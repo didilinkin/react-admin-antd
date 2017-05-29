@@ -1,23 +1,18 @@
 {
-  "name": "my-ts-app",
+  "name": "test002",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "^19.2.3",
-    "@types/node": "^7.0.18",
-    "@types/react": "^15.0.24",
-    "@types/react-dom": "^15.5.0",
-    "antd": "^2.10.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "react-scripts-ts": "1.4.0"
+    "react-scripts": "1.0.7"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
