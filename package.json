@@ -1,18 +1,55 @@
 {
-  "name": "test002",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
-  },
-  "devDependencies": {
-    "react-scripts": "1.0.7"
-  },
+  "name": "mobx-demo",
+  "version": "1.0.0",
+  "description": "a simple react demo use mobx",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node start.js",
+    "build": "rimraf dist && set NODE_ENV=production && webpack --progress --colors --config webpack.config.prod.js"
+  },
+  "author": "sundaypig",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-import": "^1.1.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "bundle-loader": "^0.5.5",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "html-webpack-plugin": "^2.28.0",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.1.1",
+    "koa-webpack-middleware": "1.0.3",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.3",
+    "mobx-react-devtools": "^4.2.11",
+    "postcss-loader": "^1.3.3",
+    "postcss-pxtorem": "^4.0.0",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "antd": "^2.9.3",
+    "axios": "^0.16.1",
+    "mobx": "^3.1.9",
+    "mobx-react": "^4.1.8",
+    "moment": "^2.18.1",
+    "qs": "^6.4.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router-dom": "^4.1.1"
   }
 }

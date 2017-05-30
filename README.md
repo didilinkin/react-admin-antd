@@ -1,4 +1,4 @@
-# 长江中心 - 物业管理系统 - V2.0版本 
+# 长江中心 - 物业管理系统 - V2.0版本
 
 > 脚手架技术( 微软 ): [ `TypeScript-React-Starter`](https://github.com/Microsoft/TypeScript-React-Starter)
 
@@ -6,6 +6,23 @@
 * 使用 `TSLint` 进行代码检测
 * 使用 `Jest` 与 `Enzyme` 进行代码测试
 * 使用 `Redux` 进行状态管理。
+
+# 目录结构
+```bash
+├── README.md
+├── package.json
+├── public
+│   ├── favicon.ico
+│   └── index.html
+├── src
+│   ├── App.css
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.css
+│   ├── index.js
+│   └── logo.svg
+└── yarn.lock
+```
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
@@ -1505,17 +1522,17 @@ When you build the project, Create React App will place the `public` folder cont
 2. Install `serve` by running `npm install --save serve`.
 
 3. Add this line to `scripts` in `package.json`:
-    
+
     ```
     "now-start": "serve build/",
     ```
-    
+
 4. Run `now` from your project directory. You will see a **now.sh** URL in your output like this:
-    
+
     ```
     > Ready! https://your-project-dirname-tpspyhtdtk.now.sh (copied to clipboard)
     ```
-    
+
     Paste that URL into your browser when the build is complete, and you will see your deployed app.
 
 Details are available in [this article.](https://zeit.co/blog/now-static)

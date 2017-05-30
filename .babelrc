@@ -1,0 +1,30 @@
+{
+  "presets": [
+    [
+      "latest",
+      {
+        "modules": false
+      }
+    ],
+    "stage-0",
+    "react"
+  ],
+  "env": {
+    "development": {
+      "presets": [
+        "react-hmre"
+      ]
+    }
+  },
+  "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": true
+      }
+    ],
+    "transform-runtime",
+    "transform-decorators-legacy"
+  ]
+}
