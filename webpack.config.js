@@ -11,7 +11,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',//打包后的文件名
     chunkFilename: '[name].[chunkhash:5].js',
-    path: path.join(__dirname, 'dist'),//打包后的文件存储位置
+    path: path.join(__dirname, '../dist'),//打包后的文件存储位置
     publicPath: '/dist/'
   },
 

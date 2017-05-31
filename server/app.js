@@ -54,7 +54,7 @@ router.get('*', async (ctx, next) => {
 				<html lang="en">
 				<head>
 				<meta charset="UTF-8">
-				<title>mobx-demo</title>
+				<title>长江中心物业管理系统</title>
 				<style>
 					*{
 					margin: 0;
@@ -77,5 +77,5 @@ router.get('*', async (ctx, next) => {
 
 app.use(router.routes()).use(router.allowedMethods())
 
-app.listen(8080)
-console.log('app started at port 8080...')
+app.listen(3000)
+console.log('app started at port 3000...')
