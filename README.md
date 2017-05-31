@@ -24,6 +24,10 @@
 └── yarn.lock
 ```
 
+检查代码风格时, 使用`standard --fix` 命令
+
+***
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

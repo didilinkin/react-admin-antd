@@ -13,44 +13,44 @@ const compile = webpack(webpackConfig)
 app.use(bodyParser())
 
 app.use(devMiddleware(compile, {
-	noInfo: true,
-	watchOptions: {
-		aggregateTimeout: 300,
-		poll: false
-	},
-	publicPath: webpackConfig.output.publicPath,
-	stats: {
-		colors: true
-	}
+  noInfo: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: false
+  },
+  publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true
+  }
 }))
 
-//webpack热更新
+// webpack热更新
 app.use(hotMiddleware(compile, {
 	// log: console.log,
 	// path: '/__webpack_hmr',
 	// heartbeat: 10 * 1000
 }))
 
-//模拟登录接口
+// 模拟登录接口
 router.post('/login', async (ctx, next) => {
-	await new Promise((resolve, reject) => {
-		setTimeout(resolve, 3000)
-	})
-	console.log(ctx.request.body)
-	ctx.body = {
-		errorcode: 0,
-		errormsg: '登录成功'
-	}
+  await new Promise((resolve, reject) => {
+    setTimeout(resolve, 3000)
+  })
+  console.log(ctx.request.body)
+  ctx.body = {
+    errorcode: 0,
+    errormsg: '登录成功'
+  }
 })
 
 router.get('/favicon.ico', (ctx, next) => {
-	ctx.body = null
+  ctx.body = null
 })
 
-//渲染页面
+// 渲染页面
 router.get('*', async (ctx, next) => {
-	ctx.type = 'html'
-	ctx.body = `<!DOCTYPE html>
+  ctx.type = 'html'
+  ctx.body = `<!DOCTYPE html>
 				<html lang="en">
 				<head>
 				<meta charset="UTF-8">
