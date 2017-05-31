@@ -86,7 +86,7 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
-antd@^2.9.3:
+antd@^2.10.2:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/antd/-/antd-2.10.2.tgz#05e1c2a4d114758f4740ca20cc5194ee492efcb3"
   dependencies:

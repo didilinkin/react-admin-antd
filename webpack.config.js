@@ -25,7 +25,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         use: 'babel-loader?cacheDirectory', // 开启编译缓存
         exclude: /node_modules/
       },
