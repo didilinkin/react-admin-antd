@@ -1378,7 +1378,7 @@ combined-stream@^1.0.5, combined-stream@~1.0.5:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@2.9.x, commander@~2.9.0:
+commander@*, commander@2.9.x, commander@~2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
   dependencies:
@@ -3356,19 +3356,11 @@ minimist@^1.1.0, minimist@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
-mobx-react-devtools@^4.2.13:
-  version "4.2.13"
-  resolved "https://registry.yarnpkg.com/mobx-react-devtools/-/mobx-react-devtools-4.2.13.tgz#44b8bab566cefb199136770ca65278c646bbb0b5"
-
-mobx-react@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-4.2.1.tgz#35324834b71ae27a7553d76ad413e5f96ba40db5"
+mockjs@^1.0.1-beta3:
+  version "1.0.1-beta3"
+  resolved "https://registry.yarnpkg.com/mockjs/-/mockjs-1.0.1-beta3.tgz#d234f3c27256397564f2c955142e891909537209"
   dependencies:
-    hoist-non-react-statics "^1.2.0"
-
-mobx@^3.1.11:
-  version "3.1.11"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.1.11.tgz#400b1e3c00a4249dfe36e9bca28ef36f057d4a28"
+    commander "*"
 
 moment@2.x, moment@^2.18.1:
   version "2.18.1"
