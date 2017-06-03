@@ -66,6 +66,10 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
+animate.css@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-3.5.2.tgz#91e668dc069a808e5e499514867b97aae0166c36"
+
 ansi-escapes@^1.1.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ansi-escapes/-/ansi-escapes-1.4.0.tgz#d3a8a83b319aa67793662b13e761c7911422306e"
@@ -1797,11 +1801,30 @@ draft-js@^0.10.0, draft-js@~0.10.0:
     immutable "~3.7.4"
     object-assign "^4.1.0"
 
+draftjs-utils@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.7.5.tgz#982b671bf9b8296c89b05683e63257817d30de55"
+  dependencies:
+    immutable "^3.x.x"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
   dependencies:
     jsbn "~0.1.0"
+
+echarts-for-react@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/echarts-for-react/-/echarts-for-react-1.4.1.tgz#bb254c0bcbf6b12de0baed274cd81eb5e178c4b2"
+  dependencies:
+    echarts "^3.5.0"
+    element-resize-event "^2.0.7"
+
+echarts@^3.5.0:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/echarts/-/echarts-3.6.1.tgz#6cb31173c6ac05ba713a613cdf4dd72145e0ab6f"
+  dependencies:
+    zrender "^3.5.1"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -1810,6 +1833,10 @@ ee-first@1.1.1:
 electron-to-chromium@^1.2.7:
   version "1.3.13"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.13.tgz#1b3a5eace6e087bb5e257a100b0cbfe81b2891fc"
+
+element-resize-event@^2.0.7:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/element-resize-event/-/element-resize-event-2.0.9.tgz#2f5e1581a296eb5275210c141bc56342e218f876"
 
 elliptic@^6.0.0:
   version "6.4.0"
@@ -2524,9 +2551,13 @@ image-size@~0.5.0:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.4.tgz#94e07beec0659386f1aefb84b2222e88405485cd"
 
-immutable@^3.7.4, immutable@^3.8.1:
+immutable@^3.7.4, immutable@^3.8.1, immutable@^3.x.x:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
+
+immutable@^4.0.0-rc.1:
+  version "4.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/immutable/-/immutable-4.0.0-rc.2.tgz#fdd0948aae728fda2306a02f72bb73e1773432d1"
 
 immutable@~3.7.4:
   version "3.7.6"
@@ -4264,6 +4295,21 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
+react-draft-wysiwyg@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/react-draft-wysiwyg/-/react-draft-wysiwyg-1.10.0.tgz#110d887364bedcd4a6eabdb69d244e162e04e095"
+  dependencies:
+    classnames "^2.2.5"
+    draftjs-utils "^0.7.5"
+    immutable "^4.0.0-rc.1"
+    prop-types "^15.5.10"
+
+react-draggable@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-2.2.6.tgz#3a806e10f2da6babfea4136be6510e89b0d76901"
+  dependencies:
+    classnames "^2.2.5"
+
 react-lazy-load@^3.0.10:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/react-lazy-load/-/react-lazy-load-3.0.12.tgz#2b841dfc3227e8119d033189d2c960ce384d0cb9"
@@ -5298,3 +5344,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zrender@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/zrender/-/zrender-3.5.1.tgz#70494096f017684c714ddd8bfa24cda6feecec34"

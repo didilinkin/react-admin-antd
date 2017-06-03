@@ -50,13 +50,17 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "antd": "^2.10.2",
     "axios": "^0.16.1",
+    "echarts-for-react": "^1.4.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "qs": "^6.4.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-draft-wysiwyg": "^1.10.0",
+    "react-draggable": "^2.2.6",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0"
