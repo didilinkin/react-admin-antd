@@ -1,9 +1,6 @@
 // 测试Antd
-/* exported React */
 import React, { Component } from 'react'
 import { Button } from 'antd'
-
-console.log(React)
 
 class App extends Component {
   render () {

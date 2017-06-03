@@ -21,6 +21,14 @@ module.exports = {
     "plugins": [
         "react"
     ],
+    // React-eslint
+    "settings": {
+      "react": {
+        "createClass": "createReactClass", // Regex for Component Factory to use, default to "createReactClass"
+        "pragma": "React",  // Pragma to use, default to "React"
+        "version": "15.0" // React version, default to the latest React stable release
+      }
+    },
     "rules": {
         // 以下规则为 'Standard' 规范( 无修改 )
         "indent": [ "error", 2 ],                                                   // 两格缩进
@@ -44,7 +52,7 @@ module.exports = {
         "comma-dangle": [ "error", "never" ],                                       // 不允许有多余的行末逗号
         "comma-style": [ "error", "last" ],                                         // 始终将逗号置于行末
         "dot-location": [ "error", "object" ],                                      // 点号操作符须与属性需在同一行
-        "eol-last": [ "error", "always" ],                                          // 文件末尾留一空行 
+        "eol-last": [ "error", "always" ],                                          // 文件末尾留一空行
         "func-call-spacing": ["error", "never"],                                    // 函数调用时标识符与括号间不留间隔
         "key-spacing": [ "error", { "beforeColon": false } ],                       // 键值对当中冒号与值之间要留空白
         "new-cap" : "error",                                                        // 构造函数要以大写字母开头
@@ -125,7 +133,7 @@ module.exports = {
         "no-whitespace-before-property": "error",                                   // 属性前面不要加空格
         "no-with": "error",                                                         // 禁止使用 with
         "object-property-newline": "error",                                         // 对象属性换行时注意统一代码风格
-        "padded-blocks": "error",                                                   // 代码块中避免多余留白
+        "padded-blocks": [ "error", "never" ],                                                   // 代码块中避免多余留白
         "rest-spread-spacing": "error",                                             // 展开运算符与它的表达式间不要留空白
         "semi-spacing": "error",                                                    // 遇到分号时空格要后留前不留
         "space-before-blocks": "error",                                             // 代码块首尾留空格
@@ -138,7 +146,7 @@ module.exports = {
         "wrap-iife": "error",                                                       // 自调用匿名函数 (IIFEs) 使用括号包裹
         "yield-star-spacing": "error",                                              // yield * 中的 * 前后都要有空格
         "yoda": "error",                                                            // 请书写优雅的条件语句（avoid Yoda conditions）
-        "semi": [ "error", "always" ],                                              // 不要使用分号
+        "semi": [ "error", "never" ],                                               // 不要使用分号
         "no-unexpected-multiline": "error",                                         // 禁止使用令人困惑的多行表达式
 
         // 加强内容
@@ -149,6 +157,10 @@ module.exports = {
         "no-unused-labels": "error",                                                // 禁用未使用过的标签
         "wrap-iife": ["error", "outside"],                                          // 需要把立即执行的函数包裹起来
         "no-undefined": "error",                                                    // 禁止将 undefined 作为标识符
-        "require-yield": "error"                                                    // 禁用函数内没有yield的 generator 函数
+        "require-yield": "error",                                                   // 禁用函数内没有yield的 generator 函数
+
+        // React JSX内容
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
     }
 };
