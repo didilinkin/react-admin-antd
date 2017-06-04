@@ -82,14 +82,15 @@ module.exports = {
       'react-native': 'react-native-web'
     }
   },
-  
+
   module: {
     // First, run the linter.
     // It's important to do this before Babel processes the JS.
     preLoaders: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint',
+        loader: 'eslint',                           // 根据Github 修复 React 问题(https://github.com/MoOx/eslint-loader/issues/92) - 更换解析 - 2017.6.4
+        exclude: /node_modules/,                    // 根据Github 修复 React 问题(https://github.com/MoOx/eslint-loader/issues/92) - 更换解析 - 2017.6.4
         enforce: 'pre',
         use: [{
           // @remove-on-eject-begin
@@ -98,7 +99,7 @@ module.exports = {
             useEslintrc: true
           },
           // @remove-on-eject-end
-          loader: 'eslint-loader'
+          loader: 'eslint'                          // 根据Github 修复 React 问题(https://github.com/MoOx/eslint-loader/issues/92) - 更换解析 - 2017.6.4
         }],
         include: paths.appSrc,
       }
@@ -180,7 +181,7 @@ module.exports = {
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
   },
-  
+
   // We use PostCSS for autoprefixing only.
   postcss: function() {
     return [

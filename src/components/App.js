@@ -1,16 +1,38 @@
-// 测试Antd
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Layout } from 'antd'
+const { Content, Footer } = Layout
+import '../style/index.less'
+import SiderCustom  from './SiderCustom'
+import HeaderCustom from './HeaderCustom'
 
 class App extends Component {
-  render () {
-    return (
-      <div className='App'>
-        <Button type='primary'>Button</Button>
-        <h1> test </h1>
-      </div>
-    )
-  }
+    state = {
+        collapsed: false
+    }
+    toggle = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        })
+    }
+    render () {
+        return (
+            <Layout className="ant-layout-has-sider">
+                <SiderCustom path={this.props.location.pathname} collapsed={this.state.collapsed} />
+                <Layout>
+                    <HeaderCustom toggle={this.toggle} />
+                    <Content style={{
+                        margin: '0 16px',
+                        overflow: 'initial'}}
+                    >
+                        {this.props.children}
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>
+                        React-Admin ©2017 Created by 865470087@qq.com
+                    </Footer>
+                </Layout>
+            </Layout>
+        )
+    }
 }
 
 export default App

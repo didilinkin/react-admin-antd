@@ -91,7 +91,8 @@ module.exports = {
     preLoaders: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'eslint',
+        loader: 'eslint',                           // 根据Github 修复 React 问题(https://github.com/MoOx/eslint-loader/issues/92) - 更换解析 - 2017.6.4
+        exclude: /node_modules/,                    // 根据Github 修复 React 问题(https://github.com/MoOx/eslint-loader/issues/92) - 更换解析 - 2017.6.4
         include: paths.appSrc
       }
     ],

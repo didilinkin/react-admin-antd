@@ -1,6 +1,5 @@
 /*
- * 本规范由 'JavaScript Standard Style' 规范 —— 添加自定义内容 组成的加强版( 未经修改的规则 + 自定义规则 )
- * 注: 'standard语法' 插件也是可以直接使用的
+ * 本规范由 'JavaScript Standard Style' 规范 —— 添加自定义内容 组成的加强版
  * Standard规则 中文文档 : https : //github.com/feross/standard/blob/master/docs/RULES-zhcn.md
  * ESlint规则 中文文档: http://eslint.cn/docs/rules/
  */
@@ -10,13 +9,15 @@ module.exports = {
         "commonjs": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+
+    "extends": ["react-app"],
     "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 8,
         "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "jsx": true
-        },
-        "sourceType": "module"
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
     },
     "plugins": [
         "react"
@@ -31,7 +32,7 @@ module.exports = {
     },
     "rules": {
         // 以下规则为 'Standard' 规范( 无修改 )
-        "indent": [ "error", 2 ],                                                   // 两格缩进
+        // "indent": [ "error", 2 ],                                                   // 两格缩进
         "quotes": [ "error", "single" ],                                            // 必须使用单引号
         "no-unused-vars": "error",                                                  // 不要定义未使用的变量
         "keyword-spacing": [ "error", { "before": true } ],                         // 关键字后面加空格
@@ -44,7 +45,7 @@ module.exports = {
         "handle-callback-err": "error",                                             // 不要丢掉异常处理中err参数
         "no-undef": "error",                                                        // 使用浏览器全局变量时加上 window. 前缀
         "no-multiple-empty-lines": ["error", { "max": 2, "maxBOF": 1 }],            // 不允许有连续多行空行
-        "operator-linebreak": [ "error", "none" ],                                  // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
+        // "operator-linebreak": [ "error", "after" ],                                 // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
         "one-var": [ "error", { var: "never", let: "never", const: "never" } ],     // 每个 var 关键字单独声明一个变量
         "no-cond-assign": "error",                                                  // 条件语句中赋值语句使用括号包起来。这样使得代码更加清晰可读，而不会认为是将条件判断语句的全等号（===）错写成了等号（=）
         "block-spacing": "error",                                                   // 单行代码块两边加空格
@@ -79,7 +80,7 @@ module.exports = {
         "no-extend-native": "error",                                                // 不要扩展原生对象
         "no-extra-bind": "error",                                                   // 避免多余的函数上下文绑定
         "no-extra-boolean-cast": "error",                                           // 避免不必要的布尔转换
-        "no-extra-parens": "error",                                                 // 不要使用多余的括号包裹函数
+        // "no-extra-parens": "error",                                                 // 不要使用多余的括号包裹函数
         "no-fallthrough": "error",                                                  // switch 一定要使用 break 来将条件分支正常中断
         "no-floating-decimal": "error",                                             // 不要省去小数点前面的0
         "no-func-assign": "error",                                                  // 避免对声明过的函数重新赋值
@@ -93,7 +94,7 @@ module.exports = {
         "no-labels": "error",                                                       // 不要使用标签语句
         "no-lone-blocks": "error",                                                  // 不要书写不必要的嵌套代码块
         "no-mixed-spaces-and-tabs": "error",                                        // 不要混合使用空格与制表符作为缩进
-        "no-multi-spaces": "error",                                                 // 除了缩进，不要使用多个空格
+        // "no-multi-spaces": "error",                                                 // 除了缩进，不要使用多个空格
         "no-multi-str": "error",                                                    // 不要使用多行字符串
         "no-new": "error",                                                          // new 创建对象实例后需要赋值给变量
         "no-new-func": "error",                                                     // 禁止使用 Function 构造器
@@ -150,7 +151,7 @@ module.exports = {
         "no-unexpected-multiline": "error",                                         // 禁止使用令人困惑的多行表达式
 
         // 加强内容
-        // "no-console": "error",                                                   // 禁止使用 console( 上线时. 放开此规则 )
+        "no-console": "off",                                                        // 禁止使用 console( 上线时. 放开此规则 )
         "no-var": "error",                                                          // 严禁使用 var; 强制要求使用 let 或 const( 防止变量提升 )
         "no-empty": "error",                                                        // 禁止空块语句
         "no-extra-semi": "error",                                                   // 禁用不必要的多余分号
@@ -161,6 +162,20 @@ module.exports = {
 
         // React JSX内容
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "react/jsx-space-before-closing": 1,                                        // 总是在自动关闭的标签前加一个空格，正常情况下也不需要换行
+        "jsx-quotes": ["error", "prefer-double"],                                   // JSX 强制使用单引号
+        "react/jsx-closing-bracket-location": 1,                                    // 遵循JSX语法缩进/格式
+        "react/jsx-boolean-value": 1,                                               // 如果属性值为 true, 可以直接省略
+        "react/no-string-refs": 1,                                                  // 总是在Refs里使用回调函数
+        "react/self-closing-comp": 1,                                               // 对于没有子元素的标签来说总是自己关闭标签
+        "react/sort-comp": 1,                                                       // 按照具体规范的React.createClass 的生命周期函数书写代码
+        "react/jsx-pascal-case": 1,                                                 // React模块名使用帕斯卡命名，实例使用骆驼式命名
+
+        // 修改规范内容
+        "no-extra-parens": ["error", "functions" ],                                     // 只在函数中 - 不要使用多余的括号包裹函数
+        "operator-linebreak": ["error", "after"],                                       // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
+        "no-multi-spaces": [ "error", { exceptions: { "ImportDeclaration": true } } ],  // 除了缩进，不要使用多个空格( 除了 'from' )
+        "indent": ["error", 4]                                                          // 两格缩进
     }
 };

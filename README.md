@@ -40,6 +40,8 @@
 
 cl
 # 目录结构
+> 借鉴: [Redux + React 应用程序架构的 3 条规范（内附实例）](https://zhuanlan.zhihu.com/p/21490605)
+
 ```bash
 ├── build /                         # 打包的文件目录
 ├── config /                        # webpack配置
