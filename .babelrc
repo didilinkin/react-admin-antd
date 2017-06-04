@@ -1,32 +1,10 @@
 {
   "presets": [
-    [
-      "latest",
-      {
-        "modules": false
-      }
-    ],
-    "stage-0",
     "es2015",
-    "react"
+    "react",
+    "stage-0"
   ],
-  "env": {
-    "development": {
-      "presets": [
-        "react-hmre"
-      ]
-    }
-  },
   "plugins": [
-    [
-      "import",
-      {
-        "libraryName": "antd",
-        "style": true
-      }
-    ],
-    "transform-runtime",
-    "transform-decorators-legacy",
-    "lodash"
+    "react-hot-loader/babel"
   ]
 }
