@@ -1,6 +1,6 @@
 # 长江中心 - 物业管理系统 - V2.0版本
 
-> 脚手架模型来自 [backend-by-react](https://github.com/sundaypig/backend-by-react)
+> 脚手架模型来自 [react-admin](https://github.com/yezihaohao/react-admin)
 
 * 使用 `TypeScript` 超集语言辅助
 * 使用 `TSLint` 进行代码检测
@@ -13,11 +13,11 @@
 | [React](https://facebook.github.io/react/)            | 视图库              | 15.5.4  |
 | [AntDesign](https://ant.design/index-cn)              | UI框架              | 2.10.4  |
 | [Redux](http://cn.redux.js.org/)                      | 状态管理             | 3.6.0  |
-| [React-router](https://reacttraining.cn/)             | 路由管理            |  4.1.1  |
+| [React-router](https://reacttraining.cn/)             | 路由管理            |  3.0.2  |
 | [Axios](https://github.com/mzabriskie/axios)          | 交互处理            |  0.16.1  |
 | [Less](http://www.bootcss.com/p/lesscss/)             | 样式预处理器(AntD)  |  2.7.2  |
 | [Sass](https://www.sass.hk/)                          | 样式预处理器        |  4.5.2  |
-| [webpack](https://doc.webpack-china.org/)             | 模块打包            | 2.4.1  |
+| [webpack](https://doc.webpack-china.org/)             | 模块打包            | 1.14.0  |
 | [Babel](http://babeljs.cn/)                           | ES6转译ES5          |  6.24.1  |
 | [Mockjs](http://mockjs.com/)                          | 模拟接口            |  1.0.1-beta3  |
 
@@ -34,30 +34,43 @@
 | [screenfull](https://github.com/sindresorhus/screenfull.js)                  | 全屏插件                                       | 3.2.0  |
 | [styled-components](https://github.com/styled-components/styled-components)  | 样式组件                                       | 2.0.0  |
 | [polished](https://github.com/styled-components/polished)                    | CSS in JS功能插件(可以用js写CSS, 内部封装函数)   | 1.1.3  |
+| [animate.css](https://daneden.github.io/animate.css/)                        | CSS3 动画功能                                  | 3.5.2  |
+| [qs](https://github.com/ljharb/qs)                                           | 字符串解析库(配合axios)                         | 6.4.0  |
+| [moment](https://momentjs.com/)                                              | JS处理 / 操作 / 转换 时间日期                   | 2.18.1  |
 
+cl
 # 目录结构
 ```bash
-├── README.md
-├── package.json
-├── dist /                          # 打包输出文件
+├── build /                         # 打包的文件目录
 ├── config /                        # webpack配置
+├—— node_modules /                  # npm安装依赖目录
 ├── public /                        # 静态文件
-│   ├── favicon.ico
-│   └── index.html
+│   ├── favicon.ico                   # 网页图标
+│   ├── index.html                    # 入口 HTML文件
+│   ├── npm.json                      # echarts测试数据
+│   └── weibo.json                    # echarts测试数据
+├── scripts /                       # webpack 配置文件
+│   ├── build.js                      # webpack - '打包'配置
+│   ├── start.js                      # webpack - '开发'配置
+│   └── test.js                       # webpack - '测试'配置
 ├── src /                           # 开发目录
-│   ├── App.css
-│   ├── App.js
-│   ├── App.test.js
-│   ├── index.css
-│   ├── index.js
-│   └── logo.svg
-├── .editorconfig                   # 编辑器统一配置
+│   ├── axios /                       # API 接口( 由 `axios`集中处理 )
+│   ├── components /                  # React 组件文件夹
+│   ├── utils /                       # 工具文件存放目录
+│   └── index.js                      # 项目的整体js入口文件，包括路由配置等
+├── .babelrc                        # Babel 配置
+├── .editorconfig                   # 统一编辑器配置
+├── .env                            # 启动项目自定义端口配置文件
 ├── .eslintrc.js                    # ES( js / jsx ) 语法纠错
 ├── .eslintignore                   # 纠错忽略 配置
 ├── .gitignore                      # git忽略 配置
+├── LICENSE                         # GPL3.0
+├── package-lock.json               # NPM 依赖包 版本锁
+├── package.json                    # 项目 配置
+├── README.md                       # 项目 说明
 ├── .postcssrc.js                   # Postcss 配置
-├── webpack.config.js               # webpack 基本配置
-├── webpack.config.prod.js          # webpack 上线配置
+├── tsconfig.json                   # TypeScript 配置(已配置好 - 未使用)
+├── tslint.json                     # TSlint(TS) 语法纠错(已配置好 - 未使用)
 └── yarn.lock                       # Yarn 依赖包版本锁
 ```
 
@@ -68,9 +81,10 @@
 ***
 
 ## **ToDoList**
+- [x]  `standard` 语法配置( 或使用 `TSlint` )
+- [x]  `TS` 配置引入
 - [ ]  `webpack` 优化配置- 需要升级 2.x !!!
 - [ ]  `webpack` report打包的体积分析报告( 类似 Vue的 `npm run build --report` )
-- [ ]  `src` 目录 功能划分的调整
-- [ ]  `TS` 配置引入
+- [ ]  `src` 目录 功能划分的调整( 参考`Redux` 推荐目录结构 )
 - [ ]  `Postcss` 配置
-- [ ]  `standard` 语法配置( 或使用 `TSlint` )
+
