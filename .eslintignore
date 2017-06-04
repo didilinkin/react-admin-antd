@@ -1,5 +1,0 @@
-config/*.js
-server/*.js
-scripts/*.js
-node_modules/*.js
-src/App.test.js
