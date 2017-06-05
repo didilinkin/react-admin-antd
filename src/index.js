@@ -7,7 +7,8 @@ import { Router, Route, hashHistory, IndexRedirect } from 'react-router'
 import App          from './components/App'
 import Page         from './components/Page'
 import BasicTable   from './components/Tables/BasicTables'
-import Tables2   from './components/Tables/tables2'
+import Tables2      from './components/Tables/tables2'
+import FixActionTable   from './components/Tables/FixActionTable'
 
 // 引入路由
 const routes =
@@ -17,6 +18,7 @@ const routes =
             <Route path={'table'}>
                 <Route path={'basicTable'} component={ BasicTable } />
                 <Route path={'Tables2'} component={ Tables2 } />
+                <Route path={'fixaction'} component={ FixActionTable } />
             </Route>
         </Route>
     </Route>
