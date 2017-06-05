@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const getPros = (url, json) => axios.post(url, json).then(function (response) {
+export const getget = (url, json) => axios.get(url, json).then(function (response) {
     return response.data
 }).catch(function (error) {
     console.log(error)

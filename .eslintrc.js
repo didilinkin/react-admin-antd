@@ -66,7 +66,7 @@ module.exports = {
         "no-const-assign": "error",                                                 // 避免修改使用 const 声明的变量
         "no-constant-condition": "error",                                           // 避免使用常量作为条件表达式的条件( 循环语句除外 )
         "no-control-regex": "error",                                                // 正则中不要使用控制符
-        "no-debugger": "error",                                                     // 不要使用 debugger
+        //"no-debugger": "error",                                                     // 不要使用 debugger
         "no-delete-var": "error",                                                   // 不要对变量使用 delete 操作
         "no-dupe-args": "error",                                                    // 不要定义冗余的函数参数
         "no-dupe-class-members": "error",                                           // 类中不要定义冗余的属性
@@ -173,6 +173,7 @@ module.exports = {
         "react/jsx-pascal-case": 1,                                                 // React模块名使用帕斯卡命名，实例使用骆驼式命名
 
         // 修改规范内容
+        "no-debugger": "off",
         "no-extra-parens": ["error", "functions" ],                                     // 只在函数中 - 不要使用多余的括号包裹函数
         "operator-linebreak": ["error", "after"],                                       // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
         "no-multi-spaces": [ "error", { exceptions: { "ImportDeclaration": true } } ],  // 除了缩进，不要使用多个空格( 除了 'from' )
