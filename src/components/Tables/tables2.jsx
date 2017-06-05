@@ -4,13 +4,18 @@ import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
 import axios from 'axios'
 
-const getget = (url) => axios.get(url).then(function (response) {
+async function get (url, json) {
+    let date
+    axios.get(url, json).then(function (response) {
+        debugger
+        date =  response.data
+    }).catch(function (error) {
+        debugger
+        console.log(error)
+    })
     debugger
-    return response.data
-}).catch(function (error) {
-    debugger
-    console.log(error)
-})
+    return date
+}
 
 // React component
 class Counter extends Component {
@@ -60,8 +65,15 @@ const store = createStore(counter)
 // Map Redux state to component props
 function mapStateToProps (state, ownProps) {
     function handleDelete (id) {
-        getget('http://127.0.0.1:18082/ceshi')
+        const date = get('http://127.0.0.1:18082/ceshi')
+
+        console.log(date)
         debugger
+        const increaseAction = {
+            type: 'increase',
+            payload: date
+        }
+        store.dispatch(increaseAction)
     }
 
 
