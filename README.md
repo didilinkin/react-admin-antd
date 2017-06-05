@@ -2,6 +2,7 @@
 
 > 脚手架模型来自 [react-admin](https://github.com/yezihaohao/react-admin)
 
+* [**React**v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
 * 使用 `TypeScript` 超集语言辅助
 * 使用 `TSLint` 进行代码检测
 * 使用 `Jest` 与 `Enzyme` 进行代码测试
@@ -41,6 +42,8 @@
 cl
 # 目录结构
 > 借鉴: [Redux + React 应用程序架构的 3 条规范（内附实例）](https://zhuanlan.zhihu.com/p/21490605)
+> 借鉴: [React + Redux 最佳实践](https://github.com/sorrycc/blog/issues/1)
+> 借鉴: [Redux状态管理之痛点、分析与改良](https://segmentfault.com/a/1190000009540007)
 
 ```bash
 ├── build /                         # 打包的文件目录
