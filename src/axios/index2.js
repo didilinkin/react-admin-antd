@@ -4,4 +4,5 @@ export const getget = (url, json) => axios.get(url, json).then(function (respons
     return response.data
 }).catch(function (error) {
     console.log(error)
+    console.log('ww')
 })
