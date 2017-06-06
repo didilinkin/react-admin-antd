@@ -13,6 +13,7 @@ import Login        from '../views/common/pages/Login'
 
 // 引入 '维修' 版块
 import Table2       from '../views/UpKeep/pages/Table2'
+import AsyncTable       from '../views/test/AsyncTable'
 
 const SetRouter = () => (
     <Router>
@@ -22,6 +23,9 @@ const SetRouter = () => (
 
             {/* 维修 - 开发中( 未匹配默认页 ) */}
             <Route path="/upkeep/list" component={ Table2 } />
+
+            {/* 测试页面*/}
+            <Route path="/test/async/table" component={ AsyncTable } />
 
             {/* 404 */}
             <Route path="/404" component={ NotFound } />
