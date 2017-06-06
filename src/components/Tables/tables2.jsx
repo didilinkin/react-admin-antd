@@ -2,30 +2,6 @@ import React, { Component } from 'react'
 import { Table, Button, Popconfirm} from 'antd'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
-import axios from 'axios'
-
-// const getget = (url) => axios.get(url).then(function (response) {
-//     // debugger
-//     // console.log(response.data)
-//     return response.data
-// }).catch(function (error) {
-//     debugger
-//     console.log(error)
-// })
-
-const getget = (url) => {
-    return new Promise(function (resolve, reject) {
-        axios.get(url).
-        then(response => {
-            let resulData = response.data
-            resolve(resulData)
-        }).
-        catch(error => {
-            reject(error)
-        })
-    })
-}
-
 
 // React component
 class Counter extends Component {
@@ -47,25 +23,19 @@ class Counter extends Component {
 
 // Reducer
 function counter (state = {count: []}, action) {
-    debugger
-    switch (action.type) {
-    case 'increase':
-        return {count: action.payload}
-    default:
-        return {
-            count: [{
-                key: '1',
-                name: '胡彦斌',
-                age: 32,
-                address: '西湖区湖底公园1号'
-            }, {
-                key: '2',
-                name: '胡彦祖',
-                age: 42,
-                address: '西湖区湖底公园1号'
-            }]
-        }
-    }
+    this.setState({count: [{
+        'id': 1,
+        'entryName': '灯泡',
+        'company': '个',
+        'purchasePrice': 10.00000,
+        'serviceCharge': 2.00000,
+        'tollAmount': 12.00000,
+        'createId': 1,
+        'createDate': 1496727795000,
+        'updateId': 0,
+        'updateDate': null
+    }]})
+    return state
 }
 
 // Store
@@ -75,45 +45,42 @@ const store = createStore(counter)
 // Map Redux state to component props
 function mapStateToProps (state, ownProps) {
     function handleDelete (id) {
-        // getget('http://127.0.0.1:18082/ceshi')
-        // let data = async function() { getget('/npm.json') }
-        // console.log(data)
-        // debugger
-
-        const asyncGet = async function () {
-            try {
-                let result = await getget('/npm.json')
-                console.log(result)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-        asyncGet()
+        store.dispatch({type: 'increase',
+            payload: id})
     }
-
-
     return {
         products: state.count,
         columns: [{
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name'
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id'
         }, {
-            title: '年龄',
-            dataIndex: 'age',
-            key: 'age'
+            title: '物品名称',
+            dataIndex: 'entryName',
+            key: 'entryName'
         }, {
-            title: '住址',
-            dataIndex: 'address',
-            key: 'address'
+            title: '单位',
+            dataIndex: 'company',
+            key: 'company'
+        }, {
+            title: '进货价格',
+            dataIndex: 'purchasePrice',
+            key: 'purchasePrice'
+        }, {
+            title: '服务费',
+            dataIndex: 'serviceCharge',
+            key: 'serviceCharge'
+        }, {
+            title: '收费',
+            dataIndex: 'tollAmount',
+            key: 'tollAmount'
         }, {
             title: '操作',
             dataIndex: 'opt',
             key: 'opt',
             render: function (text, record, index) {
                 return (
-                    <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.key)}>
+                    <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.id)}>
                         <Button >Delete</Button>
                     </Popconfirm>
                 )
