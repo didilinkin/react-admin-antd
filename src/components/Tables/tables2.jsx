@@ -5,7 +5,6 @@ import { Provider, connect } from 'react-redux'
 
 // React component
 class Counter extends Component {
-    debugger;
 
     render () {
         const {products, columns} = this.props
