@@ -9,6 +9,7 @@ import {
 // 引入路由 + 全局页面组件
 import HomeRouter   from '../views/common/pages/HomeRouter'
 import NotFound     from '../views/common/pages/404'
+import Login        from '../views/common/pages/Login'
 
 // 引入 '维修' 版块
 import Table2       from '../views/UpKeep/pages/Table2'
@@ -24,6 +25,9 @@ const SetRouter = () => (
 
             {/* 404 */}
             <Route path="/404" component={ NotFound } />
+
+            {/* Login */}
+            <Route path="/login" component={ Login } />
         </div>
     </Router>
 )

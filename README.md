@@ -39,7 +39,6 @@
 | [qs](https://github.com/ljharb/qs)                                           | 字符串解析库(配合axios)                         | 6.4.0  |
 | [moment](https://momentjs.com/)                                              | JS处理 / 操作 / 转换 时间日期                   | 2.18.1  |
 
-cl
 # 目录结构
 > 借鉴: [Redux + React 应用程序架构的 3 条规范（内附实例）](https://zhuanlan.zhihu.com/p/21490605)
 > 借鉴: [React + Redux 最佳实践](https://github.com/sorrycc/blog/issues/1)
@@ -50,19 +49,36 @@ cl
 ├── config /                        # webpack配置
 ├—— node_modules /                  # npm安装依赖目录
 ├── public /                        # 静态文件
-│   ├── favicon.ico                   # 网页图标
-│   ├── index.html                    # 入口 HTML文件
-│   ├── npm.json                      # echarts测试数据
-│   └── weibo.json                    # echarts测试数据
+│   ├── favicon.ico                 |   # 网页图标
+│   ├── index.html                  |   # 入口 HTML文件
+│   ├── npm.json                    |   # echarts测试数据
+│   └── weibo.json                  |   # echarts测试数据
 ├── scripts /                       # webpack 配置文件
-│   ├── build.js                      # webpack - '打包'配置
-│   ├── start.js                      # webpack - '开发'配置
-│   └── test.js                       # webpack - '测试'配置
+│   ├── build.js                    |   # webpack - '打包'配置
+│   ├── start.js                    |   # webpack - '开发'配置
+│   └── test.js                     |   # webpack - '测试'配置
 ├── src /                           # 开发目录
-│   ├── axios /                       # API 接口( 由 `axios`集中处理 )
-│   ├── components /                  # React 组件文件夹
-│   ├── utils /                       # 工具文件存放目录
-│   └── index.js                      # 项目的整体js入口文件，包括路由配置等
+│   ├── axios /                     |   # API 交互统一方法
+│   |   └── index.js                |   |   # axios 封装配置
+│   ├── components /                |   # React 组件文件夹( 即将删除!!! - 请及时处理 )
+│   ├── stores /                    |   # Redux 全局状态管理
+│   ├── style /                     |   # Less 样式配置
+│   ├── utils /                     |   # 工具文件存放目录
+│   ├── views /                     |   # ( 页面 + 组件 ) 统一管理 
+│   |   |── common /                |   |   # 通用
+|   │   |   |── components /        |   |   |   # 通用 组件
+|   │   |   └── pages /             |   |   |   # 通用 页面
+|   |   │   |   |── HomeRouter.jsx  |   |   |   |   # 主页 路由模版页( 开发中 )
+|   |   │   |   |── Login.jsx       |   |   |   |   # 登录 页( 开发中 )
+|   |   │   |   └── 404.jsx         |   |   |   |   # 404 页( 开发中 )
+│   |   |── UpKeep /                |   |   # '维修' 版块
+|   │   |   |── components /        |   |   |   # '维修' 组件
+|   │   |   └── pages /             |   |   |   # '维修' 页面
+|   |   │   |   └── Table2.jsx      |   |   |   |   # '维修' 测试 Redux( 测试中 )
+│   |   └── Warehouse /             |   |   # '仓库管理' 版块
+|   │   |   |── components /        |   |   |   # '仓库管理' 组件( 开发中 )
+|   │   |   └── pages /             |   |   |   # '仓库管理' 页面( 开发中 )
+│   └── index.js                    |   # 项目的整体js入口文件, 配置插件
 ├── .babelrc                        # Babel 配置
 ├── .editorconfig                   # 统一编辑器配置
 ├── .env                            # 启动项目自定义端口配置文件
