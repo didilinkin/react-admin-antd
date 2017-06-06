@@ -1,6 +1,6 @@
 /*
  * 本规范由 'JavaScript Standard Style' 规范 —— 添加自定义内容 组成的加强版
- * Standard规则 中文文档 : https : //github.com/feross/standard/blob/master/docs/RULES-zhcn.md
+ * Standard规则 中文文档 : https://github.com/feross/standard/blob/master/docs/RULES-zhcn.md
  * ESlint规则 中文文档: http://eslint.cn/docs/rules/
  */
 module.exports = {
