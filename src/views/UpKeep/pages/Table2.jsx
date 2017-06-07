@@ -1,44 +1,99 @@
-// 维修 - 测试组件
 import React, { Component } from 'react'
-import { Table, Button, Popconfirm} from 'antd'
+import { Table, Button, Spin, Modal, Popconfirm, Input, Form } from 'antd'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
 import axios from 'axios'
 
-// const getget = (url) => axios.get(url).then(function (response) {
-//     // debugger
-//     // console.log(response.data)
-//     return response.data
-// }).catch(function (error) {
-//     debugger
-//     console.log(error)
-// })
-
-const getget = (url) => {
-    return new Promise(function (resolve, reject) {
-        axios.get(url).
-        then(response => {
-            let resulData = response.data
-            resolve(resulData)
-        }).
-        catch(error => {
-            reject(error)
-        })
-    })
+const FormItem = Form.Item
+// Reducer
+function counter (state = {count: []}, action) {
+    debugger
+    return {count: action.payload}
 }
 
+// Store
+const store = createStore(counter)
 
 // React component
 class Counter extends Component {
-    debugger;
-
+    state = { loading: false,
+        modal1Visible: false,
+        modal2Visible: false}
+    componentDidMount () {
+        this.setState({ loading: true })
+        axios.post('http://192.168.1.108:18082/upkeep/list').
+        then(response => {
+            let resulData = response.data
+            this.setState({ loading: false })
+            store.dispatch({
+                type: 'SET_VISIBILITY_FILTER',
+                payload: resulData.data
+            })
+        }).
+        catch(error => {
+            store.dispatch({
+                type: 'eorr'
+            })
+        })
+    }
+    setModal1Visible (modal1Visible) {
+        if (modal1Visible === false) {
+            const text = this.refs.myTextInput
+            const text2 = this.refs.myTextInput2.value
+            debugger
+            alert(text + ':' + text2)
+        }
+        this.setState({ modal1Visible })
+    }
     render () {
         const {products, columns} = this.props
+        debugger
         return (
-            <Table
-                dataSource={products}
-                columns={columns}
-            />
+            <div>
+                <Modal
+                    title="增加收费项"
+                    style={{ top: 20,
+                        width: 350}}
+                    visible={this.state.modal1Visible}
+                    onOk={() => this.setModal1Visible(false)}
+                    onCancel={() => this.setModal1Visible(false)}
+                >
+                    <Form>
+                        <FormItem label="物品名称" labelCol={{ span: 8 }}
+                                  wrapperCol={{ span: 8 }}
+                        >
+                                <Input ref="myTextInput" placeholder="Username" />
+                        </FormItem>
+                        <FormItem label="单位" labelCol={{ span: 8 }}
+                                  wrapperCol={{ span: 8 }}
+                        >
+                            <input type="text" ref="myTextInput2" />
+                        </FormItem>
+                        <FormItem label="进货价格" labelCol={{ span: 8 }}
+                                  wrapperCol={{ span: 8 }}
+                        >
+                            <Input placeholder="Username" />
+                        </FormItem>
+                        <FormItem label="服务费" labelCol={{ span: 8 }}
+                                  wrapperCol={{ span: 8 }}
+                        >
+                            <Input placeholder="Username" />
+                        </FormItem>
+                        <FormItem label="收费金额" labelCol={{ span: 8 }}
+                                  wrapperCol={{ span: 8 }}
+                        >
+                            <Input placeholder="Username" />
+                        </FormItem>
+                    </Form>
+                </Modal>
+                <Button type="primary" onClick={() => this.setModal1Visible(true)}>增加收费项</Button>
+                <Spin spinning={this.state.loading} >
+                    <Table
+                        dataSource={products}
+                        columns={columns}
+                    />
+                </Spin>
+            </div>
         )
     }
 }
@@ -46,76 +101,62 @@ class Counter extends Component {
 
 // Action
 
-// Reducer
-function counter (state = {count: []}, action) {
-    debugger
-    switch (action.type) {
-    case 'increase':
-        return {count: action.payload}
-    default:
-        return {
-            count: [{
-                key: '1',
-                name: '胡彦斌',
-                age: 32,
-                address: '西湖区湖底公园1号'
-            }, {
-                key: '2',
-                name: '胡彦祖',
-                age: 42,
-                address: '西湖区湖底公园1号'
-            }]
-        }
-    }
-}
-
-// Store
-const store = createStore(counter)
-
 
 // Map Redux state to component props
 function mapStateToProps (state, ownProps) {
     function handleDelete (id) {
-        // getget('http://127.0.0.1:18082/ceshi')
-        // let data = async function() { getget('/npm.json') }
-        // console.log(data)
-        // debugger
-
-        const asyncGet = async function () {
-            try {
-                let result = await getget('/npm.json')
-                console.log(result)
-            } catch (err) {
-                console.log(err)
+        axios({
+            method: 'post',
+            url: 'http://192.168.1.108:18082/upkeep/delect',
+            params: {
+                id: id
             }
-        }
-
-        asyncGet()
+        }).
+        then(response => {
+            let resulData = response.data
+            store.dispatch({
+                type: 'SET_VISIBILITY_FILTER',
+                payload: resulData.data
+            })
+        }).
+        catch(error => {
+            alert(error)
+        })
     }
-
-
     return {
         products: state.count,
         columns: [{
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name'
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id'
         }, {
-            title: '年龄',
-            dataIndex: 'age',
-            key: 'age'
+            title: '物品名称',
+            dataIndex: 'entryName',
+            key: 'entryName'
         }, {
-            title: '住址',
-            dataIndex: 'address',
-            key: 'address'
+            title: '单位',
+            dataIndex: 'company',
+            key: 'company'
+        }, {
+            title: '进货价格',
+            dataIndex: 'purchasePrice',
+            key: 'purchasePrice'
+        }, {
+            title: '服务费',
+            dataIndex: 'serviceCharge',
+            key: 'serviceCharge'
+        }, {
+            title: '收费',
+            dataIndex: 'tollAmount',
+            key: 'tollAmount'
         }, {
             title: '操作',
             dataIndex: 'opt',
             key: 'opt',
             render: function (text, record, index) {
                 return (
-                    <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.key)}>
-                        <Button >Delete</Button>
+                    <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.id)}>
+                        <Button >删除</Button>
                     </Popconfirm>
                 )
             }
@@ -140,3 +181,4 @@ class index extends Component {
 }
 
 export default index
+
