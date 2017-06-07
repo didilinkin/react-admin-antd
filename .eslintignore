@@ -1,3 +1,4 @@
+bin/*.js
 config/*.js
 server/*.js
 scripts/*.js

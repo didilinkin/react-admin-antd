@@ -16,12 +16,12 @@ import axios from 'axios'
 
 const getget = (url) => {
     return new Promise(function (resolve, reject) {
-        axios.get(url).
-        then(response => {
+        axios.get(url)
+        .then(response => {
             let resulData = response.data
             resolve(resulData)
-        }).
-        catch(error => {
+        })
+        .catch(error => {
             reject(error)
         })
     })
