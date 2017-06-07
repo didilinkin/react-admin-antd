@@ -3,7 +3,7 @@
 > 脚手架模型来自 [react-admin](https://github.com/yezihaohao/react-admin)
 >
 > ## *NPM* 版本请 升级到 `5.0.3` 以上
-> ## *Nodejs* 版本 尽量使用 `6.9.0` 版本以上
+> ## *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
 
 * [**React**v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
 * 使用 `TypeScript` 超集语言辅助
