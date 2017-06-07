@@ -7,13 +7,20 @@ import {
 } from 'react-router-dom'
 
 // 引入路由 + 全局页面组件
-import HomeRouter   from '../views/common/pages/HomeRouter'
-import NotFound     from '../views/common/pages/404'
-import Login        from '../views/common/pages/Login'
+import HomeRouter           from '../views/common/pages/HomeRouter'
+import NotFound             from '../views/common/pages/404'
+import Login                from '../views/common/pages/Login'
 
 // 引入 '维修' 版块
-import Table2       from '../views/UpKeep/pages/Table2'
-import AsyncTable       from '../views/test/AsyncTable'
+import Table2               from '../views/UpKeep/pages/Table2'
+import AsyncTable           from '../views/test/AsyncTable'
+
+// 引入 '仓库管理' 版块
+import InventorySummary     from '../views/Warehouse/pages/InventorySummary'            // 库存汇总
+import IntoWarehouse        from '../views/Warehouse/pages/IntoWarehouse'               // 入库管理
+import OutWarehouse         from '../views/Warehouse/pages/OutWarehouse'                // 出库管理
+import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'           // 领用统计
+import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'          // 材料管理
 
 const SetRouter = () => (
     <Router>
@@ -26,6 +33,14 @@ const SetRouter = () => (
 
             {/* 测试页面*/}
             <Route path="/test/async/table" component={ AsyncTable } />
+
+            {/* 库存管理 */}
+            <Route path={'/warehouse'} />
+                <Route path="/warehouse/inventorySummary" component={ InventorySummary } />
+                <Route path="/warehouse/intoWarehouse" component={ IntoWarehouse } />
+                <Route path="/warehouse/outWarehouse" component={ OutWarehouse } />
+                <Route path="/warehouse/receiveStatistics" component={ ReceiveStatistics } />
+                <Route path="/warehouse/materialManagement" component={ MaterialManagement } />
 
             {/* 404 */}
             <Route path="/404" component={ NotFound } />
