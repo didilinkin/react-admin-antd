@@ -6,7 +6,10 @@ const columns = [{
     title: '项目名',
     dataIndex: 'username',
     width: 100,
-    render: (text, record) => <a href={record.url} target="_blank">{text}</a>
+    render: (text, record) => <a href={record.url}
+        target="_blank"
+        rel="noreferrer noopener"   // 使用target属性 必须加下面这句话( 否则ESlint提示安全问题 )
+                              >{text}</a>
 }, {
     title: '语言',
     dataIndex: 'lang',
