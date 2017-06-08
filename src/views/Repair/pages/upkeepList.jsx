@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Table, Button, Spin, Modal, Popconfirm, Input, Form } from 'antd'
+import { Table, Button, Spin, Popconfirm } from 'antd'
 import { createStore } from 'redux'
 import { Provider, connect } from 'react-redux'
 import axios from 'axios'
-
-const FormItem = Form.Item
+// 引入组件
+import Addupkeep from './addUpkeep'
 // Reducer
 function counter (state = {count: []}, action) {
     debugger
@@ -53,43 +53,7 @@ class Counter extends Component {
         debugger
         return (
             <div>
-                <Modal
-                    title="增加收费项"
-                    style={{ top: 20,
-                        width: 350}}
-                    visible={this.state.modal1Visible}
-                    onOk={() => this.setModal1Visible(false)}
-                    onCancel={() => this.setModal1Visible(false)}
-                >
-                    <Form>
-                        <FormItem label="物品名称" labelCol={{ span: 8 }}
-                                  wrapperCol={{ span: 8 }}
-                        >
-                            <Input ref="myTextInput" placeholder="Username" />
-                        </FormItem>
-                        <FormItem label="单位" labelCol={{ span: 8 }}
-                                  wrapperCol={{ span: 8 }}
-                        >
-                            <input type="text" ref="myTextInput2" />
-                        </FormItem>
-                        <FormItem label="进货价格" labelCol={{ span: 8 }}
-                                  wrapperCol={{ span: 8 }}
-                        >
-                            <Input placeholder="Username" />
-                        </FormItem>
-                        <FormItem label="服务费" labelCol={{ span: 8 }}
-                                  wrapperCol={{ span: 8 }}
-                        >
-                            <Input placeholder="Username" />
-                        </FormItem>
-                        <FormItem label="收费金额" labelCol={{ span: 8 }}
-                                  wrapperCol={{ span: 8 }}
-                        >
-                            <Input placeholder="Username" />
-                        </FormItem>
-                    </Form>
-                </Modal>
-                <Button type="primary" onClick={() => this.setModal1Visible(true)}>增加收费项</Button>
+               <Addupkeep/>
                 <Spin spinning={this.state.loading} >
                     <Table
                         dataSource={products}
