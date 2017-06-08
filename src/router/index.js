@@ -6,6 +6,9 @@ import {
     // Link
 } from 'react-router-dom'
 
+// 引入 styled样式配置
+import styled               from 'styled-components'
+
 // 引入路由 + 全局页面组件
 import HomeRouter           from '../views/common/pages/HomeRouter'
 import NotFound             from '../views/common/pages/404'
@@ -22,9 +25,15 @@ import OutWarehouse         from '../views/Warehouse/pages/OutWarehouse'        
 import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'           // 领用统计
 import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'          // 材料管理
 
+// 容器Div 样式配置( 不需要单独写一个组件 )
+const ContainerDiv = styled.section `
+    height: 100vh;
+    background: blue;
+`
+
 const SetRouter = () => (
     <Router>
-        <div>
+        <ContainerDiv>
             {/* 首页 */}
             <Route exact path="/" component={ HomeRouter } />
 
@@ -47,7 +56,7 @@ const SetRouter = () => (
 
             {/* Login */}
             <Route path="/login" component={ Login } />
-        </div>
+        </ContainerDiv>
     </Router>
 )
 

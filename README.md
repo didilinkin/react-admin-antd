@@ -2,14 +2,15 @@
 
 > 脚手架模型来自 [react-admin](https://github.com/yezihaohao/react-admin)
 >
-> ## *NPM* 版本请 升级到 `5.0.3` 以上
-> ## *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
+> *NPM* 版本请 升级到 `5.0.3` 以上
+> 
+> *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
 
-* [**React**v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
+* [**React** v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
 * 使用 `TypeScript` 超集语言辅助
 * 使用 `TSLint` 进行代码检测
 * 使用 `Jest` 与 `Enzyme` 进行代码测试
-* 使用 `Redux` 进行状态管理。
+* 使用 `Redux` 进行状态管理
 
 ## 使用技术:
 | 技术名称                                               | 作用                |  版本   |
@@ -44,7 +45,9 @@
 
 # 目录结构
 > 借鉴: [Redux + React 应用程序架构的 3 条规范（内附实例）](https://zhuanlan.zhihu.com/p/21490605)
+>
 > 借鉴: [React + Redux 最佳实践](https://github.com/sorrycc/blog/issues/1)
+>
 > 借鉴: [Redux状态管理之痛点、分析与改良](https://segmentfault.com/a/1190000009540007)
 
 ```bash
@@ -107,8 +110,9 @@
 ## **ToDoList**
 - [x]  `standard` 语法配置( 或使用 `TSlint` )
 - [x]  `TS` 配置引入
-- [ ]  `webpack` 优化配置- 需要升级 2.x !!!
+- [x]  `webpack` 优化配置- 需要升级 2.x !!!
 - [ ]  `webpack` report打包的体积分析报告( 类似 Vue的 `npm run build --report` )
 - [ ]  `src` 目录 功能划分的调整( 参考`Redux` 推荐目录结构 )
 - [ ]  `Postcss` 配置
+- [ ]  `Antd` 的主题 Less 配置已完成; 如果需要配置主题 需要修改`src/theme` 文件夹( 线上环境的主题 / 按需加载 条件未配置; 如有需要 配置 `webpack.config.prod.js` )
 

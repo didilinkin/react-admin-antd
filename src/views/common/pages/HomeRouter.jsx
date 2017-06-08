@@ -1,8 +1,7 @@
-// 主页模版
+// 首页
 import React from 'react'
 // 测试antd
 import { Button }   from 'antd'
-// import 'antd/dist/antd.css'  // 可用; 但严重不推荐( 大大增加代码体积 )
 
 class HomeRouter extends React.Component {
     render () {
