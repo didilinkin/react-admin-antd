@@ -2,7 +2,8 @@
 import React from 'react'
 import {
     BrowserRouter as Router,
-    Route
+    Route,
+    Switch
     // Link
 } from 'react-router-dom'
 
@@ -11,6 +12,9 @@ import styled               from 'styled-components'
 
 // 引入路由 + 全局页面组件
 import HomeRouter           from '../views/common/pages/HomeRouter'
+import HomeIndex            from '../views/common/pages/HomeIndex'
+import HomeTest             from '../views/common/pages/HomeTest'
+
 import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
 
@@ -34,28 +38,38 @@ const ContainerDiv = styled.section `
 const SetRouter = () => (
     <Router>
         <ContainerDiv>
-            {/* 首页 */}
-            <Route exact path="/" component={ HomeRouter } />
+            {/* 开启匹配配置 */}
+            <Switch>
 
-            {/* 维修 - 开发中( 未匹配默认页 ) */}
-            <Route path="/upkeep/list" component={ upkeepList } />
+                {/* '物业管理系统' 内容 - 这是个路由匹配模版( 设置 顶部导航 / 侧导航栏 ) */}
+                <Route exact path="/" component={ HomeRouter } />
+                    {/* 测试: 首页 - 'HOME' */}
+                    <Route path="home" main={ HomeIndex } />
+                    {/* 测试: 测试首页 - 'test' */}
+                    <Route path="test" main={ HomeTest } />
 
-            {/* 测试页面*/}
-            <Route path="/test/async/table" component={ AsyncTable } />
+                {/* 维修 - 开发中( 未匹配默认页 ) */}
+                <Route path="/upkeep/list" component={ upkeepList } />
 
-            {/* 库存管理 */}
-            <Route path={'/warehouse'} />
-                <Route path="/warehouse/inventorySummary" component={ InventorySummary } />
-                <Route path="/warehouse/intoWarehouse" component={ IntoWarehouse } />
-                <Route path="/warehouse/outWarehouse" component={ OutWarehouse } />
-                <Route path="/warehouse/receiveStatistics" component={ ReceiveStatistics } />
-                <Route path="/warehouse/materialManagement" component={ MaterialManagement } />
+                {/* 测试页面*/}
+                <Route path="/test/async/table" component={ AsyncTable } />
 
-            {/* 404 */}
-            <Route path="/404" component={ NotFound } />
+                {/* 库存管理 */}
+                <Route path={'/warehouse'}>
+                    <Route path="/warehouse/inventorySummary" component={ InventorySummary } />
+                    <Route path="/warehouse/intoWarehouse" component={ IntoWarehouse } />
+                    <Route path="/warehouse/outWarehouse" component={ OutWarehouse } />
+                    <Route path="/warehouse/receiveStatistics" component={ ReceiveStatistics } />
+                    <Route path="/warehouse/materialManagement" component={ MaterialManagement } />
+                </Route>
 
-            {/* Login */}
-            <Route path="/login" component={ Login } />
+                {/* Login */}
+                <Route path="/login" component={ Login } />
+
+                {/* 404 - 如果未匹配 将会跳转 '404'页面 */}
+                <Route component={ NotFound } />
+
+            </Switch>
         </ContainerDiv>
     </Router>
 )
