@@ -16,9 +16,7 @@ const store = createStore(counter)
 
 // React component
 class Counter extends Component {
-    state = { loading: false,
-        modal1Visible: false,
-        modal2Visible: false}
+    state = { loading: false}
     componentDidMount () {
         this.setState({ loading: true })
         axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
@@ -33,16 +31,6 @@ class Counter extends Component {
                 type: 'eorr'
             })
         })
-    }
-    setModal1Visible (modal1Visible, e) {
-        debugger
-        if (modal1Visible === false) {
-            const text = this.refs.myTextInput.target
-            const text2 = this.refs.myTextInput2.value
-            debugger
-            alert(text + ':' + text2)
-        }
-        this.setState({ modal1Visible })
     }
     onChange = (e) => {
         const { value } = e.target
