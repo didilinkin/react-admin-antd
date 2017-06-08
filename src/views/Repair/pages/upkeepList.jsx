@@ -7,7 +7,6 @@ import axios from 'axios'
 import Addupkeep from './addUpkeep'
 // Reducer
 function counter (state = {count: []}, action) {
-    debugger
     return {count: action.payload}
 }
 
@@ -36,12 +35,29 @@ class Counter extends Component {
         const { value } = e.target
         alert(value)
     }
+    refresh = (data) => {
+        // 刷新表格
+        this.setState({ loading: true })
+        axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
+            let resulData = response.data
+            this.setState({ loading: false })
+            store.dispatch({
+                type: 'SET_VISIBILITY_FILTER',
+                payload: resulData.data
+            })
+        }).catch(error => {
+            store.dispatch({
+                type: 'eorr'
+            })
+        })
+    }
     render () {
         const {products, columns} = this.props
-        debugger
         return (
             <div>
-               <Addupkeep/>
+               <Addupkeep
+                   refreshTable={this.refresh}
+               />
                 <Spin spinning={this.state.loading} >
                     <Table
                         dataSource={products}
