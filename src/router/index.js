@@ -12,7 +12,7 @@ import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
 
 // 引入 '维修' 版块
-import Table2               from '../views/UpKeep/pages/Table2'
+import upkeepList               from '../views/Repair/pages/upkeepList'
 import AsyncTable           from '../views/test/AsyncTable'
 
 // 引入 '仓库管理' 版块
@@ -29,7 +29,7 @@ const SetRouter = () => (
             <Route exact path="/" component={ HomeRouter } />
 
             {/* 维修 - 开发中( 未匹配默认页 ) */}
-            <Route path="/upkeep/list" component={ Table2 } />
+            <Route path="/upkeep/list" component={ upkeepList } />
 
             {/* 测试页面*/}
             <Route path="/test/async/table" component={ AsyncTable } />

@@ -21,29 +21,32 @@ class Counter extends Component {
         modal2Visible: false}
     componentDidMount () {
         this.setState({ loading: true })
-        axios.post('http://192.168.1.108:18082/upkeep/list').
-        then(response => {
+        axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
             let resulData = response.data
             this.setState({ loading: false })
             store.dispatch({
                 type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
-        }).
-        catch(error => {
+        }).catch(error => {
             store.dispatch({
                 type: 'eorr'
             })
         })
     }
-    setModal1Visible (modal1Visible) {
+    setModal1Visible (modal1Visible, e) {
+        debugger
         if (modal1Visible === false) {
-            const text = this.refs.myTextInput
+            const text = this.refs.myTextInput.target
             const text2 = this.refs.myTextInput2.value
             debugger
             alert(text + ':' + text2)
         }
         this.setState({ modal1Visible })
+    }
+    onChange = (e) => {
+        const { value } = e.target
+        alert(value)
     }
     render () {
         const {products, columns} = this.props
@@ -62,7 +65,7 @@ class Counter extends Component {
                         <FormItem label="物品名称" labelCol={{ span: 8 }}
                                   wrapperCol={{ span: 8 }}
                         >
-                                <Input ref="myTextInput" placeholder="Username" />
+                            <Input ref="myTextInput" placeholder="Username" />
                         </FormItem>
                         <FormItem label="单位" labelCol={{ span: 8 }}
                                   wrapperCol={{ span: 8 }}
@@ -111,15 +114,13 @@ function mapStateToProps (state, ownProps) {
             params: {
                 id: id
             }
-        }).
-        then(response => {
+        }).then(response => {
             let resulData = response.data
             store.dispatch({
                 type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
-        }).
-        catch(error => {
+        }).catch(error => {
             alert(error)
         })
     }
@@ -163,7 +164,6 @@ function mapStateToProps (state, ownProps) {
         }]
     }
 }
-
 // Connected Component
 const App = connect(
     mapStateToProps
