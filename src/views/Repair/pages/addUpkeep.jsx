@@ -1,4 +1,4 @@
-import {Modal, Input, Button, Form} from 'antd'
+import {Modal, Input, Button, Form, notification, Icon } from 'antd'
 import React from 'react'
 import axios from 'axios'
 const FormItem = Form.Item
@@ -19,7 +19,10 @@ class addUpkeep extends React.Component {
             url: 'http://192.168.1.108:18082/upkeep/addupkeep',
             params: this.props.form.getFieldsValue()
         }).then(response => {
-            alert('添加成功')
+            notification.open({
+                message: '添加成功',
+                icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
+            })
             this.props.refreshTable()
         }).catch(error => {
             this.props.refreshTable()
