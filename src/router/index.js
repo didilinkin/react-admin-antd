@@ -7,13 +7,12 @@ import {
     Redirect
 } from 'react-router-dom'
 
-// 引入 styled样式配置
-import styled               from 'styled-components'
-
 import {
     routes,
     RouteWithSubRoutes
-} from './HomeRouter'
+} from './HomeRouter'                                                           // 业务内容 路由匹配
+
+import styled               from 'styled-components'                            // 引入 styled样式配置
 
 import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
