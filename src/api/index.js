@@ -20,7 +20,7 @@ export const apiGet = () => {
 }
 
 // 获取资源
-export const apiPost = (configObj) => {
+export const apiPost = (url, configObj) => {
     return new Promise(function (resolve, reject) {
         axios.post(url, qs.stringify({...configObj})).then(
             response => {
