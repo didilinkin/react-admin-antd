@@ -22,7 +22,7 @@ class HomeTemplate extends React.Component {
 
     render () {
         return (
-            <Layout>
+            <Layout style={{ height: '100%' }}>
                 {/* 侧导航栏 */}
                 {/*
                     <Sidebar

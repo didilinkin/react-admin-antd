@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route }            from 'react-router-dom'
+import styled               from 'styled-components'
 
 import HomeTemplate         from '../views/common/pages/HomeTemplate'
 import HomeIndex            from '../views/common/pages/HomeIndex'
@@ -77,8 +78,12 @@ const routes = [
     }
 ]
 
+const SubRoutes = styled.section `
+    height: 100%
+`
+
 const RouteWithSubRoutes = (route) => (
-    <div>
+    <SubRoutes>
         {/* 重定向操作 */}
 
         {/* 匹配操作 */}
@@ -86,7 +91,7 @@ const RouteWithSubRoutes = (route) => (
             <route.component {...props} routes={route.routes} />
             )}
         />
-    </div>
+    </SubRoutes>
 )
 
 export { routes, RouteWithSubRoutes }
