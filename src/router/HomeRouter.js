@@ -50,7 +50,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/test',                                  // 测试 - 异步表格
+                path: '/test/table',                             // 测试 - 异步表格
                 component: AsyncTable
             }
         ]
