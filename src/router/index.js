@@ -26,18 +26,11 @@ const SetRouter = () => (
     <Router>
         <ContainerDiv>
             <Switch>
-                {/* 重定向 - 必须是 '/' 或者 url为空时 => 跳向指定的首页 */}
                 <Redirect exact from="/" to="/home/index" />
-
-                {/* 业务URL - 匹配 */}
                 {routes.map((route, i) => (
                     <RouteWithSubRoutes key={i} {...route} />
                 ))}
-
-                {/* Login */}
                 <Route path="/login" component={ Login } />
-
-                {/* 404 - 如果未匹配 将会跳转 '404'页面 */}
                 <Route component={ NotFound } />
             </Switch>
         </ContainerDiv>
