@@ -1,54 +1,52 @@
-import {Modal, Input, Form, notification, Icon } from 'antd'
+import { Input, Form, notification, Icon, Button } from 'antd'
+import { Provider, connect } from 'react-redux'
 import React from 'react'
 import axios from 'axios'
 const FormItem = Form.Item
 
-let visible = false
 class addUpkeep extends React.Component {
-    state = {
-        visible: true
-    }
-    componentDidUpdate () {
-        if (this.props.id > 0) {
-            axios({
-                method: 'post',
-                url: 'http://192.168.1.108:18082/upkeep/getUpkeep',
-                params: {
-                    id: this.props.id
-                }
-            }).then(response => {
-                let resulData = response.data
-                this.props.form.setFieldsValue({
-                    tollAmount: resulData.data.tollAmount
-                })
-            }).catch(error => {
-                alert(error)
-            })
+    constructor (props) {
+        super(props)
+        this.state = {
+            loading: false
         }
-        visible = this.props.visible
+    }
+    componentDidMount () {
+        this.setState({ loading: true })
+        axios({
+            method: 'post',
+            url: 'http://192.168.1.108:18082/upkeep/getUpkeep',
+            params: {id: 1}
+        }).then(response => {
+            let resulData = response.data
+            this.props.form.setFieldsValue({
+                tollAmount: resulData.tollAmount,
+                entryName: resulData.entryName,
+                company: resulData.company,
+                purchasePrice: resulData.purchasePrice,
+                serviceCharge: resulData.serviceCharge
+            })
+        }).catch(error => {
+        })
     }
     // 单击确定按钮提交表单
     handleSubmit = () => {
         console.log(this.props.form.getFieldsValue())
         axios({
             method: 'post',
-            url: 'http://192.168.1.108:18082/upkeep/addupkeep',
-            params: this.props.form.getFieldsValue()
+            url: 'http://192.168.1.108:18082/upkeep/getUpkeep',
+            params: {id: 1}
         }).then(response => {
             notification.open({
-                message: '添加成功',
+                message: '修改成功',
                 icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
             })
-            this.props.refreshTable()
         }).catch(error => {
-            this.props.refreshTable()
         })
-        visible = false
-        this.setState({ visible: false })
     }
-    handleCancel = (e) => {
-        visible = false
-        this.setState({ visible: false })
+    handleReset = (e) => {
+        e.preventDefault()
+        this.props.form.resetFields()
     }
     onBlur = () => {
         let purchasePrice = this.props.form.getFieldValue('purchasePrice')
@@ -65,20 +63,8 @@ class addUpkeep extends React.Component {
     }
     render () {
         const { getFieldProps } = this.props.form
-        if (this.state.visible) {
-            visible = this.props.visible
-        }
-
         return (
             <div>
-                <Modal
-                    title="增加收费项"
-                    style={{top: 20}}
-                    width="400"
-                    visible={visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                >
                     <Form layout="horizontal">
                         <FormItem label="物品名称" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
@@ -105,13 +91,23 @@ class addUpkeep extends React.Component {
                         >
                             <Input type="text" {...getFieldProps('tollAmount')} />
                         </FormItem>
+                        <FormItem wrapperCol={{ span: 30,
+                            offset: 11 }} >
+                            <Button type="primary" onClick={this.handleSubmit}>确定</Button>&nbsp;&nbsp;&nbsp;
+                            <Button type="ghost" onClick={this.handleReset}>重置</Button>
+                        </FormItem>
                     </Form>
-                </Modal>
             </div>
         )
     }
 }
 
-let Addupkeep = Form.create()(addUpkeep)
+function mapStateToProps (state) {
+    debugger
+}
+
+let addUpkeeP = connect(mapStateToProps)(addUpkeep)
+
+let Addupkeep = Form.create()(addUpkeeP)
 
 export default Addupkeep
