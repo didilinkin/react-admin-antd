@@ -1,47 +1,67 @@
-import React, { Component } from 'react'
-import { Table, Button, Spin, Popconfirm } from 'antd'
-import { createStore } from 'redux'
-import { Provider, connect } from 'react-redux'
+import React, {Component} from 'react'
+import {Table, Button, Spin, Popconfirm} from 'antd'
+import {createStore} from 'redux'
+import {Provider, connect} from 'react-redux'
 import axios from 'axios'
 // 引入组件
 import Addupkeep from './addUpkeep'
 // Reducer
-function counter (state = {count: []}, action) {
-    return {count: action.payload}
+function counter (state, action) {
+    switch (action.type) {
+        case 'update':
+            return Object.assign({}, state, {
+                id: action.payload
+            })
+        default:
+            return {
+                count: action.payload,
+                id: 0
+            }
+    }
 }
-
 // Store
-const store = createStore(counter)
+const store = createStore(counter, {
+    count: [],
+    id: ''
+})
 
 // React component
 class Counter extends Component {
-    state = { loading: false}
+    state = {
+        loading: false,
+        open: false
+    }
+
     componentDidMount () {
-        this.setState({ loading: true })
+        this.setState({loading: true})
         axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
             let resulData = response.data
-            this.setState({ loading: false })
-            store.dispatch({
+            this.setState({loading: false})
+            this.props.dispatch({
                 type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
         }).catch(error => {
-            store.dispatch({
+            this.props.dispatch({
                 type: 'eorr'
             })
         })
     }
+
     onChange = (e) => {
-        const { value } = e.target
+        const {value} = e.target
         alert(value)
     }
     refresh = (data) => {
         // 刷新表格
-        this.setState({ loading: true })
+        this.setState({
+            loading: true,
+            open: false
+        })
         axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
             let resulData = response.data
-            this.setState({ loading: false })
-            store.dispatch({
+            this.setState({loading: false})
+            this.props.dispatch({
                 type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
@@ -51,14 +71,33 @@ class Counter extends Component {
             })
         })
     }
+    // 弹出框设置
+    showModal = () => {
+        this.setState({open: true})
+    }
+
     render () {
-        const {products, columns} = this.props
+        debugger
+        const {products, columns, id} = this.props
+        let opentwo
+        if (id > 0) {
+            opentwo = true
+        } else {
+            opentwo = false
+        }
         return (
             <div>
-               <Addupkeep
-                   refreshTable={this.refresh}
-               />
-                <Spin spinning={this.state.loading} >
+                <Addupkeep
+                    refreshTable={this.refresh}
+                    visible={this.state.open}
+                />
+                <Addupkeep
+                    id={id}
+                    refreshTable={this.refresh}
+                    visible={opentwo}
+                />
+                <Button type="primary" onClick={this.showModal}>增加收费项</Button>
+                <Spin spinning={this.state.loading}>
                     <Table
                         dataSource={products}
                         columns={columns}
@@ -75,6 +114,13 @@ class Counter extends Component {
 
 // Map Redux state to component props
 function mapStateToProps (state, ownProps) {
+    return {
+        id: state.id,
+        products: state.count
+    }
+}
+
+function mapDispatchToProps (dispatch) {
     function handleDelete (id) {
         axios({
             method: 'post',
@@ -84,7 +130,7 @@ function mapStateToProps (state, ownProps) {
             }
         }).then(response => {
             let resulData = response.data
-            store.dispatch({
+            dispatch({
                 type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
@@ -92,8 +138,16 @@ function mapStateToProps (state, ownProps) {
             alert(error)
         })
     }
+
+    function handleUpdate (id) {
+        dispatch({
+            type: 'update',
+            payload: id
+        })
+    }
+
     return {
-        products: state.count,
+        dispatch: dispatch,
         columns: [{
             title: '序号',
             dataIndex: 'id',
@@ -124,9 +178,14 @@ function mapStateToProps (state, ownProps) {
             key: 'opt',
             render: function (text, record, index) {
                 return (
-                    <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.id)}>
-                        <Button >删除</Button>
-                    </Popconfirm>
+                    <div>
+                        <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
+                            <Button >删除</Button>
+                        </Popconfirm>
+                        <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
+                            <Button >修改</Button>
+                        </Popconfirm>
+                    </div>
                 )
             }
         }]
@@ -134,7 +193,8 @@ function mapStateToProps (state, ownProps) {
 }
 // Connected Component
 const App = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Counter)
 
 
