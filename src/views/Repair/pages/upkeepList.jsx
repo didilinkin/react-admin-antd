@@ -15,7 +15,7 @@ function counter (state, action) {
         default:
             return {
                 count: action.payload,
-                id: ''
+                id: 0
             }
     }
 }
@@ -62,7 +62,7 @@ class Counter extends Component {
             let resulData = response.data
             this.setState({loading: false})
             this.props.dispatch({
-                type: 'update',
+                type: 'SET_VISIBILITY_FILTER',
                 payload: resulData.data
             })
         }).catch(error => {
@@ -91,7 +91,6 @@ class Counter extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.open}
                 />
-
                 <Addupkeep
                     id={id}
                     refreshTable={this.refresh}
