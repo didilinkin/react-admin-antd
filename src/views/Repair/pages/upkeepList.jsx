@@ -29,7 +29,8 @@ const store = createStore(reducer, {
 class Counter extends Component {
     state = {
         loading: false,
-        open: false
+        open: false,
+        id: 0
     }
 
     componentDidMount () {
@@ -47,16 +48,18 @@ class Counter extends Component {
             })
         })
     }
-
-    onChange = (e) => {
-        const {value} = e.target
-        alert(value)
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.id !== 0) {
+            this.setState({open: true,
+                id: nextProps.id})
+        }
     }
     refresh = (data) => {
         // 刷新表格
         this.setState({
             loading: true,
-            open: false
+            open: false,
+            id: 0
         })
         axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
             let resulData = response.data
@@ -73,30 +76,19 @@ class Counter extends Component {
     }
     // 弹出框设置
     showModal = () => {
-        this.setState({open: true})
+        this.setState({open: true,
+            id: 'add'})
     }
 
     render () {
-        debugger
-        const {products, columns, id} = this.props
-        let open
-        if (id > 0) {
-            open = true
-        } else {
-            open = false
-        }
+        const {products, columns} = this.props
         return (
             <div>
                 <Addupkeep
-                    title="新增收费项"
+                    title="收费项修改"
+                    id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.open}
-                />
-                <Addupkeep
-                    title="收费项修改"
-                    id={id}
-                    refreshTable={this.refresh}
-                    visible={open}
                 />
                 <Button type="primary" onClick={this.showModal}>增加收费项</Button>
                 <Spin spinning={this.state.loading}>
