@@ -100,6 +100,14 @@ class Sidebar extends React.Component {
                             <Link to="/upkeep/repairList">客户报修</Link>
                         </Menu.Item>
 
+                        <Menu.Item key="/upkeep/clientReview">
+                            <Link to="/upkeep/clientReview">客户回访</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/upkeep/upkeepList">
+                            <Link to="/upkeep/upkeepList">维修费设置</Link>
+                        </Menu.Item>
+
                         <Menu.Item key="/upkeep/rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
                         </Menu.Item>

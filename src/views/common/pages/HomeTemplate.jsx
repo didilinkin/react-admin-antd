@@ -22,15 +22,6 @@ class HomeTemplate extends React.Component {
         return (
             <Layout className="ant-layout-has-sider" style={{ height: '100%' }}>
                 {/* 侧导航栏 */}
-                {/*
-                    <Sider
-                        trigger={null}
-                        collapsible
-                        collapsed={this.state.collapsed}
-                    >
-
-                    </Sider>
-                */}
                 <Sidebar
                     collapsed={this.state.collapsed}
                 />

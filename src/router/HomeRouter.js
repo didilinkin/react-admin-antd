@@ -10,8 +10,9 @@ import AsyncTable           from '../views/test/AsyncTable'                     
 
 // 引入 '客户管理' 版块
 import RepairList           from '../views/Repair/pages/RepairList'                     // 客户报修
+import ClientReview         from '../views/Repair/pages/ClientReview'                   // 客户回访
+import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置
 import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
-import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置( 详情页 )
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -55,11 +56,14 @@ const routes = [
                 path: '/upkeep/repairList',                     // 客户管理 - 客户报修
                 component: RepairList
             }, {
+                path: '/upkeep/clientReview',                   // 客户管理 - 客户回访
+                component: ClientReview
+            }, {
+                path: '/upkeep/upkeepList',                     // 客户管理 - 维修费设置
+                component: UpkeepList
+            }, {
                 path: '/upkeep/rectification',                  // 客户管理 - 整改通知
                 component: Rectification
-            }, {
-                path: '/upkeep/upkeepList',                     // 客户管理 - 维修费设置( 详情页 )
-                component: UpkeepList
             }
         ]
     }, {
@@ -86,9 +90,6 @@ const SubRoutes = styled.section `
 
 const RouteWithSubRoutes = (route) => (
     <SubRoutes>
-        {/* 重定向操作 */}
-
-        {/* 匹配操作 */}
         <Route path={route.path} render={props => (
             <route.component {...props} routes={route.routes} />
             )}
