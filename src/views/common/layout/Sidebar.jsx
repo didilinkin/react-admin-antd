@@ -91,7 +91,7 @@ class Sidebar extends React.Component {
                         key="/upkeep"
                         title={
                             <span>
-                                <Icon type="tool" />
+                                <Icon type="idcard" />
                                 <span className="nav-text">客户管理</span>
                             </span>
                         }
@@ -136,7 +136,30 @@ class Sidebar extends React.Component {
                         </Menu.Item>
                     </SubMenu>
 
-                    {/*  */}
+                    {/* 设备维护 */}
+                    <SubMenu
+                        key="/deviceMaintain"
+                        title={
+                            <span>
+                                <Icon type="tool" />
+                                <span className="nav-text">设备维护</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/warehouse/account">
+                            <Link to="/warehouse/account">设备台帐</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/warehouse/maintenance">
+                            <Link to="/warehouse/maintenance">设备维保</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/warehouse/inspection">
+                            <Link to="/warehouse/inspection">设备巡检</Link>
+                        </Menu.Item>
+
+                        
+                    </SubMenu>
                 </Menu>
                 <style>
                     {`
