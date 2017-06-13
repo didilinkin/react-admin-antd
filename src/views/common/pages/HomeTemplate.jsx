@@ -28,7 +28,7 @@ class HomeTemplate extends React.Component {
                         collapsible
                         collapsed={this.state.collapsed}
                     >
-                        
+
                     </Sider>
                 */}
                 <Sidebar
@@ -62,7 +62,8 @@ class HomeTemplate extends React.Component {
                     {/* 底部 */}
                     <Footer style={{
                         textAlign: 'center'
-                    }}>
+                    }}
+                    >
                         长江中心物业管理系统 ©2017 Created by 上朝科技
                     </Footer>
                 </Layout>
