@@ -8,7 +8,40 @@ const SubMenu = Menu.SubMenu
 
 class Sidebar extends React.Component {
     state = {
-        collapsed: false
+        collapsed: false,
+        current: '1',       // 最近
+        openKeys: []        // 打开的keys
+    }
+
+    // 操作点击
+    handleClick = (e) => {
+        console.log('Clicked: ', e)
+        this.setState({ current: e.key })
+    }
+
+    // 开启时 - 改变
+    onOpenChange = (openKeys) => {
+        const state = this.state
+        const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
+        const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
+
+        let nextOpenKeys = []
+        if (latestOpenKey) {
+            nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
+        }
+        if (latestCloseKey) {
+            nextOpenKeys = this.getAncestorKeys(latestCloseKey)
+        }
+
+        this.setState({ openKeys: nextOpenKeys })
+    }
+
+    // 获取父级key
+    getAncestorKeys = (key) => {
+        const map = {
+            sub3: ['sub2']
+        }
+        return map[key] || []
     }
 
     render () {
@@ -23,8 +56,12 @@ class Sidebar extends React.Component {
 
                 <Menu
                     theme="dark"
-                    mode="inline"
                     defaultSelectedKeys={['1']}
+                    mode="inline"                           // 设置只有一个打开
+                    openKeys={this.state.openKeys}          // 设置只有一个打开
+                    selectedKeys={[this.state.current]}     // 设置只有一个打开
+                    onOpenChange={this.onOpenChange}        // 设置只有一个打开
+                    onClick={this.handleClick}              // 设置只有一个打开
                 >
                     {/* 首页 */}
                     <Menu.Item key="/home/index">
@@ -33,7 +70,7 @@ class Sidebar extends React.Component {
                             <span className="nav-text">首页</span>
                         </Link>
                     </Menu.Item>
-                    
+
                     {/* 测试 */}
                     <SubMenu
                         key="/test"
@@ -94,7 +131,17 @@ class Sidebar extends React.Component {
                             <Link to="/warehouse/materialManagement">材料管理</Link>
                         </Menu.Item>
                     </SubMenu>
+
+                    {/*  */}
                 </Menu>
+                <style>
+                    {`
+                        #nprogress .spinner{
+                            left: ${this.state.collapsed ? '70px' : '206px'};
+                            right: 0 !important;
+                        }
+                    `}
+                </style>
             </Sider>
         )
     }
