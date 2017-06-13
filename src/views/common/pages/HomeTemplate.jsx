@@ -5,7 +5,7 @@ import { Layout, Icon }   from 'antd'
 import Sidebar from '../layout/Sidebar'
 // import HeaderCustom from '../layout/HeaderCustom'
 
-const { Header, Content, Footer } = Layout
+const { Header, Content } = Layout
 
 class HomeTemplate extends React.Component {
     state = {
@@ -60,12 +60,6 @@ class HomeTemplate extends React.Component {
                     </Content>
 
                     {/* 底部 */}
-                    <Footer style={{
-                        textAlign: 'center'
-                    }}
-                    >
-                        长江中心物业管理系统 ©2017 Created by 上朝科技
-                    </Footer>
                 </Layout>
             </Layout>
         )

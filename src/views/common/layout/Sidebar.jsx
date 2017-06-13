@@ -111,16 +111,8 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/warehouse/inventorySummary">
-                            <Link to="/warehouse/inventorySummary">库存汇总</Link>
-                        </Menu.Item>
-
-                        <Menu.Item key="/warehouse/intoWarehouse">
-                            <Link to="/warehouse/intoWarehouse">入库管理</Link>
-                        </Menu.Item>
-
-                        <Menu.Item key="/warehouse/outWarehouse">
-                            <Link to="/warehouse/outWarehouse">出库管理</Link>
+                        <Menu.Item key="/warehouse/InventoryManage">
+                            <Link to="/warehouse/InventoryManage">库存管理</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/warehouse/receiveStatistics">

@@ -4,7 +4,7 @@ import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
 import { apiPost } from '../../../api'
 // 引入组件
-import Addupkeep from './addUpkeep'
+import Addupkeep from './AddUpkeep'
 // Reducer
 function reducer (state, action) {
     switch (action.type) {

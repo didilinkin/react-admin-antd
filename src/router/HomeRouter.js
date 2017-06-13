@@ -6,13 +6,12 @@ import HomeTemplate         from '../views/common/pages/HomeTemplate'
 import HomeIndex            from '../views/common/pages/HomeIndex'
 
 // 引入 '维修' 版块
-import upkeepList           from '../views/Repair/pages/upkeepList'
+import UpkeepList           from '../views/Repair/pages/UpkeepList'
 import AsyncTable           from '../views/test/AsyncTable'
+import RepairList           from '../views/Repair/pages/RepairList'
 
 // 引入 '仓库管理' 版块
-import InventorySummary     from '../views/Warehouse/pages/InventorySummary'            // 库存汇总
-import IntoWarehouse        from '../views/Warehouse/pages/IntoWarehouse'               // 入库管理
-import OutWarehouse         from '../views/Warehouse/pages/OutWarehouse'                // 出库管理
+import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
 import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'           // 领用统计
 import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'          // 材料管理
 
@@ -41,8 +40,11 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/upkeep/list',                           // 维修 - 表格
-                component: upkeepList
+                path: '/upkeep/upkeepList',                           // 维修 - 表格
+                component: UpkeepList
+            }, {
+                path: '/upkeep/repairList',
+                component: RepairList
             }
         ]
     }, {
@@ -59,14 +61,8 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/warehouse/inventorySummary',            // 仓库管理 - 库存汇总
-                component: InventorySummary
-            }, {
-                path: '/warehouse/intoWarehouse',               // 仓库管理 - 入库管理
-                component: IntoWarehouse
-            }, {
-                path: '/warehouse/outWarehouse',                // 仓库管理 - 出库管理
-                component: OutWarehouse
+                path: '/warehouse/InventoryManage',             // 仓库管理 - 库存管理
+                component: InventoryManage
             }, {
                 path: '/warehouse/receiveStatistics',           // 仓库管理 - 领用统计
                 component: ReceiveStatistics
