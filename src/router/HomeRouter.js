@@ -5,10 +5,13 @@ import styled               from 'styled-components'
 import HomeTemplate         from '../views/common/pages/HomeTemplate'
 import HomeIndex            from '../views/common/pages/HomeIndex'
 
-// 引入 '维修' 版块
-import UpkeepList           from '../views/Repair/pages/UpkeepList'
-import AsyncTable           from '../views/test/AsyncTable'
-import RepairList           from '../views/Repair/pages/RepairList'
+// 测试组件
+import AsyncTable           from '../views/test/AsyncTable'                             // 测试异步表格
+
+// 引入 '客户管理' 版块
+import RepairList           from '../views/Repair/pages/RepairList'                     // 客户报修
+import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
+import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置( 详情页 )
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -36,24 +39,27 @@ const routes = [
             }
         ]
     }, {
-        path: '/upkeep',
-        component: HomeBox,
-        routes: [
-            {
-                path: '/upkeep/upkeepList',                           // 维修 - 表格
-                component: UpkeepList
-            }, {
-                path: '/upkeep/repairList',
-                component: RepairList
-            }
-        ]
-    }, {
         path: '/test',
         component: HomeBox,
         routes: [
             {
-                path: '/test/table',                             // 测试 - 异步表格
+                path: '/test/table',                            // 测试 - 异步表格
                 component: AsyncTable
+            }
+        ]
+    }, {
+        path: '/upkeep',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/upkeep/repairList',                     // 客户管理 - 客户报修
+                component: RepairList
+            }, {
+                path: '/upkeep/rectification',                  // 客户管理 - 整改通知
+                component: Rectification
+            }, {
+                path: '/upkeep/upkeepList',                     // 客户管理 - 维修费设置( 详情页 )
+                component: UpkeepList
             }
         ]
     }, {
@@ -61,7 +67,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/warehouse/InventoryManage',             // 仓库管理 - 库存管理
+                path: '/warehouse/inventoryManage',             // 仓库管理 - 库存管理
                 component: InventoryManage
             }, {
                 path: '/warehouse/receiveStatistics',           // 仓库管理 - 领用统计

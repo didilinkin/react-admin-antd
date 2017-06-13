@@ -86,18 +86,22 @@ class Sidebar extends React.Component {
                         </Menu.Item>
                     </SubMenu>
 
-                    {/* 维修 */}
+                    {/* 客户管理 */}
                     <SubMenu
                         key="/upkeep"
                         title={
                             <span>
                                 <Icon type="tool" />
-                                <span className="nav-text">维修</span>
+                                <span className="nav-text">客户管理</span>
                             </span>
                         }
                     >
-                        <Menu.Item key="/upkeep/list">
-                            <Link to="/upkeep/list">维修-表格</Link>
+                        <Menu.Item key="/upkeep/repairList">
+                            <Link to="/upkeep/repairList">客户报修</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/upkeep/rectification">
+                            <Link to="/upkeep/rectification">整改通知</Link>
                         </Menu.Item>
                     </SubMenu>
 
@@ -111,8 +115,8 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/warehouse/InventoryManage">
-                            <Link to="/warehouse/InventoryManage">库存管理</Link>
+                        <Menu.Item key="/warehouse/inventoryManage">
+                            <Link to="/warehouse/inventoryManage">库存管理</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/warehouse/receiveStatistics">
