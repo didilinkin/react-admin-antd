@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {Table, Button, Spin, Popconfirm} from 'antd'
+import {Table, Button, Spin, Popconfirm, Input} from 'antd'
 import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
-import axios from 'axios'
+import { apiPost } from '../../../api'
 // 引入组件
 import Addupkeep from './addUpkeep'
 // Reducer
@@ -33,20 +33,19 @@ class Counter extends Component {
         id: 0
     }
 
-    componentDidMount () {
+    async initialRemarks () {
         this.setState({loading: true})
-        axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
-            let resulData = response.data
-            this.setState({loading: false})
-            this.props.dispatch({
-                type: 'SET_VISIBILITY_FILTER',
-                payload: resulData.data
-            })
-        }).catch(error => {
-            this.props.dispatch({
-                type: 'eorr'
-            })
+        let result = await apiPost(
+            'http://192.168.1.108:18082/upkeep/list'
+        )
+        this.setState({loading: false})
+        this.props.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            payload: result.data
         })
+    }
+    componentDidMount () {
+        this.initialRemarks()
     }
     componentWillReceiveProps (nextProps) {
         if (nextProps.id !== 0) {
@@ -54,24 +53,21 @@ class Counter extends Component {
                 id: nextProps.id})
         }
     }
-    refresh = (data) => {
+    refresh = async () => {
         // 刷新表格
         this.setState({
             loading: true,
             open: false,
             id: 0
         })
-        axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
-            let resulData = response.data
-            this.setState({loading: false})
-            this.props.dispatch({
-                type: 'SET_VISIBILITY_FILTER',
-                payload: resulData.data
-            })
-        }).catch(error => {
-            store.dispatch({
-                type: 'eorr'
-            })
+        let result = await apiPost(
+            'http://192.168.1.108:18082/upkeep/list',
+            {'entryName': this.entryName}
+        )
+        this.setState({loading: false})
+        this.props.dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            payload: result.data
         })
     }
     // 弹出框设置
@@ -79,7 +75,13 @@ class Counter extends Component {
         this.setState({open: true,
             id: 'add'})
     }
-
+    entryName = ''
+    entryNameOnChange = (e) => {
+        this.entryName = e.target.value
+    }
+    query = () => {
+        this.refresh()
+    }
     render () {
         const {products, columns} = this.props
         return (
@@ -90,7 +92,11 @@ class Counter extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.open}
                 />
+                <span>
+                <Input style={{width: 200}} onChange={this.entryNameOnChange}/>
+                <Button type="primary" onClick={this.query}>查询</Button>
                 <Button type="primary" onClick={this.showModal}>增加收费项</Button>
+                </span>
                 <Spin spinning={this.state.loading}>
                     <Table
                         dataSource={products}
@@ -115,21 +121,14 @@ function mapStateToProps (state, ownProps) {
 }
 
 function mapDispatchToProps (dispatch) {
-    function handleDelete (id) {
-        axios({
-            method: 'post',
-            url: 'http://192.168.1.108:18082/upkeep/delect',
-            params: {
-                id: id
-            }
-        }).then(response => {
-            let resulData = response.data
-            dispatch({
-                type: 'SET_VISIBILITY_FILTER',
-                payload: resulData.data
-            })
-        }).catch(error => {
-            alert(error)
+    async function handleDelete (id) {
+        let result = await apiPost(
+            'http://192.168.1.108:18082/upkeep/delect',
+            { 'id': id }
+        )
+        dispatch({
+            type: 'SET_VISIBILITY_FILTER',
+            payload: result.data
         })
     }
 

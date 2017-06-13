@@ -4,7 +4,7 @@ import React from 'react'
 import { apiPost } from '../../../api'
 
 // 测试
-const asyncTest = async function() {
+const asyncTest = async function () {
     try {
         // 内网测试
         let result = await apiPost(
@@ -19,13 +19,13 @@ const asyncTest = async function() {
         // )
 
         console.log(result)
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
 
 class InventorySummary extends React.Component {
-    componentWillMount() {
+    componentWillMount () {
         asyncTest()
     }
 

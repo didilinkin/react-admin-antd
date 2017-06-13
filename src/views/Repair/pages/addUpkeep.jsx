@@ -1,6 +1,6 @@
 import {Modal, Input, Form, notification, Icon } from 'antd'
 import React from 'react'
-import axios from 'axios'
+import { apiPost } from '../../../api'
 const FormItem = Form.Item
 
 
@@ -9,45 +9,38 @@ class addUpkeep extends React.Component {
         visible: false,
         isFirst: true
     }
-    componentWillReceiveProps (nextProps) {
+    async initialRemarks (nextProps) {
         if (nextProps.id > 0) {
             if (this.state.isFirst) {
-                axios({
-                    method: 'post',
-                    url: 'http://192.168.1.108:18082/upkeep/getUpkeep',
-                    params: {
-                        id: nextProps.id
+                let resulData = await apiPost(
+                    'http://192.168.1.108:18082/upkeep/getUpkeep',
+                    { 'id': nextProps.id }
+                )
+                this.props.form.setFields({
+                    tollAmount: {
+                        value: resulData.data.tollAmount,
+                        errors: ''
+                    },
+                    entryName: {
+                        value: resulData.data.entryName,
+                        errors: ''
+                    },
+                    company: {
+                        value: resulData.data.company,
+                        errors: ''
+                    },
+                    purchasePrice: {
+                        value: resulData.data.purchasePrice,
+                        errors: ''
+                    },
+                    serviceCharge: {
+                        value: resulData.data.serviceCharge,
+                        errors: ''
                     }
-                }).then(response => {
-                    let resulData = response.data
-                    this.props.form.setFields({
-                        tollAmount: {
-                            value: resulData.data.tollAmount,
-                            errors: ''
-                        },
-                        entryName: {
-                            value: resulData.data.entryName,
-                            errors: ''
-                        },
-                        company: {
-                            value: resulData.data.company,
-                            errors: ''
-                        },
-                        purchasePrice: {
-                            value: resulData.data.purchasePrice,
-                            errors: ''
-                        },
-                        serviceCharge: {
-                            value: resulData.data.serviceCharge,
-                            errors: ''
-                        }
-                    })
-                    this.setState({
-                        isFirst: false,
-                        visible: nextProps.visible
-                    })
-                }).catch(error => {
-                    alert(error)
+                })
+                this.setState({
+                    isFirst: false,
+                    visible: nextProps.visible
                 })
             }
         } else if (nextProps.id === 'add') {
@@ -60,39 +53,34 @@ class addUpkeep extends React.Component {
             }
         }
     }
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
+    }
     // 单击确定按钮提交表单
-    handleSubmit = () => {
+    handleSubmit = async () => {
         if (this.props.id > 0) {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
-            axios({
-                method: 'post',
-                url: 'http://192.168.1.108:18082/upkeep/updateUpkeep',
-                params: json
-            }).then(response => {
-                notification.open({
-                    message: '修改成功',
-                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
-                })
-                this.props.refreshTable()
-            }).catch(error => {
-                this.props.refreshTable()
+            await apiPost(
+                'http://192.168.1.108:18082/upkeep/updateUpkeep',
+                json
+            )
+            notification.open({
+                message: '修改成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
             })
+            this.props.refreshTable()
         } else {
             console.log(this.props.form.getFieldsValue())
-            axios({
-                method: 'post',
-                url: 'http://192.168.1.108:18082/upkeep/addupkeep',
-                params: this.props.form.getFieldsValue()
-            }).then(response => {
-                notification.open({
-                    message: '添加成功',
-                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
-                })
-                this.props.refreshTable()
-            }).catch(error => {
-                this.props.refreshTable()
+            await apiPost(
+                'http://192.168.1.108:18082/upkeep/addupkeep',
+                this.props.form.getFieldsValue()
+            )
+            notification.open({
+                message: '添加成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
             })
+            this.props.refreshTable()
         }
         this.setState({visible: false,
             isFirst: true })
