@@ -88,10 +88,12 @@ class addUpkeep extends React.Component {
                 this.props.refreshTable()
             })
         }
-        this.setState({ visible: false })
+        this.setState({visible: false,
+            isFirst: true })
     }
     handleCancel = (e) => {
-        this.setState({ visible: false })
+        this.setState({ visible: false,
+            isFirst: true})
         this.props.refreshTable()
     }
     onBlur = () => {
