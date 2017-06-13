@@ -114,7 +114,7 @@ class addUpkeep extends React.Component {
         return (
             <div>
                 <Modal
-                    title="增加收费项"
+                    title={this.props.title}
                     style={{top: 20}}
                     width="400"
                     visible={this.state.visible}

@@ -6,7 +6,7 @@ import axios from 'axios'
 // 引入组件
 import Addupkeep from './addUpkeep'
 // Reducer
-function counter (state, action) {
+function reducer (state, action) {
     switch (action.type) {
         case 'update':
             return Object.assign({}, state, {
@@ -20,7 +20,7 @@ function counter (state, action) {
     }
 }
 // Store
-const store = createStore(counter, {
+const store = createStore(reducer, {
     count: [],
     id: ''
 })
@@ -79,22 +79,24 @@ class Counter extends Component {
     render () {
         debugger
         const {products, columns, id} = this.props
-        let opentwo
+        let open
         if (id > 0) {
-            opentwo = true
+            open = true
         } else {
-            opentwo = false
+            open = false
         }
         return (
             <div>
                 <Addupkeep
+                    title="新增收费项"
                     refreshTable={this.refresh}
                     visible={this.state.open}
                 />
                 <Addupkeep
+                    title="收费项修改"
                     id={id}
                     refreshTable={this.refresh}
-                    visible={opentwo}
+                    visible={open}
                 />
                 <Button type="primary" onClick={this.showModal}>增加收费项</Button>
                 <Spin spinning={this.state.loading}>
