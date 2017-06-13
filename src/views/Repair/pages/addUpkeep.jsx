@@ -10,9 +10,8 @@ class addUpkeep extends React.Component {
         isFirst: true
     }
     componentWillReceiveProps (nextProps) {
-        this.setState({ visible: nextProps.visible })
-        if (this.state.isFirst) {
-            if (nextProps.id > 0) {
+        if (nextProps.id > 0) {
+            if (this.state.isFirst) {
                 axios({
                     method: 'post',
                     url: 'http://192.168.1.108:18082/upkeep/getUpkeep',
@@ -21,7 +20,6 @@ class addUpkeep extends React.Component {
                     }
                 }).then(response => {
                     let resulData = response.data
-                    alert(resulData.data.serviceCharge)
                     this.props.form.setFields({
                         tollAmount: {
                             value: resulData.data.tollAmount,
@@ -50,6 +48,14 @@ class addUpkeep extends React.Component {
                     })
                 }).catch(error => {
                     alert(error)
+                })
+            }
+        } else if (nextProps.id === 'add') {
+            if (this.state.isFirst) {
+                this.props.form.resetFields()
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false
                 })
             }
         }
@@ -94,9 +100,9 @@ class addUpkeep extends React.Component {
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
-        this.props.refreshTable()
     }
-    onBlur = () => {
+    onBlur = (e) => {
+        e.preventDefault()
         let purchasePrice = this.props.form.getFieldValue('purchasePrice')
         let serviceCharge = this.props.form.getFieldValue('serviceCharge')
         if (typeof (purchasePrice) === 'undefined') {
@@ -114,7 +120,7 @@ class addUpkeep extends React.Component {
         return (
             <div>
                 <Modal
-                    title="增加收费项"
+                    title={this.props.title}
                     style={{top: 20}}
                     width="400"
                     visible={this.state.visible}

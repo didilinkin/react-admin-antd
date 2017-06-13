@@ -6,7 +6,7 @@ import axios from 'axios'
 // 引入组件
 import Addupkeep from './addUpkeep'
 // Reducer
-function counter (state, action) {
+function reducer (state, action) {
     switch (action.type) {
         case 'update':
             return Object.assign({}, state, {
@@ -20,7 +20,7 @@ function counter (state, action) {
     }
 }
 // Store
-const store = createStore(counter, {
+const store = createStore(reducer, {
     count: [],
     id: ''
 })
@@ -29,7 +29,8 @@ const store = createStore(counter, {
 class Counter extends Component {
     state = {
         loading: false,
-        open: false
+        open: false,
+        id: 0
     }
 
     componentDidMount () {
@@ -47,16 +48,18 @@ class Counter extends Component {
             })
         })
     }
-
-    onChange = (e) => {
-        const {value} = e.target
-        alert(value)
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.id !== 0) {
+            this.setState({open: true,
+                id: nextProps.id})
+        }
     }
     refresh = (data) => {
         // 刷新表格
         this.setState({
             loading: true,
-            open: false
+            open: false,
+            id: 0
         })
         axios.post('http://192.168.1.108:18082/upkeep/list').then(response => {
             let resulData = response.data
@@ -73,28 +76,19 @@ class Counter extends Component {
     }
     // 弹出框设置
     showModal = () => {
-        this.setState({open: true})
+        this.setState({open: true,
+            id: 'add'})
     }
 
     render () {
-        debugger
-        const {products, columns, id} = this.props
-        let opentwo
-        if (id > 0) {
-            opentwo = true
-        } else {
-            opentwo = false
-        }
+        const {products, columns} = this.props
         return (
             <div>
                 <Addupkeep
+                    title="收费项修改"
+                    id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.open}
-                />
-                <Addupkeep
-                    id={id}
-                    refreshTable={this.refresh}
-                    visible={opentwo}
                 />
                 <Button type="primary" onClick={this.showModal}>增加收费项</Button>
                 <Spin spinning={this.state.loading}>
