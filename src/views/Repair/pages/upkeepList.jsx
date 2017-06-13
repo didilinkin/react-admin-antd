@@ -84,15 +84,22 @@ class Counter extends Component {
     }
     render () {
         const {products, columns} = this.props
+        let title
+        if (this.state.id > 0) {
+            title = '收费项修改'
+        } else {
+            title = '添加收费项'
+        }
         return (
             <div>
                 <Addupkeep
-                    title="收费项修改"
+                    title={title}
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.open}
                 />
                 <span>
+                    <span>物品名称:</span>
                 <Input style={{width: 200}} onChange={this.entryNameOnChange}/>
                 <Button type="primary" onClick={this.query}>查询</Button>
                 <Button type="primary" onClick={this.showModal}>增加收费项</Button>
