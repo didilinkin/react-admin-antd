@@ -5,13 +5,20 @@ import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
 import { apiPost } from '../../../api'
 // 引入组件
-import Addupkeep from './AddUpkeep'
+import CancelRepairComponent from './CancelRepair'
+import DistributeLeafletsComponent from './DistributeLeaflets'
 // Reducer
 function reducer (state, action) {
     switch (action.type) {
         case 'update':
             return Object.assign({}, state, {
-                id: action.payload
+                id: action.payload,
+                IdType: 'openinvalid'
+            })
+        case 'distributeLeaflets':
+            return Object.assign({}, state, {
+                id: action.payload,
+                IdType: 'opendispatch'
             })
         default:
             return {
@@ -23,6 +30,7 @@ function reducer (state, action) {
 // Store
 const store = createStore(reducer, {
     count: [],
+    IdType: '',
     id: ''
 })
 
@@ -30,18 +38,19 @@ const store = createStore(reducer, {
 class Counter extends Component {
     state = {
         loading: false,
-        open: false,
+        openinvalid: false,
+        opendispatch: false,
         id: 0
     }
 
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/list'
+            'http://192.168.1.108:18082/upkeep/repairList'
         )
         this.setState({loading: false})
         this.props.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
+            type: 'repairList',
             payload: result.data
         })
     }
@@ -50,30 +59,41 @@ class Counter extends Component {
     }
     componentWillReceiveProps (nextProps) {
         if (nextProps.id !== 0) {
-            this.setState({open: true,
-                id: nextProps.id})
+            if (nextProps.IdType === 'openinvalid') {
+                this.setState({
+                    openinvalid: true,
+                    opendispatch: false,
+                    id: nextProps.id
+                })
+            } else if (nextProps.IdType === 'opendispatch') {
+                this.setState({
+                    openinvalid: false,
+                    opendispatch: true,
+                    id: nextProps.id
+                })
+            }
         }
     }
     refresh = async () => {
         // 刷新表格
         this.setState({
             loading: true,
-            open: false,
+            openinvalid: false,
+            opendispatch: false,
             id: 0
         })
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/list',
-            {'entryName': this.entryName}
+            'http://192.168.1.108:18082/upkeep/repairList'
         )
         this.setState({loading: false})
         this.props.dispatch({
-            type: 'SET_VISIBILITY_FILTER',
+            type: 'repairList',
             payload: result.data
         })
     }
     // 弹出框设置
     showModal = () => {
-        this.setState({open: true,
+        this.setState({openinvalid: true,
             id: 'add'})
     }
     entryName = ''
@@ -85,29 +105,28 @@ class Counter extends Component {
     }
     render () {
         const {products, columns} = this.props
-        let title
-        if (this.state.id > 0) {
-            title = '收费项修改'
-        } else {
-            title = '添加收费项'
-        }
         return (
             <div>
-                <Addupkeep
-                    title={title}
+                <CancelRepairComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
-                    visible={this.state.open}
+                    visible={this.state.openinvalid}
                 />
+                <DistributeLeafletsComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.opendispatch}
+                    />
                 <span>
                     <span>物品名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
-                    <Button type="primary" onClick={this.showModal}>增加收费项</Button>
+                    <Button type="primary" onClick={this.showModal}>添加保单</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        scroll={{ x: 1300 }}
                         dataSource={products}
                         columns={columns}
                     />
@@ -125,64 +144,124 @@ class Counter extends Component {
 function mapStateToProps (state, ownProps) {
     return {
         id: state.id,
+        IdType: state.IdType,
         products: state.count
     }
 }
 
 function mapDispatchToProps (dispatch) {
-    async function handleDelete (id) {
-        let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/delect',
-            { 'id': id }
-        )
-        dispatch({
-            type: 'SET_VISIBILITY_FILTER',
-            payload: result.data
-        })
-    }
-
     function handleUpdate (id) {
         dispatch({
             type: 'update',
             payload: id
         })
     }
-
+    function distributeLeaflets (id) {
+        dispatch({
+            type: 'distributeLeaflets',
+            payload: id
+        })
+    }
     return {
         dispatch: dispatch,
         columns: [{
             title: '序号',
+            width: 80,
             dataIndex: 'id',
             key: 'id'
         }, {
-            title: '物品名称',
-            dataIndex: 'entryName',
-            key: 'entryName'
+            title: '报修日期',
+            width: 150,
+            dataIndex: 'repairDate',
+            key: 'repairDate'
         }, {
-            title: '单位',
-            dataIndex: 'company',
-            key: 'company'
+            title: '公司名称',
+            width: 150,
+            dataIndex: 'clientName',
+            key: 'clientName'
         }, {
-            title: '进货价格',
-            dataIndex: 'purchasePrice',
-            key: 'purchasePrice'
+            title: '报修内容',
+            width: 150,
+            dataIndex: 'repairContent',
+            key: 'repairContent',
+            render: function (text, record, index) {
+                text = text.substring(0, 30)
+                return (
+                    <span>{text}</span>
+                )
+            }
         }, {
-            title: '服务费',
-            dataIndex: 'serviceCharge',
-            key: 'serviceCharge'
+            title: '来源',
+            width: 100,
+            dataIndex: 'fromType',
+            key: 'fromType'
         }, {
-            title: '收费',
-            dataIndex: 'tollAmount',
-            key: 'tollAmount'
+            title: '派工状态',
+            width: 100,
+            dataIndex: 'pieStatus',
+            key: 'pieStatus',
+            render: function (text, record, index) {
+                let pieStatus = '未派单'
+                if (record.pieStatus === 1) {
+                    pieStatus = '已派单'
+                }
+                return (
+                    <span>{pieStatus}</span>
+                )
+            }
+        }, {
+            title: '维修人',
+            width: 100,
+            dataIndex: 'repairedMan',
+            key: 'repairedMan'
+        }, {
+            title: '维修状态',
+            width: 100,
+            dataIndex: 'repairStatus',
+            key: 'repairStatus',
+            render: function (text, record, index) {
+                let repairStatus = '未完成'
+                if (record.repairStatus === 1) {
+                    repairStatus = '已完成'
+                }
+                return (
+                    <span>{repairStatus}</span>
+                )
+            }
+        }, {
+            title: '维修项目',
+            width: 100,
+            dataIndex: 'maintenanceProject',
+            key: 'maintenanceProject',
+            render: function (text, record, index) {
+                return (
+                    <span>查看明细</span>
+                )
+            }
+        }, {
+            title: '维修明细',
+            width: 100,
+            dataIndex: 'MaintenanceDetails',
+            key: 'MaintenanceDetails',
+            render: function (text, record, index) {
+                return (
+                    <span>查看明细</span>
+                )
+            }
         }, {
             title: '操作',
+            width: 200,
             dataIndex: 'opt',
             key: 'opt',
+            fixed: 'right',
             render: function (text, record, index) {
                 return (
                     <div>
-                        <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                            <Button >删除</Button>
+                        <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                            <Button >派单</Button>
+                        </Popconfirm>
+                        <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                            <Button >作废</Button>
                         </Popconfirm>
                         <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
                             <Button >修改</Button>

@@ -52,6 +52,8 @@ class Counter extends Component {
         if (nextProps.id !== 0) {
             this.setState({open: true,
                 id: nextProps.id})
+        } else {
+            this.setState({open: false})
         }
     }
     refresh = async () => {
