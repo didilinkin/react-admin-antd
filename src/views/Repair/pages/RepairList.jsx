@@ -13,12 +13,12 @@ function reducer (state, action) {
         case 'update':
             return Object.assign({}, state, {
                 id: action.payload,
-                IdType: 'openinvalid'
+                idType: 'openinvalid'
             })
         case 'distributeLeaflets':
             return Object.assign({}, state, {
                 id: action.payload,
-                IdType: 'opendispatch'
+                idType: 'opendispatch'
             })
         default:
             return {
@@ -30,7 +30,7 @@ function reducer (state, action) {
 // Store
 const store = createStore(reducer, {
     count: [],
-    IdType: '',
+    idType: '',
     id: ''
 })
 
@@ -59,13 +59,13 @@ class Counter extends Component {
     }
     componentWillReceiveProps (nextProps) {
         if (nextProps.id !== 0) {
-            if (nextProps.IdType === 'openinvalid') {
+            if (nextProps.idType === 'openinvalid') {
                 this.setState({
                     openinvalid: true,
                     opendispatch: false,
                     id: nextProps.id
                 })
-            } else if (nextProps.IdType === 'opendispatch') {
+            } else if (nextProps.idType === 'opendispatch') {
                 this.setState({
                     openinvalid: false,
                     opendispatch: true,
@@ -144,7 +144,7 @@ class Counter extends Component {
 function mapStateToProps (state, ownProps) {
     return {
         id: state.id,
-        IdType: state.IdType,
+        idType: state.idType,
         products: state.count
     }
 }
