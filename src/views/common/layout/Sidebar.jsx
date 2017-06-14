@@ -9,8 +9,33 @@ const SubMenu = Menu.SubMenu
 class Sidebar extends React.Component {
     state = {
         collapsed: false,
+        mode: 'inline',     // 切换模式
         current: '1',       // 最近
-        openKeys: []        // 打开的keys
+        openKeys: ''        // 打开的keys
+    }
+
+    // 记录路径
+    // componentDidMount () {
+    //     const _path = this.props.path
+    //     this.setState({
+    //         openKey: _path.substr(0, _path.lastIndexOf('/')),
+    //         selectedKey: _path
+    //     })
+    // }
+
+    // 记录状态( 切换导航栏模式 )
+    componentWillReceiveProps (nextProps) {
+        console.log(nextProps)
+        this.onCollapse(nextProps.collapsed)
+    }
+
+    // 当 collapsed状态改变, 执行此事件
+    onCollapse = (collapsed) => {
+        console.log(collapsed)
+        this.setState({
+            collapsed,
+            mode: collapsed ? 'vertical' : 'inline'
+        })
     }
 
     // 操作点击
@@ -32,7 +57,6 @@ class Sidebar extends React.Component {
         if (latestCloseKey) {
             nextOpenKeys = this.getAncestorKeys(latestCloseKey)
         }
-
         this.setState({ openKeys: nextOpenKeys })
     }
 
@@ -50,18 +74,19 @@ class Sidebar extends React.Component {
                 trigger={ null }
                 collapsible
                 collapsed={this.props.collapsed}
+                onCollapse={this.onCollapse}
+                style={{overflowY: 'auto'}}
                 breakpoint="lg"
             >
                 <div className="logo" />
 
                 <Menu
                     theme="dark"
-                    defaultSelectedKeys={['1']}
-                    mode="inline"                           // 设置只有一个打开
-                    openKeys={this.state.openKeys}          // 设置只有一个打开
-                    selectedKeys={[this.state.current]}     // 设置只有一个打开
-                    onOpenChange={this.onOpenChange}        // 设置只有一个打开
-                    onClick={this.handleClick}              // 设置只有一个打开
+                    mode="inline"
+                    openKeys={this.state.openKeys}
+                    selectedKeys={[this.state.current]}
+                    onOpenChange={this.onOpenChange}
+                    onClick={this.handleClick}
                 >
                     {/* 首页 */}
                     <Menu.Item key="/home/index">
@@ -91,7 +116,7 @@ class Sidebar extends React.Component {
                         key="/upkeep"
                         title={
                             <span>
-                                <Icon type="tool" />
+                                <Icon type="idcard" />
                                 <span className="nav-text">客户管理</span>
                             </span>
                         }
@@ -136,16 +161,56 @@ class Sidebar extends React.Component {
                         </Menu.Item>
                     </SubMenu>
 
-                    {/*  */}
-                </Menu>
-                <style>
-                    {`
-                        #nprogress .spinner{
-                            left: ${this.state.collapsed ? '70px' : '206px'};
-                            right: 0 !important;
+                    {/* 设备维护 */}
+                    <SubMenu
+                        key="/deviceMaintain"
+                        title={
+                            <span>
+                                <Icon type="tool" />
+                                <span className="nav-text">设备维护</span>
+                            </span>
                         }
-                    `}
-                </style>
+                    >
+                        <Menu.Item key="/warehouse/account">
+                            <Link to="/warehouse/account">设备台帐</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/warehouse/maintenance">
+                            <Link to="/warehouse/maintenance">设备维保</Link>
+                        </Menu.Item>
+
+                        <SubMenu key="/warehouse/inspection" title={
+                                <span>
+                                    <span className="nav-text">设备巡检</span>
+                                </span>
+                            }
+                        >
+                            <Menu.Item key="/warehouse/inspection/electric">
+                                <Link to="/warehouse/inspection/electric">电器系统</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/warehouse/inspection/elevator">
+                                <Link to="/warehouse/inspection/elevator">电梯系统</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/warehouse/inspection/airConditioning">
+                                <Link to="/warehouse/inspection/airConditioning">空调系统</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/warehouse/inspection/waterheating">
+                                <Link to="/warehouse/inspection/waterheating">水暖系统</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/warehouse/inspection/firefighting">
+                                <Link to="/warehouse/inspection/firefighting">消防系统</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/warehouse/inspection/elevatorRoom">
+                                <Link to="/warehouse/inspection/elevatorRoom">电梯间系统</Link>
+                            </Menu.Item>
+                        </SubMenu>
+                    </SubMenu>
+                </Menu>
             </Sider>
         )
     }
