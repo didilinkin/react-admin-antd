@@ -10,9 +10,9 @@ import {
 import {
     routes,
     RouteWithSubRoutes
-} from './HomeRouter'                                                           // 业务内容 路由匹配
+} from './HomeRouter'                                                               // 业务内容 路由匹配
 
-import styled               from 'styled-components'                            // 引入 styled样式配置
+import styled               from 'styled-components'                                // 引入 styled样式配置
 
 import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
@@ -30,6 +30,7 @@ const SetRouter = () => (
                 {routes.map((route, i) => (
                     <RouteWithSubRoutes key={i} {...route} />
                 ))}
+
                 <Route path="/login" component={ Login } />
                 <Route component={ NotFound } />
             </Switch>

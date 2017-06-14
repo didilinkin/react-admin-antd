@@ -9,47 +9,19 @@ const SubMenu = Menu.SubMenu
 class Sidebar extends React.Component {
     state = {
         collapsed: false,
-        mode: 'inline',     // 切换模式
         current: '1',       // 最近
-        openKeys: ''        // 打开的keys
+        openKeys: []        // 打开的keys
     }
-
-    // 记录路径
-    // componentDidMount () {
-    //     const _path = this.props.path
-    //     this.setState({
-    //         openKey: _path.substr(0, _path.lastIndexOf('/')),
-    //         selectedKey: _path
-    //     })
-    // }
-
-    // 记录状态( 切换导航栏模式 )
-    componentWillReceiveProps (nextProps) {
-        console.log(nextProps)
-        this.onCollapse(nextProps.collapsed)
-    }
-
-    // 当 collapsed状态改变, 执行此事件
-    onCollapse = (collapsed) => {
-        console.log(collapsed)
-        this.setState({
-            collapsed,
-            mode: collapsed ? 'vertical' : 'inline'
-        })
-    }
-
     // 操作点击
     handleClick = (e) => {
         console.log('Clicked: ', e)
         this.setState({ current: e.key })
     }
-
     // 开启时 - 改变
     onOpenChange = (openKeys) => {
         const state = this.state
         const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
         const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-
         let nextOpenKeys = []
         if (latestOpenKey) {
             nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
@@ -59,7 +31,6 @@ class Sidebar extends React.Component {
         }
         this.setState({ openKeys: nextOpenKeys })
     }
-
     // 获取父级key
     getAncestorKeys = (key) => {
         const map = {
