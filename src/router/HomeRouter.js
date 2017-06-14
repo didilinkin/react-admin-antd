@@ -14,6 +14,12 @@ import ClientReview         from '../views/Repair/pages/ClientReview'           
 import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置
 import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
 
+import Test           from '../views/Repair/pages/test'
+import Repair           from '../views/Repair/pages/Repair'
+import ReturnVisit           from '../views/Repair/pages/ReturnVisit'
+import ReturnVisitDetail           from '../views/Repair/pages/ReturnVisitDetail'
+import Maintenance           from '../views/Repair/pages/Maintenance'
+
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
 import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'           // 领用统计
@@ -64,6 +70,21 @@ const routes = [
             }, {
                 path: '/upkeep/rectification',                  // 客户管理 - 整改通知
                 component: Rectification
+            }, {
+                path: '/upkeep/test',                  // 客户管理 - 整改通知
+                component: Test
+            }, {
+                path: '/upkeep/repair',                  // 客户管理 - 整改通知
+                component: Repair
+            }, {
+                path: '/upkeep/returnVisit',                  // 客户管理 - 整改通知
+                component: ReturnVisit
+            }, {
+                path: '/upkeep/returnVisitDetail',                  // 客户管理 - 整改通知
+                component: ReturnVisitDetail
+            }, {
+                path: '/upkeep/maintenance',                  // 客户管理 - 整改通知
+                component: Maintenance
             }
         ]
     }, {
