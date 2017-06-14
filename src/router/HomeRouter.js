@@ -13,7 +13,7 @@ import RepairList           from '../views/Repair/pages/RepairList'             
 import ClientReview         from '../views/Repair/pages/ClientReview'                   // 客户回访
 import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置
 import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
-import ClientReviewDetails  from '../views/Repair/pages/Details/ClientReviewDetails'    // [详情]'客户回访' - ( 测试路由传递ID参数 )
+import ClientReviewDetails  from '../views/Repair/pages/Details/ClientReviewDetails'    // [详情]'客户回访'
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -28,12 +28,6 @@ const HomeBox = ({ routes }) => (
             ))
         }
     </HomeTemplate>
-)
-
-const Child = ({ match }) => (
-    <div>
-        <ClientReviewDetails detailsId={ match.params.id } />
-    </div>
 )
 
 const routes = [
@@ -72,8 +66,8 @@ const routes = [
                 path: '/upkeep/rectification',                  // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/clientReviewDetails/:id',
-                component: Child
+                path: '/upkeep/clientReviewDetails/:id',        // [详情] - '客户回访'
+                component: ClientReviewDetails
             }
         ]
     }, {
