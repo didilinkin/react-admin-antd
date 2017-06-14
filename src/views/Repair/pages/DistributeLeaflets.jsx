@@ -1,37 +1,61 @@
 import {Modal, Form, notification, Icon, Select  } from 'antd'
 import React from 'react'
-import { apiPost } from '../../../api'
+import { apiGet, apiPost } from '../../../api'
 const FormItem = Form.Item
 const Option = Select.Option
 
 class DistributeLeaflets extends React.Component {
-    state = {
-        visible: false,
-        isFirst: true
+    constructor (props) {
+        super(props)
+        this.state = {
+            visible: false,
+            data: {userArr: []},
+            id: '',
+            value: '',
+            phone: '',
+            userTelephone: '',
+            isFirst: true
+        }
     }
-    componentWillReceiveProps (nextProps) {
+    async initialRemarks (nextProps) {
+        this.setState({
+            visible: false,
+            data: {userArr: []},
+            id: '',
+            value: '',
+            phone: '',
+            userTelephone: '',
+            isFirst: true
+        })
         if (nextProps.id > 0) {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
+                let resulData = await apiGet('http://192.168.1.108:18082/upkeep/getUser')
                 this.setState({
                     visible: nextProps.visible,
+                    data: {userArr: resulData.data},
                     isFirst: false
                 })
             }
         }
     }
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
+    }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         if (this.props.id > 0) {
-            let json = this.props.form.getFieldsValue()
-            json['id'] = this.props.id
             await apiPost(
-                'http://192.168.1.108:18082/upkeep/updateRepair',
-                json
+                'http://192.168.1.108:18082/upkeep/distribute',
+                {
+                    'id': this.props.id,
+                    'repairedId': this.state.id,
+                    'repairedMan': this.state.value
+                }
             )
             notification.open({
                 message: '派单成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.props.refreshTable()
         }
@@ -43,12 +67,20 @@ class DistributeLeaflets extends React.Component {
             isFirst: true})
     }
     handleChange = (value) => {
-        alert(value)
+        this.state.data.userArr.map(d => {
+            if (d.id.toString() === value) {
+                this.setState({
+                    phone: d.phone,
+                    userTelephone: d.userTelephone,
+                    value: d.loginName,
+                    id: value
+                })
+            }
+        })
     }
     render () {
         const { getFieldProps } = this.props.form
         return (
-            <div>
                 <Modal
                     title="派单"
                     style={{top: 20}}
@@ -68,26 +100,24 @@ class DistributeLeaflets extends React.Component {
                                 placeholder="Select a person"
                                 optionFilterProp="children"
                                 onChange={this.handleChange}
+                                value={this.state.value}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
-                                <Option value="1">Jack</Option>
-                                <Option value="2">Lucy</Option>
-                                <Option value="3">Tom</Option>
+                                {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
                             </Select>
                         </FormItem>
                         <FormItem label="手机" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <span>122121212</span>
+                            <span>{this.state.phone}</span>
                         </FormItem>
                         <FormItem label="电话" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <span>122121212</span>
+                            <span>{this.state.userTelephone}</span>
                         </FormItem>
                     </Form>
                 </Modal>
-            </div>
         )
     }
 }
