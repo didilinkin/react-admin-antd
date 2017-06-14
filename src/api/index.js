@@ -6,7 +6,7 @@ const qs = require('qs')
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 // 查询
-export const apiGet = () => {
+export const apiGet = (url) => {
     return new Promise(function (resolve, reject) {
         axios.get(url).then(
             response => {
