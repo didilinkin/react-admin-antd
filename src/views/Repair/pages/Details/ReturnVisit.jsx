@@ -1,6 +1,6 @@
-import React from 'react';
-import { Timeline,Rate,Input   } from 'antd';
-import '../../../style/test.less';
+import React from 'react'
+import { Timeline, Rate, Input   } from 'antd'
+import '../../../../style/test.less'
 
 class App extends React.Component {
 

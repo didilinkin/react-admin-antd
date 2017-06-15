@@ -1,6 +1,6 @@
 import {Modal, Input, Form, notification, Icon } from 'antd'
 import React from 'react'
-import { apiPost } from '../../../api'
+import { apiPost } from '../../../../api/index'
 const FormItem = Form.Item
 
 

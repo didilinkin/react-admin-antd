@@ -1,6 +1,6 @@
 import {Modal, Form, notification, Icon, Select  } from 'antd'
 import React from 'react'
-import { apiGet, apiPost } from '../../../api'
+import { apiGet, apiPost } from '../../../../api/index'
 const FormItem = Form.Item
 const Option = Select.Option
 

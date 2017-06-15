@@ -1,73 +1,72 @@
-import React from 'react';
-import { DatePicker, message ,Radio,Steps,Tabs } from 'antd';
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
-const Step = Steps.Step;
-const TabPane = Tabs.TabPane;
+import React from 'react'
+import {DatePicker, message, Radio, Steps, Tabs} from 'antd'
+const RadioGroup = Radio.Group
+const RadioButton = Radio.Button
+const Step = Steps.Step
+const TabPane = Tabs.TabPane
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor (props) {
+        super(props)
         this.state = {
             date: '',
             value: 1,
-            date1:'block',
-            date2:'none',
-            date3:'none',
-            date4:'none',
-        };
+            date1: 'block',
+            date2: 'none',
+            date3: 'none',
+            date4: 'none'
+        }
     }
     tab = (e) => {
         console.log(e)
     }
 
     onChange = (e) => {
-        console.log('radio checked', e.target.value);
-        if(e.target.value === 1){
+        console.log('radio checked', e.target.value)
+        if (e.target.value === 1) {
             this.setState({
                 date: '',
                 value: 1,
-                date1:'block',
-                date2:'none',
-                date3:'none',
-                date4:'none',
-            });
-        }else if(e.target.value === 2){
+                date1: 'block',
+                date2: 'none',
+                date3: 'none',
+                date4: 'none'
+            })
+        } else if (e.target.value === 2) {
             this.setState({
                 date: '',
                 value: 2,
-                date1:'none',
-                date2:'block',
-                date3:'none',
-                date4:'none',
-            });
-        }else if(e.target.value === 3){
+                date1: 'none',
+                date2: 'block',
+                date3: 'none',
+                date4: 'none'
+            })
+        } else if (e.target.value === 3) {
             this.setState({
                 date: '',
                 value: 3,
-                date1:'none',
-                date2:'none',
-                date3:'block',
-                date4:'none',
-            });
-        }else if(e.target.value === 4){
+                date1: 'none',
+                date2: 'none',
+                date3: 'block',
+                date4: 'none'
+            })
+        } else if (e.target.value === 4) {
             this.setState({
                 date: '',
                 value: 4,
-                date1:'none',
-                date2:'none',
-                date3:'none',
-                date4:'block',
-            });
+                date1: 'none',
+                date2: 'none',
+                date3: 'none',
+                date4: 'block'
+            })
         }
-
     }
-    handleChange(date) {
-        message.info('您选择的日期是: ' + date.toString());
-        this.setState({ date });
+    handleChange (date) {
+        message.info('您选择的日期是: ' + date.toString())
+        this.setState({ date })
     }
-    render() {
+    render () {
         return (
             <div>
             <div style={{ width: 400}}>
@@ -108,7 +107,7 @@ class App extends React.Component {
                     <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
                 </Tabs>
             </div>
-        );
+        )
     }
 }
 

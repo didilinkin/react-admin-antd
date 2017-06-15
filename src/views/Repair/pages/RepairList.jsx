@@ -3,8 +3,8 @@ import React, {Component} from 'react'
 import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
-import CancelRepairComponent from './CancelRepair'
-import DistributeLeafletsComponent from './DistributeLeaflets'
+import CancelRepairComponent from './common/CancelRepair'
+import DistributeLeafletsComponent from './common/DistributeLeaflets'
 import TableAddUpComponent from './TableAddUp'
 const { RangePicker } = DatePicker
 // React component

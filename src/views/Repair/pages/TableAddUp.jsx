@@ -1,6 +1,6 @@
 import {Modal, Input, Form, DatePicker, Select, Row, Col, notification, Icon  } from 'antd'
 import React from 'react'
-import PicturesWall from './Details/PicturesWall'
+import PicturesWall from './common/PicturesWall'
 import { apiGet, apiPost } from '../../../api'
 import moment from 'moment'
 const FormItem = Form.Item

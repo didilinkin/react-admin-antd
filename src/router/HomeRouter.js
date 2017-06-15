@@ -15,11 +15,11 @@ import UpkeepList           from '../views/Repair/pages/UpkeepList'             
 import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
 
 import Test           from '../views/Repair/pages/test'
-import Repair           from '../views/Repair/pages/Repair'
-import ReturnVisit           from '../views/Repair/pages/ReturnVisit'
-import ReturnVisitDetail           from '../views/Repair/pages/ReturnVisitDetail'
-import Maintenance           from '../views/Repair/pages/Maintenance'
-import CorrectionDetail           from '../views/Repair/pages/CorrectionDetail'
+import Repair           from '../views/Repair/pages/Details/Repair'
+import ReturnVisit           from '../views/Repair/pages/Details/ReturnVisit'
+import ReturnVisitDetail           from '../views/Repair/pages/Details/ReturnVisitDetail'
+import Maintenance           from '../views/Repair/pages/Details/Maintenance'
+import CorrectionDetail           from '../views/Repair/pages/Details/CorrectionDetail'
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
