@@ -1,41 +1,72 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../../style/test.less'
-
+import { apiPost } from '../../../../api'
 class App extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            data: {}
+        }
+    }
 
-    render() {
+    async initialRemarks () {
+        debugger
+        let resulData = await apiPost(
+            'http://192.168.1.108:18082/upkeep/getRepair',
+            {'id': 7}
+        )
+        let Repair = resulData.data
+        if (Repair.fromType === '1') {
+            Repair['fromType'] = '微信'
+        } else {
+            Repair['fromType'] = '客服'
+        }
+        if (Repair.pieStatus === '1') {
+            Repair['pieStatus'] = '已派单'
+        } else {
+            Repair['pieStatus'] = '未派单'
+        }
+        this.setState({
+            data: Repair
+        })
+    }
+    componentDidMount () {
+        this.initialRemarks()
+    }
+    render () {
         return (
             <div className="box1">
                 <h2>报修人信息</h2>
                 <Row>
-                    <Col span={8}><b>报修人：</b> 大叔的哈芬</Col>
-                    <Col span={8}><b>联系方式：</b>此处是报修人联系方式</Col>
-                    <Col span={8}><b>报修日期：</b>2017-6-13 15:52:03</Col>
+                    <Col span={8}><b>报修人：</b>{this.state.data.repairMan}</Col>
+                    <Col span={8}><b>联系方式：</b>{this.state.data.phone}</Col>
+                    <Col span={8}><b>报修日期：</b>{this.state.data.createDate}</Col>
                 </Row>
                 <Row>
-                    <Col span={8}><b>报修房间：</b>1504</Col>
-                    <Col span={8}><b>公司名称：</b>此处是公司名称</Col>
-                    <Col span={8}><b>报修来源：</b>客服录入/微信</Col>
+                    <Col span={8}><b>报修房间：</b>{this.state.data.roomNum}</Col>
+                    <Col span={8}><b>公司名称：</b>{this.state.data.clientName}</Col>
+                    <Col span={8}><b>报修来源：</b>{this.state.data.fromType}</Col>
                 </Row>
                 <Row>
-                    <Col span={8}><b>报修单号：</b>123456789</Col>
-                    <Col span={8}></Col>
-                    <Col span={8}></Col>
+                    <Col span={8}><b>报修单号：</b>{this.state.data.repairNum}</Col>
+                    <Col span={8} />
+                    <Col span={8} />
                 </Row>
                 <h2>报修信息</h2>
                 <ul>
-                    <li><b>报修内容：</b> <span>此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息此处是报修信息</span></li>
-                    <li><b>报修图片：</b> <img src="" alt=""/><img src="" alt=""/><img src="" alt=""/></li>
+                    <li><b>报修内容：</b> <span>{this.state.data.repairedContent}</span></li>
+                    <li><b>报修图片：</b>{this.state.data.picture.split('#').map(d => <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497531828757&di=03d0c3be26f11207fb9c1c4fb9151a5e&imgtype=0&src=http%3A%2F%2Fpic67.nipic.com%2Ffile%2F20150514%2F21036787_181947848862_2.jpg" />)}
+                    </li>
                 </ul>
                 <h2>派单信息</h2>
                 <Row>
-                    <Col span={8}><b>派单状态：</b>已派工</Col>
-                    <Col span={8}><b>派单人：</b>韩俊 2017-6-13 17:12:16</Col>
-                    <Col span={8}><b>维修人：</b>被指派的人名</Col>
+                    <Col span={8}><b>派单状态：</b>{this.state.data.pieStatus}</Col>
+                    <Col span={8}><b>派单人：</b>{this.state.data.pieMan} {this.state.data.pieDate}</Col>
+                    <Col span={8}><b>维修人：</b>{this.state.data.repairedMan}</Col>
                 </Row>
             </div>
-        );
+        )
     }
 }
 

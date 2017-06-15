@@ -80,8 +80,9 @@ class RepairList extends Component {
                 key: 'repairContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
+                    let url = '/upkeep/repair/:id=' + record.id
                     return (
-                        <a href="/">{text}</a>
+                        <a href={url}>{text}</a>
                     )
                 }
             }, {

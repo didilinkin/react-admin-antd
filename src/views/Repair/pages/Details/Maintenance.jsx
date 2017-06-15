@@ -4,7 +4,7 @@ import '../../../../style/test.less'
 
 class App extends React.Component {
 
-    render() {
+    render () {
         return (
             <div className="box1">
                 <h2>报修人信息</h2>
@@ -23,7 +23,7 @@ class App extends React.Component {
                     <li><b>现场图片：</b> <img src="" alt=""/><img src="" alt=""/><img src="" alt=""/></li>
                 </ul>
             </div>
-        );
+        )
     }
 }
 

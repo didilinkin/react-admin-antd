@@ -4,7 +4,7 @@ import '../../../../style/test.less'
 
 class App extends React.Component {
 
-    render() {
+    render () {
         return (
             <div className="box2">
                 <Timeline>
@@ -22,21 +22,21 @@ class App extends React.Component {
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td />
+                                <td />
+                                <td />
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td />
+                                <td />
+                                <td />
                             </tr>
                         </table>
                         <p>维修费： <span className="red">30</span> 元</p>
                         <p>维修人： 维修人名称1 协作人1，协作人2</p>
                         <ul>
-                            <li><img src="" alt=""/><img src="" alt=""/><img src="" alt=""/></li>
+                            <li><img src="" alt="" /><img src="" alt="" /><img src="" alt="" /></li>
                         </ul>
                     </Timeline.Item>
                     <Timeline.Item>
@@ -53,7 +53,7 @@ class App extends React.Component {
                 </Timeline>
 
             </div>
-        );
+        )
     }
 }
 

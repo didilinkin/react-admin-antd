@@ -4,7 +4,7 @@ import '../../../../style/test.less'
 
 class App extends React.Component {
 
-    render() {
+    render () {
         return (
             <div className="box2">
                 <Timeline>
@@ -49,7 +49,7 @@ class App extends React.Component {
                 <div className="txtbox"><Input type="textarea" rows={4} /></div>
                 <div className="clearfix"></div>
             </div>
-        );
+        )
     }
 }
 
