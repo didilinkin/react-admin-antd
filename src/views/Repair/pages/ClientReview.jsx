@@ -2,19 +2,21 @@
 import React from 'react'
 import {Table, Button, Spin } from 'antd'
 import { apiPost } from '../../../api'
+import VisitUpdateComponent from './common/VisitUpdate'
 
 class ClientReview extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             loading: false,
+            open: false,
             columns: [],
             dataSource: []
         }
     }
     register = (id) => {
         this.setState({
-            loading: true
+            open: true
         })
     }
     async initialRemarks () {
@@ -109,6 +111,9 @@ class ClientReview extends React.Component {
     render () {
         return (
             <div>
+                <VisitUpdateComponent
+                    visible={this.state.open}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
                         dataSource={this.state.dataSource}

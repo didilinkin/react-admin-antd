@@ -1,7 +1,8 @@
-import {Modal, Input, Form, DatePicker, Select, Row, Col  } from 'antd'
+import {Modal, Input, Form, DatePicker, Select, Row, Col, notification, Icon  } from 'antd'
 import React from 'react'
 import PicturesWall from './Details/PicturesWall'
-import { apiGet } from '../../../api'
+import { apiGet, apiPost } from '../../../api'
+import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
 
@@ -10,18 +11,81 @@ class TableAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
+        view: true,
+        repairDate: '',
+        fileList: [],
         clientList: []
     }
 
+    isFirst = true
     async initialRemarks (nextProps) {
-        let result = await apiGet(
-            'http://192.168.1.108:18082/upkeep/getClient'
-        )
-        this.setState({
-            visible: nextProps.visible,
-            isFirst: false,
-            clientList: result.data
-        })
+        if (nextProps.id > 0) {
+            if (this.isFirst && nextProps.visible) {
+                let result = await apiGet(
+                    'http://192.168.1.108:18082/upkeep/getClient'
+                )
+                let resulData = await apiPost(
+                    'http://192.168.1.108:18082/upkeep/getRepair',
+                    {'id': nextProps.id}
+                )
+                this.imgUrl = resulData.data.picture + '#'
+                let imgArr = resulData.data.picture.split('#')
+                let Arr = []
+                let i = 0
+                imgArr.map(img => {
+                    if (img !== '') {
+                        i++
+                        let json = {
+                            uid: i,
+                            status: 'done',
+                            name: img,
+                            url: 'http://192.168.1.108:18082/storage/files/' + img
+                        }
+                        Arr.push(json)
+                    }
+                    return ''
+                })
+                this.isFirst = false
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false,
+                    view: true,
+                    repairDate: resulData.data.repairDate,
+                    fileList: Arr,
+                    clientList: result.data
+                })
+                this.props.form.setFieldsValue({
+                    repairDate: moment(resulData.data.repairDate),
+                    repairMan: resulData.data.repairMan,
+                    clientName: resulData.data.clientName,
+                    clientType: resulData.data.clientType,
+                    clientId: resulData.data.clientId,
+                    phone: resulData.data.phone,
+                    buildName: resulData.data.buildName,
+                    buildId: resulData.data.buildId,
+                    repairNum: resulData.data.repairNum,
+                    roomNum: resulData.data.roomNum,
+                    repairContent: resulData.data.repairContent
+                })
+            }
+        } else {
+            this.setState({
+                view: false
+            })
+            if (this.state.isFirst && nextProps.visible) {
+                this.props.form.resetFields()
+                let result = await apiGet(
+                    'http://192.168.1.108:18082/upkeep/getClient'
+                )
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false,
+                    view: true,
+                    fileList: [],
+                    clientList: result.data
+                })
+            }
+        }
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
@@ -29,18 +93,45 @@ class TableAddUp extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
+        this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
         json['picture'] = this.imgUrl
+        let repairDate = json.repairDate.format('YYYY-MM-DD')
+        json['repairDate'] = repairDate
         debugger
-        this.props.refreshTable()
+        if (this.props.id > 0) {
+            json['id'] = this.props.id
+            let result = await apiPost(
+                'http://192.168.1.108:18082/upkeep/updateRepair',
+                json
+            )
+            notification.open({
+                message: result.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+            })
+        } else {
+            let result = await apiPost(
+                'http://192.168.1.108:18082/upkeep/insertRepair',
+                json
+            )
+            notification.open({
+                message: result.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+            })
+        }
+
+        this.isFirst = true
         this.setState({visible: false,
-            isFirst: true})
+            isFirst: true,
+            clientList: []})
+        this.props.refreshTable()
     }
     handleCancel = (e) => {
+        this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
     }
     getRepairDate = (date, dateString) => {
-        console.log(date, dateString)
+        alert(dateString)
     }
     imgUrl = ''
     Callback = (url) => {
@@ -157,7 +248,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="上传图片" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <PicturesWall callback={this.Callback}/>
+                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback}/>
                         </FormItem>
                     </Form>
                 </Modal>
