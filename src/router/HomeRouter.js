@@ -19,6 +19,7 @@ import Repair           from '../views/Repair/pages/Repair'
 import ReturnVisit           from '../views/Repair/pages/ReturnVisit'
 import ReturnVisitDetail           from '../views/Repair/pages/ReturnVisitDetail'
 import Maintenance           from '../views/Repair/pages/Maintenance'
+import CorrectionDetail           from '../views/Repair/pages/CorrectionDetail'
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -71,20 +72,23 @@ const routes = [
                 path: '/upkeep/rectification',                  // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/test',                  // 客户管理 - 整改通知
+                path: '/upkeep/test',
                 component: Test
             }, {
-                path: '/upkeep/repair',                  // 客户管理 - 整改通知
+                path: '/upkeep/repair',
                 component: Repair
             }, {
-                path: '/upkeep/returnVisit',                  // 客户管理 - 整改通知
+                path: '/upkeep/returnVisit',
                 component: ReturnVisit
             }, {
-                path: '/upkeep/returnVisitDetail',                  // 客户管理 - 整改通知
+                path: '/upkeep/returnVisitDetail',
                 component: ReturnVisitDetail
             }, {
-                path: '/upkeep/maintenance',                  // 客户管理 - 整改通知
+                path: '/upkeep/maintenance',
                 component: Maintenance
+            }, {
+                path: '/upkeep/correctionDetail',
+                component: CorrectionDetail
             }
         ]
     }, {
