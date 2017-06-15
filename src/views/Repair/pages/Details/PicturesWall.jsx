@@ -11,6 +11,13 @@ class PicturesWall extends React.Component {
     handleCancel = () => {
         this.setState({ previewVisible: false })
     }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.view || this.props.fileList.length > 0) {
+            this.setState({
+                fileList: this.props.fileList
+            })
+        }
+    }
 
     handlePreview = (file) => {
         this.setState({
@@ -20,10 +27,13 @@ class PicturesWall extends React.Component {
     }
 
     handleChange = ({ fileList }) => {
+        debugger
         let imgUrl = ''
         fileList.map(file => {
             if (typeof (file.response) !== 'undefined') {
                 imgUrl = imgUrl + file.response.data + '#'
+            } else {
+                imgUrl = imgUrl + file.name + '#'
             }
             return ''
         })
@@ -41,7 +51,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="http://192.168.1.108:18082/upkeep/upimg"
+                    action="http://192.168.1.108:18082/storage/uploader"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}

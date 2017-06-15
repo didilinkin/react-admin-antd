@@ -1,11 +1,12 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
-import {Table, Button, Spin, Popconfirm, Input} from 'antd'
+import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import CancelRepairComponent from './CancelRepair'
 import DistributeLeafletsComponent from './DistributeLeaflets'
 import TableAddUpComponent from './TableAddUp'
+const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
     constructor (props) {
@@ -15,6 +16,7 @@ class RepairList extends Component {
             openinvalid: false,
             opendispatch: false,
             openTableAddUp: false,
+            openUpdate: false,
             columns: [],
             dataSource: [],
             id: 0
@@ -25,6 +27,7 @@ class RepairList extends Component {
             opendispatch: true,
             openinvalid: false,
             openTableAddUp: false,
+            openUpdate: false,
             id: id
         })
     }
@@ -33,6 +36,16 @@ class RepairList extends Component {
             openinvalid: true,
             opendispatch: false,
             openTableAddUp: false,
+            openUpdate: false,
+            id: id
+        })
+    }
+    handleUpdateRepair = (id) => {
+        this.setState({
+            openinvalid: false,
+            opendispatch: false,
+            openTableAddUp: false,
+            openUpdate: true,
             id: id
         })
     }
@@ -43,6 +56,7 @@ class RepairList extends Component {
         )
         const distributeLeaflets = this.distributeLeaflets
         const handleUpdate = this.handleUpdate
+        const handleUpdateRepair = this.handleUpdateRepair
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -67,14 +81,23 @@ class RepairList extends Component {
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
                     return (
-                        <span>{text}</span>
+                        <a href="/">{text}</a>
                     )
                 }
             }, {
                 title: '来源',
                 width: 100,
                 dataIndex: 'fromType',
-                key: 'fromType'
+                key: 'fromType',
+                render: function (text, record, index) {
+                    let fromType = '客服'
+                    if (text === '1') {
+                        fromType = '微信'
+                    }
+                    return (
+                        <span>{fromType}</span>
+                    )
+                }
             }, {
                 title: '派工状态',
                 width: 100,
@@ -143,7 +166,7 @@ class RepairList extends Component {
                             <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <Button >作废</Button>
                             </Popconfirm>
-                            <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
+                            <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
                                 <Button >修改</Button>
                             </Popconfirm>
                         </div>
@@ -159,12 +182,17 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList'
+            'http://192.168.1.108:18082/upkeep/repairList',
+            {'startDate': this.startDate,
+                'endDate': this.endDate,
+                'clientName': this.clientName
+            }
         )
         this.setState({
             openinvalid: false,
             opendispatch: false,
             openTableAddUp: false,
+            openUpdate: false,
             dataSource: result.data,
             id: 0
         })
@@ -174,19 +202,27 @@ class RepairList extends Component {
         this.setState({
             opendispatch: false,
             openinvalid: false,
+            openUpdate: false,
             openTableAddUp: true
         })
     }
-    entryName = ''
+    clientName = ''
     entryNameOnChange = (e) => {
-        this.entryName = e.target.value
+        this.clientName = e.target.value
     }
     query = () => {
         this.refresh()
     }
+    startDate = ''
+    endDate = ''
+    getDate = (date, dateString) => {
+        this.startDate = dateString[0]
+        this.endDate = dateString[1]
+    }
     render () {
         return (
             <div>
+
                 <CancelRepairComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
@@ -201,8 +237,16 @@ class RepairList extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
+                <TableAddUpComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                />
                 <span>
-                    <span>物品名称:</span>
+                    <span>报修日期:</span>
+                    <RangePicker onChange={this.getDate}
+                    />
+                    <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加保单</Button>
