@@ -25,6 +25,7 @@
 | [webpack](https://doc.webpack-china.org/)             | 模块打包            | 1.14.0  |
 | [Babel](http://babeljs.cn/)                           | ES6转译ES5          |  6.24.1  |
 | [Mockjs](http://mockjs.com/)                          | 模拟接口            |  1.0.1-beta3  |
+| [Elf-ES]()                                            | ES版本Elf(管理样式) | 2.2.1 |
 
 ## 使用插件:
 | 插件名称                                                                     | 作用                                           |   版本  |
@@ -42,6 +43,7 @@
 | [animate.css](https://daneden.github.io/animate.css/)                        | CSS3 动画功能                                  | 3.5.2  |
 | [qs](https://github.com/ljharb/qs)                                           | 字符串解析库(配合axios)                         | 6.4.0  |
 | [moment](https://momentjs.com/)                                              | JS处理 / 操作 / 转换 时间日期                   | 2.18.1  |
+| [hotcss](https://github.com/imochen/hotcss)                                  | 移动端布局终极解决方案                          | 2.2.1 |
 
 # 目录结构
 > 借鉴: [Redux + React 应用程序架构的 3 条规范（内附实例）](https://zhuanlan.zhihu.com/p/21490605)
@@ -111,6 +113,7 @@
 - [x]  `standard` 语法配置( 或使用 `TSlint` )
 - [x]  `TS` 配置引入
 - [x]  `webpack` 优化配置- 需要升级 2.x !!!
+- [ ]  `hotcss` 响应式 文字处理方案
 - [ ]  `webpack` report打包的体积分析报告( 类似 Vue的 `npm run build --report` )
 - [ ]  `src` 目录 功能划分的调整( 参考`Redux` 推荐目录结构 )
 - [ ]  `Postcss` 配置

@@ -76,6 +76,7 @@ class DistributeLeaflets extends React.Component {
                     id: value
                 })
             }
+            return ''
         })
     }
     render () {

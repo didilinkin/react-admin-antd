@@ -5,7 +5,7 @@ import { apiPost } from '../../../api'
 // 引入组件
 import CancelRepairComponent from './CancelRepair'
 import DistributeLeafletsComponent from './DistributeLeaflets'
-
+import TableAddUpComponent from './TableAddUp'
 // React component
 class RepairList extends Component {
     constructor (props) {
@@ -14,6 +14,7 @@ class RepairList extends Component {
             loading: false,
             openinvalid: false,
             opendispatch: false,
+            openTableAddUp: false,
             columns: [],
             dataSource: [],
             id: 0
@@ -23,6 +24,7 @@ class RepairList extends Component {
         this.setState({
             opendispatch: true,
             openinvalid: false,
+            openTableAddUp: false,
             id: id
         })
     }
@@ -30,6 +32,7 @@ class RepairList extends Component {
         this.setState({
             openinvalid: true,
             opendispatch: false,
+            openTableAddUp: false,
             id: id
         })
     }
@@ -161,14 +164,18 @@ class RepairList extends Component {
         this.setState({
             openinvalid: false,
             opendispatch: false,
+            openTableAddUp: false,
             dataSource: result.data,
             id: 0
         })
     }
     // 弹出框设置
     showModal = () => {
-        this.setState({openinvalid: true,
-            id: 'add'})
+        this.setState({
+            opendispatch: false,
+            openinvalid: false,
+            openTableAddUp: true
+        })
     }
     entryName = ''
     entryNameOnChange = (e) => {
@@ -190,6 +197,10 @@ class RepairList extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.opendispatch}
                     />
+                <TableAddUpComponent
+                    refreshTable={this.refresh}
+                    visible={this.state.openTableAddUp}
+                />
                 <span>
                     <span>物品名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
