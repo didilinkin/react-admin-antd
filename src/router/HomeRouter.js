@@ -19,6 +19,7 @@ import ReturnVisit          from '../views/Repair/pages/Details/ReturnVisit'    
 import ReturnVisitDetail    from '../views/Repair/pages/Details/ReturnVisitDetail'      // [详情] - 回访登记明细
 import Maintenance          from '../views/Repair/pages/Details/Maintenance'            // [详情] - 维修详情
 import CorrectionDetail     from '../views/Repair/pages/Details/CorrectionDetail'       // [详情] - 整改信息明细
+import MaintenanceProject   from '../views/Repair/pages/Details/MaintenanceProject'     // [详情] - 维修项目
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -88,6 +89,9 @@ const routes = [
             }, {
                 path: '/upkeep/correctionDetail/:id',           // [详情] - 整改信息明细
                 component: CorrectionDetail
+            }, {
+                path: '/upkeep/maintenanceProject/:id',         // [详情] - 维修项目
+                component: MaintenanceProject
             }
         ]
     }, {

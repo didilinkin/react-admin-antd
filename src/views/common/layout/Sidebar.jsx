@@ -58,7 +58,7 @@ class Sidebar extends React.Component {
     render () {
         return (
             <Sider
-                // trigger={ null }
+                trigger={ null }
                 collapsible
                 collapsed={this.props.collapsed}
                 // onCollapse={this.onCollapse}
@@ -200,6 +200,12 @@ class Sidebar extends React.Component {
                         </SubMenu>
                     </SubMenu>
                 </Menu>
+                {/* 样式描述 */}
+                <style>{`
+                    .ant-menu-vertical >div >span >span.nav-text {
+                        display: none;
+                    }
+                `}</style>
             </Sider>
         )
     }
