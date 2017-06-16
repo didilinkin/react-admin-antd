@@ -28,7 +28,12 @@ class App extends React.Component {
                     </Col>
                 </Row>
                 <ul>
-                    <li><b>现场图片：</b> <img src="" alt=""/><img src="" alt=""/><img src="" alt=""/></li>
+                    <li>
+                        <b>现场图片：</b>
+                        <img src="" alt="" />
+                        <img src="" alt="" />
+                        <img src="" alt="" />
+                    </li>
                 </ul>
                 <Row>
                     <Col span={24}><b>检查人：</b>薛凯丽、宋强、徐德存</Col>

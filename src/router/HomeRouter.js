@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route }            from 'react-router-dom'
-import styled               from 'styled-components'
 
 import HomeTemplate         from '../views/common/pages/HomeTemplate'
 import HomeIndex            from '../views/common/pages/HomeIndex'
@@ -13,7 +12,13 @@ import RepairList           from '../views/Repair/pages/RepairList'             
 import ClientReview         from '../views/Repair/pages/ClientReview'                   // 客户回访
 import UpkeepList           from '../views/Repair/pages/UpkeepList'                     // 维修费设置
 import Rectification        from '../views/Repair/pages/Rectification'                  // 整改通知
-import ClientReviewDetails  from '../views/Repair/pages/Details/ClientReviewDetails'    // [详情]'客户回访'
+import ClientReviewDetails  from '../views/Repair/pages/Details/ClientReviewDetails'    // [详情] - 客户回访
+
+import Repair               from '../views/Repair/pages/Details/Repair'                 // [详情] - 报修明细
+import ReturnVisit          from '../views/Repair/pages/Details/ReturnVisit'            // [详情] - 回访登记
+import ReturnVisitDetail    from '../views/Repair/pages/Details/ReturnVisitDetail'      // [详情] - 回访登记明细
+import Maintenance          from '../views/Repair/pages/Details/Maintenance'            // [详情] - 维修详情
+import CorrectionDetail     from '../views/Repair/pages/Details/CorrectionDetail'       // [详情] - 整改信息明细
 
 // 引入 '仓库管理' 版块
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
@@ -66,8 +71,23 @@ const routes = [
                 path: '/upkeep/rectification',                  // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/clientReviewDetails/:id',        // [详情] - '客户回访'
+                path: '/upkeep/clientReviewDetails/:id',        // [详情] - 客户回访
                 component: ClientReviewDetails
+            }, {
+                path: '/upkeep/repai/:id',                      // [详情] - 报修明细
+                component: Repair
+            }, {
+                path: '/upkeep/returnVisit/:id',                // [详情] - 回访登记
+                component: ReturnVisit
+            }, {
+                path: '/upkeep/returnVisitDetail/:id',          // [详情] - 回访登记明细
+                component: ReturnVisitDetail
+            }, {
+                path: '/upkeep/maintenance/:id',                // [详情] - 维修详情
+                component: Maintenance
+            }, {
+                path: '/upkeep/correctionDetail/:id',           // [详情] - 整改信息明细
+                component: CorrectionDetail
             }
         ]
     }, {
@@ -88,17 +108,13 @@ const routes = [
     }
 ]
 
-const SubRoutes = styled.section `
-    height: 100%
-`
-
 const RouteWithSubRoutes = (route) => (
-    <SubRoutes>
+    <div style={{ height: '100%' }}>
         <Route path={route.path} render={props => (
             <route.component {...props} routes={route.routes} />
             )}
         />
-    </SubRoutes>
+    </div>
 )
 
 export { routes, RouteWithSubRoutes }
