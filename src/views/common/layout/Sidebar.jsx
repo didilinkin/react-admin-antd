@@ -9,22 +9,27 @@ const SubMenu = Menu.SubMenu
 class Sidebar extends React.Component {
     state = {
         // collapsed: false,
-        // current: '1',               // 最近
-        // openKeys: [],               // 打开的keys
-        mode: 'inline'              // 侧导航栏 类型
+        // current: '1',                // 最近
+        // openKeys: [],                // 打开的keys
+        mode: 'inline',                 // 侧导航栏 类型
+        titleStyle: {                   // 根据collapsed状态 => 改变标题样式( 隐藏 )
+            display: 'inline'
+        }
     }
 
     // 当 组件接收到一个新的prop时执行此事件( 当侧导航栏状态改变时, 改变样式模式 )
     componentWillReceiveProps (nextProps) {
         // console.log(nextProps.collapsed)
         this.onCollapse(nextProps.collapsed)
+        // this.onTitleStyle(nextProps.collapsed)
     }
 
     // 根据 最新的 collapsed状态, 修改 '菜单类型' 模式( 当侧导航栏状态改变时, 改变样式模式 )
     onCollapse = (collapsed) => {
         this.setState({
             collapsed,
-            mode: collapsed ? 'vertical' : 'inline'
+            mode: collapsed ? 'vertical' : 'inline',
+            titleStyle: collapsed ? { display: 'none' } : { display: 'inline' }
         })
     }
 
@@ -33,6 +38,7 @@ class Sidebar extends React.Component {
     //     console.log('Clicked: ', e)
     //     this.setState({ current: e.key })
     // }
+
     // // 开启时 - 改变
     // onOpenChange = (openKeys) => {
     //     const state = this.state
@@ -47,6 +53,7 @@ class Sidebar extends React.Component {
     //     }
     //     this.setState({ openKeys: nextOpenKeys })
     // }
+
     // // 获取父级key
     // getAncestorKeys = (key) => {
     //     const map = {
@@ -81,7 +88,7 @@ class Sidebar extends React.Component {
                     <Menu.Item key="/home/index">
                         <Link to="/home/index">
                             <Icon type="user" />
-                            <span className="nav-text">首页</span>
+                            <span className="nav-text" style={ this.state.titleStyle }>首页</span>
                         </Link>
                     </Menu.Item>
 
@@ -91,7 +98,7 @@ class Sidebar extends React.Component {
                         title={
                             <span>
                                 <Icon type="schedule" />
-                                <span className="nav-text">测试</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>测试</span>
                             </span>
                         }
                     >
@@ -106,24 +113,24 @@ class Sidebar extends React.Component {
                         title={
                             <span>
                                 <Icon type="idcard" />
-                                <span className="nav-text">客户管理</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>客户管理</span>
                             </span>
                         }
                     >
                         <Menu.Item key="/upkeep/repairList">
-                            <Link to="/upkeep/repairList">客户报修</Link>
+                            <Link to="/upkeep/repairList ">客户报修</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/clientReview">
-                            <Link to="/upkeep/clientReview">客户回访</Link>
+                            <Link to="/upkeep/clientReview ">客户回访</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/upkeepList">
-                            <Link to="/upkeep/upkeepList">维修费设置</Link>
+                            <Link to="/upkeep/upkeepList ">维修费设置</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/rectification">
-                            <Link to="/upkeep/rectification">整改通知</Link>
+                            <Link to="/upkeep/rectification ">整改通知</Link>
                         </Menu.Item>
                     </SubMenu>
 
@@ -133,7 +140,7 @@ class Sidebar extends React.Component {
                         title={
                             <span>
                                 <Icon type="database" />
-                                <span className="nav-text">仓库管理</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>仓库管理</span>
                             </span>
                         }
                     >
@@ -156,7 +163,7 @@ class Sidebar extends React.Component {
                         title={
                             <span>
                                 <Icon type="tool" />
-                                <span className="nav-text">设备维护</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>设备维护</span>
                             </span>
                         }
                     >
