@@ -43,7 +43,7 @@ class CancelRepair extends React.Component {
             isFirst: true})
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
@@ -58,7 +58,14 @@ class CancelRepair extends React.Component {
                         <FormItem label="作废原因" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('invalidContent')} />
+                            {getFieldDecorator('invalidContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 作废原因!'
+                                }]
+                            })(
+                                <Input type="textarea" rows={4} />
+                            )}
                         </FormItem>
                     </Form>
                 </Modal>

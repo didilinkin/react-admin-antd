@@ -59,6 +59,11 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         if (this.props.id > 0) {
+            this.props.form.validateFieldsAndScroll((err, values) => {
+                if (!err) {
+                    console.log('Received values of form: ', values)
+                }
+            })
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
             await apiPost(
@@ -67,7 +72,7 @@ class addUpkeep extends React.Component {
             )
             notification.open({
                 message: '修改成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.props.refreshTable()
         } else {
@@ -78,7 +83,7 @@ class addUpkeep extends React.Component {
             )
             notification.open({
                 message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.props.refreshTable()
         }
@@ -104,7 +109,7 @@ class addUpkeep extends React.Component {
         })
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
@@ -119,27 +124,62 @@ class addUpkeep extends React.Component {
                         <FormItem label="物品名称" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input type="text" {...getFieldProps('entryName')} />
+                            {getFieldDecorator('entryName', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 物品名称!'
+                                }]
+                            })(
+                                <Input type="text" />
+                            )}
                         </FormItem>
                         <FormItem label="单位" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input type="text" {...getFieldProps('company')} />
+                            {getFieldDecorator('company', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 单位!'
+                                }]
+                            })(
+                                <Input type="text" />
+                            )}
                         </FormItem>
                         <FormItem label="进货价格" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input onBlur={this.onBlur} type="text" {...getFieldProps('purchasePrice')} />
+                            {getFieldDecorator('purchasePrice', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 进货价格!'
+                                }]
+                            })(
+                                <Input onBlur={this.onBlur} type="text" />
+                            )}
                         </FormItem>
                         <FormItem label="服务费" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input onBlur={this.onBlur} type="text" {...getFieldProps('serviceCharge')} />
+                            {getFieldDecorator('serviceCharge', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 服务费!'
+                                }]
+                            })(
+                                <Input onBlur={this.onBlur} type="text" />
+                            )}
                         </FormItem>
                         <FormItem label="收费金额" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input type="text" {...getFieldProps('tollAmount')} />
+                            {getFieldDecorator('tollAmount', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your 收费金额!'
+                                }]
+                            })(
+                                <Input type="text" />
+                            )}
                         </FormItem>
                     </Form>
                 </Modal>

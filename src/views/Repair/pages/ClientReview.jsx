@@ -2,28 +2,21 @@
 import React from 'react'
 import {Table, Button, Spin } from 'antd'
 import { apiPost } from '../../../api'
-import VisitUpdateComponent from './common/VisitUpdate'
 
 class ClientReview extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             loading: false,
-            open: false,
             columns: [],
-            dataSource: []
+            dataSource: [],
+            id: 0
         }
-    }
-    register = (id) => {
-        this.setState({
-            open: true
-        })
     }
     async initialRemarks () {
         let result = await apiPost(
             'http://192.168.1.108:18082/upkeep/repairList'
         )
-        const register = this.register
         this.setState({
             columns: [{
                 title: '序号',
@@ -46,9 +39,10 @@ class ClientReview extends React.Component {
                 dataIndex: 'repairContent',
                 key: 'repairContent',
                 render: function (text, record, index) {
+                    let url = '/upkeep/repai/' + record.id
                     text = text.substring(0, 30)
                     return (
-                        <span>{text}</span>
+                        <a href={url}>{text}</a>
                     )
                 }
             }, {
@@ -88,7 +82,14 @@ class ClientReview extends React.Component {
                 title: '回访情况',
                 width: 100,
                 dataIndex: 'visitContent',
-                key: 'visitContent'
+                key: 'visitContent',
+                render: function (text, record, index) {
+                    text = text.substring(0, 30)
+                    let url = '/upkeep/returnVisitDetail/' + record.id
+                    return (
+                        <a href={url}>{text}</a>
+                    )
+                }
             }, {
                 title: '操作',
                 width: 200,
@@ -96,8 +97,9 @@ class ClientReview extends React.Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/upkeep/returnVisit/' + record.id
                     return (
-                                <Button onClick={() => register(record.id)} >回访登记</Button>
+                        <a href={url}><Button>回访登记</Button></a>
                     )
                 }
             }],
@@ -108,12 +110,20 @@ class ClientReview extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    refresh = async () => {
+        // 刷新表格
+        let result = await apiPost(
+            'http://192.168.1.108:18082/upkeep/repairList',
+        )
+        this.setState({
+            loading: false,
+            id: 0,
+            dataSource: result.data
+        })
+    }
     render () {
         return (
             <div>
-                <VisitUpdateComponent
-                    visible={this.state.open}
-                />
                 <Spin spinning={this.state.loading}>
                     <Table
                         dataSource={this.state.dataSource}

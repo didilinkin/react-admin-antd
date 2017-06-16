@@ -54,6 +54,7 @@ class RepairList extends Component {
         let result = await apiPost(
             'http://192.168.1.108:18082/upkeep/repairList'
         )
+        let repairList = result.data
         const distributeLeaflets = this.distributeLeaflets
         const handleUpdate = this.handleUpdate
         const handleUpdateRepair = this.handleUpdateRepair
@@ -80,7 +81,7 @@ class RepairList extends Component {
                 key: 'repairContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
-                    let url = '/upkeep/repair/:id=' + record.id
+                    let url = '/upkeep/repai/' + record.id
                     return (
                         <a href={url}>{text}</a>
                     )
@@ -138,8 +139,9 @@ class RepairList extends Component {
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
+                    let url = '/upkeep/maintenance/' + record.id
                     return (
-                        <span>查看明细</span>
+                        <a href={url}>查看明细</a>
                     )
                 }
             }, {
@@ -174,7 +176,7 @@ class RepairList extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: repairList
         })
     }
     componentDidMount () {
