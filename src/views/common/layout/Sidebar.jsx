@@ -8,25 +8,18 @@ const SubMenu = Menu.SubMenu
 
 class Sidebar extends React.Component {
     state = {
-        // collapsed: false,
-        // current: '1',                // 最近
-        // openKeys: [],                // 打开的keys
-        mode: 'inline',                 // 侧导航栏 类型
-        titleStyle: {                   // 根据collapsed状态 => 改变标题样式( 隐藏 )
+        mode: 'inline',
+        titleStyle: {
             display: 'inline'
         },
-        current: '1',                   // 当前打开
+        current: '1',
         openKeys: []
     }
 
-    // 当 组件接收到一个新的prop时执行此事件( 当侧导航栏状态改变时, 改变样式模式 )
     componentWillReceiveProps (nextProps) {
-        // console.log(nextProps.collapsed)
         this.onCollapse(nextProps.collapsed)
-        // this.onTitleStyle(nextProps.collapsed)
     }
 
-    // 根据 最新的 collapsed状态, 修改 '菜单类型' 模式( 当侧导航栏状态改变时, 改变样式模式 )
     onCollapse = (collapsed) => {
         this.setState({
             collapsed,
@@ -35,7 +28,6 @@ class Sidebar extends React.Component {
         })
     }
 
-    // 点击把手
     handleClick = (e) => {
         console.log('Clicked: ', e)
         this.setState({ current: e.key })
@@ -45,7 +37,6 @@ class Sidebar extends React.Component {
         const state = this.state
         const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
         const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-
         let nextOpenKeys = []
         if (latestOpenKey) {
             nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
@@ -79,10 +70,10 @@ class Sidebar extends React.Component {
                     theme="dark"
                     defaultOpenKeys={['sub1']}
                     mode={ this.state.mode }
-                    onClick={ this.handleClick }                    // 打开唯一父级
-                    onOpenChange={ this.onOpenChange }              // 打开唯一父级
-                    selectedKeys={[this.state.current]}             // 打开唯一父级
-                    openKeys={ this.state.openKeys }                // 打开唯一父级
+                    onClick={ this.handleClick }
+                    onOpenChange={ this.onOpenChange }
+                    selectedKeys={[this.state.current]}
+                    openKeys={ this.state.openKeys }
                 >
                     {/* 首页 */}
                     <Menu.Item key="home/index">

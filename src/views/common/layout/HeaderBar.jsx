@@ -3,11 +3,49 @@ import React from 'react'
 import { Menu, Icon, Layout, Badge } from 'antd'
 
 import screenfull       from 'screenfull'
-import userLogo         from '../../../assets/images/b1.jpg'       // 用户头像
+import styled           from 'styled-components'
+import elf              from '../../../elf/main'
+import userLogo         from '../../../assets/images/b1.jpg'
 
 const { Header } = Layout
 const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
+
+const UserDiv = styled.span`
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    line-height: 1;
+    border-radius: 500px;
+    white-space: nowrap;
+    font-weight: bold;
+    i {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        margin: 1px;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 100%;
+        border-color: #ffffff;
+        &.bottom {
+            left: auto;
+            top: auto;
+            bottom: 0;
+            right: 0;
+        }
+        &.on {
+            background-color: #6cc788;
+        }
+    }
+    img {
+        vertical-align: middle;
+        border-radius: 500px;
+        width: 100%;
+    }
+`
 
 class HeaderBar extends React.Component {
     // 展开状态
@@ -29,11 +67,17 @@ class HeaderBar extends React.Component {
                 padding: 0,
                 height: 65 }}
             >
-                {/* 折叠按钮 */}
                 <Icon
                     className="trigger custom-trigger"
                     type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.props.toggle}
+                    style={{
+                        fontSize: elf.f.text + 'px',
+                        lineHeight: '64px',
+                        padding: `0 ${elf.f.text}px`,
+                        cursor: 'pointer',
+                        transition: 'color .3s'
+                    }}
                 />
 
                 {/* 顶部导航菜单 */}
@@ -58,10 +102,10 @@ class HeaderBar extends React.Component {
 
                     {/* 用户中心 */}
                     <SubMenu title={
-                        <span className="avatar">
+                        <UserDiv className="avatar">
                             <img src={ userLogo } alt="头像" />
                             <i className="on bottom b-white" />
-                        </span>}
+                        </UserDiv>}
                     >
                         <MenuItemGroup title="用户中心">
                             <Menu.Item key="setting:1">你好 - UserA</Menu.Item>
@@ -73,12 +117,10 @@ class HeaderBar extends React.Component {
                         </MenuItemGroup>
                     </SubMenu>
                 </Menu>
-
-                {/* react-admin 案例 样式 */}
                 <style>{`
                     .ant-menu-submenu-horizontal > .ant-menu {
                         width: 120px;
-                        left: -40px;
+                        left: -50px;
                     }
                 `}</style>
             </Header>
