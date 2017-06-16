@@ -14,7 +14,9 @@ class Sidebar extends React.Component {
         mode: 'inline',                 // 侧导航栏 类型
         titleStyle: {                   // 根据collapsed状态 => 改变标题样式( 隐藏 )
             display: 'inline'
-        }
+        },
+        current: '1',                   // 当前打开
+        openKeys: []
     }
 
     // 当 组件接收到一个新的prop时执行此事件( 当侧导航栏状态改变时, 改变样式模式 )
@@ -33,34 +35,33 @@ class Sidebar extends React.Component {
         })
     }
 
-    // 操作点击
-    // handleClick = (e) => {
-    //     console.log('Clicked: ', e)
-    //     this.setState({ current: e.key })
-    // }
+    // 点击把手
+    handleClick = (e) => {
+        console.log('Clicked: ', e)
+        this.setState({ current: e.key })
+    }
 
-    // // 开启时 - 改变
-    // onOpenChange = (openKeys) => {
-    //     const state = this.state
-    //     const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
-    //     const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-    //     let nextOpenKeys = []
-    //     if (latestOpenKey) {
-    //         nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
-    //     }
-    //     if (latestCloseKey) {
-    //         nextOpenKeys = this.getAncestorKeys(latestCloseKey)
-    //     }
-    //     this.setState({ openKeys: nextOpenKeys })
-    // }
+    onOpenChange = (openKeys) => {
+        const state = this.state
+        const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
+        const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
 
-    // // 获取父级key
-    // getAncestorKeys = (key) => {
-    //     const map = {
-    //         sub3: ['sub2']
-    //     }
-    //     return map[key] || []
-    // }
+        let nextOpenKeys = []
+        if (latestOpenKey) {
+            nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
+        }
+        if (latestCloseKey) {
+            nextOpenKeys = this.getAncestorKeys(latestCloseKey)
+        }
+        this.setState({ openKeys: nextOpenKeys })
+    }
+
+    getAncestorKeys = (key) => {
+        const map = {
+            deviceMaintain: ['/warehouse/inspection']
+        }
+        return map[key] || []
+    }
 
     render () {
         return (
@@ -76,16 +77,15 @@ class Sidebar extends React.Component {
 
                 <Menu
                     theme="dark"
-                    // style={{ width: 240 }}
                     defaultOpenKeys={['sub1']}
-                    mode={this.state.mode}
-                    // openKeys={this.state.openKeys}
-                    // selectedKeys={[this.state.current]}
-                    // onOpenChange={this.onOpenChange}
-                    // onClick={this.handleClick}
+                    mode={ this.state.mode }
+                    onClick={ this.handleClick }                    // 打开唯一父级
+                    onOpenChange={ this.onOpenChange }              // 打开唯一父级
+                    selectedKeys={[this.state.current]}             // 打开唯一父级
+                    openKeys={ this.state.openKeys }                // 打开唯一父级
                 >
                     {/* 首页 */}
-                    <Menu.Item key="/home/index">
+                    <Menu.Item key="home/index">
                         <Link to="/home/index">
                             <Icon type="user" />
                             <span className="nav-text" style={ this.state.titleStyle }>首页</span>
@@ -94,7 +94,7 @@ class Sidebar extends React.Component {
 
                     {/* 测试 */}
                     <SubMenu
-                        key="/test"
+                        key="test"
                         title={
                             <span>
                                 <Icon type="schedule" />
@@ -109,7 +109,7 @@ class Sidebar extends React.Component {
 
                     {/* 客户管理 */}
                     <SubMenu
-                        key="/upkeep"
+                        key="upkeep"
                         title={
                             <span>
                                 <Icon type="idcard" />
@@ -136,7 +136,7 @@ class Sidebar extends React.Component {
 
                     {/* 仓库管理 */}
                     <SubMenu
-                        key="/warehouse"
+                        key="warehouse"
                         title={
                             <span>
                                 <Icon type="database" />
@@ -159,7 +159,7 @@ class Sidebar extends React.Component {
 
                     {/* 设备维护 */}
                     <SubMenu
-                        key="/deviceMaintain"
+                        key="deviceMaintain"
                         title={
                             <span>
                                 <Icon type="tool" />
