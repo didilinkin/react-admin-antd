@@ -1,8 +1,8 @@
 // 客户管理 - 客户回访
 import React from 'react'
-import {Table, Button, Spin } from 'antd'
+import {Table, Button, Spin, DatePicker, Input } from 'antd'
 import { apiPost } from '../../../api'
-
+const { RangePicker } = DatePicker
 class ClientReview extends React.Component {
     constructor (props) {
         super(props)
@@ -114,6 +114,11 @@ class ClientReview extends React.Component {
         // 刷新表格
         let result = await apiPost(
             'http://192.168.1.108:18082/upkeep/repairList',
+            {'startDate': this.startDate,
+                'endDate': this.endDate,
+                'clientName': this.clientName,
+                'type': 2
+            }
         )
         this.setState({
             loading: false,
@@ -121,9 +126,30 @@ class ClientReview extends React.Component {
             dataSource: result.data
         })
     }
+    startDate = ''
+    endDate = ''
+    getDate = (date, dateString) => {
+        this.startDate = dateString[0]
+        this.endDate = dateString[1]
+    }
+    clientName = ''
+    entryNameOnChange = (e) => {
+        this.clientName = e.target.value
+    }
+    query = () => {
+        this.refresh()
+    }
     render () {
         return (
             <div>
+                <span>
+                    <span>回访日期:</span>
+                    <RangePicker onChange={this.getDate}
+                    />
+                    <span>公司名称:</span>
+                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
+                    <Button type="primary" onClick={this.query}>查询</Button>
+                </span>
                 <Spin spinning={this.state.loading}>
                     <Table
                         dataSource={this.state.dataSource}

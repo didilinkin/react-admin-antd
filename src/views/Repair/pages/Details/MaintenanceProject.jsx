@@ -1,18 +1,44 @@
 // 回访详情
 import React from 'react'
 import '../../../../style/test.less'
+import { apiPost } from '../../../../api'
 
 class App extends React.Component {
-
+    constructor (props) {
+        super(props)
+        this.state = {
+            data: {}
+        }
+    }
+    async initialRemarks () {
+        let resulData = await apiPost(
+            'http://192.168.1.108:18082/upkeep/getRepair',
+            {'id': this.props.match.params.id}
+        )
+        let Repair = resulData.data
+        Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
+            if (RepairProject !== null) {
+                return <tr><td>{RepairProject.id}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+            } else {
+                return null
+            }
+        })
+        this.setState({
+            data: Repair
+        })
+    }
+    componentWillMount () {
+        this.initialRemarks()
+    }
     render () {
         return (
             <div className="box3">
                 <h2>维修项目</h2>
                 <p>
-                    <b>发起人：</b>此处是发起人姓名
+                    <b>发起人：</b>{this.state.data.repairedMan}
                 </p>
                 <p>
-                    <b>发起日期：</b>2017-12-17  10：58
+                    <b>发起日期：</b>{this.state.data.startDate}
                 </p>
                 <table className="tb">
                     <tr className="hd">
@@ -22,28 +48,14 @@ class App extends React.Component {
                         <td>数量</td>
                         <td>收费小计</td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
+                    {this.state.data.repairProjectList}
                 </table>
                 <p>
-                    <b>应收金额：</b> 100.00 元
+                    <b>应收金额：</b> {this.state.data.amountMoney} 元
                 </p>
             </div>
         )
     }
 }
-
 export default App
 

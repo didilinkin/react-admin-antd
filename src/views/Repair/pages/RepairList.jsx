@@ -150,8 +150,9 @@ class RepairList extends Component {
                 dataIndex: 'MaintenanceDetails',
                 key: 'MaintenanceDetails',
                 render: function (text, record, index) {
+                    let url = '/upkeep/maintenance/' + record.id
                     return (
-                        <span>查看明细</span>
+                        <a href={url}>查看明细</a>
                     )
                 }
             }, {
