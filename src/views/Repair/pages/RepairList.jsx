@@ -139,7 +139,7 @@ class RepairList extends Component {
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
-                    let url = '/upkeep/maintenance/' + record.id
+                    let url = '/upkeep/maintenanceProject/' + record.id
                     return (
                         <a href={url}>查看明细</a>
                     )
