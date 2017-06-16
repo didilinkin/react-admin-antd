@@ -1,3 +1,4 @@
+// 报修明细
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../../style/test.less'
@@ -11,7 +12,6 @@ class App extends React.Component {
     }
 
     async initialRemarks () {
-        debugger
         let resulData = await apiPost(
             'http://192.168.1.108:18082/upkeep/getRepair',
             {'id': 7}
@@ -27,11 +27,16 @@ class App extends React.Component {
         } else {
             Repair['pieStatus'] = '未派单'
         }
+
+        Repair['picture'] = Repair.picture.split('#').map(img => {
+            return <img src={img} />
+        })
+        alert(Repair.picture.toString())
         this.setState({
             data: Repair
         })
     }
-    componentDidMount () {
+    componentWillMount () {
         this.initialRemarks()
     }
     render () {
@@ -56,7 +61,7 @@ class App extends React.Component {
                 <h2>报修信息</h2>
                 <ul>
                     <li><b>报修内容：</b> <span>{this.state.data.repairedContent}</span></li>
-                    <li><b>报修图片：</b>{this.state.data.picture.split('#').map(d => <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497531828757&di=03d0c3be26f11207fb9c1c4fb9151a5e&imgtype=0&src=http%3A%2F%2Fpic67.nipic.com%2Ffile%2F20150514%2F21036787_181947848862_2.jpg" />)}
+                    <li><b>报修图片：</b>{this.state.data.picture}
                     </li>
                 </ul>
                 <h2>派单信息</h2>
