@@ -8,7 +8,7 @@ import { apiPost } from '../../../api'
 import showDetailComponent from './TableAddUp'
 const { RangePicker } = DatePicker
 // React component
-class RepairList extends Component {
+class TableAddUp extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -17,6 +17,7 @@ class RepairList extends Component {
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
+            visible: false,
             columns: [],
             dataSource: [],
             id: 0
@@ -32,14 +33,14 @@ class RepairList extends Component {
         })
     }
     /*handleUpdate = (id) => {
-        this.setState({
-            openinvalid: true,
-            opendispatch: false,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }*/
+     this.setState({
+     openinvalid: true,
+     opendispatch: false,
+     openTableAddUp: false,
+     openUpdate: false,
+     id: id
+     })
+     }*/
     handleUpdateRepair = (id) => {
         this.setState({
             openinvalid: false,
@@ -49,20 +50,26 @@ class RepairList extends Component {
             id: id
         })
     }
-    async initialRemarks () {
-        this.setState({loading: true})
+    isFirst = true
+    async initialRemarks (nextProps) {
+        //this.setState({loading: true})
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage'
-        )
+                'http://127.0.0.1:18082/warehouse/getWarehouseDetail',
+                {'warehouseId': nextProps.id}
+            )
         const distributeLeaflets = this.distributeLeaflets
         /*const handleUpdate = this.handleUpdate*/
-        const showDetail = this.showDetail
         this.setState({loading: false,
             columns: [{
                 title: '序号',
                 width: 80,
                 dataIndex: 'id',
                 key: 'id'
+            }, {
+                title: '出入库日起',
+                width: 150,
+                dataIndex: 'materialName',
+                key: 'materialName'
             }, {
                 title: '仓库类型',
                 width: 100,
@@ -126,7 +133,6 @@ class RepairList extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => showDetail(record.id)}>明细</Button>
                             <Button type="primary" >出库</Button>
                         </div>
                     )
@@ -183,23 +189,23 @@ class RepairList extends Component {
             <div>
 
                 {/*<CancelRepairComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openinvalid}
-                />*/}
-                <showDetailComponent
+                 id={this.state.id}
+                 refreshTable={this.refresh}
+                 visible={this.state.openinvalid}
+                 />*/}
+               {/* <showDetailComponent
                     id={this.state.id}
                     visible={this.state.openTableAddUp}
-                />
+                />*/}
                 {/*<TableAddUpComponent
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
-                />
-                <TableAddUpComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />*/}
+                 refreshTable={this.refresh}
+                 visible={this.state.openTableAddUp}
+                 />
+                 <TableAddUpComponent
+                 id={this.state.id}
+                 refreshTable={this.refresh}
+                 visible={this.state.openUpdate}
+                 />*/}
                 <span>
                     <span>报修日期:</span>
                     <RangePicker onChange={this.getDate}
@@ -221,5 +227,5 @@ class RepairList extends Component {
         )
     }
 }
-export default RepairList
+export default TableAddUp
 
