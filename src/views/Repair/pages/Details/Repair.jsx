@@ -29,7 +29,7 @@ class App extends React.Component {
         }
 
         Repair['picture'] = Repair.picture.split('#').map(img => {
-            return <img src={img} />
+            return <img alt="" src={img} />
         })
         alert(Repair.picture.toString())
         this.setState({

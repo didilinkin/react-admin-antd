@@ -59,8 +59,8 @@ class Sidebar extends React.Component {
         return (
             <Sider
                 // trigger={ null }
-                // collapsible
-                // collapsed={this.props.collapsed}
+                collapsible
+                collapsed={this.props.collapsed}
                 // onCollapse={this.onCollapse}
                 // style={{overflowY: 'auto'}}
                 // breakpoint="lg"
