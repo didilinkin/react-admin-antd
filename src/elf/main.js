@@ -1,10 +1,10 @@
 // JS 处理CSS样式
-import * as c   from './helpers/_Color'
-import * as v   from './helpers/_Variable'
-import * as e   from './helpers/_Extend'
-import * as m   from './helpers/_Mixins'
-import * as f   from './helpers/_Font'
-import * as d   from './helpers/_Distance'
+import * as c   from './helpers/Color'
+import * as v   from './helpers/Variable'
+import * as e   from './helpers/Extend'
+import * as m   from './helpers/Mixins'
+import * as f   from './helpers/Font'
+import * as d   from './helpers/Distance'
 
 class Elf {
     constructor (c, v, e, m, f, d) {
