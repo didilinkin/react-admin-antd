@@ -1,7 +1,7 @@
 import {Modal, Input, Form, DatePicker, Select, Row, Col, notification, Icon  } from 'antd'
 import React from 'react'
-import PicturesWall from './common/PicturesWall'
-import { apiGet, apiPost } from '../../../api'
+import PicturesWall from './PicturesWall'
+import { apiGet, apiPost } from '../../../../api/index'
 import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
@@ -22,10 +22,10 @@ class TableAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.108:18082/upkeep/getRepair',
+                    'http://192.168.1.250:18082/upkeep/getRepair',
                     {'id': nextProps.id}
                 )
                 this.imgUrl = resulData.data.picture + '#'
@@ -39,7 +39,7 @@ class TableAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.108:18082/storage/files/' + img
+                            url: 'http://192.168.1.250:18082/storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -75,7 +75,7 @@ class TableAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -101,7 +101,7 @@ class TableAddUp extends React.Component {
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.108:18082/upkeep/updateRepair',
+                'http://192.168.1.250:18082/upkeep/updateRepair',
                 json
             )
             notification.open({
@@ -110,7 +110,7 @@ class TableAddUp extends React.Component {
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.108:18082/upkeep/insertRepair',
+                'http://192.168.1.250:18082/upkeep/insertRepair',
                 json
             )
             notification.open({

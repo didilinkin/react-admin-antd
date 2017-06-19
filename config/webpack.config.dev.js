@@ -267,24 +267,14 @@ module.exports = {
           },
         ],
       },
+      // 加入 Antd Less 配置 - end
+      
       // SASS
       {
         test: /\.sass$/,
         // Passing indentedSyntax query param to node-sass
         loader: "style!css!sass"
       }
-      // 加入 Antd Less 配置 - end
-
-      // // 加入 Antd 主题 Less 相关配置 - start ( 有BUG )
-      // {
-      //   test: /\.module\.less$/,
-      //   loader: ExtractTextPlugin.extract(
-      //     'css?sourceMap&modules&localIdentName=[local]___[hash:base64:5]!!' +
-      //     'postcss!' +
-      //     `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
-      //   ),
-      // },
-      // // 加入 Antd 主题 Less 相关配置 - end
     ]
   },
   plugins: [

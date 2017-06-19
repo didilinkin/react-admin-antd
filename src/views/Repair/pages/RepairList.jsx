@@ -5,7 +5,7 @@ import { apiPost } from '../../../api'
 // 引入组件
 import CancelRepairComponent from './common/CancelRepair'
 import DistributeLeafletsComponent from './common/DistributeLeaflets'
-import TableAddUpComponent from './TableAddUp'
+import TableAddUpComponent from './common/TableAddUp'
 const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
@@ -52,7 +52,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList'
+            'http://192.168.1.250:18082/upkeep/repairList'
         )
         let repairList = result.data
         const distributeLeaflets = this.distributeLeaflets
@@ -186,7 +186,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList',
+            'http://192.168.1.250:18082/upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName

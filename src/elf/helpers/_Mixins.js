@@ -18,8 +18,18 @@ export const fS = (fontSize) => {
 //     @return $px*320/$designWidth/20 + rem;
 // }
 
+// hotcss 转换px到rem
 export const px2rem = (px) => {
     return {
         'font-size': px * 320 / designWidth / 20 + 'rem'
+    }
+}
+
+// flex混合
+export const flexCenter = () => {
+    return {
+        'display': 'flex',
+        'align-items': 'center',
+        'justify-content': 'center'
     }
 }

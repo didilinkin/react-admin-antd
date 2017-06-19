@@ -1931,7 +1931,7 @@
       "label": "chai",
       "attributes": {},
       "y": 174.10605,
-      "x": 1250.3047,
+      "x": 1108.3047,
       "id": "chai",
       "size": 2.9603715
     },
@@ -2524,7 +2524,7 @@
       "color": "#c71919",
       "label": "connect-redis",
       "attributes": {},
-      "y": 0.25086692,
+      "y": 0.10886692,
       "x": -927.49084,
       "id": "connect-redis",
       "size": 1.8649102
@@ -4054,7 +4054,7 @@
       "color": "#9fc719",
       "label": "password-hash",
       "attributes": {},
-      "y": -632.2503,
+      "y": -632.1083,
       "x": 94.21731,
       "id": "password-hash",
       "size": 0.40429485
