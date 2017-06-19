@@ -56,7 +56,7 @@ class ReturnVisit extends React.Component {
         )
         notification.open({
             message: resulData.data,
-            icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
         })
     }
     render () {

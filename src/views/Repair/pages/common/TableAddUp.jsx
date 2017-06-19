@@ -106,7 +106,7 @@ class TableAddUp extends React.Component {
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
             })
         } else {
             let result = await apiPost(
@@ -115,7 +115,7 @@ class TableAddUp extends React.Component {
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
             })
         }
 
