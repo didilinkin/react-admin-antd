@@ -27,8 +27,9 @@ const SetRouter = () => (
     <Router>
         <ContainerDiv>
             {/* 正确配置 - 静态下存在问题 - 在排查中 */}
+            <Redirect exact from="/" to="/home/index" />
+
             <Switch>
-                <Redirect exact from="/" to="/home/index" />
                 {routes.map((route, i) => (
                     <RouteWithSubRoutes key={i} {...route} />
                 ))}
