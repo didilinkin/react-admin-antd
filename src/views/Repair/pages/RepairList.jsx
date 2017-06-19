@@ -5,7 +5,7 @@ import { apiPost } from '../../../api'
 // 引入组件
 import CancelRepairComponent from './common/CancelRepair'
 import DistributeLeafletsComponent from './common/DistributeLeaflets'
-import TableAddUpComponent from './TableAddUp'
+import TableAddUpComponent from './common/TableAddUp'
 const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
