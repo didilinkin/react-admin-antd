@@ -160,6 +160,7 @@ module.exports = {
           /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
+          /\.less$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -188,11 +189,11 @@ module.exports = {
         loader: require.resolve('babel-loader'),
         // @remove-on-eject-begin
         options: {
-          // babelrc: false,
-          // presets: [require.resolve('babel-preset-react-app')],
-          // 新增 AntD 配置
+          babelrc: false,
+          presets: [require.resolve('babel-preset-react-app')],
+          // AntD 配置
           plugins: [
-            ['import', [{ libraryName: 'antd', style: true }]],
+            ['import', { libraryName: 'antd', style: true }],
           ],
           cacheDirectory: true
         },
@@ -253,7 +254,7 @@ module.exports = {
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.
 
-      // 加入 Antd Less 配置 - start
+      // AntD
       // Parse less files and modify variables
       {
         test: /\.less$/,
@@ -286,7 +287,8 @@ module.exports = {
           },
         ],
       },
-      // 加入 Antd Less 配置 - end
+      // AntD End
+      
     ],
   },
   plugins: [
