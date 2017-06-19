@@ -16,6 +16,7 @@ import styled               from 'styled-components'                            
 
 import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
+import Registration         from '../views/common/pages/Registration'
 
 // 容器Div 样式配置( 不需要单独写一个组件 )
 const ContainerDiv = styled.section `
@@ -32,6 +33,7 @@ const SetRouter = () => (
                 ))}
 
                 <Route path="/login" component={ Login } />
+                <Route path="/registration" component={ Registration } />
                 <Route component={ NotFound } />
             </Switch>
         </ContainerDiv>

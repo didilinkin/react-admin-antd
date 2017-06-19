@@ -159,6 +159,7 @@ module.exports = {
         "wrap-iife": ["error", "outside"],                                          // 需要把立即执行的函数包裹起来
         "no-undefined": "error",                                                    // 禁止将 undefined 作为标识符
         "require-yield": "error",                                                   // 禁用函数内没有yield的 generator 函数
+        "no-restricted-globals": 0,                                           // 禁用特定的全局变量
 
         // React JSX内容
         "react/jsx-uses-react": "error",

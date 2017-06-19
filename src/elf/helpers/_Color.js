@@ -1,7 +1,4 @@
 // 颜色
-export const W = '#FFF'                 // 白 - 简写
-export const B = '#000'                 // 黑 - 简写
-
 export const base = '#F5F5F5'
 export const theme = '#108EE9'
 
