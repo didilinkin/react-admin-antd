@@ -81,7 +81,8 @@
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
     "webpack-manifest-plugin": "^1.1.0",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "axios-base-url": "^0.2.0"
   },
   "dependencies": {
     "@types/react": "^15.0.26",
