@@ -87,18 +87,6 @@ module.exports = function(proxy, allowedHost) {
       disableDotRule: true,
     },
     public: allowedHost,
-    // 设置Mock( 无效 )
-    // proxy: {
-    //     '/api': {
-    //         // target: 'http://10.101.64.45:8080',
-    //         target: 'http://app.pms.cn/',
-    //         // pathRewrite: {
-    //         //     '^/json': '/ui-document/json'
-    //         // },
-    //         changeOrigin: true,
-    //         secure: false
-    //     }
-    // },
     proxy,
     setup(app) {
       // This lets us open files from the runtime error overlay.

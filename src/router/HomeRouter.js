@@ -25,6 +25,7 @@ import MaintenanceProject   from '../views/Repair/pages/Details/MaintenanceProje
 import InventoryManage      from '../views/Warehouse/pages/InventoryManage'             // 库存管理( 合并: 汇总, 入库, 出库 )
 import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'           // 领用统计
 import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'          // 材料管理
+import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'             // [详情] - 出入库详情
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -107,6 +108,9 @@ const routes = [
             }, {
                 path: '/warehouse/materialManagement',          // 仓库管理 - 材料管理
                 component: MaterialManagement
+            }, {
+                path: '/warehouse/warehouseDetail/:id',         // [详情] - 出入库详情
+                component: WarehouseDetail
             }
         ]
     }
