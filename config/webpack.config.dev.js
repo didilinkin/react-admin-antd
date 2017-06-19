@@ -267,6 +267,12 @@ module.exports = {
           },
         ],
       },
+      // SASS
+      {
+        test: /\.sass$/,
+        // Passing indentedSyntax query param to node-sass
+        loader: "style!css!sass"
+      }
       // 加入 Antd Less 配置 - end
 
       // // 加入 Antd 主题 Less 相关配置 - start ( 有BUG )

@@ -2,9 +2,8 @@
 import React from 'react'
 import { Layout }   from 'antd'
 
-import Sidebar from '../layout/Sidebar'
-// import HeaderCustom from '../layout/HeaderCustom'
-import HeaderBar from '../layout/HeaderBar'
+import Sidebar      from '../layout/Sidebar'
+import HeaderBar    from '../layout/HeaderBar'
 
 const { Content } = Layout
 
@@ -23,18 +22,11 @@ class HomeTemplate extends React.Component {
         return (
             <Layout className="ant-layout-has-sider" style={{ height: '100%' }}>
                 {/* 侧导航栏 */}
-                <Sidebar
-                    collapsed={this.state.collapsed}
-                />
-
+                <Sidebar collapsed={this.state.collapsed} />
                 {/* 内容 */}
                 <Layout>
-                    {/* 顶部 */}
                     <HeaderBar toggle={this.toggle} />
-
-                    {/* 内容 */}
                     <Content style={{
-                        margin: '0 16px',
                         padding: 24,
                         background: '#fff',
                         minHeight: 280 }}

@@ -8,52 +8,51 @@ const SubMenu = Menu.SubMenu
 
 class Sidebar extends React.Component {
     state = {
-        // collapsed: false,
-        // current: '1',               // 最近
-        // openKeys: [],               // 打开的keys
-        mode: 'inline'              // 侧导航栏 类型
+        mode: 'inline',
+        titleStyle: {
+            display: 'inline'
+        },
+        current: '1',
+        openKeys: []
     }
 
-    // 当 组件接收到一个新的prop时执行此事件( 当侧导航栏状态改变时, 改变样式模式 )
     componentWillReceiveProps (nextProps) {
-        // console.log(nextProps.collapsed)
         this.onCollapse(nextProps.collapsed)
     }
 
-    // 根据 最新的 collapsed状态, 修改 '菜单类型' 模式( 当侧导航栏状态改变时, 改变样式模式 )
     onCollapse = (collapsed) => {
         this.setState({
             collapsed,
-            mode: collapsed ? 'vertical' : 'inline'
+            mode: collapsed ? 'vertical' : 'inline',
+            titleStyle: collapsed ? { display: 'none' } : { display: 'inline' }
         })
     }
 
-    // 操作点击
-    // handleClick = (e) => {
-    //     console.log('Clicked: ', e)
-    //     this.setState({ current: e.key })
-    // }
-    // // 开启时 - 改变
-    // onOpenChange = (openKeys) => {
-    //     const state = this.state
-    //     const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
-    //     const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-    //     let nextOpenKeys = []
-    //     if (latestOpenKey) {
-    //         nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
-    //     }
-    //     if (latestCloseKey) {
-    //         nextOpenKeys = this.getAncestorKeys(latestCloseKey)
-    //     }
-    //     this.setState({ openKeys: nextOpenKeys })
-    // }
-    // // 获取父级key
-    // getAncestorKeys = (key) => {
-    //     const map = {
-    //         sub3: ['sub2']
-    //     }
-    //     return map[key] || []
-    // }
+    handleClick = (e) => {
+        console.log('Clicked: ', e)
+        this.setState({ current: e.key })
+    }
+
+    onOpenChange = (openKeys) => {
+        const state = this.state
+        const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
+        const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
+        let nextOpenKeys = []
+        if (latestOpenKey) {
+            nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
+        }
+        if (latestCloseKey) {
+            nextOpenKeys = this.getAncestorKeys(latestCloseKey)
+        }
+        this.setState({ openKeys: nextOpenKeys })
+    }
+
+    getAncestorKeys = (key) => {
+        const map = {
+            deviceMaintain: ['/warehouse/inspection']
+        }
+        return map[key] || []
+    }
 
     render () {
         return (
@@ -69,29 +68,28 @@ class Sidebar extends React.Component {
 
                 <Menu
                     theme="dark"
-                    // style={{ width: 240 }}
                     defaultOpenKeys={['sub1']}
-                    mode={this.state.mode}
-                    // openKeys={this.state.openKeys}
-                    // selectedKeys={[this.state.current]}
-                    // onOpenChange={this.onOpenChange}
-                    // onClick={this.handleClick}
+                    mode={ this.state.mode }
+                    onClick={ this.handleClick }
+                    onOpenChange={ this.onOpenChange }
+                    selectedKeys={[this.state.current]}
+                    openKeys={ this.state.openKeys }
                 >
                     {/* 首页 */}
-                    <Menu.Item key="/home/index">
+                    <Menu.Item key="home/index">
                         <Link to="/home/index">
                             <Icon type="user" />
-                            <span className="nav-text">首页</span>
+                            <span className="nav-text" style={ this.state.titleStyle }>首页</span>
                         </Link>
                     </Menu.Item>
 
                     {/* 测试 */}
                     <SubMenu
-                        key="/test"
+                        key="test"
                         title={
                             <span>
                                 <Icon type="schedule" />
-                                <span className="nav-text">测试</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>测试</span>
                             </span>
                         }
                     >
@@ -102,38 +100,38 @@ class Sidebar extends React.Component {
 
                     {/* 客户管理 */}
                     <SubMenu
-                        key="/upkeep"
+                        key="upkeep"
                         title={
                             <span>
                                 <Icon type="idcard" />
-                                <span className="nav-text">客户管理</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>客户管理</span>
                             </span>
                         }
                     >
                         <Menu.Item key="/upkeep/repairList">
-                            <Link to="/upkeep/repairList">客户报修</Link>
+                            <Link to="/upkeep/repairList ">客户报修</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/clientReview">
-                            <Link to="/upkeep/clientReview">客户回访</Link>
+                            <Link to="/upkeep/clientReview ">客户回访</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/upkeepList">
-                            <Link to="/upkeep/upkeepList">维修费设置</Link>
+                            <Link to="/upkeep/upkeepList ">维修费设置</Link>
                         </Menu.Item>
 
                         <Menu.Item key="/upkeep/rectification">
-                            <Link to="/upkeep/rectification">整改通知</Link>
+                            <Link to="/upkeep/rectification ">整改通知</Link>
                         </Menu.Item>
                     </SubMenu>
 
                     {/* 仓库管理 */}
                     <SubMenu
-                        key="/warehouse"
+                        key="warehouse"
                         title={
                             <span>
                                 <Icon type="database" />
-                                <span className="nav-text">仓库管理</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>仓库管理</span>
                             </span>
                         }
                     >
@@ -152,11 +150,11 @@ class Sidebar extends React.Component {
 
                     {/* 设备维护 */}
                     <SubMenu
-                        key="/deviceMaintain"
+                        key="deviceMaintain"
                         title={
                             <span>
                                 <Icon type="tool" />
-                                <span className="nav-text">设备维护</span>
+                                <span className="nav-text" style={ this.state.titleStyle }>设备维护</span>
                             </span>
                         }
                     >
