@@ -28,3 +28,4 @@ yarn-error.log*
 
 .idea/
 /idea
+yarn.lock
