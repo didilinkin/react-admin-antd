@@ -5,3 +5,4 @@ scripts/*.js
 /node_modules/*.js
 src/App.test.js
 src/style/theme/index.js
+build/*.js

@@ -31,7 +31,7 @@ class ReturnVisit extends React.Component {
         })
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={'storage/files/' + img} alt=""/>
+                return <img src={'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }
@@ -56,7 +56,7 @@ class ReturnVisit extends React.Component {
         )
         notification.open({
             message: resulData.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
     }
     render () {

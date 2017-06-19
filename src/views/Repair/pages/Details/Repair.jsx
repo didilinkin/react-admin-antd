@@ -30,7 +30,7 @@ class App extends React.Component {
 
         Repair['picture'] = Repair.picture.split('#').map(img => {
             if (img !== '') {
-                return <img src={'storage/files/' + img} alt=""/>
+                return <img src={'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }

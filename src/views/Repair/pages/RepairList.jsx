@@ -236,7 +236,7 @@ class RepairList extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.opendispatch}
-                    />
+                />
                 <TableAddUpComponent
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
@@ -248,8 +248,7 @@ class RepairList extends Component {
                 />
                 <span>
                     <span>报修日期:</span>
-                    <RangePicker onChange={this.getDate}
-                    />
+                    <RangePicker onChange={this.getDate} />
                     <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
