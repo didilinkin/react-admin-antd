@@ -21,10 +21,10 @@ class RectificationAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.108:18082/rectification/getRectification',
+                    'http://192.168.1.250:18082/rectification/getRectification',
                     {'id': nextProps.id}
                 )
                 this.imgUrl = resulData.data.imgUrls + '#'
@@ -38,7 +38,7 @@ class RectificationAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.108:18082/storage/files/' + img
+                            url: 'http://192.168.1.250:18082/storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -70,7 +70,7 @@ class RectificationAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -96,7 +96,7 @@ class RectificationAddUp extends React.Component {
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.108:18082/rectification/updateRectification',
+                'http://192.168.1.250:18082/rectification/updateRectification',
                 json
             )
             notification.open({
@@ -105,7 +105,7 @@ class RectificationAddUp extends React.Component {
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.108:18082/rectification/insertRectification',
+                'http://192.168.1.250:18082/rectification/insertRectification',
                 json
             )
             notification.open({
