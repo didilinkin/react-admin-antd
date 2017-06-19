@@ -37,7 +37,7 @@ class Counter extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/list'
+            'upkeep/list'
         )
         this.setState({loading: false})
         this.props.dispatch({
@@ -64,7 +64,7 @@ class Counter extends Component {
             id: 0
         })
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/list',
+            'upkeep/list',
             {'entryName': this.entryName}
         )
         this.setState({loading: false})
@@ -133,7 +133,7 @@ function mapStateToProps (state, ownProps) {
 function mapDispatchToProps (dispatch) {
     async function handleDelete (id) {
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/delect',
+            'upkeep/delect',
             { 'id': id }
         )
         dispatch({

@@ -52,7 +52,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList'
+            'upkeep/repairList'
         )
         let repairList = result.data
         const distributeLeaflets = this.distributeLeaflets
@@ -186,7 +186,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList',
+            'upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName
@@ -236,7 +236,7 @@ class RepairList extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.opendispatch}
-                    />
+                />
                 <TableAddUpComponent
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
@@ -248,8 +248,7 @@ class RepairList extends Component {
                 />
                 <span>
                     <span>报修日期:</span>
-                    <RangePicker onChange={this.getDate}
-                    />
+                    <RangePicker onChange={this.getDate} />
                     <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>

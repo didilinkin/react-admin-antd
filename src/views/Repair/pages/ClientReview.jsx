@@ -15,7 +15,7 @@ class ClientReview extends React.Component {
     }
     async initialRemarks () {
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList'
+            'upkeep/repairList'
         )
         this.setState({
             columns: [{
@@ -113,7 +113,7 @@ class ClientReview extends React.Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList',
+            'upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName,
@@ -144,8 +144,7 @@ class ClientReview extends React.Component {
             <div>
                 <span>
                     <span>回访日期:</span>
-                    <RangePicker onChange={this.getDate}
-                    />
+                    <RangePicker onChange={this.getDate} />
                     <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>

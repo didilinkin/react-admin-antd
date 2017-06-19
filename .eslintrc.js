@@ -181,6 +181,9 @@ module.exports = {
         "indent": ["error", 4, {
             "SwitchCase": 1,
             "VariableDeclarator": 1
-        }]                                                                              // 四格缩进( SwitchCase 保持同步缩进; 多行声明变量保持同步缩进 )
-    }
+        }],                                                                              // 四格缩进( SwitchCase 保持同步缩进; 多行声明变量保持同步缩进 )
+        
+        // 临时关闭规则
+        "react/sort-comp": 0
+}
 };

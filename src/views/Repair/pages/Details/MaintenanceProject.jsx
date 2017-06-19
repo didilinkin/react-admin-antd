@@ -12,7 +12,7 @@ class App extends React.Component {
     }
     async initialRemarks () {
         let resulData = await apiPost(
-            'http://192.168.1.108:18082/upkeep/getRepair',
+            'upkeep/getRepair',
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data

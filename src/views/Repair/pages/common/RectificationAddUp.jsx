@@ -21,10 +21,10 @@ class RectificationAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.108:18082/rectification/getRectification',
+                    'rectification/getRectification',
                     {'id': nextProps.id}
                 )
                 this.imgUrl = resulData.data.imgUrls + '#'
@@ -38,7 +38,7 @@ class RectificationAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.108:18082/storage/files/' + img
+                            url: 'storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -70,7 +70,7 @@ class RectificationAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -96,21 +96,21 @@ class RectificationAddUp extends React.Component {
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.108:18082/rectification/updateRectification',
+                'rectification/updateRectification',
                 json
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.108:18082/rectification/insertRectification',
+                'rectification/insertRectification',
                 json
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
         }
 
@@ -166,15 +166,15 @@ class RectificationAddUp extends React.Component {
                         <FormItem label="检查日期" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('inspectDate')}/>
+                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('inspectDate')} />
                         </FormItem>
                             </Col>
                             <Col span={12}>
                         <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input {...getFieldProps('buildName')}/>
-                            <Input type="hidden" {...getFieldProps('buildId')}/>
+                            <Input {...getFieldProps('buildName')} />
+                            <Input type="hidden" {...getFieldProps('buildId')} />
                         </FormItem>
                             </Col>
                         </Row>
@@ -197,29 +197,29 @@ class RectificationAddUp extends React.Component {
                                     return <Option key={key}>{d.clientName}</Option>
                                 })}
                             </Select>
-                            <Input type="hidden" {...getFieldProps('clientType')}/>
-                            <Input type="hidden" {...getFieldProps('clientId')}/>
+                            <Input type="hidden" {...getFieldProps('clientType')} />
+                            <Input type="hidden" {...getFieldProps('clientId')} />
                         </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="所属房间" labelCol={{ span: 5 }}
                                           wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('roomNums')}/>
+                                    <Input {...getFieldProps('roomNums')} />
                                 </FormItem>
                             </Col>
                         </Row>
                         <FormItem label="整改项目" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('rectificationContent')}/>
+                            <Input type="textarea" rows={4} {...getFieldProps('rectificationContent')} />
                         </FormItem>
 
 
                         <FormItem label="现场图片" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback}/>
+                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                     </Form>
                 </Modal>

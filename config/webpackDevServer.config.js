@@ -1,13 +1,3 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-// @remove-on-eject-end
 'use strict';
 
 const errorOverlayMiddleware = require('react-error-overlay/middleware');
@@ -87,18 +77,6 @@ module.exports = function(proxy, allowedHost) {
       disableDotRule: true,
     },
     public: allowedHost,
-    // 设置Mock( 无效 )
-    // proxy: {
-    //     '/api': {
-    //         // target: 'http://10.101.64.45:8080',
-    //         target: 'http://app.pms.cn/',
-    //         // pathRewrite: {
-    //         //     '^/json': '/ui-document/json'
-    //         // },
-    //         changeOrigin: true,
-    //         secure: false
-    //     }
-    // },
     proxy,
     setup(app) {
       // This lets us open files from the runtime error overlay.

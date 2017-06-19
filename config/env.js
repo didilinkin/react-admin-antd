@@ -1,13 +1,3 @@
-// @remove-on-eject-begin
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-// @remove-on-eject-end
 'use strict';
 
 const fs = require('fs');
@@ -66,13 +56,6 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // Grab NODE_ENV and REACT_APP_* environment variables and prepare them to be
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
-
-// 添加Mock 配置
-// var mockDir = path.resolve(__dirname, '../mock')
-// fs.readdirSync(mockDir).forEach(function (file) {
-//   var mock = require(path.resolve(mockDir, file))
-//   app.use(mock.api, mock.response)
-// })
 
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
