@@ -13,7 +13,7 @@ class App extends React.Component {
     }
     async initialRemarks () {
         let resulData = await apiPost(
-            'http://192.168.1.250:18082/upkeep/getRepair',
+            'upkeep/getRepair',
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
@@ -24,7 +24,7 @@ class App extends React.Component {
         }
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={'http://192.168.1.250:18082/storage/files/' + img} alt=""/>
+                return <img src={'storage/files/' + img} alt=""/>
             } else {
                 return '无'
             }

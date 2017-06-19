@@ -22,10 +22,10 @@ class TableAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.250:18082/upkeep/getClient'
+                    'upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.250:18082/upkeep/getRepair',
+                    'upkeep/getRepair',
                     {'id': nextProps.id}
                 )
                 this.imgUrl = resulData.data.picture + '#'
@@ -39,7 +39,7 @@ class TableAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.250:18082/storage/files/' + img
+                            url: 'storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -75,7 +75,7 @@ class TableAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.250:18082/upkeep/getClient'
+                    'upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -101,7 +101,7 @@ class TableAddUp extends React.Component {
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.250:18082/upkeep/updateRepair',
+                'upkeep/updateRepair',
                 json
             )
             notification.open({
@@ -110,7 +110,7 @@ class TableAddUp extends React.Component {
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.250:18082/upkeep/insertRepair',
+                'upkeep/insertRepair',
                 json
             )
             notification.open({

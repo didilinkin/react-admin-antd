@@ -26,7 +26,7 @@ class CancelRepair extends React.Component {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
             await apiPost(
-                'http://192.168.1.250:18082/upkeep/deleteRepair',
+                'upkeep/deleteRepair',
                 json
             )
             notification.open({

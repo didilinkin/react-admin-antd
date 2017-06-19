@@ -52,7 +52,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.250:18082/upkeep/repairList'
+            'upkeep/repairList'
         )
         let repairList = result.data
         const distributeLeaflets = this.distributeLeaflets
@@ -186,7 +186,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.250:18082/upkeep/repairList',
+            'upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName
