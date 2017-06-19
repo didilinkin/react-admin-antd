@@ -15,7 +15,7 @@ class ClientReview extends React.Component {
     }
     async initialRemarks () {
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList'
+            'http://192.168.1.250:18082/upkeep/repairList'
         )
         this.setState({
             columns: [{
@@ -113,7 +113,7 @@ class ClientReview extends React.Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/repairList',
+            'http://192.168.1.250:18082/upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName,

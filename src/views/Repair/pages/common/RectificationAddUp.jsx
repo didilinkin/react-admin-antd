@@ -1,13 +1,13 @@
 import {Modal, Input, Form, DatePicker, Select, Row, Col, notification, Icon  } from 'antd'
 import React from 'react'
-import PicturesWall from './common/PicturesWall'
-import { apiGet, apiPost } from '../../../api'
+import PicturesWall from './PicturesWall'
+import { apiGet, apiPost } from '../../../../api/index'
 import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
 
 
-class TableAddUp extends React.Component {
+class RectificationAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -22,10 +22,10 @@ class TableAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.108:18082/upkeep/getRepair',
+                    'http://192.168.1.250:18082/upkeep/getRepair',
                     {'id': nextProps.id}
                 )
                 this.imgUrl = resulData.data.picture + '#'
@@ -39,7 +39,7 @@ class TableAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.108:18082/storage/files/' + img
+                            url: 'http://192.168.1.250:18082/storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -75,7 +75,7 @@ class TableAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.108:18082/upkeep/getClient'
+                    'http://192.168.1.250:18082/upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -101,21 +101,21 @@ class TableAddUp extends React.Component {
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.108:18082/upkeep/updateRepair',
+                'http://192.168.1.250:18082/upkeep/updateRepair',
                 json
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.108:18082/upkeep/insertRepair',
+                'http://192.168.1.250:18082/upkeep/insertRepair',
                 json
             )
             notification.open({
                 message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
             })
         }
 
@@ -168,17 +168,18 @@ class TableAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                        <FormItem label="报修日期" labelCol={{ span: 5 }}
+                        <FormItem label="检查日期" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')}/>
+                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('inspectDate')}/>
                         </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="报修人" labelCol={{ span: 5 }}
+                        <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input {...getFieldProps('repairMan')}/>
+                            <Input {...getFieldProps('buildName')}/>
+                            <Input type="hidden" {...getFieldProps('buildId')}/>
                         </FormItem>
                             </Col>
                         </Row>
@@ -257,6 +258,6 @@ class TableAddUp extends React.Component {
     }
 }
 
-let TableAddUpComponent = Form.create()(TableAddUp)
+let RectificationAddUpComponent = Form.create()(RectificationAddUp)
 
-export default TableAddUpComponent
+export default RectificationAddUpComponent

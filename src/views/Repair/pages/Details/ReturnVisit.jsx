@@ -13,7 +13,7 @@ class ReturnVisit extends React.Component {
     }
     async initialRemarks () {
         let resulData = await apiPost(
-            'http://192.168.1.108:18082/upkeep/getRepair',
+            'http://192.168.1.250:18082/upkeep/getRepair',
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
@@ -31,7 +31,7 @@ class ReturnVisit extends React.Component {
         })
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={'http://192.168.1.108:18082/storage/files/' + img} alt=""/>
+                return <img src={'http://192.168.1.250:18082/storage/files/' + img} alt=""/>
             } else {
                 return '无'
             }
@@ -50,13 +50,13 @@ class ReturnVisit extends React.Component {
     handleSubmit = async () => {
         let resulData = await
         apiPost(
-            'http://192.168.1.108:18082/upkeep/visit',
+            'http://192.168.1.250:18082/upkeep/visit',
             {'id': this.props.match.params.id,
                 visitContent: this.value}
         )
         notification.open({
             message: resulData.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+            icon: <Icon type="smile-circle" style={{color: '#250ee9'}}/>
         })
     }
     render () {

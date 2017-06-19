@@ -12,7 +12,7 @@ const asyncTest = async function () {
     try {
         // 内网测试
         let result = await apiPost(
-            'http://192.168.1.108:18082/upkeep/list',
+            'http://192.168.1.250:18082/upkeep/list',
             { 'entryName': '灯泡2' }
         )
 

@@ -3,7 +3,7 @@ export const W = '#FFF'                 // 白 - 简写
 export const B = '#000'                 // 黑 - 简写
 
 export const base = '#F5F5F5'
-export const theme = '#108EE9'
+export const theme = '#250EE9'
 
 export const line = '#E3E3E3'           // 线
 

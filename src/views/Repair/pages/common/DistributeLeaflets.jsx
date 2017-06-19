@@ -30,7 +30,7 @@ class DistributeLeaflets extends React.Component {
         if (nextProps.id > 0) {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
-                let resulData = await apiGet('http://192.168.1.108:18082/upkeep/getUser')
+                let resulData = await apiGet('http://192.168.1.250:18082/upkeep/getUser')
                 this.setState({
                     visible: nextProps.visible,
                     data: {userArr: resulData.data},
@@ -46,7 +46,7 @@ class DistributeLeaflets extends React.Component {
     handleSubmit = async () => {
         if (this.props.id > 0) {
             await apiPost(
-                'http://192.168.1.108:18082/upkeep/distribute',
+                'http://192.168.1.250:18082/upkeep/distribute',
                 {
                     'id': this.props.id,
                     'repairedId': this.state.id,
@@ -55,7 +55,7 @@ class DistributeLeaflets extends React.Component {
             )
             notification.open({
                 message: '派单成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                icon: <Icon type="smile-circle" style={{color: '#250ee9'}} />
             })
             this.props.refreshTable()
         }

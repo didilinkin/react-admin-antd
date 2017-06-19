@@ -26,12 +26,12 @@ class CancelRepair extends React.Component {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
             await apiPost(
-                'http://192.168.1.108:18082/upkeep/deleteRepair',
+                'http://192.168.1.250:18082/upkeep/deleteRepair',
                 json
             )
             notification.open({
                 message: '作废成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                icon: <Icon type="smile-circle" style={{color: '#250ee9'}} />
             })
             this.props.refreshTable()
         }
