@@ -12,7 +12,6 @@ class RectificationAddUp extends React.Component {
         visible: false,
         isFirst: true,
         view: true,
-        repairDate: '',
         fileList: [],
         clientList: []
     }
@@ -22,14 +21,14 @@ class RectificationAddUp extends React.Component {
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
-                    'http://192.168.1.250:18082/upkeep/getClient'
+                    'http://192.168.1.108:18082/upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'http://192.168.1.250:18082/upkeep/getRepair',
+                    'http://192.168.1.108:18082/rectification/getRectification',
                     {'id': nextProps.id}
                 )
-                this.imgUrl = resulData.data.picture + '#'
-                let imgArr = resulData.data.picture.split('#')
+                this.imgUrl = resulData.data.imgUrls + '#'
+                let imgArr = resulData.data.imgUrls.split('#')
                 let Arr = []
                 let i = 0
                 imgArr.map(img => {
@@ -39,7 +38,7 @@ class RectificationAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'http://192.168.1.250:18082/storage/files/' + img
+                            url: 'http://192.168.1.108:18082/storage/files/' + img
                         }
                         Arr.push(json)
                     }
@@ -50,22 +49,18 @@ class RectificationAddUp extends React.Component {
                     visible: nextProps.visible,
                     isFirst: false,
                     view: true,
-                    repairDate: resulData.data.repairDate,
                     fileList: Arr,
                     clientList: result.data
                 })
                 this.props.form.setFieldsValue({
-                    repairDate: moment(resulData.data.repairDate),
-                    repairMan: resulData.data.repairMan,
+                    inspectDate: moment(resulData.data.inspectDate),
+                    buildName: resulData.data.buildName,
+                    buildId: resulData.data.buildId,
                     clientName: resulData.data.clientName,
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
-                    phone: resulData.data.phone,
-                    buildName: resulData.data.buildName,
-                    buildId: resulData.data.buildId,
-                    repairNum: resulData.data.repairNum,
-                    roomNum: resulData.data.roomNum,
-                    repairContent: resulData.data.repairContent
+                    roomNums: resulData.data.roomNums,
+                    rectificationContent: resulData.data.rectificationContent
                 })
             }
         } else {
@@ -75,7 +70,7 @@ class RectificationAddUp extends React.Component {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
-                    'http://192.168.1.250:18082/upkeep/getClient'
+                    'http://192.168.1.108:18082/upkeep/getClient'
                 )
                 this.setState({
                     visible: nextProps.visible,
@@ -94,14 +89,14 @@ class RectificationAddUp extends React.Component {
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
         this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-        json['picture'] = this.imgUrl
-        let repairDate = json.repairDate.format('YYYY-MM-DD')
-        json['repairDate'] = repairDate
+        json['imgUrls'] = this.imgUrl
+        let inspectDate = json.inspectDate.format('YYYY-MM-DD')
+        json['inspectDate'] = inspectDate
         debugger
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
-                'http://192.168.1.250:18082/upkeep/updateRepair',
+                'http://192.168.1.108:18082/rectification/updateRectification',
                 json
             )
             notification.open({
@@ -110,7 +105,7 @@ class RectificationAddUp extends React.Component {
             })
         } else {
             let result = await apiPost(
-                'http://192.168.1.250:18082/upkeep/insertRepair',
+                'http://192.168.1.108:18082/rectification/insertRectification',
                 json
             )
             notification.open({
@@ -144,7 +139,7 @@ class RectificationAddUp extends React.Component {
                 this.props.form.setFieldsValue({
                     buildName: client.buildName,
                     buildId: client.buildId,
-                    roomNum: client.roomNum,
+                    roomNums: client.roomNum,
                     clientType: client.clientType,
                     clientName: client.clientName,
                     clientId: client.clientId
@@ -207,46 +202,21 @@ class RectificationAddUp extends React.Component {
                         </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="联系方式" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('phone')}/>
-                        </FormItem>
+                                <FormItem label="所属房间" labelCol={{ span: 5 }}
+                                          wrapperCol={{ span: 15 }}
+                                >
+                                    <Input {...getFieldProps('roomNums')}/>
+                                </FormItem>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col span={12}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 5 }}
+                        <FormItem label="整改项目" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input {...getFieldProps('buildName')}/>
-                            <Input type="hidden" {...getFieldProps('buildId')}/>
-                        </FormItem>
-                            </Col>
-                            <Col span={12}>
-                        <FormItem label="报修单号" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('repairNum')}/>
-                        </FormItem>
-                            </Col>
-                        </Row>
-
-                        <FormItem label="所在房间" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('roomNum')}/>
+                            <Input type="textarea" rows={4} {...getFieldProps('rectificationContent')}/>
                         </FormItem>
 
 
-                        <FormItem label="报修内容" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input type="textarea" rows={4} {...getFieldProps('repairContent')}/>
-                        </FormItem>
-
-
-                        <FormItem label="上传图片" labelCol={{ span: 5 }}
+                        <FormItem label="现场图片" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback}/>

@@ -13,7 +13,7 @@ class addUpkeep extends React.Component {
         if (nextProps.id > 0) {
             if (this.state.isFirst) {
                 let resulData = await apiPost(
-                    'http://192.168.1.250:18082/upkeep/getUpkeep',
+                    'http://192.168.1.108:18082/upkeep/getUpkeep',
                     { 'id': nextProps.id }
                 )
                 this.props.form.setFields({
@@ -67,7 +67,7 @@ class addUpkeep extends React.Component {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
             await apiPost(
-                'http://192.168.1.250:18082/upkeep/updateUpkeep',
+                'http://192.168.1.108:18082/upkeep/updateUpkeep',
                 json
             )
             notification.open({
@@ -78,7 +78,7 @@ class addUpkeep extends React.Component {
         } else {
             console.log(this.props.form.getFieldsValue())
             await apiPost(
-                'http://192.168.1.250:18082/upkeep/addupkeep',
+                'http://192.168.1.108:18082/upkeep/addupkeep',
                 this.props.form.getFieldsValue()
             )
             notification.open({

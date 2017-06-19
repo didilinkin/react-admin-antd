@@ -28,7 +28,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.250:18082/rectification/list'
+            'http://192.168.1.108:18082/rectification/list'
         )
         let repairList = result.data
         const handleUpdateRectification = this.handleUpdateRectification
@@ -100,7 +100,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.250:18082/upkeep/repairList',
+            'http://192.168.1.108:18082/rectification/list',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName
