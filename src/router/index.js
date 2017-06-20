@@ -26,6 +26,7 @@ const ContainerDiv = styled.section `
 const SetRouter = () => (
     <Router>
         <ContainerDiv>
+            {/* 正确配置 - 静态下存在问题 - 在排查中 */}
             <Switch>
                 <Redirect exact from="/" to="/home/index" />
                 {routes.map((route, i) => (
@@ -36,6 +37,16 @@ const SetRouter = () => (
                 <Route path="/registration" component={ Registration } />
                 <Route component={ NotFound } />
             </Switch>
+
+            {/* 测试: 排除 404检查 - 测试成功 */}
+            {/*
+                <Redirect exact from="/" to="/home/index" />
+                {routes.map((route, i) => (
+                    <RouteWithSubRoutes key={i} {...route} />
+                ))}
+                <Route path="/login" component={ Login } />
+                <Route path="/registration" component={ Registration } />
+            */}
         </ContainerDiv>
     </Router>
 )

@@ -27,7 +27,6 @@ class PicturesWall extends React.Component {
     }
 
     handleChange = ({ fileList }) => {
-        debugger
         let imgUrl = ''
         fileList.map(file => {
             if (typeof (file.response) !== 'undefined') {
@@ -51,7 +50,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="storage/uploader"
+                    action="http://192.168.1.108:18082/storage/uploader"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}

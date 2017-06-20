@@ -28,7 +28,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://192.168.1.250:18082/rectification/list'
+            'rectification/list'
         )
         let repairList = result.data
         const handleUpdateRectification = this.handleUpdateRectification
@@ -100,7 +100,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://192.168.1.250:18082/rectification/list',
+            'rectification/list',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName
@@ -147,8 +147,7 @@ class RepairList extends Component {
                 />
                 <span>
                     <span>检查日期:</span>
-                    <RangePicker onChange={this.getDate}
-                    />
+                    <RangePicker onChange={this.getDate} />
                     <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
