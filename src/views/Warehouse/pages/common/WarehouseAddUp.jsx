@@ -27,7 +27,7 @@ class WarehouseAddUp extends React.Component {
         })
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
-                    'http://192.168.1.108:18082/warehouse/materialManagement',
+                    'http://127.0.0.1:18082/warehouse/materialManagement',
                 )
             this.props.form.resetFields()
             this.setState({

@@ -67,7 +67,7 @@ class addUpkeep extends React.Component {
             )
             notification.open({
                 message: '修改成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.props.refreshTable()
         } else {
@@ -78,7 +78,7 @@ class addUpkeep extends React.Component {
             )
             notification.open({
                 message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.props.refreshTable()
         }

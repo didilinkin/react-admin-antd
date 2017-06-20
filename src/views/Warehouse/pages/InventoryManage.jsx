@@ -73,18 +73,13 @@ class RepairList extends Component {
             }, {
                 title: '库存数量',
                 width: 100,
-                dataIndex: 'storageNum',
-                key: 'storageNum'
+                dataIndex: 'number',
+                key: 'number'
             }, {
                 title: '金额',
                 width: 100,
                 dataIndex: 'amount',
                 key: 'amount'
-            }, {
-                title: '备注',
-                width: 100,
-                dataIndex: 'remark',
-                key: 'remark'
             }, {
                 title: '操作',
                 width: 200,
@@ -156,8 +151,7 @@ class RepairList extends Component {
                 />
                 <span>
                     <span>报修日期:</span>
-                    <RangePicker onChange={this.getDate}
-                    />
+                    <RangePicker onChange={this.getDate} />
                     <span>材料名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
