@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b1e1226b-10e0-41c2-9124-8802dbaf11b2" name="Default" comment="修改列 添加横线">
+    <list default="true" id="b1e1226b-10e0-41c2-9124-8802dbaf11b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,12 +21,10 @@
       <file leaf-file-name="HomeRouter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1083">
+            <state relative-caret-position="19">
               <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
               <folding>
                 <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
-                <marker date="1497942906779" expanded="true" signature="4889:5071" ph="&lt;div/&gt;" />
-                <marker date="1497942906779" expanded="true" signature="4930:5060" ph="&lt;Route/&gt;" />
               </folding>
             </state>
           </provider>
@@ -35,7 +33,7 @@
       <file leaf-file-name="test.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/style/test.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
+            <state relative-caret-position="19">
               <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
               <folding />
             </state>
@@ -45,16 +43,10 @@
       <file leaf-file-name="Repair.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="53" column="80" lean-forward="false" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
+            <state relative-caret-position="76">
+              <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="25" />
               <folding>
-                <marker date="1497942906831" expanded="true" signature="188:2849" ph="{...}" />
-                <marker date="1497942906831" expanded="true" signature="326:500" ph="{...}" />
-                <marker date="1497942906831" expanded="true" signature="2303:2433" ph="&lt;ul/&gt;" />
-                <marker date="1497942906831" expanded="true" signature="2303:2831" ph="&lt;div/&gt;" />
-                <marker date="1497942906831" expanded="true" signature="2303:2847" ph="{...}" />
-                <marker date="1497942906831" expanded="true" signature="2344:2411" ph="&lt;li/&gt;" />
-                <marker date="1497942906831" expanded="true" signature="2521:2812" ph="&lt;Row/&gt;" />
+                <marker date="1497945028494" expanded="true" signature="326:500" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -63,35 +55,41 @@
       <file leaf-file-name="AddUpkeep.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2546">
-              <caret line="136" column="65" lean-forward="false" selection-start-line="136" selection-start-column="65" selection-end-line="136" selection-end-column="65" />
+            <state relative-caret-position="-38">
+              <caret line="123" column="55" lean-forward="false" selection-start-line="123" selection-start-column="55" selection-end-line="123" selection-end-column="55" />
               <folding>
                 <element signature="e#0#60#0" expanded="true" />
-                <marker date="1497942906788" expanded="true" signature="204:7121" ph="{...}" />
-                <marker date="1497942906788" expanded="true" signature="6949:7031" ph="&lt;FormItem/&gt;" />
-                <marker date="1497942906788" expanded="true" signature="6949:7059" ph="&lt;Form/&gt;" />
-                <marker date="1497942906788" expanded="true" signature="6949:7084" ph="&lt;Modal/&gt;" />
-                <marker date="1497942906788" expanded="true" signature="6949:7103" ph="&lt;div/&gt;" />
+                <marker date="1497950682918" expanded="true" signature="6921:7003" ph="&lt;FormItem/&gt;" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TableAddUp.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TableAddUp.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4655">
-              <caret line="249" column="53" lean-forward="false" selection-start-line="249" selection-start-column="53" selection-end-line="249" selection-end-column="53" />
+            <state relative-caret-position="133">
+              <caret line="259" column="50" lean-forward="false" selection-start-line="259" selection-start-column="50" selection-end-line="259" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReturnVisit.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReturnVisit.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="92" column="27" lean-forward="true" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
+            <state relative-caret-position="380">
+              <caret line="95" column="43" lean-forward="true" selection-start-line="95" selection-start-column="43" selection-end-line="95" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".eslintignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.eslintignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -100,31 +98,10 @@
       <file leaf-file-name="ReturnVisitDetail.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="969">
+            <state relative-caret-position="563">
               <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
               <folding>
                 <marker date="1497930378724" expanded="true" signature="1243:1289" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Maintenance.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-              <folding>
-                <marker date="1497942906784" expanded="true" signature="327:1098" ph="{...}" />
-                <marker date="1497942906784" expanded="true" signature="797:844" ph="{...}" />
-                <marker date="1497942906784" expanded="true" signature="1055:1091" ph="{&quot;data&quot;: Repair...}" />
-                <marker date="1497942906784" expanded="true" signature="1125:1162" ph="{...}" />
-                <marker date="1497942906784" expanded="true" signature="1208:2061" ph="&lt;div/&gt;" />
-                <marker date="1497942906784" expanded="true" signature="1277:1474" ph="&lt;Row/&gt;" />
-                <marker date="1497942906784" expanded="true" signature="1491:1679" ph="&lt;Row/&gt;" />
-                <marker date="1497942906784" expanded="true" signature="1722:1834" ph="&lt;Col/&gt;" />
-                <marker date="1497942906784" expanded="true" signature="1874:2042" ph="&lt;ul/&gt;" />
-                <marker date="1497942906784" expanded="true" signature="1899:2020" ph="&lt;li/&gt;" />
               </folding>
             </state>
           </provider>
@@ -191,9 +168,9 @@
         <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" />
         <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" />
         <option value="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
         <option value="$PROJECT_DIR$/src/style/test.less" />
         <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
       </list>
     </option>
   </component>
@@ -228,6 +205,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -378,8 +357,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -415,7 +392,15 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.eslintrc.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.gitignore</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/CancelRepair.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/DistributeLeaflets.jsx</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/common/pages/HomeTemplate.jsx</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -423,6 +408,18 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/asset-manifest.json</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/favicon.ico</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/hotcss.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/index.html</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/npm.json</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/service-worker.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/css/main.9cfc0707.css</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/css/main.9cfc0707.css.map</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/js/main.321536da.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/js/main.321536da.js.map</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/media/b1.553c69e9.jpg</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/weibo.json</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -430,6 +427,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="true" />
           <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/router/HomeRouter1.js</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Restored" />
@@ -613,6 +611,9 @@
       <workItem from="1497853757050" duration="29000" />
       <workItem from="1497923165637" duration="10232000" />
       <workItem from="1497942829774" duration="336000" />
+      <workItem from="1497944137722" duration="199000" />
+      <workItem from="1497944515197" duration="587000" />
+      <workItem from="1497950473338" duration="513000" />
     </task>
     <task id="LOCAL-00002" summary="修改服务器地址">
       <created>1497848922003</created>
@@ -639,7 +640,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19664000" />
+    <option name="totallyTimeSpent" value="21325000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -685,13 +686,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Tables/tables2.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/axios/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -779,18 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-          <folding>
-            <marker date="1497942906784" expanded="true" signature="327:1098" ph="{...}" />
-            <marker date="1497942906784" expanded="true" signature="797:844" ph="{...}" />
-            <marker date="1497942906784" expanded="true" signature="1055:1091" ph="{&quot;data&quot;: Repair...}" />
-            <marker date="1497942906784" expanded="true" signature="1125:1162" ph="{...}" />
-            <marker date="1497942906784" expanded="true" signature="1208:2061" ph="&lt;div/&gt;" />
-            <marker date="1497942906784" expanded="true" signature="1277:1474" ph="&lt;Row/&gt;" />
-            <marker date="1497942906784" expanded="true" signature="1491:1679" ph="&lt;Row/&gt;" />
-            <marker date="1497942906784" expanded="true" signature="1722:1834" ph="&lt;Col/&gt;" />
-            <marker date="1497942906784" expanded="true" signature="1874:2042" ph="&lt;ul/&gt;" />
-            <marker date="1497942906784" expanded="true" signature="1899:2020" ph="&lt;li/&gt;" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -835,7 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="80" column="24" lean-forward="true" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -853,30 +834,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/test.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="95" column="43" lean-forward="true" selection-start-line="95" selection-start-column="43" selection-end-line="95" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
+          <folding>
+            <marker date="1497930378724" expanded="true" signature="1243:1289" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-          <folding>
-            <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
-            <marker date="1497942906779" expanded="true" signature="4889:5071" ph="&lt;div/&gt;" />
-            <marker date="1497942906779" expanded="true" signature="4930:5060" ph="&lt;Route/&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/test.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -888,67 +883,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx">
+    <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
+        <state relative-caret-position="19">
+          <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
           <folding>
-            <marker date="1497930378724" expanded="true" signature="1243:1289" ph="{...}" />
+            <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style/test.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="53" column="80" lean-forward="false" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
+        <state relative-caret-position="76">
+          <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="25" />
           <folding>
-            <marker date="1497942906831" expanded="true" signature="188:2849" ph="{...}" />
-            <marker date="1497942906831" expanded="true" signature="326:500" ph="{...}" />
-            <marker date="1497942906831" expanded="true" signature="2303:2433" ph="&lt;ul/&gt;" />
-            <marker date="1497942906831" expanded="true" signature="2303:2831" ph="&lt;div/&gt;" />
-            <marker date="1497942906831" expanded="true" signature="2303:2847" ph="{...}" />
-            <marker date="1497942906831" expanded="true" signature="2344:2411" ph="&lt;li/&gt;" />
-            <marker date="1497942906831" expanded="true" signature="2521:2812" ph="&lt;Row/&gt;" />
+            <marker date="1497945028494" expanded="true" signature="326:500" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2546">
-          <caret line="136" column="65" lean-forward="false" selection-start-line="136" selection-start-column="65" selection-end-line="136" selection-end-column="65" />
+        <state relative-caret-position="-38">
+          <caret line="123" column="55" lean-forward="false" selection-start-line="123" selection-start-column="55" selection-end-line="123" selection-end-column="55" />
           <folding>
             <element signature="e#0#60#0" expanded="true" />
-            <marker date="1497942906788" expanded="true" signature="204:7121" ph="{...}" />
-            <marker date="1497942906788" expanded="true" signature="6949:7031" ph="&lt;FormItem/&gt;" />
-            <marker date="1497942906788" expanded="true" signature="6949:7059" ph="&lt;Form/&gt;" />
-            <marker date="1497942906788" expanded="true" signature="6949:7084" ph="&lt;Modal/&gt;" />
-            <marker date="1497942906788" expanded="true" signature="6949:7103" ph="&lt;div/&gt;" />
+            <marker date="1497950682918" expanded="true" signature="6921:7003" ph="&lt;FormItem/&gt;" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4655">
-          <caret line="249" column="53" lean-forward="false" selection-start-line="249" selection-start-column="53" selection-end-line="249" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/style/test.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="92" column="27" lean-forward="true" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
+        <state relative-caret-position="133">
+          <caret line="259" column="50" lean-forward="false" selection-start-line="259" selection-start-column="50" selection-end-line="259" selection-end-column="50" />
           <folding />
         </state>
       </provider>
