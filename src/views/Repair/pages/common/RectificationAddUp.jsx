@@ -13,7 +13,8 @@ class RectificationAddUp extends React.Component {
         isFirst: true,
         view: true,
         fileList: [],
-        clientList: []
+        clientList: [],
+        userList: []
     }
 
     isFirst = true
@@ -27,6 +28,7 @@ class RectificationAddUp extends React.Component {
                     'rectification/getRectification',
                     {'id': nextProps.id}
                 )
+                let resulData1 = await apiGet('upkeep/getUser')
                 this.imgUrl = resulData.data.imgUrls + '#'
                 let imgArr = resulData.data.imgUrls.split('#')
                 let Arr = []
@@ -50,8 +52,13 @@ class RectificationAddUp extends React.Component {
                     isFirst: false,
                     view: true,
                     fileList: Arr,
+                    userList: resulData1.data,
                     clientList: result.data
                 })
+                let inspectIdsOne = []
+                if (resulData.data.inspectName.length > 0) {
+                    inspectIdsOne = resulData.data.inspectName.toString().split(',')
+                }
                 this.props.form.setFieldsValue({
                     inspectDate: moment(resulData.data.inspectDate),
                     buildName: resulData.data.buildName,
@@ -61,6 +68,9 @@ class RectificationAddUp extends React.Component {
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     roomNums: resulData.data.roomNums,
+                    inspectName: resulData.data.inspectName,
+                    inspectIds: resulData.data.inspectIds,
+                    inspectIdsOne: inspectIdsOne,
                     rectificationContent: resulData.data.rectificationContent
                 })
             }
@@ -73,11 +83,13 @@ class RectificationAddUp extends React.Component {
                 let result = await apiGet(
                     'upkeep/getClient'
                 )
+                let resulData = await apiGet('upkeep/getUser')
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
                     view: true,
                     fileList: [],
+                    userList: resulData.data,
                     clientList: result.data
                 })
             }
@@ -160,6 +172,22 @@ class RectificationAddUp extends React.Component {
                 })
             }
             return ''
+        })
+    }
+    getUser = (value) => {
+        let inspectName = []
+        this.state.userList.map(user => {
+            value.toString().split(',').map(value1 => {
+                if (user.id.toString() === value1) {
+                    inspectName.push(user.loginName)
+                }
+                return ''
+            })
+            return ''
+        })
+        this.props.form.setFieldsValue({
+            inspectName: inspectName.toString(),
+            inspectIds: value.toString()
         })
     }
     render () {
@@ -262,6 +290,27 @@ class RectificationAddUp extends React.Component {
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
+                        <FormItem label="检查人" labelCol={{ span: 5 }}
+                            wrapperCol={{ span: 15 }}
+                        >
+                            {getFieldDecorator('inspectIdsOne', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: 200 }}
+                                    placeholder="Select a person"
+                                    onChange={this.getUser}
+                                >
+                                    {this.state.userList.map(d => {
+                                        return <Option key={d.id}>{d.loginName}</Option>
+                                    })}
+                                </Select>
+                            )}
+                        </FormItem>
                         {getFieldDecorator('buildId')(
                             <Input type="hidden" />
                         )}
@@ -272,6 +321,12 @@ class RectificationAddUp extends React.Component {
                             <Input type="hidden" />
                         )}
                         {getFieldDecorator('clientType')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('inspectIds')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('inspectName')(
                             <Input type="hidden" />
                         )}
                     </Form>

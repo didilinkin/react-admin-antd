@@ -74,7 +74,6 @@ class TableAddUp extends React.Component {
                 view: false
             })
             if (this.state.isFirst && nextProps.visible) {
-                this.props.form.resetFields()
                 let result = await apiGet(
                     'upkeep/getClient'
                 )
@@ -84,6 +83,10 @@ class TableAddUp extends React.Component {
                     view: true,
                     fileList: [],
                     clientList: result.data
+                })
+                this.props.form.resetFields()
+                this.props.form.setFieldsValue({
+                    repairNum: new Date().getTime()
                 })
             }
         }
