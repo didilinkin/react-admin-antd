@@ -167,10 +167,10 @@ class Sidebar extends React.Component {
                         </Menu.Item>
 
                         <SubMenu key="/warehouse/inspection" title={
-                                <span>
-                                    <span className="nav-text">设备巡检</span>
-                                </span>
-                            }
+                            <span>
+                                <span className="nav-text">设备巡检</span>
+                            </span>
+                        }
                         >
                             <Menu.Item key="/warehouse/inspection/electric">
                                 <Link to="/warehouse/inspection/electric">电器系统</Link>

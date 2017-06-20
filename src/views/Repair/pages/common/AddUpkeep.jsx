@@ -122,7 +122,7 @@ class addUpkeep extends React.Component {
                 >
                     <Form layout="horizontal">
                         <FormItem label="物品名称" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('entryName', {
                                 rules: [ {
@@ -134,7 +134,7 @@ class addUpkeep extends React.Component {
                             )}
                         </FormItem>
                         <FormItem label="单位" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('company', {
                                 rules: [ {
@@ -146,7 +146,7 @@ class addUpkeep extends React.Component {
                             )}
                         </FormItem>
                         <FormItem label="进货价格" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('purchasePrice', {
                                 rules: [ {
@@ -158,7 +158,7 @@ class addUpkeep extends React.Component {
                             )}
                         </FormItem>
                         <FormItem label="服务费" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('serviceCharge', {
                                 rules: [ {
@@ -170,7 +170,7 @@ class addUpkeep extends React.Component {
                             )}
                         </FormItem>
                         <FormItem label="收费金额" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('tollAmount', {
                                 rules: [ {

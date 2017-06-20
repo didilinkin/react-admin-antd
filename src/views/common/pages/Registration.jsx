@@ -187,10 +187,10 @@ class Registration extends React.Component {
                     {...formItemLayout}
                     label={(
                         <span>
-                        Nickname&nbsp;
-                        <Tooltip title="What do you want other to call you?">
-                            <Icon type="question-circle-o" />
-                        </Tooltip>
+                            Nickname&nbsp;
+                            <Tooltip title="What do you want other to call you?">
+                                <Icon type="question-circle-o" />
+                            </Tooltip>
                         </span>
                     )}
                     hasFeedback
@@ -240,20 +240,20 @@ class Registration extends React.Component {
                     {...formItemLayout}
                     label="Website"
                 >
-                {getFieldDecorator('website', {
-                    rules: [{
-                        required: true,
-                        message: 'Please input website!'
-                    }]
-                })(
-                    <AutoComplete
-                        dataSource={websiteOptions}
-                        onChange={this.handleWebsiteChange}
-                        placeholder="website"
-                    >
-                        <Input />
-                    </AutoComplete>
-                )}
+                    {getFieldDecorator('website', {
+                        rules: [{
+                            required: true,
+                            message: 'Please input website!'
+                        }]
+                    })(
+                        <AutoComplete
+                            dataSource={websiteOptions}
+                            onChange={this.handleWebsiteChange}
+                            placeholder="website"
+                        >
+                            <Input />
+                        </AutoComplete>
+                    )}
                 </FormItem>
 
                 <FormItem

@@ -49,11 +49,11 @@ class ReturnVisit extends React.Component {
     }
     handleSubmit = async () => {
         let resulData = await
-        apiPost(
-            'upkeep/visit',
-            {'id': this.props.match.params.id,
-                visitContent: this.value}
-        )
+            apiPost(
+                'upkeep/visit',
+                {'id': this.props.match.params.id,
+                    visitContent: this.value}
+            )
         notification.open({
             message: resulData.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
@@ -61,7 +61,7 @@ class ReturnVisit extends React.Component {
     }
     render () {
         return (
-                <div className="box2">
+            <div className="box2">
                 <Timeline>
                     <Timeline.Item color="green"><h2>提交报修单</h2>受理人： {this.state.data.pieMan}</Timeline.Item>
                     <Timeline.Item color="green"><h2>已派单</h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
@@ -94,8 +94,8 @@ class ReturnVisit extends React.Component {
                 <div className="title">回访情况</div>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <div className="clearfix" />
-                    <Button onClick={this.handleSubmit}>确定</Button>
-                </div>
+                <Button onClick={this.handleSubmit}>确定</Button>
+            </div>
         )
     }
 }

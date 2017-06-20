@@ -168,85 +168,85 @@ class TableAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                        <FormItem label="报修日期" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
-                        </FormItem>
+                                <FormItem label="报修日期" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
+                                </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="报修人" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('repairMan')} />
-                        </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                        <FormItem label="公司名称" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Select
-                                {...getFieldProps('clientName')}
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                onChange={this.getClient}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                {this.state.clientList.map(d => {
-                                    let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                    return <Option key={key}>{d.clientName}</Option>
-                                })}
-                            </Select>
-                            <Input type="hidden" {...getFieldProps('clientType')} />
-                            <Input type="hidden" {...getFieldProps('clientId')} />
-                        </FormItem>
-                            </Col>
-                            <Col span={12}>
-                        <FormItem label="联系方式" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('phone')} />
-                        </FormItem>
+                                <FormItem label="报修人" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <Input {...getFieldProps('repairMan')} />
+                                </FormItem>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={12}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('buildName')} />
-                            <Input type="hidden" {...getFieldProps('buildId')} />
-                        </FormItem>
+                                <FormItem label="公司名称" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <Select
+                                        {...getFieldProps('clientName')}
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="Select a person"
+                                        optionFilterProp="children"
+                                        onChange={this.getClient}
+                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    >
+                                        {this.state.clientList.map(d => {
+                                            let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
+                                            return <Option key={key}>{d.clientName}</Option>
+                                        })}
+                                    </Select>
+                                    <Input type="hidden" {...getFieldProps('clientType')} />
+                                    <Input type="hidden" {...getFieldProps('clientId')} />
+                                </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="报修单号" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('repairNum')} />
-                        </FormItem>
+                                <FormItem label="联系方式" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <Input {...getFieldProps('phone')} />
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={12}>
+                                <FormItem label="所属楼宇" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <Input {...getFieldProps('buildName')} />
+                                    <Input type="hidden" {...getFieldProps('buildId')} />
+                                </FormItem>
+                            </Col>
+                            <Col span={12}>
+                                <FormItem label="报修单号" labelCol={{ span: 5 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    <Input {...getFieldProps('repairNum')} />
+                                </FormItem>
                             </Col>
                         </Row>
 
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input {...getFieldProps('roomNum')} />
                         </FormItem>
 
 
                         <FormItem label="报修内容" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input type="textarea" rows={4} {...getFieldProps('repairContent')} />
                         </FormItem>
 
 
                         <FormItem label="上传图片" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>

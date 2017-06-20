@@ -110,27 +110,27 @@ class addUpkeep extends React.Component {
                 >
                     <Form layout="horizontal">
                         <FormItem label="材料名称" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input type="text" {...getFieldProps('name')} />
                         </FormItem>
                         <FormItem label="规格" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input type="text" {...getFieldProps('standard')} />
                         </FormItem>
                         <FormItem label="单位" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input type="text" {...getFieldProps('unit')} />
                         </FormItem>
                         <FormItem label="单价" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input onBlur={this.onBlur} type="text" {...getFieldProps('unitPrice')} />
                         </FormItem>
                         <FormItem label="存放位置" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             <Input onBlur={this.onBlur} type="text" {...getFieldProps('storagePlace')} />
                         </FormItem>

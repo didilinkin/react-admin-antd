@@ -27,8 +27,8 @@ class WarehouseAddUp extends React.Component {
         })
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
-                    'http://127.0.0.1:18082/warehouse/materialManagement',
-                )
+                'http://127.0.0.1:18082/warehouse/materialManagement',
+            )
             this.props.form.resetFields()
             this.setState({
                 visible: nextProps.visible,
@@ -134,72 +134,72 @@ class WarehouseAddUp extends React.Component {
     render () {
         const { getFieldProps } = this.props.form
         return (
-                <Modal
-                    title="入库登记"
-                    style={{top: 20}}
-                    width="700"
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                >
-                    <Form layout="horizontal">
-                        <Row>
-                            <Col span={12}>
-                        <FormItem label="入库日期" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('warehouseDate')} />
-                        </FormItem>
-                            </Col>
-                            <Col span={12}>
-                        <FormItem label="采购人" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Input {...getFieldProps('purchase')} />
-                        </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="凭证号" labelCol={{ span: 5 }}
-                                          wrapperCol={{ span: 15 }}
-                                >
-                                    <Input {...getFieldProps('voucherNo')} />
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="验收人" labelCol={{ span: 5 }}
-                                          wrapperCol={{ span: 15 }}
-                                >
-                                    <Input {...getFieldProps('acceptor')} />
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                        <FormItem label="仓库类型" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <Select
-                                {...getFieldProps('storeroomType')}
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+            <Modal
+                title="入库登记"
+                style={{top: 20}}
+                width="700"
+                visible={this.state.visible}
+                onOk={this.handleSubmit}
+                onCancel={this.handleCancel}
+            >
+                <Form layout="horizontal">
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="入库日期" labelCol={{ span: 5 }}
+                                wrapperCol={{ span: 15 }}
                             >
-                                <Option key="0">工程部</Option>
-                                <Option key="1">保洁用品</Option>
-                                <Option key="2">行政库</Option>
-                            </Select>
-                        </FormItem>
-                            </Col>
-                        </Row>
-                        <FormItem label="现场图片" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
-                        </FormItem>
+                                <DatePicker onChange={this.getRepairDate} {...getFieldProps('warehouseDate')} />
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="采购人" labelCol={{ span: 5 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                <Input {...getFieldProps('purchase')} />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="凭证号" labelCol={{ span: 5 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                <Input {...getFieldProps('voucherNo')} />
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="验收人" labelCol={{ span: 5 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                <Input {...getFieldProps('acceptor')} />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="仓库类型" labelCol={{ span: 5 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                <Select
+                                    {...getFieldProps('storeroomType')}
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Select a person"
+                                    optionFilterProp="children"
+                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                >
+                                    <Option key="0">工程部</Option>
+                                    <Option key="1">保洁用品</Option>
+                                    <Option key="2">行政库</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <FormItem label="现场图片" labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 15 }}
+                    >
+                        <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                    </FormItem>
                     <div className="box2" style={{width: 650}}>
                         <table className="tb">
                             <tr className="hd">
@@ -228,7 +228,7 @@ class WarehouseAddUp extends React.Component {
                     <Row>
                         <Col span={12}>
                             <FormItem label="材料名称" labelCol={{ span: 5 }}
-                                      wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 15 }}
                             >
                                 <Select
                                     {...getFieldProps('name')}
@@ -248,7 +248,7 @@ class WarehouseAddUp extends React.Component {
                         </Col>
                         <Col span={12}>
                             <FormItem label="数量" labelCol={{ span: 5 }}
-                                      wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 15 }}
                             >
                                 <InputNumber onBlur={this.sumMoney} {...getFieldProps('number')} />
                             </FormItem>
@@ -257,14 +257,14 @@ class WarehouseAddUp extends React.Component {
                     <Row>
                         <Col span={12}>
                             <FormItem label="单价" labelCol={{ span: 5 }}
-                                      wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 15 }}
                             >
                                 <Input {...getFieldProps('unitPrice')} />
                             </FormItem>
                         </Col>
                         <Col span={12}>
                             <FormItem label="金额" labelCol={{ span: 5 }}
-                                      wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 15 }}
                             >
                                 <Input {...getFieldProps('amount')} />
                             </FormItem>
@@ -273,15 +273,15 @@ class WarehouseAddUp extends React.Component {
                     <Row>
                         <Col span={12}>
                             <FormItem label="备注" labelCol={{ span: 5 }}
-                                      wrapperCol={{ span: 15 }}
+                                wrapperCol={{ span: 15 }}
                             >
                                 <Input {...getFieldProps('remark')} />
                             </FormItem>
                         </Col>
                     </Row>
-                        <Button onClick={this.add}>添加一条记录</Button>
-                    </Form>
-                </Modal>
+                    <Button onClick={this.add}>添加一条记录</Button>
+                </Form>
+            </Modal>
         )
     }
 }
