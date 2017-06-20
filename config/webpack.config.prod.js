@@ -217,11 +217,11 @@ module.exports = {
             extractTextPluginOptions
           )
         ),
-        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+        //注意：如果`plugins`中没有`new ExtractTextPlugin()`, 这将不起作用.
       },
       // ** STOP ** Are you adding a new loader?
-      // Remember to add the new extension(s) to the "file" loader exclusion list.
-      // Parse less files and modify variables
+      //记住将新的扩展名添加到“文件” 加载程序排除列表中
+      //解析较少的文件和修改变量
       {
         test: /\.less$/,
         use: [
@@ -256,11 +256,11 @@ module.exports = {
     ],
   },
   plugins: [
-    // Makes some environment variables available in index.html.
-    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    // In production, it will be an empty string unless you specify "homepage"
-    // in `package.json`, in which case it will be the pathname of that URL.
+    //使一些环境变量在index.html中可用。
+    //公共URL在index.html中以％PUBLIC_URL％的形式提供，例如：
+    // <link rel="快捷图标" href ="％PUBLIC_URL%/favicon.ico">
+    //在生产中, 它将是一个空字符串，除非你指定"主页"
+    //在`package.json'中，在这种情况下，它将是该URL的路径名。
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
@@ -309,13 +309,13 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-    // Generate a service worker script that will precache, and keep up to date,
-    // the HTML & assets that are part of the Webpack build.
+    // 生成一个服务工作者脚本，它将预缓和保持最新，
+    // 作为Webpack构建的HTML和资产。
     new SWPrecacheWebpackPlugin({
-      // By default, a cache-busting query parameter is appended to requests
-      // used to populate the caches, to ensure the responses are fresh.
-      // If a URL is already hashed by Webpack, then there is no concern
-      // about it being stale, and the cache-busting can be skipped.
+      // 默认情况下，缓存清除查询参数会追加到请求中
+      // 用于填充缓存，以确保响应是新鲜的。
+      // 如果URL已经被Webpack散列，那么就不用担心了
+      // 关于它是否过时，可以跳过缓存清除。
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'service-worker.js',
       logger(message) {
