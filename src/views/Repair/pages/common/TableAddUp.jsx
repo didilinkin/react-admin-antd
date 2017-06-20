@@ -218,7 +218,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input disabled="true" {...getFieldProps('buildName')} />
+                            <Input disabled={true} {...getFieldProps('buildName')} />
                             <Input type="hidden" {...getFieldProps('buildId')} />
                         </FormItem>
                             </Col>
@@ -234,7 +234,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input disabled="true" {...getFieldProps('roomNum')} />
+                            <Input disabled={true} {...getFieldProps('roomNum')} />
                         </FormItem>
 
 
