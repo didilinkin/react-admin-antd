@@ -105,7 +105,6 @@ class ClientReview extends React.Component {
             }],
             dataSource: result.data
         })
-        debugger
     }
     componentDidMount () {
         this.initialRemarks()

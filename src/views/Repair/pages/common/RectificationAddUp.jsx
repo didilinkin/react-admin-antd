@@ -92,7 +92,6 @@ class RectificationAddUp extends React.Component {
         json['imgUrls'] = this.imgUrl
         let inspectDate = json.inspectDate.format('YYYY-MM-DD')
         json['inspectDate'] = inspectDate
-        debugger
         if (this.props.id > 0) {
             json['id'] = this.props.id
             let result = await apiPost(
@@ -149,7 +148,7 @@ class RectificationAddUp extends React.Component {
         })
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldProps, getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
@@ -163,18 +162,37 @@ class RectificationAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                                <FormItem label="检查日期" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    <DatePicker onChange={this.getRepairDate} {...getFieldProps('inspectDate')} />
+                                <FormItem label="检查日期" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+                                    {getFieldDecorator('inspectDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your inspectDate!'
+                                        }]
+                                    })(
+                                        <DatePicker />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled {...getFieldProps('buildName')} />
-                                    <Input type="hidden" {...getFieldProps('buildId')} />
+                                    {getFieldDecorator('buildName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your buildName!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
+                                    {getFieldDecorator('buildId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your buildId!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -197,22 +215,50 @@ class RectificationAddUp extends React.Component {
                                             return <Option key={key}>{d.clientName}</Option>
                                         })}
                                     </Select>
-                                    <Input type="hidden" {...getFieldProps('clientType')} />
-                                    <Input type="hidden" {...getFieldProps('clientId')} />
+                                    {getFieldDecorator('clientType', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientType!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" />
+                                    )}
+                                    {getFieldDecorator('clientId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientId!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="所属房间" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled {...getFieldProps('roomNums')} />
+                                    {getFieldDecorator('roomNums', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientId!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
                         <FormItem label="整改项目" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('rectificationContent')} />
+                            {getFieldDecorator('rectificationContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your clientId!'
+                                }]
+                            })(
+                                <Input type="textarea" rows={4} />
+                            )}
                         </FormItem>
 
 

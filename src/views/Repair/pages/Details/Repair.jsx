@@ -63,12 +63,14 @@ class App extends React.Component {
                     <Col span={8} />
                     <Col span={8} />
                 </Row>
+                <p className="line" />
                 <h2>报修信息</h2>
                 <ul>
                     <li><b>报修内容：</b> <span>{this.state.data.repairContent}</span></li>
                     <li><b>报修图片：</b>{this.state.data.picture}
                     </li>
                 </ul>
+                <p className="line" />
                 <h2>派单信息</h2>
                 <Row>
                     <Col span={8}><b>派单状态：</b>{this.state.data.pieStatus}</Col>

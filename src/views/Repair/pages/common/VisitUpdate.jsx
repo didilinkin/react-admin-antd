@@ -37,9 +37,9 @@ class VisitUpdate extends React.Component {
                 >
                     <Form layout="horizontal">
                         <FormItem label="物品名称" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
-                            <DatePicker defaultValue={moment('2012-12-12')} onChange={this.getRepairDate} {...getFieldProps('repairDate')}/>
+                            <DatePicker defaultValue={moment('2012-12-12')} onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
 
                         </FormItem>
                     </Form>
