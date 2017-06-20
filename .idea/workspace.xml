@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b1e1226b-10e0-41c2-9124-8802dbaf11b2" name="Default" comment="修改服务器地址">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/router/HomeRouter1.js" />
+    <list default="true" id="b1e1226b-10e0-41c2-9124-8802dbaf11b2" name="Default" comment="修改列 添加横线">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/style/test.less" afterPath="$PROJECT_DIR$/src/style/test.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,7 +24,9 @@
             <state relative-caret-position="1083">
               <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
               <folding>
-                <marker date="1497864429170" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+                <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+                <marker date="1497942906779" expanded="true" signature="4889:5071" ph="&lt;div/&gt;" />
+                <marker date="1497942906779" expanded="true" signature="4930:5060" ph="&lt;Route/&gt;" />
               </folding>
             </state>
           </provider>
@@ -38,8 +35,8 @@
       <file leaf-file-name="test.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/style/test.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="76" selection-end-column="5" />
+            <state relative-caret-position="114">
+              <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -48,10 +45,16 @@
       <file leaf-file-name="Repair.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="51" column="80" lean-forward="false" selection-start-line="51" selection-start-column="80" selection-end-line="51" selection-end-column="80" />
+            <state relative-caret-position="950">
+              <caret line="53" column="80" lean-forward="false" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
               <folding>
-                <marker date="1497938548944" expanded="true" signature="923:969" ph="{...}" />
+                <marker date="1497942906831" expanded="true" signature="188:2849" ph="{...}" />
+                <marker date="1497942906831" expanded="true" signature="326:500" ph="{...}" />
+                <marker date="1497942906831" expanded="true" signature="2303:2433" ph="&lt;ul/&gt;" />
+                <marker date="1497942906831" expanded="true" signature="2303:2831" ph="&lt;div/&gt;" />
+                <marker date="1497942906831" expanded="true" signature="2303:2847" ph="{...}" />
+                <marker date="1497942906831" expanded="true" signature="2344:2411" ph="&lt;li/&gt;" />
+                <marker date="1497942906831" expanded="true" signature="2521:2812" ph="&lt;Row/&gt;" />
               </folding>
             </state>
           </provider>
@@ -60,10 +63,15 @@
       <file leaf-file-name="AddUpkeep.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2527">
-              <caret line="135" column="65" lean-forward="false" selection-start-line="135" selection-start-column="65" selection-end-line="135" selection-end-column="65" />
+            <state relative-caret-position="2546">
+              <caret line="136" column="65" lean-forward="false" selection-start-line="136" selection-start-column="65" selection-end-line="136" selection-end-column="65" />
               <folding>
                 <element signature="e#0#60#0" expanded="true" />
+                <marker date="1497942906788" expanded="true" signature="204:7121" ph="{...}" />
+                <marker date="1497942906788" expanded="true" signature="6949:7031" ph="&lt;FormItem/&gt;" />
+                <marker date="1497942906788" expanded="true" signature="6949:7059" ph="&lt;Form/&gt;" />
+                <marker date="1497942906788" expanded="true" signature="6949:7084" ph="&lt;Modal/&gt;" />
+                <marker date="1497942906788" expanded="true" signature="6949:7103" ph="&lt;div/&gt;" />
               </folding>
             </state>
           </provider>
@@ -72,8 +80,8 @@
       <file leaf-file-name="TableAddUp.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4636">
-              <caret line="248" column="59" lean-forward="false" selection-start-line="248" selection-start-column="59" selection-end-line="248" selection-end-column="59" />
+            <state relative-caret-position="4655">
+              <caret line="249" column="53" lean-forward="false" selection-start-line="249" selection-start-column="53" selection-end-line="249" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -82,8 +90,8 @@
       <file leaf-file-name="ReturnVisit.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="73" column="49" lean-forward="true" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+            <state relative-caret-position="345">
+              <caret line="92" column="27" lean-forward="true" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -107,7 +115,16 @@
             <state relative-caret-position="133">
               <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
               <folding>
-                <marker date="1497930378711" expanded="true" signature="797:844" ph="{...}" />
+                <marker date="1497942906784" expanded="true" signature="327:1098" ph="{...}" />
+                <marker date="1497942906784" expanded="true" signature="797:844" ph="{...}" />
+                <marker date="1497942906784" expanded="true" signature="1055:1091" ph="{&quot;data&quot;: Repair...}" />
+                <marker date="1497942906784" expanded="true" signature="1125:1162" ph="{...}" />
+                <marker date="1497942906784" expanded="true" signature="1208:2061" ph="&lt;div/&gt;" />
+                <marker date="1497942906784" expanded="true" signature="1277:1474" ph="&lt;Row/&gt;" />
+                <marker date="1497942906784" expanded="true" signature="1491:1679" ph="&lt;Row/&gt;" />
+                <marker date="1497942906784" expanded="true" signature="1722:1834" ph="&lt;Col/&gt;" />
+                <marker date="1497942906784" expanded="true" signature="1874:2042" ph="&lt;ul/&gt;" />
+                <marker date="1497942906784" expanded="true" signature="1899:2020" ph="&lt;li/&gt;" />
               </folding>
             </state>
           </provider>
@@ -117,7 +134,7 @@
         <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -384,6 +401,116 @@
       <recent name="D:\工具\pms_changjiang_react\src\views\Repair\pages\common" />
     </key>
   </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -485,7 +612,7 @@
       <workItem from="1497834254719" duration="5337000" />
       <workItem from="1497853757050" duration="29000" />
       <workItem from="1497923165637" duration="10232000" />
-      <workItem from="1497942829774" duration="31000" />
+      <workItem from="1497942829774" duration="336000" />
     </task>
     <task id="LOCAL-00002" summary="修改服务器地址">
       <created>1497848922003</created>
@@ -501,11 +628,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497855876753</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="修改列 添加横线">
+      <created>1497942895609</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1497942895609</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19359000" />
+    <option name="totallyTimeSpent" value="19664000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -541,7 +675,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="删除多余项目文件" />
     <MESSAGE value="修改服务器地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改服务器地址" />
+    <MESSAGE value="修改列 添加横线" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改列 添加横线" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -645,7 +780,16 @@
         <state relative-caret-position="133">
           <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
           <folding>
-            <marker date="1497930378711" expanded="true" signature="797:844" ph="{...}" />
+            <marker date="1497942906784" expanded="true" signature="327:1098" ph="{...}" />
+            <marker date="1497942906784" expanded="true" signature="797:844" ph="{...}" />
+            <marker date="1497942906784" expanded="true" signature="1055:1091" ph="{&quot;data&quot;: Repair...}" />
+            <marker date="1497942906784" expanded="true" signature="1125:1162" ph="{...}" />
+            <marker date="1497942906784" expanded="true" signature="1208:2061" ph="&lt;div/&gt;" />
+            <marker date="1497942906784" expanded="true" signature="1277:1474" ph="&lt;Row/&gt;" />
+            <marker date="1497942906784" expanded="true" signature="1491:1679" ph="&lt;Row/&gt;" />
+            <marker date="1497942906784" expanded="true" signature="1722:1834" ph="&lt;Col/&gt;" />
+            <marker date="1497942906784" expanded="true" signature="1874:2042" ph="&lt;ul/&gt;" />
+            <marker date="1497942906784" expanded="true" signature="1899:2020" ph="&lt;li/&gt;" />
           </folding>
         </state>
       </provider>
@@ -712,7 +856,7 @@
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -722,7 +866,9 @@
         <state relative-caret-position="1083">
           <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
           <folding>
-            <marker date="1497864429170" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+            <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+            <marker date="1497942906779" expanded="true" signature="4889:5071" ph="&lt;div/&gt;" />
+            <marker date="1497942906779" expanded="true" signature="4930:5060" ph="&lt;Route/&gt;" />
           </folding>
         </state>
       </provider>
@@ -754,44 +900,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="51" column="80" lean-forward="false" selection-start-line="51" selection-start-column="80" selection-end-line="51" selection-end-column="80" />
+        <state relative-caret-position="950">
+          <caret line="53" column="80" lean-forward="false" selection-start-line="53" selection-start-column="80" selection-end-line="53" selection-end-column="80" />
           <folding>
-            <marker date="1497938548944" expanded="true" signature="923:969" ph="{...}" />
+            <marker date="1497942906831" expanded="true" signature="188:2849" ph="{...}" />
+            <marker date="1497942906831" expanded="true" signature="326:500" ph="{...}" />
+            <marker date="1497942906831" expanded="true" signature="2303:2433" ph="&lt;ul/&gt;" />
+            <marker date="1497942906831" expanded="true" signature="2303:2831" ph="&lt;div/&gt;" />
+            <marker date="1497942906831" expanded="true" signature="2303:2847" ph="{...}" />
+            <marker date="1497942906831" expanded="true" signature="2344:2411" ph="&lt;li/&gt;" />
+            <marker date="1497942906831" expanded="true" signature="2521:2812" ph="&lt;Row/&gt;" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/style/test.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="76" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4636">
-          <caret line="248" column="59" lean-forward="false" selection-start-line="248" selection-start-column="59" selection-end-line="248" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2527">
-          <caret line="135" column="65" lean-forward="false" selection-start-line="135" selection-start-column="65" selection-end-line="135" selection-end-column="65" />
+        <state relative-caret-position="2546">
+          <caret line="136" column="65" lean-forward="false" selection-start-line="136" selection-start-column="65" selection-end-line="136" selection-end-column="65" />
           <folding>
             <element signature="e#0#60#0" expanded="true" />
+            <marker date="1497942906788" expanded="true" signature="204:7121" ph="{...}" />
+            <marker date="1497942906788" expanded="true" signature="6949:7031" ph="&lt;FormItem/&gt;" />
+            <marker date="1497942906788" expanded="true" signature="6949:7059" ph="&lt;Form/&gt;" />
+            <marker date="1497942906788" expanded="true" signature="6949:7084" ph="&lt;Modal/&gt;" />
+            <marker date="1497942906788" expanded="true" signature="6949:7103" ph="&lt;div/&gt;" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4655">
+          <caret line="249" column="53" lean-forward="false" selection-start-line="249" selection-start-column="53" selection-end-line="249" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style/test.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="73" column="49" lean-forward="true" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+        <state relative-caret-position="345">
+          <caret line="92" column="27" lean-forward="true" selection-start-line="92" selection-start-column="27" selection-end-line="92" selection-end-column="27" />
           <folding />
         </state>
       </provider>
