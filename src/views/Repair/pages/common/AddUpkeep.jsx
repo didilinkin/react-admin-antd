@@ -58,37 +58,51 @@ class addUpkeep extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        if (this.props.id > 0) {
-            this.props.form.validateFieldsAndScroll((err, values) => {
-                if (!err) {
-                    console.log('Received values of form: ', values)
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
                 }
+            },
+        )
+        if (adopt) {
+            if (this.props.id > 0) {
+                this.props.form.validateFieldsAndScroll((err, values) => {
+                    if (!err) {
+                        console.log('Received values of form: ', values)
+                    }
+                })
+                let json = this.props.form.getFieldsValue()
+                json['id'] = this.props.id
+                await apiPost(
+                    'upkeep/updateUpkeep',
+                    json
+                )
+                notification.open({
+                    message: '修改成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.refreshTable()
+            } else {
+                console.log(this.props.form.getFieldsValue())
+                await apiPost(
+                    'upkeep/addupkeep',
+                    this.props.form.getFieldsValue()
+                )
+                notification.open({
+                    message: '添加成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.refreshTable()
+            }
+            this.setState({
+                visible: false,
+                isFirst: true
             })
-            let json = this.props.form.getFieldsValue()
-            json['id'] = this.props.id
-            await apiPost(
-                'upkeep/updateUpkeep',
-                json
-            )
-            notification.open({
-                message: '修改成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.refreshTable()
-        } else {
-            console.log(this.props.form.getFieldsValue())
-            await apiPost(
-                'upkeep/addupkeep',
-                this.props.form.getFieldsValue()
-            )
-            notification.open({
-                message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.refreshTable()
         }
-        this.setState({visible: false,
-            isFirst: true })
     }
     handleCancel = (e) => {
         this.setState({ visible: false,

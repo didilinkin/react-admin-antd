@@ -88,37 +88,51 @@ class RectificationAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-        json['imgUrls'] = this.imgUrl
-        let inspectDate = json.inspectDate.format('YYYY-MM-DD')
-        json['inspectDate'] = inspectDate
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            let result = await apiPost(
-                'rectification/updateRectification',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else {
-            let result = await apiPost(
-                'rectification/insertRectification',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        }
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
+            json['imgUrls'] = this.imgUrl
+            let inspectDate = json.inspectDate.format('YYYY-MM-DD')
+            json['inspectDate'] = inspectDate
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                let result = await apiPost(
+                    'rectification/updateRectification',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else {
+                let result = await apiPost(
+                    'rectification/insertRectification',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
 
-        this.isFirst = true
-        this.setState({visible: false,
-            isFirst: true,
-            clientList: []})
-        this.props.refreshTable()
+            this.isFirst = true
+            this.setState({
+                visible: false,
+                isFirst: true,
+                clientList: []
+            })
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -194,7 +208,12 @@ class RectificationAddUp extends React.Component {
                                 <FormItem label="公司名称" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('clientNameOne')(
+                                    {getFieldDecorator('clientNameOne', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
