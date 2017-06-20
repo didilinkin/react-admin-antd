@@ -207,15 +207,6 @@ class TableAddUp extends React.Component {
                                             })}
                                         </Select>
                                     )}
-                                    {getFieldDecorator('clientName')(
-                                        <Input type="hidden" />
-                                    )}
-                                    {getFieldDecorator('clientType')(
-                                        <Input type="hidden" />
-                                    )}
-                                    {getFieldDecorator('clientId')(
-                                        <Input type="hidden" />
-                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
@@ -235,9 +226,6 @@ class TableAddUp extends React.Component {
                                 >
                                     {getFieldDecorator('buildName')(
                                         <Input disabled />
-                                    )}
-                                    {getFieldDecorator('buildId')(
-                                        <Input type="hidden" />
                                     )}
                                 </FormItem>
                             </Col>
@@ -273,6 +261,18 @@ class TableAddUp extends React.Component {
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
+                        {getFieldDecorator('clientName')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientType')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('buildId')(
+                            <Input type="hidden" />
+                        )}
                     </Form>
                 </Modal>
             </div>

@@ -4,6 +4,7 @@ import { apiGet, apiPost } from '../../../../api/index'
 const Option = Select.Option
 const FormItem = Form.Item
 
+
 class DistributeLeaflets extends React.Component {
     constructor (props) {
         super(props)
@@ -95,12 +96,6 @@ class DistributeLeaflets extends React.Component {
                                 {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
                             </Select>
                         )}
-                        {getFieldDecorator('repairedId')(
-                            <Input type="hidden" />
-                        )}
-                        {getFieldDecorator('repairedMan')(
-                            <Input type="hidden" />
-                        )}
                     </FormItem>
                     <FormItem label="手机" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
@@ -116,6 +111,12 @@ class DistributeLeaflets extends React.Component {
                             <Input disabled />
                         )}
                     </FormItem>
+                    {getFieldDecorator('repairedId')(
+                        <Input type="hidden" />
+                    )}
+                    {getFieldDecorator('repairedMan')(
+                        <Input type="hidden" />
+                    )}
                 </Form>
             </Modal>
         )

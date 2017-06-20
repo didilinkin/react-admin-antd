@@ -186,14 +186,6 @@ class RectificationAddUp extends React.Component {
                                     })(
                                         <Input disabled />
                                     )}
-                                    {getFieldDecorator('buildId', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your buildId!'
-                                        }]
-                                    })(
-                                        <Input type="hidden" />
-                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -216,25 +208,6 @@ class RectificationAddUp extends React.Component {
                                                 return <Option key={key}>{d.clientName}</Option>
                                             })}
                                         </Select>
-                                    )}
-                                    {getFieldDecorator('clientName')(
-                                        <Input type="hidden" />
-                                    )}
-                                    {getFieldDecorator('clientType', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your clientType!'
-                                        }]
-                                    })(
-                                        <Input type="hidden" />
-                                    )}
-                                    {getFieldDecorator('clientId', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your clientId!'
-                                        }]
-                                    })(
-                                        <Input type="hidden" />
                                     )}
                                 </FormItem>
                             </Col>
@@ -265,13 +238,23 @@ class RectificationAddUp extends React.Component {
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-
-
                         <FormItem label="现场图片" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
+                        {getFieldDecorator('buildId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientName')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientType')(
+                            <Input type="hidden" />
+                        )}
                     </Form>
                 </Modal>
             </div>
