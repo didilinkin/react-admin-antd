@@ -103,9 +103,9 @@ class Counter extends Component {
                 />
                 <span>
                     <span>物品名称:</span>
-                <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                <Button type="primary" onClick={this.query}>查询</Button>
-                <Button type="primary" onClick={this.showModal}>增加收费项</Button>
+                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
+                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.showModal}>增加收费项</Button>
                 </span>
                 <Spin spinning={this.state.loading}>
                     <Table

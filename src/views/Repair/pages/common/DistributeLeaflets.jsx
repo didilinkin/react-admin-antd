@@ -82,43 +82,43 @@ class DistributeLeaflets extends React.Component {
     render () {
         const { getFieldProps } = this.props.form
         return (
-                <Modal
-                    title="派单"
-                    style={{top: 20}}
-                    width="400"
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                >
-                    <Form layout="horizontal">
-                        <FormItem label="姓名" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+            <Modal
+                title="派单"
+                style={{top: 20}}
+                width="400"
+                visible={this.state.visible}
+                onOk={this.handleSubmit}
+                onCancel={this.handleCancel}
+            >
+                <Form layout="horizontal">
+                    <FormItem label="姓名" labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 15 }}
+                    >
+                        <Select
+                            {...getFieldProps('repairedId')}
+                            showSearch
+                            style={{ width: 200 }}
+                            placeholder="Select a person"
+                            optionFilterProp="children"
+                            onChange={this.handleChange}
+                            value={this.state.value}
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         >
-                            <Select
-                                {...getFieldProps('repairedId')}
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                onChange={this.handleChange}
-                                value={this.state.value}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
-                            </Select>
-                        </FormItem>
-                        <FormItem label="手机" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <span>{this.state.phone}</span>
-                        </FormItem>
-                        <FormItem label="电话" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
-                        >
-                            <span>{this.state.userTelephone}</span>
-                        </FormItem>
-                    </Form>
-                </Modal>
+                            {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
+                        </Select>
+                    </FormItem>
+                    <FormItem label="手机" labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 15 }}
+                    >
+                        <span>{this.state.phone}</span>
+                    </FormItem>
+                    <FormItem label="电话" labelCol={{ span: 5 }}
+                        wrapperCol={{ span: 15 }}
+                    >
+                        <span>{this.state.userTelephone}</span>
+                    </FormItem>
+                </Form>
+            </Modal>
         )
     }
 }

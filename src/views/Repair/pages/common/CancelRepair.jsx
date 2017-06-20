@@ -56,7 +56,7 @@ class CancelRepair extends React.Component {
                 >
                     <Form layout="horizontal">
                         <FormItem label="作废原因" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                            wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('invalidContent', {
                                 rules: [ {

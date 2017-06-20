@@ -6,10 +6,12 @@ const columns = [{
     title: '项目名',
     dataIndex: 'username',
     width: 100,
-    render: (text, record) => <a href={record.url}
-        target="_blank"
-        rel="noreferrer noopener"   // 使用target属性 必须加下面这句话( 否则ESlint提示安全问题 )
-                              >{text}</a>
+    render: (text, record) => (
+        <a href={record.url}
+            target="_blank"
+            rel="noreferrer noopener"   // 使用target属性 必须加下面这句话( 否则ESlint提示安全问题 )
+        >{text}</a>
+    )
 }, {
     title: '语言',
     dataIndex: 'lang',
@@ -64,7 +66,7 @@ class AsyncTable extends React.Component {
                             <Card title="异步表格--GitHub今日热门javascript项目" bordered={false}>
                                 <div style={{ marginBottom: 16 }}>
                                     <Button type="primary" onClick={this.start}
-                                            disabled={loading} loading={loading}
+                                        disabled={loading} loading={loading}
                                     >Reload</Button>
                                     <span style={{ marginLeft: 8 }}>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</span>
                                 </div>

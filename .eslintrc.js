@@ -159,7 +159,7 @@ module.exports = {
         "wrap-iife": ["error", "outside"],                                          // 需要把立即执行的函数包裹起来
         "no-undefined": "error",                                                    // 禁止将 undefined 作为标识符
         "require-yield": "error",                                                   // 禁用函数内没有yield的 generator 函数
-        "no-restricted-globals": 0,                                           // 禁用特定的全局变量
+        "no-restricted-globals": 0,                                                 // 禁用特定的全局变量
 
         // React JSX内容
         "react/jsx-uses-react": "error",
@@ -177,7 +177,12 @@ module.exports = {
         "no-debugger": "off",
         "no-extra-parens": ["error", "functions" ],                                     // 只在函数中 - 不要使用多余的括号包裹函数
         "operator-linebreak": ["error", "after"],                                       // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
-        "no-multi-spaces": [ "error", { exceptions: { "ImportDeclaration": true } } ],  // 除了缩进，不要使用多个空格( 除了 'from' )
+        "no-multi-spaces": [ "error", {
+            ignoreEOLComments: true ,
+            exceptions: {
+                "ImportDeclaration": true                                              // 除了缩进，不要使用多个空格( 除了 'from' )
+            }
+        } ],
         "indent": ["error", 4, {
             "SwitchCase": 1,
             "VariableDeclarator": 1
