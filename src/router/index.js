@@ -10,9 +10,9 @@ import {
 import {
     routes,
     RouteWithSubRoutes
-} from './HomeRouter'
+} from './HomeRouter'                                                               // 业务内容 路由匹配
 
-import styled               from 'styled-components'
+import styled               from 'styled-components'                                // 引入 styled样式配置
 
 import NotFound             from '../views/common/pages/404'
 import Login                from '../views/common/pages/Login'
@@ -40,12 +40,12 @@ const SetRouter = () => (
 
             {/* 测试: 排除 404检查 - 测试成功 */}
             {/*
-                <Redirect exact from="/" to="/home/index" />
-                {routes.map((route, i) => (
-                    <RouteWithSubRoutes key={i} {...route} />
-                ))}
-                <Route path="/login" component={ Login } />
-                <Route path="/registration" component={ Registration } />
+             <Redirect exact from="/" to="/home/index" />
+             {routes.map((route, i) => (
+             <RouteWithSubRoutes key={i} {...route} />
+             ))}
+             <Route path="/login" component={ Login } />
+             <Route path="/registration" component={ Registration } />
             */}
         </ContainerDiv>
     </Router>
