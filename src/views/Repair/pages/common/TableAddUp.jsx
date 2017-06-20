@@ -153,7 +153,6 @@ class TableAddUp extends React.Component {
             return ''
         })
     }
-    bull = true
     render () {
         const { getFieldProps } = this.props.form
         return (
@@ -219,7 +218,7 @@ class TableAddUp extends React.Component {
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled={this.bull} {...getFieldProps('buildName')} />
+                                    <Input disabled {...getFieldProps('buildName')} />
                                     <Input type="hidden" {...getFieldProps('buildId')} />
                                 </FormItem>
                             </Col>
@@ -235,7 +234,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input disabled={this.bull} {...getFieldProps('roomNum')} />
+                            <Input disabled {...getFieldProps('roomNum')} />
                         </FormItem>
 
 

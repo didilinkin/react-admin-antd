@@ -108,7 +108,6 @@ class addUpkeep extends React.Component {
             tollAmount: (parseFloat(purchasePrice) + parseFloat(serviceCharge)).toFixed(0)
         })
     }
-    bull = true
     render () {
         const { getFieldDecorator } = this.props.form
         return (
@@ -179,7 +178,7 @@ class addUpkeep extends React.Component {
                                     message: 'Please input your 收费金额!'
                                 }]
                             })(
-                                <Input disabled={this.bull} type="text" />
+                                <Input disabled type="text" />
                             )}
                         </FormItem>
                     </Form>
