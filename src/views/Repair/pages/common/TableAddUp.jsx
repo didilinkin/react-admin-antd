@@ -93,38 +93,52 @@ class TableAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-        json['picture'] = this.imgUrl
-        let repairDate = json.repairDate.format('YYYY-MM-DD')
-        json['repairDate'] = repairDate
-        debugger
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            let result = await apiPost(
-                'upkeep/updateRepair',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else {
-            let result = await apiPost(
-                'upkeep/insertRepair',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        }
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
+            json['picture'] = this.imgUrl
+            let repairDate = json.repairDate.format('YYYY-MM-DD')
+            json['repairDate'] = repairDate
+            debugger
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                let result = await apiPost(
+                    'upkeep/updateRepair',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else {
+                let result = await apiPost(
+                    'upkeep/insertRepair',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
 
-        this.isFirst = true
-        this.setState({visible: false,
-            isFirst: true,
-            clientList: []})
-        this.props.refreshTable()
+            this.isFirst = true
+            this.setState({
+                visible: false,
+                isFirst: true,
+                clientList: []
+            })
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -172,7 +186,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修日期" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairDate')(
+                                    {getFieldDecorator('repairDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <DatePicker onChange={this.getRepairDate} />
                                     )}
                                 </FormItem>
@@ -181,7 +200,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修人" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairMan')(
+                                    {getFieldDecorator('repairMan', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -192,7 +216,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="公司名称" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('clientNameOne')(
+                                    {getFieldDecorator('clientNameOne', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
@@ -213,7 +242,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="联系方式" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('phone')(
+                                    {getFieldDecorator('phone', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -224,7 +258,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('buildName')(
+                                    {getFieldDecorator('buildName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Input disabled />
                                     )}
                                 </FormItem>
@@ -233,7 +272,12 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修单号" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairNum')(
+                                    {getFieldDecorator('repairNum', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -243,7 +287,12 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('roomNum')(
+                            {getFieldDecorator('roomNum', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
                                 <Input disabled />
                             )}
                         </FormItem>
@@ -252,7 +301,12 @@ class TableAddUp extends React.Component {
                         <FormItem label="报修内容" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('repairContent')(
+                            {getFieldDecorator('repairContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>

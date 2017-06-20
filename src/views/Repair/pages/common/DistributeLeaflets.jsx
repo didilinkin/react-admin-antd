@@ -36,21 +36,35 @@ class DistributeLeaflets extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        if (this.props.id > 0) {
-            let json = this.props.form.getFieldsValue()
-            json['id'] = this.props.id
-            await apiPost(
-                'upkeep/distribute',
-                json
-            )
-            notification.open({
-                message: '派单成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            if (this.props.id > 0) {
+                let json = this.props.form.getFieldsValue()
+                json['id'] = this.props.id
+                await apiPost(
+                    'upkeep/distribute',
+                    json
+                )
+                notification.open({
+                    message: '派单成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.refreshTable()
+            }
+            this.setState({
+                visible: false,
+                isFirst: true
             })
-            this.props.refreshTable()
         }
-        this.setState({visible: false,
-            isFirst: true})
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
@@ -84,7 +98,12 @@ class DistributeLeaflets extends React.Component {
                     <FormItem label="姓名" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        {getFieldDecorator('repairedIdOne')(
+                        {getFieldDecorator('repairedIdOne', {
+                            rules: [ {
+                                required: true,
+                                message: 'Please input!'
+                            }]
+                        })(
                             <Select
                                 showSearch
                                 style={{ width: 200 }}
