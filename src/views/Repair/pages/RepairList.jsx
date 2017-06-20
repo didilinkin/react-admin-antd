@@ -238,10 +238,12 @@ class RepairList extends Component {
                     visible={this.state.opendispatch}
                 />
                 <TableAddUpComponent
+                    title="添加报单"
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
                 <TableAddUpComponent
+                    title="修改报单"
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}

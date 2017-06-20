@@ -153,7 +153,7 @@ class RectificationAddUp extends React.Component {
         return (
             <div>
                 <Modal
-                    title="添加报单"
+                    title={this.props.title}
                     style={{top: 20}}
                     width="700"
                     visible={this.state.visible}
