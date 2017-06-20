@@ -173,7 +173,7 @@ class RectificationAddUp extends React.Component {
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('buildName')} />
+                                    <Input disabled="true" {...getFieldProps('buildName')} />
                                     <Input type="hidden" {...getFieldProps('buildId')} />
                                 </FormItem>
                             </Col>
@@ -205,7 +205,7 @@ class RectificationAddUp extends React.Component {
                                 <FormItem label="所属房间" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('roomNums')} />
+                                    <Input disabled="true" {...getFieldProps('roomNums')} />
                                 </FormItem>
                             </Col>
                         </Row>

@@ -178,7 +178,7 @@ class addUpkeep extends React.Component {
                                     message: 'Please input your 收费金额!'
                                 }]
                             })(
-                                <Input type="text" />
+                                <Input disabled="true" type="text" />
                             )}
                         </FormItem>
                     </Form>

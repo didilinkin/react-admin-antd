@@ -215,12 +215,21 @@ class TableAddUp extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
+<<<<<<< HEAD
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     <Input {...getFieldProps('buildName')} />
                                     <Input type="hidden" {...getFieldProps('buildId')} />
                                 </FormItem>
+=======
+                        <FormItem label="所属楼宇" labelCol={{ span: 5 }}
+                                  wrapperCol={{ span: 15 }}
+                        >
+                            <Input disabled="true" {...getFieldProps('buildName')} />
+                            <Input type="hidden" {...getFieldProps('buildId')} />
+                        </FormItem>
+>>>>>>> 97a78c07abea56e39d12bf7ea6371cd5b153e2cb
                             </Col>
                             <Col span={12}>
                                 <FormItem label="报修单号" labelCol={{ span: 5 }}
@@ -234,7 +243,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input {...getFieldProps('roomNum')} />
+                            <Input disabled="true" {...getFieldProps('roomNum')} />
                         </FormItem>
 
 
