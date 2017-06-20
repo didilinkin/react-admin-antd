@@ -1,6 +1,6 @@
 import { Upload, Icon, Modal } from 'antd'
 import React from 'react'
-
+import { baseURL } from '../../../../api/index'
 class PicturesWall extends React.Component {
     state = {
         previewVisible: false,
@@ -50,7 +50,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="storage/uploader"
+                    action={baseURL + 'storage/uploader'}
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}

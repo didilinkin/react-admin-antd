@@ -57,6 +57,7 @@ class RectificationAddUp extends React.Component {
                     buildName: resulData.data.buildName,
                     buildId: resulData.data.buildId,
                     clientName: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName,
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     roomNums: resulData.data.roomNums,
@@ -148,13 +149,13 @@ class RectificationAddUp extends React.Component {
         })
     }
     render () {
-        const { getFieldProps, getFieldDecorator } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
                     title={this.props.title}
                     style={{top: 20}}
-                    width="700"
+                    width={700}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
@@ -201,20 +202,24 @@ class RectificationAddUp extends React.Component {
                                 <FormItem label="公司名称" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Select
-                                        {...getFieldProps('clientName')}
-                                        showSearch
-                                        style={{ width: 200 }}
-                                        placeholder="Select a person"
-                                        optionFilterProp="children"
-                                        onChange={this.getClient}
-                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    >
-                                        {this.state.clientList.map(d => {
-                                            let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                            return <Option key={key}>{d.clientName}</Option>
-                                        })}
-                                    </Select>
+                                    {getFieldDecorator('clientNameOne')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200 }}
+                                            placeholder="Select a person"
+                                            optionFilterProp="children"
+                                            onChange={this.getClient}
+                                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        >
+                                            {this.state.clientList.map(d => {
+                                                let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
+                                                return <Option key={key}>{d.clientName}</Option>
+                                            })}
+                                        </Select>
+                                    )}
+                                    {getFieldDecorator('clientName')(
+                                        <Input type="hidden" />
+                                    )}
                                     {getFieldDecorator('clientType', {
                                         rules: [ {
                                             required: true,

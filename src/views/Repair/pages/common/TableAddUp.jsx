@@ -58,6 +58,7 @@ class TableAddUp extends React.Component {
                     repairDate: moment(resulData.data.repairDate),
                     repairMan: resulData.data.repairMan,
                     clientName: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName,
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     phone: resulData.data.phone,
@@ -154,13 +155,13 @@ class TableAddUp extends React.Component {
         })
     }
     render () {
-        const { getFieldProps, getFieldDecorator } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
                     title={this.props.title}
                     style={{top: 20}}
-                    width="700"
+                    width={700}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
@@ -171,12 +172,7 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修日期" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairDate', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your repairDate!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('repairDate')(
                                         <DatePicker onChange={this.getRepairDate} />
                                     )}
                                 </FormItem>
@@ -185,12 +181,7 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修人" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairMan', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your repairMan!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('repairMan')(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -201,35 +192,29 @@ class TableAddUp extends React.Component {
                                 <FormItem label="公司名称" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Select
-                                        {...getFieldProps('clientName')}
-                                        showSearch
-                                        style={{ width: 200 }}
-                                        placeholder="Select a person"
-                                        optionFilterProp="children"
-                                        onChange={this.getClient}
-                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    >
-                                        {this.state.clientList.map(d => {
-                                            let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                            return <Option key={key}>{d.clientName}</Option>
-                                        })}
-                                    </Select>
-                                    {getFieldDecorator('clientType', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your clientType!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('clientNameOne')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200 }}
+                                            placeholder="Select a person"
+                                            optionFilterProp="children"
+                                            onChange={this.getClient}
+                                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        >
+                                            {this.state.clientList.map(d => {
+                                                let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
+                                                return <Option key={key}>{d.clientName}</Option>
+                                            })}
+                                        </Select>
+                                    )}
+                                    {getFieldDecorator('clientName')(
                                         <Input type="hidden" />
                                     )}
-                                    {getFieldDecorator('clientId', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your clientId!'
-                                        }]
-                                    })(
-                                        <Input type="hidden" {...getFieldProps('clientId')} />
+                                    {getFieldDecorator('clientType')(
+                                        <Input type="hidden" />
+                                    )}
+                                    {getFieldDecorator('clientId')(
+                                        <Input type="hidden" />
                                     )}
                                 </FormItem>
                             </Col>
@@ -237,12 +222,7 @@ class TableAddUp extends React.Component {
                                 <FormItem label="联系方式" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('phone', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your phone!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('phone')(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -253,20 +233,10 @@ class TableAddUp extends React.Component {
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('buildName', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your buildName!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('buildName')(
                                         <Input disabled />
                                     )}
-                                    {getFieldDecorator('buildId', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your buildId!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('buildId')(
                                         <Input type="hidden" />
                                     )}
                                 </FormItem>
@@ -275,12 +245,7 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修单号" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('repairNum', {
-                                        rules: [ {
-                                            required: true,
-                                            message: 'Please input your repairNum!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('repairNum')(
                                         <Input />
                                     )}
                                 </FormItem>
@@ -290,13 +255,8 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('roomNum', {
-                                rules: [ {
-                                    required: true,
-                                    message: 'Please input your roomNum!'
-                                }]
-                            })(
-                                <Input disabled {...getFieldProps('roomNum')} />
+                            {getFieldDecorator('roomNum')(
+                                <Input disabled />
                             )}
                         </FormItem>
 
@@ -304,17 +264,10 @@ class TableAddUp extends React.Component {
                         <FormItem label="报修内容" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('repairContent', {
-                                rules: [ {
-                                    required: true,
-                                    message: 'Please input your repairContent!'
-                                }]
-                            })(
+                            {getFieldDecorator('repairContent')(
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-
-
                         <FormItem label="上传图片" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >

@@ -115,7 +115,7 @@ class addUpkeep extends React.Component {
                 <Modal
                     title={this.props.title}
                     style={{top: 20}}
-                    width="400"
+                    width={400}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}

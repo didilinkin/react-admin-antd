@@ -1,8 +1,8 @@
-import {Modal, Form, notification, Icon, Select  } from 'antd'
+import {Modal, Form, notification, Icon, Select, Input  } from 'antd'
 import React from 'react'
 import { apiGet, apiPost } from '../../../../api/index'
-const FormItem = Form.Item
 const Option = Select.Option
+const FormItem = Form.Item
 
 class DistributeLeaflets extends React.Component {
     constructor (props) {
@@ -18,15 +18,6 @@ class DistributeLeaflets extends React.Component {
         }
     }
     async initialRemarks (nextProps) {
-        this.setState({
-            visible: false,
-            data: {userArr: []},
-            id: '',
-            value: '',
-            phone: '',
-            userTelephone: '',
-            isFirst: true
-        })
         if (nextProps.id > 0) {
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
@@ -45,13 +36,11 @@ class DistributeLeaflets extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         if (this.props.id > 0) {
+            let json = this.props.form.getFieldsValue()
+            json['id'] = this.props.id
             await apiPost(
                 'upkeep/distribute',
-                {
-                    'id': this.props.id,
-                    'repairedId': this.state.id,
-                    'repairedMan': this.state.value
-                }
+                json
             )
             notification.open({
                 message: '派单成功',
@@ -66,26 +55,26 @@ class DistributeLeaflets extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    handleChange = (value) => {
+    getUser = (value) => {
         this.state.data.userArr.map(d => {
             if (d.id.toString() === value) {
-                this.setState({
+                this.props.form.setFieldsValue({
+                    repairedId: d.id,
+                    repairedMan: d.loginName,
                     phone: d.phone,
-                    userTelephone: d.userTelephone,
-                    value: d.loginName,
-                    id: value
+                    userTelephone: d.userTelephone
                 })
             }
             return ''
         })
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <Modal
                 title="派单"
                 style={{top: 20}}
-                width="400"
+                width={400}
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}
@@ -94,28 +83,38 @@ class DistributeLeaflets extends React.Component {
                     <FormItem label="姓名" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        <Select
-                            {...getFieldProps('repairedId')}
-                            showSearch
-                            style={{ width: 200 }}
-                            placeholder="Select a person"
-                            optionFilterProp="children"
-                            onChange={this.handleChange}
-                            value={this.state.value}
-                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        >
-                            {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
-                        </Select>
+                        {getFieldDecorator('repairedIdOne')(
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                onChange={this.getUser}
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            >
+                                {this.state.data.userArr.map(d => <Option key={d.id}>{d.loginName}</Option>)}
+                            </Select>
+                        )}
+                        {getFieldDecorator('repairedId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('repairedMan')(
+                            <Input type="hidden" />
+                        )}
                     </FormItem>
                     <FormItem label="手机" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        <span>{this.state.phone}</span>
+                        {getFieldDecorator('phone')(
+                            <Input disabled />
+                        )}
                     </FormItem>
                     <FormItem label="电话" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        <span>{this.state.userTelephone}</span>
+                        {getFieldDecorator('userTelephone')(
+                            <Input disabled />
+                        )}
                     </FormItem>
                 </Form>
             </Modal>
