@@ -4,13 +4,13 @@ import axios from 'axios'
 export const postpost = (url, json) => {
     return new Promise(function (resolve, reject) {
         axios.post(url, json).
-        then(response => {
-            let resulData = response.data
-            resolve(resulData)
-        }).
-        catch(error => {
-            reject(error)
-        })
+            then(response => {
+                let resulData = response.data
+                resolve(resulData)
+            }).
+            catch(error => {
+                reject(error)
+            })
     })
 }
 

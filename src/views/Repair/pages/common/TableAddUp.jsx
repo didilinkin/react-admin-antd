@@ -154,7 +154,7 @@ class TableAddUp extends React.Component {
         })
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldProps, getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
@@ -171,14 +171,28 @@ class TableAddUp extends React.Component {
                                 <FormItem label="报修日期" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
+                                    {getFieldDecorator('repairDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your repairDate!'
+                                        }]
+                                    })(
+                                        <DatePicker onChange={this.getRepairDate} />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="报修人" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('repairMan')} />
+                                    {getFieldDecorator('repairMan', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your repairMan!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -201,15 +215,36 @@ class TableAddUp extends React.Component {
                                             return <Option key={key}>{d.clientName}</Option>
                                         })}
                                     </Select>
-                                    <Input type="hidden" {...getFieldProps('clientType')} />
-                                    <Input type="hidden" {...getFieldProps('clientId')} />
+                                    {getFieldDecorator('clientType', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientType!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" />
+                                    )}
+                                    {getFieldDecorator('clientId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientId!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" {...getFieldProps('clientId')} />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="联系方式" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('phone')} />
+                                    {getFieldDecorator('phone', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your phone!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -218,15 +253,36 @@ class TableAddUp extends React.Component {
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled {...getFieldProps('buildName')} />
-                                    <Input type="hidden" {...getFieldProps('buildId')} />
+                                    {getFieldDecorator('buildName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your buildName!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
+                                    {getFieldDecorator('buildId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your buildId!'
+                                        }]
+                                    })(
+                                        <Input type="hidden" />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="报修单号" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('repairNum')} />
+                                    {getFieldDecorator('repairNum', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your repairNum!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -234,14 +290,28 @@ class TableAddUp extends React.Component {
                         <FormItem label="所在房间" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input disabled {...getFieldProps('roomNum')} />
+                            {getFieldDecorator('roomNum', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your roomNum!'
+                                }]
+                            })(
+                                <Input disabled {...getFieldProps('roomNum')} />
+                            )}
                         </FormItem>
 
 
                         <FormItem label="报修内容" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('repairContent')} />
+                            {getFieldDecorator('repairContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your repairContent!'
+                                }]
+                            })(
+                                <Input type="textarea" rows={4} />
+                            )}
                         </FormItem>
 
 
