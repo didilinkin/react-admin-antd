@@ -27,7 +27,6 @@ class PicturesWall extends React.Component {
     }
 
     handleChange = ({ fileList }) => {
-        debugger
         let imgUrl = ''
         fileList.map(file => {
             if (typeof (file.response) !== 'undefined') {
