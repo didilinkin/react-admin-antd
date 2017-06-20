@@ -168,15 +168,15 @@ class TableAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                        <FormItem label="报修日期" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="报修日期" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
                         </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="报修人" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="报修人" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <Input {...getFieldProps('repairMan')} />
                         </FormItem>
@@ -184,8 +184,8 @@ class TableAddUp extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
-                        <FormItem label="公司名称" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="公司名称" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <Select
                                 {...getFieldProps('clientName')}
@@ -206,8 +206,8 @@ class TableAddUp extends React.Component {
                         </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="联系方式" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="联系方式" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <Input {...getFieldProps('phone')} />
                         </FormItem>
@@ -215,38 +215,38 @@ class TableAddUp extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <Input {...getFieldProps('buildName')} />
                             <Input type="hidden" {...getFieldProps('buildId')} />
                         </FormItem>
                             </Col>
                             <Col span={12}>
-                        <FormItem label="报修单号" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="报修单号" labelCol={{ span: 6 }}
+                                  wrapperCol={{ span: 16 }}
                         >
                             <Input {...getFieldProps('repairNum')} />
                         </FormItem>
                             </Col>
                         </Row>
 
-                        <FormItem label="所在房间" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="所在房间" labelCol={{ span: 3}}
+                                  wrapperCol={{ span: 20}}
                         >
                             <Input {...getFieldProps('roomNum')} />
                         </FormItem>
 
 
-                        <FormItem label="报修内容" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="报修内容" labelCol={{ span: 3 }}
+                                  wrapperCol={{ span: 20 }}
                         >
                             <Input type="textarea" rows={4} {...getFieldProps('repairContent')} />
                         </FormItem>
 
 
-                        <FormItem label="上传图片" labelCol={{ span: 5 }}
-                                  wrapperCol={{ span: 15 }}
+                        <FormItem label="上传图片" labelCol={{ span: 3 }}
+                                  wrapperCol={{ span: 20 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
