@@ -1,3 +1,4 @@
+// 仓库添加(? 未确认名称)
 import {Modal, Input, Form, DatePicker, Button, Row, Col, Select, InputNumber } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
@@ -53,6 +54,7 @@ class WarehouseAddUp extends React.Component {
             WarehouseDetail['storeroomType'] = this.props.form.getFieldValue('storeroomType')
             WarehouseDetail['fileUrl'] = this.imgUrl
             list.push(WarehouseDetail)
+            return {}                                                   // 箭头函数必须有返回值
         })
         console.log(JSON.stringify(list))
     }
@@ -146,14 +148,14 @@ class WarehouseAddUp extends React.Component {
                         <FormItem label="入库日期" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('warehouseDate')}/>
+                            <DatePicker onChange={this.getRepairDate} {...getFieldProps('warehouseDate')} />
                         </FormItem>
                             </Col>
                             <Col span={12}>
                         <FormItem label="采购人" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <Input {...getFieldProps('purchase')}/>
+                            <Input {...getFieldProps('purchase')} />
                         </FormItem>
                             </Col>
                         </Row>
@@ -162,14 +164,14 @@ class WarehouseAddUp extends React.Component {
                                 <FormItem label="凭证号" labelCol={{ span: 5 }}
                                           wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('voucherNo')}/>
+                                    <Input {...getFieldProps('voucherNo')} />
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="验收人" labelCol={{ span: 5 }}
                                           wrapperCol={{ span: 15 }}
                                 >
-                                    <Input {...getFieldProps('acceptor')}/>
+                                    <Input {...getFieldProps('acceptor')} />
                                 </FormItem>
                             </Col>
                         </Row>
@@ -196,7 +198,7 @@ class WarehouseAddUp extends React.Component {
                         <FormItem label="现场图片" labelCol={{ span: 5 }}
                                   wrapperCol={{ span: 15 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback}/>
+                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                     <div className="box2" style={{width: 650}}>
                         <table className="tb">
@@ -248,7 +250,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="数量" labelCol={{ span: 5 }}
                                       wrapperCol={{ span: 15 }}
                             >
-                                <InputNumber onBlur={this.sumMoney} {...getFieldProps('number')}/>
+                                <InputNumber onBlur={this.sumMoney} {...getFieldProps('number')} />
                             </FormItem>
                         </Col>
                     </Row>
@@ -257,14 +259,14 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="单价" labelCol={{ span: 5 }}
                                       wrapperCol={{ span: 15 }}
                             >
-                                <Input {...getFieldProps('unitPrice')}/>
+                                <Input {...getFieldProps('unitPrice')} />
                             </FormItem>
                         </Col>
                         <Col span={12}>
                             <FormItem label="金额" labelCol={{ span: 5 }}
                                       wrapperCol={{ span: 15 }}
                             >
-                                <Input {...getFieldProps('amount')}/>
+                                <Input {...getFieldProps('amount')} />
                             </FormItem>
                         </Col>
                     </Row>
@@ -273,7 +275,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="备注" labelCol={{ span: 5 }}
                                       wrapperCol={{ span: 15 }}
                             >
-                                <Input {...getFieldProps('remark')}/>
+                                <Input {...getFieldProps('remark')} />
                             </FormItem>
                         </Col>
                     </Row>
