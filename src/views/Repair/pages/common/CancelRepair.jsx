@@ -64,6 +64,7 @@ class CancelRepair extends React.Component {
                                     message: 'Please input your 作废原因!'
                                 }]
                             })(
+
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
