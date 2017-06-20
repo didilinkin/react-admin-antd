@@ -61,7 +61,7 @@ class ReturnVisit extends React.Component {
     }
     render () {
         return (
-            <div className="box2">
+            <h2 className="box2">
                 <Timeline>
                     <Timeline.Item color="green"><h2>提交报修单</h2>受理人： {this.state.data.pieMan}</Timeline.Item>
                     <Timeline.Item color="green"><h2>已派单</h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
@@ -91,9 +91,9 @@ class ReturnVisit extends React.Component {
                         {this.state.data.ratedStatus}
                     </Timeline.Item>
                 </Timeline>
-                <div className="title">回访情况</div>
+                <h2>回访情况</h2>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
-                <div className="clearfix" />
+                <p className="linevisit"></p>
                 <Button onClick={this.handleSubmit}>确定</Button>
             </div>
         )
