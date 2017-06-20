@@ -61,7 +61,7 @@ class ReturnVisit extends React.Component {
     }
     render () {
         return (
-            <h2 className="box2">
+            <div className="box2">
                 <Timeline>
                     <Timeline.Item color="green"><h2>提交报修单</h2>受理人： {this.state.data.pieMan}</Timeline.Item>
                     <Timeline.Item color="green"><h2>已派单</h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
