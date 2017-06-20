@@ -29,6 +29,9 @@ class App extends React.Component {
                 return '无'
             }
         })
+        Repair['repairedContent'] = Repair.repairedContent.split('\n').map(span => {
+            return <p>{span}</p>
+        })
         this.setState({
             data: Repair
         })

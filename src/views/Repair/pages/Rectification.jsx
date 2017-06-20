@@ -153,7 +153,7 @@ class RepairList extends Component {
                     <span>公司名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
-                    <Button type="primary" onClick={this.showModal}>添加整改日期</Button>
+                    <Button type="primary" onClick={this.showModal}>添加整改通知</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
