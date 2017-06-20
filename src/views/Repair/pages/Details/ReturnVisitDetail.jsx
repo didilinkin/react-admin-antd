@@ -2,7 +2,7 @@
 import React from 'react'
 import { Timeline, Rate } from 'antd'
 import '../../../../style/test.less'
-import { apiPost } from '../../../../api'
+import { apiPost, baseURL  } from '../../../../api'
 
 class App extends React.Component {
     constructor (props) {
@@ -31,7 +31,7 @@ class App extends React.Component {
         })
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={'storage/files/' + img} alt="" />
+                return <img src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }

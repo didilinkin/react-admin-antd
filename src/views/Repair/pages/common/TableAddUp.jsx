@@ -1,7 +1,7 @@
 import {Modal, Input, Form, DatePicker, Select, Row, Col, notification, Icon  } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
-import { apiGet, apiPost } from '../../../../api/index'
+import { apiGet, apiPost, baseURL } from '../../../../api/index'
 import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
@@ -39,7 +39,7 @@ class TableAddUp extends React.Component {
                             uid: i,
                             status: 'done',
                             name: img,
-                            url: 'storage/files/' + img
+                            url: baseURL + 'storage/files/' + img
                         }
                         Arr.push(json)
                     }
