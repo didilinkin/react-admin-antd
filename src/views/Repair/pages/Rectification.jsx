@@ -65,7 +65,7 @@ class RepairList extends Component {
                 key: 'rectificationContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
-                    let url = '/upkeep/repai/' + record.id
+                    let url = '/upkeep/correctionDetail/' + record.id
                     return (
                         <a href={url}>{text}</a>
                     )
@@ -137,11 +137,13 @@ class RepairList extends Component {
         return (
             <div>
                 <RectificationAddUpComponent
+                    title="添加整改通知"
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
                 <RectificationAddUpComponent
                     id={this.state.id}
+                    title="修改整改通知"
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
