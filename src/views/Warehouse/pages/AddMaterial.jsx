@@ -92,13 +92,9 @@ class addUpkeep extends React.Component {
     onBlur = (e) => {
         e.preventDefault()
         let unitPrice = this.props.form.getFieldValue('unitPrice')
-        //let storagePlace = this.props.form.getFieldValue('storagePlace')
         if (typeof (unitPrice) === 'undefined') {
             unitPrice = 0
         }
-        /*this.props.form.setFieldsValue({
-            standard: (parseFloat(unitPrice) + parseFloat(storagePlace)).toFixed(0)
-        })*/
     }
     render () {
         const { getFieldProps } = this.props.form

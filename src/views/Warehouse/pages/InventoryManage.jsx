@@ -1,11 +1,9 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
-import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
+import {Table, Button, Spin, Input, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
-/*import CancelRepairComponent from './common/CancelRepair'*/
-/*import showDetailComponent from './common/DistributeLeaflets'*/
-import showDetailComponent from './TableAddUp'
+import WarehouseAddUpComponent from './common/WarehouseAddUp'
 const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
@@ -13,7 +11,7 @@ class RepairList extends Component {
         super(props)
         this.state = {
             loading: false,
-            openinvalid: false,
+            openAdd: false,
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
@@ -22,41 +20,11 @@ class RepairList extends Component {
             id: 0
         }
     }
-    showDetail = (id) => {
-        this.setState({
-            opendispatch: false,
-            openinvalid: false,
-            openTableAddUp: true,
-            openUpdate: false,
-            id: id
-        })
-    }
-    /*handleUpdate = (id) => {
-        this.setState({
-            openinvalid: true,
-            opendispatch: false,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }*/
-    handleUpdateRepair = (id) => {
-        this.setState({
-            openinvalid: false,
-            opendispatch: false,
-            openTableAddUp: false,
-            openUpdate: true,
-            id: id
-        })
-    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/inventoryManage'
         )
-        const distributeLeaflets = this.distributeLeaflets
-        /*const handleUpdate = this.handleUpdate*/
-        const showDetail = this.showDetail
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -80,8 +48,8 @@ class RepairList extends Component {
             }, {
                 title: '材料名称',
                 width: 150,
-                dataIndex: 'materialName',
-                key: 'materialName'
+                dataIndex: 'name',
+                key: 'name'
             }, {
                 title: '存放位置',
                 width: 150,
@@ -124,9 +92,10 @@ class RepairList extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/warehouse/warehouseDetail/' + record.id
                     return (
                         <div>
-                            <Button type="primary" onClick={() => showDetail(record.id)}>明细</Button>
+                            <a href={url}><Button type="primary">明细</Button></a>
                             <Button type="primary" >出库</Button>
                         </div>
                     )
@@ -148,7 +117,7 @@ class RepairList extends Component {
             }
         )
         this.setState({
-            openinvalid: false,
+            openAdd: false,
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
@@ -160,9 +129,9 @@ class RepairList extends Component {
     showModal = () => {
         this.setState({
             opendispatch: false,
-            openinvalid: false,
+            openAdd: true,
             openUpdate: false,
-            openTableAddUp: true
+            openTableAddUp: false
         })
     }
     clientName = ''
@@ -181,30 +150,15 @@ class RepairList extends Component {
     render () {
         return (
             <div>
-
-                {/*<CancelRepairComponent
-                    id={this.state.id}
+                <WarehouseAddUpComponent
                     refreshTable={this.refresh}
-                    visible={this.state.openinvalid}
-                />*/}
-                <showDetailComponent
-                    id={this.state.id}
-                    visible={this.state.openTableAddUp}
+                    visible={this.state.openAdd}
                 />
-                {/*<TableAddUpComponent
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
-                />
-                <TableAddUpComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />*/}
                 <span>
                     <span>报修日期:</span>
                     <RangePicker onChange={this.getDate}
                     />
-                    <span>公司名称:</span>
+                    <span>材料名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>入库</Button>
