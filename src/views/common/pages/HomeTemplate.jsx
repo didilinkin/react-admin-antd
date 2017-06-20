@@ -12,7 +12,6 @@ const { Content } = Layout
 
 const ContentStyle = styled.div `
     padding: ${modularScale(1)};
-    background: #FFF;
     min-height: 280px;
 `
 
@@ -35,7 +34,7 @@ class HomeTemplate extends React.Component {
                 {/* 内容 */}
                 <Layout>
                     <HeaderBar toggle={this.toggle} />
-                    <Content>
+                    <Content style={{ background: '#FFF' }}>
                         <ContentStyle>
                             {this.props.children}
                         </ContentStyle>
