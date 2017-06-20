@@ -17,6 +17,9 @@ class App extends React.Component {
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
+        Repair['repairContent'] = Repair.repairContent.split('\n').map(span => {
+            return <p>{span}</p>
+        })
         if (Repair.fromType === '1') {
             Repair['fromType'] = '微信'
         } else {
@@ -27,7 +30,6 @@ class App extends React.Component {
         } else {
             Repair['pieStatus'] = '未派单'
         }
-
         Repair['picture'] = Repair.picture.split('#').map(img => {
             if (img !== '') {
                 return <img src={baseURL + 'storage/files/' + img} alt="" />
@@ -64,7 +66,7 @@ class App extends React.Component {
                 <p className="line"></p>
                 <h2>报修信息</h2>
                 <ul>
-                    <li><b>报修内容：</b> <span>{this.state.data.repairedContent}</span></li>
+                    <li><b>报修内容：</b> <span>{this.state.data.repairContent}</span></li>
                     <li><b>报修图片：</b>{this.state.data.picture}
                     </li>
                 </ul>

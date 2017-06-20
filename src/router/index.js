@@ -40,12 +40,12 @@ const SetRouter = () => (
 
             {/* 测试: 排除 404检查 - 测试成功 */}
             {/*
-                <Redirect exact from="/" to="/home/index" />
-                {routes.map((route, i) => (
-                    <RouteWithSubRoutes key={i} {...route} />
-                ))}
-                <Route path="/login" component={ Login } />
-                <Route path="/registration" component={ Registration } />
+             <Redirect exact from="/" to="/home/index" />
+             {routes.map((route, i) => (
+             <RouteWithSubRoutes key={i} {...route} />
+             ))}
+             <Route path="/login" component={ Login } />
+             <Route path="/registration" component={ Registration } />
             */}
         </ContainerDiv>
     </Router>

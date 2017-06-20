@@ -120,7 +120,7 @@ const RouteWithSubRoutes = (route) => (
     <div style={{ height: '100%' }}>
         <Route path={route.path} render={props => (
             <route.component {...props} routes={route.routes} />
-            )}
+        )}
         />
     </div>
 )
