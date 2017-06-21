@@ -1,7 +1,8 @@
-import {Modal, Input, Form, notification, Icon } from 'antd'
+import {Modal, Input, Form, Select, notification, Icon } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../api'
 const FormItem = Form.Item
+const Option = Select.Option
 
 
 class addUpkeep extends React.Component {
@@ -35,6 +36,10 @@ class addUpkeep extends React.Component {
                     },
                     storagePlace: {
                         value: resulData.data.storagePlace,
+                        errors: ''
+                    },
+                    whType: {
+                        value: resulData.data.whType,
                         errors: ''
                     }
                 })
@@ -109,32 +114,35 @@ class addUpkeep extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
-                        <FormItem label="材料名称" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
-                        >
+                        <FormItem label="材料名称" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
                             <Input type="text" {...getFieldProps('name')} />
                         </FormItem>
-                        <FormItem label="规格" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
-                        >
+                        <FormItem label="规格" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
                             <Input type="text" {...getFieldProps('standard')} />
                         </FormItem>
-                        <FormItem label="单位" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
-                        >
+                        <FormItem label="单位" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
                             <Input type="text" {...getFieldProps('unit')} />
                         </FormItem>
-                        <FormItem label="单价" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
-                        >
+                        <FormItem label="单价" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
                             <Input onBlur={this.onBlur} type="text" {...getFieldProps('unitPrice')} />
                         </FormItem>
-                        <FormItem label="存放位置" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
-                        >
+                        <FormItem label="存放位置" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
                             <Input onBlur={this.onBlur} type="text" {...getFieldProps('storagePlace')} />
                         </FormItem>
-
+                        <FormItem label="仓库类型" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+                            <Select
+                                {...getFieldProps('whType')}
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            >
+                                <Option key="0">工程部</Option>
+                                <Option key="1">保洁用品</Option>
+                                <Option key="2">行政库</Option>
+                            </Select>
+                        </FormItem>
                     </Form>
                 </Modal>
             </div>

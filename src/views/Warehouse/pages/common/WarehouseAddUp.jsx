@@ -1,5 +1,5 @@
 // 仓库添加(? 未确认名称)
-import {Modal, Input, Form, DatePicker, Button, Row, Col, Select, InputNumber } from 'antd'
+import {Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
 import { apiPost } from '../../../../api/index'
@@ -12,10 +12,11 @@ class WarehouseAddUp extends React.Component {
         isFirst: true,
         view: true,
         warehouseDate: '',
+        warehouseId: '',
         voucherNo: '',
         purchase: '',
         acceptor: '',
-        storeroomType: '',
+        whType: '',
         WarehouseDetailList: [],
         material: []
     }
@@ -45,18 +46,31 @@ class WarehouseAddUp extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let WarehouseDetailList = this.state.WarehouseDetailList
-        let list = []
+        let list1 = []
         WarehouseDetailList.map(WarehouseDetail => {
             WarehouseDetail['warehouseDate'] = this.props.form.getFieldValue('warehouseDate')
             WarehouseDetail['purchase'] = this.props.form.getFieldValue('purchase')
             WarehouseDetail['voucherNo'] = this.props.form.getFieldValue('voucherNo')
             WarehouseDetail['acceptor'] = this.props.form.getFieldValue('acceptor')
-            WarehouseDetail['storeroomType'] = this.props.form.getFieldValue('storeroomType')
+            WarehouseDetail['whType'] = this.props.form.getFieldValue('whType')
+            WarehouseDetail['remark'] = this.props.form.getFieldValue('remark')
             WarehouseDetail['fileUrl'] = this.imgUrl
-            list.push(WarehouseDetail)
+            list1.push(WarehouseDetail)
             return {}                                                   // 箭头函数必须有返回值
         })
-        console.log(JSON.stringify(list))
+        let list = JSON.stringify(list1)
+        let result = await apiPost(
+            'http://127.0.0.1:18082/warehouse/insertWarehouse',
+            {list: list}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.props.refreshTable()
+        console.log(JSON.stringify(list1))
+        this.setState({visible: false,
+            isFirst: true })
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -74,7 +88,8 @@ class WarehouseAddUp extends React.Component {
                 this.materialId = material.id
                 this.props.form.setFieldsValue({
                     unitPrice: material.unitPrice,
-                    name: material.name
+                    name: material.name,
+                    warehouseId: material.id
                 })
             }
             return ''
@@ -84,18 +99,18 @@ class WarehouseAddUp extends React.Component {
         this.state.material.map(material => {
             if (material.id.toString() === this.materialId.toString()) {
                 let json = {}
-                let uuid = new Date().getTime()
-                json['uuid'] = uuid
-                json['id'] = material.id
+                json['warehouseId'] = material.id
                 json['storagePlace'] = material.storagePlace
                 json['name'] = material.name
                 json['standard'] = material.standard
                 json['unit'] = material.unit
+                json['whType'] = material.whType
                 json['unitPrice'] = material.unitPrice
                 json['number'] = this.props.form.getFieldValue('number')
                 json['amount'] = this.props.form.getFieldValue('amount')
                 json['remark'] = this.props.form.getFieldValue('remark')
                 let WarehouseDetailList = this.state.WarehouseDetailList
+                debugger
                 WarehouseDetailList.push(json)
                 this.setState({
                     WarehouseDetailList: WarehouseDetailList
@@ -175,26 +190,6 @@ class WarehouseAddUp extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col span={12}>
-                            <FormItem label="仓库类型" labelCol={{ span: 5 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                <Select
-                                    {...getFieldProps('storeroomType')}
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="Select a person"
-                                    optionFilterProp="children"
-                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                >
-                                    <Option key="0">工程部</Option>
-                                    <Option key="1">保洁用品</Option>
-                                    <Option key="2">行政库</Option>
-                                </Select>
-                            </FormItem>
-                        </Col>
-                    </Row>
                     <FormItem label="现场图片" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
@@ -203,6 +198,7 @@ class WarehouseAddUp extends React.Component {
                     <div className="box2" style={{width: 650}}>
                         <table className="tb">
                             <tr className="hd">
+                                <td>仓库类型</td>
                                 <td>存放位置</td>
                                 <td>材料名称</td>
                                 <td>规格</td>
@@ -214,6 +210,7 @@ class WarehouseAddUp extends React.Component {
                                 <td>操作</td>
                             </tr>
                             {this.state.WarehouseDetailList.map(WarehouseDetail => <tr>
+                                <td>{WarehouseDetail.whType}</td>
                                 <td>{WarehouseDetail.storagePlace}</td>
                                 <td>{WarehouseDetail.name}</td>
                                 <td>{WarehouseDetail.standard}</td>

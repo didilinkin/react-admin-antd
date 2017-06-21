@@ -62,7 +62,7 @@ class Counter extends Component {
         })
         let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/materialManagement',
-            {'entryName': this.entryName}
+            {'name': this.name}
         )
         this.setState({loading: false})
         this.props.dispatch({
@@ -75,9 +75,9 @@ class Counter extends Component {
         this.setState({open: true,
             id: 'add'})
     }
-    entryName = ''
+    name = ''
     entryNameOnChange = (e) => {
-        this.entryName = e.target.value
+        this.name = e.target.value
     }
     query = () => {
         this.refresh()
@@ -172,6 +172,23 @@ function mapDispatchToProps (dispatch) {
             title: '存放位置',
             dataIndex: 'storagePlace',
             key: 'storagePlace'
+        }, {
+            title: '仓库类型',
+            width: 100,
+            dataIndex: 'whType',
+            key: 'whType',
+            render: function (text, record, index) {
+                let whType = '工程库'
+                if (record.whType === 1) {
+                    whType = '保洁用品库'
+                }
+                if (record.whType === 2) {
+                    whType = '行政库'
+                }
+                return (
+                    <span>{whType}</span>
+                )
+            }
         }, {
             title: '操作',
             dataIndex: 'opt',

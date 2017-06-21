@@ -4,7 +4,6 @@ import {Table, Button, Spin, Input, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import WarehouseAddUpComponent from './common/WarehouseAddUp'
-const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
     constructor (props) {
@@ -87,7 +86,7 @@ class RepairList extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/warehouse/warehouseDetail/' + record.id
+                    let url = '/warehouse/warehouseDetail/' + record.warehouseId
                     return (
                         <div>
                             <a href={url}><Button type="primary">明细</Button></a>
@@ -106,9 +105,8 @@ class RepairList extends Component {
         // 刷新表格
         let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/inventoryManage',
-            {'storeroomType': this.storeroomType,
-                'materialName': this.materialName,
-                'storagePlace': this.storagePlace
+            {'startDate': this.startDate,
+                'name': this.name
             }
         )
         this.setState({
@@ -129,18 +127,16 @@ class RepairList extends Component {
             openTableAddUp: false
         })
     }
-    clientName = ''
+    name = ''
     entryNameOnChange = (e) => {
-        this.clientName = e.target.value
+        this.name = e.target.value
     }
     query = () => {
         this.refresh()
     }
     startDate = ''
-    endDate = ''
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
-        this.endDate = dateString[1]
     }
     render () {
         return (
@@ -151,7 +147,7 @@ class RepairList extends Component {
                 />
                 <span>
                     <span>报修日期:</span>
-                    <RangePicker onChange={this.getDate} />
+                    <DatePicker onChange={this.getDate} />
                     <span>材料名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
@@ -160,7 +156,7 @@ class RepairList extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1300 }}
+                        scroll={{ x: 1200 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
