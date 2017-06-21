@@ -58,6 +58,7 @@ class TableAddUp extends React.Component {
                     repairDate: moment(resulData.data.repairDate),
                     repairMan: resulData.data.repairMan,
                     clientName: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName,
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     phone: resulData.data.phone,
@@ -73,7 +74,6 @@ class TableAddUp extends React.Component {
                 view: false
             })
             if (this.state.isFirst && nextProps.visible) {
-                this.props.form.resetFields()
                 let result = await apiGet(
                     'upkeep/getClient'
                 )
@@ -84,6 +84,10 @@ class TableAddUp extends React.Component {
                     fileList: [],
                     clientList: result.data
                 })
+                this.props.form.resetFields()
+                this.props.form.setFieldsValue({
+                    repairNum: new Date().getTime()
+                })
             }
         }
     }
@@ -92,38 +96,52 @@ class TableAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-        json['picture'] = this.imgUrl
-        let repairDate = json.repairDate.format('YYYY-MM-DD')
-        json['repairDate'] = repairDate
-        debugger
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            let result = await apiPost(
-                'upkeep/updateRepair',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else {
-            let result = await apiPost(
-                'upkeep/insertRepair',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        }
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
+            json['picture'] = this.imgUrl
+            let repairDate = json.repairDate.format('YYYY-MM-DD')
+            json['repairDate'] = repairDate
+            debugger
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                let result = await apiPost(
+                    'upkeep/updateRepair',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else {
+                let result = await apiPost(
+                    'upkeep/insertRepair',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
 
-        this.isFirst = true
-        this.setState({visible: false,
-            isFirst: true,
-            clientList: []})
-        this.props.refreshTable()
+            this.isFirst = true
+            this.setState({
+                visible: false,
+                isFirst: true,
+                clientList: []
+            })
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -154,13 +172,13 @@ class TableAddUp extends React.Component {
         })
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
                     title={this.props.title}
                     style={{top: 20}}
-                    width="700"
+                    width={700}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
@@ -168,94 +186,150 @@ class TableAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                                <FormItem label="报修日期" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="报修日期" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <DatePicker onChange={this.getRepairDate} {...getFieldProps('repairDate')} />
+                                    {getFieldDecorator('repairDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <DatePicker onChange={this.getRepairDate} />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修人" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="报修人" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <Input {...getFieldProps('repairMan')} />
+                                    {getFieldDecorator('repairMan', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="公司名称" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="公司名称" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <Select
-                                        {...getFieldProps('clientName')}
-                                        showSearch
-                                        style={{ width: 200 }}
-                                        placeholder="Select a person"
-                                        optionFilterProp="children"
-                                        onChange={this.getClient}
-                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    >
-                                        {this.state.clientList.map(d => {
-                                            let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                            return <Option key={key}>{d.clientName}</Option>
-                                        })}
-                                    </Select>
-                                    <Input type="hidden" {...getFieldProps('clientType')} />
-                                    <Input type="hidden" {...getFieldProps('clientId')} />
+                                    {getFieldDecorator('clientNameOne', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200 }}
+                                            placeholder="Select a person"
+                                            optionFilterProp="children"
+                                            onChange={this.getClient}
+                                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        >
+                                            {this.state.clientList.map(d => {
+                                                let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
+                                                return <Option key={key}>{d.clientName}</Option>
+                                            })}
+                                        </Select>
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="联系方式" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="联系方式" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <Input {...getFieldProps('phone')} />
+                                    {getFieldDecorator('phone', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="所属楼宇" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <Input {...getFieldProps('buildName')} />
-                                    <Input type="hidden" {...getFieldProps('buildId')} />
-                                </FormItem>
-                                <FormItem label="所属楼宇" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    <Input disabled="true" {...getFieldProps('buildName')} />
-                                    <Input type="hidden" {...getFieldProps('buildId')} />
+                                    {getFieldDecorator('buildName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修单号" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="报修单号" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
-                                    <Input {...getFieldProps('repairNum')} />
+                                    {getFieldDecorator('repairNum', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
 
-                        <FormItem label="所在房间" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="所在房间" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
-                            <Input disabled="true" {...getFieldProps('roomNum')} />
+                            {getFieldDecorator('roomNum', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
+                                <Input disabled />
+                            )}
                         </FormItem>
 
 
-                        <FormItem label="报修内容" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="报修内容" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('repairContent')} />
+                            {getFieldDecorator('repairContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
+                                <Input type="textarea" rows={4} />
+                            )}
                         </FormItem>
-
-
-                        <FormItem label="上传图片" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="上传图片" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
+                        {getFieldDecorator('clientName')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientType')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('buildId')(
+                            <Input type="hidden" />
+                        )}
                     </Form>
                 </Modal>
             </div>

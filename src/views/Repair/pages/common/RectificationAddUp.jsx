@@ -13,7 +13,8 @@ class RectificationAddUp extends React.Component {
         isFirst: true,
         view: true,
         fileList: [],
-        clientList: []
+        clientList: [],
+        userList: []
     }
 
     isFirst = true
@@ -27,6 +28,7 @@ class RectificationAddUp extends React.Component {
                     'rectification/getRectification',
                     {'id': nextProps.id}
                 )
+                let resulData1 = await apiGet('upkeep/getUser')
                 this.imgUrl = resulData.data.imgUrls + '#'
                 let imgArr = resulData.data.imgUrls.split('#')
                 let Arr = []
@@ -50,16 +52,25 @@ class RectificationAddUp extends React.Component {
                     isFirst: false,
                     view: true,
                     fileList: Arr,
+                    userList: resulData1.data,
                     clientList: result.data
                 })
+                let inspectIdsOne = []
+                if (resulData.data.inspectName.length > 0) {
+                    inspectIdsOne = resulData.data.inspectName.toString().split(',')
+                }
                 this.props.form.setFieldsValue({
                     inspectDate: moment(resulData.data.inspectDate),
                     buildName: resulData.data.buildName,
                     buildId: resulData.data.buildId,
                     clientName: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName,
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     roomNums: resulData.data.roomNums,
+                    inspectName: resulData.data.inspectName,
+                    inspectIds: resulData.data.inspectIds,
+                    inspectIdsOne: inspectIdsOne,
                     rectificationContent: resulData.data.rectificationContent
                 })
             }
@@ -72,11 +83,13 @@ class RectificationAddUp extends React.Component {
                 let result = await apiGet(
                     'upkeep/getClient'
                 )
+                let resulData = await apiGet('upkeep/getUser')
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
                     view: true,
                     fileList: [],
+                    userList: resulData.data,
                     clientList: result.data
                 })
             }
@@ -87,38 +100,51 @@ class RectificationAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-        json['imgUrls'] = this.imgUrl
-        let inspectDate = json.inspectDate.format('YYYY-MM-DD')
-        json['inspectDate'] = inspectDate
-        debugger
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            let result = await apiPost(
-                'rectification/updateRectification',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else {
-            let result = await apiPost(
-                'rectification/insertRectification',
-                json
-            )
-            notification.open({
-                message: result.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        }
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
+            json['imgUrls'] = this.imgUrl
+            let inspectDate = json.inspectDate.format('YYYY-MM-DD')
+            json['inspectDate'] = inspectDate
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                let result = await apiPost(
+                    'rectification/updateRectification',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else {
+                let result = await apiPost(
+                    'rectification/insertRectification',
+                    json
+                )
+                notification.open({
+                    message: result.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
 
-        this.isFirst = true
-        this.setState({visible: false,
-            isFirst: true,
-            clientList: []})
-        this.props.refreshTable()
+            this.isFirst = true
+            this.setState({
+                visible: false,
+                isFirst: true,
+                clientList: []
+            })
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -148,14 +174,30 @@ class RectificationAddUp extends React.Component {
             return ''
         })
     }
+    getUser = (value) => {
+        let inspectName = []
+        this.state.userList.map(user => {
+            value.toString().split(',').map(value1 => {
+                if (user.id.toString() === value1) {
+                    inspectName.push(user.loginName)
+                }
+                return ''
+            })
+            return ''
+        })
+        this.props.form.setFieldsValue({
+            inspectName: inspectName.toString(),
+            inspectIds: value.toString()
+        })
+    }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal
                     title={this.props.title}
                     style={{top: 20}}
-                    width="700"
+                    width={700}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
@@ -163,18 +205,29 @@ class RectificationAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                                <FormItem label="检查日期" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    <DatePicker onChange={this.getRepairDate} {...getFieldProps('inspectDate')} />
+                                <FormItem label="检查日期" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+                                    {getFieldDecorator('inspectDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your inspectDate!'
+                                        }]
+                                    })(
+                                        <DatePicker />
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="所属楼宇" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled="true" {...getFieldProps('buildName')} />
-                                    <Input type="hidden" {...getFieldProps('buildId')} />
+                                    {getFieldDecorator('buildName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your buildName!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -183,44 +236,99 @@ class RectificationAddUp extends React.Component {
                                 <FormItem label="公司名称" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Select
-                                        {...getFieldProps('clientName')}
-                                        showSearch
-                                        style={{ width: 200 }}
-                                        placeholder="Select a person"
-                                        optionFilterProp="children"
-                                        onChange={this.getClient}
-                                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    >
-                                        {this.state.clientList.map(d => {
-                                            let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                            return <Option key={key}>{d.clientName}</Option>
-                                        })}
-                                    </Select>
-                                    <Input type="hidden" {...getFieldProps('clientType')} />
-                                    <Input type="hidden" {...getFieldProps('clientId')} />
+                                    {getFieldDecorator('clientNameOne', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200 }}
+                                            placeholder="Select a person"
+                                            optionFilterProp="children"
+                                            onChange={this.getClient}
+                                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        >
+                                            {this.state.clientList.map(d => {
+                                                let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
+                                                return <Option key={key}>{d.clientName}</Option>
+                                            })}
+                                        </Select>
+                                    )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
                                 <FormItem label="所属房间" labelCol={{ span: 5 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    <Input disabled="true" {...getFieldProps('roomNums')} />
+                                    {getFieldDecorator('roomNums', {
+                                        rules: [ {
+                                            required: true,
+                                            message: 'Please input your clientId!'
+                                        }]
+                                    })(
+                                        <Input disabled />
+                                    )}
                                 </FormItem>
                             </Col>
                         </Row>
                         <FormItem label="整改项目" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            <Input type="textarea" rows={4} {...getFieldProps('rectificationContent')} />
+                            {getFieldDecorator('rectificationContent', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input your clientId!'
+                                }]
+                            })(
+                                <Input type="textarea" rows={4} />
+                            )}
                         </FormItem>
-
-
                         <FormItem label="现场图片" labelCol={{ span: 5 }}
                             wrapperCol={{ span: 15 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
+                        <FormItem label="检查人" labelCol={{ span: 5 }}
+                            wrapperCol={{ span: 15 }}
+                        >
+                            {getFieldDecorator('inspectIdsOne', {
+                                rules: [ {
+                                    required: true,
+                                    message: 'Please input!'
+                                }]
+                            })(
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: 200 }}
+                                    placeholder="Select a person"
+                                    onChange={this.getUser}
+                                >
+                                    {this.state.userList.map(d => {
+                                        return <Option key={d.id}>{d.loginName}</Option>
+                                    })}
+                                </Select>
+                            )}
+                        </FormItem>
+                        {getFieldDecorator('buildId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientName')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientId')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('clientType')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('inspectIds')(
+                            <Input type="hidden" />
+                        )}
+                        {getFieldDecorator('inspectName')(
+                            <Input type="hidden" />
+                        )}
                     </Form>
                 </Modal>
             </div>

@@ -175,18 +175,18 @@ module.exports = {
 
         // 修改规范内容
         "no-debugger": "off",
-        "no-extra-parens": ["error", "functions" ],                                     // 只在函数中 - 不要使用多余的括号包裹函数
-        "operator-linebreak": ["error", "after"],                                       // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
+        "no-extra-parens": ["error", "functions" ],                                 // 只在函数中 - 不要使用多余的括号包裹函数
+        "operator-linebreak": ["error", "after"],                                   // 对于三元运算符 ? 和 : 与他们所负责的代码处于同一行( 所有的运算符必须在同一行 )
         "no-multi-spaces": [ "error", {
             ignoreEOLComments: true ,
             exceptions: {
-                "ImportDeclaration": true                                              // 除了缩进，不要使用多个空格( 除了 'from' )
+                "ImportDeclaration": true                                           // 除了缩进，不要使用多个空格( 除了 'from' )
             }
         } ],
         "indent": ["error", 4, {
             "SwitchCase": 1,
             "VariableDeclarator": 1
-        }],                                                                              // 四格缩进( SwitchCase 保持同步缩进; 多行声明变量保持同步缩进 )
+        }],                                                                         // 四格缩进( SwitchCase 保持同步缩进; 多行声明变量保持同步缩进 )
         
         // 临时关闭规则
         "react/sort-comp": 0

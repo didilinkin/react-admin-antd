@@ -3,25 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b1e1226b-10e0-41c2-9124-8802dbaf11b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/API.md" afterPath="$PROJECT_DIR$/docs/API.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/ClientReview.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/ClientReview.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/Rectification.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/Rectification.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/RepairList.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/RepairList.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/UpkeepList.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/UpkeepList.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/CancelRepair.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/CancelRepair.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/DistributeLeaflets.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/DistributeLeaflets.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" afterPath="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Warehouse/pages/InventoryManage.jsx" afterPath="$PROJECT_DIR$/src/views/Warehouse/pages/InventoryManage.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,74 +18,110 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="API.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/API.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="30">
-                <caret line="2" column="46" lean-forward="true" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-                <folding />
-              </first_editor>
-              <second_editor />
+      <file leaf-file-name="HomeRouter.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
+              <folding>
+                <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="test.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/style/test.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="30" column="9" lean-forward="false" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+            <state relative-caret-position="19">
+              <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientReview.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/ClientReview.jsx">
+      <file leaf-file-name="Repair.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
+            <state relative-caret-position="76">
+              <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="25" />
+              <folding>
+                <marker date="1497945028494" expanded="true" signature="326:500" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddUpkeep.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-38">
+              <caret line="123" column="55" lean-forward="false" selection-start-line="123" selection-start-column="55" selection-end-line="123" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#60#0" expanded="true" />
+                <marker date="1497950682918" expanded="true" signature="6921:7003" ph="&lt;FormItem/&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TableAddUp.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="259" column="50" lean-forward="false" selection-start-line="259" selection-start-column="50" selection-end-line="259" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file leaf-file-name="ReturnVisit.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="80" column="24" lean-forward="true" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+            <state relative-caret-position="380">
+              <caret line="95" column="43" lean-forward="true" selection-start-line="95" selection-start-column="43" selection-end-line="95" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/api/index.js">
+      <file leaf-file-name=".eslintignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.eslintignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+            <state relative-caret-position="152">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RectificationAddUp.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx">
+      <file leaf-file-name="ReturnVisitDetail.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="22" column="42" lean-forward="true" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
+            <state relative-caret-position="563">
+              <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
+              <folding>
+                <marker date="1497930378724" expanded="true" signature="1243:1289" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MaintenanceProject.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/services/index.js">
+      <file leaf-file-name="ClientReviewDetails.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ClientReviewDetails.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="209">
+              <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -124,6 +142,8 @@
       <find>1.</find>
       <find>1.250</find>
       <find>http://192.168.1.250:18082/</find>
+      <find>txtbox</find>
+      <find>title</find>
     </findStrings>
     <replaceStrings>
       <replace>250</replace>
@@ -138,8 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" />
-        <option value="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
         <option value="$PROJECT_DIR$/src/views/Repair/pages/Rectification.jsx" />
         <option value="$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx" />
         <option value="$PROJECT_DIR$/config/webpack.config.dev.js" />
@@ -147,6 +165,12 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/docs/API.md" />
         <option value="$PROJECT_DIR$/src/api/index.js" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx" />
+        <option value="$PROJECT_DIR$/src/style/test.less" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
+        <option value="$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
       </list>
     </option>
   </component>
@@ -160,10 +184,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="8" />
-    <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="717" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -181,6 +205,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -278,25 +303,72 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Details" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pms_changjiang_react" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pms_changjiang_react" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Repair" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pms_changjiang_react" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pms_changjiang_react" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="style" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path" value="$PROJECT_DIR$/../nodejs/node" />
-    <property name="node.js.path.for.package.eslint" value="/usr/local/bin/node" />
+    <property name="node.js.path.for.package.eslint" value="C:/Program Files/nodejs/node" />
     <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
-    <property name="node.js.path.for.package.standard" value="/usr/local/bin/node" />
+    <property name="node.js.selected.package.eslint" value="C:\Users\ShangChao\WebstormProjects\pms_changjiang_react\node_modules\eslint" />
+    <property name="node.js.path.for.package.standard" value="C:/Program Files/nodejs/node" />
     <property name="node.js.detected.package.standard" value="true" />
-    <property name="node.js.selected.package.standard" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.standard" value="C:\Users\ShangChao\WebstormProjects\pms_changjiang_react\node_modules\eslint" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -305,6 +377,137 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\工具\pms_changjiang_react\src\views\Repair\pages\common" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.eslintrc.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.gitignore</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/CancelRepair.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/DistributeLeaflets.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/RectificationAddUp.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/views/common/pages/HomeTemplate.jsx</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/asset-manifest.json</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/favicon.ico</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/hotcss.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/index.html</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/npm.json</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/service-worker.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/css/main.9cfc0707.css</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/css/main.9cfc0707.css.map</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/js/main.321536da.js</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/js/main.321536da.js.map</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/static/media/b1.553c69e9.jpg</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/build/weibo.json</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/router/HomeRouter1.js</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -319,17 +522,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="INTERPRETER_PATH" value="/bin/bash" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -368,6 +560,12 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -411,6 +609,11 @@
       <workItem from="1497597440656" duration="1172000" />
       <workItem from="1497834254719" duration="5337000" />
       <workItem from="1497853757050" duration="29000" />
+      <workItem from="1497923165637" duration="10232000" />
+      <workItem from="1497942829774" duration="336000" />
+      <workItem from="1497944137722" duration="199000" />
+      <workItem from="1497944515197" duration="587000" />
+      <workItem from="1497950473338" duration="513000" />
     </task>
     <task id="LOCAL-00002" summary="修改服务器地址">
       <created>1497848922003</created>
@@ -426,34 +629,41 @@
       <option name="project" value="LOCAL" />
       <updated>1497855876753</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="修改列 添加横线">
+      <created>1497942895609</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1497942895609</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8490000" />
+    <option name="totallyTimeSpent" value="21325000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="8" y="23" width="1280" height="717" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2446386" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24710222" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31744313" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3180328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.224" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22318527" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -466,7 +676,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="删除多余项目文件" />
     <MESSAGE value="修改服务器地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改服务器地址" />
+    <MESSAGE value="修改列 添加横线" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改列 添加横线" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -475,14 +686,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/logo.svg" />
-    <entry file="file://$PROJECT_DIR$/src/components/Tables/tables2.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/axios/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -550,14 +753,10 @@
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/CorrectionDetail.jsx" />
     <entry file="file://$PROJECT_DIR$/src/views/Warehouse/pages/InventoryManage.jsx" />
     <entry file="file://$PROJECT_DIR$/src/router/HomeRouter1.js" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/test.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ClientReviewDetails.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/CorrectionDetail.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/style/test.less">
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/CorrectionDetail.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="145" column="5" lean-forward="false" selection-start-line="145" selection-start-column="5" selection-end-line="145" selection-end-column="5" />
+        <state relative-caret-position="1007">
+          <caret line="55" column="45" lean-forward="false" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -569,20 +768,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js" />
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/PicturesWall.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx" />
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Maintenance.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="10" column="20" lean-forward="false" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/RepairList.jsx" />
-    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx" />
     <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Rectification.jsx" />
     <entry file="file://$PROJECT_DIR$/config/webpack.config.dev.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4035">
           <caret line="269" column="30" lean-forward="true" selection-start-line="269" selection-start-column="30" selection-end-line="269" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -590,24 +789,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/API.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="30">
-            <caret line="2" column="46" lean-forward="true" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -615,7 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="30" column="9" lean-forward="false" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -623,7 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="16" column="30" lean-forward="false" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -631,7 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="80" column="24" lean-forward="true" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -639,7 +824,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="22" column="42" lean-forward="true" selection-start-line="22" selection-start-column="42" selection-end-line="22" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -647,6 +831,101 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="34" lean-forward="true" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/test.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisit.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="95" column="43" lean-forward="true" selection-start-line="95" selection-start-column="43" selection-end-line="95" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ReturnVisitDetail.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="54" column="24" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
+          <folding>
+            <marker date="1497930378724" expanded="true" signature="1243:1289" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/MaintenanceProject.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/ClientReviewDetails.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/HomeRouter.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
+          <folding>
+            <marker date="1497942906779" expanded="true" signature="4811:4825" ph="{&quot;path&quot;: '/warehouse/materialManagement'...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style/test.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/Details/Repair.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="49" column="25" lean-forward="false" selection-start-line="49" selection-start-column="20" selection-end-line="49" selection-end-column="25" />
+          <folding>
+            <marker date="1497945028494" expanded="true" signature="326:500" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/AddUpkeep.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="123" column="55" lean-forward="false" selection-start-line="123" selection-start-column="55" selection-end-line="123" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+            <marker date="1497950682918" expanded="true" signature="6921:7003" ph="&lt;FormItem/&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Repair/pages/common/TableAddUp.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="259" column="50" lean-forward="false" selection-start-line="259" selection-start-column="50" selection-end-line="259" selection-end-column="50" />
           <folding />
         </state>
       </provider>

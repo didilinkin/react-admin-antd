@@ -153,32 +153,25 @@ function mapDispatchToProps (dispatch) {
         dispatch: dispatch,
         columns: [{
             title: '序号',
-            dataIndex: 'id',
-            key: 'id'
+            dataIndex: 'id'
         }, {
             title: '物品名称',
-            dataIndex: 'entryName',
-            key: 'entryName'
+            dataIndex: 'entryName'
         }, {
             title: '单位',
-            dataIndex: 'company',
-            key: 'company'
+            dataIndex: 'company'
         }, {
             title: '进货价格',
-            dataIndex: 'purchasePrice',
-            key: 'purchasePrice'
+            dataIndex: 'purchasePrice'
         }, {
             title: '服务费',
-            dataIndex: 'serviceCharge',
-            key: 'serviceCharge'
+            dataIndex: 'serviceCharge'
         }, {
             title: '收费',
-            dataIndex: 'tollAmount',
-            key: 'tollAmount'
+            dataIndex: 'tollAmount'
         }, {
             title: '操作',
             dataIndex: 'opt',
-            key: 'opt',
             render: function (text, record, index) {
                 return (
                     <div>
