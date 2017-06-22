@@ -1,3 +1,4 @@
+// @remove-on-eject-end
 'use strict';
 
 const autoprefixer = require('autoprefixer');
@@ -84,7 +85,15 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     extensions: ['.js', '.json', '.jsx'],
     alias: {
-
+      // @remove-on-eject-begin
+      // Resolve Babel runtime relative to react-scripts.
+      // It usually still works on npm 3 without this but it would be
+      // unfortunate to rely on, as react-scripts could be symlinked,
+      // and thus babel-runtime might not be resolvable from the source.
+      'babel-runtime': path.dirname(
+        require.resolve('babel-runtime/package.json')
+      ),
+      // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -114,7 +123,15 @@ module.exports = {
           {
             options: {
               formatter: eslintFormatter,
-
+              // @remove-on-eject-begin
+              // TODO: consider separate config for production,
+              // e.g. to enable no-console and no-debugger only in production.
+              baseConfig: {
+                extends: [require.resolve('eslint-config-react-app')],
+              },
+              ignore: false,
+              useEslintrc: false,
+              // @remove-on-eject-end
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -217,11 +234,10 @@ module.exports = {
             extractTextPluginOptions
           )
         ),
-        //注意：如果`plugins`中没有`new ExtractTextPlugin()`, 这将不起作用.
+        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
-      // ** STOP ** Are you adding a new loader?
-      //记住将新的扩展名添加到“文件” 加载程序排除列表中
-      //解析较少的文件和修改变量
+
+
       {
         test: /\.less$/,
         use: [
@@ -253,14 +269,17 @@ module.exports = {
           },
         ],
       },
+
+      // ** STOP ** Are you adding a new loader?
+      // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
   },
   plugins: [
-    //使一些环境变量在index.html中可用。
-    //公共URL在index.html中以％PUBLIC_URL％的形式提供，例如：
-    // <link rel="快捷图标" href ="％PUBLIC_URL%/favicon.ico">
-    //在生产中, 它将是一个空字符串，除非你指定"主页"
-    //在`package.json'中，在这种情况下，它将是该URL的路径名。
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In production, it will be an empty string unless you specify "homepage"
+    // in `package.json`, in which case it will be the pathname of that URL.
     new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
@@ -309,13 +328,13 @@ module.exports = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
-    // 生成一个服务工作者脚本，它将预缓和保持最新，
-    // 作为Webpack构建的HTML和资产。
+    // Generate a service worker script that will precache, and keep up to date,
+    // the HTML & assets that are part of the Webpack build.
     new SWPrecacheWebpackPlugin({
-      // 默认情况下，缓存清除查询参数会追加到请求中
-      // 用于填充缓存，以确保响应是新鲜的。
-      // 如果URL已经被Webpack散列，那么就不用担心了
-      // 关于它是否过时，可以跳过缓存清除。
+      // By default, a cache-busting query parameter is appended to requests
+      // used to populate the caches, to ensure the responses are fresh.
+      // If a URL is already hashed by Webpack, then there is no concern
+      // about it being stale, and the cache-busting can be skipped.
       dontCacheBustUrlsMatching: /\.\w{8}\./,
       filename: 'service-worker.js',
       logger(message) {
