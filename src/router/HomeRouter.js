@@ -27,6 +27,16 @@ import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'   
 import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'          // 材料管理
 import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'             // [详情] - 出入库详情
 
+// 引入 '设备维护' 版块
+import Account              from '../views/DeviceMaintain/pages/Account'                // 设备台账
+import DeviceMaintenance    from '../views/DeviceMaintain/pages/DeviceMaintenance'      // 设备维护保障
+import Electric             from '../views/DeviceMaintain/pages/Electric'               // 设备巡检 - 电器系统
+import Elevator             from '../views/DeviceMaintain/pages/Elevator'               // 设备巡检 - 电梯系统
+import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'        // 设备巡检 - 空调系统
+import WaterHeating         from '../views/DeviceMaintain/pages/WaterHeating'           // 设备巡检 - 水暖系统
+import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'           // 设备巡检 - 消防系统
+import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'           // 设备巡检 - 电梯间系统
+
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
         {
@@ -43,7 +53,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/home/index',                            // 默认首页
+                path: '/home/index',                                                    // 默认首页
                 component: HomeIndex
             }
         ]
@@ -52,7 +62,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/test/table',                            // 测试 - 异步表格
+                path: '/test/table',                                                    // 测试 - 异步表格
                 component: AsyncTable
             }
         ]
@@ -61,37 +71,37 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/upkeep/repairList',                     // 客户管理 - 客户报修
+                path: '/upkeep/repairList',                                             // 客户管理 - 客户报修
                 component: RepairList
             }, {
-                path: '/upkeep/clientReview',                   // 客户管理 - 客户回访
+                path: '/upkeep/clientReview',                                           // 客户管理 - 客户回访
                 component: ClientReview
             }, {
-                path: '/upkeep/upkeepList',                     // 客户管理 - 维修费设置
+                path: '/upkeep/upkeepList',                                             // 客户管理 - 维修费设置
                 component: UpkeepList
             }, {
-                path: '/upkeep/rectification',                  // 客户管理 - 整改通知
+                path: '/upkeep/rectification',                                          // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/clientReviewDetails/:id',        // [详情] - 客户回访
+                path: '/upkeep/clientReviewDetails/:id',                                // [详情] - 客户回访
                 component: ClientReviewDetails
             }, {
-                path: '/upkeep/repai/:id',                      // [详情] - 报修明细
+                path: '/upkeep/repai/:id',                                              // [详情] - 报修明细
                 component: Repair
             }, {
-                path: '/upkeep/returnVisit/:id',                // [详情] - 回访登记
+                path: '/upkeep/returnVisit/:id',                                        // [详情] - 回访登记
                 component: ReturnVisit
             }, {
-                path: '/upkeep/returnVisitDetail/:id',          // [详情] - 回访登记明细
+                path: '/upkeep/returnVisitDetail/:id',                                  // [详情] - 回访登记明细
                 component: ReturnVisitDetail
             }, {
-                path: '/upkeep/maintenance/:id',                // [详情] - 维修详情
+                path: '/upkeep/maintenance/:id',                                        // [详情] - 维修详情
                 component: Maintenance
             }, {
-                path: '/upkeep/correctionDetail/:id',           // [详情] - 整改信息明细
+                path: '/upkeep/correctionDetail/:id',                                   // [详情] - 整改信息明细
                 component: CorrectionDetail
             }, {
-                path: '/upkeep/maintenanceProject/:id',         // [详情] - 维修项目
+                path: '/upkeep/maintenanceProject/:id',                                 // [详情] - 维修项目
                 component: MaintenanceProject
             }
         ]
@@ -100,17 +110,47 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/warehouse/inventoryManage',             // 仓库管理 - 库存管理
+                path: '/warehouse/inventoryManage',                                     // 仓库管理 - 库存管理
                 component: InventoryManage
             }, {
-                path: '/warehouse/receiveStatistics',           // 仓库管理 - 领用统计
+                path: '/warehouse/receiveStatistics',                                   // 仓库管理 - 领用统计
                 component: ReceiveStatistics
             }, {
-                path: '/warehouse/materialManagement',          // 仓库管理 - 材料管理
+                path: '/warehouse/materialManagement',                                  // 仓库管理 - 材料管理
                 component: MaterialManagement
             }, {
-                path: '/warehouse/warehouseDetail/:id',         // [详情] - 出入库详情
+                path: '/warehouse/warehouseDetail/:id',                                 // [详情] - 出入库详情
                 component: WarehouseDetail
+            }
+        ]
+    }, {
+        path: '/deviceMaintain',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/deviceMaintain/account',                                        // 设备维护 - 设备台帐
+                component: Account
+            }, {
+                path: '/deviceMaintain/deviceMaintenance',                              // 设备维护 - 设备维护保障
+                component: DeviceMaintenance
+            }, {
+                path: '/deviceMaintain/inspection/electric',                            // 设备维护 - 设备巡检 - 电器系统
+                component: Electric
+            }, {
+                path: '/deviceMaintain/inspection/elevator',                            // 设备维护 - 设备巡检 - 电梯系统
+                component: Elevator
+            }, {
+                path: '/deviceMaintain/inspection/airConditioning',                     // 设备维护 - 设备巡检 - 空调系统
+                component: AirConditioning
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating',                        // 设备维护 - 设备巡检 - 水暖系统
+                component: WaterHeating
+            }, {
+                path: '/deviceMaintain/inspection/firefighting',                        // 设备维护 - 设备巡检 - 消防系统
+                component: Firefighting
+            }, {
+                path: '/deviceMaintain/inspection/elevatorRoom',                        // 设备维护 - 设备巡检 - 电梯房系统
+                component: ElevatorRoom
             }
         ]
     }

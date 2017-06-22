@@ -158,12 +158,12 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/warehouse/account">
-                            <Link to="/warehouse/account">设备台帐</Link>
+                        <Menu.Item key="/deviceMaintain/account">
+                            <Link to="/deviceMaintain/account">设备台帐</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/warehouse/maintenance">
-                            <Link to="/warehouse/maintenance">设备维保</Link>
+                        <Menu.Item key="/deviceMaintain/deviceMaintenance">
+                            <Link to="/deviceMaintain/deviceMaintenance">设备维保</Link>
                         </Menu.Item>
 
                         <SubMenu key="/warehouse/inspection" title={
@@ -172,28 +172,28 @@ class Sidebar extends React.Component {
                             </span>
                         }
                         >
-                            <Menu.Item key="/warehouse/inspection/electric">
-                                <Link to="/warehouse/inspection/electric">电器系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/electric">
+                                <Link to="/deviceMaintain/inspection/electric">电器系统</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/warehouse/inspection/elevator">
-                                <Link to="/warehouse/inspection/elevator">电梯系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/elevator">
+                                <Link to="/deviceMaintain/inspection/elevator">电梯系统</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/warehouse/inspection/airConditioning">
-                                <Link to="/warehouse/inspection/airConditioning">空调系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/airConditioning">
+                                <Link to="/deviceMaintain/inspection/airConditioning">空调系统</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/warehouse/inspection/waterheating">
-                                <Link to="/warehouse/inspection/waterheating">水暖系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/waterHeating">
+                                <Link to="/deviceMaintain/inspection/waterHeating">水暖系统</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/warehouse/inspection/firefighting">
-                                <Link to="/warehouse/inspection/firefighting">消防系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/firefighting">
+                                <Link to="/deviceMaintain/inspection/firefighting">消防系统</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/warehouse/inspection/elevatorRoom">
-                                <Link to="/warehouse/inspection/elevatorRoom">电梯间系统</Link>
+                            <Menu.Item key="/deviceMaintain/inspection/elevatorRoom">
+                                <Link to="/deviceMaintain/inspection/elevatorRoom">电梯间系统</Link>
                             </Menu.Item>
                         </SubMenu>
                     </SubMenu>
