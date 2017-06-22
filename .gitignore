@@ -28,3 +28,4 @@ yarn-error.log*
 .idea/
 .idea/workspace.xml
 yarn.lock
+build/static/js/
