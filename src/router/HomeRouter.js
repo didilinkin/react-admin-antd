@@ -29,7 +29,10 @@ import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'     
 
 // 引入 '设备维护' 版块
 import Account              from '../views/DeviceMaintain/pages/Account'                // 设备台账
-import DeviceMaintenance    from '../views/DeviceMaintain/pages/DeviceMaintenance'      // 设备维护保障
+// import DeviceMaintenance    from '../views/DeviceMaintain/pages/DeviceMaintenance'      // 设备维护保障
+import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'         // 设备维护保障 - 巡检计划
+import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'        // 设备维护保障 - 保养记录
+import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'        // 设备维护保障 - 设备报修
 import Electric             from '../views/DeviceMaintain/pages/Electric'               // 设备巡检 - 电器系统
 import Elevator             from '../views/DeviceMaintain/pages/Elevator'               // 设备巡检 - 电梯系统
 import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'        // 设备巡检 - 空调系统
@@ -131,8 +134,14 @@ const routes = [
                 path: '/deviceMaintain/account',                                        // 设备维护 - 设备台帐
                 component: Account
             }, {
-                path: '/deviceMaintain/deviceMaintenance',                              // 设备维护 - 设备维护保障
-                component: DeviceMaintenance
+                path: '/deviceMaintain/maintenance/inspectionPlan',                     // 设备维护 - 设备维护保障 - 巡检计划
+                component: InspectionPlan
+            }, {
+                path: '/deviceMaintain/maintenance/maintenancePlan',                    // 设备维护 - 设备维护保障 - 保养记录
+                component: MaintenancePlan
+            }, {
+                path: '/deviceMaintain/maintenance/equipmentRepair',                    // 设备维护 - 设备维护保障 - 设备报修
+                component: EquipmentRepair
             }, {
                 path: '/deviceMaintain/inspection/electric',                            // 设备维护 - 设备巡检 - 电器系统
                 component: Electric
