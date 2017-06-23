@@ -20,7 +20,7 @@ const RouterDiv = styled.section `
     height: 100vh;
 `
 
-// 测试 Redux
+// 测试 Redux - Counter
 class Counter extends React.Component {
     constructor (props) {
         super(props)
@@ -42,25 +42,25 @@ class Counter extends React.Component {
         const { value, onIncrement, onDecrement } = this.props
         return (
             <p>
-                Clicked: {value} times
+                Clicked: { value } times
                 {' '}
 
-                <button onClick={onIncrement}>
+                <button onClick={ onIncrement }>
                     +
                 </button>
                 {' '}
 
-                <button onClick={onDecrement}>
+                <button onClick={ onDecrement }>
                     -
                 </button>
                 {' '}
 
-                <button onClick={this.incrementIfOdd}>
+                <button onClick={ this.incrementIfOdd }>
                     增量奇数( 是偶数则不增加; 奇数增加 )
                 </button>
                 {' '}
 
-                <button onClick={this.incrementAsync}>
+                <button onClick={ this.incrementAsync }>
                     异步增加
                 </button>
             </p>
@@ -74,6 +74,17 @@ Counter.propTypes = {
     onIncrement: PropTypes.func.isRequired,
     onDecrement: PropTypes.func.isRequired
 }
+
+// 测试 Redux - 简单验证
+class AuthTest extends React.Component {
+    constructor (props) {
+        super(props)
+        this.incrementAsync = this.incrementAsync.bind(this)
+        this.incrementIfOdd = this.incrementIfOdd.bind(this)
+        this.onAuth
+    }
+}
+
 
 // 伪造验证
 // const fakeAuth = {
@@ -124,4 +135,4 @@ const SetRouter = () => (
     </Router>
 )
 
-export { SetRouter, Counter }
+export { SetRouter, Counter, AuthTest }
