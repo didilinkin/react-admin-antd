@@ -29,7 +29,6 @@ import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'     
 
 // 引入 '设备维护' 版块
 import Account              from '../views/DeviceMaintain/pages/Account'                // 设备台账
-// import DeviceMaintenance    from '../views/DeviceMaintain/pages/DeviceMaintenance'      // 设备维护保障
 import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'         // 设备维护保障 - 巡检计划
 import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'        // 设备维护保障 - 保养记录
 import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'        // 设备维护保障 - 设备报修
