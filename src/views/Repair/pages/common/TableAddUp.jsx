@@ -148,9 +148,6 @@ class TableAddUp extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    getRepairDate = (date, dateString) => {
-        alert(dateString)
-    }
     imgUrl = ''
     Callback = (url) => {
         this.imgUrl = url
@@ -195,7 +192,7 @@ class TableAddUp extends React.Component {
                                             message: 'Please input!'
                                         }]
                                     })(
-                                        <DatePicker onChange={this.getRepairDate} />
+                                        <DatePicker />
                                     )}
                                 </FormItem>
                             </Col>
