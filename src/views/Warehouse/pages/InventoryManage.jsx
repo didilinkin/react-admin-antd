@@ -46,8 +46,8 @@ class RepairList extends Component {
             columns: [{
                 title: '序号',
                 width: 80,
-                dataIndex: 'index',
-                key: 'index',
+                dataIndex: 'id',
+                key: 'id',
                 render: function (text, record, index) {
                     index++
                     return (

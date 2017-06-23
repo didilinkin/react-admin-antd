@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
-import WarehouseAddUpComponent from './common/WarehouseAddUp'
-import WarehouseUpdateComponent from './common/WarehouseUpdate'
 const Option = Select.Option
 // React component
 class RepairList extends Component {
@@ -25,11 +23,24 @@ class RepairList extends Component {
         }
     }
     async initialRemarks () {
-        let result = await apiPost(
+        let result2 = await apiPost(
             'http://127.0.0.1:18082/warehouse/getRecipient'
         )
+        let list = result2.data
+        let number = {
+            title: '总计',
+            dataIndex: 'number1',
+            key: 'number1'
+        }
+        let amount = {
+            title: '领用金额',
+            dataIndex: 'amount1',
+            key: 'amount1'
+        }
+        list.push(number)
+        list.push(amount)
         this.setState({loading: true})
-        result = await apiPost(
+        let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/receiveStatistics'
         )
         this.setState({loading: false,
@@ -95,18 +106,8 @@ class RepairList extends Component {
                 }]
             }, {
                 title: '出库',
-                dataIndex: 'title',
-                key: 'title',
                 width: 100,
-                children: [{
-                    title: '总计',
-                    dataIndex: 'title',
-                    key: 'title'
-                }, {
-                    title: '领用金额',
-                    dataIndex: 'amount',
-                    key: 'amount'
-                }]
+                children: list
             }, {
                 title: '剩余',
                 children: [{
@@ -128,7 +129,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage',
+            'http://127.0.0.1:18082/warehouse/receiveStatistics',
             {'startDate': this.startDate,
                 'name': this.name,
                 'whType': this.whType
@@ -141,15 +142,6 @@ class RepairList extends Component {
             openUpdate: false,
             dataSource: result.data,
             id: 0
-        })
-    }
-    // 弹出框设置
-    showModal = () => {
-        this.setState({
-            opendispatch: false,
-            openAdd: true,
-            openUpdate: false,
-            openTableAddUp: false
         })
     }
     name = ''
@@ -170,18 +162,6 @@ class RepairList extends Component {
     render () {
         return (
             <div>
-                <WarehouseAddUpComponent
-                    refreshTable={this.refresh}
-                    visible={this.state.openAdd}
-                />
-                <WarehouseUpdateComponent
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                    warehouseId= {this.state.warehouseId}
-                    amount={this.state.amount}
-                    number={this.state.number}
-                    unitPrice={this.state.unitPrice}
-                />
                 <span>
                     <span>查询截止日期:</span>
                     <DatePicker onChange={this.getDate} />
@@ -191,7 +171,7 @@ class RepairList extends Component {
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} >
                         <Option key="0">工程部</Option>
                         <Option key="1">保洁用品</Option>
                         <Option key="2">行政库</Option>
@@ -199,14 +179,15 @@ class RepairList extends Component {
                     <span>材料名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
-                    <Button type="primary" onClick={this.showModal}>入库</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1200 }}
+                        scroll={{ x: 1900 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
+                        bordered
+                        size="middle"
                     />
                 </Spin>
             </div>
