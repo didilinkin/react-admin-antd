@@ -112,7 +112,6 @@ class TableAddUp extends React.Component {
             json['picture'] = this.imgUrl
             let repairDate = json.repairDate.format('YYYY-MM-DD')
             json['repairDate'] = repairDate
-            debugger
             if (this.props.id > 0) {
                 json['id'] = this.props.id
                 let result = await apiPost(
@@ -135,9 +134,11 @@ class TableAddUp extends React.Component {
             }
 
             this.isFirst = true
+            debugger
             this.setState({
                 visible: false,
                 isFirst: true,
+                view: false,
                 clientList: []
             })
             this.props.refreshTable()
