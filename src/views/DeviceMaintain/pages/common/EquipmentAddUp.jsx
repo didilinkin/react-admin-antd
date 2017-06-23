@@ -31,7 +31,7 @@ class EquipmentAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    imgUrl: equipment.data.twoCode,
+                    imgUrl: baseURL + 'storage/files/' + equipment.data.twoCode,
                     userList: userList.data,
                     systList: systList.data,
                     categoryList: categoryList.data

@@ -205,7 +205,7 @@ class RectificationAddUp extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={12}>
-                                <FormItem label="检查日期" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+                                <FormItem label="检查日期" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                                     {getFieldDecorator('inspectDate', {
                                         rules: [ {
                                             required: true,
@@ -217,8 +217,8 @@ class RectificationAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="所属楼宇" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('buildName', {
                                         rules: [ {
@@ -233,8 +233,8 @@ class RectificationAddUp extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="公司名称" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="公司名称" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('clientNameOne', {
                                         rules: [ {
@@ -259,8 +259,8 @@ class RectificationAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="所属房间" labelCol={{ span: 5 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="所属房间" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('roomNums', {
                                         rules: [ {
@@ -273,8 +273,8 @@ class RectificationAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                         </Row>
-                        <FormItem label="整改项目" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="整改项目" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             {getFieldDecorator('rectificationContent', {
                                 rules: [ {
@@ -285,13 +285,13 @@ class RectificationAddUp extends React.Component {
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-                        <FormItem label="现场图片" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="现场图片" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
-                        <FormItem label="检查人" labelCol={{ span: 5 }}
-                            wrapperCol={{ span: 15 }}
+                        <FormItem label="检查人" labelCol={{ span: 3 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             {getFieldDecorator('inspectIdsOne', {
                                 rules: [ {
