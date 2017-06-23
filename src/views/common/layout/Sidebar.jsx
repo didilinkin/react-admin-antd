@@ -162,9 +162,24 @@ class Sidebar extends React.Component {
                             <Link to="/deviceMaintain/account">设备台帐</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/deviceMaintain/deviceMaintenance">
-                            <Link to="/deviceMaintain/deviceMaintenance">设备维保</Link>
-                        </Menu.Item>
+                        <SubMenu key="/deviceMaintain/deviceMaintenance" title={
+                            <span>
+                                <span className="nav-text">设备维保</span>
+                            </span>
+                        }
+                        >
+                            <Menu.Item key="/deviceMaintain/maintenance/inspectionPlan">
+                                <Link to="/deviceMaintain/maintenance/inspectionPlan">巡检计划</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/deviceMaintain/maintenance/maintenancePlan">
+                                <Link to="/deviceMaintain/maintenance/maintenancePlan">保养记录</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/deviceMaintain/maintenance/equipmentRepair">
+                                <Link to="/deviceMaintain/maintenance/equipmentRepair">设备报修</Link>
+                            </Menu.Item>
+                        </SubMenu>
 
                         <SubMenu key="/warehouse/inspection" title={
                             <span>
