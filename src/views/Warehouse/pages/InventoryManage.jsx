@@ -1,9 +1,11 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, DatePicker } from 'antd'
+import {Table, Button, Spin, Input, Select, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import WarehouseAddUpComponent from './common/WarehouseAddUp'
+import WarehouseUpdateComponent from './common/WarehouseUpdate'
+const Option = Select.Option
 // React component
 class RepairList extends Component {
     constructor (props) {
@@ -16,32 +18,57 @@ class RepairList extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
-            id: 0
+            warehouseId: 0,
+            amount: 0,
+            number: 0,
+            unitPrice: 0
         }
+    }
+    handleUpdate = (id, amount, number, unitPrice) => {
+        this.setState({
+            openinvalid: false,
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: true,
+            warehouseId: id,
+            amount: amount,
+            number: number,
+            unitPrice: unitPrice
+        })
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/inventoryManage'
         )
+        const handleUpdate = this.handleUpdate
         this.setState({loading: false,
             columns: [{
                 title: '序号',
                 width: 80,
-                dataIndex: 'id',
-                key: 'id'
+                dataIndex: 'index',
+                key: 'index',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
             }, {
                 title: '仓库类型',
                 width: 100,
-                dataIndex: 'storeroomType',
-                key: 'storeroomType',
+                dataIndex: 'whType',
+                key: 'whType',
                 render: function (text, record, index) {
-                    let storeroomType = '工程库'
-                    if (record.storeroomType === 1) {
-                        storeroomType = '保洁用品库'
+                    let whType = '工程库'
+                    if (record.whType === 1) {
+                        whType = '保洁用品库'
+                    }
+                    if (record.whType === 2) {
+                        whType = '行政库'
                     }
                     return (
-                        <span>{storeroomType}</span>
+                        <span>{whType}</span>
                     )
                 }
             }, {
@@ -90,7 +117,7 @@ class RepairList extends Component {
                     return (
                         <div>
                             <a href={url}><Button type="primary">明细</Button></a>
-                            <Button type="primary" >出库</Button>
+                            <Button type="primary" onClick={() => handleUpdate(record.warehouseId, record.amount, record.number, record.unitPrice)} >出库</Button>
                         </div>
                     )
                 }
@@ -106,7 +133,8 @@ class RepairList extends Component {
         let result = await apiPost(
             'http://127.0.0.1:18082/warehouse/inventoryManage',
             {'startDate': this.startDate,
-                'name': this.name
+                'name': this.name,
+                'whType': this.whType
             }
         )
         this.setState({
@@ -131,6 +159,10 @@ class RepairList extends Component {
     entryNameOnChange = (e) => {
         this.name = e.target.value
     }
+    whType = ''
+    selectOnChange = (e) => {
+        this.whType = e
+    }
     query = () => {
         this.refresh()
     }
@@ -145,9 +177,28 @@ class RepairList extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
                 />
+                <WarehouseUpdateComponent
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                    warehouseId= {this.state.warehouseId}
+                    amount={this.state.amount}
+                    number={this.state.number}
+                    unitPrice={this.state.unitPrice}
+                />
                 <span>
-                    <span>报修日期:</span>
+                    <span>查询截止日期:</span>
                     <DatePicker onChange={this.getDate} />
+                    <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="请选择仓库"
+                        optionFilterProp="children"
+                        onSelect={this.selectOnChange}
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                        <Option key="0">工程部</Option>
+                        <Option key="1">保洁用品</Option>
+                        <Option key="2">行政库</Option>
+                    </Select>
                     <span>材料名称:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>

@@ -190,7 +190,7 @@ class WarehouseAddUp extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
-                    <FormItem label="现场图片" labelCol={{ span: 5 }}
+                    <FormItem label="上传图片" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
                         <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
