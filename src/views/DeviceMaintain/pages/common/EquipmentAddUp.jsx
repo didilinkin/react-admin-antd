@@ -37,12 +37,18 @@ class EquipmentAddUp extends React.Component {
                     categoryList: categoryList.data
                 })
                 equipment = equipment.data
-                if (equipment.equipmentStatus.toString() === '0') {
-                    equipment['equipmentStatusOne'] = '使用'
-                } else if (equipment.equipmentStatus.toString() === '1') {
-                    equipment['equipmentStatusOne'] = '闲置'
+                if (equipment.useDepartment.toString() === '0') {
+                    equipment['useDepartmentOne'] = '工程与维修部'
+                } else if (equipment.useDepartment.toString() === '1') {
+                    equipment['useDepartmentOne'] = '设备与运行部'
+                } else if (equipment.useDepartment.toString() === '2') {
+                    equipment['useDepartmentOne'] = '消防与监控部'
+                } else if (equipment.useDepartment.toString() === '3') {
+                    equipment['useDepartmentOne'] = '交通与安全部'
+                } else if (equipment.useDepartment.toString() === '4') {
+                    equipment['useDepartmentOne'] = '卫生与环保部'
                 } else {
-                    equipment['equipmentStatusOne'] = '报废'
+                    equipment['useDepartmentOne'] = '综合管理部'
                 }
                 this.props.form.setFieldsValue({
                     systemId: equipment.systemId,
@@ -58,8 +64,8 @@ class EquipmentAddUp extends React.Component {
                     equipmentNumber: equipment.equipmentNumber,
                     serviceLife: equipment.serviceLife,
                     equipmentModel: equipment.equipmentModel,
-                    equipmentStatusOne: equipment.equipmentStatusOne,
-                    equipmentStatus: equipment.equipmentStatus,
+                    useDepartmentOne: equipment.useDepartmentOne,
+                    useDepartment: equipment.useDepartment,
                     equipmentBrand: equipment.equipmentBrand,
                     maintenanceIdOne: equipment.maintenanceName,
                     maintenanceId: equipment.maintenanceId,
@@ -195,7 +201,7 @@ class EquipmentAddUp extends React.Component {
     }
     equipmentStatus = (value) => {
         this.props.form.setFieldsValue({
-            equipmentStatus: value
+            useDepartment: value
         })
     }
     twoCode = async () => {
@@ -377,10 +383,10 @@ class EquipmentAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="设备状态" labelCol={{ span: 6 }}
+                                <FormItem label="使用部门" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('equipmentStatusOne', {
+                                    {getFieldDecorator('useDepartmentOne', {
                                         rules: [ {
                                             required: true,
                                             message: 'Please input!'
@@ -393,9 +399,12 @@ class EquipmentAddUp extends React.Component {
                                             optionFilterProp="children"
                                             onChange={this.equipmentStatus}
                                         >
-                                            <Option key="0">使用</Option>
-                                            <Option key="2">报废</Option>
-                                            <Option key="1">闲置</Option>
+                                            <Option key="0">工程与维修部</Option>
+                                            <Option key="1">设备与运行部</Option>
+                                            <Option key="2">消防与监控部</Option>
+                                            <Option key="3">交通与安全部</Option>
+                                            <Option key="4">卫生与环保部</Option>
+                                            <Option key="5">综合管理部</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -493,8 +502,8 @@ class EquipmentAddUp extends React.Component {
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-
                         <Row>
+                            <span>如果改动编号，请重新生成二维码</span>
                             <Col span={12}>
                                 <Button onClick={this.twoCode}>生成二维码</Button>
                             </Col>
@@ -527,7 +536,7 @@ class EquipmentAddUp extends React.Component {
                         {getFieldDecorator('patrolId')(
                             <Input type="hidden" />
                         )}
-                        {getFieldDecorator('equipmentStatus')(
+                        {getFieldDecorator('useDepartment')(
                             <Input type="hidden" />
                         )}
                         {getFieldDecorator('twoCode')(

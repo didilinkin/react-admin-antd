@@ -58,6 +58,7 @@ class ReturnVisit extends React.Component {
             message: resulData.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        window.location.href = '/upkeep/returnVisitDetail/' + this.props.match.params.id
     }
     render () {
         return (

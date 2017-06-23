@@ -25,7 +25,7 @@ class App extends React.Component {
         } else {
             Repair['fromType'] = '客服'
         }
-        if (Repair.pieStatus === '1') {
+        if (Repair.pieStatus === 1) {
             Repair['pieStatus'] = '已派单'
         } else {
             Repair['pieStatus'] = '未派单'
@@ -67,7 +67,8 @@ class App extends React.Component {
                 <h2>报修信息</h2>
                 <ul>
                     <li><b>报修内容：</b> <span>{this.state.data.repairContent}</span></li>
-                    <li><b>报修图片：</b>{this.state.data.picture}
+                    <li><b>报修图片：</b>
+                        {this.state.data.picture}
                     </li>
                 </ul>
                 <p className="line" />
