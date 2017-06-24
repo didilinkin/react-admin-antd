@@ -29,9 +29,10 @@ class Counter extends React.Component {
     }
 
     incrementIfOdd () {
-        if (this.props.value % 2 !== 0) {
-            this.props.onIncrement()
-        }
+        // if (this.props.value % 2 !== 0) {
+        //     this.props.onIncrement()
+        // }
+        this.props.onIncrement()
     }
 
     incrementAsync () {
@@ -70,7 +71,7 @@ class Counter extends React.Component {
 
 // 对 Redux 对象 Counter设置 propTypes
 Counter.propTypes = {
-    value: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
     onIncrement: PropTypes.func.isRequired,
     onDecrement: PropTypes.func.isRequired
 }
@@ -79,9 +80,49 @@ Counter.propTypes = {
 class AuthTest extends React.Component {
     constructor (props) {
         super(props)
-        this.incrementAsync = this.incrementAsync.bind(this)
-        this.incrementIfOdd = this.incrementIfOdd.bind(this)
-        this.onAuth
+        this.authenticate = this.authenticate.bind(this)
+    }
+
+    // 鉴定事件
+    authenticate () {
+        // setTimeout(console.log('登录'), 2000)
+        // let timedCount = function () {
+        //     console.log(this)
+        // }
+
+        setTimeout(() => {
+            // console.log(this)
+            this.props.signIn()
+        }, 2000)
+    }
+
+    // 需要更新
+    componentWillReceiveProps (nextProps) {
+        console.log('props更新')
+        console.log(nextProps.value)
+    }
+
+    render () {
+        const { value, signout } = this.props
+        return (
+            <p>
+                Clicked: { value ? (
+                    <b> 登录A </b>
+                ) : (
+                    <b> 未登录B </b>
+                )}
+
+                {/* 登录 */}
+                <button onClick={ this.authenticate }>
+                    检验登录
+                </button>
+
+                {/* 退出 */}
+                <button onClick={ signout }>
+                    退出
+                </button>
+            </p>
+        )
     }
 }
 
