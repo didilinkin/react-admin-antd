@@ -75,6 +75,9 @@ class RectificationAddUp extends React.Component {
                 })
             }
         } else {
+            this.setState({
+                view: false
+            })
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
@@ -108,9 +111,6 @@ class RectificationAddUp extends React.Component {
             },
         )
         if (adopt) {
-            this.setState({
-                view: false
-            })
             let json = this.props.form.getFieldsValue()
             this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
             json['imgUrls'] = this.imgUrl

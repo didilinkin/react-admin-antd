@@ -70,6 +70,9 @@ class TableAddUp extends React.Component {
                 })
             }
         } else {
+            this.setState({
+                view: false
+            })
             if (this.state.isFirst && nextProps.visible) {
                 let result = await apiGet(
                     'upkeep/getClient'
