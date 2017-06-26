@@ -11,7 +11,7 @@ class TableAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        view: true,
+        view: 'select',
         repairDate: '',
         fileList: [],
         clientList: []
@@ -49,7 +49,7 @@ class TableAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'update',
                     repairDate: resulData.data.repairDate,
                     fileList: Arr,
                     clientList: result.data
@@ -70,9 +70,6 @@ class TableAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 let result = await apiGet(
                     'upkeep/getClient'
@@ -80,7 +77,7 @@ class TableAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'insert',
                     fileList: [],
                     clientList: result.data
                 })
@@ -169,6 +166,11 @@ class TableAddUp extends React.Component {
                 })
             }
             return ''
+        })
+    }
+    updateView = () => {
+        this.setState({
+            view: 'select'
         })
     }
     render () {
@@ -316,7 +318,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="上传图片" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                            <PicturesWall updateView={this.updateView} fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                         {getFieldDecorator('clientName')(
                             <Input type="hidden" />

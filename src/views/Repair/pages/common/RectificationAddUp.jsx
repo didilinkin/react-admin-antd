@@ -11,7 +11,7 @@ class RectificationAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        view: true,
+        view: 'select',
         fileList: [],
         clientList: [],
         userList: []
@@ -50,7 +50,7 @@ class RectificationAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'update',
                     fileList: Arr,
                     userList: resulData1.data,
                     clientList: result.data
@@ -75,9 +75,6 @@ class RectificationAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
@@ -87,7 +84,7 @@ class RectificationAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'insert',
                     fileList: [],
                     userList: resulData.data,
                     clientList: result.data
@@ -157,6 +154,11 @@ class RectificationAddUp extends React.Component {
     imgUrl = ''
     Callback = (url) => {
         this.imgUrl = url
+    }
+    updateView = () => {
+        this.setState({
+            view: 'select'
+        })
     }
     getClient = (value) => {
         this.state.clientList.map(client => {
@@ -288,7 +290,7 @@ class RectificationAddUp extends React.Component {
                         <FormItem label="现场图片" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                            <PicturesWall updateView={this.updateView} fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                         <FormItem label="检查人" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}

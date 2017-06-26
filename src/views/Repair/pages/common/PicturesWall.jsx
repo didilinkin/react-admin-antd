@@ -12,11 +12,16 @@ class PicturesWall extends React.Component {
         this.setState({ previewVisible: false })
     }
     componentWillReceiveProps (nextProps) {
-        if (nextProps.view || this.props.fileList.length > 0) {
-            alert(nextProps.view + ':' + this.props.fileList.length)
+        if (nextProps.view.toString() === 'update') {
             this.setState({
-                fileList: this.props.fileList
+                fileList: nextProps.fileList
             })
+            this.props.updateView()
+        } else if (nextProps.view.toString() === 'insert') {
+            this.setState({
+                fileList: []
+            })
+            this.props.updateView()
         }
     }
 
