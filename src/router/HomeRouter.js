@@ -164,13 +164,13 @@ const routes = [
                 path: '/deviceMaintain/inspection/elevatorRoom',                        // 设备维护 - 设备巡检 - 电梯房系统
                 component: ElevatorRoom
             }, {
-                path: '/deviceMaintain/equipmentLedger',                        // 设备台账
+                path: '/deviceMaintain/equipmentLedger/:id',                        // 设备台账
                 component: Equipmentledger
             }, {
-                path: '/deviceMaintain/maintenanceDetails',                        // 维修明细
+                path: '/deviceMaintain/maintenanceDetails/:id',                        // 维修明细
                 component: Maintenancedetails
             }, {
-                path: '/deviceMaintain/maintenanceSchedule',                        // 维修明细
+                path: '/deviceMaintain/maintenanceSchedule/:id',                        // 维修明细
                 component: Maintenanceschedule
             }
         ]

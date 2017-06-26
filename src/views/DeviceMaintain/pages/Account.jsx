@@ -114,9 +114,10 @@ class Account extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/deviceMaintain/equipmentLedger/' + record.id
                     return (
                         <div>
-                            <Button >详情</Button>
+                            <a href={url}><Button >详情</Button></a>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
                             <Button onClick={() => openSS(record.id)}>启停设备</Button>
                         </div>
