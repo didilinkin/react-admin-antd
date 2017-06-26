@@ -171,7 +171,8 @@ class RepairList extends Component {
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} >
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
                         <Option key="0">工程部</Option>
                         <Option key="1">保洁用品</Option>
                         <Option key="2">行政库</Option>

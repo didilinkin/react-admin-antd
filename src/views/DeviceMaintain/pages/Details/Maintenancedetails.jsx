@@ -18,7 +18,7 @@ class App extends React.Component {
                     <Row>
                         <Col span={8}><b>故障等级：</b>A</Col>
                         <Col span={8}><b>设备状态：</b>运行</Col>
-                        <Col span={8}></Col>
+                        <Col span={8} />
                     </Row>
                     <ul>
                         <li>
@@ -31,12 +31,12 @@ class App extends React.Component {
                     <ul>
                         <li>
                             <b>现场图片：</b>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
+                            <img src="" alt="" />
+                            <img src="" alt="" />
+                            <img src="" alt="" />
                         </li>
                     </ul>
-                    <p className="line"/>
+                    <p className="line" />
                     <h3>报修信息</h3>
                     <Row>
                         <Col span={8}><b>完工时间：</b> 1</Col>
@@ -54,9 +54,9 @@ class App extends React.Component {
                     <ul>
                         <li>
                             <b>现场图片：</b>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
+                            <img src="" alt="" />
+                            <img src="" alt="" />
+                            <img src="" alt="" />
                         </li>
                     </ul>
                     <ul>

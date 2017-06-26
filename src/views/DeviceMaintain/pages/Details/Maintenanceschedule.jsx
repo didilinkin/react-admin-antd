@@ -15,7 +15,7 @@ class App extends React.Component {
                     </Row>
                     <Row>
                         <Col span={12}><b>保养人：</b>A</Col>
-                        <Col span={12}></Col>
+                        <Col span={12} />
                     </Row>
                     <ul>
                         <li>
@@ -28,9 +28,9 @@ class App extends React.Component {
                     <ul>
                         <li>
                             <b>现场图片：</b>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
-                            <img src="" alt=""/>
+                            <img src="" alt="" />
+                            <img src="" alt="" />
+                            <img src="" alt="" />
                         </li>
                     </ul>
                 </div>
