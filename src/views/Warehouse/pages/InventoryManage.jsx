@@ -39,7 +39,7 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage'
+            '/warehouse/inventoryManage'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
@@ -131,7 +131,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage',
+            '/warehouse/inventoryManage',
             {'startDate': this.startDate,
                 'name': this.name,
                 'whType': this.whType
