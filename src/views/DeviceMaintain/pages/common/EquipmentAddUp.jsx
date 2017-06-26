@@ -79,9 +79,6 @@ class EquipmentAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 let userList = await apiGet('upkeep/getUser')
                 let systList = await apiPost('/equipment/systList')

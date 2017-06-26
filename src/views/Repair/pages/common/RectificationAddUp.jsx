@@ -64,7 +64,7 @@ class RectificationAddUp extends React.Component {
                     buildName: resulData.data.buildName,
                     buildId: resulData.data.buildId,
                     clientName: resulData.data.clientName,
-                    clientNameOne: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName + '(' + resulData.data.roomNums + ')',
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     roomNums: resulData.data.roomNums,
@@ -75,9 +75,6 @@ class RectificationAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
@@ -111,6 +108,9 @@ class RectificationAddUp extends React.Component {
             },
         )
         if (adopt) {
+            this.setState({
+                view: false
+            })
             let json = this.props.form.getFieldsValue()
             this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
             json['imgUrls'] = this.imgUrl
@@ -175,19 +175,19 @@ class RectificationAddUp extends React.Component {
         })
     }
     getUser = (value) => {
-        let inspectName = []
+        let inspectIds = []
         this.state.userList.map(user => {
             value.toString().split(',').map(value1 => {
-                if (user.id.toString() === value1) {
-                    inspectName.push(user.loginName)
+                if (user.loginName.toString() === value1.toString()) {
+                    inspectIds.push(user.id)
                 }
                 return ''
             })
             return ''
         })
         this.props.form.setFieldsValue({
-            inspectName: inspectName.toString(),
-            inspectIds: value.toString()
+            inspectName: value.toString(),
+            inspectIds: inspectIds.toString()
         })
     }
     render () {
@@ -252,7 +252,7 @@ class RectificationAddUp extends React.Component {
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option key={key}>{d.clientName}</Option>
+                                                return <Option key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
@@ -306,7 +306,7 @@ class RectificationAddUp extends React.Component {
                                     onChange={this.getUser}
                                 >
                                     {this.state.userList.map(d => {
-                                        return <Option key={d.id}>{d.loginName}</Option>
+                                        return <Option key={d.loginName}>{d.loginName}</Option>
                                     })}
                                 </Select>
                             )}

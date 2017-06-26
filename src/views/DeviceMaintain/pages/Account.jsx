@@ -4,6 +4,7 @@ import {Table, Button, Spin, Select, Input } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import EquipmentAddUpComponent from './common/EquipmentAddUp'
+import EnabledStateComponent from './common/EnabledState'
 const Option = Select.Option
 // React component
 class Account extends Component {
@@ -13,14 +14,25 @@ class Account extends Component {
             loading: false,
             openAdd: false,
             openUpdate: false,
+            openSS: false,
             columns: [],
             dataSource: [],
             id: 0
         }
     }
+    // 弹出框设置
+    openSS = (id) => {
+        this.setState({
+            openUpdate: false,
+            openSS: true,
+            openAdd: false,
+            id: id
+        })
+    }
     handleUpdateEquipment = (id) => {
         this.setState({
             openAdd: false,
+            openSS: false,
             openUpdate: true,
             id: id
         })
@@ -32,6 +44,7 @@ class Account extends Component {
         )
         let repairList = result.data
         const handleUpdateEquipment = this.handleUpdateEquipment
+        const openSS = this.openSS
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -105,7 +118,7 @@ class Account extends Component {
                         <div>
                             <Button >详情</Button>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
-                            <Button >启停设备</Button>
+                            <Button onClick={() => openSS(record.id)}>启停设备</Button>
                         </div>
                     )
                 }
@@ -129,6 +142,7 @@ class Account extends Component {
         this.setState({
             openAdd: false,
             openUpdate: false,
+            openSS: false,
             dataSource: result.data,
             id: 0
         })
@@ -137,6 +151,7 @@ class Account extends Component {
     showModal = () => {
         this.setState({
             openUpdate: false,
+            openSS: false,
             openAdd: true
         })
     }
@@ -164,6 +179,12 @@ class Account extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
+                />
+                <EnabledStateComponent
+                    title="启停设备"
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openSS}
                 />
                 <span>
                     <span>设备名称:</span>
