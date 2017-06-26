@@ -12,7 +12,7 @@ class PicturesWall extends React.Component {
         this.setState({ previewVisible: false })
     }
     componentWillReceiveProps (nextProps) {
-        if (nextProps.view || this.props.fileList.length > 0) {
+        if (nextProps.view && this.props.fileList.length > 0) {
             this.setState({
                 fileList: this.props.fileList
             })

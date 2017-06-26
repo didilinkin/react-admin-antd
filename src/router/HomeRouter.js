@@ -39,6 +39,8 @@ import WaterHeating         from '../views/DeviceMaintain/pages/WaterHeating'   
 import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'           // 设备巡检 - 消防系统
 import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'           // 设备巡检 - 电梯间系统
 
+import Equipmentledger         from '../views/DeviceMaintain/pages/Details/Equipmentledger'           // 设备明细
+
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
         {
@@ -159,6 +161,9 @@ const routes = [
             }, {
                 path: '/deviceMaintain/inspection/elevatorRoom',                        // 设备维护 - 设备巡检 - 电梯房系统
                 component: ElevatorRoom
+            }, {
+                path: '/deviceMaintain/equipmentLedger',                        // 设备台账
+                component: Equipmentledger
             }
         ]
     }

@@ -18,7 +18,7 @@ class App extends React.Component {
         let Repair = resulData.data
         Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
             if (RepairProject !== null) {
-                let roomType = '自由'
+                let roomType = '自有'
                 if (RepairProject.roomType === 1) {
                     roomType = '出售'
                 }

@@ -29,12 +29,12 @@ class App extends React.Component {
         Repair['repairContent'] = Repair.repairContent.split('\n').map(span => {
             return <p>{span}</p>
         })
-        if (Repair.fromType === '1') {
+        if (Repair.fromType === 1) {
             Repair['fromType'] = '微信'
         } else {
             Repair['fromType'] = '客服'
         }
-        if (Repair.pieStatus === '1') {
+        if (Repair.pieStatus === 1) {
             Repair['pieStatus'] = '已派单'
         } else {
             Repair['pieStatus'] = '未派单'

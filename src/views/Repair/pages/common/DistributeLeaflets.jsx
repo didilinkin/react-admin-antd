@@ -77,7 +77,7 @@ class DistributeLeaflets extends React.Component {
                     repairedId: d.id,
                     repairedMan: d.loginName,
                     phone: d.phone,
-                    userTelephone: d.userTelephone
+                    roleName: d.roleName
                 })
             }
             return ''
@@ -123,10 +123,10 @@ class DistributeLeaflets extends React.Component {
                             <Input disabled />
                         )}
                     </FormItem>
-                    <FormItem label="电话" labelCol={{ span: 5 }}
+                    <FormItem label="职位" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        {getFieldDecorator('userTelephone')(
+                        {getFieldDecorator('roleName')(
                             <Input disabled />
                         )}
                     </FormItem>

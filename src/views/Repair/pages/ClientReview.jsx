@@ -15,7 +15,8 @@ class ClientReview extends React.Component {
     }
     async initialRemarks () {
         let result = await apiPost(
-            'upkeep/repairList'
+            'upkeep/repairList',
+            {repairStatus: 1}
         )
         this.setState({
             columns: [{
