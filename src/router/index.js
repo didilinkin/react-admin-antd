@@ -7,9 +7,12 @@ import {
     // Switch,
     // Redirect
 } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
 import PropTypes from 'prop-types'
 
 import styled               from 'styled-components'
+
+const history = createBrowserHistory()
 
 // import HomeTemplate         from '../views/common/pages/HomeTemplate'
 // import NotFound             from '../views/common/pages/404'
