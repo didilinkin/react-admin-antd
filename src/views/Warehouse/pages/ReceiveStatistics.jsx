@@ -24,7 +24,7 @@ class RepairList extends Component {
     }
     async initialRemarks () {
         let result2 = await apiPost(
-            'http://127.0.0.1:18082/warehouse/getRecipient'
+            '/warehouse/getRecipient'
         )
         let list = result2.data
         let number = {
@@ -41,7 +41,7 @@ class RepairList extends Component {
         list.push(amount)
         this.setState({loading: true})
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/receiveStatistics'
+            '/warehouse/receiveStatistics'
         )
         this.setState({loading: false,
             columns: [{
@@ -129,7 +129,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/receiveStatistics',
+            '/warehouse/receiveStatistics',
             {'startDate': this.startDate,
                 'name': this.name,
                 'whType': this.whType

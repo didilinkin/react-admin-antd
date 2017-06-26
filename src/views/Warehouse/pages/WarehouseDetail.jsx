@@ -17,7 +17,7 @@ class WarehouseDetail extends Component {
     }
     async initialRemarks () {
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/getWarehouseDetail',
+            '/warehouse/getWarehouseDetail',
             {'warehouseId': this.props.match.params.id}
         )
         this.setState({
@@ -106,7 +106,7 @@ class WarehouseDetail extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage',
+            '/warehouse/inventoryManage',
             {'storeroomType': this.storeroomType,
                 'materialName': this.materialName,
                 'storagePlace': this.storagePlace

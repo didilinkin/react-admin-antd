@@ -32,7 +32,7 @@ class WarehouseAddUp extends React.Component {
         })
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
-                'http://127.0.0.1:18082/warehouse/getUser',
+                '/warehouse/getUser',
             )
             this.props.form.resetFields()
             this.setState({
@@ -59,7 +59,7 @@ class WarehouseAddUp extends React.Component {
         json['warehouseType'] = 1
         json['warehouseId'] = this.state.warehouseId
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/updateWarehouse',
+            '/warehouse/updateWarehouse',
             json
         )
         notification.open({

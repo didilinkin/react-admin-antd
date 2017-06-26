@@ -1,4 +1,4 @@
-// 报修明细
+// 设备明细
 import React from 'react'
 import { Row, Col, Tabs } from 'antd'
 import '../../../../style/test.less'
@@ -48,9 +48,70 @@ class Equipmentledger extends React.Component {
                     <Col span={12}><b>设备二维码：</b><img src="" alt="" /></Col>
                 </Row>
                 <Tabs defaultActiveKey="1" onChange={callback}>
-                    <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
-                    <TabPane tab="Tab 2" key="2">Content of Tab Pane 2</TabPane>
-                    <TabPane tab="Tab 3" key="3">Content of Tab Pane 3</TabPane>
+                    <TabPane tab="维修记录" key="1">
+                        <table className="tb">
+                            <tr className="hd">
+                                <td>序号</td>
+                                <td>维修完工时间</td>
+                                <td>故障描述</td>
+                                <td>维修情况</td>
+                                <td>操作</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td><a href="">查看明细</a></td>
+                            </tr>
+                        </table>
+                    </TabPane>
+                    <TabPane tab="保养记录" key="2">
+                        <table className="tb">
+                            <tr className="hd">
+                                <td>序号</td>
+                                <td>保养日期</td>
+                                <td>保养单号</td>
+                                <td>保养情况</td>
+                                <td>保养人员</td>
+                                <td>操作</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td><a href="">查看明细</a></td>
+                            </tr>
+                        </table>
+                    </TabPane>
+                    <TabPane tab="启停记录" key="3">
+                        <table className="tb">
+                            <tr className="hd">
+                                <td>类型</td>
+                                <td>申请部门</td>
+                                <td>申请人</td>
+                                <td>申请日期</td>
+                                <td>申请原因</td>
+                                <td>设备去向</td>
+                                <td>审批人</td>
+                                <td>审批日期</td>
+                                <td>备注</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                            </tr>
+                        </table>
+                    </TabPane>
                 </Tabs>
             </div>
         )
