@@ -99,6 +99,15 @@ class WarehouseAddUp extends React.Component {
         this.state.material.map(material => {
             if (material.id.toString() === this.materialId.toString()) {
                 let json = {}
+                if (material.whType === 0) {
+                    json['whTypeName'] = '工程库'
+                }
+                if (material.whType === 1) {
+                    json['whTypeName'] = '保洁用品库'
+                }
+                if (material.whType === 2) {
+                    json['whTypeName'] = '行政库'
+                }
                 json['warehouseId'] = material.id
                 json['storagePlace'] = material.storagePlace
                 json['name'] = material.name
@@ -210,7 +219,7 @@ class WarehouseAddUp extends React.Component {
                                 <td>操作</td>
                             </tr>
                             {this.state.WarehouseDetailList.map(WarehouseDetail => <tr>
-                                <td>{WarehouseDetail.whType}</td>
+                                <td>{WarehouseDetail.whTypeName}</td>
                                 <td>{WarehouseDetail.storagePlace}</td>
                                 <td>{WarehouseDetail.name}</td>
                                 <td>{WarehouseDetail.standard}</td>
