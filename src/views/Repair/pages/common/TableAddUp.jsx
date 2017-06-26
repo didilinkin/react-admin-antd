@@ -58,7 +58,7 @@ class TableAddUp extends React.Component {
                     repairDate: moment(resulData.data.repairDate),
                     repairMan: resulData.data.repairMan,
                     clientName: resulData.data.clientName,
-                    clientNameOne: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName + '(' + resulData.data.roomNum + ')',
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     phone: resulData.data.phone,
@@ -235,7 +235,7 @@ class TableAddUp extends React.Component {
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option key={key}>{d.clientName}</Option>
+                                                return <Option key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
