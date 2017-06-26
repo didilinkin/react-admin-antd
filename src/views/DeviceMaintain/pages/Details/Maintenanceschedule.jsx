@@ -15,7 +15,7 @@ class App extends React.Component {
                     </Row>
                     <Row>
                         <Col span={12}><b>保养人：</b>A</Col>
-                        <Col span={812}></Col>
+                        <Col span={12}></Col>
                     </Row>
                     <ul>
                         <li>
