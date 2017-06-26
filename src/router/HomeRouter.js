@@ -40,6 +40,8 @@ import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'   
 import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'           // 设备巡检 - 电梯间系统
 
 import Equipmentledger         from '../views/DeviceMaintain/pages/Details/Equipmentledger'           // 设备明细
+import Maintenancedetails         from '../views/DeviceMaintain/pages/Details/Maintenancedetails'           // 维修明细
+import Maintenanceschedule         from '../views/DeviceMaintain/pages/Details/Maintenanceschedule'           // 保养明细
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -164,6 +166,12 @@ const routes = [
             }, {
                 path: '/deviceMaintain/equipmentLedger',                        // 设备台账
                 component: Equipmentledger
+            }, {
+                path: '/deviceMaintain/maintenanceDetails',                        // 维修明细
+                component: Maintenancedetails
+            }, {
+                path: '/deviceMaintain/maintenanceSchedule',                        // 维修明细
+                component: Maintenanceschedule
             }
         ]
     }
