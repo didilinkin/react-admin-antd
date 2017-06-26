@@ -178,19 +178,19 @@ class RectificationAddUp extends React.Component {
         })
     }
     getUser = (value) => {
-        let inspectName = []
+        let inspectIds = []
         this.state.userList.map(user => {
             value.toString().split(',').map(value1 => {
-                if (user.id.toString() === value1) {
-                    inspectName.push(user.loginName)
+                if (user.loginName.toString() === value1.toString()) {
+                    inspectIds.push(user.id)
                 }
                 return ''
             })
             return ''
         })
         this.props.form.setFieldsValue({
-            inspectName: inspectName.toString(),
-            inspectIds: value.toString()
+            inspectName: value.toString(),
+            inspectIds: inspectIds.toString()
         })
     }
     render () {
@@ -309,7 +309,7 @@ class RectificationAddUp extends React.Component {
                                     onChange={this.getUser}
                                 >
                                     {this.state.userList.map(d => {
-                                        return <Option key={d.id}>{d.loginName}</Option>
+                                        return <Option key={d.loginName}>{d.loginName}</Option>
                                     })}
                                 </Select>
                             )}
