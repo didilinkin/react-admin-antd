@@ -111,6 +111,9 @@ class RectificationAddUp extends React.Component {
             },
         )
         if (adopt) {
+            this.setState({
+                view: false
+            })
             let json = this.props.form.getFieldsValue()
             this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
             json['imgUrls'] = this.imgUrl

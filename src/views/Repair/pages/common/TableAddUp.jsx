@@ -107,6 +107,9 @@ class TableAddUp extends React.Component {
             },
         )
         if (adopt) {
+            this.setState({
+                view: false
+            })
             let json = this.props.form.getFieldsValue()
             this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
             json['picture'] = this.imgUrl
@@ -134,7 +137,6 @@ class TableAddUp extends React.Component {
             }
 
             this.isFirst = true
-            debugger
             this.setState({
                 visible: false,
                 isFirst: true,

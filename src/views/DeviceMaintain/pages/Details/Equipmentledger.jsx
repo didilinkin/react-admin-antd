@@ -45,7 +45,7 @@ class Equipmentledger extends React.Component {
                 </Row>
                 <Row>
                     <Col span={12}><b>安装位置：</b><div className="pl120">底层</div></Col>
-                    <Col span={12}><b>设备二维码：</b><img src="" alt=""/></Col>
+                    <Col span={12}><b>设备二维码：</b><img src="" alt="" /></Col>
                 </Row>
                 <Tabs defaultActiveKey="1" onChange={callback}>
                     <TabPane tab="Tab 1" key="1">Content of Tab Pane 1</TabPane>
