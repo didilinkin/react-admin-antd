@@ -61,7 +61,7 @@ class RepairList extends Component {
         this.setState({loading: false,
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id'
             }, {
@@ -89,7 +89,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '来源',
-                width: 100,
+                width: 150,
                 dataIndex: 'fromType',
                 key: 'fromType',
                 render: function (text, record, index) {
@@ -103,7 +103,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '派工状态',
-                width: 100,
+                width: 150,
                 dataIndex: 'pieStatus',
                 key: 'pieStatus',
                 render: function (text, record, index) {
@@ -117,12 +117,12 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修人',
-                width: 100,
+                width: 150,
                 dataIndex: 'repairedMan',
                 key: 'repairedMan'
             }, {
                 title: '维修状态',
-                width: 100,
+                width: 150,
                 dataIndex: 'repairStatus',
                 key: 'repairStatus',
                 render: function (text, record, index) {
@@ -136,7 +136,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修项目',
-                width: 100,
+                width: 150,
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
@@ -147,7 +147,6 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修明细',
-                width: 100,
                 dataIndex: 'MaintenanceDetails',
                 key: 'MaintenanceDetails',
                 render: function (text, record, index) {
@@ -279,7 +278,7 @@ class RepairList extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
-                        scroll={{ x: 1300 }}
+                        scroll={{ x: 1650 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

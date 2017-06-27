@@ -11,7 +11,7 @@ class RectificationAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        view: true,
+        view: 'select',
         fileList: [],
         clientList: [],
         userList: []
@@ -50,7 +50,7 @@ class RectificationAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'update',
                     fileList: Arr,
                     userList: resulData1.data,
                     clientList: result.data
@@ -64,7 +64,7 @@ class RectificationAddUp extends React.Component {
                     buildName: resulData.data.buildName,
                     buildId: resulData.data.buildId,
                     clientName: resulData.data.clientName,
-                    clientNameOne: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName + '(' + resulData.data.roomNums + ')',
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     roomNums: resulData.data.roomNums,
@@ -75,9 +75,6 @@ class RectificationAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 this.props.form.resetFields()
                 let result = await apiGet(
@@ -87,7 +84,7 @@ class RectificationAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'insert',
                     fileList: [],
                     userList: resulData.data,
                     clientList: result.data
@@ -158,6 +155,11 @@ class RectificationAddUp extends React.Component {
     Callback = (url) => {
         this.imgUrl = url
     }
+    updateView = () => {
+        this.setState({
+            view: 'select'
+        })
+    }
     getClient = (value) => {
         this.state.clientList.map(client => {
             let key = client.clientId + ':' + client.roomNum.toString() + ':' + client.clientType.toString()
@@ -175,19 +177,19 @@ class RectificationAddUp extends React.Component {
         })
     }
     getUser = (value) => {
-        let inspectName = []
+        let inspectIds = []
         this.state.userList.map(user => {
             value.toString().split(',').map(value1 => {
-                if (user.id.toString() === value1) {
-                    inspectName.push(user.loginName)
+                if (user.loginName.toString() === value1.toString()) {
+                    inspectIds.push(user.id)
                 }
                 return ''
             })
             return ''
         })
         this.props.form.setFieldsValue({
-            inspectName: inspectName.toString(),
-            inspectIds: value.toString()
+            inspectName: value.toString(),
+            inspectIds: inspectIds.toString()
         })
     }
     render () {
@@ -252,7 +254,7 @@ class RectificationAddUp extends React.Component {
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option key={key}>{d.clientName}</Option>
+                                                return <Option key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
@@ -288,7 +290,7 @@ class RectificationAddUp extends React.Component {
                         <FormItem label="现场图片" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                            <PicturesWall updateView={this.updateView} fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                         <FormItem label="检查人" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
@@ -306,7 +308,7 @@ class RectificationAddUp extends React.Component {
                                     onChange={this.getUser}
                                 >
                                     {this.state.userList.map(d => {
-                                        return <Option key={d.id}>{d.loginName}</Option>
+                                        return <Option key={d.loginName}>{d.loginName}</Option>
                                     })}
                                 </Select>
                             )}

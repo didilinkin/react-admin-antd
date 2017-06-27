@@ -1,9 +1,10 @@
 // 设备维护 - 设备台帐
 import React, {Component} from 'react'
-import {Table, Button, Spin, Select, Input } from 'antd'
+import {Modal, Table, Button, Spin, Select, Input } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import EquipmentAddUpComponent from './common/EquipmentAddUp'
+import EnabledStateComponent from './common/EnabledState'
 const Option = Select.Option
 // React component
 class Account extends Component {
@@ -13,14 +14,28 @@ class Account extends Component {
             loading: false,
             openAdd: false,
             openUpdate: false,
+            previewVisible: false,
+            equipmentNumber: '',
+            imgUrl: '',
+            openSS: false,
             columns: [],
             dataSource: [],
             id: 0
         }
     }
+    // 弹出框设置
+    openSS = (id) => {
+        this.setState({
+            openUpdate: false,
+            openSS: true,
+            openAdd: false,
+            id: id
+        })
+    }
     handleUpdateEquipment = (id) => {
         this.setState({
             openAdd: false,
+            openSS: false,
             openUpdate: true,
             id: id
         })
@@ -32,6 +47,7 @@ class Account extends Component {
         )
         let repairList = result.data
         const handleUpdateEquipment = this.handleUpdateEquipment
+        const openSS = this.openSS
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -101,11 +117,12 @@ class Account extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/deviceMaintain/equipmentLedger/' + record.id
                     return (
                         <div>
-                            <Button >详情</Button>
+                            <a href={url}><Button >详情</Button></a>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
-                            <Button >启停设备</Button>
+                            <Button onClick={() => openSS(record.id)}>启停设备</Button>
                         </div>
                     )
                 }
@@ -116,9 +133,11 @@ class Account extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (url, equipmentNumber) => {
         // 刷新表格
-        debugger
+        if (typeof (url) !== 'undefined') {
+            this.info(url, equipmentNumber)
+        }
         let result = await apiPost(
             '/equipment/equipmentList',
             {
@@ -129,6 +148,7 @@ class Account extends Component {
         this.setState({
             openAdd: false,
             openUpdate: false,
+            openSS: false,
             dataSource: result.data,
             id: 0
         })
@@ -137,6 +157,7 @@ class Account extends Component {
     showModal = () => {
         this.setState({
             openUpdate: false,
+            openSS: false,
             openAdd: true
         })
     }
@@ -151,6 +172,26 @@ class Account extends Component {
     query = () => {
         this.refresh()
     }
+    info (url, equipmentNumber) {
+        this.setState({
+            previewVisible: true,
+            loading: false,
+            openAdd: false,
+            openUpdate: false,
+            equipmentNumber: equipmentNumber,
+            imgUrl: url
+        })
+    }
+    handleCancel = () => {
+        this.setState({
+            previewVisible: false,
+            loading: false,
+            openAdd: false,
+            openUpdate: false,
+            equipmentNumber: '',
+            imgUrl: ''
+        })
+    }
     render () {
         return (
             <div>
@@ -164,6 +205,12 @@ class Account extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
+                />
+                <EnabledStateComponent
+                    title="启停设备"
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openSS}
                 />
                 <span>
                     <span>设备名称:</span>
@@ -191,6 +238,11 @@ class Account extends Component {
                         columns={this.state.columns}
                     />
                 </Spin>
+                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.imgUrl} />
+                    <span style={{textAlign: 'center',
+                        display: 'block'}}>设备编号：{this.state.equipmentNumber}</span>
+                </Modal>
             </div>
         )
     }
