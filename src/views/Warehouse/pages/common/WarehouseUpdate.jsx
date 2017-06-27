@@ -55,7 +55,7 @@ class WarehouseAddUp extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        json['fileUrl'] = this.fileUrl
+        json['fileUrl'] = this.imgUrl
         json['warehouseType'] = 1
         json['warehouseId'] = this.state.warehouseId
         let result = await apiPost(
@@ -108,8 +108,7 @@ class WarehouseAddUp extends React.Component {
             unitPrice = 0
         }
         this.props.form.setFieldsValue({
-            number: parseFloat(num) - parseFloat(sum),
-            amount: (parseFloat(unitPrice) * (parseFloat(num) - parseFloat(sum))).toFixed(0)})
+            amount: (parseFloat(unitPrice) * parseFloat(sum)).toFixed(0)})
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -147,7 +146,7 @@ class WarehouseAddUp extends React.Component {
                                     <Select
                                         showSearch
                                         style={{ width: 200 }}
-                                        placeholder="Select a person"
+                                        placeholder="请选择领用人"
                                         optionFilterProp="children"
                                         onChange={this.getUser}
                                         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -161,10 +160,10 @@ class WarehouseAddUp extends React.Component {
                     <Row>
                         <Col span={12}>
                             <FormItem label="数量" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                                {getFieldDecorator('buildName', {
+                                {getFieldDecorator('number', {
                                     rules: [ {
                                         required: true,
-                                        message: 'Please input your buildName!'
+                                        message: ''
                                     }]
                                 })(
                                     <InputNumber onBlur={this.sumMoney} />
@@ -175,7 +174,10 @@ class WarehouseAddUp extends React.Component {
                     <FormItem label="上传图片" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                        {getFieldDecorator('fileUrl'
+                        )(
+                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                        )}
                     </FormItem>
                     {getFieldDecorator('amount')(
                         <Input type="hidden" />
