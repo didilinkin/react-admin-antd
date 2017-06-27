@@ -42,6 +42,7 @@ import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'   
 import Equipmentledger         from '../views/DeviceMaintain/pages/Details/Equipmentledger'           // 设备明细
 import Maintenancedetails         from '../views/DeviceMaintain/pages/Details/Maintenancedetails'           // 维修明细
 import Maintenanceschedule         from '../views/DeviceMaintain/pages/Details/Maintenanceschedule'           // 保养明细
+import Patrolscheme         from '../views/DeviceMaintain/pages/Details/Patrolscheme'           // 巡检计划
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -164,14 +165,17 @@ const routes = [
                 path: '/deviceMaintain/inspection/elevatorRoom',                        // 设备维护 - 设备巡检 - 电梯房系统
                 component: ElevatorRoom
             }, {
-                path: '/deviceMaintain/equipmentLedger/:id',                        // 设备台账
+                path: '/deviceMaintain/equipmentLedger/:id',                            // 设备维护 - 设备台账 - 设备明细
                 component: Equipmentledger
             }, {
-                path: '/deviceMaintain/maintenanceDetails/:id',                        // 维修明细
+                path: '/deviceMaintain/maintenanceDetails/:id',                        // 设备维护 - 设备台账 - 维修明细
                 component: Maintenancedetails
             }, {
-                path: '/deviceMaintain/maintenanceSchedule/:id',                        // 维修明细
+                path: '/deviceMaintain/maintenanceSchedule/:id',                        // 设备维护 - 设备台账 - 保养明细
                 component: Maintenanceschedule
+            }, {
+                path: '/deviceMaintain/patrolScheme',                        // 设备维护 - 设备台账 - 保养明细
+                component: Patrolscheme
             }
         ]
     }
