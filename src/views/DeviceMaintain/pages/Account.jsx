@@ -1,6 +1,6 @@
 // 设备维护 - 设备台帐
 import React, {Component} from 'react'
-import {Table, Button, Spin, Select, Input } from 'antd'
+import {Modal, Table, Button, Spin, Select, Input } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import EquipmentAddUpComponent from './common/EquipmentAddUp'
@@ -14,6 +14,9 @@ class Account extends Component {
             loading: false,
             openAdd: false,
             openUpdate: false,
+            previewVisible: false,
+            equipmentNumber: '',
+            imgUrl: '',
             openSS: false,
             columns: [],
             dataSource: [],
@@ -130,9 +133,11 @@ class Account extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (url, equipmentNumber) => {
         // 刷新表格
-        debugger
+        if (typeof (url) !== 'undefined') {
+            this.info(url, equipmentNumber)
+        }
         let result = await apiPost(
             '/equipment/equipmentList',
             {
@@ -166,6 +171,26 @@ class Account extends Component {
     }
     query = () => {
         this.refresh()
+    }
+    info (url, equipmentNumber) {
+        this.setState({
+            previewVisible: true,
+            loading: false,
+            openAdd: false,
+            openUpdate: false,
+            equipmentNumber: equipmentNumber,
+            imgUrl: url
+        })
+    }
+    handleCancel = () => {
+        this.setState({
+            previewVisible: false,
+            loading: false,
+            openAdd: false,
+            openUpdate: false,
+            equipmentNumber: '',
+            imgUrl: ''
+        })
     }
     render () {
         return (
@@ -213,6 +238,11 @@ class Account extends Component {
                         columns={this.state.columns}
                     />
                 </Spin>
+                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="example" style={{ width: '100%' }} src={this.state.imgUrl} />
+                    <span style={{textAlign: 'center',
+                        display: 'block'}}>设备编号：{this.state.equipmentNumber}</span>
+                </Modal>
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import {Modal, Input, Form, Select, Row, Col, notification, Icon, DatePicker, Button  } from 'antd'
+import {Modal, Input, Form, Select, Row, Col, notification, Icon, DatePicker } from 'antd'
 import React from 'react'
 import { apiGet, apiPost, baseURL } from '../../../../api/index'
 import moment from 'moment'
@@ -10,7 +10,6 @@ class EquipmentAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        imgUrl: '',
         userList: [],
         systList: [],
         categoryList: []
@@ -74,8 +73,7 @@ class EquipmentAddUp extends React.Component {
                     patrolIdOne: equipment.patrolName,
                     patrolName: equipment.patrolName,
                     patrolId: equipment.patrolId,
-                    remarks: equipment.remarks,
-                    twoCode: equipment.twoCode
+                    remarks: equipment.remarks
                 })
             }
         } else {
@@ -123,23 +121,36 @@ class EquipmentAddUp extends React.Component {
                     message: result.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
+                this.isFirst = true
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                this.props.refreshTable()
             } else {
                 let result = await apiPost(
                     'equipment/insertEquipment',
                     json
                 )
+                let url = await apiPost('ProduceTwoCode',
+                    {code: result.data})
+                await apiPost(
+                    'equipment/updateEquipment',
+                    {url: url.data,
+                        id: this.props.id
+                    }
+                )
                 notification.open({
-                    message: result.data,
+                    message: '添加成功',
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
+                this.isFirst = true
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                this.props.refreshTable(baseURL + 'storage/files/' + url.data, json.equipmentNumber)
             }
-
-            this.isFirst = true
-            this.setState({
-                visible: false,
-                isFirst: true
-            })
-            this.props.refreshTable()
         }
     }
     handleCancel = (e) => {
@@ -199,16 +210,6 @@ class EquipmentAddUp extends React.Component {
     equipmentStatus = (value) => {
         this.props.form.setFieldsValue({
             useDepartment: value
-        })
-    }
-    twoCode = async () => {
-        let url = await apiPost('ProduceTwoCode',
-            {code: this.props.form.getFieldValue('equipmentNumber')})
-        this.setState({
-            imgUrl: baseURL + 'storage/files/' + url.data
-        })
-        this.props.form.setFieldsValue({
-            twoCode: url.data
         })
     }
     render () {
@@ -499,16 +500,6 @@ class EquipmentAddUp extends React.Component {
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-                        <Row>
-                            <span>如果改动编号，请重新生成二维码</span>
-                            <Col span={12}>
-                                <Button onClick={this.twoCode}>生成二维码</Button>
-                            </Col>
-                            <Col span={12}>
-                                <img src={this.state.imgUrl} alt="" />
-                            </Col>
-                        </Row>
-
                         {getFieldDecorator('systemName')(
                             <Input type="hidden" />
                         )}
@@ -534,9 +525,6 @@ class EquipmentAddUp extends React.Component {
                             <Input type="hidden" />
                         )}
                         {getFieldDecorator('useDepartment')(
-                            <Input type="hidden" />
-                        )}
-                        {getFieldDecorator('twoCode')(
                             <Input type="hidden" />
                         )}
                     </Form>
