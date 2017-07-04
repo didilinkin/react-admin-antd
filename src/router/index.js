@@ -64,7 +64,7 @@ AuthTest.propTypes = {
 }
 
 const SetRouter = () => (
-    <Router>
+    <Router history={ history }>
         <RouterDiv>
             {/* 测试Redux => 原始路由配置 暂时注释 */}
             {/*
