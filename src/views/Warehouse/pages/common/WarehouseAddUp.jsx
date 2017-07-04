@@ -60,7 +60,7 @@ class WarehouseAddUp extends React.Component {
         })
         let list = JSON.stringify(list1)
         let result = await apiPost(
-            '/warehouse/insertWarehouse',
+            'http://127.0.0.1:18082/warehouse/insertWarehouse',
             {list: list}
         )
         notification.open({
@@ -240,7 +240,7 @@ class WarehouseAddUp extends React.Component {
                                     {...getFieldProps('name')}
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择材料"
                                     optionFilterProp="children"
                                     onChange={this.getMaterial}
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -281,7 +281,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="备注" labelCol={{ span: 5 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                <Input {...getFieldProps('remark')} />
+                                <textarea {...getFieldProps('remark')} />
                             </FormItem>
                         </Col>
                     </Row>

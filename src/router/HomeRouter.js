@@ -44,6 +44,8 @@ import Equipmentledger         from '../views/DeviceMaintain/pages/Details/Equip
 import Maintenancedetails         from '../views/DeviceMaintain/pages/Details/Maintenancedetails'           // 维修明细
 import Maintenanceschedule         from '../views/DeviceMaintain/pages/Details/Maintenanceschedule'           // 保养明细
 import Patrolscheme         from '../views/DeviceMaintain/pages/Details/Patrolscheme'           // 巡检计划
+import Maintenancerecord         from '../views/DeviceMaintain/pages/Details/Maintenancerecord'
+import Repairrecord         from '../views/DeviceMaintain/pages/Details/Repairrecord'
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -179,9 +181,16 @@ const routes = [
                 path: '/deviceMaintain/maintenanceSchedule/:id',                        // 设备维护 - 设备台账 - 保养明细
                 component: Maintenanceschedule
             }, {
-                path: '/deviceMaintain/patrolScheme',                        // 设备维护 - 设备台账 - 保养明细
+                path: '/deviceMaintain/patrolScheme',                        // 设备维护 - 设备维保 - 巡检计划明细
                 component: Patrolscheme
+            }, {
+                path: '/deviceMaintain/maintenanceRecord',                        // 设备维护 - 设备维保 - 保养记录
+                component: Maintenancerecord
+            }, {
+                path: '/deviceMaintain/repairRecord',                        // 设备维护 - 设备维保 - 维修记录
+                component: Repairrecord
             }
+
         ]
     }
 ]

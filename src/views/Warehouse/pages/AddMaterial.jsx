@@ -134,7 +134,7 @@ class addUpkeep extends React.Component {
                                 {...getFieldProps('whType')}
                                 showSearch
                                 style={{ width: 200 }}
-                                placeholder="Select a person"
+                                placeholder="请选择仓库类型"
                                 optionFilterProp="children"
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
