@@ -1,5 +1,5 @@
 import shop from '../../api'
-import * as types from '../../constants/ActionTypes'
+import * as types from '../../constants/ActionTypes'    // 别名
 
 // 接收商品信息
 const receiveProducts = products => ({
@@ -39,4 +39,15 @@ export const checkout = products => (dispatch, getState) => {
         // Replace the line above with line below to rollback on failure:
         // dispatch({ type: types.CHECKOUT_FAILURE, cart })
     })
+}
+
+// 测试登录
+export const authLogin = () => dispatch => {
+    let auth = false
+
+    dispatch({
+        type: types.AUTHENTICATE,
+        auth
+    })
+    // 此处应该执行 api 请求验证
 }
