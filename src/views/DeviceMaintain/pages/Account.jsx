@@ -1,7 +1,7 @@
 // 设备维护 - 设备台帐
 import React, {Component} from 'react'
-import {Modal, Table, Button, Spin, Select, Input } from 'antd'
-import { apiPost } from '../../../api'
+import {Modal, Table, Button, Spin, Select, Input} from 'antd'
+import {apiPost} from '../../../api'
 // 引入组件
 import EquipmentAddUpComponent from './common/EquipmentAddUp'
 import EnabledStateComponent from './common/EnabledState'
@@ -23,6 +23,7 @@ class Account extends Component {
             id: 0
         }
     }
+
     // 弹出框设置
     openSS = (id) => {
         this.setState({
@@ -40,6 +41,7 @@ class Account extends Component {
             id: id
         })
     }
+
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -48,7 +50,8 @@ class Account extends Component {
         let repairList = result.data
         const handleUpdateEquipment = this.handleUpdateEquipment
         const openSS = this.openSS
-        this.setState({loading: false,
+        this.setState({
+            loading: false,
             columns: [{
                 title: '序号',
                 width: 80,
@@ -130,9 +133,11 @@ class Account extends Component {
             dataSource: repairList
         })
     }
+
     componentDidMount () {
         this.initialRemarks()
     }
+
     refresh = async (url, equipmentNumber) => {
         // 刷新表格
         if (typeof (url) !== 'undefined') {
@@ -172,6 +177,7 @@ class Account extends Component {
     query = () => {
         this.refresh()
     }
+
     info (url, equipmentNumber) {
         this.setState({
             previewVisible: true,
@@ -182,6 +188,7 @@ class Account extends Component {
             imgUrl: url
         })
     }
+
     handleCancel = () => {
         this.setState({
             previewVisible: false,
@@ -192,6 +199,7 @@ class Account extends Component {
             imgUrl: ''
         })
     }
+
     render () {
         return (
             <div>
@@ -218,7 +226,7 @@ class Account extends Component {
                     <span>设备状态:</span>
                     <Select
                         showSearch
-                        style={{ width: 200 }}
+                        style={{width: 200}}
                         placeholder="Select a person"
                         optionFilterProp="children"
                         onChange={this.equipmentStatusOne}
@@ -233,15 +241,18 @@ class Account extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1550 }}
+                        scroll={{x: 1550}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
                 </Spin>
                 <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="example" style={{ width: '100%' }} src={this.state.imgUrl} />
-                    <span style={{textAlign: 'center',
-                        display: 'block'}}>设备编号：{this.state.equipmentNumber}</span>
+                    <img alt="example" style={{width: '100%'}} src={this.state.imgUrl} />
+                    <span style={{
+                        textAlign: 'center',
+                        display: 'block'
+                    }}
+                    >设备编号：{this.state.equipmentNumber}</span>
                 </Modal>
             </div>
         )
