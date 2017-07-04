@@ -4,10 +4,9 @@ import {Modal, Table, Button, Spin, Select, Input} from 'antd'
 import {apiPost} from '../../../api'
 // 引入组件
 import EquipmentAddUpComponent from './common/EquipmentAddUp'
-import EnabledStateComponent from './common/EnabledState'
 const Option = Select.Option
 // React component
-class Account extends Component {
+class ComputerRoom extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -17,26 +16,14 @@ class Account extends Component {
             previewVisible: false,
             equipmentNumber: '',
             imgUrl: '',
-            openSS: false,
             columns: [],
             dataSource: [],
             id: 0
         }
     }
-
-    // 弹出框设置
-    openSS = (id) => {
-        this.setState({
-            openUpdate: false,
-            openSS: true,
-            openAdd: false,
-            id: id
-        })
-    }
     handleUpdateEquipment = (id) => {
         this.setState({
             openAdd: false,
-            openSS: false,
             openUpdate: true,
             id: id
         })
@@ -45,11 +32,10 @@ class Account extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/equipment/equipmentList'
+            '/equipment/machineRoomList'
         )
         let repairList = result.data
         const handleUpdateEquipment = this.handleUpdateEquipment
-        const openSS = this.openSS
         this.setState({
             loading: false,
             columns: [{
@@ -58,61 +44,20 @@ class Account extends Component {
                 dataIndex: 'id',
                 key: 'id'
             }, {
+                title: '机房名称',
+                width: 150,
+                dataIndex: 'machineRoomName',
+                key: 'machineRoomName'
+            }, {
                 title: '所属系统',
                 width: 150,
                 dataIndex: 'systemName',
                 key: 'systemName'
             }, {
-                title: '设备编号',
+                title: '所属类别',
                 width: 150,
-                dataIndex: 'equipmentNumber',
-                key: 'equipmentNumber'
-            }, {
-                title: '设备名称',
-                width: 150,
-                dataIndex: 'equipmentName',
-                key: 'equipmentName'
-            }, {
-                title: '规格型号',
-                width: 150,
-                dataIndex: 'equipmentModel',
-                key: 'equipmentModel'
-            }, {
-                title: '设备品牌',
-                width: 150,
-                dataIndex: 'equipmentBrand',
-                key: 'equipmentBrand'
-            }, {
-                title: '使用年限',
-                width: 150,
-                dataIndex: 'serviceLife',
-                key: 'serviceLife'
-            }, {
-                title: '设备状态',
-                width: 100,
-                dataIndex: 'equipmentStatus',
-                key: 'equipmentStatus',
-                render: function (text, record, index) {
-                    let equipmentStatus = '使用'
-                    if (text === 1) {
-                        equipmentStatus = '闲置'
-                    } else if (text === 2) {
-                        equipmentStatus = '报废'
-                    }
-                    return (
-                        <span>{equipmentStatus}</span>
-                    )
-                }
-            }, {
-                title: '维保责任人',
-                width: 100,
-                dataIndex: 'maintenanceName',
-                key: 'maintenanceName'
-            }, {
-                title: '巡检责任人',
-                width: 100,
-                dataIndex: 'patrolName',
-                key: 'patrolName'
+                dataIndex: 'categoryName',
+                key: 'categoryName'
             }, {
                 title: '操作',
                 width: 250,
@@ -125,7 +70,7 @@ class Account extends Component {
                         <div>
                             <a href={url}><Button >详情</Button></a>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
-                            <Button onClick={() => openSS(record.id)}>启停设备</Button>
+                            <Button>删除</Button>
                         </div>
                     )
                 }
@@ -144,7 +89,7 @@ class Account extends Component {
             this.info(url, equipmentNumber)
         }
         let result = await apiPost(
-            '/equipment/equipmentList',
+            '/equipment/machineRoomList',
             {
                 'equipmentName': this.equipmentName,
                 'equipmentStatus': this.equipmentStatus
@@ -153,7 +98,6 @@ class Account extends Component {
         this.setState({
             openAdd: false,
             openUpdate: false,
-            openSS: false,
             dataSource: result.data,
             id: 0
         })
@@ -162,7 +106,6 @@ class Account extends Component {
     showModal = () => {
         this.setState({
             openUpdate: false,
-            openSS: false,
             openAdd: true
         })
     }
@@ -170,9 +113,9 @@ class Account extends Component {
     entryNameOnChange = (e) => {
         this.equipmentName = e.target.value
     }
-    equipmentStatus = ''
-    equipmentStatusOne = (value) => {
-        this.equipmentStatus = value
+    machineRoomName = ''
+    machineRoomNameFN = (value) => {
+        this.machineRoomName = value
     }
     query = () => {
         this.refresh()
@@ -214,27 +157,24 @@ class Account extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
-                <EnabledStateComponent
-                    title="启停设备"
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openSS}
-                />
                 <span>
-                    <span>设备名称:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <span>设备状态:</span>
+                    <span>所属系统:</span>
                     <Select
                         showSearch
                         style={{width: 200}}
                         placeholder="Select a person"
                         optionFilterProp="children"
-                        onChange={this.equipmentStatusOne}
+                        onChange={this.machineRoomNameFN}
                     >
-                        <Option key="0">使用</Option>
-                        <Option key="2">报废</Option>
-                        <Option key="1">闲置</Option>
+                        <Option key="工程与维修部">工程与维修部</Option>
+                        <Option key="设备与运行部">设备与运行部</Option>
+                        <Option key="消防与监控部">消防与监控部</Option>
+                        <Option key="交通与安全部">交通与安全部</Option>
+                        <Option key="卫生与环保部">卫生与环保部</Option>
+                        <Option key="综合管理部">综合管理部</Option>
                     </Select>
+                    <span>机房民称:</span>
+                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加设备</Button>
                 </span>
@@ -258,6 +198,6 @@ class Account extends Component {
         )
     }
 }
-export default Account
+export default ComputerRoom
 
 

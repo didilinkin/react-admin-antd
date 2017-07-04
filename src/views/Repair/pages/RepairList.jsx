@@ -61,14 +61,15 @@ class RepairList extends Component {
         this.setState({loading: false,
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id'
             }, {
                 title: '报修日期',
                 width: 150,
                 dataIndex: 'repairDate',
-                key: 'repairDate'
+                key: 'repairDate',
+                sorter: true
             }, {
                 title: '公司名称',
                 width: 150,
@@ -88,7 +89,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '来源',
-                width: 100,
+                width: 150,
                 dataIndex: 'fromType',
                 key: 'fromType',
                 render: function (text, record, index) {
@@ -102,7 +103,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '派工状态',
-                width: 100,
+                width: 150,
                 dataIndex: 'pieStatus',
                 key: 'pieStatus',
                 render: function (text, record, index) {
@@ -116,12 +117,12 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修人',
-                width: 100,
+                width: 150,
                 dataIndex: 'repairedMan',
                 key: 'repairedMan'
             }, {
                 title: '维修状态',
-                width: 100,
+                width: 150,
                 dataIndex: 'repairStatus',
                 key: 'repairStatus',
                 render: function (text, record, index) {
@@ -135,7 +136,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修项目',
-                width: 100,
+                width: 150,
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
@@ -146,7 +147,6 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修明细',
-                width: 100,
                 dataIndex: 'MaintenanceDetails',
                 key: 'MaintenanceDetails',
                 render: function (text, record, index) {
@@ -162,19 +162,32 @@ class RepairList extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                <Button >派单</Button>
-                            </Popconfirm>
-                            <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <Button >作废</Button>
-                            </Popconfirm>
-                            <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
-                                <Button >修改</Button>
-                            </Popconfirm>
-                        </div>
-                    )
+                    if (record.pieStatus === 1) {
+                        return (
+                            <div>
+                                <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                                    <Button >派单</Button>
+                                </Popconfirm>
+                                <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <Button >作废</Button>
+                                </Popconfirm>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                                    <Button >派单</Button>
+                                </Popconfirm>
+                                <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <Button >作废</Button>
+                                </Popconfirm>
+                                <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
+                                    <Button >修改</Button>
+                                </Popconfirm>
+                            </div>
+                        )
+                    }
                 }
             }],
             dataSource: repairList
@@ -183,13 +196,18 @@ class RepairList extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
         // 刷新表格
+        let order = ''
+        if (typeof (sorter) !== 'undefined' && typeof (sorter.order) !== 'undefined') {
+            order = sorter.columnKey + ' ' + sorter.order.substring(0, sorter.order.length - 3)
+        }
         let result = await apiPost(
             'upkeep/repairList',
             {'startDate': this.startDate,
                 'endDate': this.endDate,
-                'clientName': this.clientName
+                'clientName': this.clientName,
+                'order': order
             }
         )
         this.setState({
@@ -259,7 +277,8 @@ class RepairList extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1300 }}
+                        onChange={this.refresh}
+                        scroll={{ x: 1650 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

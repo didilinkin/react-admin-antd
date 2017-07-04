@@ -6,8 +6,8 @@ const qs = require('qs')
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
-axios.defaults.baseURL = 'http://192.168.1.108:18082/'
-export const baseURL = 'http://192.168.1.108:18082/'
+axios.defaults.baseURL = 'http://192.168.0.114:18082/'
+export const baseURL = 'http://192.168.0.114:18082/'
 // 查询
 export const apiGet = (url) => {
     return new Promise(function (resolve, reject) {

@@ -39,15 +39,15 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage'
+            '/warehouse/inventoryManage'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
             columns: [{
                 title: '序号',
                 width: 80,
-                dataIndex: 'index',
-                key: 'index',
+                dataIndex: 'id',
+                key: 'id',
                 render: function (text, record, index) {
                     index++
                     return (
@@ -131,7 +131,7 @@ class RepairList extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            'http://127.0.0.1:18082/warehouse/inventoryManage',
+            '/warehouse/inventoryManage',
             {'startDate': this.startDate,
                 'name': this.name,
                 'whType': this.whType
@@ -194,7 +194,8 @@ class RepairList extends Component {
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
                         <Option key="0">工程部</Option>
                         <Option key="1">保洁用品</Option>
                         <Option key="2">行政库</Option>
