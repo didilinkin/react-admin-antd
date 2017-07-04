@@ -29,6 +29,7 @@ import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'     
 
 // 引入 '设备维护' 版块
 import Account              from '../views/DeviceMaintain/pages/Account'                // 设备台账
+import ComputerRoom         from '../views/DeviceMaintain/pages/ComputerRoom'           // 机房编码
 import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'         // 设备维护保障 - 巡检计划
 import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'        // 设备维护保障 - 保养记录
 import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'        // 设备维护保障 - 设备报修
@@ -138,6 +139,10 @@ const routes = [
                 path: '/deviceMaintain/account',                                        // 设备维护 - 设备台帐
                 component: Account
             }, {
+                path: '/deviceMaintain/computerRoom',                                        // 设备维护 - 机房编码
+                component: ComputerRoom
+            },
+            {
                 path: '/deviceMaintain/maintenance/inspectionPlan',                     // 设备维护 - 设备维护保障 - 巡检计划
                 component: InspectionPlan
             }, {
