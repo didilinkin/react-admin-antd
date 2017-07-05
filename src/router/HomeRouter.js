@@ -46,6 +46,12 @@ import Maintenanceschedule         from '../views/DeviceMaintain/pages/Details/M
 import Patrolscheme         from '../views/DeviceMaintain/pages/Details/Patrolscheme'           // 巡检计划
 import Maintenancerecord         from '../views/DeviceMaintain/pages/Details/Maintenancerecord'
 import Repairrecord         from '../views/DeviceMaintain/pages/Details/Repairrecord'
+import ServerRoom         from '../views/DeviceMaintain/pages/Details/ServerRoom'
+import ElectricalErrorDevice         from '../views/DeviceMaintain/pages/Details/ElectricalErrorDevice'     // 电器异常带设备信息
+import ElectricalError         from '../views/DeviceMaintain/pages/Details/ElectricalError'     // 电器异常不带设备信息
+import ElevatorError         from '../views/DeviceMaintain/pages/Details/ElevatorError'     // 电梯异常
+import ElevatorErrorDevice         from '../views/DeviceMaintain/pages/Details/ElevatorErrorDevice'     // 电梯异常
+
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -189,6 +195,21 @@ const routes = [
             }, {
                 path: '/deviceMaintain/repairRecord',                        // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
+            }, {
+                path: '/deviceMaintain/serverRoom',                        // 设备维护 - 机房明细
+                component: ServerRoom
+            }, {
+                path: '/deviceMaintain/electricalErrorDevice',                        // 设备维护 - 电器异常带设备信息
+                component: ElectricalErrorDevice
+            }, {
+                path: '/deviceMaintain/electricalError',                        // 设备维护 - 电器异常不带设备信息
+                component: ElectricalError
+            }, {
+                path: '/deviceMaintain/elevatorError',                        // 设备维护 - 电梯异常
+                component: ElevatorError
+            }, {
+                path: '/deviceMaintain/elevatorErrorDevice',                        // 设备维护 - 电梯异常
+                component: ElevatorErrorDevice
             }
 
         ]
