@@ -286,7 +286,50 @@ class RoomAddUp extends React.Component {
                                     message: 'Please input!'
                                 }]
                             })(
-                                <Input />
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="Select a person"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="1">1</Option>
+                                    <Option key="2">2</Option>
+                                    <Option key="3">3</Option>
+                                    <Option key="4">4</Option>
+                                    <Option key="5">5</Option>
+                                    <Option key="6">6</Option>
+                                    <Option key="7">7</Option>
+                                    <Option key="8">8</Option>
+                                    <Option key="9">9</Option>
+                                    <Option key="10">10</Option>
+                                    <Option key="11">11</Option>
+                                    <Option key="12">12</Option>
+                                    <Option key="13">13</Option>
+                                    <Option key="14">14</Option>
+                                    <Option key="15">15</Option>
+                                    <Option key="16">16</Option>
+                                    <Option key="17">17</Option>
+                                    <Option key="18">18</Option>
+                                    <Option key="19">19</Option>
+                                    <Option key="20">20</Option>
+                                    <Option key="21">21</Option>
+                                    <Option key="22">22</Option>
+                                    <Option key="23">23</Option>
+                                    <Option key="24">24</Option>
+                                    <Option key="25">25</Option>
+                                    <Option key="26">26</Option>
+                                    <Option key="27">27</Option>
+                                    <Option key="28">28</Option>
+                                    <Option key="29">29</Option>
+                                    <Option key="30">30</Option>
+                                    <Option key="31">31</Option>
+                                    <Option key="负一">负一</Option>
+                                    <Option key="裙楼一">裙楼一</Option>
+                                    <Option key="裙楼二">裙楼二</Option>
+                                    <Option key="裙楼三">裙楼三</Option>
+                                    <Option key="裙楼四">裙楼四</Option>
+                                    <Option key="裙楼五">裙楼五</Option>
+                                </Select>
                             )}
                         </FormItem>
                         <FormItem label="所属设备" labelCol={{ span: 6 }}
