@@ -38,8 +38,17 @@ import DistributionRoom         from '../views/DeviceMaintain/pages/Distribution
 import WeakRoom                 from '../views/DeviceMaintain/pages/WeakRoom'                           // 设备巡检 - 电器系统 - 弱电间巡查记录
 import GeneratorLog             from '../views/DeviceMaintain/pages/GeneratorLog'                       // 设备巡检 - 电器系统 - 发电机运行记录
 
-import AirConditioning          from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
-import WaterHeating             from '../views/DeviceMaintain/pages/WaterHeating'                       // 设备巡检 - 水暖系统
+import AirConditioningRoom      from '../views/DeviceMaintain/pages/AirConditioningRoom'                // 设备巡检 - 空调系统 - 空调机房
+import NewWindRoom              from '../views/DeviceMaintain/pages/NewWindRoom'                        // 设备巡检 - 空调系统 - 新风机房
+import CentralAirConditioning   from '../views/DeviceMaintain/pages/CentralAirConditioning'             // 设备巡检 - 空调系统 - 中央空调
+
+import HeatExchange             from '../views/DeviceMaintain/pages/HeatExchange'                       // 设备巡检 - 水暖系统 - 热交换设备巡检
+import FirePump                 from '../views/DeviceMaintain/pages/FirePump'                           // 设备巡检 - 水暖系统 - 消防水泵房巡检
+import PlumbingPipeline         from '../views/DeviceMaintain/pages/PlumbingPipeline'                   // 设备巡检 - 水暖系统 - 水暖管道
+import PlumbingInfrastructure   from '../views/DeviceMaintain/pages/PlumbingInfrastructure'             // 设备巡检 - 水暖系统 - 水暖基建
+import SolarEnergy              from '../views/DeviceMaintain/pages/SolarEnergy'                        // 设备巡检 - 水暖系统 - 太阳能
+import HeatTransferStation      from '../views/DeviceMaintain/pages/HeatTransferStation'                // 设备巡检 - 水暖系统 - 换热站巡检
+
 import Firefighting             from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
 
 import ElevatorRoom             from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
@@ -175,11 +184,32 @@ const routes = [
                 path: '/deviceMaintain/inspection/electric/generatorLog',                               // 设备维护 - 设备巡检 - 电器系统 - 发电机运行记录
                 component: GeneratorLog
             }, {
-                path: '/deviceMaintain/inspection/airConditioning',                                     // 设备维护 - 设备巡检 - 空调系统
-                component: AirConditioning
+                path: '/deviceMaintain/inspection/airConditioning/airConditioningRoom',                 // 设备维护 - 设备巡检 - 空调系统 - 空调机房
+                component: AirConditioningRoom
             }, {
-                path: '/deviceMaintain/inspection/waterHeating',                                        // 设备维护 - 设备巡检 - 水暖系统
-                component: WaterHeating
+                path: '/deviceMaintain/inspection/airConditioning/newWindRoom',                         // 设备维护 - 设备巡检 - 空调系统 - 新风机房
+                component: NewWindRoom
+            }, {
+                path: '/deviceMaintain/inspection/airConditioning/centralAirConditioning',              // 设备维护 - 设备巡检 - 空调系统 - 中央空调
+                component: CentralAirConditioning
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/heatExchange',                           // 设备维护 - 设备巡检 - 水暖系统 - 热交换设备巡检
+                component: HeatExchange
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/firePump',                               // 设备维护 - 设备巡检 - 水暖系统 - 消防水泵房巡检
+                component: FirePump
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/plumbingPipeline',                       // 设备维护 - 设备巡检 - 水暖系统 - 水暖管道
+                component: PlumbingPipeline
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/plumbingInfrastructure',                 // 设备维护 - 设备巡检 - 水暖系统 - 水暖基建
+                component: PlumbingInfrastructure
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/solarEnergy',                            // 设备维护 - 设备巡检 - 水暖系统 - 太阳能
+                component: SolarEnergy
+            }, {
+                path: '/deviceMaintain/inspection/waterHeating/heatTransferStation',                    // 设备维护 - 设备巡检 - 水暖系统 - 换热站巡检
+                component: HeatTransferStation
             }, {
                 path: '/deviceMaintain/inspection/firefighting',                                        // 设备维护 - 设备巡检 - 消防系统
                 component: Firefighting
