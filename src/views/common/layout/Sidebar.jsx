@@ -187,15 +187,26 @@ class Sidebar extends React.Component {
                             </span>
                         }
                         >
-                            <Menu.Item key="/deviceMaintain/inspection/electric">
-                                <Link to="/deviceMaintain/inspection/electric">电器系统</Link>
-                            </Menu.Item>
-
-                            {/*
-                                <Menu.Item key="/deviceMaintain/inspection/elevator">
-                                    <Link to="/deviceMaintain/inspection/elevator">电梯系统</Link>
+                            <SubMenu key="/deviceMaintain/inspection/electric" title={
+                                <span>
+                                    <p classID="nav-text">电器系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/electric/distributionRoom">
+                                    <Link to="/deviceMaintain/inspection/electric/distributionRoom">配电房巡查记录</Link>
                                 </Menu.Item>
-                            */}
+
+                                <Menu.Item key="/deviceMaintain/inspection/electric/weakRoom">
+                                    <Link to="/deviceMaintain/inspection/electric/weakRoom">弱电间巡查记录</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/electric/generatorLog">
+                                    <Link to="/deviceMaintain/inspection/electric/generatorLog">发电机运行记录</Link>
+                                </Menu.Item>
+                            </SubMenu>
+
+
                             <SubMenu key="/deviceMaintain/inspection/elevator" title={
                                 <span>
                                     <p classID="nav-text">电梯系统</p>
