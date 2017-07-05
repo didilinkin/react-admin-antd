@@ -1,40 +1,32 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { createStore, applyMiddleware }     from 'redux'
-import { Provider }                         from 'react-redux'          // 供应store 组件(全局共享store)
-import thunk                                from 'redux-thunk'
-import { createLogger }                     from 'redux-logger'         // 实现打印日志 功能
+import { createStore, applyMiddleware } from 'redux'
+import { Provider }                     from 'react-redux'          // 全局store
+import { createLogger }                 from 'redux-logger'         // 开发阶段: 打印redux 日志
+import thunk                            from 'redux-thunk'          // 异步
 
-import { getAllProducts }                   from './store/actions'      // 获取所有产品
-import reducer                              from './store/reducers'
+import rootReducer                      from './store/reducers'     // 根reducers
 
-import App                                  from './containers'         // 容器型 根组件
-import 'animate.css'
+import routes                           from './router'
 
 const rootElement = document.getElementById('root')
 
-// 创建中间件
+// 开发环境下, 打印 redux日志
 const middleware = [ thunk ]
-
-// 判断构建环境, 如果不是上线环境 则 => 输出中间件的log日志
 if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger())
 }
 
-console.log(process.env.NODE_ENV)                                       // 测试输出环境
-
-// 创建一个 Redux store 来以存放应用中所有的 state
+// 根store
 const store = createStore(
-    reducer,                                                            // reducer: 接收两个参数, 分别是当前的 state 树和要处理的 action, 返回新的 state 树
-    applyMiddleware(...middleware)                                      // Middleware 只是包装了 store 的 dispatch 方法
+    rootReducer,
+    applyMiddleware(...middleware)
 )
 
-store.dispatch(getAllProducts())                                        // store.dispatch执行 => 获取所有产品
-
 render(
-    <Provider store={ store }>
-        <App />
+    <Provider store={store}>
+        { routes }
     </Provider>,
     rootElement
 )
