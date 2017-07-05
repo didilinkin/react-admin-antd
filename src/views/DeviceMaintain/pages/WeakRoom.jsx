@@ -122,9 +122,10 @@ class WeakRoom extends React.Component {
         // 刷新表格
         let result = await apiPost(
             '/deviceMaintain/inspection/electric/ListRoom',
-            {'startDate': this.startDate,
-                'endDate': this.endDate,
-                'createName': this.createName
+            {'startTime': this.startDate,
+                'endTime': this.endDate,
+                'createName': this.createName,
+                'floor': this.floor
             }
         )
         this.setState({
@@ -152,6 +153,10 @@ class WeakRoom extends React.Component {
             id: ''
         })
     }
+    floor = ''
+    floorFn = (e) => {
+        this.floor = e.target.value
+    }
     render () {
         return (
             <div>
@@ -160,6 +165,8 @@ class WeakRoom extends React.Component {
                     <RangePicker onChange={this.getDate} />
                     <span>巡查人:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
+                    <span>楼层:</span>
+                    <Input style={{width: 200}} onChange={this.floorFn} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>
