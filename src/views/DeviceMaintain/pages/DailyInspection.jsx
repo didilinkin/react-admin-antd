@@ -1,6 +1,6 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
-import {Table, Button, Spin, DatePicker, Input} from 'antd'
+import {Table, Button, Spin, DatePicker, Input, message} from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 const { RangePicker } = DatePicker
@@ -20,6 +20,7 @@ class DailyInspection extends Component {
         let result = await apiPost(
             'deviceMaintain/getElevatorSystemInspection'
         )
+        const abnormal = this.abnormal
         this.setState({
             loading: false,
             columns: [{
@@ -87,20 +88,9 @@ class DailyInspection extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.handleResult === null || record.handleResult === '') {
-                        return (
-                            <div>
-                                无异常
-                            </div>
-                        )
-                    } else {
-                        let url = '/deviceMaintain/elevatorSystemInspectionDetail/' + record.id
-                        return (
-                            <div>
-                                <a href={url}><Button type="primary">查看</Button></a>
-                            </div>
-                        )
-                    }
+                    return (
+                        <Button onClick={() => abnormal(record.id, 5)}>查看</Button>
+                    )
                 }
             }],
             dataSource: result.data
@@ -108,6 +98,16 @@ class DailyInspection extends Component {
     }
     componentDidMount () {
         this.initialRemarks()
+    }
+    abnormal = async (id, type) => {
+        let resulData = await apiPost('/deviceMaintain/electricalErrorDevice',
+            {parentId: id,
+                parentType: type})
+        if (resulData.data !== null) {
+            location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',5'
+        } else {
+            message.info('无异常信息')
+        }
     }
     refresh = async () => {
         // 刷新表格
