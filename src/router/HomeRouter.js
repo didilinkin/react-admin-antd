@@ -44,6 +44,7 @@ import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'   
 
 import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
 import DailyInspection      from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
+import AbnormalLog          from '../views/DeviceMaintain/pages/Details/AbnormalLog'                // [详情] - 设备巡检 - 电梯系统 - 异常记录
 
 import Equipmentledger      from '../views/DeviceMaintain/pages/Details/Equipmentledger'            // 设备明细
 import Maintenancedetails   from '../views/DeviceMaintain/pages/Details/Maintenancedetails'         // 维修明细
@@ -182,6 +183,9 @@ const routes = [
             }, {
                 path: '/deviceMaintain/inspection/elevator/dailyInspection',                        // 设备维护 - 设备巡检 - 电梯系统 - 日常检查
                 component: DailyInspection
+            }, {
+                path: '/deviceMaintain/inspection/elevator/abnormalLog/:id',                        // [详情] - 设备维护 - 设备巡检 - 电梯系统 - 异常记录
+                component: AbnormalLog
             }, {
                 path: '/deviceMaintain/equipmentLedger/:id',                                        // 设备维护 - 设备台账 - 设备明细
                 component: Equipmentledger
