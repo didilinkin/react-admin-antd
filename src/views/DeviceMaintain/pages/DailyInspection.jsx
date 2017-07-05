@@ -115,8 +115,8 @@ class DailyInspection extends Component {
             'deviceMaintain/getElevatorSystemInspection',
             {'elevatorName': this.elevatorName,
                 'patrolName': this.patrolName,
-                'startDate': this.startDate,
-                'endDate': this.endDate
+                'startTime': this.startTime,
+                'endTime': this.endTime
             }
         )
         this.setState({
@@ -139,11 +139,11 @@ class DailyInspection extends Component {
     entryMachineRoomName = (e) => {
         this.elevatorName = e.target.value
     }
-    startDate = ''
-    endDate = ''
+    startTime = ''
+    endTime = ''
     getDate = (date, dateString) => {
-        this.startDate = dateString[0]
-        this.endDate = dateString[1]
+        this.startTime = dateString[0]
+        this.endTime = dateString[1]
     }
     render () {
         return (

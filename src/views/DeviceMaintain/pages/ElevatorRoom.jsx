@@ -1,9 +1,8 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
-import {Table, Button, Spin, DatePicker, Select, Input} from 'antd'
+import {Table, Button, Spin, DatePicker, Input} from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
-const Option = Select.Option
 const { RangePicker } = DatePicker
 // React component
 class ElevatorRoom extends Component {
@@ -178,8 +177,8 @@ class ElevatorRoom extends Component {
             'deviceMaintain/getElevatorMachineRoom',
             {'machineRoomName': this.machineRoomName,
                 'patrolName': this.patrolName,
-                'startDate': this.startDate,
-                'endDate': this.endDate
+                'startTime': this.startTime,
+                'endTime': this.endTime
             }
         )
         this.setState({
@@ -196,17 +195,17 @@ class ElevatorRoom extends Component {
     }
     machineRoomName = ''
     selectOnChange = (e) => {
-        this.machineRoomName = e
+        this.machineRoomName = e.target.value
     }
     patrolName = ''
     entryNameOnChange = (e) => {
         this.patrolName = e.target.value
     }
-    startDate = ''
-    endDate = ''
+    startTime = ''
+    endTime = ''
     getDate = (date, dateString) => {
-        this.startDate = dateString[0]
-        this.endDate = dateString[1]
+        this.startTime = dateString[0]
+        this.endTime = dateString[1]
     }
     render () {
         return (
@@ -214,18 +213,8 @@ class ElevatorRoom extends Component {
                 <span>
                     <span>巡检日期:</span>
                     <RangePicker onChange={this.getDate} />
-                    <Select
-                        showSearch
-                        style={{ width: 200 }}
-                        placeholder="请选择机房"
-                        optionFilterProp="machineRoomName"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="高区电梯">高区电梯</Option>
-                        <Option key="低区电梯">低区电梯</Option>
-                        <Option key="消防梯">消防梯</Option>
-                    </Select>
+                    <span>机房名称:</span>
+                    <Input style={{width: 200}} onChange={this.selectOnChange} />
                     <span>巡检人:</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
