@@ -28,7 +28,7 @@ class WarehouseAddUp extends React.Component {
         })
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
-                'http://127.0.0.1:18082/warehouse/materialManagement',
+                '/warehouse/materialManagement',
             )
             this.props.form.resetFields()
             this.setState({
@@ -99,6 +99,15 @@ class WarehouseAddUp extends React.Component {
         this.state.material.map(material => {
             if (material.id.toString() === this.materialId.toString()) {
                 let json = {}
+                if (material.whType === 0) {
+                    json['whTypeName'] = '工程库'
+                }
+                if (material.whType === 1) {
+                    json['whTypeName'] = '保洁用品库'
+                }
+                if (material.whType === 2) {
+                    json['whTypeName'] = '行政库'
+                }
                 json['warehouseId'] = material.id
                 json['storagePlace'] = material.storagePlace
                 json['name'] = material.name
@@ -210,7 +219,7 @@ class WarehouseAddUp extends React.Component {
                                 <td>操作</td>
                             </tr>
                             {this.state.WarehouseDetailList.map(WarehouseDetail => <tr>
-                                <td>{WarehouseDetail.whType}</td>
+                                <td>{WarehouseDetail.whTypeName}</td>
                                 <td>{WarehouseDetail.storagePlace}</td>
                                 <td>{WarehouseDetail.name}</td>
                                 <td>{WarehouseDetail.standard}</td>
@@ -231,7 +240,7 @@ class WarehouseAddUp extends React.Component {
                                     {...getFieldProps('name')}
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择材料"
                                     optionFilterProp="children"
                                     onChange={this.getMaterial}
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -272,7 +281,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="备注" labelCol={{ span: 5 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                <Input {...getFieldProps('remark')} />
+                                <textarea {...getFieldProps('remark')} />
                             </FormItem>
                         </Col>
                     </Row>

@@ -1,4 +1,4 @@
-import {Modal, Input, Form, Select, Row, Col, notification, Icon, DatePicker, Button  } from 'antd'
+import {Modal, Input, Form, Select, Row, Col, notification, Icon, DatePicker } from 'antd'
 import React from 'react'
 import { apiGet, apiPost, baseURL } from '../../../../api/index'
 import moment from 'moment'
@@ -10,7 +10,6 @@ class EquipmentAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        imgUrl: '',
         userList: [],
         systList: [],
         categoryList: []
@@ -31,18 +30,24 @@ class EquipmentAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    imgUrl: equipment.data.twoCode,
+                    imgUrl: baseURL + 'storage/files/' + equipment.data.twoCode,
                     userList: userList.data,
                     systList: systList.data,
                     categoryList: categoryList.data
                 })
                 equipment = equipment.data
-                if (equipment.equipmentStatus.toString() === '0') {
-                    equipment['equipmentStatusOne'] = '使用'
-                } else if (equipment.equipmentStatus.toString() === '1') {
-                    equipment['equipmentStatusOne'] = '闲置'
+                if (equipment.useDepartment.toString() === '0') {
+                    equipment['useDepartmentOne'] = '工程与维修部'
+                } else if (equipment.useDepartment.toString() === '1') {
+                    equipment['useDepartmentOne'] = '设备与运行部'
+                } else if (equipment.useDepartment.toString() === '2') {
+                    equipment['useDepartmentOne'] = '消防与监控部'
+                } else if (equipment.useDepartment.toString() === '3') {
+                    equipment['useDepartmentOne'] = '交通与安全部'
+                } else if (equipment.useDepartment.toString() === '4') {
+                    equipment['useDepartmentOne'] = '卫生与环保部'
                 } else {
-                    equipment['equipmentStatusOne'] = '报废'
+                    equipment['useDepartmentOne'] = '综合管理部'
                 }
                 this.props.form.setFieldsValue({
                     systemId: equipment.systemId,
@@ -58,8 +63,8 @@ class EquipmentAddUp extends React.Component {
                     equipmentNumber: equipment.equipmentNumber,
                     serviceLife: equipment.serviceLife,
                     equipmentModel: equipment.equipmentModel,
-                    equipmentStatusOne: equipment.equipmentStatusOne,
-                    equipmentStatus: equipment.equipmentStatus,
+                    useDepartmentOne: equipment.useDepartmentOne,
+                    useDepartment: equipment.useDepartment,
                     equipmentBrand: equipment.equipmentBrand,
                     maintenanceIdOne: equipment.maintenanceName,
                     maintenanceId: equipment.maintenanceId,
@@ -68,14 +73,10 @@ class EquipmentAddUp extends React.Component {
                     patrolIdOne: equipment.patrolName,
                     patrolName: equipment.patrolName,
                     patrolId: equipment.patrolId,
-                    remarks: equipment.remarks,
-                    twoCode: equipment.twoCode
+                    remarks: equipment.remarks
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 let userList = await apiGet('upkeep/getUser')
                 let systList = await apiPost('/equipment/systList')
@@ -120,23 +121,36 @@ class EquipmentAddUp extends React.Component {
                     message: result.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
+                this.isFirst = true
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                this.props.refreshTable()
             } else {
                 let result = await apiPost(
                     'equipment/insertEquipment',
                     json
                 )
+                let url = await apiPost('ProduceTwoCode',
+                    {code: result.data})
+                await apiPost(
+                    'equipment/updateEquipment',
+                    {url: url.data,
+                        id: this.props.id
+                    }
+                )
                 notification.open({
-                    message: result.data,
+                    message: '添加成功',
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
+                this.isFirst = true
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                this.props.refreshTable(baseURL + 'storage/files/' + url.data, json.equipmentNumber)
             }
-
-            this.isFirst = true
-            this.setState({
-                visible: false,
-                isFirst: true
-            })
-            this.props.refreshTable()
         }
     }
     handleCancel = (e) => {
@@ -195,17 +209,7 @@ class EquipmentAddUp extends React.Component {
     }
     equipmentStatus = (value) => {
         this.props.form.setFieldsValue({
-            equipmentStatus: value
-        })
-    }
-    twoCode = async () => {
-        let url = await apiPost('ProduceTwoCode',
-            {code: this.props.form.getFieldValue('equipmentNumber')})
-        this.setState({
-            imgUrl: baseURL + 'storage/files/' + url.data
-        })
-        this.props.form.setFieldsValue({
-            twoCode: url.data
+            useDepartment: value
         })
     }
     render () {
@@ -377,10 +381,10 @@ class EquipmentAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="设备状态" labelCol={{ span: 6 }}
+                                <FormItem label="使用部门" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('equipmentStatusOne', {
+                                    {getFieldDecorator('useDepartmentOne', {
                                         rules: [ {
                                             required: true,
                                             message: 'Please input!'
@@ -393,9 +397,12 @@ class EquipmentAddUp extends React.Component {
                                             optionFilterProp="children"
                                             onChange={this.equipmentStatus}
                                         >
-                                            <Option key="0">使用</Option>
-                                            <Option key="2">报废</Option>
-                                            <Option key="1">闲置</Option>
+                                            <Option key="0">工程与维修部</Option>
+                                            <Option key="1">设备与运行部</Option>
+                                            <Option key="2">消防与监控部</Option>
+                                            <Option key="3">交通与安全部</Option>
+                                            <Option key="4">卫生与环保部</Option>
+                                            <Option key="5">综合管理部</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -493,16 +500,6 @@ class EquipmentAddUp extends React.Component {
                                 <Input type="textarea" rows={4} />
                             )}
                         </FormItem>
-
-                        <Row>
-                            <Col span={12}>
-                                <Button onClick={this.twoCode}>生成二维码</Button>
-                            </Col>
-                            <Col span={12}>
-                                <img src={this.state.imgUrl} alt="" />
-                            </Col>
-                        </Row>
-
                         {getFieldDecorator('systemName')(
                             <Input type="hidden" />
                         )}
@@ -527,10 +524,7 @@ class EquipmentAddUp extends React.Component {
                         {getFieldDecorator('patrolId')(
                             <Input type="hidden" />
                         )}
-                        {getFieldDecorator('equipmentStatus')(
-                            <Input type="hidden" />
-                        )}
-                        {getFieldDecorator('twoCode')(
+                        {getFieldDecorator('useDepartment')(
                             <Input type="hidden" />
                         )}
                     </Form>

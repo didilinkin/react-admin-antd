@@ -14,7 +14,7 @@ class addUpkeep extends React.Component {
         if (nextProps.id > 0) {
             if (this.state.isFirst) {
                 let resulData = await apiPost(
-                    'http://127.0.0.1:18082/warehouse/getMaterial',
+                    '/warehouse/getMaterial',
                     { 'id': nextProps.id }
                 )
                 this.props.form.setFields({
@@ -67,7 +67,7 @@ class addUpkeep extends React.Component {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.props.id
             await apiPost(
-                'http://127.0.0.1:18082/warehouse/updateMaterial',
+                '/warehouse/updateMaterial',
                 json
             )
             notification.open({
@@ -78,7 +78,7 @@ class addUpkeep extends React.Component {
         } else {
             console.log(this.props.form.getFieldsValue())
             await apiPost(
-                'http://127.0.0.1:18082/warehouse/addMaterial',
+                '/warehouse/addMaterial',
                 this.props.form.getFieldsValue()
             )
             notification.open({
@@ -134,7 +134,7 @@ class addUpkeep extends React.Component {
                                 {...getFieldProps('whType')}
                                 showSearch
                                 style={{ width: 200 }}
-                                placeholder="Select a person"
+                                placeholder="请选择仓库类型"
                                 optionFilterProp="children"
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >

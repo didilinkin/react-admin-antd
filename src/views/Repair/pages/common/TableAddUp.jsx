@@ -11,7 +11,7 @@ class TableAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        view: true,
+        view: 'select',
         repairDate: '',
         fileList: [],
         clientList: []
@@ -49,7 +49,7 @@ class TableAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'update',
                     repairDate: resulData.data.repairDate,
                     fileList: Arr,
                     clientList: result.data
@@ -58,7 +58,7 @@ class TableAddUp extends React.Component {
                     repairDate: moment(resulData.data.repairDate),
                     repairMan: resulData.data.repairMan,
                     clientName: resulData.data.clientName,
-                    clientNameOne: resulData.data.clientName,
+                    clientNameOne: resulData.data.clientName + '(' + resulData.data.roomNum + ')',
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     phone: resulData.data.phone,
@@ -70,9 +70,6 @@ class TableAddUp extends React.Component {
                 })
             }
         } else {
-            this.setState({
-                view: false
-            })
             if (this.state.isFirst && nextProps.visible) {
                 let result = await apiGet(
                     'upkeep/getClient'
@@ -80,7 +77,7 @@ class TableAddUp extends React.Component {
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
-                    view: true,
+                    view: 'insert',
                     fileList: [],
                     clientList: result.data
                 })
@@ -107,12 +104,14 @@ class TableAddUp extends React.Component {
             },
         )
         if (adopt) {
+            this.setState({
+                view: false
+            })
             let json = this.props.form.getFieldsValue()
             this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
             json['picture'] = this.imgUrl
             let repairDate = json.repairDate.format('YYYY-MM-DD')
             json['repairDate'] = repairDate
-            debugger
             if (this.props.id > 0) {
                 json['id'] = this.props.id
                 let result = await apiPost(
@@ -138,6 +137,7 @@ class TableAddUp extends React.Component {
             this.setState({
                 visible: false,
                 isFirst: true,
+                view: false,
                 clientList: []
             })
             this.props.refreshTable()
@@ -147,9 +147,6 @@ class TableAddUp extends React.Component {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
-    }
-    getRepairDate = (date, dateString) => {
-        alert(dateString)
     }
     imgUrl = ''
     Callback = (url) => {
@@ -169,6 +166,11 @@ class TableAddUp extends React.Component {
                 })
             }
             return ''
+        })
+    }
+    updateView = () => {
+        this.setState({
+            view: 'select'
         })
     }
     render () {
@@ -195,7 +197,7 @@ class TableAddUp extends React.Component {
                                             message: 'Please input!'
                                         }]
                                     })(
-                                        <DatePicker onChange={this.getRepairDate} />
+                                        <DatePicker />
                                     )}
                                 </FormItem>
                             </Col>
@@ -235,7 +237,7 @@ class TableAddUp extends React.Component {
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option key={key}>{d.clientName}</Option>
+                                                return <Option key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
@@ -316,7 +318,7 @@ class TableAddUp extends React.Component {
                         <FormItem label="上传图片" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
                         >
-                            <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
+                            <PicturesWall updateView={this.updateView} fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                         </FormItem>
                         {getFieldDecorator('clientName')(
                             <Input type="hidden" />
