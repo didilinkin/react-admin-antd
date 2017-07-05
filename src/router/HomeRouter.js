@@ -1,74 +1,62 @@
 import React from 'react'
-import { Route }            from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
-import HomeTemplate         from '../views/common/pages/HomeTemplate'
-import HomeIndex            from '../views/common/pages/HomeIndex'
+import HomeTemplate             from '../views/common/pages/HomeTemplate'
+import HomeIndex                from '../views/common/pages/HomeIndex'
 
 // 测试组件
-import AsyncTable           from '../views/test/AsyncTable'                                         // 测试异步表格
+import AsyncTable               from '../views/test/AsyncTable'                                         // 测试异步表格
 
 // 引入 '客户管理' 版块
-import RepairList           from '../views/Repair/pages/RepairList'                                 // 客户报修
-import ClientReview         from '../views/Repair/pages/ClientReview'                               // 客户回访
-import UpkeepList           from '../views/Repair/pages/UpkeepList'                                 // 维修费设置
-import Rectification        from '../views/Repair/pages/Rectification'                              // 整改通知
-import ClientReviewDetails  from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
+import RepairList               from '../views/Repair/pages/RepairList'                                 // 客户报修
+import ClientReview             from '../views/Repair/pages/ClientReview'                               // 客户回访
+import UpkeepList               from '../views/Repair/pages/UpkeepList'                                 // 维修费设置
+import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
+import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 
-import Repair               from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
-import ReturnVisit          from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
-import ReturnVisitDetail    from '../views/Repair/pages/Details/ReturnVisitDetail'                  // [详情] - 回访登记明细
-import Maintenance          from '../views/Repair/pages/Details/Maintenance'                        // [详情] - 维修详情
-import CorrectionDetail     from '../views/Repair/pages/Details/CorrectionDetail'                   // [详情] - 整改信息明细
-import MaintenanceProject   from '../views/Repair/pages/Details/MaintenanceProject'                 // [详情] - 维修项目
+import Repair                   from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
+import ReturnVisit              from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
+import ReturnVisitDetail        from '../views/Repair/pages/Details/ReturnVisitDetail'                  // [详情] - 回访登记明细
+import Maintenance              from '../views/Repair/pages/Details/Maintenance'                        // [详情] - 维修详情
+import CorrectionDetail         from '../views/Repair/pages/Details/CorrectionDetail'                   // [详情] - 整改信息明细
+import MaintenanceProject       from '../views/Repair/pages/Details/MaintenanceProject'                 // [详情] - 维修项目
 
 // 引入 '仓库管理' 版块
-import InventoryManage      from '../views/Warehouse/pages/InventoryManage'                         // 库存管理( 合并: 汇总, 入库, 出库 )
-import ReceiveStatistics    from '../views/Warehouse/pages/ReceiveStatistics'                       // 领用统计
-import MaterialManagement   from '../views/Warehouse/pages/MaterialManagement'                      // 材料管理
-import WarehouseDetail      from '../views/Warehouse/pages/WarehouseDetail'                         // [详情] - 出入库详情
+import InventoryManage          from '../views/Warehouse/pages/InventoryManage'                         // 库存管理( 合并: 汇总, 入库, 出库 )
+import ReceiveStatistics        from '../views/Warehouse/pages/ReceiveStatistics'                       // 领用统计
+import MaterialManagement       from '../views/Warehouse/pages/MaterialManagement'                      // 材料管理
+import WarehouseDetail          from '../views/Warehouse/pages/WarehouseDetail'                         // [详情] - 出入库详情
 
 // 引入 '设备维护' 版块
-import Account              from '../views/DeviceMaintain/pages/Account'                            // 设备台账
-import ComputerRoom         from '../views/DeviceMaintain/pages/ComputerRoom'                       // 机房编码
-import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'                     // 设备维护保障 - 巡检计划
-import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'                    // 设备维护保障 - 保养记录
-import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'                    // 设备维护保障 - 设备报修
+import Account                  from '../views/DeviceMaintain/pages/Account'                            // 设备台账
+import ComputerRoom             from '../views/DeviceMaintain/pages/ComputerRoom'                       // 机房编码
+import InspectionPlan           from '../views/DeviceMaintain/pages/InspectionPlan'                     // 设备维护保障 - 巡检计划
+import MaintenancePlan          from '../views/DeviceMaintain/pages/MaintenancePlan'                    // 设备维护保障 - 保养记录
+import EquipmentRepair          from '../views/DeviceMaintain/pages/EquipmentRepair'                    // 设备维护保障 - 设备报修
 
-import DistributionRoom     from '../views/DeviceMaintain/pages/DistributionRoom'                   // 设备巡检 - 电器系统 - 配电房巡查记录
-import WeakRoom             from '../views/DeviceMaintain/pages/WeakRoom'                           // 设备巡检 - 电器系统 - 弱电间巡查记录
-import GeneratorLog         from '../views/DeviceMaintain/pages/GeneratorLog'                       // 设备巡检 - 电器系统 - 发电机运行记录
+import DistributionRoom         from '../views/DeviceMaintain/pages/DistributionRoom'                   // 设备巡检 - 电器系统 - 配电房巡查记录
+import WeakRoom                 from '../views/DeviceMaintain/pages/WeakRoom'                           // 设备巡检 - 电器系统 - 弱电间巡查记录
+import GeneratorLog             from '../views/DeviceMaintain/pages/GeneratorLog'                       // 设备巡检 - 电器系统 - 发电机运行记录
 
-import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
-import WaterHeating         from '../views/DeviceMaintain/pages/WaterHeating'                       // 设备巡检 - 水暖系统
-import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
+import AirConditioning          from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
+import WaterHeating             from '../views/DeviceMaintain/pages/WaterHeating'                       // 设备巡检 - 水暖系统
+import Firefighting             from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
 
-import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
-import DailyInspection      from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
-import Account              from '../views/DeviceMaintain/pages/Account'                            // 设备台账
-import ComputerRoom         from '../views/DeviceMaintain/pages/ComputerRoom'                       // 机房编码
-import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'                     // 设备维护保障 - 巡检计划
-import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'                    // 设备维护保障 - 保养记录
-import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'                    // 设备维护保障 - 设备报修
-import Electric             from '../views/DeviceMaintain/pages/Electric'                           // 设备巡检 - 电器系统
-// import Elevator             from '../views/DeviceMaintain/pages/Elevator'                           // 设备巡检 - 电梯系统
-import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
-import WaterHeating         from '../views/DeviceMaintain/pages/WaterHeating'                       // 设备巡检 - 水暖系统
-import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
+import ElevatorRoom             from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
+import DailyInspection          from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
+import AbnormalLog              from '../views/DeviceMaintain/pages/Details/AbnormalLog'                // [详情] - 设备巡检 - 电梯系统 - 异常记录
 
-import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
-import DailyInspection      from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
-
-import Equipmentledger      from '../views/DeviceMaintain/pages/Details/Equipmentledger'            // 设备明细
-import Maintenancedetails   from '../views/DeviceMaintain/pages/Details/Maintenancedetails'         // 维修明细
-import Maintenanceschedule  from '../views/DeviceMaintain/pages/Details/Maintenanceschedule'        // 保养明细
-import Patrolscheme         from '../views/DeviceMaintain/pages/Details/Patrolscheme'               // 巡检计划
-import Maintenancerecord    from '../views/DeviceMaintain/pages/Details/Maintenancerecord'
-import Repairrecord         from '../views/DeviceMaintain/pages/Details/Repairrecord'
-import ServerRoom         from '../views/DeviceMaintain/pages/Details/ServerRoom'
-import ElectricalErrorDevice         from '../views/DeviceMaintain/pages/Details/ElectricalErrorDevice'     // 电器异常带设备信息
-import ElectricalError         from '../views/DeviceMaintain/pages/Details/ElectricalError'     // 电器异常不带设备信息
-import ElevatorError         from '../views/DeviceMaintain/pages/Details/ElevatorError'     // 电梯异常
-import ElevatorErrorDevice         from '../views/DeviceMaintain/pages/Details/ElevatorErrorDevice'     // 电梯异常
+import Equipmentledger          from '../views/DeviceMaintain/pages/Details/Equipmentledger'            // 设备明细
+import Maintenancedetails       from '../views/DeviceMaintain/pages/Details/Maintenancedetails'         // 维修明细
+import Maintenanceschedule      from '../views/DeviceMaintain/pages/Details/Maintenanceschedule'        // 保养明细
+import Patrolscheme             from '../views/DeviceMaintain/pages/Details/Patrolscheme'               // 巡检计划
+import Maintenancerecord        from '../views/DeviceMaintain/pages/Details/Maintenancerecord'
+import Repairrecord             from '../views/DeviceMaintain/pages/Details/Repairrecord'
+import ServerRoom               from '../views/DeviceMaintain/pages/Details/ServerRoom'
+import ElectricalErrorDevice    from '../views/DeviceMaintain/pages/Details/ElectricalErrorDevice'      // 电器异常带设备信息
+import ElectricalError          from '../views/DeviceMaintain/pages/Details/ElectricalError'            // 电器异常不带设备信息
+import ElevatorError            from '../views/DeviceMaintain/pages/Details/ElevatorError'              // 电梯异常
+import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/ElevatorErrorDevice'        // 电梯异常
 
 
 const HomeBox = ({ routes }) => (
@@ -87,7 +75,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/home/index',                                                                // 默认首页
+                path: '/home/index',                                                                    // 默认首页
                 component: HomeIndex
             }
         ]
@@ -96,7 +84,7 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/test/table',                                                                // 测试 - 异步表格
+                path: '/test/table',                                                                    // 测试 - 异步表格
                 component: AsyncTable
             }
         ]
@@ -105,37 +93,37 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/upkeep/repairList',                                                         // 客户管理 - 客户报修
+                path: '/upkeep/repairList',                                                             // 客户管理 - 客户报修
                 component: RepairList
             }, {
-                path: '/upkeep/clientReview',                                                       // 客户管理 - 客户回访
+                path: '/upkeep/clientReview',                                                           // 客户管理 - 客户回访
                 component: ClientReview
             }, {
-                path: '/upkeep/upkeepList',                                                         // 客户管理 - 维修费设置
+                path: '/upkeep/upkeepList',                                                             // 客户管理 - 维修费设置
                 component: UpkeepList
             }, {
-                path: '/upkeep/rectification',                                                      // 客户管理 - 整改通知
+                path: '/upkeep/rectification',                                                          // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/clientReviewDetails/:id',                                            // [详情] - 客户回访
+                path: '/upkeep/clientReviewDetails/:id',                                                // [详情] - 客户回访
                 component: ClientReviewDetails
             }, {
-                path: '/upkeep/repai/:id',                                                          // [详情] - 报修明细
+                path: '/upkeep/repai/:id',                                                              // [详情] - 报修明细
                 component: Repair
             }, {
-                path: '/upkeep/returnVisit/:id',                                                    // [详情] - 回访登记
+                path: '/upkeep/returnVisit/:id',                                                        // [详情] - 回访登记
                 component: ReturnVisit
             }, {
-                path: '/upkeep/returnVisitDetail/:id',                                              // [详情] - 回访登记明细
+                path: '/upkeep/returnVisitDetail/:id',                                                  // [详情] - 回访登记明细
                 component: ReturnVisitDetail
             }, {
-                path: '/upkeep/maintenance/:id',                                                    // [详情] - 维修详情
+                path: '/upkeep/maintenance/:id',                                                        // [详情] - 维修详情
                 component: Maintenance
             }, {
-                path: '/upkeep/correctionDetail/:id',                                               // [详情] - 整改信息明细
+                path: '/upkeep/correctionDetail/:id',                                                   // [详情] - 整改信息明细
                 component: CorrectionDetail
             }, {
-                path: '/upkeep/maintenanceProject/:id',                                             // [详情] - 维修项目
+                path: '/upkeep/maintenanceProject/:id',                                                 // [详情] - 维修项目
                 component: MaintenanceProject
             }
         ]
@@ -144,16 +132,16 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/warehouse/inventoryManage',                                                 // 仓库管理 - 库存管理
+                path: '/warehouse/inventoryManage',                                                     // 仓库管理 - 库存管理
                 component: InventoryManage
             }, {
-                path: '/warehouse/receiveStatistics',                                               // 仓库管理 - 领用统计
+                path: '/warehouse/receiveStatistics',                                                   // 仓库管理 - 领用统计
                 component: ReceiveStatistics
             }, {
-                path: '/warehouse/materialManagement',                                              // 仓库管理 - 材料管理
+                path: '/warehouse/materialManagement',                                                  // 仓库管理 - 材料管理
                 component: MaterialManagement
             }, {
-                path: '/warehouse/warehouseDetail/:id',                                             // [详情] - 出入库详情
+                path: '/warehouse/warehouseDetail/:id',                                                 // [详情] - 出入库详情
                 component: WarehouseDetail
             }
         ]
@@ -162,80 +150,80 @@ const routes = [
         component: HomeBox,
         routes: [
             {
-                path: '/deviceMaintain/account',                                                    // 设备维护 - 设备台帐
+                path: '/deviceMaintain/account',                                                        // 设备维护 - 设备台帐
                 component: Account
             }, {
-                path: '/deviceMaintain/computerRoom',                                               // 设备维护 - 机房编码
+                path: '/deviceMaintain/computerRoom',                                                   // 设备维护 - 机房编码
                 component: ComputerRoom
             },
             {
-                path: '/deviceMaintain/maintenance/inspectionPlan',                                 // 设备维护 - 设备维护保障 - 巡检计划
+                path: '/deviceMaintain/maintenance/inspectionPlan',                                     // 设备维护 - 设备维护保障 - 巡检计划
                 component: InspectionPlan
             }, {
-                path: '/deviceMaintain/maintenance/maintenancePlan',                                // 设备维护 - 设备维护保障 - 保养记录
+                path: '/deviceMaintain/maintenance/maintenancePlan',                                    // 设备维护 - 设备维护保障 - 保养记录
                 component: MaintenancePlan
             }, {
-                path: '/deviceMaintain/maintenance/equipmentRepair',                                // 设备维护 - 设备维护保障 - 设备报修
+                path: '/deviceMaintain/maintenance/equipmentRepair',                                    // 设备维护 - 设备维护保障 - 设备报修
                 component: EquipmentRepair
             }, {
-                path: '/deviceMaintain/inspection/electric/distributionRoom',                       // 设备维护 - 设备巡检 - 电器系统 - 配电房巡查记录
+                path: '/deviceMaintain/inspection/electric/distributionRoom',                           // 设备维护 - 设备巡检 - 电器系统 - 配电房巡查记录
                 component: DistributionRoom
-                path: '/deviceMaintain/inspection/electric',                                        // 设备维护 - 设备巡检 - 电器系统
-                component: Electric
             }, {
-                path: '/deviceMaintain/inspection/electric/weakRoom',                               // 设备维护 - 设备巡检 - 电器系统 - 弱电间巡查记录
+                path: '/deviceMaintain/inspection/electric/weakRoom',                                   // 设备维护 - 设备巡检 - 电器系统 - 弱电间巡查记录
                 component: WeakRoom
             }, {
-                path: '/deviceMaintain/inspection/electric/generatorLog',                           // 设备维护 - 设备巡检 - 电器系统 - 发电机运行记录
+                path: '/deviceMaintain/inspection/electric/generatorLog',                               // 设备维护 - 设备巡检 - 电器系统 - 发电机运行记录
                 component: GeneratorLog
             }, {
-                path: '/deviceMaintain/inspection/airConditioning',                                 // 设备维护 - 设备巡检 - 空调系统
-                path: '/deviceMaintain/inspection/airConditioning',                                 // 设备维护 - 设备巡检 - 空调系统
+                path: '/deviceMaintain/inspection/airConditioning',                                     // 设备维护 - 设备巡检 - 空调系统
                 component: AirConditioning
             }, {
-                path: '/deviceMaintain/inspection/waterHeating',                                    // 设备维护 - 设备巡检 - 水暖系统
+                path: '/deviceMaintain/inspection/waterHeating',                                        // 设备维护 - 设备巡检 - 水暖系统
                 component: WaterHeating
             }, {
-                path: '/deviceMaintain/inspection/firefighting',                                    // 设备维护 - 设备巡检 - 消防系统
+                path: '/deviceMaintain/inspection/firefighting',                                        // 设备维护 - 设备巡检 - 消防系统
                 component: Firefighting
             }, {
-                path: '/deviceMaintain/inspection/elevator/elevatorRoom',                           // 设备维护 - 设备巡检 - 电梯系统 - 电梯机房
+                path: '/deviceMaintain/inspection/elevator/elevatorRoom',                               // 设备维护 - 设备巡检 - 电梯系统 - 电梯机房
                 component: ElevatorRoom
             }, {
-                path: '/deviceMaintain/inspection/elevator/dailyInspection',                        // 设备维护 - 设备巡检 - 电梯系统 - 日常检查
+                path: '/deviceMaintain/inspection/elevator/dailyInspection',                            // 设备维护 - 设备巡检 - 电梯系统 - 日常检查
                 component: DailyInspection
             }, {
-                path: '/deviceMaintain/equipmentLedger/:id',                                        // 设备维护 - 设备台账 - 设备明细
+                path: '/deviceMaintain/inspection/elevator/abnormalLog/:id',                            // [详情] - 设备维护 - 设备巡检 - 电梯系统 - 异常记录
+                component: AbnormalLog
+            }, {
+                path: '/deviceMaintain/equipmentLedger/:id',                                            // 设备维护 - 设备台账 - 设备明细
                 component: Equipmentledger
             }, {
-                path: '/deviceMaintain/maintenanceDetails/:id',                                     // 设备维护 - 设备台账 - 维修明细
+                path: '/deviceMaintain/maintenanceDetails/:id',                                         // 设备维护 - 设备台账 - 维修明细
                 component: Maintenancedetails
             }, {
-                path: '/deviceMaintain/maintenanceSchedule/:id',                                    // 设备维护 - 设备台账 - 保养明细
+                path: '/deviceMaintain/maintenanceSchedule/:id',                                        // 设备维护 - 设备台账 - 保养明细
                 component: Maintenanceschedule
             }, {
-                path: '/deviceMaintain/patrolScheme',                                               // 设备维护 - 设备维保 - 巡检计划明细
+                path: '/deviceMaintain/patrolScheme',                                                   // 设备维护 - 设备维保 - 巡检计划明细
                 component: Patrolscheme
             }, {
-                path: '/deviceMaintain/maintenanceRecord',                                          // 设备维护 - 设备维保 - 保养记录
+                path: '/deviceMaintain/maintenanceRecord',                                              // 设备维护 - 设备维保 - 保养记录
                 component: Maintenancerecord
             }, {
-                path: '/deviceMaintain/repairRecord',                                               // 设备维护 - 设备维保 - 维修记录
+                path: '/deviceMaintain/repairRecord',                                                   // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
-                path: '/deviceMaintain/serverRoom',                        // 设备维护 - 机房明细
+                path: '/deviceMaintain/serverRoom',                                                     // 设备维护 - 机房明细
                 component: ServerRoom
             }, {
-                path: '/deviceMaintain/electricalErrorDevice',                        // 设备维护 - 电器异常带设备信息
+                path: '/deviceMaintain/electricalErrorDevice',                                          // 设备维护 - 电器异常带设备信息
                 component: ElectricalErrorDevice
             }, {
-                path: '/deviceMaintain/electricalError',                        // 设备维护 - 电器异常不带设备信息
+                path: '/deviceMaintain/electricalError',                                                // 设备维护 - 电器异常不带设备信息
                 component: ElectricalError
             }, {
-                path: '/deviceMaintain/elevatorError',                        // 设备维护 - 电梯异常
+                path: '/deviceMaintain/elevatorError',                                                  // 设备维护 - 电梯异常
                 component: ElevatorError
             }, {
-                path: '/deviceMaintain/elevatorErrorDevice',                        // 设备维护 - 电梯异常
+                path: '/deviceMaintain/elevatorErrorDevice',                                            // 设备维护 - 电梯异常
                 component: ElevatorErrorDevice
             }
 
