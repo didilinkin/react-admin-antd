@@ -33,6 +33,22 @@ import ComputerRoom         from '../views/DeviceMaintain/pages/ComputerRoom'   
 import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'                     // 设备维护保障 - 巡检计划
 import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'                    // 设备维护保障 - 保养记录
 import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'                    // 设备维护保障 - 设备报修
+
+import DistributionRoom     from '../views/DeviceMaintain/pages/DistributionRoom'                   // 设备巡检 - 电器系统 - 配电房巡查记录
+import WeakRoom             from '../views/DeviceMaintain/pages/WeakRoom'                           // 设备巡检 - 电器系统 - 弱电间巡查记录
+import GeneratorLog         from '../views/DeviceMaintain/pages/GeneratorLog'                       // 设备巡检 - 电器系统 - 发电机运行记录
+
+import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
+import WaterHeating         from '../views/DeviceMaintain/pages/WaterHeating'                       // 设备巡检 - 水暖系统
+import Firefighting         from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
+
+import ElevatorRoom         from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
+import DailyInspection      from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
+import Account              from '../views/DeviceMaintain/pages/Account'                            // 设备台账
+import ComputerRoom         from '../views/DeviceMaintain/pages/ComputerRoom'                       // 机房编码
+import InspectionPlan       from '../views/DeviceMaintain/pages/InspectionPlan'                     // 设备维护保障 - 巡检计划
+import MaintenancePlan      from '../views/DeviceMaintain/pages/MaintenancePlan'                    // 设备维护保障 - 保养记录
+import EquipmentRepair      from '../views/DeviceMaintain/pages/EquipmentRepair'                    // 设备维护保障 - 设备报修
 import Electric             from '../views/DeviceMaintain/pages/Electric'                           // 设备巡检 - 电器系统
 // import Elevator             from '../views/DeviceMaintain/pages/Elevator'                           // 设备巡检 - 电梯系统
 import AirConditioning      from '../views/DeviceMaintain/pages/AirConditioning'                    // 设备巡检 - 空调系统
@@ -156,9 +172,18 @@ const routes = [
                 path: '/deviceMaintain/maintenance/equipmentRepair',                                // 设备维护 - 设备维护保障 - 设备报修
                 component: EquipmentRepair
             }, {
+                path: '/deviceMaintain/inspection/electric/distributionRoom',                       // 设备维护 - 设备巡检 - 电器系统 - 配电房巡查记录
+                component: DistributionRoom
                 path: '/deviceMaintain/inspection/electric',                                        // 设备维护 - 设备巡检 - 电器系统
                 component: Electric
             }, {
+                path: '/deviceMaintain/inspection/electric/weakRoom',                               // 设备维护 - 设备巡检 - 电器系统 - 弱电间巡查记录
+                component: WeakRoom
+            }, {
+                path: '/deviceMaintain/inspection/electric/generatorLog',                           // 设备维护 - 设备巡检 - 电器系统 - 发电机运行记录
+                component: GeneratorLog
+            }, {
+                path: '/deviceMaintain/inspection/airConditioning',                                 // 设备维护 - 设备巡检 - 空调系统
                 path: '/deviceMaintain/inspection/airConditioning',                                 // 设备维护 - 设备巡检 - 空调系统
                 component: AirConditioning
             }, {
