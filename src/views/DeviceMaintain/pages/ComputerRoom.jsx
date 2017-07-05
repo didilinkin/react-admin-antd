@@ -1,9 +1,9 @@
 // 设备维护 - 设备台帐
 import React, {Component} from 'react'
-import {Modal, Table, Button, Spin, Select, Input} from 'antd'
+import {Modal, Table, Button, Spin, Select, Input, Popconfirm, notification, Icon} from 'antd'
 import {apiPost} from '../../../api'
 // 引入组件
-import EquipmentAddUpComponent from './common/EquipmentAddUp'
+import RoomAddUpAddUpComponent from './common/RoomAddUp'
 const Option = Select.Option
 // React component
 class ComputerRoom extends Component {
@@ -14,6 +14,7 @@ class ComputerRoom extends Component {
             openAdd: false,
             openUpdate: false,
             previewVisible: false,
+            systList: [],
             equipmentNumber: '',
             imgUrl: '',
             columns: [],
@@ -28,16 +29,29 @@ class ComputerRoom extends Component {
             id: id
         })
     }
-
+    delect = async (id) => {
+        let result = await apiPost(
+            '/equipment/delectMachineRoom',
+            {id: id}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             '/equipment/machineRoomList'
         )
+        let systList = await apiPost('equipment/systList')
         let repairList = result.data
         const handleUpdateEquipment = this.handleUpdateEquipment
+        const delect = this.delect
         this.setState({
             loading: false,
+            systList: systList.data,
             columns: [{
                 title: '序号',
                 width: 80,
@@ -63,14 +77,15 @@ class ComputerRoom extends Component {
                 width: 250,
                 dataIndex: 'opt',
                 key: 'opt',
-                fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/deviceMaintain/equipmentLedger/' + record.id
                     return (
                         <div>
                             <a href={url}><Button >详情</Button></a>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
-                            <Button>删除</Button>
+                            <Popconfirm title="确定修改吗?" onConfirm={() => delect(record.id)}>
+                                <Button>删除</Button>
+                            </Popconfirm>
                         </div>
                     )
                 }
@@ -91,8 +106,8 @@ class ComputerRoom extends Component {
         let result = await apiPost(
             '/equipment/machineRoomList',
             {
-                'equipmentName': this.equipmentName,
-                'equipmentStatus': this.equipmentStatus
+                'machineRoomName': this.machineRoomName,
+                'systemName': this.systemName
             }
         )
         this.setState({
@@ -109,13 +124,13 @@ class ComputerRoom extends Component {
             openAdd: true
         })
     }
-    equipmentName = ''
-    entryNameOnChange = (e) => {
-        this.equipmentName = e.target.value
-    }
     machineRoomName = ''
-    machineRoomNameFN = (value) => {
-        this.machineRoomName = value
+    machineRoomNameFn = (e) => {
+        this.machineRoomName = e.target.value
+    }
+    systemName = ''
+    systemNameFN = (value) => {
+        this.systemName = value
     }
     query = () => {
         this.refresh()
@@ -146,13 +161,13 @@ class ComputerRoom extends Component {
     render () {
         return (
             <div>
-                <EquipmentAddUpComponent
-                    title="添加设备"
+                <RoomAddUpAddUpComponent
+                    title="添加机房"
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
                 />
-                <EquipmentAddUpComponent
-                    title="修改设备"
+                <RoomAddUpAddUpComponent
+                    title="修改机房"
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
@@ -164,24 +179,20 @@ class ComputerRoom extends Component {
                         style={{width: 200}}
                         placeholder="Select a person"
                         optionFilterProp="children"
-                        onChange={this.machineRoomNameFN}
+                        onChange={this.systemNameFN}
                     >
-                        <Option key="工程与维修部">工程与维修部</Option>
-                        <Option key="设备与运行部">设备与运行部</Option>
-                        <Option key="消防与监控部">消防与监控部</Option>
-                        <Option key="交通与安全部">交通与安全部</Option>
-                        <Option key="卫生与环保部">卫生与环保部</Option>
-                        <Option key="综合管理部">综合管理部</Option>
+                        {this.state.systList.map(sys => {
+                            return <Option key={sys.systemName}>{sys.systemName}</Option>
+                        })}
                     </Select>
-                    <span>机房民称:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
+                    <span>机房名称:</span>
+                    <Input style={{width: 200}} onChange={this.machineRoomNameFn} />
                     <Button type="primary" onClick={this.query}>查询</Button>
-                    <Button type="primary" onClick={this.showModal}>添加设备</Button>
+                    <Button type="primary" onClick={this.showModal}>添加机房</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{x: 1550}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
@@ -192,7 +203,7 @@ class ComputerRoom extends Component {
                         textAlign: 'center',
                         display: 'block'
                     }}
-                    >设备编号：{this.state.equipmentNumber}</span>
+                    >机房编号：{this.state.equipmentNumber}</span>
                 </Modal>
             </div>
         )

@@ -68,12 +68,12 @@ class Sidebar extends React.Component {
 
                 <Menu
                     theme="dark"
-                    defaultOpenKeys={['sub1']}
+                    // defaultOpenKeys={['sub1']}                   // 初始展开的 SubMenu 菜单项 key 数组
                     mode={ this.state.mode }
                     onClick={ this.handleClick }
-                    onOpenChange={ this.onOpenChange }
-                    selectedKeys={[this.state.current]}
-                    openKeys={ this.state.openKeys }
+                    // onOpenChange= this.onOpenChange              // SubMenu 展开/关闭的回调
+                    // selectedKeys={[this.state.current]}          // 当前选中的菜单项 key 数组
+                    // openKeys={ this.state.openKeys }             // 当前展开的 SubMenu 菜单项 key 数组
                 >
                     {/* 首页 */}
                     <Menu.Item key="home/index">
@@ -187,13 +187,40 @@ class Sidebar extends React.Component {
                             </span>
                         }
                         >
-                            <Menu.Item key="/deviceMaintain/inspection/electric">
-                                <Link to="/deviceMaintain/inspection/electric">电器系统</Link>
-                            </Menu.Item>
+                            <SubMenu key="/deviceMaintain/inspection/electric" title={
+                                <span>
+                                    <p classID="nav-text">电器系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/electric/distributionRoom">
+                                    <Link to="/deviceMaintain/inspection/electric/distributionRoom">配电房巡查记录</Link>
+                                </Menu.Item>
 
-                            <Menu.Item key="/deviceMaintain/inspection/elevator">
-                                <Link to="/deviceMaintain/inspection/elevator">电梯系统</Link>
-                            </Menu.Item>
+                                <Menu.Item key="/deviceMaintain/inspection/electric/weakRoom">
+                                    <Link to="/deviceMaintain/inspection/electric/weakRoom">弱电间巡查记录</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/electric/generatorLog">
+                                    <Link to="/deviceMaintain/inspection/electric/generatorLog">发电机运行记录</Link>
+                                </Menu.Item>
+                            </SubMenu>
+
+
+                            <SubMenu key="/deviceMaintain/inspection/elevator" title={
+                                <span>
+                                    <p classID="nav-text">电梯系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/elevator/elevatorRoom">
+                                    <Link to="/deviceMaintain/inspection/elevator/elevatorRoom">电梯机房</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/elevator/dailyInspection">
+                                    <Link to="/deviceMaintain/inspection/elevator/dailyInspection">日常检查</Link>
+                                </Menu.Item>
+                            </SubMenu>
 
                             <Menu.Item key="/deviceMaintain/inspection/airConditioning">
                                 <Link to="/deviceMaintain/inspection/airConditioning">空调系统</Link>
