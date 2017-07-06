@@ -89,7 +89,7 @@
     "animate.css": "^3.5.2",
     "antd": "^2.10.4",
     "axios": "^0.16.1",
-    "echarts-for-react": "^1.4.1",
+    "echarts-for-react": "^1.4.4",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "nprogress": "^0.2.0",
