@@ -96,6 +96,10 @@ class Sidebar extends React.Component {
                         <Menu.Item key="/test/table">
                             <Link to="/test/table">测试-异步表格</Link>
                         </Menu.Item>
+
+                        <Menu.Item key="/test/echarts">
+                            <Link to="/test/echarts">测试 echarts组建(简单例子)</Link>
+                        </Menu.Item>
                     </SubMenu>
 
                     {/* 客户管理 */}
