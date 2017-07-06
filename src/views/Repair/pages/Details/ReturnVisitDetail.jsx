@@ -22,16 +22,20 @@ class App extends React.Component {
         } else {
             Repair['ratedStatus'] = <div><Rate disabled defaultValue={Repair.star} /><p>{Repair.ratedContent}</p></div>
         }
+        let j = 0
         Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
             if (RepairProject !== null) {
-                return <tr><td>{RepairProject.id}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                j++
+                return <tr key={j}><td>{RepairProject.id}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
             } else {
                 return null
             }
         })
+        let i = 0
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={baseURL + 'storage/files/' + img} alt="" />
+                i++
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }

@@ -17,15 +17,19 @@ class App extends React.Component {
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
+        let i = 0
         Repair['imgUrls'] = Repair.imgUrls.split('#').map(img => {
             if (img !== '') {
-                return <img src={baseURL + 'storage/files/' + img} alt="" />
+                i++
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }
         })
+        let j = 0
         Repair['rectificationContent'] = Repair.rectificationContent.split('\n').map(span => {
-            return <p>{span}</p>
+            j++
+            return <p key={j}>{span}</p>
         })
         this.setState({
             data: Repair

@@ -46,7 +46,7 @@ class Equipmentledger extends React.Component {
             '/equipment/listEquipmentSs',
             {'equipmentId': this.props.match.params.id}
         )
-        let listSs = ListEquipmentSs.data.map(EquipmentSs => {
+        let listSs = ListEquipmentSs.data.map((EquipmentSs, j) => {
             if (EquipmentSs.typeSs.toString() === '0') {
                 EquipmentSs['typeSs'] = '启用'
             } else if (EquipmentSs.typeSs.toString() === '1') {
@@ -54,17 +54,19 @@ class Equipmentledger extends React.Component {
             } else {
                 EquipmentSs['typeSs'] = '闲置'
             }
-            return <tr>
-                <td>{EquipmentSs.typeSs}</td>
-                <td>{EquipmentSs.departmentName}</td>
-                <td>{EquipmentSs.applicant}</td>
-                <td>{EquipmentSs.applyDate}</td>
-                <td>{EquipmentSs.applyReason}</td>
-                <td>{EquipmentSs.whereabouts}</td>
-                <td>{EquipmentSs.approver}</td>
-                <td>{EquipmentSs.approvalDate}</td>
-                <td>{EquipmentSs.remarks}</td>
-            </tr>
+            return (
+                <tr key={j}>
+                    <td>{EquipmentSs.typeSs}</td>
+                    <td>{EquipmentSs.departmentName}</td>
+                    <td>{EquipmentSs.applicant}</td>
+                    <td>{EquipmentSs.applyDate}</td>
+                    <td>{EquipmentSs.applyReason}</td>
+                    <td>{EquipmentSs.whereabouts}</td>
+                    <td>{EquipmentSs.approver}</td>
+                    <td>{EquipmentSs.approvalDate}</td>
+                    <td>{EquipmentSs.remarks}</td>
+                </tr>
+            )
         })
         this.setState({
             EquipmentData: equipment,
@@ -155,18 +157,20 @@ class Equipmentledger extends React.Component {
                         </TabPane>
                         <TabPane tab="启停记录" key="3">
                             <table className="tb">
-                                <tr className="hd">
-                                    <td>类型</td>
-                                    <td>申请部门</td>
-                                    <td>申请人</td>
-                                    <td>申请日期</td>
-                                    <td>申请原因</td>
-                                    <td>设备去向</td>
-                                    <td>审批人</td>
-                                    <td>审批日期</td>
-                                    <td>备注</td>
-                                </tr>
-                                {this.state.EquipmentSsData}
+                                <tbody>
+                                    <tr className="hd">
+                                        <td>类型</td>
+                                        <td>申请部门</td>
+                                        <td>申请人</td>
+                                        <td>申请日期</td>
+                                        <td>申请原因</td>
+                                        <td>设备去向</td>
+                                        <td>审批人</td>
+                                        <td>审批日期</td>
+                                        <td>备注</td>
+                                    </tr>
+                                    {this.state.EquipmentSsData}
+                                </tbody>
                             </table>
                         </TabPane>
                     </Tabs>

@@ -16,13 +16,15 @@ class App extends React.Component {
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
+        let j = 0
         Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
             if (RepairProject !== null) {
+                j++
                 let roomType = '自有'
                 if (RepairProject.roomType === 1) {
                     roomType = '出售'
                 }
-                return <tr><td>{RepairProject.id}</td><td>{roomType}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                return <tr key={j}><td>{RepairProject.id}</td><td>{roomType}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
             } else {
                 return null
             }
