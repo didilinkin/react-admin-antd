@@ -206,7 +206,6 @@ class Sidebar extends React.Component {
                                 </Menu.Item>
                             </SubMenu>
 
-
                             <SubMenu key="/deviceMaintain/inspection/elevator" title={
                                 <span>
                                     <p classID="nav-text">电梯系统</p>
@@ -222,21 +221,74 @@ class Sidebar extends React.Component {
                                 </Menu.Item>
                             </SubMenu>
 
-                            <Menu.Item key="/deviceMaintain/inspection/airConditioning">
-                                <Link to="/deviceMaintain/inspection/airConditioning">空调系统</Link>
-                            </Menu.Item>
+                            <SubMenu key="/deviceMaintain/inspection/airConditioning" title={
+                                <span>
+                                    <p classID="nav-text">空调系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/airConditioning/airConditioningRoom">
+                                    <Link to="/deviceMaintain/inspection/airConditioning/airConditioningRoom">空调机房</Link>
+                                </Menu.Item>
 
-                            <Menu.Item key="/deviceMaintain/inspection/waterHeating">
-                                <Link to="/deviceMaintain/inspection/waterHeating">水暖系统</Link>
-                            </Menu.Item>
+                                <Menu.Item key="/deviceMaintain/inspection/airConditioning/newWindRoom">
+                                    <Link to="/deviceMaintain/inspection/airConditioning/newWindRoom">新风机房</Link>
+                                </Menu.Item>
 
-                            <Menu.Item key="/deviceMaintain/inspection/firefighting">
-                                <Link to="/deviceMaintain/inspection/firefighting">消防系统</Link>
-                            </Menu.Item>
+                                <Menu.Item key="/deviceMaintain/inspection/airConditioning/centralAirConditioning">
+                                    <Link to="/deviceMaintain/inspection/airConditioning/centralAirConditioning">中央空调</Link>
+                                </Menu.Item>
+                            </SubMenu>
 
-                            <Menu.Item key="/deviceMaintain/inspection/elevatorRoom">
-                                <Link to="/deviceMaintain/inspection/elevatorRoom">电梯间系统</Link>
-                            </Menu.Item>
+                            <SubMenu key="/deviceMaintain/inspection/waterHeating" title={
+                                <span>
+                                    <p classID="nav-text">水暖系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/heatExchange">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/heatExchange">热交换设备巡检</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/firePump">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/firePump">消防水泵房巡检</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/plumbingPipeline">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/plumbingPipeline">水暖管道</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/plumbingInfrastructure">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/plumbingInfrastructure">水暖基建</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/solarEnergy">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/solarEnergy">太阳能</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/waterHeating/heatTransferStation">
+                                    <Link to="/deviceMaintain/inspection/waterHeating/heatTransferStation">换热站巡检</Link>
+                                </Menu.Item>
+                            </SubMenu>
+
+                            <SubMenu key="/deviceMaintain/inspection/firefighting" title={
+                                <span>
+                                    <p classID="nav-text">消防系统</p>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/deviceMaintain/inspection/firefighting/waterTank">
+                                    <Link to="/deviceMaintain/inspection/firefighting/waterTank">高位消防水箱</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/firefighting/gasFireExtinguishing">
+                                    <Link to="/deviceMaintain/inspection/firefighting/gasFireExtinguishing">气体灭火</Link>
+                                </Menu.Item>
+
+                                <Menu.Item key="/deviceMaintain/inspection/firefighting/maintenanceRecords">
+                                    <Link to="/deviceMaintain/inspection/firefighting/maintenanceRecords">消防维保记录</Link>
+                                </Menu.Item>
+                            </SubMenu>
                         </SubMenu>
                     </SubMenu>
                 </Menu>

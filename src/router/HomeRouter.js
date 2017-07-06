@@ -49,7 +49,9 @@ import PlumbingInfrastructure   from '../views/DeviceMaintain/pages/PlumbingInfr
 import SolarEnergy              from '../views/DeviceMaintain/pages/SolarEnergy'                        // 设备巡检 - 水暖系统 - 太阳能
 import HeatTransferStation      from '../views/DeviceMaintain/pages/HeatTransferStation'                // 设备巡检 - 水暖系统 - 换热站巡检
 
-import Firefighting             from '../views/DeviceMaintain/pages/Firefighting'                       // 设备巡检 - 消防系统
+import WaterTank                from '../views/DeviceMaintain/pages/WaterTank'                          // 设备巡检 - 消防系统 - 高位消防水箱
+import GasFireExtinguishing     from '../views/DeviceMaintain/pages/GasFireExtinguishing'               // 设备巡检 - 消防系统 - 气体灭火
+import MaintenanceRecords       from '../views/DeviceMaintain/pages/MaintenanceRecords'                 // 设备巡检 - 消防系统 - 消防维保记录
 
 import ElevatorRoom             from '../views/DeviceMaintain/pages/ElevatorRoom'                       // 设备巡检 - 电梯系统 - 电梯机房
 import DailyInspection          from '../views/DeviceMaintain/pages/DailyInspection'                    // 设备巡检 - 电梯系统 - 日常检查
@@ -211,8 +213,14 @@ const routes = [
                 path: '/deviceMaintain/inspection/waterHeating/heatTransferStation',                    // 设备维护 - 设备巡检 - 水暖系统 - 换热站巡检
                 component: HeatTransferStation
             }, {
-                path: '/deviceMaintain/inspection/firefighting',                                        // 设备维护 - 设备巡检 - 消防系统
-                component: Firefighting
+                path: '/deviceMaintain/inspection/firefighting/waterTank',                              // 设备维护 - 设备巡检 - 消防系统 - 高位消防水箱
+                component: WaterTank
+            }, {
+                path: '/deviceMaintain/inspection/firefighting/gasFireExtinguishing',                   // 设备维护 - 设备巡检 - 消防系统 - 气体灭火
+                component: GasFireExtinguishing
+            }, {
+                path: '/deviceMaintain/inspection/firefighting/maintenanceRecords',                     // 设备维护 - 设备巡检 - 消防系统 - 消防维保记录
+                component: MaintenanceRecords
             }, {
                 path: '/deviceMaintain/inspection/elevator/elevatorRoom',                               // 设备维护 - 设备巡检 - 电梯系统 - 电梯机房
                 component: ElevatorRoom
