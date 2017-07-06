@@ -1,3 +1,4 @@
+// 根路由 配置
 import React from 'react'
 import {
     BrowserRouter,
@@ -8,18 +9,20 @@ import styled               from 'styled-components'
 import createBrowserHistory from 'history/createBrowserHistory'
 
 import App                  from '../container'
+import Login                from '../common/Login'
 
 const history = createBrowserHistory()
+const supportsHistory = 'pushState' in window.history // 当浏览器不支持 HTML5 的 history API 时强制刷新页面; 只有当浏览器不支持 HTML5 的 history API 时，才设置为 true
 
 const RouterBox = styled.section `
     height: 100vh;
 `
 
-// forceRefresh={!supportsHistory}  // 当设置为 true 时，在导航的过程中整个页面将会刷新。 只有当浏览器不支持 HTML5 的 history API 时，才设置为 true
 const Routes = () => (
-    <BrowserRouter history={ history }>
+    <BrowserRouter history={ history } forceRefresh={!supportsHistory}>
         <RouterBox>
             <Route path="/" component={ App } />
+            <Route path="/login" component={ Login } />
         </RouterBox>
     </BrowserRouter>
 )
