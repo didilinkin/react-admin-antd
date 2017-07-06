@@ -74,13 +74,15 @@ class ReturnVisit extends React.Component {
                         <h2>完工登记</h2>
                         <p>{this.state.data.repairedContent}</p>
                         <table className="tb">
-                            <tr className="hd">
-                                <td>序号</td>
-                                <td>材料名称</td>
-                                <td>数量</td>
-                                <td>收费小计</td>
-                            </tr>
-                            {this.state.data.repairProjectList}
+                            <tbody>
+                                <tr className="hd">
+                                    <td>序号</td>
+                                    <td>材料名称</td>
+                                    <td>数量</td>
+                                    <td>收费小计</td>
+                                </tr>
+                                {this.state.data.repairProjectList}
+                            </tbody>
                         </table>
                         <p>维修费： <span className="red">{this.state.data.amountMoney}</span> 元</p>
                         <p>维修人： {this.state.data.repairedMan}</p>

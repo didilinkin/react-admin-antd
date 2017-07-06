@@ -119,40 +119,44 @@ class Equipmentledger extends React.Component {
                     <Tabs defaultActiveKey="1" onChange={callback}>
                         <TabPane tab="维修记录" key="1">
                             <table className="tb">
-                                <tr className="hd">
-                                    <td>序号</td>
-                                    <td>维修完工时间</td>
-                                    <td>故障描述</td>
-                                    <td>维修情况</td>
-                                    <td>操作</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td><a href="">查看明细</a></td>
-                                </tr>
+                                <tbody>
+                                    <tr className="hd">
+                                        <td>序号</td>
+                                        <td>维修完工时间</td>
+                                        <td>故障描述</td>
+                                        <td>维修情况</td>
+                                        <td>操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td><a href="">查看明细</a></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </TabPane>
                         <TabPane tab="保养记录" key="2">
                             <table className="tb">
-                                <tr className="hd">
-                                    <td>序号</td>
-                                    <td>保养日期</td>
-                                    <td>保养单号</td>
-                                    <td>保养情况</td>
-                                    <td>保养人员</td>
-                                    <td>操作</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>4</td>
-                                    <td>5</td>
-                                    <td><a href="">查看明细</a></td>
-                                </tr>
+                                <tbody>
+                                    <tr className="hd">
+                                        <td>序号</td>
+                                        <td>保养日期</td>
+                                        <td>保养单号</td>
+                                        <td>保养情况</td>
+                                        <td>保养人员</td>
+                                        <td>操作</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td><a href="">查看明细</a></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </TabPane>
                         <TabPane tab="启停记录" key="3">

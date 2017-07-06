@@ -47,14 +47,16 @@ class App extends React.Component {
                     <b>发起日期：</b>{this.state.data.startDate}
                 </p>
                 <table className="tb">
-                    <tr className="hd">
-                        <td>序号</td>
-                        <td>房屋性质</td>
-                        <td>材料名称</td>
-                        <td>数量</td>
-                        <td>收费小计</td>
-                    </tr>
-                    {this.state.data.repairProjectList}
+                    <tbody>
+                        <tr className="hd">
+                            <td>序号</td>
+                            <td>房屋性质</td>
+                            <td>材料名称</td>
+                            <td>数量</td>
+                            <td>收费小计</td>
+                        </tr>
+                        {this.state.data.repairProjectList}
+                    </tbody>
                 </table>
                 <p>
                     <b>应收金额：</b> {this.state.data.amountMoney} 元
