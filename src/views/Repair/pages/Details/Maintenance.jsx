@@ -22,15 +22,19 @@ class App extends React.Component {
         } else {
             Repair['repairStatus'] = '未完成'
         }
+        let i = 0
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={baseURL + 'storage/files/' + img} alt="" />
+                i++
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }
         })
+        let j = 0
         Repair['repairedContent'] = Repair.repairedContent.split('\n').map(span => {
-            return <p>{span}</p>
+            j++
+            return <p key={j}>{span}</p>
         })
         this.setState({
             data: Repair

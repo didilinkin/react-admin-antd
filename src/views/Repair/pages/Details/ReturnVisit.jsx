@@ -22,16 +22,20 @@ class ReturnVisit extends React.Component {
         } else {
             Repair['ratedStatus'] = <div><Rate disabled defaultValue={Repair.star} /><p>{Repair.ratedContent}</p></div>
         }
+        let j = 0
         Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
             if (RepairProject !== null) {
-                return <tr><td>{RepairProject.id}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                j++
+                return <tr key={j}><td>{RepairProject.id}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
             } else {
                 return null
             }
         })
+        let i = 0
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {
-                return <img src={baseURL + 'storage/files/' + img} alt="" />
+                i++
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }
@@ -70,13 +74,15 @@ class ReturnVisit extends React.Component {
                         <h2>完工登记</h2>
                         <p>{this.state.data.repairedContent}</p>
                         <table className="tb">
-                            <tr className="hd">
-                                <td>序号</td>
-                                <td>材料名称</td>
-                                <td>数量</td>
-                                <td>收费小计</td>
-                            </tr>
-                            {this.state.data.repairProjectList}
+                            <tbody>
+                                <tr className="hd">
+                                    <td>序号</td>
+                                    <td>材料名称</td>
+                                    <td>数量</td>
+                                    <td>收费小计</td>
+                                </tr>
+                                {this.state.data.repairProjectList}
+                            </tbody>
                         </table>
                         <p>维修费： <span className="red">{this.state.data.amountMoney}</span> 元</p>
                         <p>维修人： {this.state.data.repairedMan}</p>

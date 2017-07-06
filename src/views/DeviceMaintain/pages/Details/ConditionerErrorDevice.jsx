@@ -19,9 +19,11 @@ class App extends React.Component {
             }
         )
         let Repair = resulData.data
+        let i = 0
         Repair['scenePictures'] = Repair.scenePictures.split('#').map(img => {
             if (img !== '') {
-                return <img src={baseURL + 'storage/files/' + img} alt="" />
+                i++
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
             } else {
                 return '无'
             }
