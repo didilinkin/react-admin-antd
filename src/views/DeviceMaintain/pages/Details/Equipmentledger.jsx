@@ -1,6 +1,6 @@
 // 设备明细
 import React from 'react'
-import { Row, Col, Tabs } from 'antd'
+import { Row, Col, Tabs, Button, Modal } from 'antd'
 import '../../../../style/test.less'
 import { apiPost, baseURL } from '../../../../api'
 const TabPane = Tabs.TabPane
@@ -13,7 +13,9 @@ class Equipmentledger extends React.Component {
         super(props)
         this.state = {
             EquipmentData: {},
-            EquipmentSsData: ''
+            EquipmentSsData: [],
+            maintenanceOpen: false,
+            id: ''
         }
     }
     async initialRemarks () {
@@ -68,14 +70,57 @@ class Equipmentledger extends React.Component {
                 </tr>
             )
         })
+        let maintenanceDataList = await apiPost(
+            '/deviceMaintain/maintenance/maintenanceList',
+            {'equipmentId': this.props.match.params.id}
+        )
         this.setState({
             EquipmentData: equipment,
-            EquipmentSsData: listSs
+            EquipmentSsData: listSs,
+            maintenanceData: maintenanceDataList.data.map((maintenance, j) => {
+                return (
+                    <tr key={j}>
+                        <td>{maintenance.id}</td>
+                        <td>{maintenance.maintenanceDate}</td>
+                        <td>{maintenance.maintenanceNumber}</td>
+                        <td>{maintenance.statusStatement.toString().split(0, 30)}</td>
+                        <td>{maintenance.maintenanceManName}</td>
+                        <td><Button onClick={() => this.maintenanceOpen(maintenance.id)}>查看明细</Button></td>
+                    </tr>
+                )
+            })
         })
     }
     componentWillMount () {
         this.initialRemarks()
     }
+    maintenanceOpen = async (id) => {
+        let resulData = await apiPost(
+            '/deviceMaintain/maintenance/getmaintenance',
+            {'id': id}
+        )
+        let maintenance = resulData.data
+        maintenance['scenePictures'] = maintenance.scenePictures.split('#').map((img, i) => {
+            if (img !== '') {
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
+            } else {
+                return '无'
+            }
+        })
+        this.maintenanceData = maintenance
+        this.setState({
+            maintenanceOpen: true,
+            id: id
+        })
+    }
+    handleCancel = () =>{
+        this.maintenanceData = {}
+        this.setState({
+            maintenanceOpen: false,
+            id: ''
+        })
+    }
+    maintenanceData = {}
     render () {
         return (
             <div>
@@ -148,14 +193,7 @@ class Equipmentledger extends React.Component {
                                         <td>保养人员</td>
                                         <td>操作</td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td><a href="">查看明细</a></td>
-                                    </tr>
+                                    {this.state.maintenanceData}
                                 </tbody>
                             </table>
                         </TabPane>
@@ -179,6 +217,42 @@ class Equipmentledger extends React.Component {
                         </TabPane>
                     </Tabs>
                 </div>
+                <Modal
+                    title="保养明细"
+                    style={{top: 20}}
+                    width={700}
+                    footer={null}
+                    visible={this.state.maintenanceOpen}
+                    onCancel={this.handleCancel}
+                >
+                    <div>
+                        <h2>保养明细</h2>
+                        <div className="box1">
+                            <Row>
+                                <Col span={12}><b>保养日期：</b> {this.maintenanceData.maintenanceDate}</Col>
+                                <Col span={12}><b>保养单号：</b>{this.maintenanceData.maintenanceNumber}</Col>
+                            </Row>
+                            <Row>
+                                <Col span={12}><b>保养人：</b>{this.maintenanceData.maintenanceManName}</Col>
+                                <Col span={12} />
+                            </Row>
+                            <ul>
+                                <li>
+                                    <b>情况说明：</b>
+                                    <div className="pl80">
+                                        <p>{this.maintenanceData.statusStatement}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <b>现场图片：</b>
+                                    {this.maintenanceData.scenePictures}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Modal>
             </div>
         )
     }
