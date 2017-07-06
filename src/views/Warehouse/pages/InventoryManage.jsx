@@ -45,7 +45,7 @@ class RepairList extends Component {
         this.setState({loading: false,
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id',
                 render: function (text, record, index) {
@@ -56,7 +56,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '仓库类型',
-                width: 100,
+                width: 150,
                 dataIndex: 'whType',
                 key: 'whType',
                 render: function (text, record, index) {
@@ -83,27 +83,26 @@ class RepairList extends Component {
                 key: 'storagePlace'
             }, {
                 title: '规格',
-                width: 100,
+                width: 150,
                 dataIndex: 'standard',
                 key: 'standard'
             }, {
                 title: '单位',
-                width: 100,
+                width: 150,
                 dataIndex: 'unit',
                 key: 'unit'
             }, {
                 title: '单价',
-                width: 100,
+                width: 150,
                 dataIndex: 'unitPrice',
                 key: 'unitPrice'
             }, {
                 title: '库存数量',
-                width: 100,
+                width: 150,
                 dataIndex: 'number',
                 key: 'number'
             }, {
                 title: '金额',
-                width: 100,
                 dataIndex: 'amount',
                 key: 'amount'
             }, {
