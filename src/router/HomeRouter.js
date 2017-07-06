@@ -7,6 +7,7 @@ import HomeIndex                from '../views/common/pages/HomeIndex'
 // 测试组件
 import AsyncTable               from '../views/test/AsyncTable'                                         // 测试异步表格
 import Echarts                  from '../views/test/Echarts'                                            // 测试 echarts组建( 简单例子 )
+import Recharts                 from '../views/test/Recharts'                                           // 测试 Recharts组件( 饼状图 - 简单例子 )
 
 // 引入 '客户管理' 版块
 import RepairList               from '../views/Repair/pages/RepairList'                                 // 客户报修
@@ -101,6 +102,9 @@ const routes = [
             }, {
                 path: '/test/echarts',                                                                  // 测试 echarts组建( 简单例子 )
                 component: Echarts
+            }, {
+                path: '/test/recharts',                                                                 // 测试 Recharts组件( 饼状图 - 简单例子 )
+                component: Recharts
             }
         ]
     }, {
