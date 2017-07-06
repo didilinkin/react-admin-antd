@@ -21,7 +21,7 @@ class ClientReview extends React.Component {
         this.setState({
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id'
             }, {
@@ -48,7 +48,7 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '客户评价',
-                width: 100,
+                width: 150,
                 dataIndex: 'ratedStatus',
                 key: 'ratedStatus',
                 render: function (text, record, index) {
@@ -62,7 +62,7 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '回访状态',
-                width: 100,
+                width: 150,
                 dataIndex: 'visit',
                 key: 'visit',
                 render: function (text, record, index) {
@@ -81,7 +81,6 @@ class ClientReview extends React.Component {
                 key: 'visitDate'
             }, {
                 title: '回访情况',
-                width: 100,
                 dataIndex: 'visitContent',
                 key: 'visitContent',
                 render: function (text, record, index) {

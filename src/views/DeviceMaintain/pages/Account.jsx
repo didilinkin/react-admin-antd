@@ -54,7 +54,7 @@ class Account extends Component {
             loading: false,
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id'
             }, {
@@ -105,12 +105,11 @@ class Account extends Component {
                 }
             }, {
                 title: '维保责任人',
-                width: 100,
+                width: 150,
                 dataIndex: 'maintenanceName',
                 key: 'maintenanceName'
             }, {
                 title: '巡检责任人',
-                width: 100,
                 dataIndex: 'patrolName',
                 key: 'patrolName'
             }, {
