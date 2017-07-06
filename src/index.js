@@ -8,7 +8,7 @@ import thunk                            from 'redux-thunk'          // 异步
 
 import rootReducer                      from './store/reducers'     // 根reducers
 
-import routes                           from './router'
+import Routes                           from './router'
 
 const rootElement = document.getElementById('root')
 
@@ -26,7 +26,7 @@ const store = createStore(
 
 render(
     <Provider store={store}>
-        { routes }
+        { Routes }
     </Provider>,
     rootElement
 )
