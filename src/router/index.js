@@ -21,7 +21,7 @@ const RouterBox = styled.section `
 const Routes = () => (
     <BrowserRouter history={ history } forceRefresh={!supportsHistory}>
         <RouterBox>
-            <Route path="/" component={ App } />
+            <Route exact path="/" component={ App } />
             <Route path="/login" component={ LoginContainer } />
         </RouterBox>
     </BrowserRouter>

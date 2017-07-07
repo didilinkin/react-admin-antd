@@ -1,5 +1,6 @@
 // 登录页面
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Login extends React.Component {
     constructor (props) {
@@ -10,7 +11,7 @@ class Login extends React.Component {
     // 鉴定事件
     authenticate () {
         setTimeout(() => {
-            this.props.onClickAuth()
+            this.props.authenticate()
         }, 500)
     }
 
@@ -21,7 +22,7 @@ class Login extends React.Component {
     }
 
     render () {
-        const { authState, onSignout } = this.props
+        const { authState, onSignOut } = this.props
         return (
             <p>
                 Clicked: { authState ? (
@@ -32,12 +33,18 @@ class Login extends React.Component {
                 <button onClick={ this.authenticate }>
                     检验登录
                 </button>
-                <button onClick={ onSignout }>
+                <button onClick={ onSignOut }>
                     退出
                 </button>
             </p>
         )
     }
+}
+
+Login.propTypes = {
+    authState: PropTypes.bool.isRequired,   // 布尔值
+    authenticate: PropTypes.func.isRequired,      // 函数
+    onSignOut: PropTypes.func.isRequired      // 函数
 }
 
 export default Login

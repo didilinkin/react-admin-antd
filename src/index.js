@@ -27,7 +27,7 @@ const store = createStore(
 
 render(
     <Provider store={store}>
-        { Routes }
+        <Routes />
     </Provider>,
     rootElement
 )
