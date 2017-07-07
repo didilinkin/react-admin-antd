@@ -15,6 +15,7 @@ class Equipmentledger extends React.Component {
             EquipmentData: {},
             EquipmentSsData: [],
             maintenanceOpen: false,
+            equipmentMaintenanceOpen: false,
             id: ''
         }
     }
@@ -74,6 +75,11 @@ class Equipmentledger extends React.Component {
             '/deviceMaintain/maintenance/maintenanceList',
             {'equipmentId': this.props.match.params.id}
         )
+        let equipmentMaintenanceList = await apiPost(
+            '/deviceMaintain/maintenance/equipmentRepairList',
+            {'equipmentId': this.props.match.params.id}
+        )
+        console.log(equipmentMaintenanceList)
         this.setState({
             EquipmentData: equipment,
             EquipmentSsData: listSs,
@@ -88,11 +94,51 @@ class Equipmentledger extends React.Component {
                         <td><Button onClick={() => this.maintenanceOpen(maintenance.id)}>查看明细</Button></td>
                     </tr>
                 )
+            }),
+            equipmentMaintenanceList: equipmentMaintenanceList.data.map((equipmentMaintenance, j) => {
+                return (
+                    <tr key={j}>
+                        <td>{j}</td>
+                        <td>{equipmentMaintenance.makespan}</td>
+                        <td>{equipmentMaintenance.faultDescription}</td>
+                        <td>{equipmentMaintenance.maintenanceStatus}</td>
+                        <td><Button onClick={() => this.equipmentMaintenanceOpen(equipmentMaintenance.id)}>查看明细</Button></td>
+                    </tr>
+                )
             })
         })
     }
     componentWillMount () {
         this.initialRemarks()
+    }
+    equipmentMaintenance = ''
+    list = []
+    equipmentMaintenanceOpen = async (id) => {
+        let resulData = await apiPost(
+            '/deviceMaintain/maintenance/getEquipmentRepair',
+            {'id': id}
+        )
+        let equipmentMaintenance = resulData.data
+        equipmentMaintenance['scenePictures'] = equipmentMaintenance.scenePictures.split('#').map((img, i) => {
+            if (img !== '') {
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
+            } else {
+                return '无'
+            }
+        })
+        equipmentMaintenance['servicePicture'] = equipmentMaintenance.servicePicture.split('#').map((img, i) => {
+            if (img !== '') {
+                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
+            } else {
+                return '无'
+            }
+        })
+        this.equipmentMaintenance = equipmentMaintenance
+        this.list = equipmentMaintenance.list
+        this.setState({
+            equipmentMaintenanceOpen: true,
+            id: id
+        })
     }
     maintenanceOpen = async (id) => {
         let resulData = await apiPost(
@@ -116,6 +162,7 @@ class Equipmentledger extends React.Component {
     handleCancel = () =>{
         this.maintenanceData = {}
         this.setState({
+            equipmentMaintenanceOpen: false,
             maintenanceOpen: false,
             id: ''
         })
@@ -172,13 +219,7 @@ class Equipmentledger extends React.Component {
                                         <td>维修情况</td>
                                         <td>操作</td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td><a href="">查看明细</a></td>
-                                    </tr>
+                                    {this.state.equipmentMaintenanceList}
                                 </tbody>
                             </table>
                         </TabPane>
@@ -218,36 +259,81 @@ class Equipmentledger extends React.Component {
                     </Tabs>
                 </div>
                 <Modal
-                    title="保养明细"
+                    title="维修明细"
                     style={{top: 20}}
                     width={700}
                     footer={null}
-                    visible={this.state.maintenanceOpen}
+                    visible={this.state.equipmentMaintenanceOpen}
                     onCancel={this.handleCancel}
                 >
                     <div>
-                        <h2>保养明细</h2>
-                        <div className="box1">
+                        <h2>维修信息</h2>
+                        <div className="box5">
+                            <h3>报修信息</h3>
                             <Row>
-                                <Col span={12}><b>保养日期：</b> {this.maintenanceData.maintenanceDate}</Col>
-                                <Col span={12}><b>保养单号：</b>{this.maintenanceData.maintenanceNumber}</Col>
+                                <Col span={8}><b>送修时间：</b> {this.equipmentMaintenance.repairDate}</Col>
+                                <Col span={8}><b>报修人：</b>{this.equipmentMaintenance.repairManName}</Col>
+                                <Col span={8}><b>维修单号：</b>{this.equipmentMaintenance.maintenanceNumber}</Col>
                             </Row>
                             <Row>
-                                <Col span={12}><b>保养人：</b>{this.maintenanceData.maintenanceManName}</Col>
-                                <Col span={12} />
+                                <Col span={8}><b>故障等级：</b>{this.equipmentMaintenance.failureLevel}</Col>
+                                <Col span={8}><b>设备状态：</b>{this.equipmentMaintenance.equipmentStatus}</Col>
+                                <Col span={8} />
                             </Row>
-                            <ul>
+                            <ul className="clearfix">
                                 <li>
-                                    <b>情况说明：</b>
+                                    <b>故障描述：</b>
                                     <div className="pl80">
-                                        <p>{this.maintenanceData.statusStatement}</p>
+                                        <p>{this.equipmentMaintenance.faultDescription}</p>
                                     </div>
                                 </li>
                             </ul>
                             <ul>
                                 <li>
                                     <b>现场图片：</b>
-                                    {this.maintenanceData.scenePictures}
+                                    {this.equipmentMaintenance.scenePictures}
+                                </li>
+                            </ul>
+                            <p className="line" />
+                            <h3>报修信息</h3>
+                            <Row>
+                                <Col span={8}><b>完工时间：</b> {this.equipmentMaintenance.makespan}</Col>
+                                <Col span={8}><b>维修人：</b>{this.equipmentMaintenance.repairerName}</Col>
+                                <Col span={8}><b>协作人：</b>{this.equipmentMaintenance.collaboratorNames}</Col>
+                            </Row>
+                            <ul className="clearfix">
+                                <li>
+                                    <b>维修情况：</b>
+                                    <div className="pl80">
+                                        <p>{this.equipmentMaintenance.maintenanceStatus}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <b>现场图片：</b>
+                                    {this.equipmentMaintenance.servicePicture}
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <b>维修项目：</b>
+                                    <div className="pl80">
+                                        <table className="tb">
+                                            <tbody>
+                                                <tr className="hd">
+                                                    <td>材料名称</td>
+                                                    <td>数量</td>
+                                                </tr>
+                                                {this.list.map((maintenanceProject, i) => {
+                                                    return <tr key={i}>
+                                                        <td >{maintenanceProject.materialName}</td>
+                                                        <td >{maintenanceProject.number}</td>
+                                                    </tr>
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

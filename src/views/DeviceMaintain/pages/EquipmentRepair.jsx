@@ -71,7 +71,7 @@ class EquipmentRepair extends React.Component {
                 dataIndex: 'wxmx',
                 key: 'wxmx',
                 render: function (text, record, index) {
-                    let url = '/deviceMaintain/maintenanceDetails/' + record.id
+                    let url = '/deviceMaintain/repairRecord/' + record.id
                     return (
                         <a href={url}>查看明细</a>
                     )
