@@ -35,7 +35,7 @@ class RepairList extends Component {
         this.setState({loading: false,
             columns: [{
                 title: '序号',
-                width: 80,
+                width: 100,
                 dataIndex: 'id',
                 key: 'id'
             }, {
@@ -72,7 +72,6 @@ class RepairList extends Component {
                 }
             }, {
                 title: '检查人',
-                width: 100,
                 dataIndex: 'inspectName',
                 key: 'inspectName'
             }, {

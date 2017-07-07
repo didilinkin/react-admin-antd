@@ -6,86 +6,73 @@ class Echarts extends React.Component {
     getOtion = () => {
         const option = {
             title: {
-                text: '堆叠区域图'
+                text: '客户评价情况',
+                subtext: ' ',
+                x: 'center'
             },
             tooltip: {
-                trigger: 'axis'
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
             legend: {
-                data: ['邮件营销', '联盟广告', '视频广告']
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
             },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
             series: [
                 {
-                    name: '邮件营销',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: '联盟广告',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: '视频广告',
-                    type: 'line',
-                    stack: '总量',
-                    areaStyle: {normal: {}},
-                    data: [150, 232, 201, 154, 190, 330, 410]
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 335,
+                            name: '直接访问'},
+                        {value: 310,
+                            name: '邮件营销'},
+                        {value: 234,
+                            name: '联盟广告'},
+                        {value: 135,
+                            name: '视频广告'},
+                        {value: 1548,
+                            name: '搜索引擎'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
                 }
             ]
         }
         return option
     }
+    onChartClick = () => function (param, echart) {
+        console.log(param, echart)
+        alert('chart click')
+    }
+    onChartLegendselectchanged = () => function (param, echart) {
+        console.log(param, echart)
+        alert('chart legendselectchanged')
+    }
+    onChartReady = () => function (echart) {
+        console.log('echart is ready', echart)
+    }
 
     render () {
-        let code = '<ReactEcharts \n' +
-                   '   option={this.getOtion()} \n' +
-                   '   style={{height: "350px", width: "100%"}}  \n' +
-                   '   className="react_for_echarts"  \n' +
-        '/>'
         return (
             <div className="examples">
                 <div className="parent">
-                    <label> render a Simple echart With <strong>option and height</strong>: </label>
                     <ReactEcharts
                         option={ this.getOtion() }
                         style={{
                             height: '350px',
-                            width: '100%'
+                            width: '350px'
                         }}
                         className="react_for_echarts"
                     />
-                    <h1> 案例代码在下面: </h1>
-                    <pre>
-                        <code>{code}</code>
-                    </pre>
                 </div>
             </div>
         )

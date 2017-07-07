@@ -270,7 +270,7 @@ class RectificationAddUp extends React.Component {
                                             message: 'Please input your clientId!'
                                         }]
                                     })(
-                                        <Input disabled />
+                                        <Input />
                                     )}
                                 </FormItem>
                             </Col>

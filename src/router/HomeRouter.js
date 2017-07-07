@@ -258,7 +258,7 @@ const routes = [
                 path: '/deviceMaintain/maintenanceRecord/:id',                                              // 设备维护 - 设备维保 - 保养记录
                 component: Maintenancerecord
             }, {
-                path: '/deviceMaintain/repairRecord',                                                   // 设备维护 - 设备维保 - 维修记录
+                path: '/deviceMaintain/repairRecord/:id',                                                   // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
                 path: '/deviceMaintain/serverRoom',                                                     // 设备维护 - 机房明细
