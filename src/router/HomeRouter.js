@@ -6,8 +6,9 @@ import HomeIndex                from '../views/common/pages/HomeIndex'
 
 // 测试组件
 import AsyncTable               from '../views/test/AsyncTable'                                         // 测试异步表格
-import Echarts                  from '../views/test/Echarts'                                            // 测试 echarts组建( 简单例子 )
-import Recharts                 from '../views/test/Recharts'                                           // 测试 Recharts组件( 饼状图 - 简单例子 )
+import Echarts                  from '../views/test/Echarts'                                            // 测试 echarts组建(简单例子)
+import Recharts                 from '../views/test/Recharts'                                           // 测试 Recharts组件(饼状图 - 简单例子)
+import SimpleBarChart           from '../views/test/SimpleBarChart'                                     // 测试 Recharts组件(柱状图)
 
 // 引入 '客户管理' 版块
 import RepairList               from '../views/Repair/pages/RepairList'                                 // 客户报修
@@ -105,6 +106,9 @@ const routes = [
             }, {
                 path: '/test/recharts',                                                                 // 测试 Recharts组件( 饼状图 - 简单例子 )
                 component: Recharts
+            }, {
+                path: '/test/simpleBarChart',                                                           // 测试 Recharts组件(柱状图)
+                component: SimpleBarChart
             }
         ]
     }, {
@@ -254,7 +258,7 @@ const routes = [
                 path: '/deviceMaintain/maintenanceRecord/:id',                                              // 设备维护 - 设备维保 - 保养记录
                 component: Maintenancerecord
             }, {
-                path: '/deviceMaintain/repairRecord',                                                   // 设备维护 - 设备维保 - 维修记录
+                path: '/deviceMaintain/repairRecord/:id',                                                   // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
                 path: '/deviceMaintain/serverRoom',                                                     // 设备维护 - 机房明细

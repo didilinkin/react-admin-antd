@@ -299,6 +299,7 @@ class CentralAirConditioning extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 3000 }}
+                        bordered={3}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
