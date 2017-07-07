@@ -17,7 +17,7 @@ class App extends React.Component {
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
-        if (Repair.repairStatus === '1') {
+        if (Repair.repairStatus === 1) {
             Repair['repairStatus'] = '已完成'
         } else {
             Repair['repairStatus'] = '未完成'
