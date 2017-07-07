@@ -9,7 +9,7 @@ import styled               from 'styled-components'
 import createBrowserHistory from 'history/createBrowserHistory'
 
 import App                  from '../container'
-import Login                from '../common/Login'
+import LoginContainer       from '../container/LoginContainer'
 
 const history = createBrowserHistory()
 const supportsHistory = 'pushState' in window.history // 当浏览器不支持 HTML5 的 history API 时强制刷新页面; 只有当浏览器不支持 HTML5 的 history API 时，才设置为 true
@@ -22,7 +22,7 @@ const Routes = () => (
     <BrowserRouter history={ history } forceRefresh={!supportsHistory}>
         <RouterBox>
             <Route path="/" component={ App } />
-            <Route path="/login" component={ Login } />
+            <Route path="/login" component={ LoginContainer } />
         </RouterBox>
     </BrowserRouter>
 )
