@@ -89,7 +89,6 @@ class Echarts extends React.Component {
     onChartReady = () => function (echart) {
         console.log('echart is ready', echart)
     }
-
     render () {
         return (
             <div className="examples">
