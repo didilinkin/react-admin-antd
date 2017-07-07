@@ -47,7 +47,7 @@ class EchartsTest extends Component {
                 {
                     name: '访问来源',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['40%', '50%'],
                     avoidLabelOverlap: false,
                     label: {
                         normal: {
