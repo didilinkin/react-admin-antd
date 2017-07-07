@@ -33,6 +33,7 @@ class EchartsTest extends Component {
         let myChart1 = echarts.init(document.getElementById('main1'))
         // 绘制图表
         myChart1.setOption({
+            title: { text: '客户报修情况' },
             tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b}: {c} ({d}%)'
