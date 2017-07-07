@@ -290,7 +290,8 @@ class CentralAirConditioning extends Component {
                         placeholder="请选择所在区域"
                         optionFilterProp="district"
                         onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
                         <Option key="低区">低区</Option>
                         <Option key="高区">高区</Option>
                     </Select>

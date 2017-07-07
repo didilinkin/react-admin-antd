@@ -183,7 +183,8 @@ class AirConditioningRoom extends Component {
                         placeholder="请选择类型"
                         optionFilterProp="inspectionState"
                         onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
                         <Option key="8:00">8:00</Option>
                         <Option key="13:30">13:30</Option>
                     </Select>
