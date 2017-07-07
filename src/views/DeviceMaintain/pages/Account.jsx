@@ -122,7 +122,7 @@ class Account extends Component {
                     let url = '/deviceMaintain/equipmentLedger/' + record.id
                     return (
                         <div>
-                            <a href={url}><Button >详情 </Button></a>
+                            <a href={url}><Button >详情</Button></a>
                             <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
                             <Button onClick={() => openSS(record.id)}>启停设备</Button>
                         </div>
