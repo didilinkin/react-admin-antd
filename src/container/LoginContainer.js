@@ -11,7 +11,7 @@ import { signIn, signOut } from '../store/actions'
 import { getAuthState } from '../store/getter'
 
 // components
-import Login from '../common/Login'
+import Login from '../common/pages/Login'
 
 // 样式组件
 const LoginContainer = ({ authState, signIn, signOut }) => (
