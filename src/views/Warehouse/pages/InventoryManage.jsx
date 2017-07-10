@@ -207,7 +207,8 @@ class RepairList extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1200 }}
+                        scroll={{ x: 1500 }}
+                        bordered={3}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

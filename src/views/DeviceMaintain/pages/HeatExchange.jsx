@@ -251,7 +251,7 @@ class HeatExchange extends Component {
                 </span>
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1900 }}
+                        scroll={{ x: 3500 }}
                         bordered={3}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
