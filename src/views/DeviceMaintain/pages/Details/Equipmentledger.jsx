@@ -258,7 +258,7 @@ class Equipmentledger extends React.Component {
                         </TabPane>
                     </Tabs>
                 </div>
-                <Modal
+                <Modal maskClosable={false}
                     title="维修明细"
                     style={{top: 20}}
                     width={700}

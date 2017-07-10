@@ -113,7 +113,7 @@ class WarehouseAddUp extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form
         return (
-            <Modal
+            <Modal maskClosable={false}
                 title="出库"
                 style={{top: 20}}
                 width={600}

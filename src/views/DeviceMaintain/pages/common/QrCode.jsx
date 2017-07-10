@@ -22,7 +22,7 @@ class QrCode extends React.Component {
     }
     render () {
         return (
-            <Modal
+            <Modal maskClosable={false}
                 title={this.props.title}
                 style={{top: 20}}
                 width={450}

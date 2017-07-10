@@ -158,7 +158,7 @@ class WarehouseAddUp extends React.Component {
     render () {
         const { getFieldProps } = this.props.form
         return (
-            <Modal
+            <Modal maskClosable={false}
                 title="入库登记"
                 style={{top: 20}}
                 width="700"
