@@ -63,14 +63,12 @@ const dateC = [
 class Echarts extends React.Component {
     constructor (props) {
         super(props)
-        this.state1 = {
-            data: dateA
-        }
 
         this.todayData = this.todayData.bind(this)
         this.yesterdayData = this.yesterdayData.bind(this)
         this.intervalData = this.intervalData.bind(this)
         this.state = {
+            data1: dateA,
             data: [
                 {value: 335,
                     name: '直接访问'},
@@ -86,15 +84,15 @@ class Echarts extends React.Component {
         }
     }
     todayData () {
-        this.setState({data: dateA})
+        this.setState({data1: dateA})
     }
 
     yesterdayData () {
-        this.setState({data: dateB})
+        this.setState({data1: dateB})
     }
 
     intervalData () {
-        this.setState({data: dateC})
+        this.setState({data1: dateC})
     }
     getOtion = () => {
         const option = {
@@ -165,7 +163,7 @@ class Echarts extends React.Component {
                             <button style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </button>
                             <button style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </button>
                         </p>
-                        <BarChart width={ 600 } height={ 300 } data={ this.state1.data }
+                        <BarChart width={ 600 } height={ 300 } data={ this.state.data1 }
                             margin={{
                                 top: 5,
                                 right: 30,
