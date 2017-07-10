@@ -13,6 +13,17 @@ import {
     Pie,
     Cell
 } from 'recharts'
+// 日期组件
+import { DatePicker } from 'antd'
+import moment from 'moment'
+const RangePicker = DatePicker.RangePicker
+
+function onChange (dates, dateStrings) {
+    console.log('From: ', dates[0], ', to: ', dates[1])
+    console.log('From: ', dateStrings[0], ', to: ', dateStrings[1])
+}
+
+
 const data = [{name: 'Group A',
     value: 76}, {name: 'Group B',
     value: 56}, {name: 'Group C',
@@ -253,7 +264,12 @@ class Echarts extends React.Component {
                             <p style={{'padding': '15px 45px'}}>
                                 <a style={{ marginRight: '1rem' }} onClick={ this.todayData }> 今日 </a>
                                 <a style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </a>
-                                <a style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </a>
+                                <a style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 本月 </a>
+                                <RangePicker
+                                    ranges={{ Today: [moment(), moment()],
+                                        'This Month': [moment(), moment().endOf('month')] }}
+                                    onChange={onChange}
+                                />
                             </p>
                             <BarChart width={ 600 } height={ 400 } data={ this.state.data1 } >
                                 <XAxis dataKey="name" />
