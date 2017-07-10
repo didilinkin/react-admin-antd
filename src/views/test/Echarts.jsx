@@ -170,7 +170,13 @@ class Echarts extends React.Component {
                         <div style={{'float': 'left',
                             'width': '200px',
                             'height': '200px'}}>
-
+                            <ul style={{'padding': '15px',
+                                'lineHeight': '1.9'}}>
+                                <li><p>设备总数</p><span style={{'fontSize': '30px'}}>124,345</span></li>
+                                <li><p>在用</p><span>23,345</span></li>
+                                <li><p>闲置</p><span>23,345</span></li>
+                                <li><p>报废</p><span>23,345</span></li>
+                            </ul>
                         </div>
                         <div style={{'float': 'left'}}>
                             <p style={{'padding': '15px 45px'}}>
