@@ -78,7 +78,7 @@ class ComputerRoom extends Component {
                 dataIndex: 'opt',
                 key: 'opt',
                 render: function (text, record, index) {
-                    let url = '/deviceMaintain/equipmentLedger/' + record.id
+                    let url = '/deviceMaintain/serverRoom/' + record.id
                     return (
                         <div>
                             <a href={url}><Button >详情</Button></a>
