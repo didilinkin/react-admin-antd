@@ -13,51 +13,60 @@ import {
 // 今日 数据
 const dateA = [
     {
-        name: '电梯系统',
-        '故障台数': 100,
-        amt: 600
-    }, {
         name: '电器系统',
-        '故障台数': 121,
-        amt: 121
+        '故障台数': 10
+    }, {
+        name: '电梯系统',
+        '故障台数': 12
     }, {
         name: '空调系统',
-        '故障台数': 88,
-        amt: 88
+        '故障台数': 8
+    }, {
+        name: '水暖系统',
+        '故障台数': 1
+    }, {
+        name: '消防监控系统',
+        '故障台数': 14
     }
 ]
 
 // 本周 数据
 const dateB = [
     {
-        name: '电梯系统',
-        '故障台数': 200,
-        amt: 200
-    }, {
         name: '电器系统',
-        '故障台数': 250,
-        amt: 250
+        '故障台数': 20
+    }, {
+        name: '电梯系统',
+        '故障台数': 25
     }, {
         name: '空调系统',
-        '故障台数': 220,
-        amt: 220
+        '故障台数': 22
+    }, {
+        name: '水暖系统',
+        '故障台数': 11
+    }, {
+        name: '消防监控系统',
+        '故障台数': 12
     }
 ]
 
 // 某个时间段 数据
 const dateC = [
     {
-        name: '电梯系统',
-        '故障台数': 300,
-        amt: 300
-    }, {
         name: '电器系统',
-        '故障台数': 350,
-        amt: 350
+        '故障台数': 30
+    }, {
+        name: '电梯系统',
+        '故障台数': 40
     }, {
         name: '空调系统',
-        '故障台数': 320,
-        amt: 320
+        '故障台数': 32
+    }, {
+        name: '水暖系统',
+        '故障台数': 6
+    }, {
+        name: '消防监控系统',
+        '故障台数': 22
     }
 ]
 class Echarts extends React.Component {
@@ -159,11 +168,11 @@ class Echarts extends React.Component {
                         'color': '#333'}}>设备故障情况</h2>
                     <div>
                         <p style={{'padding': '15px 0'}}>
-                            <button style={{ marginRight: '1rem' }} onClick={ this.todayData }> 今日 </button>
-                            <button style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </button>
-                            <button style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </button>
+                            <a style={{ marginRight: '1rem' }} onClick={ this.todayData }> 今日 </a>
+                            <a style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </a>
+                            <a style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </a>
                         </p>
-                        <BarChart width={ 600 } height={ 300 } data={ this.state.data1 }
+                        <BarChart width={ 600 } height={ 400 } data={ this.state.data1 }
                             margin={{
                                 top: 5,
                                 right: 30,
