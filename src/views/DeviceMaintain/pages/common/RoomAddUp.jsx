@@ -119,7 +119,7 @@ class RoomAddUp extends React.Component {
                 await apiPost(
                     'equipment/updateMachineRoom',
                     {twoCode: url.data,
-                        id: this.props.id
+                        id: result.data.slice(1, result.data.length)
                     }
                 )
                 notification.open({
@@ -200,7 +200,7 @@ class RoomAddUp extends React.Component {
         const { getFieldDecorator } = this.props.form
         return (
             <div>
-                <Modal
+                <Modal maskClosable={false}
                     title={this.props.title}
                     style={{top: 20}}
                     width={400}
