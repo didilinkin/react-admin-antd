@@ -174,6 +174,10 @@ class Sidebar extends React.Component {
                             <Link to="/deviceMaintain/account">设备台帐</Link>
                         </Menu.Item>
 
+                        <Menu.Item key="/deviceMaintain/computerRoom">
+                            <Link to="/deviceMaintain/computerRoom">机房编码</Link>
+                        </Menu.Item>
+
                         <SubMenu key="/deviceMaintain/deviceMaintenance" title={
                             <span>
                                 <span className="nav-text">设备维保</span>
