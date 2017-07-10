@@ -91,16 +91,18 @@ class Echarts extends React.Component {
         this.state = {
             data1: dateA,
             data: [
-                {value: 335,
-                    name: '直接访问'},
-                {value: 310,
-                    name: '邮件营销'},
-                {value: 234,
-                    name: '联盟广告'},
-                {value: 135,
-                    name: '视频广告'},
-                {value: 1548,
-                    name: '搜索引擎'}
+                {value: 20,
+                    name: '1星'},
+                {value: 6,
+                    name: '2星'},
+                {value: 10,
+                    name: '3星'},
+                {value: 20,
+                    name: '4星'},
+                {value: 28,
+                    name: '5星'},
+                {value: 18,
+                    name: '6星'}
             ]
         }
     }
@@ -129,7 +131,7 @@ class Echarts extends React.Component {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                data: ['1星', '2星', '3星', '4星', '5星', '6星']
             },
             series: [
                 {
