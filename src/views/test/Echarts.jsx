@@ -19,7 +19,7 @@ const data = [{name: 'Group A',
     value: 40}, {name: 'Group D',
     value: 20}, {name: 'Group E',
     value: 12}]
-const COLORS = ['#48A9EF', '#8997E7', '#F3857A', '#FFD96E', '#99D97C']
+const COLORS = ['#48A9EF', '#99D97C', '#FFD96E', '#F3857A', '#8997E7']
 
 
 // 今日 数据
@@ -102,7 +102,7 @@ class Echarts extends React.Component {
                 {value: 28,
                     name: '5星'},
                 {value: 18,
-                    name: '6星'}
+                    name: '未评价'}
             ]
         }
     }
@@ -131,14 +131,14 @@ class Echarts extends React.Component {
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['1星', '2星', '3星', '4星', '5星', '6星']
+                data: ['1星', '2星', '3星', '4星', '5星', '未评价']
             },
             series: [
                 {
                     name: '访问来源',
                     type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
+                    radius: '50%',
+                    center: ['55%', '60%'],
                     data: this.state.data,
                     itemStyle: {
                         emphasis: {
@@ -162,21 +162,63 @@ class Echarts extends React.Component {
                         <h2 style={{ 'lineHeight': 'normal',
                             'fontSize': '18px',
                             'color': '#333'}}>客户报修情况</h2>
-                        <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
-                            <Pie
-                                data={data}
-                                cx={120}
-                                cy={180}
-                                innerRadius={60}
-                                outerRadius={80}
-                                fill="#8884d8"
-                                paddingAngle={0}
-                            >
-                                {
-                                    data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
-                                }
-                            </Pie>
-                        </PieChart>
+                        <div style={{'width': '300px',
+                            'height': '300px',
+                            'float': 'left'}}>
+                            <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
+                                <Pie
+                                    data={data}
+                                    cx={120}
+                                    cy={180}
+                                    innerRadius={60}
+                                    outerRadius={80}
+                                    fill="#8884d8"
+                                    paddingAngle={0}
+                                >
+                                    {
+                                        data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                                    }
+                                </Pie>
+                            </PieChart>
+                        </div>
+                        <div style={{'width': '150px',
+                            'float': 'left',
+                            'color': '#000',
+                            'paddingTop': '110px',
+                            'lineHeight': '30px'}}>
+                            <ul>
+                                <li><span style={{'width': '10px',
+                                    'height': '10px',
+                                    'marginRight': '5px',
+                                    'borderRadius': '50%',
+                                    'display': 'inline-block',
+                                    'background': '#48A9EF'}} />未派单 {data[0].value}</li>
+                                <li><span style={{'width': '10px',
+                                    'height': '10px',
+                                    'marginRight': '5px',
+                                    'borderRadius': '50%',
+                                    'display': 'inline-block',
+                                    'background': '#99D97C'}} />已完工 {data[1].value}</li>
+                                <li><span style={{'width': '10px',
+                                    'height': '10px',
+                                    'marginRight': '5px',
+                                    'borderRadius': '50%',
+                                    'display': 'inline-block',
+                                    'background': '#FFD96E'}} />进行中 {data[2].value}</li>
+                                <li><span style={{'width': '10px',
+                                    'height': '10px',
+                                    'marginRight': '5px',
+                                    'borderRadius': '50%',
+                                    'display': 'inline-block',
+                                    'background': '#F3857A'}} />取消工单 {data[3].value}</li>
+                                <li><span style={{'width': '10px',
+                                    'height': '10px',
+                                    'marginRight': '5px',
+                                    'borderRadius': '50%',
+                                    'display': 'inline-block',
+                                    'background': '#8997E7'}} />作废工单 {data[4].value}</li>
+                            </ul>
+                        </div>
                     </div>
                     <div className="parent" style={{'float': 'left'}}>
                         <ReactEcharts
