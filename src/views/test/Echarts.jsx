@@ -8,8 +8,20 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend
+    Legend,
+    PieChart,
+    Pie,
+    Cell
 } from 'recharts'
+const data = [{name: 'Group A',
+    value: 76}, {name: 'Group B',
+    value: 56}, {name: 'Group C',
+    value: 40}, {name: 'Group D',
+    value: 20}, {name: 'Group E',
+    value: 12}]
+const COLORS = ['#48A9EF', '#8997E7', '#F3857A', '#FFD96E', '#99D97C']
+
+
 // 今日 数据
 const dateA = [
     {
@@ -143,11 +155,26 @@ class Echarts extends React.Component {
             <div className="examples">
                 <div>
                     <div style={{'float': 'left',
-                        'width': '350px',
+                        'width': '450px',
                         'height': '350px'}}>
                         <h2 style={{ 'lineHeight': 'normal',
                             'fontSize': '18px',
                             'color': '#333'}}>客户报修情况</h2>
+                        <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
+                            <Pie
+                                data={data}
+                                cx={120}
+                                cy={180}
+                                innerRadius={60}
+                                outerRadius={80}
+                                fill="#8884d8"
+                                paddingAngle={0}
+                            >
+                                {
+                                    data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                                }
+                            </Pie>
+                        </PieChart>
                     </div>
                     <div className="parent" style={{'float': 'left'}}>
                         <ReactEcharts
@@ -173,9 +200,9 @@ class Echarts extends React.Component {
                             <ul style={{'padding': '15px',
                                 'lineHeight': '1.9'}}>
                                 <li><p>设备总数</p><span style={{'fontSize': '30px'}}>124,345</span></li>
-                                <li><p>在用</p><span>23,345</span></li>
-                                <li><p>闲置</p><span>23,345</span></li>
-                                <li><p>报废</p><span>23,345</span></li>
+                                <li><p>在用</p><span style={{'fontSize': '30px'}}>23,345</span></li>
+                                <li><p>闲置</p><span style={{'fontSize': '30px'}}>23,345</span></li>
+                                <li><p>报废</p><span style={{'fontSize': '30px'}}>23,345</span></li>
                             </ul>
                         </div>
                         <div style={{'float': 'left'}}>
