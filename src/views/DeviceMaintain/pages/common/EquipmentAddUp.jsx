@@ -136,8 +136,8 @@ class EquipmentAddUp extends React.Component {
                     {code: result.data})
                 await apiPost(
                     'equipment/updateEquipment',
-                    {url: url.data,
-                        id: this.props.id
+                    {twoCode: url.data,
+                        id: result.data.slice(1, result.data.length)
                     }
                 )
                 notification.open({

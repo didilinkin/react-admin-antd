@@ -261,7 +261,7 @@ const routes = [
                 path: '/deviceMaintain/repairRecord/:id',                                                   // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
-                path: '/deviceMaintain/serverRoom',                                                     // 设备维护 - 机房明细
+                path: '/deviceMaintain/serverRoom/:id',                                                     // 设备维护 - 机房明细
                 component: ServerRoom
             }, {
                 path: '/deviceMaintain/electricalErrorDevice/:id',                                      // 设备维护 - 电器异常带设备信息

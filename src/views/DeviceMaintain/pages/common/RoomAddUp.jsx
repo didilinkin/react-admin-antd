@@ -119,7 +119,7 @@ class RoomAddUp extends React.Component {
                 await apiPost(
                     'equipment/updateMachineRoom',
                     {twoCode: url.data,
-                        id: this.props.id
+                        id: result.data.slice(1, result.data.length)
                     }
                 )
                 notification.open({
