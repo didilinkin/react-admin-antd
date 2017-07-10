@@ -167,26 +167,27 @@ class Echarts extends React.Component {
                         'fontSize': '18px',
                         'color': '#333'}}>设备故障情况</h2>
                     <div>
-                        <p style={{'padding': '15px 0'}}>
-                            <a style={{ marginRight: '1rem' }} onClick={ this.todayData }> 今日 </a>
-                            <a style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </a>
-                            <a style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </a>
-                        </p>
-                        <BarChart width={ 600 } height={ 400 } data={ this.state.data1 }
-                            margin={{
-                                top: 5,
-                                right: 30,
-                                left: 20,
-                                bottom: 5
-                            }}
-                        >
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="故障台数" fill="#8884d8" />
-                        </BarChart>
+                        <div style={{'float': 'left',
+                            'width': '200px',
+                            'height': '200px'}}>
+
+                        </div>
+                        <div style={{'float': 'left'}}>
+                            <p style={{'padding': '15px 45px'}}>
+                                <a style={{ marginRight: '1rem' }} onClick={ this.todayData }> 今日 </a>
+                                <a style={{ marginRight: '1rem' }} onClick={ this.yesterdayData }> 本周 </a>
+                                <a style={{ marginRight: '1rem' }} onClick={ this.intervalData }> 某个区间(可以用日期选择器选择出时间区间) </a>
+                            </p>
+                            <BarChart width={ 600 } height={ 400 } data={ this.state.data1 } >
+                                <XAxis dataKey="name" />
+                                <YAxis />
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="故障台数" fill="#8884d8" />
+                            </BarChart>
+                        </div>
+
                     </div>
                 </div>
             </div>
