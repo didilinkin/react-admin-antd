@@ -108,6 +108,8 @@ class WarehouseAddUp extends React.Component {
                 if (material.whType === 2) {
                     json['whTypeName'] = '行政库'
                 }
+                let uuid = new Date().getTime()
+                json['uuid'] = uuid
                 json['warehouseId'] = material.id
                 json['storagePlace'] = material.storagePlace
                 json['name'] = material.name
