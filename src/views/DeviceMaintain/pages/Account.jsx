@@ -245,7 +245,7 @@ class Account extends Component {
                         columns={this.state.columns}
                     />
                 </Spin>
-                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                <Modal maskClosable={false} visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="example" style={{width: '100%'}} src={this.state.imgUrl} />
                     <span style={{
                         textAlign: 'center',

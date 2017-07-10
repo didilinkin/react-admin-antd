@@ -126,7 +126,7 @@ class addUpkeep extends React.Component {
         const { getFieldDecorator } = this.props.form
         return (
             <div>
-                <Modal
+                <Modal maskClosable={false}
                     title={this.props.title}
                     style={{top: 20}}
                     width={400}

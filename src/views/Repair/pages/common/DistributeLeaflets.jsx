@@ -86,7 +86,7 @@ class DistributeLeaflets extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form
         return (
-            <Modal
+            <Modal maskClosable={false}
                 title="派单"
                 style={{top: 20}}
                 width={400}

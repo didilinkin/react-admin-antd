@@ -178,7 +178,7 @@ class DistributionRoom extends React.Component {
                         columns={this.state.columns}
                     />
                 </Spin>
-                <Modal
+                <Modal maskClosable={false}
                     title="变压器巡检信息"
                     style={{top: 20}}
                     width={800}
