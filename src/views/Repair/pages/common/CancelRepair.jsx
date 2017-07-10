@@ -60,7 +60,7 @@ class CancelRepair extends React.Component {
         const { getFieldDecorator } = this.props.form
         return (
             <div>
-                <Modal
+                <Modal maskClosable={false}
                     title="作废报修记录"
                     style={{top: 20}}
                     width={400}

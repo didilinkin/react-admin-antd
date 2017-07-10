@@ -78,7 +78,7 @@ class ComputerRoom extends Component {
                 dataIndex: 'opt',
                 key: 'opt',
                 render: function (text, record, index) {
-                    let url = '/deviceMaintain/equipmentLedger/' + record.id
+                    let url = '/deviceMaintain/serverRoom/' + record.id
                     return (
                         <div>
                             <a href={url}><Button >详情</Button></a>
@@ -197,7 +197,7 @@ class ComputerRoom extends Component {
                         columns={this.state.columns}
                     />
                 </Spin>
-                <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                <Modal maskClosable={false} visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="example" style={{width: '100%'}} src={this.state.imgUrl} />
                     <span style={{
                         textAlign: 'center',
