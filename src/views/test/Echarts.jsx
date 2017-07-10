@@ -16,7 +16,7 @@ class EchartsTest extends Component {
         let myChart = echarts.init(document.getElementById('main'))
         // 绘制图表
         myChart.setOption({
-            title: { text: 'ECharts 入门示例' },
+            title: { text: '客户报修情况' },
             tooltip: {},
             xAxis: {
                 data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
@@ -33,7 +33,7 @@ class EchartsTest extends Component {
         let myChart1 = echarts.init(document.getElementById('main1'))
         // 绘制图表
         myChart1.setOption({
-            title: { text: '客户报修情况' },
+            title: { text: '设备故障情况' },
             tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -41,7 +41,8 @@ class EchartsTest extends Component {
             legend: {
                 show: true,
                 orient: 'vertical',
-                left: '20px',
+                left: '10px',
+                top: '50px',
                 data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
             },
             series: [
