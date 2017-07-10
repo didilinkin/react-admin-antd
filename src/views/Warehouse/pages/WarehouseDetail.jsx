@@ -79,8 +79,8 @@ class WarehouseDetail extends Component {
             }, {
                 title: '领用人',
                 width: 100,
-                dataIndex: 'recipient',
-                key: 'recipient'
+                dataIndex: 'recipientName',
+                key: 'recipientName'
             }, {
                 title: '操作人',
                 width: 100,

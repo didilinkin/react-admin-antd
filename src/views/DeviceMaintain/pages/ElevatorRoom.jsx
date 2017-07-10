@@ -114,31 +114,6 @@ class ElevatorRoom extends Component {
                 dataIndex: 'doorLockState',
                 key: 'doorLockState'
             }, {
-                title: '轿厢照明通风是否正常',
-                width: 150,
-                dataIndex: 'cageLightingState',
-                key: 'cageLightingState'
-            }, {
-                title: '轿厢平层是否良好',
-                width: 150,
-                dataIndex: 'cageFlatState',
-                key: 'cageFlatState'
-            }, {
-                title: '轿门开/关是否正常',
-                width: 150,
-                dataIndex: 'gateButtonState',
-                key: 'gateButtonState'
-            }, {
-                title: '地坑是否干燥整洁',
-                width: 150,
-                dataIndex: 'pitDryState',
-                key: 'pitDryState'
-            }, {
-                title: '问题梯号',
-                width: 150,
-                dataIndex: 'abnormalElevatorName',
-                key: 'abnormalElevatorName'
-            }, {
                 title: '巡检人',
                 width: 150,
                 dataIndex: 'patrolName',

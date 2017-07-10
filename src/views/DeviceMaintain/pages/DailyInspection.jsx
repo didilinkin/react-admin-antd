@@ -76,10 +76,6 @@ class DailyInspection extends Component {
                     title: '电梯运行',
                     dataIndex: 'elevatorState',
                     key: 'elevatorState'
-                }, {
-                    title: '设备卫生及机房安全',
-                    dataIndex: 'safetyState',
-                    key: 'safetyState'
                 }]
             }, {
                 title: '异常情况',
