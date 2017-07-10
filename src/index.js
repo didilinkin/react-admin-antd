@@ -3,145 +3,64 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'          // 全局store
-import { createLogger } from 'redux-logger'         // 开发阶段: 打印redux 日志
-import thunk from 'redux-thunk'          // 异步
+import {
+    createStore,
+    combineReducers,
+    applyMiddleware
+}    from 'redux'
+import { Provider }         from 'react-redux'          // 全局store
+// import { createLogger }     from 'redux-logger'         // 开发阶段: 打印redux 日志
+// import thunk                from 'redux-thunk'          // 异步
 
-import rootReducer from './store/reducers'     // 根reducers
+import createBrowserHistory from 'history/createBrowserHistory'
+import {
+    ConnectedRouter,
+    routerReducer,
+    routerMiddleware
+    // ,push
+} from 'react-router-redux'
+
+import rootReducer from './store/reducers'      // 根reducers
 
 import Routes from './router'
 
 // import particlesJS from 'particles.js'
 
-// particlesJS.load('particles-js', {
-//     'particles': {
-//         'number': {
-//             'value': 80,
-//             'density': {
-//                 'enable': true,
-//                 'value_area': 800
-//             }
-//         },
-//         'color': {
-//             'value': '#ffffff'
-//         },
-//         'shape': {
-//             'type': 'circle',
-//             'stroke': {
-//                 'width': 0,
-//                 'color': '#000000'
-//             },
-//             'polygon': {
-//                 'nb_sides': 5
-//             },
-//             'image': {
-//                 'src': 'img/github.svg',
-//                 'width': 100,
-//                 'height': 100
-//             }
-//         },
-//         'opacity': {
-//             'value': 0.5,
-//             'random': false,
-//             'anim': {
-//                 'enable': false,
-//                 'speed': 1,
-//                 'opacity_min': 0.1,
-//                 'sync': false
-//             }
-//         },
-//         'size': {
-//             'value': 3,
-//             'random': true,
-//             'anim': {
-//                 'enable': false,
-//                 'speed': 40,
-//                 'size_min': 0.1,
-//                 'sync': false
-//             }
-//         },
-//         'line_linked': {
-//             'enable': true,
-//             'distance': 150,
-//             'color': '#ffffff',
-//             'opacity': 0.4,
-//             'width': 1
-//         },
-//         'move': {
-//             'enable': true,
-//             'speed': 6,
-//             'direction': 'none',
-//             'random': false,
-//             'straight': false,
-//             'out_mode': 'out',
-//             'bounce': false,
-//             'attract': {
-//                 'enable': false,
-//                 'rotateX': 600,
-//                 'rotateY': 1200
-//             }
-//         }
-//     },
-//     'interactivity': {
-//         'detect_on': 'canvas',
-//         'events': {
-//             'onhover': {
-//                 'enable': true,
-//                 'mode': 'repulse'
-//             },
-//             'onclick': {
-//                 'enable': true,
-//                 'mode': 'push'
-//             },
-//             'resize': true
-//         },
-//         'modes': {
-//             'grab': {
-//                 'distance': 400,
-//                 'line_linked': {
-//                     'opacity': 1
-//                 }
-//             },
-//             'bubble': {
-//                 'distance': 400,
-//                 'size': 40,
-//                 'duration': 2,
-//                 'opacity': 8,
-//                 'speed': 3
-//             },
-//             'repulse': {
-//                 'distance': 200,
-//                 'duration': 0.4
-//             },
-//             'push': {
-//                 'particles_nb': 4
-//             },
-//             'remove': {
-//                 'particles_nb': 2
-//             }
-//         }
-//     },
-//     'retina_detect': true
-// })
+const history = createBrowserHistory()          // 创建您选择的历史记录（在这种情况下，我们使用浏览器历史记录）
+/*
+ * 当浏览器不支持 HTML5 的 history API 时强制刷新页面;
+ * 只有当浏览器不支持 HTML5 的 history API 时，才设置为 true
+ */
+const supportsHistory = 'pushState' in window.history
+const middleware = routerMiddleware(history)    // 构建 拦截 和 调度导航 actions的中间件 / 日志
 
 const rootElement = document.getElementById('root')
 
 // 开发环境下, 打印 redux日志
-const middleware = [thunk]
-if (process.env.NODE_ENV !== 'production') {
-    middleware.push(createLogger())
-}
+// const middleware = [thunk]
+// if (process.env.NODE_ENV !== 'production') {
+//     middleware.push(createLogger())
+// }
 
 // 根store
 const store = createStore(
-    rootReducer,
-    applyMiddleware(...middleware)
+    combineReducers({
+        ...rootReducer,             // 在 'route' 标签上将 'reducer' 添加到 全局store上
+        router: routerReducer       // 为 导航 应用 中间件
+    }),
+    applyMiddleware(middleware)
+    // rootReducer,
+    // applyMiddleware(...middleware)
 )
 
+// Now you can dispatch navigation actions from anywhere!
+// store.dispatch(push('/foo'))
 render(
     <Provider store={store}>
-        <Routes />
+        { /* ConnectedRouter 将自动提供 store */ }
+        <ConnectedRouter history={history} forceRefresh={!supportsHistory}>
+            <Routes />
+        </ConnectedRouter>
     </Provider>,
     rootElement
 )
