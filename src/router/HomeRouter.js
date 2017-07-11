@@ -18,6 +18,7 @@ import Rectification            from '../views/Repair/pages/Rectification'      
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 
 import Repair                   from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
+import test                   from '../views/Repair/pages/test'                             // [详情] - 报修明细
 import ReturnVisit              from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
 import ReturnVisitDetail        from '../views/Repair/pages/Details/ReturnVisitDetail'                  // [详情] - 回访登记明细
 import Maintenance              from '../views/Repair/pages/Details/Maintenance'                        // [详情] - 维修详情
@@ -118,6 +119,9 @@ const routes = [
             {
                 path: '/upkeep/repairList',                                                             // 客户管理 - 客户报修
                 component: RepairList
+            }, {
+                path: '/upkeep/test',                                                             // test
+                component: test
             }, {
                 path: '/upkeep/clientReview',                                                           // 客户管理 - 客户回访
                 component: ClientReview
