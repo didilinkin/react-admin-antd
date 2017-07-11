@@ -1,9 +1,12 @@
-import React from 'react'
+// 收集全部组件
+import App from './App'
+import Home from './Home'
+import Foo from './Foo'
+import Bar from './Bar'
 
-const App = () => (
-    <div>
-        <h1> App </h1>
-    </div>
-)
-
-export default App
+export {
+    App,
+    Home,
+    Foo,
+    Bar
+}

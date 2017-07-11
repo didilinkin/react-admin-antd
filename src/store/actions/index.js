@@ -16,3 +16,18 @@ export const signOut = auth => (dispatch, getState) => {
         type: types.SIGN_OUT
     })
 }
+
+// react-router-redex 测试用 计算器
+export function increase (n) {
+    return {
+        type: types.INCREASE,
+        amount: n
+    }
+}
+
+export function decrease (n) {
+    return {
+        type: types.DECREASE,
+        amount: n
+    }
+}

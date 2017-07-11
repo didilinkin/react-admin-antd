@@ -1,7 +1,9 @@
 // reducers 根
 import { combineReducers } from 'redux'
-import auth from './auth'
+// import auth from './auth'
+import count from './count'
 
 export default combineReducers({
-    auth
+    // auth,
+    count
 })
