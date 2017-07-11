@@ -1,5 +1,5 @@
 // 仓库添加(? 未确认名称)
-import {Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select } from 'antd'
+import {Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
 import { apiPost } from '../../../../api/index'
@@ -257,7 +257,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="数量" labelCol={{ span: 5 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('purchase')(<Input onBlur={this.sumMoney} />)}
+                                {getFieldDecorator('number')(<InputNumber onBlur={this.sumMoney} />)}
                             </FormItem>
                         </Col>
                     </Row>
