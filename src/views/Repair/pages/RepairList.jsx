@@ -127,7 +127,9 @@ class RepairList extends Component {
                 key: 'repairStatus',
                 render: function (text, record, index) {
                     let repairStatus = '未完成'
-                    if (record.repairStatus === 1) {
+                    if (record.isCancel === 1) {
+                        repairStatus = '已取消'
+                    } else if (record.repairStatus === 1) {
                         repairStatus = '已完成'
                     }
                     return (
