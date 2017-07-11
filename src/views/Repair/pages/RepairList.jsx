@@ -52,7 +52,8 @@ class RepairList extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            'upkeep/repairList'
+            'upkeep/repairList',
+            {repairStatus: 0}
         )
         let repairList = result.data
         const distributeLeaflets = this.distributeLeaflets
@@ -164,32 +165,25 @@ class RepairList extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.pieStatus === 1) {
-                        return (
-                            <div>
-                                <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                    <Button >派单</Button>
-                                </Popconfirm>
-                                <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <Button >作废</Button>
-                                </Popconfirm>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div>
-                                <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                    <Button >派单</Button>
-                                </Popconfirm>
-                                <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <Button >作废</Button>
-                                </Popconfirm>
-                                <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
-                                    <Button >修改</Button>
-                                </Popconfirm>
-                            </div>
+                    let arr = []
+                    if (record.pieStatus === 0 || record.isCancel === 1) {
+                        arr.push(
+                            <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                                <Button >派单</Button>
+                            </Popconfirm>)
+                        arr.push(
+                            <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
+                                <Button >修改</Button>
+                            </Popconfirm>)
+                    }
+                    if (record.pieStatus === 0) {
+                        arr.push(
+                            <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                                <Button >作废</Button>
+                            </Popconfirm>
                         )
                     }
+                    return arr
                 }
             }],
             dataSource: repairList
@@ -209,6 +203,7 @@ class RepairList extends Component {
             {'startDate': this.startDate,
                 'endDate': this.endDate,
                 'clientName': this.clientName,
+                'repairStatus': 0,
                 'order': order
             }
         )
