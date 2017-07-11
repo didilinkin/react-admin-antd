@@ -1,5 +1,6 @@
 import { Upload, Icon, Modal } from 'antd'
 import React from 'react'
+import { baseURL } from '../../../../api/index'
 
 class PicturesWall extends React.Component {
     state = {
@@ -50,7 +51,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="http://192.168.5.106:18082/storage/uploader"
+                    action={ baseURL + 'storage/uploader'}
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}
