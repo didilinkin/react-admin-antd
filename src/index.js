@@ -1,5 +1,4 @@
 // 根文件
-// /* global particlesJS: true */
 import React from 'react'
 import { render } from 'react-dom'
 
@@ -9,8 +8,6 @@ import {
     applyMiddleware
 }    from 'redux'
 import { Provider }         from 'react-redux'          // 全局store
-// import { createLogger }     from 'redux-logger'         // 开发阶段: 打印redux 日志
-// import thunk                from 'redux-thunk'          // 异步
 
 import createBrowserHistory from 'history/createBrowserHistory'
 import {
@@ -24,8 +21,6 @@ import rootReducer from './store/reducers'      // 根reducers
 
 import Routes from './router'
 
-// import particlesJS from 'particles.js'
-
 const history = createBrowserHistory()          // 创建您选择的历史记录（在这种情况下，我们使用浏览器历史记录）
 /*
  * 当浏览器不支持 HTML5 的 history API 时强制刷新页面;
@@ -36,12 +31,6 @@ const middleware = routerMiddleware(history)    // 构建 拦截 和 调度导�
 
 const rootElement = document.getElementById('root')
 
-// 开发环境下, 打印 redux日志
-// const middleware = [thunk]
-// if (process.env.NODE_ENV !== 'production') {
-//     middleware.push(createLogger())
-// }
-
 // 根store
 const store = createStore(
     combineReducers({
@@ -49,8 +38,6 @@ const store = createStore(
         router: routerReducer       // 为 导航 应用 中间件
     }),
     applyMiddleware(middleware)
-    // rootReducer,
-    // applyMiddleware(...middleware)
 )
 
 // Now you can dispatch navigation actions from anywhere!
