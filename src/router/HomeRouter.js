@@ -9,6 +9,7 @@ import AsyncTable               from '../views/test/AsyncTable'                 
 import Echarts                  from '../views/test/Echarts'                                            // 测试 echarts组建(简单例子)
 import Recharts                 from '../views/test/Recharts'                                           // 测试 Recharts组件(饼状图 - 简单例子)
 import SimpleBarChart           from '../views/test/SimpleBarChart'                                     // 测试 Recharts组件(柱状图)
+import TabsTest                 from '../views/test/TabsTest'                                           // 测试 标签页切换 案例
 
 // 引入 '客户管理' 版块
 import RepairList               from '../views/Repair/pages/RepairList'                                 // 客户报修
@@ -110,6 +111,9 @@ const routes = [
             }, {
                 path: '/test/simpleBarChart',                                                           // 测试 Recharts组件(柱状图)
                 component: SimpleBarChart
+            }, {
+                path: '/test/tabsTest',
+                component: TabsTest
             }
         ]
     }, {

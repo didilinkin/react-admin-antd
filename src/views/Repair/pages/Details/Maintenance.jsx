@@ -22,6 +22,9 @@ class App extends React.Component {
         } else {
             Repair['repairStatus'] = '未完成'
         }
+        if (Repair.isCancel === 1) {
+            Repair['repairStatus'] = '已取消'
+        }
         let i = 0
         Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
             if (img !== '') {

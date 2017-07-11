@@ -17,6 +17,28 @@ class addUpkeep extends React.Component {
                     '/warehouse/getMaterial',
                     { 'id': nextProps.id }
                 )
+                if (resulData.data.whType === 0) {
+                    this.props.form.setFields({
+                        whType: {
+                            value: '工程库',
+                            errors: ''
+                        }
+                    })
+                } else if (resulData.data.whType === 1) {
+                    this.props.form.setFields({
+                        whType: {
+                            value: '保洁用品库',
+                            errors: ''
+                        }
+                    })
+                } else {
+                    this.props.form.setFields({
+                        whType: {
+                            value: '行政库',
+                            errors: ''
+                        }
+                    })
+                }
                 this.props.form.setFields({
                     standard: {
                         value: resulData.data.standard,
@@ -36,10 +58,6 @@ class addUpkeep extends React.Component {
                     },
                     storagePlace: {
                         value: resulData.data.storagePlace,
-                        errors: ''
-                    },
-                    whType: {
-                        value: resulData.data.whType,
                         errors: ''
                     }
                 })
@@ -138,8 +156,8 @@ class addUpkeep extends React.Component {
                                 optionFilterProp="children"
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
-                                <Option key="0">工程部</Option>
-                                <Option key="1">保洁用品</Option>
+                                <Option key="0">工程库</Option>
+                                <Option key="1">保洁用品库</Option>
                                 <Option key="2">行政库</Option>
                             </Select>
                         </FormItem>

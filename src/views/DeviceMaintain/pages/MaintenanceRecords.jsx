@@ -1,7 +1,7 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
 import {Table, Button, Spin, DatePicker, Input} from 'antd'
-import { apiPost } from '../../../api'
+import { apiPost, baseURL} from '../../../api'
 // 引入组件
 const { RangePicker } = DatePicker
 
@@ -60,9 +60,24 @@ class MaintenanceRecords extends Component {
                 key: 'patrolName'
             }, {
                 title: '现场图片',
-                width: 150,
+                width: 500,
                 dataIndex: 'imgUrl',
-                key: 'imgUrl'
+                key: 'imgUrl',
+                render: function (text, record, index) {
+                    let i = 0
+                    let arr = []
+                    record.imgUrl.split('#').map(img => {
+                        if (img !== '') {
+                            i++
+                            arr.push(
+                                <img key={i} style={{width: '100px',
+                                    height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
+                                />)
+                        }
+                        return ''
+                    })
+                    return arr
+                }
             }],
             dataSource: result.data
         })
