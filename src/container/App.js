@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, browserHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const App = ({ children }) => (
     <div>
@@ -13,7 +13,7 @@ const App = ({ children }) => (
             <Link to="/bar">Bar</Link>
         </header>
         <div>
-            <button onClick={() => browserHistory.push('/foo')}>Go to /foo</button>
+            <button onClick={() => history.push('/foo')}>Go to /foo</button>
         </div>
         <div style={{ marginTop: '1.5em' }}>
             {children}

@@ -11,7 +11,7 @@ import { Provider }                             from 'react-redux'
 
 import { syncHistoryWithStore, routerReducer }  from 'react-router-redux'
 
-import { Router, BrowserRouter }                from 'react-router-dom'
+import { Router, BrowserRouter }                from 'react-router'
 
 import rootReducer                              from './store/reducers'      // 根reducers
 import Routes                                   from './router'
