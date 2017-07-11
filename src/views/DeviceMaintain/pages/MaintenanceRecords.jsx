@@ -69,9 +69,10 @@ class MaintenanceRecords extends Component {
                     record.imgUrl.split('#').map(img => {
                         if (img !== '') {
                             i++
-                            arr.push(<img key={i} style={{width: '100px',
-                                height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
-                            />)
+                            arr.push(
+                                <img key={i} style={{width: '100px',
+                                    height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
+                                />)
                         }
                         return ''
                     })
