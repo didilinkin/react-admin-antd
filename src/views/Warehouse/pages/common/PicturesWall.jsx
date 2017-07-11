@@ -50,7 +50,7 @@ class PicturesWall extends React.Component {
         return (
             <div className="clearfix">
                 <Upload
-                    action="http://192.168.1.108:18082/storage/uploader"
+                    action="http://192.168.5.106:18082/storage/uploader"
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}

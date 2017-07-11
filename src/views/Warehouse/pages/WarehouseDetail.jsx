@@ -1,7 +1,7 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
-import { apiPost } from '../../../api'
+import { apiPost, baseURL } from '../../../api'
 // 引入组件
 
 // React component
@@ -26,10 +26,16 @@ class WarehouseDetail extends Component {
                 title: '序号',
                 width: 80,
                 dataIndex: 'id',
-                key: 'id'
+                key: 'id',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
             }, {
                 title: '出入库日期 ',
-                width: 150,
+                width: 200,
                 dataIndex: 'warehouseDate',
                 key: 'warehouseDate'
             }, {
@@ -88,14 +94,28 @@ class WarehouseDetail extends Component {
                 key: 'createBy'
             }, {
                 title: '操作时间',
-                width: 150,
+                width: 200,
                 dataIndex: 'createDate',
                 key: 'createDate'
             }, {
-                title: '操作',
-                width: 200,
+                title: '附件',
+                width: 500,
                 dataIndex: 'fileUrl',
-                key: 'fileUrl'
+                key: 'fileUrl',
+                render: function (text, record, index) {
+                    let i = 0
+                    let arr = []
+                    record.fileUrl.split('#').map(img => {
+                        if (img !== '') {
+                            i++
+                            arr.push(<img key={i} style={{width: '100px',
+                                height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
+                            />)
+                        }
+                        return ''
+                    })
+                    return arr
+                }
             }],
             dataSource: result.data
         })
