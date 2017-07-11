@@ -66,7 +66,7 @@ class MaintenanceRecords extends Component {
                 render: function (text, record, index) {
                     let i = 0
                     let arr = []
-                    record.fileUrl.split('#').map(img => {
+                    record.imgUrl.split('#').map(img => {
                         if (img !== '') {
                             i++
                             arr.push(<img key={i} style={{width: '100px',
