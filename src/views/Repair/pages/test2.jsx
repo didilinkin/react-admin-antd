@@ -1,4 +1,4 @@
-// 报修明细
+// 欢乐颂电费明细
 import React from 'react'
 import { Row, Col, Tabs } from 'antd'
 import '../../../style/test.less'
