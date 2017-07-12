@@ -172,42 +172,42 @@ class App extends React.Component {
                                 <p className="line" />
                                 <table className="tb">
                                     <tbody>
-                                    <tr className="hd">
-                                        <td>租赁周期</td>
-                                        <td>交费期限</td>
-                                        <td>金额 （元）</td>
-                                        <td>优惠（元）</td>
-                                        <td>应收租金（元）</td>
-                                        <td>实收租金（元）</td>
-                                        <td>未收租金（元）</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                        <td>23</td>
-                                        <td>23</td>
-                                        <td>11</td>
-                                    </tr>
+                                        <tr className="hd">
+                                            <td>租赁周期</td>
+                                            <td>交费期限</td>
+                                            <td>金额 （元）</td>
+                                            <td>优惠（元）</td>
+                                            <td>应收租金（元）</td>
+                                            <td>实收租金（元）</td>
+                                            <td>未收租金（元）</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                            <td>23</td>
+                                            <td>23</td>
+                                            <td>11</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -239,31 +239,31 @@ class App extends React.Component {
                                 <div className="leftbox">
                                     <table className="tb">
                                         <tbody>
-                                        <tr className="hd">
-                                            <td>费用类别</td>
-                                            <td>收费标准</td>
-                                            <td>金额 （元）</td>
-                                        </tr>
-                                        <tr>
-                                            <td>物业管理费</td>
-                                            <td>4.85 元／㎡/月</td>
-                                            <td>123.12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>电梯费</td>
-                                            <td>1.35 元／㎡/月</td>
-                                            <td>123.12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>空调费</td>
-                                            <td>0.85 元／㎡/月</td>
-                                            <td>123.12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>水费</td>
-                                            <td>1.0 元/㎡ </td>
-                                            <td>0</td>
-                                        </tr>
+                                            <tr className="hd">
+                                                <td>费用类别</td>
+                                                <td>收费标准</td>
+                                                <td>金额 （元）</td>
+                                            </tr>
+                                            <tr>
+                                                <td>物业管理费</td>
+                                                <td>4.85 元／㎡/月</td>
+                                                <td>123.12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>电梯费</td>
+                                                <td>1.35 元／㎡/月</td>
+                                                <td>123.12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>空调费</td>
+                                                <td>0.85 元／㎡/月</td>
+                                                <td>123.12</td>
+                                            </tr>
+                                            <tr>
+                                                <td>水费</td>
+                                                <td>1.0 元/㎡ </td>
+                                                <td>0</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
