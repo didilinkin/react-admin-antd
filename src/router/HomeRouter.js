@@ -18,6 +18,7 @@ import UpkeepList               from '../views/Repair/pages/UpkeepList'         
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
 import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
+
 import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
 import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
 import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
