@@ -1,4 +1,4 @@
-// 报修明细
+// 电费
 import React from 'react'
 import { Row, Col, Tabs } from 'antd'
 import '../../../style/test.less'
