@@ -135,6 +135,10 @@ class Sidebar extends React.Component {
                         <Menu.Item key="/upkeep/rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
                         </Menu.Item>
+
+                        <Menu.Item key="/upkeep/contractManagement">
+                            <Link to="/upkeep/contractManagement">合同管理</Link>
+                        </Menu.Item>
                     </SubMenu>
 
                     {/* 仓库管理 */}
@@ -306,6 +310,36 @@ class Sidebar extends React.Component {
                                 </Menu.Item>
                             </SubMenu>
                         </SubMenu>
+                    </SubMenu>
+
+                    {/* 收费管理 */}
+                    <SubMenu
+                        key="charge"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>收费管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/charge/receivableRent">
+                            <Link to="/charge/receivableRent">应收租金</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
+                    {/* 财务管理 */}
+                    <SubMenu
+                        key="financial"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>财务管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/financial/rentReview">
+                            <Link to="/financial/rentReview">租金审核</Link>
+                        </Menu.Item>
                     </SubMenu>
                 </Menu>
                 {/* 样式描述 */}

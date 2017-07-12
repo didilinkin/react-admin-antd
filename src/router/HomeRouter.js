@@ -16,10 +16,13 @@ import RepairList               from '../views/Repair/pages/RepairList'         
 import ClientReview             from '../views/Repair/pages/ClientReview'                               // 客户回访
 import UpkeepList               from '../views/Repair/pages/UpkeepList'                                 // 维修费设置
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
+import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
+import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
+import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
+import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
 
 import Repair                   from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
-import test                   from '../views/Repair/pages/test'                             // [详情] - 报修明细
 import ReturnVisit              from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
 import ReturnVisitDetail        from '../views/Repair/pages/Details/ReturnVisitDetail'                  // [详情] - 回访登记明细
 import Maintenance              from '../views/Repair/pages/Details/Maintenance'                        // [详情] - 维修详情
@@ -74,6 +77,11 @@ import ElectricalError          from '../views/DeviceMaintain/pages/Details/Elec
 import ElevatorError            from '../views/DeviceMaintain/pages/Details/ElevatorError'              // 电梯异常
 import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/ElevatorErrorDevice'        // 电梯异常
 
+// 引入 '收费管理' 版块
+import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
+
+// 引入 '财务管理' 版块
+import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -124,9 +132,6 @@ const routes = [
                 path: '/upkeep/repairList',                                                             // 客户管理 - 客户报修
                 component: RepairList
             }, {
-                path: '/upkeep/test',                                                             // test
-                component: test
-            }, {
                 path: '/upkeep/clientReview',                                                           // 客户管理 - 客户回访
                 component: ClientReview
             }, {
@@ -135,6 +140,9 @@ const routes = [
             }, {
                 path: '/upkeep/rectification',                                                          // 客户管理 - 整改通知
                 component: Rectification
+            }, {
+                path: '/upkeep/contractManagement',                                                     // 客户管理 - 合同管理
+                component: ContractManagement
             }, {
                 path: '/upkeep/clientReviewDetails/:id',                                                // [详情] - 客户回访
                 component: ClientReviewDetails
@@ -156,6 +164,15 @@ const routes = [
             }, {
                 path: '/upkeep/maintenanceProject/:id',                                                 // [详情] - 维修项目
                 component: MaintenanceProject
+            }, {
+                path: '/upkeep/contractDetail/:id',                                                     // [详情] - 合同详情
+                component: ContractDetail
+            }, {
+                path: '/upkeep/electricityDetail/:id',                                                  // [详情] - 电费详情
+                component: ElectricityDetail
+            }, {
+                path: '/upkeep/happyDetail/:id',                                                        // [详情] - 欢乐颂详情
+                component: HappyDetail
             }
         ]
     }, {
@@ -263,13 +280,13 @@ const routes = [
                 path: '/deviceMaintain/patrolScheme',                                                   // 设备维护 - 设备维保 - 巡检计划明细
                 component: Patrolscheme
             }, {
-                path: '/deviceMaintain/maintenanceRecord/:id',                                              // 设备维护 - 设备维保 - 保养记录
+                path: '/deviceMaintain/maintenanceRecord/:id',                                          // 设备维护 - 设备维保 - 保养记录
                 component: Maintenancerecord
             }, {
-                path: '/deviceMaintain/repairRecord/:id',                                                   // 设备维护 - 设备维保 - 维修记录
+                path: '/deviceMaintain/repairRecord/:id',                                               // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
-                path: '/deviceMaintain/serverRoom/:id',                                                     // 设备维护 - 机房明细
+                path: '/deviceMaintain/serverRoom/:id',                                                 // 设备维护 - 机房明细
                 component: ServerRoom
             }, {
                 path: '/deviceMaintain/electricalErrorDevice/:id',                                      // 设备维护 - 电器异常带设备信息
@@ -285,6 +302,24 @@ const routes = [
                 component: ElevatorErrorDevice
             }
 
+        ]
+    }, {
+        path: '/charge',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/charge/receivableRent',                                                         // 收费管理 - 应收租金
+                component: ReceivableRent
+            }
+        ]
+    }, {
+        path: '/financial',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/financial/rentReview',                                                          // 财务管理 - 租金审核
+                component: RentReview
+            }
         ]
     }
 ]
