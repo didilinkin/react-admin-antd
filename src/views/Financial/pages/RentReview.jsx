@@ -1,7 +1,7 @@
 // 财务管理 - 租金审核
 import React from 'react'
 import { Row, Col, Input } from 'antd'
-import '../../../../style/test.less'
+import '../../../style/test.less'
 
 
 class App extends React.Component {
