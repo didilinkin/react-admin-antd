@@ -18,6 +18,9 @@ import UpkeepList               from '../views/Repair/pages/UpkeepList'         
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
 import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
+import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
+import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
+import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
 
 import Repair                   from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
 import ReturnVisit              from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
@@ -161,6 +164,15 @@ const routes = [
             }, {
                 path: '/upkeep/maintenanceProject/:id',                                                 // [详情] - 维修项目
                 component: MaintenanceProject
+            }, {
+                path: '/upkeep/contractDetail/:id',                                                     // [详情] - 合同详情
+                component: ContractDetail
+            }, {
+                path: '/upkeep/electricityDetail/:id',                                                  // [详情] - 电费详情
+                component: ElectricityDetail
+            }, {
+                path: '/upkeep/happyDetail/:id',                                                        // [详情] - 欢乐颂详情
+                component: HappyDetail
             }
         ]
     }, {
