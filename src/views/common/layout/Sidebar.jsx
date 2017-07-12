@@ -135,6 +135,10 @@ class Sidebar extends React.Component {
                         <Menu.Item key="/upkeep/rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
                         </Menu.Item>
+
+                        <Menu.Item key="/upkeep/contractManagement">
+                            <Link to="/upkeep/contractManagement">合同管理</Link>
+                        </Menu.Item>
                     </SubMenu>
 
                     {/* 仓库管理 */}

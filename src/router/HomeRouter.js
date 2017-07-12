@@ -16,10 +16,10 @@ import RepairList               from '../views/Repair/pages/RepairList'         
 import ClientReview             from '../views/Repair/pages/ClientReview'                               // 客户回访
 import UpkeepList               from '../views/Repair/pages/UpkeepList'                                 // 维修费设置
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
+import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 
 import Repair                   from '../views/Repair/pages/Details/Repair'                             // [详情] - 报修明细
-import test                   from '../views/Repair/pages/test'                             // [详情] - 报修明细
 import ReturnVisit              from '../views/Repair/pages/Details/ReturnVisit'                        // [详情] - 回访登记
 import ReturnVisitDetail        from '../views/Repair/pages/Details/ReturnVisitDetail'                  // [详情] - 回访登记明细
 import Maintenance              from '../views/Repair/pages/Details/Maintenance'                        // [详情] - 维修详情
@@ -124,9 +124,6 @@ const routes = [
                 path: '/upkeep/repairList',                                                             // 客户管理 - 客户报修
                 component: RepairList
             }, {
-                path: '/upkeep/test',                                                             // test
-                component: test
-            }, {
                 path: '/upkeep/clientReview',                                                           // 客户管理 - 客户回访
                 component: ClientReview
             }, {
@@ -135,6 +132,9 @@ const routes = [
             }, {
                 path: '/upkeep/rectification',                                                          // 客户管理 - 整改通知
                 component: Rectification
+            }, {
+                path: '/upkeep/contractManagement',                                                     // 客户管理 - 合同管理
+                component: ContractManagement
             }, {
                 path: '/upkeep/clientReviewDetails/:id',                                                // [详情] - 客户回访
                 component: ClientReviewDetails
