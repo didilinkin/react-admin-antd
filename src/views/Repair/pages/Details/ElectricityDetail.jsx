@@ -9,15 +9,17 @@ class App extends React.Component {
         return (
             <div className="contract">
                 <div className="wrapbox">
-                    <h2>房源信息</h2>
-                    <Row>
-                        <Col span={8}><b>所属楼宇：</b>长江中心A座 </Col>
-                        <Col span={8}><b>服务面积：</b>d</Col>
-                        <Col span={8}><b>房间别名：</b>123</Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}><b>房间编号：</b>2301/2302/2303/2305/2306 </Col>
-                    </Row>
+                    <div className="title">房源信息</div>
+                    <div className="main">
+                        <Row>
+                            <Col span={8}><b>所属楼宇：</b>长江中心A座 </Col>
+                            <Col span={8}><b>服务面积：</b>d</Col>
+                            <Col span={8}><b>房间别名：</b>123</Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}><b>房间编号：</b>2301/2302/2303/2305/2306 </Col>
+                        </Row>
+                    </div>
                 </div>
                 <div className="wrapbox">
                     <div className="title">
