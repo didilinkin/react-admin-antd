@@ -311,6 +311,36 @@ class Sidebar extends React.Component {
                             </SubMenu>
                         </SubMenu>
                     </SubMenu>
+
+                    {/* 收费管理 */}
+                    <SubMenu
+                        key="charge"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>收费管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/charge/receivableRent">
+                            <Link to="/charge/receivableRent">应收租金</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
+                    {/* 财务管理 */}
+                    <SubMenu
+                        key="financial"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>财务管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/financial/rentReview">
+                            <Link to="/financial/rentReview">租金审核</Link>
+                        </Menu.Item>
+                    </SubMenu>
                 </Menu>
                 {/* 样式描述 */}
                 <style>{`

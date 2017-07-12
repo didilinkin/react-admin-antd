@@ -74,6 +74,11 @@ import ElectricalError          from '../views/DeviceMaintain/pages/Details/Elec
 import ElevatorError            from '../views/DeviceMaintain/pages/Details/ElevatorError'              // 电梯异常
 import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/ElevatorErrorDevice'        // 电梯异常
 
+// 引入 '收费管理' 版块
+import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
+
+// 引入 '财务管理' 版块
+import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -263,13 +268,13 @@ const routes = [
                 path: '/deviceMaintain/patrolScheme',                                                   // 设备维护 - 设备维保 - 巡检计划明细
                 component: Patrolscheme
             }, {
-                path: '/deviceMaintain/maintenanceRecord/:id',                                              // 设备维护 - 设备维保 - 保养记录
+                path: '/deviceMaintain/maintenanceRecord/:id',                                          // 设备维护 - 设备维保 - 保养记录
                 component: Maintenancerecord
             }, {
-                path: '/deviceMaintain/repairRecord/:id',                                                   // 设备维护 - 设备维保 - 维修记录
+                path: '/deviceMaintain/repairRecord/:id',                                               // 设备维护 - 设备维保 - 维修记录
                 component: Repairrecord
             }, {
-                path: '/deviceMaintain/serverRoom/:id',                                                     // 设备维护 - 机房明细
+                path: '/deviceMaintain/serverRoom/:id',                                                 // 设备维护 - 机房明细
                 component: ServerRoom
             }, {
                 path: '/deviceMaintain/electricalErrorDevice/:id',                                      // 设备维护 - 电器异常带设备信息
@@ -285,6 +290,24 @@ const routes = [
                 component: ElevatorErrorDevice
             }
 
+        ]
+    }, {
+        path: '/charge',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/charge/receivableRent',                                                         // 收费管理 - 应收租金
+                component: ReceivableRent
+            }
+        ]
+    }, {
+        path: '/financial',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/financial/rentReview',                                                          // 财务管理 - 租金审核
+                component: RentReview
+            }
         ]
     }
 ]
