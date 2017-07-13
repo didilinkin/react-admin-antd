@@ -108,10 +108,10 @@ class ContractManagement extends React.Component {
                 render: function (text, record, index) {
                     let arr = []
                     arr.push(
-                        <Button >查看</Button>
+                        <Button key="1">查看</Button>
                     )
                     arr.push(
-                        <Button >编辑</Button>
+                        <Button key="2">编辑</Button>
                     )
 
                     return arr

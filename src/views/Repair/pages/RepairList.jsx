@@ -168,17 +168,17 @@ class RepairList extends Component {
                     let arr = []
                     if (record.pieStatus === 0 || record.isCancel === 1) {
                         arr.push(
-                            <Popconfirm title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                            <Popconfirm key="1" title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
                                 <Button >派单</Button>
                             </Popconfirm>)
                         arr.push(
-                            <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
+                            <Popconfirm key="2" title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
                                 <Button >修改</Button>
                             </Popconfirm>)
                     }
                     if (record.pieStatus === 0) {
                         arr.push(
-                            <Popconfirm title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                            <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <Button >作废</Button>
                             </Popconfirm>
                         )
