@@ -11,14 +11,17 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
-    PieChart,
-    Pie,
-    Cell
+    Legend
+    // ,PieChart,
+    // Pie,
+    // Cell
 } from 'recharts'
 // 日期组件
 import { DatePicker } from 'antd'
 import moment from 'moment'
+
+import Ringdiagram from '../components/echarts/Ringdiagram'
+
 const RangePicker = DatePicker.RangePicker
 
 function onChange (dates, dateStrings) {
@@ -27,25 +30,25 @@ function onChange (dates, dateStrings) {
 }
 
 
-const data = [
-    {
-        name: 'Group A',
-        value: 76
-    }, {
-        name: 'Group B',
-        value: 56
-    }, {
-        name: 'Group C',
-        value: 40
-    }, {
-        name: 'Group D',
-        value: 20
-    }, {
-        name: 'Group E',
-        value: 12
-    }
-]
-const COLORS = ['#8996e6', '#f3857b', '#ffd86e', '#98d87d', '#d7d7d7', '#49a9ee' ]
+// const data = [
+//     {
+//         name: 'Group A',
+//         value: 76
+//     }, {
+//         name: 'Group B',
+//         value: 56
+//     }, {
+//         name: 'Group C',
+//         value: 40
+//     }, {
+//         name: 'Group D',
+//         value: 20
+//     }, {
+//         name: 'Group E',
+//         value: 12
+//     }
+// ]
+// const COLORS = ['#8996e6', '#f3857b', '#ffd86e', '#98d87d', '#d7d7d7', '#49a9ee' ]
 
 
 // 今日 数据
@@ -187,89 +190,98 @@ class HomeIndex extends React.Component {
         return (
             <div className="examples">
                 <div>
-                    <div style={{'float': 'left',
-                        'width': '450px',
-                        'height': '350px'}}
-                    >
-                        <h2 style={{ 'lineHeight': 'normal',
-                            'fontSize': '18px',
-                            'color': '#333'}}
-                        >客户报修情况</h2>
-                        <div style={{'width': '300px',
-                            'height': '300px',
-                            'float': 'left'}}
+                    {/* 等待修改的 图标 - start */}
+                    {/*
+                        <div style={{'float': 'left',
+                            'width': '450px',
+                            'height': '350px'}}
                         >
-                            <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
-                                <Pie
-                                    data={data}
-                                    cx={120}
-                                    cy={180}
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    fill="#8884d8"
-                                    paddingAngle={0}
-                                >
-                                    {
-                                        data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]} />)
-                                    }
-                                </Pie>
-                            </PieChart>
+                            <h2 style={{ 'lineHeight': 'normal',
+                                'fontSize': '18px',
+                                'color': '#333'}}
+                            >客户报修情况</h2>
+                            <div style={{'width': '300px',
+                                'height': '300px',
+                                'float': 'left'}}
+                            >
+                                <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
+                                    <Pie
+                                        data={data}
+                                        cx={120}
+                                        cy={180}
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        fill="#8884d8"
+                                        paddingAngle={0}
+                                    >
+                                        {
+                                            data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]} />)
+                                        }
+                                    </Pie>
+                                </PieChart>
+                            </div>
+                            <div style={{'width': '150px',
+                                'float': 'left',
+                                'color': '#000',
+                                'paddingTop': '110px',
+                                'lineHeight': '30px'}}
+                            >
+                                <ul>
+                                    <li>
+                                        <span style={{'width': '10px',
+                                            'height': '10px',
+                                            'marginRight': '5px',
+                                            'borderRadius': '50%',
+                                            'display': 'inline-block',
+                                            'background': '#48A9EF'}}
+                                        />未派单 {data[0].value}
+                                    </li>
+                                    <li>
+                                        <span style={{'width': '10px',
+                                            'height': '10px',
+                                            'marginRight': '5px',
+                                            'borderRadius': '50%',
+                                            'display': 'inline-block',
+                                            'background': '#99D97C'}}
+                                        />已完工 {data[1].value}
+                                    </li>
+                                    <li>
+                                        <span style={{'width': '10px',
+                                            'height': '10px',
+                                            'marginRight': '5px',
+                                            'borderRadius': '50%',
+                                            'display': 'inline-block',
+                                            'background': '#FFD96E'}}
+                                        />进行中 {data[2].value}
+                                    </li>
+                                    <li>
+                                        <span style={{'width': '10px',
+                                            'height': '10px',
+                                            'marginRight': '5px',
+                                            'borderRadius': '50%',
+                                            'display': 'inline-block',
+                                            'background': '#F3857A'}}
+                                        />取消工单 {data[3].value}
+                                    </li>
+                                    <li>
+                                        <span style={{'width': '10px',
+                                            'height': '10px',
+                                            'marginRight': '5px',
+                                            'borderRadius': '50%',
+                                            'display': 'inline-block',
+                                            'background': '#8997E7'}}
+                                        />作废工单 {data[4].value}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <div style={{'width': '150px',
-                            'float': 'left',
-                            'color': '#000',
-                            'paddingTop': '110px',
-                            'lineHeight': '30px'}}
-                        >
-                            <ul>
-                                <li>
-                                    <span style={{'width': '10px',
-                                        'height': '10px',
-                                        'marginRight': '5px',
-                                        'borderRadius': '50%',
-                                        'display': 'inline-block',
-                                        'background': '#48A9EF'}}
-                                    />未派单 {data[0].value}
-                                </li>
-                                <li>
-                                    <span style={{'width': '10px',
-                                        'height': '10px',
-                                        'marginRight': '5px',
-                                        'borderRadius': '50%',
-                                        'display': 'inline-block',
-                                        'background': '#99D97C'}}
-                                    />已完工 {data[1].value}
-                                </li>
-                                <li>
-                                    <span style={{'width': '10px',
-                                        'height': '10px',
-                                        'marginRight': '5px',
-                                        'borderRadius': '50%',
-                                        'display': 'inline-block',
-                                        'background': '#FFD96E'}}
-                                    />进行中 {data[2].value}
-                                </li>
-                                <li>
-                                    <span style={{'width': '10px',
-                                        'height': '10px',
-                                        'marginRight': '5px',
-                                        'borderRadius': '50%',
-                                        'display': 'inline-block',
-                                        'background': '#F3857A'}}
-                                    />取消工单 {data[3].value}
-                                </li>
-                                <li>
-                                    <span style={{'width': '10px',
-                                        'height': '10px',
-                                        'marginRight': '5px',
-                                        'borderRadius': '50%',
-                                        'display': 'inline-block',
-                                        'background': '#8997E7'}}
-                                    />作废工单 {data[4].value}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    */}
+                    {/* 等待修改的 图标 - end */}
+
+                    {/* 测试用例 - 环形图组件 - 需要传递 props(保修总数 数值), 由后台返回数值 */}
+                    <Ringdiagram />
+                    {/* 测试用例 - 环形图组件 */}
+
                     <div className="parent" style={{'float': 'left'}}>
                         <ReactEcharts
                             option={ this.getOtion() }
