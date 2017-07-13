@@ -13,7 +13,7 @@ class DistributeLeaflets extends React.Component {
             data: {userArr: []},
             id: '',
             value: '',
-            phone: '',
+            phone1: '',
             userTelephone: '',
             isFirst: true
         }
@@ -76,7 +76,7 @@ class DistributeLeaflets extends React.Component {
                 this.props.form.setFieldsValue({
                     repairedId: d.id,
                     repairedMan: d.loginName,
-                    phone: d.phone,
+                    phone1: d.phone,
                     roleName: d.roleName
                 })
             }
@@ -119,7 +119,7 @@ class DistributeLeaflets extends React.Component {
                     <FormItem label="手机" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        {getFieldDecorator('phone')(
+                        {getFieldDecorator('phone1')(
                             <Input disabled />
                         )}
                     </FormItem>
