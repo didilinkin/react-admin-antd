@@ -17,8 +17,8 @@ class App extends React.Component {
     render () {
         return (
             <div>
-                <AfterAudit value={1} />
-                <InReview value={2} />
+                <InReview value={1} />
+                <AfterAudit value={2} />
                 <PaymentSuccess value={3}/>
             </div>
         )
