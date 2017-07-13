@@ -3,6 +3,7 @@ import React from 'react'
 import { apiPost } from '../../../api'
 import {Table, Button, Spin } from 'antd'
 import ContractHeadComponent from './common/ContractHead'
+import  PropertyContractAddedCom from './common/PropertyContractAdded'
 class PropertyContract extends React.Component {
     constructor (props) {
         super(props)
@@ -12,7 +13,8 @@ class PropertyContract extends React.Component {
             id: 0,
             columns: [],
             dataSource: [],
-            ListBuildingInfo: []
+            ListBuildingInfo: [],
+            PropertyContractAddedComOpen: false
         }
     }
     async initialRemarks () {
@@ -133,7 +135,13 @@ class PropertyContract extends React.Component {
         this.setState({
             dataSource: result.data,
             type: filters['type'],
+            PropertyContractAddedComOpen: false,
             id: 0
+        })
+    }
+    showModal = () => {
+        this.setState({
+            PropertyContractAddedComOpen: true
         })
     }
     render () {
@@ -144,6 +152,7 @@ class PropertyContract extends React.Component {
                     type={this.state.type}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
+                <Button type="primary" onClick={this.showModal}>添加报单</Button>
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
@@ -153,6 +162,11 @@ class PropertyContract extends React.Component {
                         columns={this.state.columns}
                     />
                 </Spin>
+                <PropertyContractAddedCom
+                    refreshTable={this.refresh}
+                    visible={this.state.PropertyContractAddedComOpen}
+                    title="添加范本物业合同"
+                />
             </div>
         )
     }
