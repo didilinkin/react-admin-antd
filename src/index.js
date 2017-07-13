@@ -104,6 +104,7 @@ render(
                 <Route exact path="/" component={ App } />
                 <Route path="/about" component={ Foo } />
                 <Route path="/topics" component={ Bar } />
+                <Route path="/home" component={ Home } />
             </div>
         </ConnectedRouter>
     </Provider>,
