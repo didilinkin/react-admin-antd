@@ -1,6 +1,6 @@
-// 审核中
+// 审核后
 import React from 'react'
-import { Row, Col, Input } from 'antd'
+import { Row, Col, Button } from 'antd'
 import '../../../../style/test.less'
 
 
@@ -45,9 +45,13 @@ class App extends React.Component {
                             <Col span={8}><b>录入日期：</b>王小明  2017-7-12 13:09:29</Col>
                             <Col span={16}><b>最后修改：</b>王小明  2017-7-12 13:09:29</Col>
                         </Row>
+                        <Row>
+                            <Col span={8}><b>审核人：</b>李某明   2016-09-27   12:12:12 </Col>
+                            <Col span={16}><b>审核状态：</b>不通过，某某原因某某原因某某原因某某原因某某原因某某原因</Col>
+                        </Row>
                     </div>
                 </div>
-                <Input placeholder="请输入审批意见" />
+                <Button type="primary">Primary</Button>
             </div>
         )
     }
