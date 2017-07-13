@@ -1,5 +1,7 @@
 // '物业管理系统' 内容 - 首页( 默认页 )
 // echarts-react 测试组件
+
+// 请把这个页面的内容组件 拆为 小组件! 删除无用代码!
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import {
@@ -25,13 +27,25 @@ function onChange (dates, dateStrings) {
 }
 
 
-const data = [{name: 'Group A',
-    value: 76}, {name: 'Group B',
-    value: 56}, {name: 'Group C',
-    value: 40}, {name: 'Group D',
-    value: 20}, {name: 'Group E',
-    value: 12}]
-const COLORS = ['#48A9EF', '#99D97C', '#FFD96E', '#F3857A', '#8997E7']
+const data = [
+    {
+        name: 'Group A',
+        value: 76
+    }, {
+        name: 'Group B',
+        value: 56
+    }, {
+        name: 'Group C',
+        value: 40
+    }, {
+        name: 'Group D',
+        value: 20
+    }, {
+        name: 'Group E',
+        value: 12
+    }
+]
+const COLORS = ['#8996e6', '#f3857b', '#ffd86e', '#98d87d', '#d7d7d7', '#49a9ee' ]
 
 
 // 今日 数据
@@ -103,18 +117,25 @@ class HomeIndex extends React.Component {
         this.state = {
             data1: dateA,
             data: [
-                {value: 20,
-                    name: '1星'},
-                {value: 6,
-                    name: '2星'},
-                {value: 10,
-                    name: '3星'},
-                {value: 20,
-                    name: '4星'},
-                {value: 28,
-                    name: '5星'},
-                {value: 18,
-                    name: '未评价'}
+                {
+                    value: 20,
+                    name: '1星'
+                }, {
+                    value: 6,
+                    name: '2星'
+                }, {
+                    value: 10,
+                    name: '3星'
+                }, {
+                    value: 20,
+                    name: '4星'
+                }, {
+                    value: 28,
+                    name: '5星'
+                }, {
+                    value: 18,
+                    name: '未评价'
+                }
             ]
         }
     }
@@ -140,11 +161,9 @@ class HomeIndex extends React.Component {
                 trigger: 'item',
                 formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['1星', '2星', '3星', '4星', '5星', '未评价']
-            },
+            color: [
+                '#49a9ee', '#d7d7d7', '#98d87d', '#ffd86e', '#f3857b', '#8996e6'
+            ],
             series: [
                 {
                     name: '访问来源',
