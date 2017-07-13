@@ -10,5 +10,4 @@ class ClientReviewDetails extends React.Component {
         )
     }
 }
-
 export default ClientReviewDetails
