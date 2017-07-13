@@ -38,7 +38,7 @@ const Ringdiagram = React.createClass({
                 formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
             color: [
-                '#49a9ee', '#d7d7d7', '#98d87d', '#ffd86e', '#f3857b', '#8996e6'
+                '#49a9ee', '#d7d7d7', '#98d87d', '#ffd86e', '#f3857b'
             ],
             series: [
                 {
