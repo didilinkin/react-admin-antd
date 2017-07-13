@@ -19,7 +19,7 @@ class App extends React.Component {
             <div>
                 <InReview value={1} />
                 <AfterAudit value={2} />
-                <PaymentSuccess value={3}/>
+                <PaymentSuccess value={3} />
             </div>
         )
     }
