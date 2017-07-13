@@ -12,7 +12,7 @@ const ParentBox = styled.div `
 const ParentEmphasis = styled.div `
     position: absolute;
     top: 52%;
-    left: 45%;
+    width: 100%;
     text-align: center;
 `
 
@@ -37,6 +37,9 @@ const Ringdiagram = React.createClass({
                 trigger: 'item',
                 formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
+            color: [
+                '#49a9ee', '#d7d7d7', '#98d87d', '#ffd86e', '#f3857b', '#8996e6'
+            ],
             series: [
                 {
                     name: '访问来源',
@@ -57,7 +60,7 @@ const Ringdiagram = React.createClass({
                             value: 135,
                             name: '视频广告'
                         }, {
-                            value: 1548,
+                            value: 548,
                             name: '搜索引擎'
                         }
                     ],
