@@ -16,9 +16,11 @@ import RepairList               from '../views/Repair/pages/RepairList'         
 import ClientReview             from '../views/Repair/pages/ClientReview'                               // 客户回访
 import UpkeepList               from '../views/Repair/pages/UpkeepList'                                 // 维修费设置
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
-import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
-import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 
+import LeaseContract            from '../views/Repair/pages/LeaseContract'                              // 租赁合同
+import PropertyContract         from '../views/Repair/pages/PropertyContract'                           // 物业合同
+
+import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
 import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
 import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
@@ -144,8 +146,11 @@ const routes = [
                 path: '/upkeep/rectification',                                                          // 客户管理 - 整改通知
                 component: Rectification
             }, {
-                path: '/upkeep/contractManagement',                                                     // 客户管理 - 合同管理
-                component: ContractManagement
+                path: '/upkeep/contractManagement/leaseContract',                                       // 客户管理 - 合同管理 - 租赁合同
+                component: LeaseContract
+            }, {
+                path: '/upkeep/contractManagement/propertyContract',                                    // 客户管理 - 合同管理 - 物业合同
+                component: PropertyContract
             }, {
                 path: '/upkeep/clientReviewDetails/:id',                                                // [详情] - 客户回访
                 component: ClientReviewDetails

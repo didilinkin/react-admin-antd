@@ -120,6 +120,21 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
+                        <SubMenu key="/upkeep/contractManagement" title={
+                            <span>
+                                <span className="nav-text">合同管理</span>
+                            </span>
+                        }
+                        >
+                            <Menu.Item key="/upkeep/contractManagement/leaseContract">
+                                <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/upkeep/contractManagement/propertyContract">
+                                <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
+                            </Menu.Item>
+                        </SubMenu>
+
                         <Menu.Item key="/upkeep/repairList">
                             <Link to="/upkeep/repairList">客户报修</Link>
                         </Menu.Item>
@@ -134,10 +149,6 @@ class Sidebar extends React.Component {
 
                         <Menu.Item key="/upkeep/rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
-                        </Menu.Item>
-
-                        <Menu.Item key="/upkeep/contractManagement">
-                            <Link to="/upkeep/contractManagement">合同管理</Link>
                         </Menu.Item>
                     </SubMenu>
 
