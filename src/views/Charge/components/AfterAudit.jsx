@@ -5,9 +5,23 @@ import '../../../style/test.less'
 
 
 class App extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            none: 'none'
+        }
+    }
+    componentWillReceiveProps (nextProps) {
+        alert(nextProps.value)
+        if (this.props.value === 2) {
+            this.setState({
+                none: 'none'
+            })
+        }
+    }
     render () {
         return (
-            <div className="contract">
+            <div style={{display: this.state.none}} className="contract">
                 <h2>租户信息</h2>
                 <Row>
                     <Col span={8}><b>客户明细：</b>中国移动山东分公司 </Col>

@@ -8,9 +8,9 @@ class RentManagement extends React.Component {
     render () {
         return (
             <div>
-                <InReview value={1} />
-                <AfterAudit value={2} />
-                <PaymentSuccess value={3}/>
+                <InReview value="1" />
+                <AfterAudit value="2" />
+                <PaymentSuccess value="3" />
             </div>
         )
     }
