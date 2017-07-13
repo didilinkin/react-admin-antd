@@ -1,4 +1,4 @@
-// 财务管理 - 租金审核
+// 租金明细
 import React from 'react'
 import { Row, Col, Input } from 'antd'
 import '../../../style/test.less'

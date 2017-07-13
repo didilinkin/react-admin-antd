@@ -18,6 +18,7 @@ import UpkeepList               from '../views/Repair/pages/UpkeepList'         
 import Rectification            from '../views/Repair/pages/Rectification'                              // 整改通知
 import ContractManagement       from '../views/Repair/pages/ContractManagement.jsx'                     // 合同管理
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
+
 import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
 import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
 import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
@@ -82,6 +83,7 @@ import ReceivableRent           from '../views/Charge/pages/ReceivableRent'     
 
 // 引入 '财务管理' 版块
 import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
+import RentReviewDetail         from '../views/Financial/pages/Details/RentReviewDetail'                // [详情] - 租金审核 状态详情( 如: 审核中/审核完成/收款完成 )
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -319,6 +321,9 @@ const routes = [
             {
                 path: '/financial/rentReview',                                                          // 财务管理 - 租金审核
                 component: RentReview
+            }, {
+                path: '/financial/rentReviewDetail/:id',                                                // [详情] - 租金审核 状态详情
+                component: RentReviewDetail
             }
         ]
     }
