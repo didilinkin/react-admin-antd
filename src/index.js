@@ -31,6 +31,7 @@ import rootReducer                              from './store/reducers'         
 import App from './container/App'
 import Foo from './container/Foo'
 import Bar from './container/Bar'
+import Home from './container/Home'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
@@ -85,6 +86,7 @@ render(
                 <Route exact path="/" component={ App } />
                 <Route path="/about" component={ Foo } />
                 <Route path="/topics" component={ Bar } />
+                <Route path="/home" component={ Home } />
             </div>
         </ConnectedRouter>
     </Provider>,
