@@ -1,6 +1,6 @@
 // 审核中
 import React from 'react'
-import { Row, Col, Input } from 'antd'
+import { Row, Col } from 'antd'
 import '../../../style/test.less'
 
 
@@ -47,7 +47,6 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <Input placeholder="请输入审批意见" />
             </div>
         )
     }

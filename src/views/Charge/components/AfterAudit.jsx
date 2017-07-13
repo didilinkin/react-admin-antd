@@ -51,7 +51,6 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <Button type="primary">Primary</Button>
             </div>
         )
     }
