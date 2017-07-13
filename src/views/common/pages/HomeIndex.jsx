@@ -170,13 +170,16 @@ class HomeIndex extends React.Component {
                 <div>
                     <div style={{'float': 'left',
                         'width': '450px',
-                        'height': '350px'}}>
+                        'height': '350px'}}
+                    >
                         <h2 style={{ 'lineHeight': 'normal',
                             'fontSize': '18px',
-                            'color': '#333'}}>客户报修情况</h2>
+                            'color': '#333'}}
+                        >客户报修情况</h2>
                         <div style={{'width': '300px',
                             'height': '300px',
-                            'float': 'left'}}>
+                            'float': 'left'}}
+                        >
                             <PieChart width={300} height={300} onMouseEnter={this.onPieEnter}>
                                 <Pie
                                     data={data}
@@ -188,7 +191,7 @@ class HomeIndex extends React.Component {
                                     paddingAngle={0}
                                 >
                                     {
-                                        data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]}/>)
+                                        data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]} />)
                                     }
                                 </Pie>
                             </PieChart>
@@ -197,38 +200,54 @@ class HomeIndex extends React.Component {
                             'float': 'left',
                             'color': '#000',
                             'paddingTop': '110px',
-                            'lineHeight': '30px'}}>
+                            'lineHeight': '30px'}}
+                        >
                             <ul>
-                                <li><span style={{'width': '10px',
-                                    'height': '10px',
-                                    'marginRight': '5px',
-                                    'borderRadius': '50%',
-                                    'display': 'inline-block',
-                                    'background': '#48A9EF'}} />未派单 {data[0].value}</li>
-                                <li><span style={{'width': '10px',
-                                    'height': '10px',
-                                    'marginRight': '5px',
-                                    'borderRadius': '50%',
-                                    'display': 'inline-block',
-                                    'background': '#99D97C'}} />已完工 {data[1].value}</li>
-                                <li><span style={{'width': '10px',
-                                    'height': '10px',
-                                    'marginRight': '5px',
-                                    'borderRadius': '50%',
-                                    'display': 'inline-block',
-                                    'background': '#FFD96E'}} />进行中 {data[2].value}</li>
-                                <li><span style={{'width': '10px',
-                                    'height': '10px',
-                                    'marginRight': '5px',
-                                    'borderRadius': '50%',
-                                    'display': 'inline-block',
-                                    'background': '#F3857A'}} />取消工单 {data[3].value}</li>
-                                <li><span style={{'width': '10px',
-                                    'height': '10px',
-                                    'marginRight': '5px',
-                                    'borderRadius': '50%',
-                                    'display': 'inline-block',
-                                    'background': '#8997E7'}} />作废工单 {data[4].value}</li>
+                                <li>
+                                    <span style={{'width': '10px',
+                                        'height': '10px',
+                                        'marginRight': '5px',
+                                        'borderRadius': '50%',
+                                        'display': 'inline-block',
+                                        'background': '#48A9EF'}}
+                                    />未派单 {data[0].value}
+                                </li>
+                                <li>
+                                    <span style={{'width': '10px',
+                                        'height': '10px',
+                                        'marginRight': '5px',
+                                        'borderRadius': '50%',
+                                        'display': 'inline-block',
+                                        'background': '#99D97C'}}
+                                    />已完工 {data[1].value}
+                                </li>
+                                <li>
+                                    <span style={{'width': '10px',
+                                        'height': '10px',
+                                        'marginRight': '5px',
+                                        'borderRadius': '50%',
+                                        'display': 'inline-block',
+                                        'background': '#FFD96E'}}
+                                    />进行中 {data[2].value}
+                                </li>
+                                <li>
+                                    <span style={{'width': '10px',
+                                        'height': '10px',
+                                        'marginRight': '5px',
+                                        'borderRadius': '50%',
+                                        'display': 'inline-block',
+                                        'background': '#F3857A'}}
+                                    />取消工单 {data[3].value}
+                                </li>
+                                <li>
+                                    <span style={{'width': '10px',
+                                        'height': '10px',
+                                        'marginRight': '5px',
+                                        'borderRadius': '50%',
+                                        'display': 'inline-block',
+                                        'background': '#8997E7'}}
+                                    />作废工单 {data[4].value}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -248,24 +267,39 @@ class HomeIndex extends React.Component {
                 <div>
                     <h2 style={{ 'lineHeight': 'normal',
                         'fontSize': '18px',
-                        'color': '#333'}}>设备故障情况</h2>
+                        'color': '#333'}}
+                    >设备故障情况</h2>
                     <div>
                         <div style={{'float': 'left',
-                            'width': '300px'}}>
+                            'width': '300px'}}
+                        >
                             <ul style={{'padding': '15px',
-                                'lineHeight': '1.9'}}>
-                                <li><img src={require('../../../assets/images/ico_sbzs_60px.png')} width={60} height={60} style={{float: 'left',
-                                    marginRight: '20',
-                                    marginTop: '10'}} alt=""/><p>设备总数</p><span style={{'fontSize': '30px'}}>124,345</span></li>
-                                <li><img src={require('../../../assets/images/ico_in use_60px.png')} width={60} height={60} style={{float: 'left',
-                                    marginRight: '20',
-                                    marginTop: '10'}} alt=""/><p>在用</p><span style={{'fontSize': '30px'}}>23,345</span></li>
-                                <li><img src={require('../../../assets/images/ico_xz_60px.png')} width={60} height={60} style={{float: 'left',
-                                    marginRight: '20',
-                                    marginTop: '10'}} alt=""/><p>闲置</p><span style={{'fontSize': '30px'}}>23,345</span></li>
-                                <li><img src={require('../../../assets/images/ico_bf_60px.png')} width={60} height={60} style={{float: 'left',
-                                    marginRight: '20',
-                                    marginTop: '10'}} alt=""/><p>报废</p><span style={{'fontSize': '30px'}}>23,345</span></li>
+                                'lineHeight': '1.9'}}
+                            >
+                                <li>
+                                    <img src={require('../../../assets/images/ico_sbzs_60px.png')} width={60} height={60} style={{float: 'left',
+                                        marginRight: '20',
+                                        marginTop: '10'}} alt=""
+                                    /><p>设备总数</p><span style={{'fontSize': '30px'}}>124,345</span>
+                                </li>
+                                <li>
+                                    <img src={require('../../../assets/images/ico_in use_60px.png')} width={60} height={60} style={{float: 'left',
+                                        marginRight: '20',
+                                        marginTop: '10'}} alt=""
+                                    /><p>在用</p><span style={{'fontSize': '30px'}}>23,345</span>
+                                </li>
+                                <li>
+                                    <img src={require('../../../assets/images/ico_xz_60px.png')} width={60} height={60} style={{float: 'left',
+                                        marginRight: '20',
+                                        marginTop: '10'}} alt=""
+                                    /><p>闲置</p><span style={{'fontSize': '30px'}}>23,345</span>
+                                </li>
+                                <li>
+                                    <img src={require('../../../assets/images/ico_bf_60px.png')} width={60} height={60} style={{float: 'left',
+                                        marginRight: '20',
+                                        marginTop: '10'}} alt=""
+                                    /><p>报废</p><span style={{'fontSize': '30px'}}>23,345</span>
+                                </li>
                             </ul>
                         </div>
                         <div style={{'float': 'left'}}>
