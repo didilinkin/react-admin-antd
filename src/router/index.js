@@ -4,8 +4,8 @@ import { Route } from 'react-router-dom'
 
 import styled               from 'styled-components'
 
-// import App                  from '../container'
-// import LoginContainer       from '../container/LoginContainer'
+// import App                  from '../containers'
+// import LoginContainer       from '../containers/LoginContainer'
 
 // react-router-redex 测试用 计算器
 import {
@@ -13,7 +13,7 @@ import {
     Home,
     Foo,
     Bar
-} from '../container'
+} from '../containers'
 
 const RouterBox = styled.section `
     height: 100vh;

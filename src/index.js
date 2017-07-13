@@ -7,8 +7,12 @@ import { render } from 'react-dom'
 // import DockMonitor                              from 'redux-devtools-dock-monitor'
 
 // import { createStore, combineReducers }         from 'redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
+
+import thunk                                    from 'redux-thunk'          // 异步
+
+import DevTools                                 from './containers/DevTools' // redux-devtools 工具
 
 // router
 // import { Router, BrowserRouter }                from 'react-router'
@@ -28,15 +32,30 @@ import rootReducer                              from './store/reducers'         
 // import Routes                                   from './router'                 // 根 路由配置
 
 // 临时测试 子页面
-import App from './container/App'
-import Foo from './container/Foo'
-import Bar from './container/Bar'
+import App from './containers/App'
+import Foo from './containers/Foo'
+import Bar from './containers/Bar'
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory()
 
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history)
+
+
+// redux-devtools
+const enhancer = compose(
+    // 你要使用的中间件，放在前面
+    applyMiddleware(thunk),
+    // 必须的！启用带有monitors（监视显示）的DevTools
+    DevTools.instrument()
+)
+
+export default function createStoreWithMiddleware (initialState) {
+    // 注意：仅仅只有redux>=3.1.0支持第三个参数
+    const store = createStore(rootReducer, initialState, enhancer)
+    return store
+}
 
 
 // react-router-redux 4.x
