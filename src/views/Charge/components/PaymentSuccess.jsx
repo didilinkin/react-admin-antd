@@ -7,7 +7,7 @@ import '../../../style/test.less'
 class App extends React.Component {
     render () {
         return (
-            <div className="contract">
+            <div style={this.props.style} className="contract">
                 <h2>租户信息</h2>
                 <Row>
                     <Col span={8}><b>客户明细：</b>中国移动山东分公司 </Col>
