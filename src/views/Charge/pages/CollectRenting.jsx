@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CollectRentConductComponent from './components/PaidConfirm'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -14,12 +15,10 @@ class CollectRenting extends Component {
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
+            AccountList: [],
             columns: [],
             dataSource: [],
-            warehouseId: 0,
-            amount: 0,
-            number: 0,
-            unitPrice: 0
+            id: 0
         }
     }
     handleUpdate = (id) => {
@@ -162,6 +161,12 @@ class CollectRenting extends Component {
     render () {
         return (
             <div>
+                <CollectRentConductComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                    accountLsit={this.state.accountList}
+                />
                 <span>
                     <span>房间编号:</span>
                     <Input style={{width: 150}} onChange={this.entryNumberOnChange} />

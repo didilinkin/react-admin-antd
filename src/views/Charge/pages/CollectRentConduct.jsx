@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CollectRentConductComponent from './components/InReview'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -109,7 +110,7 @@ class CollectRentConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >收租</Button>
+                            <Button type="primary" onClick={() => handleUpdate(record.id)} >明细</Button>
                         </div>
                     )
                 }
@@ -157,6 +158,11 @@ class CollectRentConduct extends Component {
     render () {
         return (
             <div>
+                <CollectRentConductComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                />
                 <span>
                     <span>房间编号:</span>
                     <Input style={{width: 150}} onChange={this.entryNumberOnChange} />

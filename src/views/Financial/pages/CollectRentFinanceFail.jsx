@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CollectRentFailComponent from './components/AfterAudit'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -172,6 +173,11 @@ class CollectRentConduct extends Component {
     render () {
         return (
             <div>
+                <CollectRentFailComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                />
                 <span>
                     <span>房间编号:</span>
                     <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
