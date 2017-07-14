@@ -1,5 +1,5 @@
 import {Modal, Input, Form, notification, Icon, Steps, Button, Select, Row, Col,
-    DatePicker, Radio, Checkbox  } from 'antd'
+    DatePicker, Radio, Checkbox, InputNumber   } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 const FormItem = Form.Item
@@ -18,11 +18,9 @@ class PropertyContractAdded extends React.Component {
             ListBuildingInfo: [],
             listRoom: [],
             ListclientName: [],
-            isSublet: 1,
             rooms: [],
             none1: '',
-            none2: 'none',
-            none3: 'none'
+            none2: 'none'
         }
     }
     handleSubmit = () => {
@@ -36,9 +34,10 @@ class PropertyContractAdded extends React.Component {
             isFirst: true,
             none1: '',
             none2: 'none',
-            none3: 'none',
+            rooms: [],
             current: 0
         })
+        this.props.form.resetFields()
     }
     handleCancel = () => {
         this.setState({
@@ -46,9 +45,10 @@ class PropertyContractAdded extends React.Component {
             isFirst: true,
             none1: '',
             none2: 'none',
-            none3: 'none',
+            rooms: [],
             current: 0
         })
+        this.props.form.resetFields()
     }
 
     initialRemarks2 (nextProps) {
@@ -83,22 +83,13 @@ class PropertyContractAdded extends React.Component {
             this.setState({
                 current: current,
                 none1: '',
-                none2: 'none',
-                none3: 'none'
+                none2: 'none'
             })
         } else if (current === 1) {
             this.setState({
                 current: current,
                 none1: 'none',
-                none2: '',
-                none3: 'none'
-            })
-        } else {
-            this.setState({
-                current: current,
-                none1: 'none',
-                none2: 'none',
-                none3: ''
+                none2: ''
             })
         }
     }
@@ -108,22 +99,13 @@ class PropertyContractAdded extends React.Component {
             this.setState({
                 current: current,
                 none1: '',
-                none2: 'none',
-                none3: 'none'
+                none2: 'none'
             })
         } else if (current === 1) {
             this.setState({
                 current: current,
                 none1: 'none',
-                none2: '',
-                none3: 'none'
-            })
-        } else {
-            this.setState({
-                current: current,
-                none1: 'none',
-                none2: 'none',
-                none3: ''
+                none2: ''
             })
         }
     }
@@ -138,8 +120,42 @@ class PropertyContractAdded extends React.Component {
         })
     }
     selectRoom = (value) => {
+        let serviceArea = 0
+        value.map(roomnun => {
+            this.state.listRoom.map(room => {
+                if (roomnun.toString() === room.roomNum.toString()) {
+                    serviceArea = serviceArea + room.roomArea
+                }
+                return ''
+            })
+            return ''
+        })
+        this.props.form.setFieldsValue({
+            serviceArea: serviceArea.toFixed(2)
+        })
         this.setState({
             rooms: value
+        })
+    }
+    reliefArea = (value) => {
+        let serviceArea = 0
+        this.props.form.getFieldValue('leaseRooms').map(roomnun => {
+            this.state.listRoom.map(room => {
+                if (roomnun.toString() === room.roomNum.toString()) {
+                    serviceArea = serviceArea + room.roomArea
+                }
+                return ''
+            })
+            return ''
+        })
+        if (typeof (value) === 'undefined') {
+            value = 0
+        }
+        if (typeof (serviceArea) === 'undefined') {
+            serviceArea = 0
+        }
+        this.props.form.setFieldsValue({
+            serviceArea: serviceArea - value
         })
     }
     render () {
@@ -229,7 +245,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15}}
                                 >
                                     {getFieldDecorator('reliefArea')(
-                                        <Input style={{ width: 200 }} />
+                                        <InputNumber onChange={this.reliefArea} style={{ width: 200 }} />
                                     )}
                                 </FormItem>
                             </Col>
@@ -526,9 +542,6 @@ class PropertyContractAdded extends React.Component {
                                 )}
                             </FormItem>
                         </Row>
-                    </div>
-                    <div style={{display: this.state.none3}}>
-                        <h2>完成</h2>
                     </div>
                 </Form>
                 <div className="steps-action">
