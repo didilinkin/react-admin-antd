@@ -323,7 +323,7 @@ const routes = [
                 path: '/charge/rentManagement',                                                         // 收费管理 - 租金管理
                 component: RentManagement
             }, {
-                path: '/charge/initiateRent',                                                         // 收费管理 - 租金管理
+                path: '/charge/initiateRent',                                                         // 弹出
                 component: InitiateRent
             }
         ]
