@@ -22,6 +22,8 @@ import PropertyContract         from '../views/Repair/pages/PropertyContract'   
 
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
+import ContractTenancyDetail           from '../views/Repair/pages/Details/ContractTenancyDetail'                     // [详情] - 合同详情
+
 import ElectricityDetail        from '../views/Repair/pages/Details/ElectricityDetail'                  // [详情] - 电费详情
 import HappyDetail              from '../views/Repair/pages/Details/HappyDetail'                        // [详情] - 欢乐颂详情
 
@@ -83,6 +85,7 @@ import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/Elev
 // 引入 '收费管理' 版块
 import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
 import RentManagement           from '../views/Charge/pages/RentManagement'                             // 收费管理 - 租金管理
+import InitiateRent           from '../views/Charge/components/InitiateRent'
 
 // 引入 '财务管理' 版块
 import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
@@ -175,6 +178,9 @@ const routes = [
             }, {
                 path: '/upkeep/contractDetail/:id',                                                     // [详情] - 合同详情
                 component: ContractDetail
+            }, {
+                path: '/upkeep/contractTenancyDetail/:id',                                                     // [详情] - 合同租赁详情
+                component: ContractTenancyDetail
             }, {
                 path: '/upkeep/electricityDetail/:id',                                                  // [详情] - 电费详情
                 component: ElectricityDetail
@@ -321,6 +327,9 @@ const routes = [
             }, {
                 path: '/charge/rentManagement',                                                         // 收费管理 - 租金管理
                 component: RentManagement
+            }, {
+                path: '/charge/initiateRent',                                                         // 弹出
+                component: InitiateRent
             }
         ]
     }, {
