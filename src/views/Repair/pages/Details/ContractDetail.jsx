@@ -103,67 +103,6 @@ class App extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div className="wrapbox">
-                    <div className="title">
-                        租赁费用
-                    </div>
-                    <div className="main">
-                        <Row>
-                            <Col span={8}><b>收费方式：</b>单价递增</Col>
-                            <Col span={8}><b>合同单价：</b>2.0 元/㎡/天</Col>
-                            <Col span={8}><b>首年租金：</b>123,456 元 </Col>
-                        </Row>
-                        <Row>
-                            <Col span={8}><b>交费周期：</b>季付</Col>
-                            <Col span={8}><b>免租期：</b>2017/1/1-2017/1/15</Col>
-                            <Col span={8}><b>免租金额：</b>10000 元</Col>
-                        </Row>
-                        <Row>
-                            <Col span={24}><b>租赁保证金：</b>1,378.42 元 （当前余额：123.00 元） &nbsp; 1 年后租金每年递增 5 %</Col>
-                        </Row>
-                        <p className="line" />
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>租赁周期</td>
-                                    <td>交费期限</td>
-                                    <td>金额 （元）</td>
-                                    <td>优惠（元）</td>
-                                    <td>应收租金（元）</td>
-                                    <td>实收租金（元）</td>
-                                    <td>未收租金（元）</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         )
     }
