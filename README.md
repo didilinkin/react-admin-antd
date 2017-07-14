@@ -3,7 +3,7 @@
 > 脚手架模型来自 [react-admin](https://github.com/yezihaohao/react-admin)
 >
 > *NPM* 版本请 升级到 `5.0.3` 以上
-> 
+>
 > *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
 
 * [**React** v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
@@ -66,26 +66,6 @@
 │   ├── start.js                    |   # webpack - '开发'配置
 │   └── test.js                     |   # webpack - '测试'配置
 ├── src /                           # 开发目录
-│   ├── axios /                     |   # API 交互统一方法
-│   |   └── index.js                |   |   # axios 封装配置
-│   ├── components /                |   # React 组件文件夹( 即将删除!!! - 请及时处理 )
-│   ├── stores /                    |   # Redux 全局状态管理
-│   ├── style /                     |   # Less 样式配置
-│   ├── utils /                     |   # 工具文件存放目录
-│   ├── views /                     |   # ( 页面 + 组件 ) 统一管理 
-│   |   |── common /                |   |   # 通用
-|   │   |   |── components /        |   |   |   # 通用 组件
-|   │   |   └── pages /             |   |   |   # 通用 页面
-|   |   │   |   |── HomeRouter.jsx  |   |   |   |   # 主页 路由模版页( 开发中 )
-|   |   │   |   |── Login.jsx       |   |   |   |   # 登录 页( 开发中 )
-|   |   │   |   └── 404.jsx         |   |   |   |   # 404 页( 开发中 )
-│   |   |── UpKeep /                |   |   # '维修' 版块
-|   │   |   |── components /        |   |   |   # '维修' 组件
-|   │   |   └── pages /             |   |   |   # '维修' 页面
-|   |   │   |   └── Table2.jsx      |   |   |   |   # '维修' 测试 Redux( 测试中 )
-│   |   └── Warehouse /             |   |   # '仓库管理' 版块
-|   │   |   |── components /        |   |   |   # '仓库管理' 组件( 开发中 )
-|   │   |   └── pages /             |   |   |   # '仓库管理' 页面( 开发中 )
 │   └── index.js                    |   # 项目的整体js入口文件, 配置插件
 ├── .babelrc                        # Babel 配置
 ├── .editorconfig                   # 统一编辑器配置
@@ -110,13 +90,11 @@
 ***
 
 ## **ToDoList**
-- [x]  `standard` 语法配置( 或使用 `TSlint` )
-- [x]  `TS` 配置引入
-- [x]  `webpack` 优化配置- 需要升级 2.x !!!
-- [ ]  `hotcss` 响应式 文字处理方案
 - [ ]  `webpack` report打包的体积分析报告( 类似 Vue的 `npm run build --report` )
 - [ ]  `src` 目录 功能划分的调整( 参考`Redux` 推荐目录结构 )
-- [ ]  `Postcss` 配置
-- [ ]  `Antd` 的主题 Less 配置已完成; 如果需要配置主题 需要修改`src/theme` 文件夹( 线上环境的主题 / 按需加载 条件未配置; 如有需要 配置 `webpack.config.prod.js` )
 - [ ] [**webpack 巧解环境配置问题**](https://segmentfault.com/a/1190000004053607)
+- [ ] `redux-devtools` 配置说明
+- [ ] 优化项目结构果
+- [ ] 将 `store` 独立出来, 作为一个模块
+- [ ] 在 `redux` 中使用 异步`thunk`
 
