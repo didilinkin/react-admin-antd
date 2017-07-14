@@ -158,13 +158,13 @@ class PropertyContractAdded extends React.Component {
                     <Step key="合同信息" title="合同信息" />
                     <Step key="设置物业费" title="设置物业费" />
                 </Steps>
-                <Form layout="inline">
+                <Form layout="horizontal">
                     <div style={{display: this.state.none1}}>
                         <h2>房源信息</h2>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="所在房间:" labelCol={{ span: 7 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="所在房间:" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 18 }}
                                 >
                                     {getFieldDecorator('buildId', {
                                         rules: [ {
@@ -174,7 +174,8 @@ class PropertyContractAdded extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
                                             placeholder="请选择所属楼宇"
                                             onChange={this.selectbuildId}
                                             optionFilterProp="children"
@@ -187,33 +188,29 @@ class PropertyContractAdded extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem labelCol={{ span: 7 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('leaseRooms', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择所属房间!'
-                                        }]
-                                    })(
-                                        <Select
-                                            mode="multiple"
-                                            style={{ width: 200 }}
-                                            placeholder="请选择所属房间"
-                                            onChange={this.selectRoom}
-                                            optionFilterProp="children"
-                                        >
-                                            {this.state.listRoom.map(room => {
-                                                return <Option key={room.roomNum}>{room.roomNum}</Option>
-                                            })}
-                                        </Select>
-                                    )}
-                                </FormItem>
+                                {getFieldDecorator('leaseRooms', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '请选择所属房间!'
+                                    }]
+                                })(
+                                    <Select
+                                        mode="multiple"
+                                        style={{ width: 200 }}
+                                        placeholder="请选择所属房间"
+                                        onChange={this.selectRoom}
+                                        optionFilterProp="children"
+                                    >
+                                        {this.state.listRoom.map(room => {
+                                            return <Option key={room.roomNum}>{room.roomNum}</Option>
+                                        })}
+                                    </Select>
+                                )}
                             </Col>
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="服务面积:" labelCol={{ span: 7 }}
+                                <FormItem label="服务面积:" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('serviceArea', {
@@ -228,8 +225,8 @@ class PropertyContractAdded extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="减免:" labelCol={{ span: 7 }}
-                                    wrapperCol={{ span: 15 }}
+                                <FormItem label="减免:" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15}}
                                 >
                                     {getFieldDecorator('reliefArea')(
                                         <Input style={{ width: 200 }} />
@@ -240,7 +237,7 @@ class PropertyContractAdded extends React.Component {
                         <h2>合同信息</h2>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="签约日期:" labelCol={{ span: 7 }}
+                                <FormItem label="签约日期:" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('signDate', {
@@ -254,7 +251,7 @@ class PropertyContractAdded extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="物业合同编号:" labelCol={{ span: 7 }}
+                                <FormItem label="物业合同编号:" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('contractCode', {
@@ -270,7 +267,7 @@ class PropertyContractAdded extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="服务周期:" labelCol={{ span: 7 }}
+                                <FormItem label="服务周期:" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('fuzq', {
@@ -284,7 +281,7 @@ class PropertyContractAdded extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="物业客户名称:" labelCol={{ span: 7 }}
+                                <FormItem label="物业客户名称:" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('clientName', {
@@ -309,7 +306,7 @@ class PropertyContractAdded extends React.Component {
                         </Row>
                         <h2>能源管理押金</h2>
                         <Row>
-                            <FormItem label="交款方式:" labelCol={{ span: 7 }}
+                            <FormItem label="交款方式:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('isSublet', {
@@ -326,7 +323,7 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="应收金额:" labelCol={{ span: 7 }}
+                            <FormItem label="应收金额:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('energy', {
@@ -340,19 +337,17 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="业主自交房间:  （注意：若转租自交，请不要在此选择房间号）:" labelCol={{ span: 17 }}
+                            <p style={{paddingLeft: '26px'}}>
+                                业主自交房间:  （<span style={{color: 'red'}}>注意：若转租自交，请不要在此选择房间号</span>）
+                            </p>
+                            <FormItem
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('roomIdsEnergy', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请选择自交房间!'
-                                    }]
-                                })(
+                                {getFieldDecorator('roomIdsEnergy')(
                                     <Checkbox.Group style={{ width: '100%' }}>
                                         <Row>
                                             {this.state.rooms.map((room, i) => {
-                                                return <Col key={i} span={6}><Checkbox value={room}>{room}</Checkbox></Col>
+                                                return <Col key={i} offset="1" span={4}><Checkbox value={room}>{room}</Checkbox></Col>
                                             })}
                                         </Row>
                                     </Checkbox.Group>
@@ -363,7 +358,7 @@ class PropertyContractAdded extends React.Component {
                     <div style={{display: this.state.none2}}>
                         <h2>设置物业费</h2>
                         <Row>
-                            <FormItem label="物业费单价:" labelCol={{ span: 6 }}
+                            <FormItem label="物业费单价:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('wyfdj', {
@@ -375,12 +370,14 @@ class PropertyContractAdded extends React.Component {
                                     <RadioGroup style={{ width: 700 }}>
                                         <Radio value={1}>每月单价
                                             {getFieldDecorator('pmUnitPrice')(
-                                                <Input style={{ width: 140 }} addonAfter="元／㎡/月" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元／㎡/月" />
                                             )}
-                                        </Radio>
+                                        </Radio><br />
                                         <Radio value={2}>年物业费
                                             {getFieldDecorator('yearPmPrice')(
-                                                <Input style={{ width: 140 }} addonAfter="元" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元" />
                                             )}
                                         </Radio>
                                     </RadioGroup>
@@ -388,7 +385,7 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="空调费单价:" labelCol={{ span: 6 }}
+                            <FormItem label="空调费单价:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('ktfdj', {
@@ -402,7 +399,8 @@ class PropertyContractAdded extends React.Component {
                                             {getFieldDecorator('acUnitDay')(
                                                 <Select
                                                     showSearch
-                                                    style={{ width: 100 }}
+                                                    style={{ width: 100,
+                                                        marginLeft: '10px' }}
                                                     placeholder="请选择空调费类型"
                                                     optionFilterProp="children"
                                                 >
@@ -411,12 +409,14 @@ class PropertyContractAdded extends React.Component {
                                                 </Select>
                                             )}
                                             {getFieldDecorator('acUnitPrice')(
-                                                <Input style={{ width: 140 }} addonAfter="元／㎡/天" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元／㎡/天" />
                                             )}
-                                        </Radio>
+                                        </Radio><br />
                                         <Radio value={2}>年空调费
                                             {getFieldDecorator('yearAcPrice')(
-                                                <Input style={{ width: 140 }} addonAfter="元" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元" />
                                             )}
                                         </Radio>
                                     </RadioGroup>
@@ -424,7 +424,7 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="电梯费单价:" labelCol={{ span: 6 }}
+                            <FormItem label="电梯费单价:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('dtfdj', {
@@ -433,10 +433,12 @@ class PropertyContractAdded extends React.Component {
                                         message: '请选择电梯费单价!'
                                     }]
                                 })(
-                                    <RadioGroup style={{ width: 700 }}>
+                                    <RadioGroup style={{ width: 700,
+                                        marginLeft: '10px' }}>
                                         <Radio value={2}>固定单价
                                             {getFieldDecorator('elevUnitPrice')(
-                                                <Input style={{ width: 140 }} addonAfter="元／㎡/月" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元／㎡/月" />
                                             )}
                                         </Radio>
                                     </RadioGroup>
@@ -444,7 +446,7 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="收水费方式:" labelCol={{ span: 6 }}
+                            <FormItem label="收水费方式:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('waterType', {
@@ -453,18 +455,22 @@ class PropertyContractAdded extends React.Component {
                                         message: '请选择收水费方式!'
                                     }]
                                 })(
-                                    <RadioGroup style={{ width: 700 }}>
+                                    <RadioGroup style={{ width: 700,
+                                        marginLeft: '10px' }}>
                                         <Radio value={1}>按面积
                                             {getFieldDecorator('waterUnitPrice')(
-                                                <Input style={{ width: 140 }} addonAfter=" 元／㎡" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter=" 元／㎡" />
                                             )}
-                                        </Radio>
+                                        </Radio><br />
                                         <Radio value={2}>独立水表
                                             {getFieldDecorator('waterUnitPriceTwo')(
-                                                <Input style={{ width: 140 }} addonAfter="元/立方米" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元/立方米" />
                                             )}
                                             {getFieldDecorator('waterLossRatio')(
-                                                <Input style={{ width: 140 }} addonAfter=" % 损耗" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter=" % 损耗" />
                                             )}
                                         </Radio>
                                     </RadioGroup>
@@ -472,7 +478,7 @@ class PropertyContractAdded extends React.Component {
                             </FormItem>
                         </Row>
                         <Row>
-                            <FormItem label="收电费方式:" labelCol={{ span: 6 }}
+                            <FormItem label="收电费方式:" labelCol={{ span: 3 }}
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('powerType', {
@@ -484,29 +490,36 @@ class PropertyContractAdded extends React.Component {
                                     <RadioGroup style={{ width: 700 }}>
                                         <Radio value={1}>固定单价
                                             {getFieldDecorator('powerUnitPrice1')(
-                                                <Input style={{ width: 140 }} addonAfter="元／㎡" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元／㎡" />
                                             )}
                                         </Radio>
                                         <Radio value={2}>差额单价
                                             {getFieldDecorator('powerUnitPrice2')(
-                                                <Input style={{ width: 140 }} addonAfter="元/度" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元/度" />
                                             )}
                                             {getFieldDecorator('sunhao1')(
-                                                <Input style={{ width: 140 }} addonAfter="% 损耗" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="% 损耗" />
                                             )}
                                             {getFieldDecorator('biaobi1')(
-                                                <Input style={{ width: 140 }} addonAfter="变比" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="变比" />
                                             )}
                                         </Radio>
                                         <Radio value={3}>功峰平谷
                                             {getFieldDecorator('powerUnitPrice3')(
-                                                <Input style={{ width: 140 }} addonAfter="元/度" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="元/度" />
                                             )}
                                             {getFieldDecorator('sunhao2')(
-                                                <Input style={{ width: 140 }} addonAfter="% 损耗" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="% 损耗" />
                                             )}
                                             {getFieldDecorator('biaobi2')(
-                                                <Input style={{ width: 140 }} addonAfter="变比" />
+                                                <Input style={{ width: 140,
+                                                    marginLeft: '10px' }} addonAfter="变比" />
                                             )}
                                         </Radio>
                                     </RadioGroup>
