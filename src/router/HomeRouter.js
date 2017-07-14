@@ -180,7 +180,7 @@ const routes = [
                 component: ContractDetail
             }, {
                 path: '/upkeep/contractTenancyDetail/:id',                                                     // [详情] - 合同租赁详情
-                component: ContractDetail
+                component: ContractTenancyDetail
             }, {
                 path: '/upkeep/electricityDetail/:id',                                                  // [详情] - 电费详情
                 component: ElectricityDetail
