@@ -2,6 +2,8 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CollectRentFailComponent from './components/AfterAudit'
+import CollectRentRepaidComponent from './components/PaidConfirm'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -11,7 +13,6 @@ class CollectRentConduct extends Component {
         this.state = {
             loading: false,
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
@@ -24,10 +25,17 @@ class CollectRentConduct extends Component {
     }
     handleUpdate = (id) => {
         this.setState({
-            openinvalid: false,
             openAdd: false,
             openTableAddUp: false,
             openUpdate: true,
+            id: id
+        })
+    }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: true,
+            openUpdate: false,
             id: id
         })
     }
@@ -38,6 +46,7 @@ class CollectRentConduct extends Component {
             {auditStatus: 3}
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -124,7 +133,8 @@ class CollectRentConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >收租</Button>
+                            <Button type="primary" onClick={() => handleUpdate(record.id)} >明细</Button>
+                            <Button type="primary" onClick={() => handleUpdate2(record.id)} >重新收租</Button>
                         </div>
                     )
                 }
@@ -147,7 +157,6 @@ class CollectRentConduct extends Component {
         )
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             dataSource: result.data,
@@ -172,6 +181,16 @@ class CollectRentConduct extends Component {
     render () {
         return (
             <div>
+                <CollectRentFailComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
+                />
+                <CollectRentRepaidComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openTableAddUp}
+                />
                 <span>
                     <span>房间编号:</span>
                     <Input style={{width: 150}} onChange={this.entryNumberOnChange} />

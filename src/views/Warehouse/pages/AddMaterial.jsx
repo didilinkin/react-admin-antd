@@ -17,49 +17,14 @@ class addUpkeep extends React.Component {
                     '/warehouse/getMaterial',
                     { 'id': nextProps.id }
                 )
-                if (resulData.data.whType === 0) {
-                    this.props.form.setFields({
-                        whType: {
-                            value: '工程库',
-                            errors: ''
-                        }
-                    })
-                } else if (resulData.data.whType === 1) {
-                    this.props.form.setFields({
-                        whType: {
-                            value: '保洁用品库',
-                            errors: ''
-                        }
-                    })
-                } else {
-                    this.props.form.setFields({
-                        whType: {
-                            value: '行政库',
-                            errors: ''
-                        }
-                    })
-                }
-                this.props.form.setFields({
-                    standard: {
-                        value: resulData.data.standard,
-                        errors: ''
-                    },
-                    name: {
-                        value: resulData.data.name,
-                        errors: ''
-                    },
-                    unit: {
-                        value: resulData.data.unit,
-                        errors: ''
-                    },
-                    unitPrice: {
-                        value: resulData.data.unitPrice,
-                        errors: ''
-                    },
-                    storagePlace: {
-                        value: resulData.data.storagePlace,
-                        errors: ''
-                    }
+                this.props.form.setFieldsValue({
+                    standard: resulData.data.standard,
+                    name: resulData.data.name,
+                    unit: resulData.data.unit,
+                    unitPrice: resulData.data.unitPrice,
+                    storagePlace: resulData.data.storagePlace,
+                    whType: resulData.data.whType,
+                    whType1: resulData.data.whType
                 })
                 this.setState({
                     isFirst: false,
@@ -120,7 +85,7 @@ class addUpkeep extends React.Component {
         }
     }
     render () {
-        const { getFieldProps } = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal maskClosable={false}
@@ -133,34 +98,78 @@ class addUpkeep extends React.Component {
                 >
                     <Form layout="horizontal">
                         <FormItem label="材料名称" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Input type="text" {...getFieldProps('name')} />
+                            {getFieldDecorator('name', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入材料名称'
+                                }]
+                            })(
+                                <Input />
+                            )}
                         </FormItem>
                         <FormItem label="规格" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Input type="text" {...getFieldProps('standard')} />
+                            {getFieldDecorator('standard', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入规格!'
+                                }]
+                            })(
+                                <Input />
+                            )}
                         </FormItem>
                         <FormItem label="单位" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Input type="text" {...getFieldProps('unit')} />
+                            {getFieldDecorator('unit', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入单位!'
+                                }]
+                            })(
+                                <Input />
+                            )}
                         </FormItem>
                         <FormItem label="单价" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Input onBlur={this.onBlur} type="text" {...getFieldProps('unitPrice')} />
+                            {getFieldDecorator('unitPrice', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入单价!'
+                                }]
+                            })(
+                                <Input />
+                            )}
                         </FormItem>
                         <FormItem label="存放位置" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Input onBlur={this.onBlur} type="text" {...getFieldProps('storagePlace')} />
+                            {getFieldDecorator('storagePlace', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入存放位置!'
+                                }]
+                            })(
+                                <Input onBlur={this.onBlur}/>
+                            )}
                         </FormItem>
                         <FormItem label="仓库类型" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
-                            <Select
-                                {...getFieldProps('whType')}
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="请选择仓库类型"
-                                optionFilterProp="children"
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            >
-                                <Option key="0">工程库</Option>
-                                <Option key="1">保洁用品库</Option>
-                                <Option key="2">行政库</Option>
-                            </Select>
+                            {getFieldDecorator('whType1', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请输入存放位置!'
+                                }]
+                            })(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="请选择仓库类型"
+                                    optionFilterProp="children"
+                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                >
+                                    <Option key="0">工程库</Option>
+                                    <Option key="1">保洁用品库</Option>
+                                    <Option key="2">行政库</Option>
+                                </Select>
+                            )}
                         </FormItem>
+                        {getFieldDecorator('whType')(
+                            <Input type="hidden" />
+                        )}
                     </Form>
                 </Modal>
             </div>

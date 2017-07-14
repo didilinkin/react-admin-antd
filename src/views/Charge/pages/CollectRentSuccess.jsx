@@ -1,9 +1,9 @@
 // 收费管理 - 应收租金
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin } from 'antd'
 import { apiPost } from '../../../api'
+import CollectRentHeadComponent from './components/CollectRentHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class CollectRentConduct extends Component {
     constructor (props) {
@@ -16,10 +16,7 @@ class CollectRentConduct extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
-            warehouseId: 0,
-            amount: 0,
-            number: 0,
-            unitPrice: 0
+            ListBuildingInfo: []
         }
     }
     handleUpdate = (id) => {
@@ -33,12 +30,16 @@ class CollectRentConduct extends Component {
     }
     async initialRemarks () {
         this.setState({loading: true})
+        let ListBuildingInfo = await apiPost(
+            '/contract/ListBuildingInfo'
+        )
         let result = await apiPost(
             '/collectRent/collectRentList',
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -153,7 +154,7 @@ class CollectRentConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >收租</Button>
+                            <Button type="primary" onClick={() => handleUpdate(record.id)} >明细</Button>
                         </div>
                     )
                 }
@@ -164,15 +165,12 @@ class CollectRentConduct extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        filters['auditStatus'] = 2
         // 刷新表格
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
-                'roomNum': this.roomNum,
-                'auditStatus': 2
-            }
+            filters
         )
         this.setState({
             openAdd: false,
@@ -201,29 +199,13 @@ class CollectRentConduct extends Component {
     render () {
         return (
             <div>
-                <span>
-                    <span>房间编号:</span>
-                    <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称:</span>
-                    <Input style={{width: 150}} onChange={this.entryNameOnChange} />
-                    <Select
-                        showSearch
-                        style={{ width: 150 }}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
-
+                <CollectRentHeadComponent
+                    refresh={this.refresh}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 2000 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
