@@ -26,6 +26,19 @@ class addUpkeep extends React.Component {
                     whType: resulData.data.whType,
                     whType1: resulData.data.whType
                 })
+                if (resulData.data.whType === 0) {
+                    this.props.form.setFieldsValue({
+                        whType1: '工程库'
+                    })
+                } else if (resulData.data.whType === 1) {
+                    this.props.form.setFieldsValue({
+                        whType1: '保洁用品库'
+                    })
+                } else {
+                    this.props.form.setFieldsValue({
+                        whType1: '行政库'
+                    })
+                }
                 this.setState({
                     isFirst: false,
                     visible: nextProps.visible
@@ -83,6 +96,11 @@ class addUpkeep extends React.Component {
         if (typeof (unitPrice) === 'undefined') {
             unitPrice = 0
         }
+    }
+    onSelect = (e) => {
+        this.props.form.setFieldsValue({
+            whType: e
+        })
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -144,7 +162,7 @@ class addUpkeep extends React.Component {
                                     message: '请输入存放位置!'
                                 }]
                             })(
-                                <Input onBlur={this.onBlur}/>
+                                <Input onBlur={this.onBlur} />
                             )}
                         </FormItem>
                         <FormItem label="仓库类型" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
@@ -159,6 +177,7 @@ class addUpkeep extends React.Component {
                                     style={{ width: 200 }}
                                     placeholder="请选择仓库类型"
                                     optionFilterProp="children"
+                                    onSelect={this.onSelect}
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 >
                                     <Option key="0">工程库</Option>
