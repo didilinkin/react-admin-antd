@@ -3,7 +3,8 @@ import React from 'react'
 import { apiPost } from '../../../api'
 import {Table, Button, Spin } from 'antd'
 import ContractHeadComponent from './common/ContractHead'
-import  PropertyContractAddedCom from './common/PropertyContractAdded'
+import PropertyContractAddedCom from './common/PropertyContractAdded'
+import HydropowerContractAdditionCom from './common/HydropowerContractAddition'
 class PropertyContract extends React.Component {
     constructor (props) {
         super(props)
@@ -14,7 +15,8 @@ class PropertyContract extends React.Component {
             columns: [],
             dataSource: [],
             ListBuildingInfo: [],
-            PropertyContractAddedComOpen: false
+            PropertyContractAddedComOpen: false,
+            HydropowerContractAdditionComOpen: false
         }
     }
     async initialRemarks () {
@@ -139,12 +141,20 @@ class PropertyContract extends React.Component {
             dataSource: result.data,
             type: filters['type'],
             PropertyContractAddedComOpen: false,
+            HydropowerContractAdditionComOpen: false,
             id: 0
         })
     }
-    showModal = () => {
+    openPropertyContractAddedCom = () => {
         this.setState({
-            PropertyContractAddedComOpen: true
+            PropertyContractAddedComOpen: true,
+            HydropowerContractAdditionComOpen: false
+        })
+    }
+    openHydropowerContractAdditionCom = () => {
+        this.setState({
+            PropertyContractAddedComOpen: false,
+            HydropowerContractAdditionComOpen: true
         })
     }
     render () {
@@ -155,7 +165,8 @@ class PropertyContract extends React.Component {
                     type={this.state.type}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <Button type="primary" onClick={this.showModal}>添加物业合同</Button>
+                <Button type="primary" onClick={this.openPropertyContractAddedCom}>添加物业合同</Button>
+                <Button type="primary" onClick={this.openHydropowerContractAdditionCom}>添加仅水电合同</Button>
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
@@ -169,6 +180,11 @@ class PropertyContract extends React.Component {
                     refreshTable={this.refresh}
                     visible={this.state.PropertyContractAddedComOpen}
                     title="添加范本物业合同"
+                />
+                <HydropowerContractAdditionCom
+                    refreshTable={this.refresh}
+                    visible={this.state.HydropowerContractAdditionComOpen}
+                    title="添加仅水电合同"
                 />
             </div>
         )
