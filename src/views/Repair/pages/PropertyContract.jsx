@@ -28,7 +28,7 @@ class PropertyContract extends React.Component {
         )
         let repairList = result.data
         this.setState({loading: false,
-            ListBuildingInfo: ListBuildingInfo.data,
+            ListBuildingInfo: ListBuildingInfo.data.ListBuildingInfo,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -127,6 +127,9 @@ class PropertyContract extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         // 刷新表格
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['type'] = this.state.type
         let result = await apiPost(
             '/contract/contractlist',
@@ -152,7 +155,7 @@ class PropertyContract extends React.Component {
                     type={this.state.type}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <Button type="primary" onClick={this.showModal}>添加报单</Button>
+                <Button type="primary" onClick={this.showModal}>添加物业合同</Button>
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}

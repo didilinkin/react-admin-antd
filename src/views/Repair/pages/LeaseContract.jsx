@@ -26,7 +26,7 @@ class PropertyContract extends React.Component {
         )
         let repairList = result.data
         this.setState({loading: false,
-            ListBuildingInfo: ListBuildingInfo.data,
+            ListBuildingInfo: ListBuildingInfo.data.ListBuildingInfo,
             columns: [{
                 title: '序号',
                 width: 100,
