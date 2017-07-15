@@ -2,18 +2,12 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-// 状态
-// import { createStore, combineReducers, applyMiddleware } from 'redux'
-// import { Provider } from 'react-redux'
+import configureStore from './store/configureStore/index'
+import Root from './containers/Root'
 
-// 路由
-import Routes from './router'
-
-// react-router-redux
+const store = configureStore()
 
 render(
-    <div>
-        <Routes />
-    </div>,
+    <Root store={ store } />,
     document.getElementById('root')
 )
