@@ -1,5 +1,4 @@
 // 路由根组件
-
 import React from 'react'
 import {
     BrowserRouter as Router,
@@ -8,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import {
-    App,
+    Home,
     Count,
     View
 } from '../containers'
@@ -24,7 +23,7 @@ const Routes = () => (
 
             <hr />
 
-            <Route exact path="/" component={ App } />
+            <Route exact path="/" component={ Home } />
             <Route path="/count" component={ Count } />
             <Route path="/view" component={ View } />
         </div>

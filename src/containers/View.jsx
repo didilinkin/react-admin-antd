@@ -1,16 +1,26 @@
 // 共享计算值
 import React from 'react'
-// import { connect } from 'react-redux'
+// import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
+// getters
+import { getCountState } from '../store/getters'
 
-class View extends React.Component {
-    render () {
-        return (
-            <div>
-                <h1> 共享计算值 </h1>
-            </div>
-        )
-    }
-}
+const View = ({ countState }) => (
+    <h3>
+        <b> 目前计算器结果: </b>
+        { countState }
+    </h3>
+)
 
-export default View
+// View.prototype = {
+//     countState: PropTypes.number.isRequired
+// }
+
+const mapStateToProps = (state) => ({
+    countState: getCountState(state)
+})
+
+export default connect(
+    mapStateToProps
+)(View)

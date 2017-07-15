@@ -1,13 +1,13 @@
 // 计算器 reducers
 import { combineReducers } from 'redux'
 
-import * as types from '../constants/ActionTypes'
+import { INCREMENT, DECREMENT } from '../constants/ActionTypes'
 
 const count = (state = 0, action) => {
     switch (action.type) {
-        case types.INCREMENT:
+        case INCREMENT:
             return state + 1
-        case types.DECREMENT:
+        case DECREMENT:
             return state - 1
         default:
             return state

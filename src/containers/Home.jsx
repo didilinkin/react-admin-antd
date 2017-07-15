@@ -3,7 +3,7 @@ import React from 'react'
 
 // import Link from 'react-router-redux-dom-link'
 
-class App extends React.Component {
+class Home extends React.Component {
     render () {
         return (
             <div>
@@ -13,4 +13,4 @@ class App extends React.Component {
     }
 }
 
-export default App
+export default Home

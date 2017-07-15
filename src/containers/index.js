@@ -1,10 +1,10 @@
 // 收集全部组件
-import App from './App'
+import Home from './Home'
 import Count from './Count'
 import View from './View'
 
 export {
-    App,
+    Home,
     Count,
     View
 }
