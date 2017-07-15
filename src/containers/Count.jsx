@@ -1,6 +1,6 @@
 // 计算器
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // actions
@@ -20,11 +20,11 @@ const Count = ({ countState, increment, decrement }) => (
     />
 )
 
-// Count.prototype = {
-//     value: PropTypes.number.isRequired,
-//     onIncrement: PropTypes.func.isRequired,
-//     onDecrement: PropTypes.func.isRequired
-// }
+Count.propTypes = {
+    countState: PropTypes.number.isRequired,
+    increment: PropTypes.func.isRequired,
+    decrement: PropTypes.func.isRequired
+}
 
 // 将 Store中的 state 状态 映射到 组件内
 const mapStateToProps = (state) => ({

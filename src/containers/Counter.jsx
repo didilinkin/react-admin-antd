@@ -1,6 +1,6 @@
 // 计算器 组件(components)
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 class Counter extends React.Component {
     render () {
@@ -18,10 +18,10 @@ class Counter extends React.Component {
     }
 }
 
-// Counter.prototype = {
-//     value: PropTypes.number.isRequired,
-//     onIncrement: PropTypes.func.isRequired,
-//     onDecrement: PropTypes.func.isRequired
-// }
+Counter.propTypes = {
+    value: PropTypes.number.isRequired,
+    onIncrement: PropTypes.func.isRequired,
+    onDecrement: PropTypes.func.isRequired
+}
 
 export default Counter
