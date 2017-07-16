@@ -2,12 +2,15 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import configureStore from './store/configureStore/index'
+import { configureStore, history } from './store/configureStore/index'
 import Root from './containers/Root'
 
 const store = configureStore()
 
 render(
-    <Root store={ store } />,
+    <Root
+        store={ store }
+        history={ history }
+    />,
     document.getElementById('root')
 )
