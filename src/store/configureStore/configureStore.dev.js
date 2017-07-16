@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux' // compose
 import { routerReducer, routerMiddleware } from 'react-router-redux'
-// import { createLogger } from 'redux-logger'
-// import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import thunk from 'redux-thunk'
 
 import createHistory from 'history/createBrowserHistory'
 
@@ -15,7 +15,7 @@ const history = createHistory()
 
 // Build the middleware for intercepting and dispatching navigation actions
 // const middleware = routerMiddleware(history) // 测试 改个名字
-const middleware = routerMiddleware(history)
+const middlewareHistory = routerMiddleware(history)
 
 // 增强器(组成: 异步 + 调试插件 + redux日志) => 必须浏览器安装有 devtools插件, 否则不使用 这个增强器
 // const enhancer = compose(
@@ -52,13 +52,20 @@ const middleware = routerMiddleware(history)
 //     return store
 // }
 
+// 将 组合 middleware
+const middleware = [ thunk, middlewareHistory ]
+
+if (process.env.NODE_ENV !== 'production') {
+    middleware.push(createLogger())
+}
+
 const store = createStore(
     combineReducers({
         ...rootReducer,
         router: routerReducer
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(middleware)
+    applyMiddleware(...middleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
 export { history, store } // configureStore
