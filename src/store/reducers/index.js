@@ -1,6 +1,8 @@
 // reducers 根文件
-import { combineReducers } from 'redux'
+// import { combineReducers } from 'redux'
 
 import count from './count'
 
-export default combineReducers({ count })
+// export default combineReducers({ count })
+
+export { count }
