@@ -1,11 +1,8 @@
 // 路由根组件
 import React from 'react'
-import {
-    BrowserRouter as Router,
-    Route
-} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
-import { withRouter } from 'react-router'
+// import { withRouter } from 'react-router'
 
 import {
     Home,
@@ -38,10 +35,8 @@ import Link from 'react-router-redux-dom-link'
 
 class Routes extends React.Component {
     render () {
-        const { history } = this.props
-
         return (
-            <Router history={ history }>
+            <Route>
                 <div>
                     <ul>
                         <li><Link to="/" replace> 首页 </Link></li>
@@ -57,11 +52,11 @@ class Routes extends React.Component {
                     <Route path="/view" component={ View } />
                     <Route path="/testRoute" component={ TestRoute } />
                 </div>
-            </Router>
+            </Route>
         )
     }
 }
 
-const RoutesWithRouter = withRouter(Routes)
+// const RoutesWithRouter = withRouter(Routes)
 
-export default RoutesWithRouter
+export default Routes
