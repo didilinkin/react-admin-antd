@@ -26,67 +26,79 @@ class PropertyContractAdded extends React.Component {
         }
     }
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        json['contractSplit'] = 1
-        json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
-        json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
-        json['fuzq'] = ''
-        json['leaseRooms'] = json.leaseRooms.toString()
-        json['roomIdsEnergy'] = json.roomIdsEnergy.toString()
-        json['signDate'] = json.signDate.format('YYYY-MM-DD')
-        if (json.waterType.toString() === '0') {
-            json['waterUnitPrice'] = json.waterUnitPrice1
-        } else {
-            json['waterUnitPrice'] = json.waterUnitPrice2
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            json['contractSplit'] = 1
+            json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
+            json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
+            json['fuzq'] = ''
+            json['leaseRooms'] = json.leaseRooms.toString()
+            json['roomIdsEnergy'] = json.roomIdsEnergy.toString()
+            json['signDate'] = json.signDate.format('YYYY-MM-DD')
+            if (json.waterType.toString() === '0') {
+                json['waterUnitPrice'] = json.waterUnitPrice1
+            } else {
+                json['waterUnitPrice'] = json.waterUnitPrice2
+            }
+            if (json.powerType.toString() === '0') {
+                json['powerUnitPrice'] = json.powerUnitPrice1
+            } else if (json.powerType.toString() === '1') {
+                json['powerUnitPrice'] = json.powerUnitPrice2
+                json['powerRatio'] = json.biaobi1
+                json['powerLossRatio'] = json.sunhao1
+            } else {
+                json['powerUnitPrice'] = json.powerUnitPrice3
+                json['powerRatio'] = json.biaobi2
+                json['powerLossRatio'] = json.sunhao2
+            }
+            if (json.wyfdj.toString() === '1') {
+                json['yearPmPrice'] = null
+            } else {
+                json['pmUnitPrice'] = null
+            }
+            if (json.ktfdj.toString() === '1') {
+                json['yearAcPrice'] = null
+            } else {
+                json['acUnitPrice'] = null
+            }
+            console.log(JSON.stringify(json))
+            let map = ''
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                map = await apiPost(
+                    '/contract/updatePmContract',
+                    json
+                )
+            } else {
+                map = await apiPost(
+                    '/contract/insertPmContract',
+                    json
+                )
+            }
+            notification.open({
+                message: map.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+            })
+            this.setState({
+                visible: false,
+                isFirst: true,
+                none1: '',
+                none2: 'none',
+                rooms: [],
+                current: 0
+            })
+            this.props.refreshTable()
         }
-        if (json.powerType.toString() === '0') {
-            json['powerUnitPrice'] = json.powerUnitPrice1
-        } else if (json.powerType.toString() === '1') {
-            json['powerUnitPrice'] = json.powerUnitPrice2
-            json['powerRatio'] = json.biaobi1
-            json['powerLossRatio'] = json.sunhao1
-        } else {
-            json['powerUnitPrice'] = json.powerUnitPrice3
-            json['powerRatio'] = json.biaobi2
-            json['powerLossRatio'] = json.sunhao2
-        }
-        if (json.wyfdj.toString() === '1') {
-            json['yearPmPrice'] = null
-        } else {
-            json['pmUnitPrice'] = null
-        }
-        if (json.ktfdj.toString() === '1') {
-            json['yearAcPrice'] = null
-        } else {
-            json['acUnitPrice'] = null
-        }
-        console.log(JSON.stringify(json))
-        let map = ''
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            map = await apiPost(
-                '/contract/updatePmContract',
-                json
-            )
-        } else {
-            map = await apiPost(
-                '/contract/insertPmContract',
-                json
-            )
-        }
-        notification.open({
-            message: map.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.setState({
-            visible: false,
-            isFirst: true,
-            none1: '',
-            none2: 'none',
-            rooms: [],
-            current: 0
-        })
-        this.props.refreshTable()
     }
     handleCancel = () => {
         this.setState({
