@@ -330,7 +330,7 @@ const routes = [
                 path: '/charge/rentManagement',                                                         // 收费管理 - 租金管理
                 component: RentManagement
             }, {
-                path: '/charge/propertyManagement',                                                     // 物业费管理
+                path: '/charge/propertyManagement',                                                     // 收费管理 - 物业费管理
                 component: PropertyManagement
             }, {
                 path: '/charge/initiateRent',                                                           // 弹出
