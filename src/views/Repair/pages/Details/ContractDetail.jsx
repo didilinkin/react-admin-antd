@@ -22,7 +22,7 @@ class App extends React.Component {
                         客户信息
                     </div>
                     <div className="main">
-                        <h3>客户信息</h3>
+                        <h3>客户信息 <span className="blue">添加转租信息</span></h3>
                         <Row>
                             <Col span={8}><b>物业客户名称：</b>长江中心A座 </Col>
                             <Col span={8}><b>联系人：</b>对对对</Col>
@@ -39,7 +39,7 @@ class App extends React.Component {
                             <Col span={8} />
                         </Row>
                         <p className="line" />
-                        <h3>转租信息</h3>
+                        <h3>转租信息 <span className="green">编辑</span> <span className="red">删除</span></h3>
                         <Row>
                             <Col span={8}><b>租户名称：</b>长江中心A座 </Col>
                             <Col span={8}><b>联系人：</b>对对对</Col>
