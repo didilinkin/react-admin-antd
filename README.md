@@ -5,11 +5,11 @@
 > *NPM* 版本请 升级到 `5.0.3` 以上
 >
 > *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
+>
+> 开发环境, 请务必使用 *chrome* 作为调试浏览器; 并且安装 *react-devtools* 与 *redux-devtools* 调试插件;
 
 * [**React** v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
-* 使用 `TypeScript` 超集语言辅助
-* 使用 `TSLint` 进行代码检测
-* 使用 `Jest` 与 `Enzyme` 进行代码测试
+* 使用 `ESLint` 进行代码检测
 * 使用 `Redux` 进行状态管理
 
 ## 使用技术:
