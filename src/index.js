@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import { configureStore, history } from './store/configureStore/index' // configureStore
-import Root from './containers/Root'
+import Root from './containers/Root/index'
 
 const store = configureStore()
 

@@ -16,7 +16,7 @@ class Root extends React.Component {
 
         return (
             <Provider store={store}>
-                <ConnectedRouter history={ history } >
+                <ConnectedRouter history={ history }>
                     <div>
                         <Routes />
                         {/* <DevTools /> */}
