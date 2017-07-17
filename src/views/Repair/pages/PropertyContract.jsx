@@ -16,7 +16,28 @@ class PropertyContract extends React.Component {
             dataSource: [],
             ListBuildingInfo: [],
             PropertyContractAddedComOpen: false,
-            HydropowerContractAdditionComOpen: false
+            HydropowerContractAdditionComOpen: false,
+            PropertyContractAddedComOpenUP: false,
+            HydropowerContractAdditionComOpenUP: false
+        }
+    }
+    updatePm = (contractSplit, id) => {
+        if (contractSplit === 1) {
+            this.setState({
+                PropertyContractAddedComOpen: false,
+                HydropowerContractAdditionComOpen: false,
+                PropertyContractAddedComOpenUP: true,
+                HydropowerContractAdditionComOpenUP: false,
+                id: id
+            })
+        } else {
+            this.setState({
+                PropertyContractAddedComOpen: false,
+                HydropowerContractAdditionComOpen: false,
+                PropertyContractAddedComOpenUP: false,
+                HydropowerContractAdditionComOpenUP: true,
+                id: id
+            })
         }
     }
     async initialRemarks () {
@@ -29,6 +50,7 @@ class PropertyContract extends React.Component {
             '/contract/ListBuildingInfo'
         )
         let repairList = result.data
+        let updatePm = this.updatePm
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data.ListBuildingInfo,
             columns: [{
@@ -111,11 +133,17 @@ class PropertyContract extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     let arr = []
+                    let url = ''
+                    if (record.contractSplit === 1) {
+                        url = '/upkeep/contractDetail/' + record.id
+                    } else {
+                        url = '/upkeep/electricityDetail/' + record.id
+                    }
                     arr.push(
-                        <Button key="1">查看</Button>
+                        <Button key="1"> <a href={url}>查看</a> </Button>
                     )
                     arr.push(
-                        <Button key="2">编辑</Button>
+                        <Button key="2" onClick={() => updatePm(record.contractSplit, record.id)}>编辑</Button>
                     )
 
                     return arr
@@ -142,19 +170,25 @@ class PropertyContract extends React.Component {
             type: filters['type'],
             PropertyContractAddedComOpen: false,
             HydropowerContractAdditionComOpen: false,
+            PropertyContractAddedComOpenUP: false,
+            HydropowerContractAdditionComOpenUP: false,
             id: 0
         })
     }
     openPropertyContractAddedCom = () => {
         this.setState({
             PropertyContractAddedComOpen: true,
-            HydropowerContractAdditionComOpen: false
+            HydropowerContractAdditionComOpen: false,
+            PropertyContractAddedComOpenUP: false,
+            HydropowerContractAdditionComOpenUP: false
         })
     }
     openHydropowerContractAdditionCom = () => {
         this.setState({
             PropertyContractAddedComOpen: false,
-            HydropowerContractAdditionComOpen: true
+            HydropowerContractAdditionComOpen: true,
+            PropertyContractAddedComOpenUP: false,
+            HydropowerContractAdditionComOpenUP: false
         })
     }
     render () {
@@ -185,6 +219,18 @@ class PropertyContract extends React.Component {
                     refreshTable={this.refresh}
                     visible={this.state.HydropowerContractAdditionComOpen}
                     title="添加仅水电合同"
+                />
+                <PropertyContractAddedCom
+                    refreshTable={this.refresh}
+                    id={this.state.id}
+                    visible={this.state.PropertyContractAddedComOpenUP}
+                    title="修改范本物业合同"
+                />
+                <HydropowerContractAdditionCom
+                    refreshTable={this.refresh}
+                    id={this.state.id}
+                    visible={this.state.HydropowerContractAdditionComOpenUP}
+                    title="修改仅水电合同"
                 />
             </div>
         )
