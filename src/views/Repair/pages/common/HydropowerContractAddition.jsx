@@ -18,17 +18,43 @@ class HydropowerContractAddition extends React.Component {
             ListclientName: []
         }
     }
-    handleSubmit = () => {
-        this.props.refreshTable()
+    handleSubmit = async () => {
+        let json = this.props.form.getFieldsValue()
+        json['contractSplit'] = 2
+        json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
+        json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
+        json['leaseRooms'] = json.leaseRooms.toString()
+        json['signDate'] = json.signDate.format('YYYY-MM-DD')
+        if (json.waterType.toString() === '1') {
+            json['waterUnitPrice'] = json.waterUnitPrice1
+        } else {
+            json['waterUnitPrice'] = json.waterUnitPrice2
+        }
+        if (json.powerType.toString() === '1') {
+            json['powerUnitPrice'] = json.powerUnitPrice1
+        } else if (json.powerType.toString() === '2') {
+            json['powerUnitPrice'] = json.powerUnitPrice2
+            json['powerRatio'] = json.biaobi1
+            json['powerLossRatio'] = json.sunhao1
+        } else {
+            json['powerUnitPrice'] = json.powerUnitPrice3
+            json['powerRatio'] = json.biaobi2
+            json['powerLossRatio'] = json.sunhao2
+        }
+        console.log(JSON.stringify(json))
+        let map = await apiPost(
+            '/contract/insertPmContract',
+            json
+        )
         notification.open({
-            message: '添加成功',
+            message: map.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.setState({
             visible: false,
             isFirst: true
         })
-        this.props.form.resetFields()
+        this.props.refreshTable()
     }
     handleCancel = () => {
         this.setState({
@@ -40,6 +66,7 @@ class HydropowerContractAddition extends React.Component {
 
     initialRemarks2 (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
+            this.props.form.resetFields()
             this.setState({
                 isFirst: false,
                 visible: nextProps.visible
@@ -74,17 +101,20 @@ class HydropowerContractAddition extends React.Component {
     }
     selectRoom = (value) => {
         let serviceArea = 0
+        let roomIds = []
         value.map(roomnun => {
             this.state.listRoom.map(room => {
                 if (roomnun.toString() === room.roomNum.toString()) {
                     serviceArea = serviceArea + room.roomArea
+                    roomIds.push(room.id)
                 }
                 return ''
             })
             return ''
         })
         this.props.form.setFieldsValue({
-            serviceArea: serviceArea.toFixed(2)
+            serviceArea: serviceArea.toFixed(2),
+            roomIds: roomIds.toString()
         })
         this.setState({
             rooms: value
@@ -109,6 +139,18 @@ class HydropowerContractAddition extends React.Component {
         }
         this.props.form.setFieldsValue({
             serviceArea: serviceArea - value
+        })
+    }
+    selectClient = (value) => {
+        let clientId = 0
+        this.state.ListclientName.map(client => {
+            if (value.toString() === client.clientName.toString()) {
+                clientId = client.id
+            }
+            return ''
+        })
+        this.props.form.setFieldsValue({
+            clientId: clientId
         })
     }
     render () {
@@ -189,7 +231,7 @@ class HydropowerContractAddition extends React.Component {
                             </FormItem>
                         </Col>
                         <Col span={12}>
-                            <FormItem label="减免:" labelCol={{ span: 6 }}
+                            <FormItem label="减免面积:" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 15}}
                             >
                                 {getFieldDecorator('reliefArea')(
@@ -258,6 +300,7 @@ class HydropowerContractAddition extends React.Component {
                                         showSearch
                                         style={{ width: 200 }}
                                         placeholder="请选择物业客户名称"
+                                        onChange={this.selectClient}
                                         optionFilterProp="children"
                                     >
                                         {this.state.ListclientName.map(clientName => {
@@ -283,14 +326,14 @@ class HydropowerContractAddition extends React.Component {
                                     marginLeft: '10px' }}
                                 >
                                     <Radio value={1}>按面积
-                                        {getFieldDecorator('waterUnitPrice')(
+                                        {getFieldDecorator('waterUnitPrice1')(
                                             <Input style={{ width: 140,
                                                 marginLeft: '10px' }} addonAfter=" 元／㎡"
                                             />
                                         )}
                                     </Radio><br />
                                     <Radio value={2}>独立水表
-                                        {getFieldDecorator('waterUnitPriceTwo')(
+                                        {getFieldDecorator('waterUnitPrice2')(
                                             <Input style={{ width: 140,
                                                 marginLeft: '10px' }} addonAfter="元/立方米"
                                             />
@@ -361,6 +404,14 @@ class HydropowerContractAddition extends React.Component {
                             )}
                         </FormItem>
                     </Row>
+                    {getFieldDecorator('roomIds')(
+                        <Input type="hidden"
+                        />
+                    )}
+                    {getFieldDecorator('clientId')(
+                        <Input type="hidden"
+                        />
+                    )}
                 </Form>
                 <Button onClick={this.handleSubmit}>保存</Button>
             </Modal>
