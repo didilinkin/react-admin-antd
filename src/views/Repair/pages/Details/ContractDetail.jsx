@@ -84,16 +84,16 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>物业费单价：</b>4.85 元／㎡/月 </Col>
-                            <Col span={16}><b>电费收费方式：</b>峰平谷        单价 2 元/度            变比  1    电损比 10%</Col>
+                            <Col span={8}><b>物业费单价：</b><em className="color1">4.85</em> 元／㎡/月 </Col>
+                            <Col span={16}><b>电费收费方式：</b><em className="color1">峰平谷</em>        单价 <em className="color1">2</em> 元/度  变比 <em className="color1">1</em> 电损比 <em className="color1">10</em>%</Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>空调费单价：</b>ABC-123456789 </Col>
-                            <Col span={16}><b>水费收费方式：</b>王小明      2016-09-26    12:12:12</Col>
+                            <Col span={8}><b>空调费单价：</b><em className="color1">0.39</em> 元／㎡/月 </Col>
+                            <Col span={16}><b>水费收费方式：</b><em className="color1">独立水表</em>     单价 <em className="color1">5.3</em> 元/立方米 耗损比 <em className="color1">10</em>%</Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>电梯费单价：</b>ABC-123456789 </Col>
-                            <Col span={16}><b>能源管理押金：</b>王小明      2016-09-26    12:12:12</Col>
+                            <Col span={8}><b>电梯费单价：</b><em className="color1">1.35</em> 元／㎡/月 </Col>
+                            <Col span={16}><b>能源管理押金：</b><em className="color1">123,456.00</em> 元 （ 业主自交    当前余额：123 元）</Col>
                         </Row>
                         <ul>
                             <li>
