@@ -115,6 +115,7 @@
     "redux-freeze": "^0.1.5",
     "redux-thunk": "^2.2.0",
     "screenfull": "^3.2.0",
+    "store": "^2.0.12",
     "styled-components": "^2.0.0"
   },
   "scripts": {
