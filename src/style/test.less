@@ -304,31 +304,32 @@ div.contract{
     background: #fff;
     h2{
         font-size:16px;
-        span{
-            padding: 10px 20px;
-            margin-left: 10px;
-            display: inline-block;
-            border-radius: 5px;
-            border: 2px solid;
-        }
-        span.blue{
-            border-color: rgba(0, 153, 255, 1);
-            color: rgba(0, 153, 255, 1);
-        }
-        span.green{
-            border-color: #00CC00;
-            color: #00CC00;
-        }
-        span.red{
-            border-color: #FF0000;
-            color: #FF0000;
-        }
-
     }
     h3{
         font-size:14px;
         height: 55px;
         line-height: 55px;
+        span{
+            padding: 5px 10px;
+            margin-left: 10px;
+            display: inline-block;
+            border-radius: 5px;
+            border: 2px solid;
+            line-height: initial;
+            cursor: pointer;
+        }
+        .blue{
+            border-color: rgba(0, 153, 255, 1);
+            color: rgba(0, 153, 255, 1);
+        }
+        .green{
+            border-color: #00CC00;
+            color: #00CC00;
+        }
+        .red{
+            border-color: #FF0000;
+            color: #FF0000;
+        }
     }
     font-size:14px;
     line-height:40px;
@@ -377,6 +378,17 @@ div.contract{
                 margin-top: 20px;
             }
         }
+    }
+    .submit{
+        margin: 10px auto;
+        width: 106px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: rgba(255, 0, 0, 1);
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
     }
 }
 

@@ -103,6 +103,9 @@ class App extends React.Component {
                         </ul>
                     </div>
                 </div>
+                <div className="submit">
+                    终止合同
+                </div>
             </div>
         )
     }
