@@ -20,51 +20,63 @@ class HydropowerContractAddition extends React.Component {
         }
     }
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        json['contractSplit'] = 2
-        json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
-        json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
-        json['leaseRooms'] = json.leaseRooms.toString()
-        json['signDate'] = json.signDate.format('YYYY-MM-DD')
-        if (json.waterType.toString() === '0') {
-            json['waterUnitPrice'] = json.waterUnitPrice1
-        } else {
-            json['waterUnitPrice'] = json.waterUnitPrice2
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            json['contractSplit'] = 2
+            json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
+            json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
+            json['leaseRooms'] = json.leaseRooms.toString()
+            json['signDate'] = json.signDate.format('YYYY-MM-DD')
+            if (json.waterType.toString() === '0') {
+                json['waterUnitPrice'] = json.waterUnitPrice1
+            } else {
+                json['waterUnitPrice'] = json.waterUnitPrice2
+            }
+            if (json.powerType.toString() === '0') {
+                json['powerUnitPrice'] = json.powerUnitPrice1
+            } else if (json.powerType.toString() === '1') {
+                json['powerUnitPrice'] = json.powerUnitPrice2
+                json['powerRatio'] = json.biaobi1
+                json['powerLossRatio'] = json.sunhao1
+            } else {
+                json['powerUnitPrice'] = json.powerUnitPrice3
+                json['powerRatio'] = json.biaobi2
+                json['powerLossRatio'] = json.sunhao2
+            }
+            console.log(JSON.stringify(json))
+            let map = ''
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                map = await apiPost(
+                    '/contract/updatePmContract',
+                    json
+                )
+            } else {
+                map = await apiPost(
+                    '/contract/insertPmContract',
+                    json
+                )
+            }
+            notification.open({
+                message: map.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+            this.props.refreshTable()
         }
-        if (json.powerType.toString() === '0') {
-            json['powerUnitPrice'] = json.powerUnitPrice1
-        } else if (json.powerType.toString() === '1') {
-            json['powerUnitPrice'] = json.powerUnitPrice2
-            json['powerRatio'] = json.biaobi1
-            json['powerLossRatio'] = json.sunhao1
-        } else {
-            json['powerUnitPrice'] = json.powerUnitPrice3
-            json['powerRatio'] = json.biaobi2
-            json['powerLossRatio'] = json.sunhao2
-        }
-        console.log(JSON.stringify(json))
-        let map = ''
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            map = await apiPost(
-                '/contract/updatePmContract',
-                json
-            )
-        } else {
-            map = await apiPost(
-                '/contract/insertPmContract',
-                json
-            )
-        }
-        notification.open({
-            message: map.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.setState({
-            visible: false,
-            isFirst: true
-        })
-        this.props.refreshTable()
     }
     handleCancel = () => {
         this.setState({
@@ -469,12 +481,10 @@ class HydropowerContractAddition extends React.Component {
                         </FormItem>
                     </Row>
                     {getFieldDecorator('roomIds')(
-                        <Input type="hidden"
-                        />
+                        <Input type="hidden" />
                     )}
                     {getFieldDecorator('clientId')(
-                        <Input type="hidden"
-                        />
+                        <Input type="hidden" />
                     )}
                     {getFieldDecorator('buildId')(
                         <Input type="hidden" />

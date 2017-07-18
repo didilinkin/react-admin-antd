@@ -2,9 +2,29 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../../style/test.less'
+import { apiPost } from '../../../../api'
 
 
 class App extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            ListSublet: [],
+            contract: {}
+        }
+    }
+    async initialRemarks () {
+        let contract = await apiPost(
+            '/contract/getcontract',
+            {'id': this.props.match.params.id,
+                type: 1}
+        )
+        console.log(contract.data.contract)
+        console.log(contract.data.subletInfoList)
+    }
+    componentWillMount () {
+        this.initialRemarks()
+    }
     render () {
         return (
             <div className="contract">
@@ -35,7 +55,7 @@ class App extends React.Component {
                         </Row>
                         <Row>
                             <Col span={8}><b>签约日期：</b>2017-7-11 14:17:07 </Col>
-                            <Col span={8} />
+                            <Col span={8}><b>公司编号：</b>2017-7-11 14:17:07 </Col>
                             <Col span={8} />
                         </Row>
                         <p className="line" />
@@ -53,6 +73,11 @@ class App extends React.Component {
                         <Row>
                             <Col span={8}><b>转租周期：</b>2017-7-11 14:17:07 </Col>
                             <Col span={16}><b>转租房间：</b>2301/2302/2303/2305/2306 </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}><b>公司编号：</b>2017-7-11 14:17:07 </Col>
+                            <Col span={8} />
+                            <Col span={8} />
                         </Row>
                     </div>
 

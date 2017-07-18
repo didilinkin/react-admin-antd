@@ -166,8 +166,12 @@ class RepairList extends Component {
         this.refresh()
     }
     startDate = ''
-    getDate = (date, dateString) => {
-        this.startDate = dateString[0]
+    getDate = (e) => {
+        if (e !== null) {
+            this.startDate = e.format('YYYY-MM-DD')
+        } else {
+            this.startDate = ''
+        }
     }
     render () {
         return (
@@ -208,7 +212,7 @@ class RepairList extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 1500 }}
-                        bordered={3}
+                        bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

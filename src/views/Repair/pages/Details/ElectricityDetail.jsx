@@ -39,7 +39,7 @@ class App extends React.Component {
                         </Row>
                         <Row>
                             <Col span={8}><b>签约日期：</b>2017-7-11 14:17:07 </Col>
-                            <Col span={8} />
+                            <Col span={8}><b>公司编号：</b>2017-7-11 14:17:07 </Col>
                             <Col span={8} />
                         </Row>
                     </div>

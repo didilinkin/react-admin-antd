@@ -56,7 +56,13 @@ class ComputerRoom extends Component {
                 title: '序号',
                 width: 80,
                 dataIndex: 'id',
-                key: 'id'
+                key: 'id',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
             }, {
                 title: '机房名称',
                 width: 150,
