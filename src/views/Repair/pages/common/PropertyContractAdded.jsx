@@ -87,7 +87,7 @@ class PropertyContractAdded extends React.Component {
             }
             notification.open({
                 message: map.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}}/>
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
             this.setState({
                 visible: false,
