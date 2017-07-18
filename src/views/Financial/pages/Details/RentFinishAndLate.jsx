@@ -222,6 +222,31 @@ class RentFinishAndLate extends React.Component {
                                 })}
                             </tbody>
                         </table>
+                        <p className="line" />
+                        <h2>确认违约金</h2>
+                        <Row>
+                            <Col span={8}><b>违约天数：</b>1 天</Col>
+                            <Col span={8}><b>违约金额：</b>1,234  元  （已优惠  0.12 元）</Col>
+                            <Col span={8}><b>开票状态：</b>已开票</Col>
+                        </Row>
+                        <table className="tb">
+                            <tbody>
+                                <tr className="hd">
+                                    <td>时间</td>
+                                    <td>实收金额</td>
+                                    <td>未收收金额</td>
+                                    <td>收款方式</td>
+                                    <td>经手人</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>23</td>
+                                    <td>23</td>
+                                    <td>11</td>
+                                    <td>23</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <Button type="primary" onClick={this.handleUpdate} >收违约金</Button>
