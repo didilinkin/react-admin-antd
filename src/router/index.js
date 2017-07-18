@@ -8,12 +8,11 @@ import {
     TestRoute,
     AuthView,
     PrivateRoute,
-    Login
+    Login,
+    Protected
 } from '../common/containers'
 
 import Link from 'react-router-redux-dom-link'
-
-const Protected = () => <h3>非公开的页面</h3>
 
 class Routes extends React.Component {
     render () {
@@ -28,6 +27,7 @@ class Routes extends React.Component {
                         <li><Link to="/count" replace> 计算器 </Link></li>
                         <li><Link to="/view" replace> 共享计算值 </Link></li>
                         <li><Link to="/testRoute" replace> 测试路由页面 </Link></li>
+                        <li><Link to="/protected" replace> 验证登录页 </Link></li>
                     </ul>
 
                     <hr />

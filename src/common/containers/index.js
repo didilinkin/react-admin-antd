@@ -6,6 +6,7 @@ import TestRoute from './TestRoute'
 import AuthView from './AuthView'
 import PrivateRoute from './PrivateRoute'
 import Login from './Login'
+import Protected from './Protected'
 
 export {
     Home,
@@ -14,5 +15,6 @@ export {
     TestRoute,
     AuthView,
     PrivateRoute,
-    Login
+    Login,
+    Protected
 }
