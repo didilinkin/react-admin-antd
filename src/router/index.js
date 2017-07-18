@@ -5,7 +5,8 @@ import {
     Home,
     Count,
     View,
-    TestRoute
+    TestRoute,
+    AuthView
 } from '../common/containers'
 
 import Link from 'react-router-redux-dom-link'
@@ -18,6 +19,7 @@ class Routes extends React.Component {
         return (
             <Route>
                 <div>
+                    {/* 导航 部分 */}
                     <ul>
                         <li><Link to="/" replace> 首页 </Link></li>
                         <li><Link to="/count" replace> 计算器 </Link></li>
@@ -27,6 +29,7 @@ class Routes extends React.Component {
 
                     <hr />
 
+                    {/* 内容 展示 */}
                     <Route exact path="/" component={ Home } />
                     <Route path="/count" component={ Count } />
                     <Route path="/view" component={ View } />
@@ -34,7 +37,8 @@ class Routes extends React.Component {
 
                     <hr />
 
-                    <button style={{ test: isAuthenticate }}> 检查 local 登录状态 </button>
+                    {/* 登录状态 展示 */}
+                    <AuthView isAuthenticate={ isAuthenticate } />
                 </div>
             </Route>
         )
