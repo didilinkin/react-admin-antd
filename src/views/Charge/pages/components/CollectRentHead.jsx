@@ -44,7 +44,6 @@ class ContractHead extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let { ListBuildingInfo } = this.props
         return (
             <Form layout="inline">
                 <Row>
@@ -59,9 +58,6 @@ class ContractHead extends React.Component {
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
-                                    {ListBuildingInfo.map(BuildingInfo => {
-                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                    })}
                                 </Select>
                             )}
                         </FormItem>
