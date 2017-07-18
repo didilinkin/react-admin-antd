@@ -481,8 +481,8 @@ class PropertyContractAdded extends React.Component {
                                         }]
                                     })(
                                         <RadioGroup style={{ width: 500 }}>
-                                            <Radio value={1}>业主自交</Radio>
-                                            <Radio value={0}>转租自交</Radio>
+                                            <Radio value={0}>业主自交</Radio>
+                                            <Radio value={1}>转租自交</Radio>
                                         </RadioGroup>
                                     )}
                                 </FormItem>
