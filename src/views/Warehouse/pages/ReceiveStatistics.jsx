@@ -103,6 +103,12 @@ class RepairList extends Component {
                     dataIndex: 'preNumber',
                     key: 'preNumber',
                     width: 100
+                },
+                {
+                    title: '上月金额',
+                    dataIndex: 'preAmount',
+                    key: 'preAmount',
+                    width: 100
                 }]
             }, {
                 title: '出库',
