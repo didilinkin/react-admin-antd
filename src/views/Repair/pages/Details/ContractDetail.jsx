@@ -1,8 +1,9 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col } from 'antd'
+import { Row, Col, notification, Icon } from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
+import SubletAddUpCom from '../common/SubletAddUp'
 
 
 class App extends React.Component {
@@ -10,7 +11,10 @@ class App extends React.Component {
         super(props)
         this.state = {
             ListSublet: [],
-            contract: {}
+            contract: {},
+            id: 0,
+            SubletOpen: false,
+            title: ''
         }
     }
     async initialRemarks () {
@@ -29,6 +33,46 @@ class App extends React.Component {
     componentWillMount () {
         this.initialRemarks()
     }
+    SubletOpen = (id) => {
+        if (id > 0) {
+            this.setState({
+                id: id,
+                SubletOpen: true,
+                title: '编辑转租信息'
+            })
+        } else {
+            this.setState({
+                id: id,
+                SubletOpen: true,
+                title: '添加转租信息'
+            })
+        }
+    }
+    deleteSublet = async (id) => {
+        let data = await apiPost(
+            '/contract/deleteSublet',
+            {'id': id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    refresh = async () => {
+        let contract = await apiPost(
+            '/contract/getcontract',
+            {'id': this.props.match.params.id,
+                type: 1}
+        )
+        this.setState({
+            ListSublet: contract.data.subletInfoList,
+            contract: contract.data.contract,
+            id: 0,
+            SubletOpen: false,
+            title: ''
+        })
+    }
     render () {
         return (
             <div className="contract">
@@ -46,7 +90,7 @@ class App extends React.Component {
                         客户信息
                     </div>
                     <div className="main">
-                        <h3>客户信息 <span className="blue">添加转租信息</span></h3>
+                        <h3>客户信息 <span onClick={this.SubletOpen.bind(this, 0)} className="blue">添加转租信息</span></h3>
                         <Row>
                             <Col span={8}><b>物业客户名称：</b>{this.state.contract.clientName} </Col>
                             <Col span={8}><b>联系人：</b>{this.state.contract.contactPerson}</Col>
@@ -65,7 +109,7 @@ class App extends React.Component {
                         {this.state.ListSublet.map((sublet, i) => {
                             return <div key={i}>
                                 <p className="line" />
-                                <h3>转租信息 <span className="green">编辑</span> <span className="red">删除</span></h3>
+                                <h3>转租信息 <span onClick={this.SubletOpen.bind(this, sublet.id)} className="green">编辑</span> <span onClick={this.deleteSublet.bind(this, sublet.id)} className="red">删除</span></h3>
                                 <Row>
                                     <Col span={8}><b>租户名称：</b>{sublet.tenant} </Col>
                                     <Col span={8}><b>联系人：</b>{sublet.contactPerson}</Col>
@@ -104,7 +148,7 @@ class App extends React.Component {
                         </Row>
                         {this.state.contract.contractStatus === 1 &&
                         <div>
-                            <p className="line"/>
+                            <p className="line" />
                             <Row>
                                 <Col span={8}><b>终止日期：</b>{this.state.contract.updateDate} </Col>
                                 <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
@@ -181,6 +225,16 @@ class App extends React.Component {
                 <div className="submit">
                     终止合同
                 </div>
+                <SubletAddUpCom
+                    id={this.state.id}
+                    refresh={this.refresh}
+                    data={{
+                        ListSublet: this.state.ListSublet,
+                        contract: this.state.contract
+                    }}
+                    visible={this.state.SubletOpen}
+                    title={this.state.title}
+                />
             </div>
         )
     }

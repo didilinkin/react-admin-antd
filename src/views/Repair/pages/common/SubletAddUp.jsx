@@ -1,20 +1,57 @@
 // 转租添加修改
-import {Modal, Input, Form, notification, Icon, DatePicker, Checkbox, Row, Col } from 'antd'
+import {Modal, Input, Form, DatePicker, notification, Icon, Checkbox, Row, Col } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
+import moment from 'moment'
 const FormItem = Form.Item
 
 
 class SubletAddUp extends React.Component {
     state = {
         visible: false,
-        isFirst: true
+        isFirst: true,
+        leaseRooms: []
     }
     async initialRemarks (nextProps) {
-        if (this.isFirst && nextProps.visible) {
+        if (this.state.isFirst && nextProps.visible) {
+            if (nextProps.id > 0) {
+                let SubletInfo = await apiPost(
+                    '/contract/getSubletInfo',
+                    {id: nextProps.id}
+                )
+                SubletInfo = SubletInfo.data
+                this.props.form.setFieldsValue({
+                    tenant: SubletInfo.tenant,
+                    contactPerson: SubletInfo.contactPerson,
+                    phoneAdmin: SubletInfo.phoneAdmin,
+                    phoneFinance: SubletInfo.phoneFinance,
+                    phoneManager: SubletInfo.phoneManager,
+                    email: SubletInfo.email,
+                    subletStartDate: moment(SubletInfo.subletStartDate),
+                    subletEndDate: moment(SubletInfo.subletEndDate),
+                    roomNum: SubletInfo.roomNum.split(','),
+                    energy: SubletInfo.energy
+                })
+                console.log(SubletInfo)
+            }
+            let data = nextProps.data
+            let subArr = []
+            data.ListSublet.map(sub => {
+                sub.roomNum.split(',')
+                subArr.push.apply(subArr, sub.roomNum.split(','))
+            })
+            let leaseRooms = data.contract.leaseRooms.split(',')
+            // leaseRooms.map((roomNum, i) => {
+            //     subArr.map(rommNum2 => {
+            //         if (roomNum === rommNum2) {
+            //             leaseRooms.splice(i, roomNum.length)
+            //         }
+            //     })
+            // })
             this.setState({
                 visible: nextProps.visible,
-                isFirst: false
+                isFirst: false,
+                leaseRooms: leaseRooms
             })
         }
     }
@@ -34,34 +71,35 @@ class SubletAddUp extends React.Component {
             },
         )
         if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            json['subletStartDate'] = json.subletStartDate.format('YYYY-MM-DD')
+            json['subletEndDate'] = json.subletEndDate.format('YYYY-MM-DD')
+            json['roomNum'] = json.roomNum.toString()
+            json['buildId'] = this.props.data.contract.buildId
+            json['clientId'] = this.props.data.contract.clientId
+            json['pmId'] = this.props.data.contract.id
+            json['pmContractCode'] = this.props.data.contract.contractCode
             if (this.props.id > 0) {
-                this.props.form.validateFieldsAndScroll((err, values) => {
-                    if (!err) {
-                        console.log('Received values of form: ', values)
-                    }
-                })
-                let json = this.props.form.getFieldsValue()
                 json['id'] = this.props.id
-                await apiPost(
-                    'upkeep/updateUpkeep',
+                let message = await apiPost(
+                    '/contract/updateSubletInfo',
                     json
                 )
                 notification.open({
-                    message: '修改成功',
+                    message: message.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
-                this.props.refreshTable()
+                this.props.refresh()
             } else {
-                console.log(this.props.form.getFieldsValue())
-                await apiPost(
-                    'upkeep/addupkeep',
-                    this.props.form.getFieldsValue()
+                let message = await apiPost(
+                    '/contract/insertSubletInfo',
+                    json
                 )
                 notification.open({
-                    message: '添加成功',
+                    message: message.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
-                this.props.refreshTable()
+                this.props.refresh()
             }
             this.setState({
                 visible: false,
@@ -86,7 +124,7 @@ class SubletAddUp extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
-                        <FormItem label="租户名称" labelCol={{ span: 5 }}
+                        <FormItem label="租户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('tenant', {
@@ -95,10 +133,10 @@ class SubletAddUp extends React.Component {
                                     message: '请输入!'
                                 }]
                             })(
-                                <Input type="text" />
+                                <Input type="text" style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="联系人" labelCol={{ span: 5 }}
+                        <FormItem label="联系人" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('contactPerson', {
@@ -107,10 +145,10 @@ class SubletAddUp extends React.Component {
                                     message: '请输入!'
                                 }]
                             })(
-                                <Input type="text" />
+                                <Input type="text" style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="行政电话" labelCol={{ span: 5 }}
+                        <FormItem label="行政电话" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('phoneAdmin', {
@@ -119,31 +157,31 @@ class SubletAddUp extends React.Component {
                                     message: '请输入!'
                                 }]
                             })(
-                                <Input type="text" />
+                                <Input type="text" style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="财务电话" labelCol={{ span: 5 }}
+                        <FormItem label="财务电话" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('phoneFinance')(
-                                <Input type="text" />
+                                <Input type="text"style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="经理电话" labelCol={{ span: 5 }}
+                        <FormItem label="经理电话" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('phoneManager')(
-                                <Input type="text" />
+                                <Input type="text" style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="E-mail" labelCol={{ span: 5 }}
+                        <FormItem label="E-mail" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('email')(
-                                <Input type="text" />
+                                <Input type="text" style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="起租日期" labelCol={{ span: 5 }}
+                        <FormItem label="起租日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('subletStartDate', {
@@ -155,7 +193,7 @@ class SubletAddUp extends React.Component {
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="结束日期" labelCol={{ span: 5 }}
+                        <FormItem label="结束日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('subletEndDate', {
@@ -167,22 +205,24 @@ class SubletAddUp extends React.Component {
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>
-                        <FormItem label="租赁房间" labelCol={{ span: 5 }}
+                        <FormItem label="租赁房间" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('subletEndDate')(
+                            {getFieldDecorator('roomNum')(
                                 <Checkbox.Group style={{ width: '100%' }}>
                                     <Row>
-                                        <Col key={1} offset="1" span={4}><Checkbox value={1}>1</Checkbox></Col>
+                                        {this.state.leaseRooms.map((room, i) => {
+                                            return <Col key={i} offset="1" span={4}><Checkbox value={room}>{room}</Checkbox></Col>
+                                        })}
                                     </Row>
                                 </Checkbox.Group>
                             )}
                         </FormItem>
-                        <FormItem label="能源管理押金" labelCol={{ span: 5 }}
+                        <FormItem label="能源管理押金" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
                             {getFieldDecorator('energy')(
-                                <Input />
+                                <Input style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Form>
