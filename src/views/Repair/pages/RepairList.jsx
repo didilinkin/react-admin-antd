@@ -242,7 +242,11 @@ class RepairList extends Component {
     endDate = ''
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
-        this.endDate = dateString[1] + ' 23:59:59'
+        if (dateString[1] > 0) {
+            this.endDate = dateString[1] + ' 23:59:59'
+        } else {
+            this.endDate = dateString[1]
+        }
     }
     render () {
         return (
