@@ -126,12 +126,13 @@ class EquipmentRepair extends React.Component {
         return (
             <div>
                 <span>
-                    <span>送修时间:</span>
+                    <span>送修时间:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>故障等级:</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;故障等级:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
-                        style={{width: 200}}
+                        style={{width: 200,
+                            marginRight: '5px'}}
                         placeholder="Select a person"
                         optionFilterProp="children"
                         onChange={this.failureLevelFn}
@@ -140,8 +141,9 @@ class EquipmentRepair extends React.Component {
                         <Option key="重大">重大</Option>
                         <Option key="一般">一般</Option>
                     </Select>
-                    <span>设备名称:</span>
-                    <Input style={{width: 200}} onChange={this.equipmentNameFn} />
+                    <span>设备名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.equipmentNameFn} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>
