@@ -6,7 +6,7 @@ import {
     Count,
     View,
     TestRoute
-} from '../containers'
+} from '../common/containers'
 
 import Link from 'react-router-redux-dom-link'
 

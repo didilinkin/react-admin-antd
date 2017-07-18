@@ -1,10 +1,10 @@
 // 共享计算值
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // getters
-import { getCountState } from '../store/getters'
+import { getCountState } from '../../store/getters'
 
 const View = ({ countState }) => (
     <h3>
@@ -13,9 +13,9 @@ const View = ({ countState }) => (
     </h3>
 )
 
-// View.prototype = {
-//     countState: PropTypes.number.isRequired
-// }
+View.prototype = {
+    countState: PropTypes.number.isRequired
+}
 
 const mapStateToProps = (state) => ({
     countState: getCountState(state)

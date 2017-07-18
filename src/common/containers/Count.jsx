@@ -3,12 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-// actions
-import { increment, decrement } from '../store/actions/count'
-
-// getters
-import { getCountState } from '../store/getters'
-
+import { increment, decrement } from '../../store/actions/count'
+import { getCountState } from '../../store/getters'
 
 import Counter from './Counter'
 
