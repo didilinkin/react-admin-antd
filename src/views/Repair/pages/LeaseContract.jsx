@@ -62,7 +62,7 @@ class PropertyContract extends React.Component {
             }, {
                 title: '所属楼宇',
                 width: 100,
-                dataIndex: 'buildId'
+                dataIndex: 'buildName'
             }, {
                 title: '房间编号',
                 width: 100,

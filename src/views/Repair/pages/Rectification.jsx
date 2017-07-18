@@ -37,7 +37,13 @@ class RepairList extends Component {
                 title: '序号',
                 width: 100,
                 dataIndex: 'id',
-                key: 'id'
+                key: 'id',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
             }, {
                 title: '检查日期',
                 width: 150,

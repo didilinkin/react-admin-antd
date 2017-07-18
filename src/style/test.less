@@ -16,6 +16,12 @@
     background: #ebebeb;
     margin: 15px 0 5px 0;
 }
+.color1{
+    color: #169BD5;
+}
+i,em{
+    font-style: normal;
+}
 .alert{
     width:100%;
     margin:0 auto;
@@ -309,6 +315,27 @@ div.contract{
         font-size:14px;
         height: 55px;
         line-height: 55px;
+        span{
+            padding: 5px 10px;
+            margin-left: 10px;
+            display: inline-block;
+            border-radius: 5px;
+            border: 2px solid;
+            line-height: initial;
+            cursor: pointer;
+        }
+        .blue{
+            border-color: rgba(0, 153, 255, 1);
+            color: rgba(0, 153, 255, 1);
+        }
+        .green{
+            border-color: #00CC00;
+            color: #00CC00;
+        }
+        .red{
+            border-color: #FF0000;
+            color: #FF0000;
+        }
     }
     font-size:14px;
     line-height:40px;
@@ -357,5 +384,87 @@ div.contract{
                 margin-top: 20px;
             }
         }
+    }
+    .submit{
+        margin: 10px auto;
+        width: 106px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: rgba(255, 0, 0, 1);
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+}
+
+/* 物业 */
+.property{
+    width:100%;
+    margin:0 auto;
+    padding:20px;
+    border:1px solid;
+    border-color:rgba(235, 235, 235, 1);
+    border-radius:5px;
+    background: #fff;
+    h2{
+        font-size:16px;
+    }
+    h3{
+        font-size:14px;
+        height: 55px;
+        line-height: 55px;
+    }
+    font-size:14px;
+    line-height:40px;
+    i{
+        width:110px;
+        display:block;
+        float:left;
+        font-weight: normal;
+        font-style: normal;
+    }
+    ul{
+        li{
+            div{
+                padding:0 10px 0 80px;
+
+            }
+            img{
+                width:128px;
+                height:128px;
+                margin-right:20px;
+                margin-top:10px;
+            }
+        }
+    }
+    .wrapbox{
+        width:auto;
+        height:auto;
+        border:1px solid rgb(235, 235, 235);
+        margin-bottom: 20px;
+        .title{
+            height:40px;
+            line-height: 40px;
+            padding: 0 20px;
+            background: rgb(243, 243, 243);
+        }
+        .main{
+            padding: 0 20px 20px 20px;
+            .leftbox{
+                float: left;
+                width: 450px;
+                margin: 20px 20px 0 0;
+            }
+            .right{
+                float: left;
+                width: 450px;
+                margin-top: 20px;
+            }
+        }
+    }
+    .bt{
+        padding: 20px;
+        text-align: center;
     }
 }

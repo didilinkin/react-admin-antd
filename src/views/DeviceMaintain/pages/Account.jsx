@@ -56,7 +56,13 @@ class Account extends Component {
                 title: '序号',
                 width: 100,
                 dataIndex: 'id',
-                key: 'id'
+                key: 'id',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
             }, {
                 title: '所属系统',
                 width: 150,

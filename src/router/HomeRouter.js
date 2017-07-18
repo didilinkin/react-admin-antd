@@ -85,7 +85,9 @@ import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/Elev
 // 引入 '收费管理' 版块
 import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
 import RentManagement           from '../views/Charge/pages/RentManagement'                             // 收费管理 - 租金管理
-import InitiateRent           from '../views/Charge/components/InitiateRent'
+import PropertyManagement       from '../views/Charge/pages/PropertyManagement'                         // 收费管理 - 物业费管理
+import InitiateRent             from '../views/Charge/components/InitiateRent'
+import PropertyDetail           from '../views/Charge/pages/Details/PropertyDetail'                     // [详情] - 物业费管理
 
 // 引入 '财务管理' 版块
 import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
@@ -330,8 +332,14 @@ const routes = [
                 path: '/charge/rentManagement',                                                         // 收费管理 - 租金管理
                 component: RentManagement
             }, {
-                path: '/charge/initiateRent',                                                         // 弹出
+                path: '/charge/propertyManagement',                                                     // 收费管理 - 物业费管理
+                component: PropertyManagement
+            }, {
+                path: '/charge/initiateRent',                                                           // 弹出
                 component: InitiateRent
+            }, {
+                path: '/charge/propertyDetail/:id',                                                     // [详情] - 物业费管理
+                component: PropertyDetail
             }
         ]
     }, {
