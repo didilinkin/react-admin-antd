@@ -157,11 +157,12 @@ class RepairList extends Component {
                     visible={this.state.openUpdate}
                 />
                 <span>
-                    <span>检查日期:</span>
+                    <span>检查日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>公司名称:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                    <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加整改通知</Button>
                 </span>
 
