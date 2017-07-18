@@ -154,7 +154,13 @@ function mapDispatchToProps (dispatch) {
         dispatch: dispatch,
         columns: [{
             title: '序号',
-            dataIndex: 'id'
+            dataIndex: 'id',
+            render: function (text, record, index) {
+                index++
+                return (
+                    <span>{index}</span>
+                )
+            }
         }, {
             title: '物品名称',
             dataIndex: 'entryName'

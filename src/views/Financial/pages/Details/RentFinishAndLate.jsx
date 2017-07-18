@@ -3,10 +3,10 @@ import React from 'react'
 import {Row, Col, Button, notification, Icon} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
-import CollectRentAuditComponent from '../components/CollectRentConfirm'
+import CollectRentAuditComponent from '../components/CollectRentLateConfirm'
 
 
-class RentReviewDetailNoLate extends React.Component {
+class RentFinishAndLate extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -34,6 +34,17 @@ class RentReviewDetailNoLate extends React.Component {
         )
         notification.open({
             message: '租金开票成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+    }
+    invoiceLate = async () => {
+        await apiPost(
+            '/collectRent/updateCollectRentVoByInvoiceRent',
+            {id: this.props.match.params.id,
+                invoiceLateStatus: 1}
+        )
+        notification.open({
+            message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
     }
@@ -213,12 +224,13 @@ class RentReviewDetailNoLate extends React.Component {
                         </table>
                     </div>
                 </div>
-                <Button type="primary" onClick={this.handleUpdate} >收租金</Button>
+                <Button type="primary" onClick={this.handleUpdate} >收违约金</Button>
                 <Button type="primary" onClick={this.invoiceRent} >租金开票</Button>
+                <Button type="primary" onClick={this.invoiceLate} >违约金开票</Button>
             </div>
         )
     }
 }
 
-export default RentReviewDetailNoLate
+export default RentFinishAndLate
 
