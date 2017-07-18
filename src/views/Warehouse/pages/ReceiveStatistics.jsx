@@ -105,7 +105,7 @@ class RepairList extends Component {
                     width: 100
                 },
                 {
-                    title: '上月金额',
+                    title: '上月剩余金额',
                     dataIndex: 'preAmount',
                     key: 'preAmount',
                     width: 100

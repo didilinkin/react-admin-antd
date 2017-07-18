@@ -48,12 +48,12 @@ class addUpkeep extends React.Component {
                 })
             }
             this.props.form.setFields({
-                currentPeriodMoney: {
-                    value: resulData.data.currentPeriodMoney,
+                lateMoney: {
+                    value: resulData.data.lateMoney,
                     errors: ''
                 },
-                actualPaidMoney: {
-                    value: resulData.data.actualPaidMoney,
+                thisActualLateMoney: {
+                    value: resulData.data.unpaidLateMoney,
                     errors: ''
                 },
                 thisActualPaidMoney: {
@@ -104,11 +104,11 @@ class addUpkeep extends React.Component {
         console.log(json)
         json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
         await apiPost(
-            '/collectRent/updateCollectRentVoByPaid',
+            '/collectRent/updateCollectRentVoByLate',
             json
         )
         notification.open({
-            message: '收租成功',
+            message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.props.refreshTable()
@@ -124,21 +124,51 @@ class addUpkeep extends React.Component {
         if (typeof (thisPaidMoney) === 'undefined') {
             thisPaidMoney = 0
         }
-        let unpaidMoney1 = this.props.form.getFieldValue('unpaidMoney')
+        let unpaidMoney1 = this.props.form.getFieldValue('unpaidLateMoney')
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
         let unpaidMoney2 = unpaidMoney1 - thisPaidMoney
         if (unpaidMoney2 < 0) {
             this.props.form.setFields({
-                unpaidMoney: {
+                unpaidLateMoney: {
                     value: unpaidMoney1,
                     errors: ''
                 }
             })
         } else {
             this.props.form.setFields({
-                unpaidMoney: {
+                unpaidLateMoney: {
+                    value: unpaidMoney2,
+                    errors: ''
+                }
+            })
+        }
+    }
+    sumMoney2 = (e) => {
+        let discountMoney = e.target.value
+        if (typeof (discountMoney) === 'undefined') {
+            discountMoney = 0
+        }
+        let thisActualLateMoney = this.props.form.getFieldValue('thisActualLateMoney')
+        if (typeof (thisActualLateMoney) === 'undefined') {
+            thisActualLateMoney = 0
+        }
+        let unpaidMoney2 = thisActualLateMoney - discountMoney
+        if (unpaidMoney2 < 0) {
+            this.props.form.setFields({
+                thisActualLateMoney: {
+                    value: thisActualLateMoney,
+                    errors: ''
+                },
+                discountMoney: {
+                    value: 0,
+                    errors: ''
+                }
+            })
+        } else {
+            this.props.form.setFields({
+                thisActualLateMoney: {
                     value: unpaidMoney2,
                     errors: ''
                 }
@@ -175,7 +205,7 @@ class addUpkeep extends React.Component {
                                 <FormItem label="本期应收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('actualLateMoney')(
+                                    {getFieldDecorator('lateMoney')(
                                         <Input disabled />
                                     )}
                                 </FormItem>
@@ -186,17 +216,17 @@ class addUpkeep extends React.Component {
                                         <Input disabled />
                                     )}
                                 </FormItem>
-                                <FormItem label="本次实收" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('thisLateMoney')(
-                                        <Input onBlur={this.sumMoney} />
-                                    )}
-                                </FormItem>
                                 <FormItem label="优惠金额" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('discountMoney')(
+                                        <Input onBlur={this.sumMoney2} />
+                                    )}
+                                </FormItem>
+                                <FormItem label="本次实收" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('thisLateMoney')(
                                         <Input onBlur={this.sumMoney} />
                                     )}
                                 </FormItem>
@@ -241,7 +271,7 @@ class addUpkeep extends React.Component {
                                 {getFieldDecorator('paidMoney')(
                                     <Input type="hidden" />
                                 )}
-                                {getFieldDecorator('currentPeriodMoney')(
+                                {getFieldDecorator('lateMoney')(
                                     <Input type="hidden" />
                                 )}
                                 {getFieldDecorator('lastLateMoney')(
