@@ -139,21 +139,35 @@ class CollectRentConduct extends Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     if (record.lateMoney === 0 && record.paidMoney === 0) {
-                        let url = '/financial/RentReviewDetailNoLate/' + record.id
-                        return (
-                            <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
-                            </div>
-                        )
-                    } else if (record.lateMoney === 0 && record.unpaidMoney !== 0) {
                         let url = '/financial/RentReviewDetailNoPaid/' + record.id
                         return (
                             <div>
                                 <a href={url}><Button type="primary">明细</Button></a>
                             </div>
                         )
-                    } else {
-                        let url = '/financial/rentReviewDetail/' + record.id
+                    } else if (record.lateMoney === 0 && record.paidMoney !== 0 && record.unpaidMoney !== 0) {
+                        let url = '/financial/RentReviewDetailNoLate/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    } else if (record.lateMoney === 0 && record.paidMoney !== 0 && record.unpaidMoney === 0) {
+                        let url = '/financial/NoLateAndRentFinish/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    } else if (record.lateMoney !== 0 && record.paidMoney !== 0 && record.unpaidMoney === 0) {
+                        let url = '/financial/RentFinishAndLate/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    } else if (record.lateMoney !== 0 && record.paidMoney !== 0 && record.unpaidMoney === 0 && record.unpaidLateMoney === 0) {
+                        let url = '/financial/RentReviewDetail/' + record.id
                         return (
                             <div>
                                 <a href={url}><Button type="primary">明细</Button></a>

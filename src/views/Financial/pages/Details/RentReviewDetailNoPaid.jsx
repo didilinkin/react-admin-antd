@@ -1,12 +1,12 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, Button} from 'antd'
+import {Row, Col, Button, Icon, notification} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentConfirm'
 
 
-class App extends React.Component {
+class RentReviewDetailNoPaid extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -15,8 +15,8 @@ class App extends React.Component {
             id: 0,
             remark: '',
             openUpdate: false,
-            data: {},
-            data2: {}
+            data2: [],
+            data: {}
         }
     }
         handleUpdate = () => {
@@ -25,7 +25,18 @@ class App extends React.Component {
                 id: this.state.id
             })
         }
-        async initialRemarks () {
+    invoiceRent = async () => {
+        await apiPost(
+            '/collectRent/updateCollectRentVoByInvoiceRent',
+            {id: this.props.match.params.id,
+                invoiceRentStatus: 1}
+        )
+        notification.open({
+            message: '租金开票成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+    }
+    async initialRemarks () {
         this.setState({
             id: this.props.match.params.id
         })
@@ -33,10 +44,9 @@ class App extends React.Component {
             '/collectRent/getCollectRentById',
             {id: this.props.match.params.id}
         )
-        let result = await apiPost(
-            '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
-                feeType: 0}
+        let result2 = await apiPost(
+            '/collectRent/collectRentList',
+            {auditStatus: 2}
         )
         if (resulData.data.payCycle === 3) {
             this.setState({
@@ -53,11 +63,11 @@ class App extends React.Component {
         }
         this.setState({
             data: resulData.data,
-            data2: result.data
+            data2: result2.data
         })
-        console.log(this.state.data.rentClientName)
+        console.log(this.state.data2)
     }
-        componentDidMount () {
+    componentDidMount () {
         this.initialRemarks()
     }
     refresh = async () => {
@@ -73,7 +83,6 @@ class App extends React.Component {
         })
     }
     render () {
-        let collectList = this.state.data2
         return (
             <div style={this.props.style} className="contract">
                 <CollectRentAuditComponent
@@ -118,43 +127,12 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <div className="wrapbox">
-                    <div className="title">
-                        收款信息
-                    </div>
-                    <div className="main">
-                        <h2>确认收款</h2>
-                        <Row>
-                            <Col span={8}><b>应收金额：</b>{this.state.data.actualPaidMoney}</Col>
-                            <Col span={16}><b>开票状态：</b>已开票</Col>
-                        </Row>
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>时间</td>
-                                    <td>实收金额</td>
-                                    <td>未收收金额</td>
-                                    <td>收款方式</td>
-                                    <td>经手人</td>
-                                </tr>
-                                {collectList.map(collectRent => {
-                                    return <tr>
-                                        <td>{collectRent.receiptDate}</td>
-                                        <td>{collectRent.paidMoney}</td>
-                                        <td>{collectRent.unpaidMoney}</td>
-                                        <td>{collectRent.paidWay}</td>
-                                        <td>{collectRent.createBy}</td>
-                                    </tr>
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 <Button type="primary" onClick={this.handleUpdate} >收租金</Button>
+                <Button type="primary" onClick={this.invoiceRent} >租金开票</Button>
             </div>
         )
     }
 }
 
-export default App
+export default RentReviewDetailNoPaid
 

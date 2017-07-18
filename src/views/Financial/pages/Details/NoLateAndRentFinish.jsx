@@ -6,7 +6,7 @@ import { apiPost  } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentConfirm'
 
 
-class RentReviewDetailNoLate extends React.Component {
+class NoLateAndRentFinish extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -213,12 +213,11 @@ class RentReviewDetailNoLate extends React.Component {
                         </table>
                     </div>
                 </div>
-                <Button type="primary" onClick={this.handleUpdate} >收租金</Button>
                 <Button type="primary" onClick={this.invoiceRent} >租金开票</Button>
             </div>
         )
     }
 }
 
-export default RentReviewDetailNoLate
+export default NoLateAndRentFinish
 

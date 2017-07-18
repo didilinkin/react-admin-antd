@@ -5,7 +5,7 @@ import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
 
 
-class App extends React.Component {
+class RentReviewDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -194,5 +194,5 @@ class App extends React.Component {
     }
 }
 
-export default App
+export default RentReviewDetail
 
