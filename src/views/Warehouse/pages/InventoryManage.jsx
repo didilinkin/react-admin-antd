@@ -189,11 +189,13 @@ class RepairList extends Component {
                     unitPrice={this.state.unitPrice}
                 />
                 <span>
-                    <span>查询截止日期:</span>
-                    <DatePicker onChange={this.getDate} />
+                    <span>查询截止日期:&nbsp;&nbsp;</span>
+                    <DatePicker style={{width: 200,
+                        marginRight: '5px'}} onChange={this.getDate} />
                     <Select
                         showSearch
-                        style={{ width: 200 }}
+                        style={{width: 200,
+                            marginRight: '5px'}}
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}
@@ -203,9 +205,10 @@ class RepairList extends Component {
                         <Option key="1">保洁用品库</Option>
                         <Option key="2">行政库</Option>
                     </Select>
-                    <span>材料名称:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;材料名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                    <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>入库</Button>
                 </span>
 

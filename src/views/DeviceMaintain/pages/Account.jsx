@@ -226,12 +226,13 @@ class Account extends Component {
                     visible={this.state.openSS}
                 />
                 <span>
-                    <span>设备名称:</span>
+                    <span>设备名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <span>设备状态:</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;设备状态:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
-                        style={{width: 200}}
+                        style={{width: 200,
+                            marginRight: '5px'}}
                         placeholder="Select a person"
                         optionFilterProp="children"
                         onChange={this.equipmentStatusOne}
@@ -240,7 +241,7 @@ class Account extends Component {
                         <Option key="2">报废</Option>
                         <Option key="1">闲置</Option>
                     </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加设备</Button>
                 </span>
 

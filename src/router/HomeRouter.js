@@ -92,8 +92,10 @@ import PropertyDetail           from '../views/Charge/pages/Details/PropertyDeta
 // 引入 '财务管理' 版块
 import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
 import RentReviewDetail         from '../views/Financial/pages/Details/RentReviewDetail'                // [详情] - 租金审核 状态详情( 如: 审核中/审核完成/收款完成 )
-import RentReviewDetailNoLate         from '../views/Financial/pages/Details/RentReviewDetailNoLate'                // [详情] - 租金审核 状态详情( 如: 审核中/审核完成/收款完成 )
-import RentReviewDetailNoPaid         from '../views/Financial/pages/Details/RentReviewDetailNoPaid'                // [详情] - 租金审核 状态详情( 如: 审核中/审核完成/收款完成 )
+import RentReviewDetailNoLate         from '../views/Financial/pages/Details/RentReviewDetailNoLate'
+import RentReviewDetailNoPaid         from '../views/Financial/pages/Details/RentReviewDetailNoPaid'
+import NoLateAndRentFinish         from '../views/Financial/pages/Details/NoLateAndRentFinish'
+import RentFinishAndLate         from '../views/Financial/pages/Details/RentFinishAndLate'
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -358,6 +360,12 @@ const routes = [
             }, {
                 path: '/financial/RentReviewDetailNoPaid/:id',                                                // [详情] - 租金审核 状态详情
                 component: RentReviewDetailNoPaid
+            }, {
+                path: '/financial/NoLateAndRentFinish/:id',                                                // [详情] - 租金审核 状态详情
+                component: NoLateAndRentFinish
+            }, {
+                path: '/financial/RentFinishAndLate/:id',                                                // [详情] - 租金审核 状态详情
+                component: RentFinishAndLate
             }
         ]
     }

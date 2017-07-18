@@ -116,12 +116,14 @@ class MaintenancePlan extends React.Component {
         return (
             <div>
                 <span>
-                    <span>保养日期:</span>
+                    <span>保养日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>设备名称:</span>
-                    <Input style={{width: 200}} onChange={this.equipmentNameFn} />
-                    <span>保养人员:</span>
-                    <Input style={{width: 200}} onChange={this.maintenanceManNameFn} />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;设备名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.equipmentNameFn} />
+                    <span>保养人员:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.maintenanceManNameFn} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>

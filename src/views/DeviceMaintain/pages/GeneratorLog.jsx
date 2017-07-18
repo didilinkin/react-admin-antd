@@ -284,13 +284,16 @@ class GeneratorLog extends React.Component {
     render () {
         return (
             <div>
-                <span>
-                    <span>巡查日期:</span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
+                    <span>巡查日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>巡查人:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <span>设备编号:</span>
-                    <Input style={{width: 200}} onChange={this.equipmentNumberFn} />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡查人:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                    <span>设备编号:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.equipmentNumberFn} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>
