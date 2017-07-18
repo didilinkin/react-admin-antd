@@ -2,15 +2,18 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import {
-    Home,
-    Count,
-    View,
+    // Home,
+    // Count,
+    // View,
     TestRoute,
-    AuthView
+    AuthView,
+    PrivateRoute,
+    Login
 } from '../common/containers'
 
 import Link from 'react-router-redux-dom-link'
 
+const Protected = () => <h3>非公开的页面</h3>
 
 class Routes extends React.Component {
     render () {
@@ -30,11 +33,20 @@ class Routes extends React.Component {
                     <hr />
 
                     {/* 内容 展示 */}
-                    <Route exact path="/" component={ Home } />
-                    <Route path="/count" component={ Count } />
-                    <Route path="/view" component={ View } />
-                    <Route path="/testRoute" component={ TestRoute } />
+                    {/*
+                        <Route exact path="/" component={ Home } />
+                        <Route path="/count" component={ Count } />
+                        <Route path="/view" component={ View } />
+                        <Route path="/testRoute" component={ TestRoute } />
+                    */}
 
+                    <PrivateRoute
+                        isAuthenticate={ isAuthenticate }
+                        path="/protected "
+                        component={ Protected }
+                    />
+                    <Route path="/login" component={ Login } />
+                    <Route path="/testRoute" component={ TestRoute } />
                     <hr />
 
                     {/* 登录状态 展示 */}

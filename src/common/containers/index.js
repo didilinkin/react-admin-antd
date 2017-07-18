@@ -4,11 +4,15 @@ import Count from './Count'
 import View from './View'
 import TestRoute from './TestRoute'
 import AuthView from './AuthView'
+import PrivateRoute from './PrivateRoute'
+import Login from './Login'
 
 export {
     Home,
     Count,
     View,
     TestRoute,
-    AuthView
+    AuthView,
+    PrivateRoute,
+    Login
 }
