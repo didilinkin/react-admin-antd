@@ -4,34 +4,38 @@ import React from 'react'
 const localStore = require('../../utils/LocalStore').default
 
 class TestRoute extends React.Component {
-    // 保存 值
+    // 保存 登录状态
     setLocal = () => {
-        console.log(localStore)
-        localStore.set('user', {
-            name: 'test'
-        })
+        localStore.set('isAuthenticate', true)
     }
 
-    // 读取 值
+    // 读取 登录状态
     getLocal = () => {
-        let user = localStore.get('user')
-        console.log(user)
+        let isAuthenticate = localStore.get('isAuthenticate')
+        console.log(isAuthenticate)
     }
 
-    // 保存 session值
-    setSession = () => {
-        sessionStorage.setItem('testKey', 'value')
+    // 清空 登录状态
+    removeLocal = () => {
+        localStore.remove('isAuthenticate')
+    }
+
+    // 清空 全部状态
+    clearLocal = () => {
+        localStore.clearAll()
     }
 
     render () {
         return (
             <div>
                 <h1> 测试路由页面 </h1>
-                <button onClick={ this.setLocal }> 保存 local值 </button>
+                <button onClick={ this.setLocal }> 保存 登录状态 </button>
                 <hr />
-                <button onClick={ this.getLocal }> 获取 local值 </button>
+                <button onClick={ this.getLocal }>  读取 登录状态 </button>
                 <hr />
-                <button onClick={ this.setSession }> 保存 session值 </button>
+                <button onClick={ this.removeLocal }> 清空 登录状态 </button>
+                <hr />
+                <button onClick={ this.clearLocal }> 清空 全部状态 </button>
             </div>
         )
     }
