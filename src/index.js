@@ -2,24 +2,18 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-// 验证 localStorage 状态
-import { authenticate } from './utils/LocalStore'
-
+import { authenticate } from './utils/LocalStore' // 验证 localStorage 状态
 import { configureStore, history } from './store/configureStore/index'
 import Root from './common/containers/Root'
+
 const store = configureStore()
-
-let auth = () => {
-    let authState = authenticate()
-    console.log(authState)
-}
-
-auth()
+const authState = authenticate()
 
 render(
     <Root
         store={ store }
         history={ history }
+        isAuthenticate={ authState }
     />,
     document.getElementById('root')
 )

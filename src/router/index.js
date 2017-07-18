@@ -13,6 +13,8 @@ import Link from 'react-router-redux-dom-link'
 
 class Routes extends React.Component {
     render () {
+        const { isAuthenticate } = this.props
+
         return (
             <Route>
                 <div>
@@ -29,6 +31,10 @@ class Routes extends React.Component {
                     <Route path="/count" component={ Count } />
                     <Route path="/view" component={ View } />
                     <Route path="/testRoute" component={ TestRoute } />
+
+                    <hr />
+
+                    <button style={{ test: isAuthenticate }}> 检查 local 登录状态 </button>
                 </div>
             </Route>
         )

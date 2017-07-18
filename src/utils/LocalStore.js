@@ -2,11 +2,7 @@
 const localStore = require('store')
 
 // 验证本地 用户登录状态: function => boolean
-const authenticate = () => {
-    let authState
-    localStore.get('isAuthenticate') ? authState = true : authState = false
-    return authState
-}
+const authenticate = () => localStore.get('isAuthenticate')
 
 export default localStore
 

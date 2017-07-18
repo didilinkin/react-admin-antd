@@ -9,12 +9,13 @@ class Root extends React.Component {
     render () {
         const { store } = this.props
         const { history } = this.props
+        const { isAuthenticate } = this.props
 
         return (
             <Provider store={store}>
                 <ConnectedRouter history={ history }>
                     <div>
-                        <Routes />
+                        <Routes isAuthenticate={ isAuthenticate } />
                     </div>
                 </ConnectedRouter>
             </Provider>
