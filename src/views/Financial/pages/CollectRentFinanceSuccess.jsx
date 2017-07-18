@@ -37,7 +37,6 @@ class CollectRentConduct extends Component {
             '/collectRent/collectRentList',
             {auditStatus: 2}
         )
-        const handleUpdate = this.handleUpdate
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -139,11 +138,28 @@ class CollectRentConduct extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >明细</Button>
-                        </div>
-                    )
+                    if (record.lateMoney === 0 && record.paidMoney === 0) {
+                        let url = '/financial/RentReviewDetailNoLate/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    } else if (record.lateMoney === 0 && record.unpaidMoney !== 0) {
+                        let url = '/financial/RentReviewDetailNoPaid/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    } else {
+                        let url = '/financial/rentReviewDetail/' + record.id
+                        return (
+                            <div>
+                                <a href={url}><Button type="primary">明细</Button></a>
+                            </div>
+                        )
+                    }
                 }
             }],
             dataSource: result.data

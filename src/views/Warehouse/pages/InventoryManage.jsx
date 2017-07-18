@@ -166,8 +166,8 @@ class RepairList extends Component {
         this.refresh()
     }
     startDate = ''
-    getDate = (date, dateString) => {
-        this.startDate = dateString[0]
+    getDate = (e) => {
+        this.startDate = e
     }
     render () {
         return (

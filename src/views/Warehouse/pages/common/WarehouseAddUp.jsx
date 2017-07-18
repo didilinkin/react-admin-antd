@@ -257,7 +257,7 @@ class WarehouseAddUp extends React.Component {
                             <FormItem label="数量" labelCol={{ span: 5 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('number')(<InputNumber onBlur={this.sumMoney} />)}
+                                {getFieldDecorator('number')(<InputNumber min="0" onBlur={this.sumMoney} />)}
                             </FormItem>
                         </Col>
                     </Row>
