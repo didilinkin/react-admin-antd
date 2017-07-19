@@ -157,7 +157,7 @@ class RepairList extends Component {
                     visible={this.state.openUpdate}
                 />
                 <span style={{paddingBottom: '10px',
-                    display: 'block'}}>>
+                    display: 'block'}}>
                     <span>检查日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;</span>
