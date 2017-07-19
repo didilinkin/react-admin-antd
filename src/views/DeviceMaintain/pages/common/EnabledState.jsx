@@ -97,7 +97,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('departmentName', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Select
@@ -122,7 +122,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('applicant', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input />
@@ -134,7 +134,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('applyDate', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <DatePicker />
@@ -146,7 +146,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('applyReason', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />
@@ -158,7 +158,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('whereabouts', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input />
@@ -170,7 +170,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('approver', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input />
@@ -182,7 +182,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('approvalDate', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <DatePicker />
@@ -194,7 +194,7 @@ class EnabledState extends React.Component {
                             {getFieldDecorator('remarks', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />

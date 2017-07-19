@@ -233,7 +233,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('systemIdOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -257,7 +257,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('manufacturingUnit', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -273,7 +273,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('categoryIdOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -297,7 +297,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('manufacturingDate', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <DatePicker />
@@ -313,7 +313,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('equipmentName', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -327,7 +327,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('purchaseDate', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <DatePicker />
@@ -343,7 +343,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('equipmentNumber', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -357,7 +357,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('serviceLife', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -373,7 +373,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('equipmentModel', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -387,7 +387,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('useDepartmentOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -416,7 +416,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('equipmentBrand', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -430,7 +430,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('maintenanceIdOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -456,7 +456,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('installationLocation', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -470,7 +470,7 @@ class EquipmentAddUp extends React.Component {
                                     {getFieldDecorator('patrolIdOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -494,7 +494,7 @@ class EquipmentAddUp extends React.Component {
                             {getFieldDecorator('remarks', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />

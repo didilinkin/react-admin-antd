@@ -1,4 +1,4 @@
-// 收费管理 - 应收租金
+// 收费管理 - 待收租
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'

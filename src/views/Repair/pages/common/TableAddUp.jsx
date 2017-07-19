@@ -194,7 +194,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('repairDate', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <DatePicker />
@@ -208,7 +208,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('repairMan', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -224,7 +224,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('clientNameOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -250,7 +250,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('phone', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -266,7 +266,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('buildName', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input disabled />
@@ -280,7 +280,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('repairNum', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input />
@@ -295,7 +295,7 @@ class TableAddUp extends React.Component {
                             {getFieldDecorator('roomNum', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input disabled />
@@ -309,7 +309,7 @@ class TableAddUp extends React.Component {
                             {getFieldDecorator('repairContent', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />

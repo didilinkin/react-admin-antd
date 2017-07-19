@@ -215,7 +215,7 @@ class RoomAddUp extends React.Component {
                             {getFieldDecorator('systemIdOne', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Select
@@ -237,7 +237,7 @@ class RoomAddUp extends React.Component {
                             {getFieldDecorator('categoryIdOne', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Select
@@ -259,7 +259,7 @@ class RoomAddUp extends React.Component {
                             {getFieldDecorator('machineRoomNumber', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input />
@@ -271,7 +271,7 @@ class RoomAddUp extends React.Component {
                             {getFieldDecorator('machineRoomName', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Input />
@@ -283,7 +283,7 @@ class RoomAddUp extends React.Component {
                             {getFieldDecorator('floor', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Select

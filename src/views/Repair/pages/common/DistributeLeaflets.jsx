@@ -101,7 +101,7 @@ class DistributeLeaflets extends React.Component {
                         {getFieldDecorator('repairedIdOne', {
                             rules: [ {
                                 required: true,
-                                message: 'Please input!'
+                                message: '请输入'
                             }]
                         })(
                             <Select

@@ -127,7 +127,7 @@ class addUpkeep extends React.Component {
                                     {getFieldDecorator('receiptDate', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <DatePicker />

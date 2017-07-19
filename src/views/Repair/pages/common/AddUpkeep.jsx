@@ -141,7 +141,7 @@ class addUpkeep extends React.Component {
                             {getFieldDecorator('entryName', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 物品名称!'
+                                    message: '请输入 物品名称!'
                                 }]
                             })(
                                 <Input type="text" />
@@ -153,7 +153,7 @@ class addUpkeep extends React.Component {
                             {getFieldDecorator('company', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 单位!'
+                                    message: '请输入 单位!'
                                 }]
                             })(
                                 <Input type="text" />
@@ -165,7 +165,7 @@ class addUpkeep extends React.Component {
                             {getFieldDecorator('purchasePrice', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 进货价格!'
+                                    message: '请输入 进货价格!'
                                 }]
                             })(
                                 <Input onBlur={this.onBlur} type="text" />
@@ -177,7 +177,7 @@ class addUpkeep extends React.Component {
                             {getFieldDecorator('serviceCharge', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 服务费!'
+                                    message: '请输入 服务费!'
                                 }]
                             })(
                                 <Input onBlur={this.onBlur} type="text" />
@@ -189,7 +189,7 @@ class addUpkeep extends React.Component {
                             {getFieldDecorator('tollAmount', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 收费金额!'
+                                    message: '请输入 收费金额!'
                                 }]
                             })(
                                 <Input disabled type="text" />

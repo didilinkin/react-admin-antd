@@ -75,7 +75,7 @@ class CancelRepair extends React.Component {
                             {getFieldDecorator('invalidContent', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your 作废原因!'
+                                    message: '请输入 作废原因!'
                                 }]
                             })(
 
