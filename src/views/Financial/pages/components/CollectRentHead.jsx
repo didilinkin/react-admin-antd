@@ -164,7 +164,7 @@ class CollectRentHead extends React.Component {
                 <Row>
                     <Col span={8}><div style={{paddingLeft: '25%',
                         marginBottom: 10}}>
-                        <Button onClick={this.handleSubmit}>搜索</Button>
+                        <Button onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
                         <Button onClick={this.open}>{this.state.open}</Button></div>
                     </Col>
                     <Col span={16}/>
