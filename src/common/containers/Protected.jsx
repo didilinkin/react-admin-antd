@@ -1,5 +1,7 @@
 import React from 'react'
 
+// 退出按钮 测试
+
 class Protected extends React.Component {
     render () {
         return (

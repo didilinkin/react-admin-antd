@@ -1,20 +1,17 @@
-// 登录页
+// 登录页: 如果登录状态, 禁止查看此页
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
 const localStore = require('../../utils/LocalStore').default
 
 class Login extends React.Component {
-    // 保存 登录状态: 成功
-    setLocalT = () => {
-        localStore.set('isAuthenticate', true)
-    }
-
     state = {
         redirectToReferrer: false // 重定向到 来访地址
     }
 
-    login = () => { // 此时已登录, 直接修改 state
+    // 保存 登录状态: 成功
+    setLocalT = () => {
+        localStore.set('isAuthenticate', true)
         this.setState({
             redirectToReferrer: true
         })
@@ -32,7 +29,7 @@ class Login extends React.Component {
 
         return (
             <div>
-                <p>登录页: 若想访问 { from.pathname } ，你需要先登录</p>
+                <p>登录页: 若想访问 内容, 你必须登录</p>
                 <button onClick={ this.setLocalT }>登录页: 登录</button>
             </div>
         )
