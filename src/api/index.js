@@ -9,6 +9,7 @@ axios.defaults.baseURL = 'http://192.168.5.4:18082/'
 export const baseURL = 'http://192.168.5.4:18082/'
 // 查询
 export const apiGet = (url) => {
+    url = url + '?token=' + localStorage.getItem('token')
     return new Promise(function (resolve, reject) {
         axios.get(url).then(
             response => {
