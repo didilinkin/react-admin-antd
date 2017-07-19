@@ -1,6 +1,6 @@
 // 收费管理 - 应收租金
 import React, {Component} from 'react'
-import {Table, Button, Spin } from 'antd'
+import {Table, Spin } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import CollectRentHeadComponent from './components/CollectRentHead'
@@ -144,35 +144,35 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentReviewDetailNoPaid/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">收款</Button></a>
+                                <a href={url}> 收款 </a>
                             </div>
                         )
                     } else if (record.lateMoney === 0 && record.whetherRentPaid !== 1) {
                         let url = '/financial/RentReviewDetailNoLate/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">收款</Button></a>
+                                <a href={url}> 收款 </a>
                             </div>
                         )
                     } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
                         let url = '/financial/NoLateAndRentFinish/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">收款</Button></a>
+                                <a href={url}> 收款 </a>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
                         let url = '/financial/RentFinishAndLate/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">收款</Button></a>
+                                <a href={url}> 收款 </a>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
                         let url = '/financial/RentReviewDetail/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">收款</Button></a>
+                                <a href={url}> 收款 </a>
                             </div>
                         )
                     }

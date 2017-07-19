@@ -80,7 +80,7 @@ function mapStateToProps (state, ownProps) {
             render: function (text, record, index) {
                 return (
                     <Popconfirm title="Delete?" onConfirm={() => handleDelete(record.id)}>
-                        <a href="javascript:">Delete</a>
+                        <a href="javascript:"> Delete </a>
                     </Popconfirm>
                 )
             }

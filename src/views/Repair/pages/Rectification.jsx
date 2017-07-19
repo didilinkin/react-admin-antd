@@ -90,7 +90,7 @@ class RepairList extends Component {
                     return (
                         <div>
                             <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRectification(record.id)}>
-                                <a href="javascript:" >修改</a>
+                                <a href="javascript:" > 修改 </a>
                             </Popconfirm>
                         </div>
                     )

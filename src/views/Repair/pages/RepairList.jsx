@@ -175,17 +175,17 @@ class RepairList extends Component {
                     if (record.pieStatus === 0 || record.isCancel === 1) {
                         arr.push(
                             <Popconfirm key="1" title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                <a href="javascript:">派单</a>
+                                <a href="javascript:"> 派单 </a>
                             </Popconfirm>)
                         arr.push(
                             <Popconfirm key="2" title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
-                                <a href="javascript:">修改</a>
+                                <a href="javascript:"> 修改 </a>
                             </Popconfirm>)
                     }
                     if (record.pieStatus === 0) {
                         arr.push(
                             <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a href="javascript:" >作废</a>
+                                <a href="javascript:" > 作废 </a>
                             </Popconfirm>
                         )
                     }
