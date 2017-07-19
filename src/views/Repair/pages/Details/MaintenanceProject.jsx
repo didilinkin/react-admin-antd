@@ -24,7 +24,7 @@ class App extends React.Component {
                 if (RepairProject.roomType === 1) {
                     roomType = '出售'
                 }
-                return <tr key={j}><td>{RepairProject.id}</td><td>{roomType}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                return <tr key={j}><td>{roomType}</td><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
             } else {
                 return null
             }
@@ -49,7 +49,6 @@ class App extends React.Component {
                 <table className="tb">
                     <tbody>
                         <tr className="hd">
-                            <td>序号</td>
                             <td>房屋性质</td>
                             <td>材料名称</td>
                             <td>数量</td>
