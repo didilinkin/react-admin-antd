@@ -5,8 +5,8 @@ const qs = require('qs')
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
-axios.defaults.baseURL = 'http://192.168.5.106:18082/'
-export const baseURL = 'http://192.168.5.106:18082/'
+axios.defaults.baseURL = 'http://192.168.5.4:18082/'
+export const baseURL = 'http://192.168.5.4:18082/'
 // 查询
 export const apiGet = (url) => {
     return new Promise(function (resolve, reject) {
@@ -23,18 +23,26 @@ export const apiGet = (url) => {
 
 // 获取资源
 export const apiPost = (url, configObj) => {
+    if (typeof (configObj) === 'undefined') {
+        configObj = []
+    }
+    configObj['token'] = localStorage.getItem('token')
     return new Promise(function (resolve, reject) {
         axios.post(url, qs.stringify({...configObj})).then(
             response => {
                 let resulData = response.data
-                resolve(resulData)
+                if (resulData.data.toString() === '登录过期') {
+                    localStorage.removeItem('token')
+                    window.location.href = '/login'
+                } else {
+                    resolve(resulData)
+                }
             }
         ).catch(error => {
             reject(error)
         })
     })
 }
-
 // 删除
 export const apiDel = (configObj) => {
     return new Promise(function (resolve, reject) {
