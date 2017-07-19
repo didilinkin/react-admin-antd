@@ -59,7 +59,7 @@ class CollectRentHead extends React.Component {
         const { getFieldDecorator } = this.props.form
         let {ListBuildingInfo} = this.props
         return (
-            <Form layout="inline">
+            <Form layout="horizontal">
                 <Row>
                     <Col span={8}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
@@ -178,8 +178,14 @@ class CollectRentHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>
-                <Button onClick={this.handleSubmit}>搜索</Button>
-                <Button onClick={this.open}>{this.state.open}</Button>
+                <Row>
+                    <Col span={8}><div style={{paddingLeft: '25%',
+                        marginBottom: 10}}>
+                        <Button onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                        <Button onClick={this.open}>{this.state.open}</Button></div>
+                    </Col>
+                    <Col span={16}/>
+                </Row>
             </Form>
         )
     }
