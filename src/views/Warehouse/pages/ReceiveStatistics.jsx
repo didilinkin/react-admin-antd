@@ -172,7 +172,8 @@ class RepairList extends Component {
     render () {
         return (
             <div>
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>查询截止日期:&nbsp;&nbsp;</span>
                     <DatePicker style={{width: 200,
                         marginRight: '5px'}} onChange={this.getDate} />

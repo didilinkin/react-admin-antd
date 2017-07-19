@@ -119,11 +119,13 @@ class MaintenanceRecords extends Component {
     render () {
         return (
             <div>
-                <span>
-                    <span>巡检日期:</span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
+                    <span>巡检日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>巡检人:</span>
-                    <Input style={{width: 200}} onChange={this.entryNameOnChange} />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>

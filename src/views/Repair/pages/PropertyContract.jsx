@@ -199,8 +199,8 @@ class PropertyContract extends React.Component {
                     type={this.state.type}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <Button type="primary" onClick={this.openPropertyContractAddedCom}>添加物业合同</Button>
-                <Button type="primary" onClick={this.openHydropowerContractAdditionCom}>添加仅水电合同</Button>
+                <Button style={{ marginBottom: 10}} type="primary" onClick={this.openPropertyContractAddedCom}>添加物业合同</Button>&nbsp;&nbsp;
+                <Button style={{ marginBottom: 10}} type="primary" onClick={this.openHydropowerContractAdditionCom}>添加仅水电合同</Button>
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}

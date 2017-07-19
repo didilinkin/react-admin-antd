@@ -225,7 +225,8 @@ class Account extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openSS}
                 />
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>设备名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;设备状态:&nbsp;&nbsp;</span>

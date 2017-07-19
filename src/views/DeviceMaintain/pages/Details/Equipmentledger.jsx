@@ -86,7 +86,6 @@ class Equipmentledger extends React.Component {
             maintenanceData: maintenanceDataList.data.map((maintenance, j) => {
                 return (
                     <tr key={j}>
-                        <td>{maintenance.id}</td>
                         <td>{maintenance.maintenanceDate}</td>
                         <td>{maintenance.maintenanceNumber}</td>
                         <td>{maintenance.statusStatement.toString().split(0, 30)}</td>
@@ -98,7 +97,6 @@ class Equipmentledger extends React.Component {
             equipmentMaintenanceList: equipmentMaintenanceList.data.map((equipmentMaintenance, j) => {
                 return (
                     <tr key={j}>
-                        <td>{j}</td>
                         <td>{equipmentMaintenance.makespan}</td>
                         <td>{equipmentMaintenance.faultDescription}</td>
                         <td>{equipmentMaintenance.maintenanceStatus}</td>
@@ -213,7 +211,6 @@ class Equipmentledger extends React.Component {
                             <table className="tb">
                                 <tbody>
                                     <tr className="hd">
-                                        <td>序号</td>
                                         <td>维修完工时间</td>
                                         <td>故障描述</td>
                                         <td>维修情况</td>
@@ -227,7 +224,6 @@ class Equipmentledger extends React.Component {
                             <table className="tb">
                                 <tbody>
                                     <tr className="hd">
-                                        <td>序号</td>
                                         <td>保养日期</td>
                                         <td>保养单号</td>
                                         <td>保养情况</td>

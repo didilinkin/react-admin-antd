@@ -185,7 +185,8 @@ class ElevatorRoom extends Component {
     render () {
         return (
             <div>
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>巡检日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;机房名称:&nbsp;&nbsp;</span>
