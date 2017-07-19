@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Button, Spin } from 'antd'
+import {Table, Spin } from 'antd'
 import { apiPost } from '../../../api'
 import CollectRentHeadComponent from './components/CollectRentHead'
 import NoPaidComponent from './Details/RentReviewDetailNoPaid'
