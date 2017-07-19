@@ -123,7 +123,6 @@ class PropertyContract extends React.Component {
                 }
             }, {
                 title: '剩余天数',
-                width: 100,
                 dataIndex: 'daysRemaining'
             }, {
                 title: '操作',
