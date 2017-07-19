@@ -188,7 +188,8 @@ class RepairList extends Component {
                     number={this.state.number}
                     unitPrice={this.state.unitPrice}
                 />
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>查询截止日期:&nbsp;&nbsp;</span>
                     <DatePicker style={{width: 200,
                         marginRight: '5px'}} onChange={this.getDate} />

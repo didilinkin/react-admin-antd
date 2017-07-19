@@ -1,10 +1,11 @@
-import {Form, Select, Input, Button, Row, Col  } from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker  } from 'antd'
 import React from 'react'
 const Option = Select.Option
 const FormItem = Form.Item
+const { RangePicker } = DatePicker
 
 
-class ContractHead extends React.Component {
+class CollectRentHead extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -26,6 +27,8 @@ class ContractHead extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
+            json['startDate'] = this.startDate
+            json['endDate'] = this.endDate
             this.props.refresh(null, json, null)
         }
     }
@@ -42,72 +45,22 @@ class ContractHead extends React.Component {
             })
         }
     }
+    startDate = ''
+    endDate = ''
+    getDate = (date, dateString) => {
+        this.startDate = dateString[0]
+        if (dateString[1] > 0) {
+            this.endDate = dateString[1] + ' 23:59:59'
+        } else {
+            this.endDate = dateString[1]
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
-        let { type, ListBuildingInfo } = this.props
-        let contractSplit = []
-        if (type === 1) {
-            contractSplit = [<Option key="1">正常</Option>, <Option key="2">水电</Option>]
-        } else {
-            contractSplit = [<Option key="1">正常</Option>, <Option key="2">欢乐颂</Option>]
-        }
+        let {ListBuildingInfo} = this.props
         return (
-            <Form layout="horizontal">
+            <Form layout="inline">
                 <Row>
-                    <Col span={8}>
-                        <FormItem label="合同类型" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('contractSplit')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择合同类型"
-                                    optionFilterProp="children"
-                                >
-                                    {contractSplit}
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('clientName')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('leaseRooms')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row style={{display: this.state.none}}>
-                    <Col span={8}>
-                        <FormItem label="合同状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('contractStatus')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择合同状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">正常</Option>
-                                    <Option key="1">终止</Option>
-                                    <Option key="2">未开始</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
                     <Col span={8}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
@@ -127,37 +80,94 @@ class ContractHead extends React.Component {
                         </FormItem>
                     </Col>
                     <Col span={8}>
-                        <FormItem label="临期查询" labelCol={{ span: 6 }}
+                        <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
-                            {getFieldDecorator('Advent')(
+                            {getFieldDecorator('rentClientName')(
+                                <Input placeholder="请输入" style={{ width: 200 }} />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={8}>
+                        <FormItem label="房间编号" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('roomNum')(
+                                <Input placeholder="请输入" style={{ width: 200 }} />
+                            )}
+                        </FormItem>
+                    </Col>
+                </Row>
+                <Row style={{display: this.state.none}}>
+                    <Col span={8}>
+                        <FormItem label="租金是否开票" labelCol={{ span: 8 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('invoiceRentStatus')(
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="请选择临期查询"
+                                    placeholder="请选择租金是否开票"
                                     optionFilterProp="children"
                                 >
-                                    <Option key="1">一个月</Option>
-                                    <Option key="3">一个季度</Option>
-                                    <Option key="6">半年</Option>
-                                    <Option key="12">一年</Option>
+                                    <Option key="0">未开票</Option>
+                                    <Option key="1">已开票</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={8}>
+                        <FormItem label="收费状态" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('whetherRentPaid')(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="请选择收费状态"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="0">未收款</Option>
+                                    <Option key="1">已收全</Option>
+                                    <Option key="2">未收全</Option>
                                 </Select>
                             )}
                         </FormItem>
                     </Col>
                 </Row>
-                <Row>
-                    <Col span={8}><div style={{paddingLeft: '25%',
-                        marginBottom: 10}}><Button onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
-                    <Col span={16}/>
+                <Row style={{display: this.state.none}}>
+                    <Col span={8}>
+                        <FormItem label="查询类型" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('dateSelect')(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="请选择查询类型"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="0">实交日期</Option>
+                                    <Option key="1">交费期限</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={8}>
+                        <FormItem label="" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            <RangePicker onChange={this.getDate} />
+                        </FormItem>
+                    </Col>
                 </Row>
-
-
+                <Button onClick={this.handleSubmit}>搜索</Button>
+                <Button onClick={this.open}>{this.state.open}</Button>
             </Form>
         )
     }
 }
 
-let ContractHeadComponent = Form.create()(ContractHead)
+let ContractHeadComponent = Form.create()(CollectRentHead)
 
 export default ContractHeadComponent

@@ -151,7 +151,8 @@ class ClientReview extends React.Component {
     render () {
         return (
             <div>
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>回访日期:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;</span>

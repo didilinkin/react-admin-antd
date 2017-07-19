@@ -99,7 +99,7 @@ class addUpkeep extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let ListBuildingInfo = this.state.accountList
+        let accountList = this.state.accountList
         return (
             <div>
                 <Modal maskClosable={false}
@@ -168,8 +168,8 @@ class addUpkeep extends React.Component {
                                             placeholder="请选择付款帐号"
                                             optionFilterProp="children"
                                         >
-                                            {ListBuildingInfo.map(BuildingInfo => {
-                                                return <Option key={BuildingInfo.accountId}>{BuildingInfo.accountName}</Option>
+                                            {accountList.map(Account => {
+                                                return <Option key={Account.accountId}>{Account.accountName}</Option>
                                             })}
                                         </Select>
                                     )}

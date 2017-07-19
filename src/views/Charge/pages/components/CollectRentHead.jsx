@@ -1,10 +1,11 @@
-import {Form, Select, Input, Button, Row, Col  } from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker  } from 'antd'
 import React from 'react'
 const Option = Select.Option
 const FormItem = Form.Item
+const { RangePicker } = DatePicker
 
 
-class ContractHead extends React.Component {
+class CollectRentHead extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -26,6 +27,8 @@ class ContractHead extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
+            json['startDate'] = this.startDate
+            json['endDate'] = this.endDate
             this.props.refresh(null, json, null)
         }
     }
@@ -42,8 +45,19 @@ class ContractHead extends React.Component {
             })
         }
     }
+    startDate = ''
+    endDate = ''
+    getDate = (date, dateString) => {
+        this.startDate = dateString[0]
+        if (dateString[1] > 0) {
+            this.endDate = dateString[1] + ' 23:59:59'
+        } else {
+            this.endDate = dateString[1]
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
+        let {ListBuildingInfo} = this.props
         return (
             <Form layout="inline">
                 <Row>
@@ -58,6 +72,9 @@ class ContractHead extends React.Component {
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
+                                    {ListBuildingInfo.map(BuildingInfo => {
+                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                    })}
                                 </Select>
                             )}
                         </FormItem>
@@ -66,7 +83,7 @@ class ContractHead extends React.Component {
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
-                            {getFieldDecorator('clientName')(
+                            {getFieldDecorator('rentClientName')(
                                 <Input placeholder="请输入" style={{ width: 200 }} />
                             )}
                         </FormItem>
@@ -83,7 +100,7 @@ class ContractHead extends React.Component {
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
-                        <FormItem label="租金是否开票" labelCol={{ span: 6 }}
+                        <FormItem label="租金是否开票" labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('invoiceRentStatus')(
@@ -135,6 +152,32 @@ class ContractHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>
+                <Row style={{display: this.state.none}}>
+                    <Col span={8}>
+                        <FormItem label="查询类型" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('dateSelect')(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="请选择查询类型"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="0">实交日期</Option>
+                                    <Option key="1">交费期限</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={8}>
+                        <FormItem label="" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            <RangePicker onChange={this.getDate} />
+                        </FormItem>
+                    </Col>
+                </Row>
                 <Button onClick={this.handleSubmit}>搜索</Button>
                 <Button onClick={this.open}>{this.state.open}</Button>
             </Form>
@@ -142,6 +185,6 @@ class ContractHead extends React.Component {
     }
 }
 
-let ContractHeadComponent = Form.create()(ContractHead)
+let ContractHeadComponent = Form.create()(CollectRentHead)
 
 export default ContractHeadComponent

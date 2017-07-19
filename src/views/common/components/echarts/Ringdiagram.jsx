@@ -29,8 +29,8 @@ const Ringdiagram = React.createClass({
     getOtion: function () {
         const option = {
             title: {
-                text: '某站点用户访问来源',
-                subtext: '纯属虚构',
+                text: '客户报修情况',
+                subtext: '',
                 x: 'center'
             },
             tooltip: {
@@ -49,19 +49,19 @@ const Ringdiagram = React.createClass({
                     data: [
                         {
                             value: 335,
-                            name: '直接访问'
+                            name: '未派单'
                         }, {
                             value: 310,
-                            name: '邮件营销'
+                            name: '已完工'
                         }, {
                             value: 234,
-                            name: '联盟广告'
+                            name: '进行中'
                         }, {
                             value: 135,
-                            name: '视频广告'
+                            name: '取消工单'
                         }, {
                             value: 548,
-                            name: '搜索引擎'
+                            name: '作废工单'
                         }
                     ],
                     itemStyle: {

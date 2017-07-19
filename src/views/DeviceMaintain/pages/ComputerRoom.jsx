@@ -178,7 +178,8 @@ class ComputerRoom extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>所属系统:&nbsp;&nbsp;</span>
                     <Select
                         showSearch

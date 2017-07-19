@@ -18,6 +18,7 @@ class CollectRenting extends Component {
             AccountList: [],
             columns: [],
             dataSource: [],
+            ListBuildingInfo: [],
             id: 0
         }
     }
@@ -36,8 +37,12 @@ class CollectRenting extends Component {
             '/collectRent/rentingList',
             {auditStatus: 0}
         )
+        let ListBuildingInfo = await apiPost(
+            '/collectRent/ListBuildingInfo'
+        )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -131,6 +136,7 @@ class CollectRenting extends Component {
             {'periodStatus': this.periodStatus,
                 'rentClientName': this.rentClientName,
                 'roomNum': this.roomNum,
+                'buildId': this.buildId,
                 'auditStatus': 0
             }
         )
@@ -155,10 +161,15 @@ class CollectRenting extends Component {
     selectOnChange = (e) => {
         this.periodStatus = e
     }
+    buildId = ''
+    selectBuild = (e) => {
+        this.buildId = e
+    }
     query = () => {
         this.refresh()
     }
     render () {
+        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <CollectRentConductComponent
@@ -167,14 +178,30 @@ class CollectRenting extends Component {
                     visible={this.state.openUpdate}
                     accountLsit={this.state.accountList}
                 />
-                <span>
-                    <span>房间编号:</span>
-                    <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称:</span>
-                    <Input style={{width: 150}} onChange={this.entryNameOnChange} />
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <Select
                         showSearch
-                        style={{ width: 150 }}
+                        style={{width: 200,
+                            marginRight: '5px'}}
+                        placeholder="请选择所属楼宇"
+                        optionFilterProp="children"
+                        onSelect={this.selectBuild}
+                    >
+                        {ListBuildingInfo.map(BuildingInfo => {
+                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                        })}
+                    </Select>
+                    <span>房间编号:&nbsp;&nbsp;</span>
+                    <Input style={{width: 150,
+                        marginRight: '5px'}} onChange={this.entryNumberOnChange} />
+                    <span>客户名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 150,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                    <Select
+                        showSearch
+                        style={{width: 150,
+                            marginRight: '5px'}}
                         placeholder="请选择交费周期"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}

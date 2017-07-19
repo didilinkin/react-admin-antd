@@ -24,70 +24,20 @@ class addUpkeep extends React.Component {
                 '/collectRent/getCollectRentById',
                 { 'id': nextProps.id }
             )
-            if (resulData.data.lastLateMoney !== null) {
-                this.props.form.setFields({
-                    lastLateMoney: {
-                        value: resulData.data.lastLateMoney,
-                        errors: ''
-                    }
-                })
-            } else {
-                this.props.form.setFields({
-                    lastLateMoney: {
-                        value: 0,
-                        errors: ''
-                    }
-                })
-            }
             if (resulData.data.receiptDate !== null) {
-                this.props.form.setFields({
-                    lastReceiptDate: {
-                        value: resulData.data.receiptDate,
-                        errors: ''
-                    }
+                this.props.form.setFieldsValue({
+                    lastReceiptDate: resulData.data.receiptDate
                 })
             }
-            this.props.form.setFields({
-                lateMoney: {
-                    value: resulData.data.lateMoney,
-                    errors: ''
-                },
-                thisActualLateMoney: {
-                    value: resulData.data.unpaidLateMoney,
-                    errors: ''
-                },
-                thisActualPaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                },
-                periodRent: {
-                    value: resulData.data.periodRent,
-                    errors: ''
-                },
-                id: {
-                    value: resulData.data.id,
-                    errors: ''
-                },
-                rentClientName: {
-                    value: resulData.data.rentClientName,
-                    errors: ''
-                },
-                lastUnpaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                },
-                paidMoney: {
-                    value: resulData.data.paidMoney,
-                    errors: ''
-                },
-                payDeadline: {
-                    value: resulData.data.payDeadline,
-                    errors: ''
-                },
-                unpaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                lateMoney: resulData.data.lateMoney,
+                thisActualLateMoney: resulData.data.unpaidLateMoney,
+                unpaidLateMoney: resulData.data.unpaidLateMoney,
+                periodRent: resulData.data.periodRent,
+                feeId: resulData.data.id,
+                id: resulData.data.id,
+                rentClientName: resulData.data.rentClientName,
+                payDeadline: resulData.data.payDeadline
             })
             this.setState({
                 isFirst: false,
@@ -124,24 +74,23 @@ class addUpkeep extends React.Component {
         if (typeof (thisPaidMoney) === 'undefined') {
             thisPaidMoney = 0
         }
+        this.props.form.setFieldsValue({
+            paidMoney: parseFloat(thisPaidMoney).toFixed(1)
+        })
         let unpaidMoney1 = this.props.form.getFieldValue('unpaidLateMoney')
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
         let unpaidMoney2 = unpaidMoney1 - thisPaidMoney
         if (unpaidMoney2 < 0) {
-            this.props.form.setFields({
-                unpaidLateMoney: {
-                    value: unpaidMoney1,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                unpaidLateMoney: parseFloat(unpaidMoney1).toFixed(1),
+                unpaidMoney: parseFloat(unpaidMoney1).toFixed(1)
             })
         } else {
-            this.props.form.setFields({
-                unpaidLateMoney: {
-                    value: unpaidMoney2,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1),
+                unpaidMoney: parseFloat(unpaidMoney2).toFixed(1)
             })
         }
     }
@@ -156,22 +105,15 @@ class addUpkeep extends React.Component {
         }
         let unpaidMoney2 = thisActualLateMoney - discountMoney
         if (unpaidMoney2 < 0) {
-            this.props.form.setFields({
-                thisActualLateMoney: {
-                    value: thisActualLateMoney,
-                    errors: ''
-                },
-                discountMoney: {
-                    value: 0,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                thisActualLateMoney: parseFloat(thisActualLateMoney).toFixed(1),
+                discountMoney: 0,
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1)
             })
         } else {
-            this.props.form.setFields({
-                thisActualLateMoney: {
-                    value: unpaidMoney2,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                thisActualLateMoney: parseFloat(unpaidMoney2).toFixed(1),
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1)
             })
         }
     }
@@ -256,6 +198,12 @@ class addUpkeep extends React.Component {
                                         </Select>
                                     )}
                                 </FormItem>
+                                {getFieldDecorator('feeId')(
+                                    <Input type="hidden" />
+                                )}
+                                {getFieldDecorator('feeType')(
+                                    <Input value={1} type="hidden" />
+                                )}
                                 {getFieldDecorator('id')(
                                     <Input type="hidden" />
                                 )}
@@ -265,10 +213,10 @@ class addUpkeep extends React.Component {
                                 {getFieldDecorator('rentClientName')(
                                     <Input type="hidden" />
                                 )}
-                                {getFieldDecorator('lastUnpaidMoney')(
+                                {getFieldDecorator('paidMoney')(
                                     <Input type="hidden" />
                                 )}
-                                {getFieldDecorator('paidMoney')(
+                                {getFieldDecorator('unpaidMoney')(
                                     <Input type="hidden" />
                                 )}
                                 {getFieldDecorator('lateMoney')(

@@ -104,7 +104,6 @@ class RentFinishAndLate extends React.Component {
             data2: result2.data,
             data3: result3.data
         })
-        console.log(this.state.data2)
     }
     componentDidMount () {
         this.initialRemarks()

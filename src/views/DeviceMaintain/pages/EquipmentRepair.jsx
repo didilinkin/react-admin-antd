@@ -125,7 +125,8 @@ class EquipmentRepair extends React.Component {
     render () {
         return (
             <div>
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>送修时间:&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;故障等级:&nbsp;&nbsp;</span>
