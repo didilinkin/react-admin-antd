@@ -105,7 +105,7 @@ class ClientReview extends React.Component {
                 render: function (text, record, index) {
                     let url = '/upkeep/returnVisit/' + record.id
                     return (
-                        <a href={url}><Button>回访登记</Button></a>
+                        <a href={url}>回访登记</a>
                     )
                 }
             }],
