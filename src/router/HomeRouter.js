@@ -352,19 +352,19 @@ const routes = [
                 path: '/financial/rentReview',                                                          // 财务管理 - 租金审核
                 component: RentReview
             }, {
-                path: '/financial/rentReviewDetail/:id',                                                // [详情] - 租金审核 状态详情
+                path: '/financial/RentReviewDetail/:id',                                                // [详情] - 租金审核 状态详情
                 component: RentReviewDetail
             }, {
-                path: '/financial/RentReviewDetailNoLate/:id',                                                // [详情] - 租金审核 状态详情
+                path: '/financial/RentReviewDetailNoLate/:id',
                 component: RentReviewDetailNoLate
             }, {
-                path: '/financial/RentReviewDetailNoPaid/:id',                                                // [详情] - 租金审核 状态详情
+                path: '/financial/RentReviewDetailNoPaid/:id',
                 component: RentReviewDetailNoPaid
             }, {
-                path: '/financial/NoLateAndRentFinish/:id',                                                // [详情] - 租金审核 状态详情
+                path: '/financial/NoLateAndRentFinish/:id',
                 component: NoLateAndRentFinish
             }, {
-                path: '/financial/RentFinishAndLate/:id',                                                // [详情] - 租金审核 状态详情
+                path: '/financial/RentFinishAndLate/:id',
                 component: RentFinishAndLate
             }
         ]

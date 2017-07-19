@@ -1,9 +1,9 @@
 // 收费管理 - 应收租金
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin } from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
-const Option = Select.Option
+import CollectRentHeadComponent from './components/CollectRentHead'
 // React component
 class CollectRentConduct extends Component {
     constructor (props) {
@@ -16,10 +16,7 @@ class CollectRentConduct extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
-            warehouseId: 0,
-            amount: 0,
-            number: 0,
-            unitPrice: 0
+            ListBuildingInfo: []
         }
     }
     handleUpdate = (id) => {
@@ -33,11 +30,16 @@ class CollectRentConduct extends Component {
     }
     async initialRemarks () {
         this.setState({loading: true})
+        let ListBuildingInfo = await apiPost(
+            '/collectRent/ListBuildingInfo'
+        )
         let result = await apiPost(
             '/collectRent/collectRentList',
             {auditStatus: 2}
         )
+        console.log(result.data)
         this.setState({loading: false,
+            ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -142,35 +144,35 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentReviewDetailNoPaid/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
+                                <a href={url}><Button type="primary">收款</Button></a>
                             </div>
                         )
-                    } else if (record.lateMoney === 0 && record.paidMoney !== 0 && record.unpaidMoney !== 0) {
+                    } else if (record.lateMoney === 0 && record.whetherRentPaid !== 1) {
                         let url = '/financial/RentReviewDetailNoLate/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
+                                <a href={url}><Button type="primary">收款</Button></a>
                             </div>
                         )
-                    } else if (record.lateMoney === 0 && record.paidMoney !== 0 && record.unpaidMoney === 0) {
+                    } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
                         let url = '/financial/NoLateAndRentFinish/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
+                                <a href={url}><Button type="primary">收款</Button></a>
                             </div>
                         )
-                    } else if (record.lateMoney !== 0 && record.paidMoney !== 0 && record.unpaidMoney === 0) {
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
                         let url = '/financial/RentFinishAndLate/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
+                                <a href={url}><Button type="primary">收款</Button></a>
                             </div>
                         )
-                    } else if (record.lateMoney !== 0 && record.paidMoney !== 0 && record.unpaidMoney === 0 && record.unpaidLateMoney === 0) {
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
                         let url = '/financial/RentReviewDetail/' + record.id
                         return (
                             <div>
-                                <a href={url}><Button type="primary">明细</Button></a>
+                                <a href={url}><Button type="primary">收款</Button></a>
                             </div>
                         )
                     }
@@ -182,19 +184,15 @@ class CollectRentConduct extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        filters['auditStatus'] = 2
         // 刷新表格
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
-                'roomNum': this.roomNum,
-                'auditStatus': 2
-            }
+            filters
         )
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             dataSource: result.data,
@@ -206,9 +204,6 @@ class CollectRentConduct extends Component {
         this.rentClientName = e.target.value
     }
     roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
     periodStatus = ''
     selectOnChange = (e) => {
         this.periodStatus = e
@@ -219,26 +214,10 @@ class CollectRentConduct extends Component {
     render () {
         return (
             <div>
-                <span>
-                    <span>房间编号:</span>
-                    <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称:</span>
-                    <Input style={{width: 150}} onChange={this.entryNameOnChange} />
-                    <Select
-                        showSearch
-                        style={{ width: 150 }}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
-
+                <CollectRentHeadComponent
+                    refresh={this.refresh}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 2000 }}

@@ -25,69 +25,30 @@ class addUpkeep extends React.Component {
                 { 'id': nextProps.id }
             )
             if (resulData.data.lastLateMoney !== null) {
-                this.props.form.setFields({
-                    lastLateMoney: {
-                        value: resulData.data.lastLateMoney,
-                        errors: ''
-                    }
+                this.props.form.setFieldsValue({
+                    lastLateMoney: resulData.data.lastLateMoney
                 })
             } else {
-                this.props.form.setFields({
-                    lastLateMoney: {
-                        value: 0,
-                        errors: ''
-                    }
+                this.props.form.setFieldsValue({
+                    lastLateMoney: 0
                 })
             }
             if (resulData.data.receiptDate !== null) {
-                this.props.form.setFields({
-                    lastReceiptDate: {
-                        value: resulData.data.receiptDate,
-                        errors: ''
-                    }
+                this.props.form.setFieldsValue({
+                    lastReceiptDate: resulData.data.receiptDate
                 })
             }
-            this.props.form.setFields({
-                currentPeriodMoney: {
-                    value: resulData.data.currentPeriodMoney,
-                    errors: ''
-                },
-                actualPaidMoney: {
-                    value: resulData.data.actualPaidMoney,
-                    errors: ''
-                },
-                thisActualPaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                },
-                periodRent: {
-                    value: resulData.data.periodRent,
-                    errors: ''
-                },
-                id: {
-                    value: resulData.data.id,
-                    errors: ''
-                },
-                rentClientName: {
-                    value: resulData.data.rentClientName,
-                    errors: ''
-                },
-                lastUnpaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                },
-                paidMoney: {
-                    value: resulData.data.paidMoney,
-                    errors: ''
-                },
-                payDeadline: {
-                    value: resulData.data.payDeadline,
-                    errors: ''
-                },
-                unpaidMoney: {
-                    value: resulData.data.unpaidMoney,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                currentPeriodMoney: resulData.data.currentPeriodMoney,
+                actualPaidMoney: resulData.data.actualPaidMoney,
+                thisActualPaidMoney: resulData.data.unpaidMoney,
+                periodRent: resulData.data.periodRent,
+                id: resulData.data.id,
+                rentClientName: resulData.data.rentClientName,
+                lastUnpaidMoney: resulData.data.unpaidMoney,
+                paidMoney: resulData.data.paidMoney,
+                payDeadline: resulData.data.payDeadline,
+                unpaidMoney: resulData.data.unpaidMoney
             })
             this.setState({
                 isFirst: false,

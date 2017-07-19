@@ -17,10 +17,7 @@ class CollectRentConduct extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
-            warehouseId: 0,
-            amount: 0,
-            number: 0,
-            unitPrice: 0
+            ListBuildingInfo: []
         }
     }
     handleUpdate = (id) => {
@@ -45,9 +42,13 @@ class CollectRentConduct extends Component {
             '/collectRent/collectRentList',
             {auditStatus: 3}
         )
+        let ListBuildingInfo = await apiPost(
+            '/collectRent/ListBuildingInfo'
+        )
         const handleUpdate = this.handleUpdate
         const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
+            ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -152,6 +153,7 @@ class CollectRentConduct extends Component {
             {'periodStatus': this.periodStatus,
                 'rentClientName': this.rentClientName,
                 'roomNum': this.roomNum,
+                'buildId': this.buildId,
                 'auditStatus': 3
             }
         )
@@ -175,10 +177,15 @@ class CollectRentConduct extends Component {
     selectOnChange = (e) => {
         this.periodStatus = e
     }
+    buildId = ''
+    selectBuild = (e) => {
+        this.buildId = e
+    }
     query = () => {
         this.refresh()
     }
     render () {
+        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <CollectRentFailComponent
@@ -192,6 +199,17 @@ class CollectRentConduct extends Component {
                     visible={this.state.openTableAddUp}
                 />
                 <span>
+                    <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="请选择所属楼宇"
+                        optionFilterProp="children"
+                        onSelect={this.selectBuild}
+                    >
+                        {ListBuildingInfo.map(BuildingInfo => {
+                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                        })}
+                    </Select>
                     <span>房间编号:</span>
                     <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
                     <span>客户名称:</span>

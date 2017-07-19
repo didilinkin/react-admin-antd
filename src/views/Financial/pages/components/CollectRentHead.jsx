@@ -134,23 +134,6 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <FormItem label="打印状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('whetherPrinted')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择打印状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">未打印</Option>
-                                    <Option key="1">已打印</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
