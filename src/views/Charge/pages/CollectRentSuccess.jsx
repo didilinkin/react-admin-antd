@@ -180,13 +180,13 @@ class CollectRentConduct extends Component {
                     } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
                         return (
                             <div>
-                                <Button type="primary" onClick={() => handleUpdate2(record.id)} >明细</Button>
+                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} >明细</a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <Button type="primary" onClick={() => handleUpdate3(record.id)} >明细</Button>
+                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} >明细</a>
                             </div>
                         )
                     }

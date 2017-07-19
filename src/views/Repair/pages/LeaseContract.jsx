@@ -111,7 +111,7 @@ class PropertyContract extends React.Component {
                         <a href="javascript:" key="1">查看</a>
                     )
                     arr.push(
-                        <Button key="2">编辑</Button>
+                        <a href="javascript:" key="2">编辑</a>
                     )
 
                     return arr
