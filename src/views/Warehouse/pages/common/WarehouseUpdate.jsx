@@ -1,4 +1,4 @@
-// 仓库添加(? 未确认名称)
+// 出库
 import {Modal, Input, Form, Row, notification, Col, Icon, InputNumber, Select } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
@@ -166,7 +166,7 @@ class WarehouseAddUp extends React.Component {
                                         message: ''
                                     }]
                                 })(
-                                    <InputNumber onBlur={this.sumMoney} />
+                                    <InputNumber min="0" onBlur={this.sumMoney} ></InputNumber>
                                 )}
                             </FormItem>
                         </Col>

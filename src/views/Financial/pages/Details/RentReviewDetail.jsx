@@ -6,7 +6,7 @@ import { apiPost  } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentLateConfirm'
 
 
-class RentFinishAndLate extends React.Component {
+class RentReviewDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -323,5 +323,5 @@ class RentFinishAndLate extends React.Component {
     }
 }
 
-export default RentFinishAndLate
+export default RentReviewDetail
 

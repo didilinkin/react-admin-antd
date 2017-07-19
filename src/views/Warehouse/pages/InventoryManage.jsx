@@ -1,4 +1,4 @@
-// 客户管理 - 客户报修
+// 仓库管理 - 库存管理
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select, DatePicker } from 'antd'
 import { apiPost } from '../../../api'
@@ -7,7 +7,7 @@ import WarehouseAddUpComponent from './common/WarehouseAddUp'
 import WarehouseUpdateComponent from './common/WarehouseUpdate'
 const Option = Select.Option
 // React component
-class RepairList extends Component {
+class InventoryManage extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -190,9 +190,10 @@ class RepairList extends Component {
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>查询截止日期:&nbsp;&nbsp;</span>
+                    <span>截止日期:&nbsp;&nbsp;</span>
                     <DatePicker style={{width: 200,
                         marginRight: '5px'}} onChange={this.getDate} />
+                    <span>仓库类型:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200,
@@ -225,5 +226,5 @@ class RepairList extends Component {
         )
     }
 }
-export default RepairList
+export default InventoryManage
 

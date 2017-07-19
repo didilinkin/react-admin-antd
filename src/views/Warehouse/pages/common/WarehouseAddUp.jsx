@@ -1,4 +1,4 @@
-// 仓库添加(? 未确认名称)
+// 入库
 import {Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'

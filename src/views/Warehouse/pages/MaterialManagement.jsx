@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-import {Table, Button, Spin, Popconfirm, Input} from 'antd'
+import {Table, Button, Spin, Popconfirm, Input, Select} from 'antd'
 import {createStore} from 'redux'
 import {Provider, connect} from 'react-redux'
 import { apiPost } from '../../../api'
+
 // 引入组件
 import AddMaterial from './AddMaterial'
+const Option = Select.Option
 // Reducer
 function reducer (state, action) {
     switch (action.type) {
@@ -62,7 +64,8 @@ class Counter extends Component {
         })
         let result = await apiPost(
             '/warehouse/materialManagement',
-            {'name': this.name}
+            {'name': this.name,
+                'whType': this.whType}
         )
         this.setState({loading: false})
         this.props.dispatch({
@@ -78,6 +81,10 @@ class Counter extends Component {
     name = ''
     entryNameOnChange = (e) => {
         this.name = e.target.value
+    }
+    whType = ''
+    selectOnChange = (e) => {
+        this.whType = e
     }
     query = () => {
         this.refresh()
@@ -99,10 +106,26 @@ class Counter extends Component {
                     visible={this.state.open}
                 />
                 <span style={{paddingBottom: '10px',
-                    display: 'block'}}>
+                    display: 'block'}}
+                >
+                    <span>仓库类型:&nbsp;&nbsp;</span>
+                    <Select
+                        showSearch
+                        style={{width: 200,
+                            marginRight: '5px'}}
+                        placeholder="请选择仓库"
+                        optionFilterProp="children"
+                        onSelect={this.selectOnChange}
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >
+                        <Option key="0">工程库</Option>
+                        <Option key="1">保洁用品库</Option>
+                        <Option key="2">行政库</Option>
+                    </Select>
                     <span>物品名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>新建材料</Button>
                 </span>
