@@ -98,7 +98,8 @@ class Counter extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.open}
                 />
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>物品名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
