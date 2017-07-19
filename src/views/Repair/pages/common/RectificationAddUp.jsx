@@ -211,7 +211,7 @@ class RectificationAddUp extends React.Component {
                                     {getFieldDecorator('inspectDate', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input your inspectDate!'
+                                            message: '请输入 inspectDate!'
                                         }]
                                     })(
                                         <DatePicker />
@@ -225,7 +225,7 @@ class RectificationAddUp extends React.Component {
                                     {getFieldDecorator('buildName', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input your buildName!'
+                                            message: '请输入 buildName!'
                                         }]
                                     })(
                                         <Input disabled />
@@ -241,7 +241,7 @@ class RectificationAddUp extends React.Component {
                                     {getFieldDecorator('clientNameOne', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Select
@@ -267,7 +267,7 @@ class RectificationAddUp extends React.Component {
                                     {getFieldDecorator('roomNums', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input your clientId!'
+                                            message: '请输入 clientId!'
                                         }]
                                     })(
                                         <Input />
@@ -281,7 +281,7 @@ class RectificationAddUp extends React.Component {
                             {getFieldDecorator('rectificationContent', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input your clientId!'
+                                    message: '请输入 clientId!'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />
@@ -298,7 +298,7 @@ class RectificationAddUp extends React.Component {
                             {getFieldDecorator('inspectIdsOne', {
                                 rules: [ {
                                     required: true,
-                                    message: 'Please input!'
+                                    message: '请输入'
                                 }]
                             })(
                                 <Select

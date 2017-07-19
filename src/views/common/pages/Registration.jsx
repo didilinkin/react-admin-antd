@@ -142,7 +142,7 @@ class Registration extends React.Component {
                             message: 'The input is not valid E-mail!'
                         }, {
                             required: true,
-                            message: 'Please input your E-mail!'
+                            message: '请输入 E-mail!'
                         }]
                     })(
                         <Input />
@@ -157,7 +157,7 @@ class Registration extends React.Component {
                     {getFieldDecorator('password', {
                         rules: [{
                             required: true,
-                            message: 'Please input your password!'
+                            message: '请输入 password!'
                         }, {
                             validator: this.checkConfirm
                         }]
@@ -198,7 +198,7 @@ class Registration extends React.Component {
                     {getFieldDecorator('nickname', {
                         rules: [{
                             required: true,
-                            message: 'Please input your nickname!',
+                            message: '请输入 nickname!',
                             whitespace: true
                         }]
                     })(
@@ -229,7 +229,7 @@ class Registration extends React.Component {
                     {getFieldDecorator('phone', {
                         rules: [{
                             required: true,
-                            message: 'Please input your phone number!'
+                            message: '请输入 phone number!'
                         }]
                     })(
                         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />

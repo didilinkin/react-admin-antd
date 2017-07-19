@@ -126,7 +126,7 @@ class addUpkeep extends React.Component {
                                     {getFieldDecorator('payDeadline', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <DatePicker />
@@ -138,7 +138,7 @@ class addUpkeep extends React.Component {
                                     {getFieldDecorator('currentPeriodMoney', {
                                         rules: [ {
                                             required: true,
-                                            message: 'Please input!'
+                                            message: '请输入'
                                         }]
                                     })(
                                         <Input disabled />

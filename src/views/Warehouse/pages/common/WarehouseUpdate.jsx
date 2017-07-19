@@ -140,7 +140,7 @@ class WarehouseAddUp extends React.Component {
                                 {getFieldDecorator('recipientId', {
                                     rules: [ {
                                         required: true,
-                                        message: 'Please input!'
+                                        message: '请输入'
                                     }]
                                 })(
                                     <Select
