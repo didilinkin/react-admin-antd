@@ -52,7 +52,7 @@ class ContractHead extends React.Component {
             contractSplit = [<Option key="1">正常</Option>, <Option key="2">欢乐颂</Option>]
         }
         return (
-            <Form layout="inline">
+            <Form layout="horizontal">
                 <Row>
                     <Col span={8}>
                         <FormItem label="合同类型" labelCol={{ span: 6 }}
@@ -146,8 +146,13 @@ class ContractHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>
-                <Button onClick={this.handleSubmit}>搜索</Button>
-                <Button onClick={this.open}>{this.state.open}</Button>
+                <Row>
+                    <Col span={8}><div style={{paddingLeft: '25%',
+                        marginBottom: 10}}><Button onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
+                    <Col span={16}/>
+                </Row>
+
+
             </Form>
         )
     }
