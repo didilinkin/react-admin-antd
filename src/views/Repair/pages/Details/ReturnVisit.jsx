@@ -68,10 +68,10 @@ class ReturnVisit extends React.Component {
         return (
             <div className="box2">
                 <Timeline>
-                    <Timeline.Item color="green"><h2>提交报修单</h2>受理人： {this.state.data.pieMan}</Timeline.Item>
-                    <Timeline.Item color="green"><h2>已派单</h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
-                    <Timeline.Item color="red">
-                        <h2>完工登记</h2>
+                    <Timeline.Item color="green"><h2>提交报修单<em className="time">2017-7-19 17:21:56</em></h2>受理人： {this.state.data.pieMan}</Timeline.Item>
+                    <Timeline.Item color="green"><h2>已派单<em className="time">2017-7-19 17:21:56</em></h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
+                    <Timeline.Item color="green">
+                        <h2>完工登记 <em className="time">2017-7-19 17:21:56</em></h2>
                         <p>{this.state.data.repairedContent}</p>
                         <table className="tb">
                             <tbody>
@@ -92,12 +92,12 @@ class ReturnVisit extends React.Component {
                             </li>
                         </ul>
                     </Timeline.Item>
-                    <Timeline.Item>
-                        <h2>客户评价</h2>
+                    <Timeline.Item color="green">
+                        <h2>客户评价<em className="time">2017-7-19 17:21:56</em></h2>
                         {this.state.data.ratedStatus}
                     </Timeline.Item>
                 </Timeline>
-                <h2>回访情况</h2>
+                <h2>回访情况<em className="time">2017-7-19 17:21:56</em></h2>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <p className="linevisit" />
                 <Button onClick={this.handleSubmit}>确定</Button>
