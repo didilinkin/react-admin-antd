@@ -118,7 +118,7 @@ class CollectRenting extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >收租</Button>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} >收租</a>
                         </div>
                     )
                 }

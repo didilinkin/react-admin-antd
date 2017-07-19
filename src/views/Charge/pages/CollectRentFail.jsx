@@ -134,8 +134,8 @@ class CollectRentConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Button type="primary" onClick={() => handleUpdate(record.id)} >明细</Button>
-                            <Button type="primary" onClick={() => handleUpdate2(record.id)} >重新收租</Button>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} >明细</a>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate2(record.id)} >重新收租</a>
                         </div>
                     )
                 }

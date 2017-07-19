@@ -129,8 +129,8 @@ class Account extends Component {
                     return (
                         <div>
                             <a href={url}><Button >详情</Button></a>
-                            <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
-                            <Button onClick={() => openSS(record.id)}>启停设备</Button>
+                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}>修改</a>
+                            <a href="javascript:" onClick={() => openSS(record.id)}>启停设备</a>
                         </div>
                     )
                 }

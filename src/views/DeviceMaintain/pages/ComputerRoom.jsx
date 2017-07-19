@@ -88,9 +88,9 @@ class ComputerRoom extends Component {
                     return (
                         <div>
                             <a href={url}><Button >详情</Button></a>
-                            <Button onClick={() => handleUpdateEquipment(record.id)}>修改</Button>
+                            <a onClick={() => handleUpdateEquipment(record.id)}>修改</a>
                             <Popconfirm title="确定修改吗?" onConfirm={() => delect(record.id)}>
-                                <Button>删除</Button>
+                                <a>删除</a>
                             </Popconfirm>
                         </div>
                     )
