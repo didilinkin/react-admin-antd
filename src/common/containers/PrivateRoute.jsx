@@ -4,22 +4,9 @@ import { Route, Redirect } from 'react-router-dom' // Redirect
 
 import Protected from './Protected'
 
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//     <Route { ...rest } render={ props => (
-//         <h3>非公开的页面</h3>
-//     )}
-//     />
-// )
-
-// <Redirect to={{
-//     pathname: '/login',
-//     state: { from: props.location } }}
-// />
-
 class PrivateRoute extends React.Component {
-    render (props) {
+    render () {
         const { isAuthenticate } = this.props
-        // const { component } = this.props
         const { path } = this.props
 
         if (isAuthenticate) {
@@ -30,11 +17,7 @@ class PrivateRoute extends React.Component {
             )
         } else {
             return (
-                <Redirect to={{
-                    pathname: '/login',
-                    state: { from: props.location }
-                }}
-                />
+                <Redirect to="/login" />
             )
         }
     }

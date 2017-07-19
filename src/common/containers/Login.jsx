@@ -2,7 +2,14 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
+const localStore = require('../../utils/LocalStore').default
+
 class Login extends React.Component {
+    // 保存 登录状态: 成功
+    setLocalT = () => {
+        localStore.set('isAuthenticate', true)
+    }
+
     state = {
         redirectToReferrer: false // 重定向到 来访地址
     }
@@ -26,7 +33,7 @@ class Login extends React.Component {
         return (
             <div>
                 <p>登录页: 若想访问 { from.pathname } ，你需要先登录</p>
-                <button onClick={ this.login }>登录页: 登录</button>
+                <button onClick={ this.setLocalT }>登录页: 登录</button>
             </div>
         )
     }
