@@ -1,6 +1,7 @@
 // '登录' 页面
 import React from 'react'
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, notification } from 'antd'
+import { apiPost } from '../../../api/index'
 
 import styled   from 'styled-components'
 import elf      from '../../../elf/main'
@@ -29,13 +30,33 @@ const LoginTitle = styled.h2`
 // 样式 - end
 
 class Login extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values)
+    handleSubmit = async () => {
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            json['jobNum'] = json.loginName
+            console.log(json)
+            let token = await apiPost('/login',
+                json)
+            if (token.data.toString() === '登陆失败') {
+                notification.open({
+                    message: '登陆失败',
+                    Icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else {
+                localStorage.setItem('token', token.data)
+                window.location.href = '/home/index'
             }
-        })
+        }
     }
 
     render () {
@@ -46,9 +67,9 @@ class Login extends React.Component {
                     <LoginTitle>
                         <span>长江中心 - 物业管理系统</span>
                     </LoginTitle>
-                    <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
+                    <Form style={{maxWidth: '300px'}}>
                         <FormItem>
-                            {getFieldDecorator('userName', {
+                            {getFieldDecorator('loginName', {
                                 rules: [{
                                     required: true,
                                     message: '请输入用户名!'
@@ -58,7 +79,7 @@ class Login extends React.Component {
                             )}
                         </FormItem>
                         <FormItem>
-                            {getFieldDecorator('password', {
+                            {getFieldDecorator('passWord', {
                                 rules: [{
                                     required: true,
                                     message: '请输入密码!'
@@ -75,7 +96,7 @@ class Login extends React.Component {
                                 <Checkbox>记住我</Checkbox>
                             )}
                             <a className="login-form-forgot" href="" style={{float: 'right'}}>忘记密码</a>
-                            <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                            <Button onClick={this.handleSubmit} type="primary" className="login-form-button" style={{width: '100%'}}>
                                 登录
                             </Button>
                         </FormItem>
