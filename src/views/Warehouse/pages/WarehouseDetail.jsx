@@ -1,4 +1,4 @@
-// 客户管理 - 客户报修
+// [详情] - 出入库详情
 import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost, baseURL } from '../../../api'
