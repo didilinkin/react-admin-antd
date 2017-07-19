@@ -174,7 +174,8 @@ class AirConditioningRoom extends Component {
     render () {
         return (
             <div>
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <span>巡检日期:&nbsp;&nbsp;</span>
                     <RangePicker style={{marginRight: '5px'}} onChange={this.getDate} />
                     <Select
