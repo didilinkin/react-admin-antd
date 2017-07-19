@@ -178,10 +178,12 @@ class CollectRenting extends Component {
                     visible={this.state.openUpdate}
                     accountLsit={this.state.accountList}
                 />
-                <span>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}>
                     <Select
                         showSearch
-                        style={{ width: 200 }}
+                        style={{width: 200,
+                            marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
                         onSelect={this.selectBuild}
@@ -190,13 +192,16 @@ class CollectRenting extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号:</span>
-                    <Input style={{width: 150}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称:</span>
-                    <Input style={{width: 150}} onChange={this.entryNameOnChange} />
+                    <span>房间编号:&nbsp;&nbsp;</span>
+                    <Input style={{width: 150,
+                        marginRight: '5px'}} onChange={this.entryNumberOnChange} />
+                    <span>客户名称:&nbsp;&nbsp;</span>
+                    <Input style={{width: 150,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Select
                         showSearch
-                        style={{ width: 150 }}
+                        style={{width: 150,
+                            marginRight: '5px'}}
                         placeholder="请选择交费周期"
                         optionFilterProp="children"
                         onSelect={this.selectOnChange}
