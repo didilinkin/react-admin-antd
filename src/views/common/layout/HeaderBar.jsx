@@ -59,7 +59,10 @@ class HeaderBar extends React.Component {
             screenfull.request()
         }
     }
-
+    Logout = () => {
+        localStorage.removeItem('token')
+        window.location.href = '/login'
+    }
     render () {
         return (
             <Header className="custom-theme" style={{
@@ -114,6 +117,9 @@ class HeaderBar extends React.Component {
                         <MenuItemGroup title="设置中心">
                             <Menu.Item key="setting:3">个人设置</Menu.Item>
                             <Menu.Item key="setting:4">系统设置</Menu.Item>
+                            <Menu.Item key="setting:5">
+                                <span onClick={this.Logout}>退出</span>
+                            </Menu.Item>
                         </MenuItemGroup>
                     </SubMenu>
                 </Menu>
