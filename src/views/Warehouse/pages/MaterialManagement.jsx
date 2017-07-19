@@ -228,10 +228,10 @@ function mapDispatchToProps (dispatch) {
                 return (
                     <div>
                         <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                            <Button >删除</Button>
+                            <a href="javascript:" >删除</a>
                         </Popconfirm>
                         <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
-                            <Button >修改</Button>
+                            <a href="javascript:" >修改</a>
                         </Popconfirm>
                     </div>
                 )
