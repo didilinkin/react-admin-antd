@@ -7,11 +7,11 @@ class AuthView extends React.Component {
 
         if (isAuthenticate) {
             return (
-                <p> 欢迎! 已登录 </p>
+                <p> 监视登录状态: 已登录 </p>
             )
         } else {
             return (
-                <p> 请登录 </p>
+                <p> 监视登录状态: 未登录 </p>
             )
         }
     }
