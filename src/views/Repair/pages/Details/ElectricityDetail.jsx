@@ -3,12 +3,13 @@ import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
-
+import TerminationComponent from '../common/Termination'
 
 class App extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            TerminationComponentOpen: false,
             contract: {}
         }
     }
@@ -25,6 +26,22 @@ class App extends React.Component {
     }
     componentWillMount () {
         this.initialRemarks()
+    }
+    refresh = async () => {
+        let contract = await apiPost(
+            '/contract/getcontract',
+            {'id': this.props.match.params.id,
+                type: 1}
+        )
+        this.setState({
+            contract: contract.data.contract,
+            TerminationComponentOpen: false
+        })
+    }
+    TerminationComponent = () => {
+        this.setState({
+            TerminationComponentOpen: true
+        })
     }
     render () {
         return (
@@ -78,8 +95,8 @@ class App extends React.Component {
                         <div>
                             <p className="line"/>
                             <Row>
-                                <Col span={8}><b>终止日期：</b>{this.state.contract.updateDate} </Col>
                                 <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
+                                <Col span={8}></Col>
                             </Row>
                         </div>
                         }
@@ -119,9 +136,14 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <div className="submit">
+                <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>
+                <TerminationComponent
+                    id={this.props.match.params.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.TerminationComponentOpen}
+                />
             </div>
         )
     }

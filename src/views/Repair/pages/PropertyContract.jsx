@@ -139,7 +139,7 @@ class PropertyContract extends React.Component {
                         url = '/upkeep/electricityDetail/' + record.id
                     }
                     arr.push(
-                        <a href="javascript:" key="1"> <a href={url}> 查看 </a> </a>
+                        <a key="1" href={url}> 查看 </a>
                     )
                     arr.push(
                         <a href="javascript:" key="2" onClick={() => updatePm(record.contractSplit, record.id)}> 编辑 </a>

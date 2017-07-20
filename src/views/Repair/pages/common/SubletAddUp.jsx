@@ -39,6 +39,7 @@ class SubletAddUp extends React.Component {
             data.ListSublet.map(sub => {
                 sub.roomNum.split(',')
                 subArr.push.apply(subArr, sub.roomNum.split(','))
+                return ''
             })
             let leaseRooms = data.contract.leaseRooms.split(',')
             // leaseRooms.map((roomNum, i) => {
@@ -218,13 +219,15 @@ class SubletAddUp extends React.Component {
                                 </Checkbox.Group>
                             )}
                         </FormItem>
-                        <FormItem label="能源管理押金" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
+                        {!this.props.id > 0 &&
+                        <FormItem label="能源管理押金" labelCol={{span: 6}}
+                            wrapperCol={{span: 15}}
                         >
                             {getFieldDecorator('energy')(
-                                <Input style={{ width: 200 }} />
+                                <Input style={{width: 200}} />
                             )}
                         </FormItem>
+                        }
                     </Form>
                 </Modal>
             </div>

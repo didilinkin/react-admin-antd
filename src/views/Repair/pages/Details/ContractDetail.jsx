@@ -4,7 +4,7 @@ import { Row, Col, notification, Icon } from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
 import SubletAddUpCom from '../common/SubletAddUp'
-
+import TerminationComponent from '../common/Termination'
 
 class App extends React.Component {
     constructor (props) {
@@ -14,6 +14,7 @@ class App extends React.Component {
             contract: {},
             id: 0,
             SubletOpen: false,
+            TerminationComponentOpen: false,
             title: ''
         }
     }
@@ -38,12 +39,14 @@ class App extends React.Component {
             this.setState({
                 id: id,
                 SubletOpen: true,
+                TerminationComponentOpen: false,
                 title: '编辑转租信息'
             })
         } else {
             this.setState({
                 id: id,
                 SubletOpen: true,
+                TerminationComponentOpen: false,
                 title: '添加转租信息'
             })
         }
@@ -70,7 +73,14 @@ class App extends React.Component {
             contract: contract.data.contract,
             id: 0,
             SubletOpen: false,
+            TerminationComponentOpen: false,
             title: ''
+        })
+    }
+    TerminationComponent = () => {
+        this.setState({
+            SubletOpen: false,
+            TerminationComponentOpen: true
         })
     }
     render () {
@@ -150,8 +160,8 @@ class App extends React.Component {
                         <div>
                             <p className="line" />
                             <Row>
-                                <Col span={8}><b>终止日期：</b>{this.state.contract.updateDate} </Col>
                                 <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
+                                <Col span={8}></Col>
                             </Row>
                         </div>
                         }
@@ -212,7 +222,7 @@ class App extends React.Component {
                                 {this.state.contract.isSublet === 1 &&
                                 <em>转租自交</em>
                                 }
-                                当前余额：123 元）</Col>
+                                当前余额：{this.state.contract.currentBalance} 元）</Col>
                         </Row>
                         <ul>
                             <li>
@@ -222,7 +232,7 @@ class App extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div className="submit">
+                <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>
                 <SubletAddUpCom
@@ -234,6 +244,11 @@ class App extends React.Component {
                     }}
                     visible={this.state.SubletOpen}
                     title={this.state.title}
+                />
+                <TerminationComponent
+                    id={this.props.match.params.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.TerminationComponentOpen}
                 />
             </div>
         )
