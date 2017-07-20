@@ -1,6 +1,6 @@
 // 收费管理 - 应收租金
 import React, {Component} from 'react'
-import {Table, Spin } from 'antd'
+import {Table, Spin, Popconfirm, notification, Icon} from 'antd'
 import { apiPost } from '../../../api'
 // 引入组件
 import CollectRentHeadComponent from './components/CollectRentHead'
@@ -19,13 +19,14 @@ class CollectRentConduct extends Component {
             ListBuildingInfo: []
         }
     }
-    handleUpdate = (id) => {
-        this.setState({
-            openinvalid: false,
-            openAdd: false,
-            openTableAddUp: false,
-            openUpdate: true,
-            id: id
+    handleUpdate = async (id) => {
+        await apiPost(
+            '/collectRent/updateCollectRentVoByRecall',
+            {id: id}
+        )
+        notification.open({
+            message: '违约金开票成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
     }
     async initialRemarks () {
@@ -37,7 +38,7 @@ class CollectRentConduct extends Component {
             '/collectRent/collectRentList',
             {auditStatus: 2}
         )
-        console.log(result.data)
+        const handleUpdate = this.handleUpdate
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -145,6 +146,9 @@ class CollectRentConduct extends Component {
                         return (
                             <div>
                                 <a href={url}> 收款 </a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney === 0 && record.whetherRentPaid !== 1) {
@@ -152,6 +156,9 @@ class CollectRentConduct extends Component {
                         return (
                             <div>
                                 <a href={url}> 收款 </a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
@@ -159,6 +166,9 @@ class CollectRentConduct extends Component {
                         return (
                             <div>
                                 <a href={url}> 收款 </a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
@@ -166,6 +176,9 @@ class CollectRentConduct extends Component {
                         return (
                             <div>
                                 <a href={url}> 收款 </a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
@@ -173,6 +186,9 @@ class CollectRentConduct extends Component {
                         return (
                             <div>
                                 <a href={url}> 收款 </a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     }
