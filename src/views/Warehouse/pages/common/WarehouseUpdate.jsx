@@ -1,5 +1,5 @@
 // 出库
-import {Modal, Input, Form, Row, notification, Col, Icon, InputNumber, Select } from 'antd'
+import {Modal, Input, Form, Row, notification, Col, Icon, Select } from 'antd'
 import React from 'react'
 import PicturesWall from './PicturesWall'
 import { apiPost } from '../../../../api/index'
@@ -93,22 +93,31 @@ class WarehouseAddUp extends React.Component {
     sumMoney = (e) => {
         let sum = e.target.value
         let num = this.state.number
-        let amount = this.state.amount
-        let unitPrice = this.state.unitPrice
-        if (typeof (sum) === 'undefined') {
-            sum = 0
+        if (sum > num) {
+            this.props.form.setFieldsValue({
+                number: 0})
+            notification.open({
+                message: '出库不能大于库存数量',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+        } else {
+            let amount = this.state.amount
+            let unitPrice = this.state.unitPrice
+            if (typeof (sum) === 'undefined') {
+                sum = 0
+            }
+            if (typeof (num) === 'undefined') {
+                num = 0
+            }
+            if (typeof (amount) === 'undefined') {
+                amount = 0
+            }
+            if (typeof (unitPrice) === 'undefined') {
+                unitPrice = 0
+            }
+            this.props.form.setFieldsValue({
+                amount: (parseFloat(unitPrice) * parseFloat(sum)).toFixed(0)})
         }
-        if (typeof (num) === 'undefined') {
-            num = 0
-        }
-        if (typeof (amount) === 'undefined') {
-            amount = 0
-        }
-        if (typeof (unitPrice) === 'undefined') {
-            unitPrice = 0
-        }
-        this.props.form.setFieldsValue({
-            amount: (parseFloat(unitPrice) * parseFloat(sum)).toFixed(0)})
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -166,7 +175,7 @@ class WarehouseAddUp extends React.Component {
                                         message: ''
                                     }]
                                 })(
-                                    <InputNumber min="0" onBlur={this.sumMoney} ></InputNumber>
+                                    <Input min="0" onKeyUp={this.sumMoney} />
                                 )}
                             </FormItem>
                         </Col>
