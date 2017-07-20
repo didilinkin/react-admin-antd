@@ -135,7 +135,7 @@ class App extends React.Component {
                                     <Col span={16}><b>转租房间：</b>{sublet.roomNum} </Col>
                                 </Row>
                                 <Row>
-                                    <Col span={8}><b>公司编号：</b>2017-7-11 14:17:07 </Col>
+                                    <Col span={8}><b>公司编号：</b>{sublet.tenantNum} </Col>
                                     <Col span={8} />
                                     <Col span={8} />
                                 </Row>

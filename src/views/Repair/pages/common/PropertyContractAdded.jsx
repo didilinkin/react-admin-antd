@@ -20,6 +20,7 @@ class PropertyContractAdded extends React.Component {
             ListBuildingInfo: [],
             listRoom: [],
             ListclientName: [],
+            MapDict: {},
             rooms: [],
             none1: '',
             none2: 'none',
@@ -63,14 +64,14 @@ class PropertyContractAdded extends React.Component {
                 json['powerLossRatio'] = json.sunhao2
             }
             if (json.wyfdj.toString() === '1') {
-                json['yearPmPrice'] = null
+                json['yearPmPrice'] = 0
             } else {
-                json['pmUnitPrice'] = null
+                json['pmUnitPrice'] = 0
             }
             if (json.ktfdj.toString() === '1') {
-                json['yearAcPrice'] = null
+                json['yearAcPrice'] = 0
             } else {
-                json['acUnitPrice'] = null
+                json['acUnitPrice'] = 0
             }
             console.log(JSON.stringify(json))
             let map = ''
@@ -196,7 +197,8 @@ class PropertyContractAdded extends React.Component {
         map = map.data
         this.setState({
             ListBuildingInfo: map.ListBuildingInfo,
-            ListclientName: map.ListCustomerInfo
+            ListclientName: map.ListCustomerInfo,
+            MapDict: map.MapDict
         })
     }
     componentDidMount () {
@@ -529,6 +531,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('wyfdj', {
+                                        initialValue: 1,
                                         rules: [ {
                                             required: true,
                                             message: '请选择物业费单价!'
@@ -536,16 +539,20 @@ class PropertyContractAdded extends React.Component {
                                     })(
                                         <RadioGroup style={{ width: 700 }}>
                                             <Radio value={1}>每月单价
-                                                {getFieldDecorator('pmUnitPrice')(
+                                                {getFieldDecorator('pmUnitPrice',
+                                                    {initialValue: this.state.MapDict.Property})(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元／㎡/月"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('wyfdj') !== 1 && 'none'
+                                                    }} addonAfter="元／㎡/月"
                                                     />
                                                 )}
                                             </Radio><br />
                                             <Radio value={2}>年物业费
                                                 {getFieldDecorator('yearPmPrice')(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('wyfdj') !== 2 && 'none'}} addonAfter="元"
                                                     />
                                                 )}
                                             </Radio>
@@ -558,6 +565,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('ktfdj', {
+                                        initialValue: 1,
                                         rules: [ {
                                             required: true,
                                             message: '请选择空调费单价!'
@@ -565,11 +573,15 @@ class PropertyContractAdded extends React.Component {
                                     })(
                                         <RadioGroup style={{ width: 700 }}>
                                             <Radio value={1}>每月单价
-                                                {getFieldDecorator('acUnitDay')(
+                                                {getFieldDecorator('acUnitDay',
+                                                    {
+                                                        initialValue: '277'
+                                                    })(
                                                     <Select
                                                         showSearch
                                                         style={{ width: 100,
-                                                            marginLeft: '10px' }}
+                                                            marginLeft: '10px',
+                                                            display: this.props.form.getFieldValue('ktfdj') !== 1 && 'none'}}
                                                         placeholder="请选择空调费类型"
                                                         optionFilterProp="children"
                                                     >
@@ -577,16 +589,21 @@ class PropertyContractAdded extends React.Component {
                                                         <Option key={299}>{299}</Option>
                                                     </Select>
                                                 )}
-                                                {getFieldDecorator('acUnitPrice')(
+                                                {getFieldDecorator('acUnitPrice',
+                                                    {
+                                                        initialValue: this.state.MapDict.Air
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元／㎡/天"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('ktfdj') !== 1 && 'none'}} addonAfter="元／㎡/天"
                                                     />
                                                 )}
                                             </Radio><br />
                                             <Radio value={2}>年空调费
                                                 {getFieldDecorator('yearAcPrice')(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('ktfdj') !== 2 && 'none'}} addonAfter="元"
                                                     />
                                                 )}
                                             </Radio>
@@ -599,6 +616,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('dtfdj', {
+                                        initialValue: 2,
                                         rules: [ {
                                             required: true,
                                             message: '请选择电梯费单价!'
@@ -608,7 +626,10 @@ class PropertyContractAdded extends React.Component {
                                             marginLeft: '10px' }}
                                         >
                                             <Radio value={2}>固定单价
-                                                {getFieldDecorator('elevUnitPrice')(
+                                                {getFieldDecorator('elevUnitPrice',
+                                                    {
+                                                        initialValue: this.state.MapDict.elevator
+                                                    })(
                                                     <Input style={{ width: 140,
                                                         marginLeft: '10px' }} addonAfter="元／㎡/月"
                                                     />
@@ -623,6 +644,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('waterType', {
+                                        initialValue: 0,
                                         rules: [ {
                                             required: true,
                                             message: '请选择收水费方式!'
@@ -632,21 +654,33 @@ class PropertyContractAdded extends React.Component {
                                             marginLeft: '10px' }}
                                         >
                                             <Radio value={0}>按面积
-                                                {getFieldDecorator('waterUnitPrice1')(
+                                                {getFieldDecorator('waterUnitPrice1',
+                                                    {
+                                                        initialValue: this.state.MapDict.Water
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter=" 元／㎡"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('waterType') !== 0 && 'none'}} addonAfter=" 元／㎡"
                                                     />
                                                 )}
                                             </Radio><br />
                                             <Radio value={1}>独立水表
-                                                {getFieldDecorator('waterUnitPrice2')(
+                                                {getFieldDecorator('waterUnitPrice2',
+                                                    {
+                                                        initialValue: this.state.MapDict.river
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元/立方米"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('waterType') !== 1 && 'none'}} addonAfter="元/立方米"
                                                     />
                                                 )}
-                                                {getFieldDecorator('waterLossRatio')(
+                                                {getFieldDecorator('waterLossRatio',
+                                                    {
+                                                        initialValue: this.state.MapDict.loss
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter=" % 损耗"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('waterType') !== 1 && 'none'}} addonAfter=" % 损耗"
                                                     />
                                                 )}
                                             </Radio>
@@ -659,6 +693,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('powerType', {
+                                        initialValue: 0,
                                         rules: [ {
                                             required: true,
                                             message: '请选择收电费方式!'
@@ -666,43 +701,71 @@ class PropertyContractAdded extends React.Component {
                                     })(
                                         <RadioGroup style={{ width: 700 }}>
                                             <Radio value={0}>固定单价
-                                                {getFieldDecorator('powerUnitPrice1')(
+                                                {getFieldDecorator('powerUnitPrice1',
+                                                    {
+                                                        initialValue: this.state.MapDict.Electricity
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元／㎡"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 0 && 'none'}} addonAfter="元／㎡"
                                                     />
                                                 )}
-                                            </Radio>
+                                            </Radio><br />
                                             <Radio value={1}>差额单价
-                                                {getFieldDecorator('powerUnitPrice2')(
+                                                {getFieldDecorator('powerUnitPrice2',
+                                                    {
+                                                        initialValue: this.state.MapDict.Electricity
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元/度"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 1 && 'none'}} addonAfter="元/度"
                                                     />
                                                 )}
-                                                {getFieldDecorator('sunhao1')(
+                                                {getFieldDecorator('sunhao1',
+                                                    {
+                                                        initialValue: this.state.MapDict.Power
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="% 损耗"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 1 && 'none'}} addonAfter="% 损耗"
                                                     />
                                                 )}
-                                                {getFieldDecorator('biaobi1')(
+                                                {getFieldDecorator('biaobi1',
+                                                    {
+                                                        initialValue: this.state.MapDict.ratio
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="变比"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 1 && 'none'}} addonAfter="变比"
                                                     />
                                                 )}
-                                            </Radio>
+                                            </Radio><br />
                                             <Radio value={2}>功峰平谷
-                                                {getFieldDecorator('powerUnitPrice3')(
+                                                {getFieldDecorator('powerUnitPrice3',
+                                                    {
+                                                        initialValue: this.state.MapDict.Electricity
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="元/度"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 2 && 'none'}} addonAfter="元/度"
                                                     />
                                                 )}
-                                                {getFieldDecorator('sunhao2')(
+                                                {getFieldDecorator('sunhao2',
+                                                    {
+                                                        initialValue: this.state.MapDict.Power
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="% 损耗"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 2 && 'none'}} addonAfter="% 损耗"
                                                     />
                                                 )}
-                                                {getFieldDecorator('biaobi2')(
+                                                {getFieldDecorator('biaobi2',
+                                                    {
+                                                        initialValue: this.state.MapDict.ratio
+                                                    })(
                                                     <Input style={{ width: 140,
-                                                        marginLeft: '10px' }} addonAfter="变比"
+                                                        marginLeft: '10px',
+                                                        display: this.props.form.getFieldValue('powerType') !== 2 && 'none'}} addonAfter="变比"
                                                     />
                                                 )}
                                             </Radio>
