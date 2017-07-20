@@ -22,7 +22,8 @@ class PropertyContractAdded extends React.Component {
             ListclientName: [],
             rooms: [],
             none1: '',
-            none2: 'none'
+            none2: 'none',
+            isEdit: false
         }
     }
     handleSubmit = async () => {
@@ -137,6 +138,7 @@ class PropertyContractAdded extends React.Component {
                     isFirst: false,
                     visible: nextProps.visible,
                     listRoom: listRoom,
+                    isEdit: contract.isEdit !== 0,
                     rooms: contract.leaseRooms.split(',')
                 })
                 this.props.form.setFieldsValue({
@@ -497,7 +499,7 @@ class PropertyContractAdded extends React.Component {
                                             message: '请填写应收金额!'
                                         }]
                                     })(
-                                        <Input style={{ width: 500 }} />
+                                        <Input disabled ={this.state.isEdit} style={{ width: 500 }} />
                                     )}
                                 </FormItem>
                             </Row>

@@ -14,7 +14,12 @@ export const apiGet = (url) => {
         axios.get(url).then(
             response => {
                 let resulData = response.data
-                resolve(resulData)
+                if (resulData.data.toString() === '登录过期') {
+                    localStorage.removeItem('token')
+                    window.location.href = '/login'
+                } else {
+                    resolve(resulData)
+                }
             }
         ).catch(error => {
             reject(error)
