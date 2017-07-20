@@ -164,7 +164,7 @@ class ReceiveStatistics extends Component {
     startDate = ''
     getDate = (e) => {
         if (e !== null) {
-            this.startDate = e.format('YYYY-MM-DD')
+            this.startDate = e.format('YYYY-MM-DD 23:59:59')
         } else {
             this.startDate = ''
         }

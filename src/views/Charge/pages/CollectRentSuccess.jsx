@@ -166,7 +166,7 @@ class CollectRentConduct extends Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',

@@ -85,7 +85,7 @@ import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/Elev
 // 引入 '收费管理' 版块
 import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
 import RentManagement           from '../views/Charge/pages/RentManagement'                             // 收费管理 - 租金管理
-import PropertyManagement       from '../views/Charge/pages/PropertyManagement'                         // 收费管理 - 物业费管理
+import PropertyManagement       from '../views/Charge/propertyFee/ReceivablePropertyFee'                         // 收费管理 - 物业费管理
 import InitiateRent             from '../views/Charge/components/InitiateRent'
 import PropertyDetail           from '../views/Charge/pages/Details/PropertyDetail'                     // [详情] - 物业费管理
 
