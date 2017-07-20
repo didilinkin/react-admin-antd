@@ -7,6 +7,7 @@ import AuthView from './AuthView'
 import PrivateRoute from './PrivateRoute'
 import Login from './Login'
 import Protected from './Protected'
+import Sider from './Sider'
 
 export {
     Home,
@@ -16,5 +17,6 @@ export {
     AuthView,
     PrivateRoute,
     Login,
-    Protected
+    Protected,
+    Sider
 }
