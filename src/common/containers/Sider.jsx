@@ -3,165 +3,109 @@ import React from 'react'
 
 import globalDir from '../../utils/globalDir'
 
-import { Menu, Icon } from 'antd'
+import { Menu, Icon, Button } from 'antd'
 
 const SubMenu = Menu.SubMenu
 
 class Sider extends React.Component {
     state = {
-        current: '1',
-        openKeys: []
+        collapsed: false, // 收缩
+        current: '1', // 当前选中的菜单项 key 数组
+        openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组
     }
 
     handleClick = (e) => {
         console.log('Clicked: ', e)
-        this.setState({ current: e.key })
+        // this.setState({ current: e.key })
     }
 
-    onOpenChange = (openKeys) => {
-        const state = this.state
-        const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
-        const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-
-        let nextOpenKeys = []
-        if (latestOpenKey) {
-            nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
-        }
-        if (latestCloseKey) {
-            nextOpenKeys = this.getAncestorKeys(latestCloseKey)
-        }
-        this.setState({ openKeys: nextOpenKeys })
+    toggleCollapsed = () => {
+        this.setState({
+            collapsed: !this.state.collapsed
+        })
     }
 
-    getAncestorKeys = (key) => {
-        const map = {
-            sub3: ['sub2']
-        }
-        return map[key] || []
-    }
+    // 判断是否 有折叠; 返回值(Boolean)
+    hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute')
 
-    // 判断是否 有折叠, 继续向下渲染 => 用 三目运算
-    hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute') // 返回值(Boolean): T / F
+    // 渲染 导航菜单
+    renderChildRoute = (obj) => {
+        let childHtml
+        let childArray = obj.childRoute
 
-    // 可折叠
-    renderChildRoute = (childItem) => {
-        let childItemHtml = ''
-        let childRouteArr = childItem.childRoute
-        // 判断
-        if (childRouteArr.hasOwnProperty('childRoute')) {
-            childItemHtml = childRouteArr.map((item) => {
+        if (obj.hasOwnProperty('childRoute')) {
+            childHtml = childArray.map((item) => {
                 return this.renderChildRoute(item)
             })
-            return (
-                <SubMenu
-                    key={ childItem.path }
-                    title={ childItem.title }
-                >
-                    { childItemHtml }
-                </SubMenu>
-            )
+
+            // 判断是否需要 图标
+            if (obj.hasOwnProperty('icon')) {
+                return (
+                    <SubMenu
+                        key={ obj.path }
+                        title={
+                            <span>
+                                <Icon type={ obj.icon } />
+                                <span>{ obj.title }</span>
+                            </span>
+                        }
+                    >
+                        { childHtml }
+                    </SubMenu>
+                )
+            } else {
+                return (
+                    <SubMenu
+                        key={ obj.path }
+                        title={ obj.title }
+                    >
+                        { childHtml }
+                    </SubMenu>
+                )
+            }
         } else {
             return (
-                this.renderItemMenu(childItem)
+                <Menu.Item key={ obj.path }>
+                    { obj.title }
+                </Menu.Item>
             )
         }
-    }
-
-    // 无折叠
-    renderItemMenu = (childItem) => {
-        return (
-            <Menu.Item key={ childItem.path }>
-                { childItem.tilte }
-            </Menu.Item>
-        )
     }
 
     render () {
-        // 负责 渲染 module下的 内容
-        // let renderMenu = (item) => {
-        //     item.childRoute.map((childItem) => {
-        //         return (
-        //             <Menu.Item key={ childItem.path }>
-        //                 { childItem.tilte }
-        //             </Menu.Item>
-        //         )
-        //     })
-        // }
+        const renderMenu = globalDir.map((childItem) => {
+            if (this.hasChildRoute(childItem)) {
+                return this.renderChildRoute(childItem)
+            } else {
+                return (
+                    <Menu.Item key={ childItem.path }>
+                        { childItem.title }
+                    </Menu.Item>
+                )
+            }
+        })
 
         return (
-            <Menu
-                mode="inline"
-                openKeys={this.state.openKeys}
-                selectedKeys={[this.state.current]}
-                style={{ width: 240 }}
-                onOpenChange={this.onOpenChange}
-                onClick={this.handleClick}
-            >
-                {/* A版块 */}
-                <SubMenu key="sub1" title={
-                    <span>
-                        <Icon type="mail" />
-                        <span>Navigation One</span>
-                    </span>}
+            <div style={{ width: 240 }}>
+                <Button
+                    type="primary"
+                    onClick={this.toggleCollapsed}
+                    style={{ marginBottom: 16 }}
                 >
-                    <Menu.Item key="1">Option 1</Menu.Item>
-                    <Menu.Item key="2">Option 2</Menu.Item>
-                    <Menu.Item key="3">Option 3</Menu.Item>
-                    <Menu.Item key="4">Option 4</Menu.Item>
-                </SubMenu>
+                    <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                </Button>
 
-                {/* B版块 */}
-                <SubMenu key="sub2" title={
-                    <span>
-                        <Icon type="appstore" />
-                        <span>Navigation Two</span>
-                    </span>}
+                <Menu
+                    mode="inline"
+                    theme="dark"
+                    onClick={ this.handleClick }
+                    defaultOpenKeys={['sub1']}
+                    inlineCollapsed={ this.state.collapsed }
+                    defaultSelectedKeys={['1']}
                 >
-                    <Menu.Item key="5">Option 5</Menu.Item>
-                    <SubMenu key="sub3" title="Submenu">
-                        <Menu.Item key="6">Option 6</Menu.Item>
-                        <Menu.Item key="7">Option 7</Menu.Item>
-                    </SubMenu>
-                </SubMenu>
-
-                {/* 仓库管理 */}
-                {
-                    globalDir.map((item) => {
-                        return (
-                            <SubMenu key={ item.path } title={
-                                <span>
-                                    <Icon type={ item.icon } />
-                                    <span>{ item.title }</span>
-                                </span>}
-                            >
-                                {
-                                    item.childRoute.map((childItem) => {
-                                        if (childItem.hasOwnProperty('childRoute')) {
-                                            // 可折叠
-                                            return (
-                                                <SubMenu
-                                                    key={ childItem.path }
-                                                    title={ childItem.title }
-                                                >
-                                                    <Menu.Item key="6">Option 6</Menu.Item>
-                                                    <Menu.Item key="7">Option 7</Menu.Item>
-                                                </SubMenu>
-                                            )
-                                        } else {
-                                            // 不折叠
-                                            return (
-                                                <Menu.Item key={ childItem.path }>
-                                                    { childItem.title }
-                                                </Menu.Item>
-                                            )
-                                        }
-                                    })
-                                }
-                            </SubMenu>
-                        )
-                    })
-                }
-            </Menu>
+                    { renderMenu }
+                </Menu>
+            </div>
         )
     }
 }
