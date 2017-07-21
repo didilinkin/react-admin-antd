@@ -31,7 +31,7 @@ const LoginTitle = styled.h2`
 
 function info () {
     Modal.info({
-        title: 'This is a notification message',
+        title: '忘记密码',
         content: (
             <div>
                 <p>如果忘记密码你就拍拍手</p>
