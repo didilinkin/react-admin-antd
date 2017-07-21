@@ -40,21 +40,53 @@ class Sider extends React.Component {
         return map[key] || []
     }
 
-    // 判断是否 有折叠, 继续向下渲染
+    // 判断是否 有折叠, 继续向下渲染 => 用 三目运算
     hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute') // 返回值(Boolean): T / F
 
-    // 判断深度 逻辑: 第一层之后, 设置 => 从2级 childRoute数组 开始遍历;
-    // 如果有 childRoute, 继续遍历
-    // 如果无 childRoute. 停止遍历
+    // 可折叠
+    renderChildRoute = (childItem) => {
+        let childItemHtml = ''
+        let childRouteArr = childItem.childRoute
+        // 判断
+        if (childRouteArr.hasOwnProperty('childRoute')) {
+            childItemHtml = childRouteArr.map((item) => {
+                return this.renderChildRoute(item)
+            })
+            return (
+                <SubMenu
+                    key={ childItem.path }
+                    title={ childItem.title }
+                >
+                    { childItemHtml }
+                </SubMenu>
+            )
+        } else {
+            return (
+                this.renderItemMenu(childItem)
+            )
+        }
+    }
 
-    // 配合判断 进行渲染
-    // <SubMenu key="sub3" title="Submenu">
-    //     <Menu.Item key="6">Option 6</Menu.Item>
-    //     <Menu.Item key="7">Option 7</Menu.Item>
-    // </SubMenu>
+    // 无折叠
+    renderItemMenu = (childItem) => {
+        return (
+            <Menu.Item key={ childItem.path }>
+                { childItem.tilte }
+            </Menu.Item>
+        )
+    }
 
     render () {
-        console.log(globalDir)
+        // 负责 渲染 module下的 内容
+        // let renderMenu = (item) => {
+        //     item.childRoute.map((childItem) => {
+        //         return (
+        //             <Menu.Item key={ childItem.path }>
+        //                 { childItem.tilte }
+        //             </Menu.Item>
+        //         )
+        //     })
+        // }
 
         return (
             <Menu
@@ -104,17 +136,25 @@ class Sider extends React.Component {
                             >
                                 {
                                     item.childRoute.map((childItem) => {
-                                        return (
-                                            // 开始判断(三元运算): ES方案 => Object.keys(childItem).includes('childRoute')
-                                            // childItem.hasOwnProperty('childRoute') ? (
-                                            //     {/* 有折叠 */}
-                                            //     <SubMenu>
-                                            // )
-
-                                            <Menu.Item key={ childItem.path }>
-                                                { childItem.title }
-                                            </Menu.Item>
-                                        )
+                                        if (childItem.hasOwnProperty('childRoute')) {
+                                            // 可折叠
+                                            return (
+                                                <SubMenu
+                                                    key={ childItem.path }
+                                                    title={ childItem.title }
+                                                >
+                                                    <Menu.Item key="6">Option 6</Menu.Item>
+                                                    <Menu.Item key="7">Option 7</Menu.Item>
+                                                </SubMenu>
+                                            )
+                                        } else {
+                                            // 不折叠
+                                            return (
+                                                <Menu.Item key={ childItem.path }>
+                                                    { childItem.title }
+                                                </Menu.Item>
+                                            )
+                                        }
                                     })
                                 }
                             </SubMenu>
