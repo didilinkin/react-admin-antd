@@ -108,7 +108,7 @@ class Login extends React.Component {
                             })(
                                 <Checkbox>记住我</Checkbox>
                             )}
-                            <a className="login-form-forgot" href="" onClick={info} style={{float: 'right'}}>忘记密码</a>
+                            <a className="login-form-forgot" href="javascript:" onClick={info} style={{float: 'right'}}>忘记密码</a>
                             <Button onClick={this.handleSubmit} type="primary" className="login-form-button" style={{width: '100%'}}>
                                 登录
                             </Button>
