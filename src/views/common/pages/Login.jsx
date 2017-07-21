@@ -1,6 +1,6 @@
 // '登录' 页面
 import React from 'react'
-import { Form, Icon, Input, Button, Checkbox, notification } from 'antd'
+import { Form, Icon, Input, Button, Modal, Checkbox, notification } from 'antd'
 import { apiPost } from '../../../api/index'
 
 import styled   from 'styled-components'
@@ -28,6 +28,19 @@ const LoginTitle = styled.h2`
     padding-bottom: ${elf.d.autoPadding};
 `
 // 样式 - end
+
+function info () {
+    Modal.info({
+        title: 'This is a notification message',
+        content: (
+            <div>
+                <p>如果忘记密码你就拍拍手</p>
+                <p>哈哈哈！！！</p>
+            </div>
+        ),
+        onOk () {}
+    })
+}
 
 class Login extends React.Component {
     handleSubmit = async () => {
@@ -95,7 +108,7 @@ class Login extends React.Component {
                             })(
                                 <Checkbox>记住我</Checkbox>
                             )}
-                            <a className="login-form-forgot" href="" style={{float: 'right'}}>忘记密码</a>
+                            <a className="login-form-forgot" href="" onClick={info} style={{float: 'right'}}>忘记密码</a>
                             <Button onClick={this.handleSubmit} type="primary" className="login-form-button" style={{width: '100%'}}>
                                 登录
                             </Button>
