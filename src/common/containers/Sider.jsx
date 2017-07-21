@@ -9,14 +9,15 @@ const SubMenu = Menu.SubMenu
 
 class Sider extends React.Component {
     state = {
-        collapsed: false, // 收缩
+        multiple: false, // 是否允许多选
+        collapsed: false, // 收缩 => 按钮 切换 导航模式 类型
         current: '1', // 当前选中的菜单项 key 数组
-        openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组
+        openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组,
     }
 
     handleClick = (e) => {
         console.log('Clicked: ', e)
-        // this.setState({ current: e.key })
+        this.setState({ current: e.key })
     }
 
     toggleCollapsed = () => {
@@ -24,6 +25,15 @@ class Sider extends React.Component {
             collapsed: !this.state.collapsed
         })
     }
+
+    // SubMenu 展开/关闭的回调
+    onOpenChange = (e) => {
+        console.log('Clicked:', e)
+        // 清空 openKeys, 然后把 最新的 放入
+        this.setState({ openKeys: [] }) // 清空
+        console.log(this)
+    }
+
 
     // 判断是否 有折叠; 返回值(Boolean)
     hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute')
@@ -96,12 +106,17 @@ class Sider extends React.Component {
                 </Button>
 
                 <Menu
-                    mode="inline"
-                    theme="dark"
-                    onClick={ this.handleClick }
-                    defaultOpenKeys={['sub1']}
-                    inlineCollapsed={ this.state.collapsed }
-                    defaultSelectedKeys={['1']}
+                    mode="inline" // 排版模式
+                    theme="dark" // 主题色
+                    onClick={ this.handleClick } // 点击事件
+                    defaultOpenKeys={this.state.openKeys} // 初始展开的 SubMenu 菜单项 key 数组
+                    inlineCollapsed={ this.state.collapsed } // inline 时菜单是否收起状态 => 切换 mode 类型
+                    defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
+
+                    selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
+                    onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
+                    multiple={ this.state.multiple }
+                    // openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组
                 >
                     { renderMenu }
                 </Menu>
