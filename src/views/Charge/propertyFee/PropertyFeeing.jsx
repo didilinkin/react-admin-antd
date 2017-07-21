@@ -1,13 +1,13 @@
-// 收费管理 - 审核失败
+// 收费管理 - 待收费
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin, Input, Select, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../api'
-import CollectRentFailComponent from './components/AfterAudit'
-import CollectRentRepaidComponent from './components/PaidConfirm'
+import CollectRentConductComponent from './components/PaidConfirm'
+import PropertyAddComponent from './Details/PropertyFeeAdd'
 // 引入组件
 const Option = Select.Option
 // React component
-class CollectRentFail extends Component {
+class PropertyFeeing extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -15,9 +15,11 @@ class CollectRentFail extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
+            AccountList: [],
             columns: [],
             dataSource: [],
-            ListBuildingInfo: []
+            ListBuildingInfo: [],
+            id: 0
         }
     }
     handleUpdate = (id) => {
@@ -28,25 +30,51 @@ class CollectRentFail extends Component {
             id: id
         })
     }
-    handleUpdate2 = (id) => {
+    handleDelete = async (id) => {
+        await apiPost(
+            '/propertyFee/updatePropertyFee',
+            {id: id,
+                delFlag: 1}
+        )
+        notification.open({
+            message: '删除成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    handleCommit = async (id) => {
+        await apiPost(
+            '/propertyFee/updatePropertyFee',
+            {id: id,
+                auditStatus: 1}
+        )
+        notification.open({
+            message: '提交成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    // 弹出框设置
+    showModal = () => {
         this.setState({
-            openAdd: false,
-            openTableAddUp: true,
+            openAdd: true,
             openUpdate: false,
-            id: id
+            openTableAddUp: false
         })
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {auditStatus: 3}
+            '/propertyFee/propertyFeeList',
+            {auditStatus: 0,
+                contractStatus: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
+        const handleDelete = this.handleDelete
+        const handleCommit = this.handleCommit
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -73,35 +101,15 @@ class CollectRentFail extends Component {
             }, {
                 title: '客户名称',
                 width: 300,
-                dataIndex: 'rentClientName',
-                key: 'rentClientName'
+                dataIndex: 'clientName',
+                key: 'clientName'
             }, {
-                title: '交费周期',
-                width: 150,
-                dataIndex: 'periodStatus',
-                key: 'periodStatus',
-                render: function (text, record, index) {
-                    let whType = ''
-                    if (record.periodStatus === 3) {
-                        whType = '季付'
-                    }
-                    if (record.periodStatus === 6) {
-                        whType = '半年付'
-                    }
-                    if (record.periodStatus === 12) {
-                        whType = '年付'
-                    }
-                    return (
-                        <span>{whType}</span>
-                    )
-                }
-            }, {
-                title: '本期租金周期',
+                title: '本期物业费周期',
                 width: 250,
-                dataIndex: 'periodRent',
-                key: 'periodRent'
+                dataIndex: 'periodPropertyFee',
+                key: 'periodPropertyFee'
             }, {
-                title: '本期租金',
+                title: '应收金额',
                 width: 150,
                 dataIndex: 'actualPaidMoney',
                 key: 'actualPaidMoney'
@@ -111,21 +119,6 @@ class CollectRentFail extends Component {
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
-                title: '审核说明',
-                width: 150,
-                dataIndex: 'remark',
-                key: 'remark'
-            }, {
-                title: '审核时间',
-                width: 150,
-                dataIndex: 'auditDate',
-                key: 'auditDate'
-            }, {
-                title: '审核人',
-                width: 150,
-                dataIndex: 'auditName',
-                key: 'auditName'
-            }, {
                 title: '操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -134,8 +127,13 @@ class CollectRentFail extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} > 明细 </a>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate2(record.id)} > 重新收租 </a>
+                            <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>
+                                <a href="javascript:" > 提交 </a>
+                            </Popconfirm>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 </a>
+                            <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
+                                <a href="javascript:" > 删除 </a>
+                            </Popconfirm>
                         </div>
                     )
                 }
@@ -149,12 +147,12 @@ class CollectRentFail extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
+            '/propertyFee/propertyFeeList',
+            {'clientName': this.clientName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'auditStatus': 3
+                'contractStatus': 0,
+                'auditStatus': 0
             }
         )
         this.setState({
@@ -165,17 +163,13 @@ class CollectRentFail extends Component {
             id: 0
         })
     }
-    rentClientName = ''
+    clientName = null
     entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
+        this.clientName = e.target.value
     }
     roomNum = ''
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
-    }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
     }
     buildId = ''
     selectBuild = (e) => {
@@ -188,19 +182,19 @@ class CollectRentFail extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
-                <CollectRentFailComponent
+                <CollectRentConductComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
+                    accountLsit={this.state.accountList}
                 />
-                <CollectRentRepaidComponent
-                    id={this.state.id}
+                <PropertyAddComponent
                     refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
+                    visible={this.state.openAdd}
                 />
                 <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}>
+                    display: 'block'}}
+                >
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
@@ -216,24 +210,14 @@ class CollectRentFail extends Component {
                     </Select>
                     <span>房间编号:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange} />
+                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
+                    />
                     <span>客户名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
-                    <Select
-                        showSearch
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
                     <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.showModal}>收物业费</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
@@ -248,6 +232,6 @@ class CollectRentFail extends Component {
         )
     }
 }
-export default CollectRentFail
+export default PropertyFeeing
 
 

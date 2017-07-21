@@ -83,7 +83,7 @@ class CollectRentHead extends React.Component {
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
-                            {getFieldDecorator('rentClientName')(
+                            {getFieldDecorator('clientName')(
                                 <Input placeholder="请输入" style={{ width: 200 }} />
                             )}
                         </FormItem>
@@ -103,7 +103,7 @@ class CollectRentHead extends React.Component {
                         <FormItem label="开票状态" labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
                         >
-                            {getFieldDecorator('invoiceRentStatus')(
+                            {getFieldDecorator('invoicePropertyStatus')(
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
@@ -134,22 +134,38 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
+                    <Col span={8}>
+                        <FormItem label="打印状态" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('whetherPrinted')(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200 }}
+                                    placeholder="请选择打印状态"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="0">未打印</Option>
+                                    <Option key="1">已打印</Option>
+                                </Select>
+                            )}
+                        </FormItem>
+                    </Col>
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
-                        <FormItem label="查询依据" labelCol={{ span: 6 }}
+                        <FormItem label="查询类型" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('dateSelect')(
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="请选择查询依据"
+                                    placeholder="请选择查询类型"
                                     optionFilterProp="children"
                                 >
                                     <Option key="0">实交日期</Option>
                                     <Option key="1">交费期限</Option>
-                                    <Option key="2">费用周期</Option>
                                 </Select>
                             )}
                         </FormItem>
@@ -170,7 +186,6 @@ class CollectRentHead extends React.Component {
                     </Col>
                     <Col span={16}/>
                 </Row>
-
             </Form>
         )
     }
