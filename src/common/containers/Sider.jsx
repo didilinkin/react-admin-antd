@@ -1,7 +1,7 @@
 // 导航菜单 测试
 import React from 'react'
 
-import globalDir from '../../utils/globalDir'
+// import globalDir from '../../utils/globalDir'
 
 import { Menu, Icon, Button } from 'antd'
 
@@ -9,30 +9,32 @@ const SubMenu = Menu.SubMenu
 
 class Sider extends React.Component {
     state = {
-        multiple: false, // 是否允许多选
-        collapsed: false, // 收缩 => 按钮 切换 导航模式 类型
-        current: '1', // 当前选中的菜单项 key 数组
-        openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组,
+        collapsed: false
+        // , // 缩起内嵌菜单(使用)
+        // multiple: false, // 是否允许多选
+        // current: '1', // 当前选中的菜单项 key 数组
+        // openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组,
     }
 
-    handleClick = (e) => {
-        console.log('Clicked: ', e)
-        this.setState({ current: e.key })
-    }
-
+    // 缩起内嵌菜单(使用)
     toggleCollapsed = () => {
         this.setState({
             collapsed: !this.state.collapsed
         })
     }
 
-    // SubMenu 展开/关闭的回调
-    onOpenChange = (e) => {
-        console.log('Clicked:', e)
-        // 清空 openKeys, 然后把 最新的 放入
-        this.setState({ openKeys: [] }) // 清空
-        console.log(this)
-    }
+    // handleClick = (e) => {
+    //     console.log('Clicked: ', e)
+    //     this.setState({ current: e.key })
+    // }
+
+    // // SubMenu 展开/关闭的回调
+    // onOpenChange = (e) => {
+    //     console.log('Clicked:', e)
+    //     // 清空 openKeys, 然后把 最新的 放入
+    //     this.setState({ openKeys: [] }) // 清空
+    //     console.log(this)
+    // }
 
 
     // 判断是否 有折叠; 返回值(Boolean)
@@ -52,48 +54,48 @@ class Sider extends React.Component {
             if (obj.hasOwnProperty('icon')) {
                 return (
                     <SubMenu
-                        key={ obj.path }
+                        key={obj.path}
                         title={
                             <span>
-                                <Icon type={ obj.icon } />
-                                <span>{ obj.title }</span>
+                                <Icon type={obj.icon} />
+                                <span>{obj.title}</span>
                             </span>
                         }
                     >
-                        { childHtml }
+                        {childHtml}
                     </SubMenu>
                 )
             } else {
                 return (
                     <SubMenu
-                        key={ obj.path }
-                        title={ obj.title }
+                        key={obj.path}
+                        title={obj.title}
                     >
-                        { childHtml }
+                        {childHtml}
                     </SubMenu>
                 )
             }
         } else {
             return (
-                <Menu.Item key={ obj.path }>
-                    { obj.title }
+                <Menu.Item key={obj.path}>
+                    {obj.title}
                 </Menu.Item>
             )
         }
     }
 
     render () {
-        const renderMenu = globalDir.map((childItem) => {
-            if (this.hasChildRoute(childItem)) {
-                return this.renderChildRoute(childItem)
-            } else {
-                return (
-                    <Menu.Item key={ childItem.path }>
-                        { childItem.title }
-                    </Menu.Item>
-                )
-            }
-        })
+        // const renderMenu = globalDir.map((childItem) => {
+        //     if (this.hasChildRoute(childItem)) {
+        //         return this.renderChildRoute(childItem)
+        //     } else {
+        //         return (
+        //             <Menu.Item key={childItem.path}>
+        //                 {childItem.title}
+        //             </Menu.Item>
+        //         )
+        //     }
+        // })
 
         return (
             <div style={{ width: 240 }}>
@@ -106,21 +108,50 @@ class Sider extends React.Component {
                 </Button>
 
                 <Menu
+                    // 折叠
+                    defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
+                    defaultOpenKeys={['sub1']} // 初始展开的 SubMenu 菜单项 key 数组
                     mode="inline" // 排版模式
                     theme="dark" // 主题色
-                    onClick={ this.handleClick } // 点击事件
-                    defaultOpenKeys={this.state.openKeys} // 初始展开的 SubMenu 菜单项 key 数组
-                    inlineCollapsed={ this.state.collapsed } // inline 时菜单是否收起状态 => 切换 mode 类型
-                    defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
+                    inlineCollapsed={this.state.collapsed} // inline 时菜单是否收起状态 => 切换 mode 类型
 
-                    selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
-                    onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
-                    multiple={ this.state.multiple }
-                    // openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组
+                // 只展开父级
+                // selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
+                // onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
+                // multiple={ this.state.multiple }
+                // onClick={ this.handleClick } // 点击事件
+
+                // 放开 会失效
+                // openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组
                 >
-                    { renderMenu }
+                    <Menu.Item key="1">
+                        <Icon type="pie-chart" />
+                        <span>Option 1</span>
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                        <Icon type="desktop" />
+                        <span>Option 2</span>
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                        <Icon type="inbox" />
+                        <span>Option 3</span>
+                    </Menu.Item>
+                    <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
+                        <Menu.Item key="5">Option 5</Menu.Item>
+                        <Menu.Item key="6">Option 6</Menu.Item>
+                        <Menu.Item key="7">Option 7</Menu.Item>
+                        <Menu.Item key="8">Option 8</Menu.Item>
+                    </SubMenu>
+                    <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigation Two</span></span>}>
+                        <Menu.Item key="9">Option 9</Menu.Item>
+                        <Menu.Item key="10">Option 10</Menu.Item>
+                        <SubMenu key="sub3" title="Submenu">
+                            <Menu.Item key="11">Option 11</Menu.Item>
+                            <Menu.Item key="12">Option 12</Menu.Item>
+                        </SubMenu>
+                    </SubMenu>
                 </Menu>
-            </div>
+            </div >
         )
     }
 }

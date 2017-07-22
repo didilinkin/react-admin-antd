@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute'
 import Login from './Login'
 import Protected from './Protected'
 import Sider from './Sider'
+import SiderA from './SiderA'
 
 export {
     Home,
@@ -18,5 +19,6 @@ export {
     PrivateRoute,
     Login,
     Protected,
-    Sider
+    Sider,
+    SiderA
 }

@@ -8,7 +8,8 @@ import {
     PrivateRoute,
     Protected,
     Login,
-    Sider
+    Sider,
+    SiderA
 } from '../common/containers'
 
 class Routes extends React.Component {
@@ -22,6 +23,7 @@ class Routes extends React.Component {
                     <PrivateRoute exact path="/" component={ Protected } isAuthenticate={ isAuthenticate } />
                     <Route exact path="/login" component={ Login } />
                     <Route exact path="/sider" component={ Sider } />
+                    <Route exact path="/siderA" component={ SiderA } />
                 </div>
             </Route>
         )
