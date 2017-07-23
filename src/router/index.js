@@ -9,7 +9,8 @@ import {
     Protected,
     Login,
     Sider,
-    SiderA
+    SiderA,
+    SiderOne
 } from '../common/containers'
 
 class Routes extends React.Component {
@@ -24,6 +25,7 @@ class Routes extends React.Component {
                     <Route exact path="/login" component={ Login } />
                     <Route exact path="/sider" component={ Sider } />
                     <Route exact path="/siderA" component={ SiderA } />
+                    <Route exact path="/siderOne" component={ SiderOne } />
                 </div>
             </Route>
         )

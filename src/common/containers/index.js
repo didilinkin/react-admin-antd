@@ -9,6 +9,7 @@ import Login from './Login'
 import Protected from './Protected'
 import Sider from './Sider'
 import SiderA from './SiderA'
+import SiderOne from './SiderOne'
 
 export {
     Home,
@@ -20,5 +21,6 @@ export {
     Login,
     Protected,
     Sider,
-    SiderA
+    SiderA,
+    SiderOne
 }
