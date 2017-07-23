@@ -11,12 +11,10 @@ class Sider extends React.Component {
         collapsed: false, // 缩起内嵌菜单(使用)
         current: '1', // 只展开父级:  当前选中的菜单项 key 数组
         openKeys: [] // 只展开父级: 当前展开的 SubMenu 菜单项 key 数组
-        // multiple: false, // 是否允许多选
     }
 
     // 缩起内嵌菜单(使用)
     toggleCollapsed = () => {
-        // 测试 按钮点击效果
         this.setState({
             collapsed: !this.state.collapsed
         })
@@ -53,25 +51,34 @@ class Sider extends React.Component {
 
     // 只展开父级: 获取祖先级 Key
     getAncestorKeys = (key) => {
+        console.log(globalDir)
         const map = {
-            sub3: ['sub2'],
+            // sub3: ['sub2'],
             // 新改: 仓库管理
             inventoryManage: ['wareHouse'],
             receiveStatistics: ['wareHouse'],
             meterialManagement: ['wareHouse'],
             // 新改: 仓库管理
+            account: ['equipment'],
+            computerRoomManagement: ['equipment'],
+            maintain: ['equipment'],
+            // 新改: 仓库管理 - 设备维保
+            maintenancePlan: ['equipment', 'maintain'],
+            repairRecord: ['equipment', 'maintain'],
+            // 新改: 仓库管理 - 设备巡检
+            inspection: ['equipment'],
+            // 新改: 仓库管理 - 设备巡检 - 电器系统
+            electric: ['equipment', 'inspection'],
+            distributionRoom: ['equipment', 'inspection', 'electric'],
+            weakRoom: ['equipment', 'inspection', 'electric'],
+            generatorLog: ['equipment', 'inspection', 'electric'],
+            // 新改: 仓库管理 - 设备巡检 - 电梯系统
+            elevator: ['equipment', 'inspection'],
+            elevatorRoom: ['equipment', 'inspection', 'elevator'],
+            dailyInspection: ['equipment', 'inspection', 'elevator']
         }
         return map[key] || []
     }
-
-    // // SubMenu 展开/关闭的回调
-    // onOpenChange = (e) => {
-    //     console.log('Clicked:', e)
-    //     // 清空 openKeys, 然后把 最新的 放入
-    //     this.setState({ openKeys: [] }) // 清空
-    //     console.log(this)
-    // }
-
 
     // 判断是否 有折叠; 返回值(Boolean)
     hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute')
@@ -157,7 +164,6 @@ class Sider extends React.Component {
                     selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
                     onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
                     onClick={ this.handleClick } // 点击事件
-                    // multiple={ this.state.multiple }
                 >
                     { renderMenu }
                 </Menu>
