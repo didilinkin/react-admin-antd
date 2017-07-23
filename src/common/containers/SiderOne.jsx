@@ -42,6 +42,7 @@ class SiderOne extends Component {
                 style={{ width: 240 }}
                 onOpenChange={this.onOpenChange}
                 onClick={this.handleClick}
+                theme="dark" // 主题色
             >
                 <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
                     <Menu.Item key="1">Option 1</Menu.Item>

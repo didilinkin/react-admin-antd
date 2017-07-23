@@ -17,6 +17,7 @@ class Sider extends React.Component {
 
     // 缩起内嵌菜单(使用)
     toggleCollapsed = () => {
+        // 测试 按钮点击效果
         this.setState({
             collapsed: !this.state.collapsed
         })
@@ -97,10 +98,10 @@ class Sider extends React.Component {
         })
 
         return (
-            <div style={{ width: 240 }}>
+            <div style={{ width: 230 }}>
                 <Button
                     type="primary"
-                    onClick={this.toggleCollapsed}
+                    onClick={ this.toggleCollapsed }
                     style={{ marginBottom: 16 }}
                 >
                     <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
@@ -110,9 +111,9 @@ class Sider extends React.Component {
                     // 折叠
                     defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
                     defaultOpenKeys={['sub1']} // 初始展开的 SubMenu 菜单项 key 数组
-                    mode="inline" // 排版模式
+                    mode={ this.state.collapsed ? 'inline' : 'vertical' } // 排版模式
                     theme="dark" // 主题色
-                    inlineCollapsed={this.state.collapsed} // inline 时菜单是否收起状态 => 切换 mode 类型
+                    inlineCollapsed="false" // inline 时菜单是否收起状态 => 切换 mode 类型
 
                     // 只展开父级
                     // selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
