@@ -8,11 +8,10 @@ const SubMenu = Menu.SubMenu
 
 class Sider extends React.Component {
     state = {
-        collapsed: false // 缩起内嵌菜单(使用)
-        // ,
+        collapsed: false, // 缩起内嵌菜单(使用)
+        current: '1', // 只展开父级:  当前选中的菜单项 key 数组
+        openKeys: [] // 只展开父级: 当前展开的 SubMenu 菜单项 key 数组
         // multiple: false, // 是否允许多选
-        // current: '1', // 当前选中的菜单项 key 数组
-        // openKeys: [] // 当前展开的 SubMenu 菜单项 key 数组,
     }
 
     // 缩起内嵌菜单(使用)
@@ -23,10 +22,47 @@ class Sider extends React.Component {
         })
     }
 
-    // handleClick = (e) => {
-    //     console.log('Clicked: ', e)
-    //     this.setState({ current: e.key })
-    // }
+    // 只展开父级: 点击事件
+    handleClick = (e) => {
+        console.log('Clicked: ', e)
+        this.setState({ current: e.key })
+    }
+
+    // 只展开父级:
+    onOpenChange = (openKeys) => {
+        const state = this.state
+        // 最后打开的 Key
+        const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
+        console.log('latestOpenKey:' + latestOpenKey)
+
+        // 最后关闭的 key
+        const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
+        console.log('latestCloseKey:' + latestCloseKey)
+
+        // 新打开的 key
+        let nextOpenKeys = []
+        if (latestOpenKey) {
+            nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey)
+        }
+
+        if (latestCloseKey) {
+            nextOpenKeys = this.getAncestorKeys(latestCloseKey)
+        }
+        this.setState({ openKeys: nextOpenKeys })
+    }
+
+    // 只展开父级: 获取祖先级 Key
+    getAncestorKeys = (key) => {
+        const map = {
+            sub3: ['sub2'],
+            // 新改: 仓库管理
+            inventoryManage: ['wareHouse'],
+            receiveStatistics: ['wareHouse'],
+            meterialManagement: ['wareHouse'],
+            // 新改: 仓库管理
+        }
+        return map[key] || []
+    }
 
     // // SubMenu 展开/关闭的回调
     // onOpenChange = (e) => {
@@ -54,31 +90,31 @@ class Sider extends React.Component {
             if (obj.hasOwnProperty('icon')) {
                 return (
                     <SubMenu
-                        key={obj.path}
+                        key={ obj.path }
                         title={
                             <span>
-                                <Icon type={obj.icon} />
-                                <span>{obj.title}</span>
+                                <Icon type={ obj.icon } />
+                                <span>{ obj.title }</span>
                             </span>
                         }
                     >
-                        {childHtml}
+                        { childHtml }
                     </SubMenu>
                 )
             } else {
                 return (
                     <SubMenu
-                        key={obj.path}
-                        title={obj.title}
+                        key={ obj.path }
+                        title={ obj.title }
                     >
-                        {childHtml}
+                        { childHtml }
                     </SubMenu>
                 )
             }
         } else {
             return (
-                <Menu.Item key={obj.path}>
-                    {obj.title}
+                <Menu.Item key={ obj.path }>
+                    { obj.title }
                 </Menu.Item>
             )
         }
@@ -91,7 +127,7 @@ class Sider extends React.Component {
             } else {
                 return (
                     <Menu.Item key={childItem.path}>
-                        {childItem.title}
+                        { childItem.title }
                     </Menu.Item>
                 )
             }
@@ -104,25 +140,24 @@ class Sider extends React.Component {
                     onClick={ this.toggleCollapsed }
                     style={{ marginBottom: 16 }}
                 >
-                    <Icon type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} />
+                    <Icon type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } />
                 </Button>
 
                 <Menu
                     // 折叠
                     defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
-                    defaultOpenKeys={['sub1']} // 初始展开的 SubMenu 菜单项 key 数组
-                    mode={ this.state.collapsed ? 'inline' : 'vertical' } // 排版模式
+                    defaultOpenKeys={['wareHouse']} // 初始展开的 SubMenu 菜单项 key 数组
+                    // mode={ this.state.collapsed ? 'inline' : 'vertical' } // 排版模式 => 后期改
+                    mode="inline"
                     theme="dark" // 主题色
                     inlineCollapsed="false" // inline 时菜单是否收起状态 => 切换 mode 类型
 
                     // 只展开父级
-                    // selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
-                    // onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
+                    openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组
+                    selectedKeys={ [this.state.current] } // 当前选中的菜单项 key 数组
+                    onOpenChange={ this.onOpenChange } // SubMenu 展开/关闭的回调
+                    onClick={ this.handleClick } // 点击事件
                     // multiple={ this.state.multiple }
-                    // onClick={ this.handleClick } // 点击事件
-
-                    // 放开 会失效
-                    // openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组
                 >
                     { renderMenu }
                 </Menu>
