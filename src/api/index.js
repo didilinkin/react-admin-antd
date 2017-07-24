@@ -14,11 +14,13 @@ export const apiGet = (url) => {
         axios.get(url).then(
             response => {
                 let resulData = response.data
-                if (resulData.data.toString() === '登录过期') {
-                    localStorage.removeItem('token')
-                    window.location.href = '/login'
-                } else {
-                    resolve(resulData)
+                if (resulData.data !== null && resulData.data !== '') {
+                    if (resulData.data.toString() === '登录过期') {
+                        localStorage.removeItem('token')
+                        window.location.href = '/login'
+                    } else {
+                        resolve(resulData)
+                    }
                 }
             }
         ).catch(error => {
@@ -37,11 +39,13 @@ export const apiPost = (url, configObj) => {
         axios.post(url, qs.stringify({...configObj})).then(
             response => {
                 let resulData = response.data
-                if (resulData.data.toString() === '登录过期') {
-                    localStorage.removeItem('token')
-                    window.location.href = '/login'
-                } else {
-                    resolve(resulData)
+                if (resulData.data !== null && resulData.data !== '') {
+                    if (resulData.data.toString() === '登录过期') {
+                        localStorage.removeItem('token')
+                        window.location.href = '/login'
+                    } else {
+                        resolve(resulData)
+                    }
                 }
             }
         ).catch(error => {

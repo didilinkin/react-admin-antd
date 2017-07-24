@@ -31,12 +31,24 @@ class addUpkeep extends React.Component {
                 '/collectRent/getCollectRentById',
                 { 'id': nextProps.id }
             )
-            this.props.form.setFieldsValue({
-                repairDate: [moment(resulData.data.startDate), moment(resulData.data.endDate)],
-                currentPeriodMoney: resulData.data.currentPeriodMoney,
-                actualPaidMoney: resulData.data.currentPeriodMoney,
-                discountMoney: resulData.data.discountMoney,
-                id: resulData.data.id
+            this.props.form.setFields({
+                repairDate: {value: [moment(resulData.data.startDate), moment(resulData.data.endDate)]},
+                currentPeriodMoney: {
+                    value: resulData.data.currentPeriodMoney,
+                    errors: ''
+                },
+                actualPaidMoney: {
+                    value: resulData.data.currentPeriodMoney,
+                    errors: ''
+                },
+                discountMoney: {
+                    value: resulData.data.discountMoney,
+                    errors: ''
+                },
+                id: {
+                    value: resulData.data.id,
+                    errors: ''
+                }
             })
             this.setState({
                 isFirst: false,
@@ -50,8 +62,6 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        json['payDeadline'] = json.payDeadline.format('YYYY-MM-DD')
-        console.log(json)
         await apiPost(
             '/collectRent/updateCollectRentVoByCommit',
             json

@@ -170,6 +170,7 @@ class CollectRentConduct extends Component {
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}>
+                    <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200,

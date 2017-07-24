@@ -2,13 +2,13 @@
 import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../api'
-import CollectRentHeadComponent from './components/CollectRentHead'
+import PropertyFeeHeadComponent from './components/PropertyFeeHead'
 import NoPaidComponent from './Details/RentReviewDetailNoPaid'
 import NoLateAndRentFinishComponent from './Details/NoLateAndRentFinish'
 import AllPaidComponent from './Details/RentReviewDetail'
 // 引入组件
 // React component
-class CollectRentSuccess extends Component {
+class PropertyFeeFinanceSuccess extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -51,7 +51,7 @@ class CollectRentSuccess extends Component {
             '/collectRent/ListBuildingInfo'
         )
         let result = await apiPost(
-            '/collectRent/collectRentList',
+            '/propertyFee/propertyFeeList',
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
@@ -83,35 +83,15 @@ class CollectRentSuccess extends Component {
             }, {
                 title: '客户名称',
                 width: 320,
-                dataIndex: 'rentClientName',
-                key: 'rentClientName'
+                dataIndex: 'clientName',
+                key: 'clientName'
             }, {
-                title: '交费周期',
-                width: 150,
-                dataIndex: 'periodStatus',
-                key: 'periodStatus',
-                render: function (text, record, index) {
-                    let whType = ''
-                    if (record.periodStatus === 3) {
-                        whType = '季付'
-                    }
-                    if (record.periodStatus === 6) {
-                        whType = '半年付'
-                    }
-                    if (record.periodStatus === 12) {
-                        whType = '年付'
-                    }
-                    return (
-                        <span>{whType}</span>
-                    )
-                }
-            }, {
-                title: '本期租金周期',
+                title: '本期物业费周期',
                 width: 280,
-                dataIndex: 'periodRent',
-                key: 'periodRent'
+                dataIndex: 'periodPropertyFee',
+                key: 'periodPropertyFee'
             }, {
-                title: '本期租金',
+                title: '应收金额',
                 width: 150,
                 dataIndex: 'actualPaidMoney',
                 key: 'actualPaidMoney'
@@ -121,7 +101,7 @@ class CollectRentSuccess extends Component {
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
-                title: '实收租金日期',
+                title: '实收物业费日期',
                 width: 150,
                 dataIndex: 'receiptDate',
                 key: 'receiptDate'
@@ -131,16 +111,33 @@ class CollectRentSuccess extends Component {
                 dataIndex: 'overdueDay',
                 key: 'overdueDay'
             }, {
-                title: '租金开票状态',
+                title: '延期下个月电费',
                 width: 150,
-                dataIndex: 'invoiceRentStatus',
-                key: 'invoiceRentStatus',
+                dataIndex: 'lateConductWay',
+                key: 'lateConductWay',
                 render: function (text, record, index) {
                     let whType = ''
-                    if (record.invoiceRentStatus === 0) {
+                    if (record.lateConductWay === 0) {
+                        whType = '否'
+                    }
+                    if (record.lateConductWay === 1) {
+                        whType = '是'
+                    }
+                    return (
+                        <span>{whType}</span>
+                    )
+                }
+            }, {
+                title: '物业费开票状态',
+                width: 150,
+                dataIndex: 'invoicePropertyStatus',
+                key: 'invoicePropertyStatus',
+                render: function (text, record, index) {
+                    let whType = ''
+                    if (record.invoicePropertyStatus === 0) {
                         whType = '未开票'
                     }
-                    if (record.invoiceRentStatus === 1) {
+                    if (record.invoicePropertyStatus === 1) {
                         whType = '已开票'
                     }
                     return (
@@ -148,22 +145,25 @@ class CollectRentSuccess extends Component {
                     )
                 }
             }, {
-                title: '打印状态',
+                title: '审核时间',
                 width: 150,
-                dataIndex: 'whetherPrinted',
-                key: 'whetherPrinted',
-                render: function (text, record, index) {
-                    let whetherPrinted = ''
-                    if (record.whetherPrinted === 0) {
-                        whetherPrinted = '未打印'
-                    }
-                    if (record.whetherPrinted === 1) {
-                        whetherPrinted = '已打印'
-                    }
-                    return (
-                        <span>{whetherPrinted}</span>
-                    )
-                }
+                dataIndex: 'auditDate',
+                key: 'auditDate'
+            }, {
+                title: '审核人',
+                width: 150,
+                dataIndex: 'auditName',
+                key: 'auditName'
+            }, {
+                title: '申请人',
+                width: 150,
+                dataIndex: 'updateName',
+                key: 'updateName'
+            }, {
+                title: '申请日期',
+                width: 150,
+                dataIndex: 'updateDate',
+                key: 'updateDate'
             }, {
                 title: '操作',
                 width: 100,
@@ -174,19 +174,19 @@ class CollectRentSuccess extends Component {
                     if (record.whetherRentPaid === 0) {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
                             </div>
                         )
                     } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
+                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 明细 </a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
+                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 明细 </a>
                             </div>
                         )
                     }
@@ -202,7 +202,7 @@ class CollectRentSuccess extends Component {
         filters['auditStatus'] = 2
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
+            '/propertyFee/propertyFeeList',
             filters
         )
         this.setState({
@@ -213,9 +213,9 @@ class CollectRentSuccess extends Component {
             id: 0
         })
     }
-    rentClientName = ''
+    clientName = null
     entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
+        this.clientName = e.target.value
     }
     roomNum = ''
     entryNumberOnChange = (e) => {
@@ -231,7 +231,7 @@ class CollectRentSuccess extends Component {
     render () {
         return (
             <div>
-                <CollectRentHeadComponent
+                <PropertyFeeHeadComponent
                     refresh={this.refresh}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
@@ -252,7 +252,7 @@ class CollectRentSuccess extends Component {
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 2000 }}
+                        scroll={{ x: 2200 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
@@ -262,6 +262,6 @@ class CollectRentSuccess extends Component {
         )
     }
 }
-export default CollectRentSuccess
+export default PropertyFeeFinanceSuccess
 
 

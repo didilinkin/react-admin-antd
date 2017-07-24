@@ -96,7 +96,7 @@ import RentReviewDetailNoLate   from '../views/Financial/pages/Details/RentRevie
 import RentReviewDetailNoPaid   from '../views/Financial/pages/Details/RentReviewDetailNoPaid'
 import NoLateAndRentFinish      from '../views/Financial/pages/Details/NoLateAndRentFinish'
 import RentFinishAndLate        from '../views/Financial/pages/Details/RentFinishAndLate'
-import PropertyCostsReview      from '../views/Financial/pages/PropertyCostsReview'                     // 财务管理 - 物业费审核
+import PropertyCostsReview      from '../views/Financial/propertyFee/PropertyCostsReview'                     // 财务管理 - 物业费审核
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>

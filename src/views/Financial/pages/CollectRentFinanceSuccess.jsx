@@ -25,9 +25,10 @@ class CollectRentConduct extends Component {
             {id: id}
         )
         notification.open({
-            message: '违约金开票成功',
+            message: '撤回成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        this.refresh1()
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -199,6 +200,21 @@ class CollectRentConduct extends Component {
     }
     componentDidMount () {
         this.initialRemarks()
+    }
+    refresh1 = async () => {
+        // 刷新表格
+        let result = await apiPost(
+            '/collectRent/collectRentList',
+            {'auditStatus': 2
+            }
+        )
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            dataSource: result.data,
+            id: 0
+        })
     }
     refresh = async (pagination, filters, sorter) => {
         filters['auditStatus'] = 2

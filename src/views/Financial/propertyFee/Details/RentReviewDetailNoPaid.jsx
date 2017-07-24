@@ -1,21 +1,23 @@
-// 财务管理 - 租金审核
+// 租金明细
 import React from 'react'
-import {Row, Col, textarea, Modal, Radio, notification, Icon} from 'antd'
+import {Row, Col, Modal} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
-const RadioGroup = Radio.Group
 
 
-class App extends React.Component {
+class RentReviewDetailNoPaid extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            visible: false,
             auditStatus: 2,
-            payPeriod: '',
-            remark: '',
+            visible: false,
             view: true,
+            payPeriod: '',
+            id: 0,
+            remark: '',
+            openUpdate: false,
             isFirst: true,
+            data2: [],
             data: {}
         }
     }
@@ -27,6 +29,10 @@ class App extends React.Component {
             let resulData = await apiPost(
                 '/collectRent/getCollectRentById',
                 {id: nextProps.id}
+            )
+            let result2 = await apiPost(
+                '/collectRent/collectRentList',
+                {auditStatus: 2}
             )
             if (resulData.data.payCycle === 3) {
                 this.setState({
@@ -42,58 +48,32 @@ class App extends React.Component {
                 })
             }
             this.setState({
-                visible: nextProps.visible,
                 data: resulData.data,
+                data2: result2.data,
+                visible: nextProps.visible,
                 isFirst: false,
-                view: true,
-                fileList: []
+                view: true
             })
-            console.log(this.state.data.rentClientName)
+            console.log(this.state.data2)
         }
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
-    }
-    onChange = (e) => {
-        this.setState({
-            auditStatus: e.target.value
-        })
-    }
-    onValueChange = (e) => {
-        this.setState({
-            remark: e.target.value
-        })
     }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
     }
-    // 单击确定按钮提交表单
-    handleSubmit = async () => {
-        let result = await apiPost(
-            'collectRent/updateCollectRentVoByAudit',
-            {auditStatus: this.state.auditStatus,
-                remark: this.state.remark,
-                id: this.state.data.id}
-        )
-        notification.open({
-            message: result.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.props.refreshTable()
-        this.setState({visible: false,
-            isFirst: false })
-    }
     render () {
         return (
-            <div className="contract">
+            <div style={this.props.style} className="contract">
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title= "租金明细"
                     style={{top: 20}}
                     width={700}
                     visible={this.state.visible}
-                    onOk={this.handleSubmit}
+                    footer={null}
                     onCancel={this.handleCancel}
                 >
                     <h2>租户信息</h2>
@@ -122,7 +102,7 @@ class App extends React.Component {
                             <h2>本期租金</h2>
                             <Row>
                                 <Col span={8}><b>本期周期：</b>{this.state.data.periodRent}</Col>
-                                <Col span={8}><b>缴费期限：</b>{this.state.data.payDeadline}</Col>
+                                <Col span={8}><b>交费期限：</b>{this.state.data.payDeadline}</Col>
                                 <Col span={8}><b>本期租金：</b>{this.state.data.actualPaidMoney} 元  （已优惠 {this.state.data.discountMoney} 元）</Col>
                             </Row>
                             <p className="line" />
@@ -131,20 +111,13 @@ class App extends React.Component {
                                 <Col span={8}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
                                 <Col span={16}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
                             </Row>
-                            <Row>
-                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
-                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
-                                    <Radio value={3}>审核不通过</Radio>
-                                </RadioGroup>
-                            </Row>
                         </div>
                     </div>
-                    <textarea placeholder="请输入审批意见" onChange={this.onValueChange} />
                 </Modal>
             </div>
         )
     }
 }
 
-export default App
+export default RentReviewDetailNoPaid
 

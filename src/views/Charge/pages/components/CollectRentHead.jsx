@@ -100,14 +100,14 @@ class CollectRentHead extends React.Component {
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
-                        <FormItem label="租金是否开票" labelCol={{ span: 8 }}
+                        <FormItem label="开票状态" labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('invoiceRentStatus')(
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="请选择租金是否开票"
+                                    placeholder="请选择开票状态"
                                     optionFilterProp="children"
                                 >
                                     <Option key="0">未开票</Option>
@@ -154,18 +154,19 @@ class CollectRentHead extends React.Component {
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
-                        <FormItem label="查询类型" labelCol={{ span: 6 }}
+                        <FormItem label="查询依据" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('dateSelect')(
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="请选择查询类型"
+                                    placeholder="请选择查询依据"
                                     optionFilterProp="children"
                                 >
                                     <Option key="0">实交日期</Option>
                                     <Option key="1">交费期限</Option>
+                                    <Option key="2">费用周期</Option>
                                 </Select>
                             )}
                         </FormItem>

@@ -7,7 +7,7 @@ import CollectRentRepaidComponent from './components/PaidConfirm'
 // 引入组件
 const Option = Select.Option
 // React component
-class CollectRentConduct extends Component {
+class CollectRentFail extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -201,6 +201,7 @@ class CollectRentConduct extends Component {
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}>
+                    <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200,
@@ -247,6 +248,6 @@ class CollectRentConduct extends Component {
         )
     }
 }
-export default CollectRentConduct
+export default CollectRentFail
 
 
