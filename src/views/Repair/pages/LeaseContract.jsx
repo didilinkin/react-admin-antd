@@ -1,8 +1,9 @@
 // 客户管理 - 合同管理 - 租赁合同
 import React from 'react'
 import { apiPost } from '../../../api'
-import {Table, Spin } from 'antd'
+import {Table, Spin, Button } from 'antd'
 import ContractHeadComponent from './common/ContractHead'
+import LeaseCom from './common/LeaseCom'
 class PropertyContract extends React.Component {
     constructor (props) {
         super(props)
@@ -12,7 +13,13 @@ class PropertyContract extends React.Component {
             id: 0,
             columns: [],
             dataSource: [],
-            ListBuildingInfo: []
+            map: {
+                ListBuildingInfo: [],
+                MapDict: {},
+                ListCustomerInfo: []
+            },
+            openLeaseCom: false,
+            openHappyCom: false
         }
     }
     async initialRemarks () {
@@ -26,7 +33,7 @@ class PropertyContract extends React.Component {
         )
         let repairList = result.data
         this.setState({loading: false,
-            ListBuildingInfo: ListBuildingInfo.data.ListBuildingInfo,
+            map: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -132,7 +139,23 @@ class PropertyContract extends React.Component {
         this.setState({
             dataSource: result.data,
             type: filters['type'],
-            id: 0
+            id: 0,
+            openLeaseCom: false,
+            openHappyCom: false
+        })
+    }
+    openLeaseCom = () => {
+        this.setState({
+            id: 0,
+            openLeaseCom: true,
+            openHappyCom: false
+        })
+    }
+    openHappyCom = () => {
+        this.setState({
+            id: 0,
+            openLeaseCom: false,
+            openHappyCom: true
         })
     }
     render () {
@@ -141,8 +164,10 @@ class PropertyContract extends React.Component {
                 <ContractHeadComponent
                     refresh={this.refresh}
                     type={this.state.type}
-                    ListBuildingInfo={this.state.ListBuildingInfo}
+                    ListBuildingInfo={this.state.map.ListBuildingInfo}
                 />
+                <Button style={{ marginBottom: 10}} type="primary" onClick={this.openLeaseCom}>添加范本合同</Button>&nbsp;&nbsp;
+                <Button style={{ marginBottom: 10}} type="primary" onClick={this.openHappyCom}>添加欢乐颂合同</Button>
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
@@ -152,6 +177,12 @@ class PropertyContract extends React.Component {
                         columns={this.state.columns}
                     />
                 </Spin>
+                <LeaseCom
+                    refreshTable={this.refresh}
+                    visible={this.state.openLeaseCom}
+                    map={this.state.map}
+                    title="添加范本租赁合同"
+                />
             </div>
         )
     }

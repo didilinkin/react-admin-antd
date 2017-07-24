@@ -45,6 +45,7 @@ class ContractHead extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
+        console.log(ListBuildingInfo)
         let contractSplit = []
         if (type === 1) {
             contractSplit = [<Option key="1">正常</Option>, <Option key="2">水电</Option>]
