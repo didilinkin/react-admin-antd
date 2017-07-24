@@ -62,6 +62,8 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
+        json['payDeadline'] = json.payDeadline.format('YYYY-MM-DD')
+        console.log(json)
         await apiPost(
             '/collectRent/updateCollectRentVoByCommit',
             json
@@ -116,6 +118,18 @@ class addUpkeep extends React.Component {
                                 >
                                     {getFieldDecorator('repairDate')(
                                         <RangePicker disabled />
+                                    )}
+                                </FormItem>
+                                <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('payDeadline', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入'
+                                        }]
+                                    })(
+                                        <DatePicker />
                                     )}
                                 </FormItem>
                                 <FormItem label="本期租金" labelCol={{ span: 6 }}

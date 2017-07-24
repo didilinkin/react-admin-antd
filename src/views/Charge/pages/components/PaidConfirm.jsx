@@ -31,24 +31,12 @@ class addUpkeep extends React.Component {
                 '/collectRent/getCollectRentById',
                 { 'id': nextProps.id }
             )
-            this.props.form.setFields({
-                repairDate: {value: [moment(resulData.data.startDate), moment(resulData.data.endDate)]},
-                currentPeriodMoney: {
-                    value: resulData.data.currentPeriodMoney,
-                    errors: ''
-                },
-                actualPaidMoney: {
-                    value: resulData.data.currentPeriodMoney,
-                    errors: ''
-                },
-                discountMoney: {
-                    value: resulData.data.discountMoney,
-                    errors: ''
-                },
-                id: {
-                    value: resulData.data.id,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                repairDate: [moment(resulData.data.startDate), moment(resulData.data.endDate)],
+                currentPeriodMoney: resulData.data.currentPeriodMoney,
+                actualPaidMoney: resulData.data.currentPeriodMoney,
+                discountMoney: resulData.data.discountMoney,
+                id: resulData.data.id
             })
             this.setState({
                 isFirst: false,
@@ -118,18 +106,6 @@ class addUpkeep extends React.Component {
                                 >
                                     {getFieldDecorator('repairDate')(
                                         <RangePicker disabled />
-                                    )}
-                                </FormItem>
-                                <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('payDeadline', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请输入'
-                                        }]
-                                    })(
-                                        <DatePicker />
                                     )}
                                 </FormItem>
                                 <FormItem label="本期租金" labelCol={{ span: 6 }}
