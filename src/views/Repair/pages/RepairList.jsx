@@ -89,18 +89,18 @@ class RepairList extends Component {
                 }
             }, {
                 title: '报修日期',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairDate',
                 key: 'repairDate',
                 sorter: true
             }, {
                 title: '公司名称',
-                width: 150,
+                width: 200,
                 dataIndex: 'clientName',
                 key: 'clientName'
             }, {
                 title: '报修内容',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairContent',
                 key: 'repairContent',
                 render: function (text, record, index) {
@@ -112,7 +112,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '派工状态',
-                width: 150,
+                width: 200,
                 dataIndex: 'pieStatus',
                 key: 'pieStatus',
                 render: function (text, record, index) {
@@ -126,12 +126,12 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修人',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairedMan',
                 key: 'repairedMan'
             }, {
                 title: '维修状态',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairStatus',
                 key: 'repairStatus',
                 render: function (text, record, index) {
@@ -147,7 +147,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修项目',
-                width: 150,
+                width: 200,
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {

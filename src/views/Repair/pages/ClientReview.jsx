@@ -32,17 +32,17 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '完工日期',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairedDate',
                 key: 'repairedDate'
             }, {
                 title: '公司名称',
-                width: 150,
+                width: 200,
                 dataIndex: 'clientName',
                 key: 'clientName'
             }, {
                 title: '报修内容',
-                width: 150,
+                width: 200,
                 dataIndex: 'repairContent',
                 key: 'repairContent',
                 render: function (text, record, index) {
@@ -54,7 +54,7 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '客户评价',
-                width: 150,
+                width: 200,
                 dataIndex: 'ratedStatus',
                 key: 'ratedStatus',
                 render: function (text, record, index) {
@@ -68,7 +68,7 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '回访状态',
-                width: 150,
+                width: 200,
                 dataIndex: 'visit',
                 key: 'visit',
                 render: function (text, record, index) {
@@ -82,7 +82,7 @@ class ClientReview extends React.Component {
                 }
             }, {
                 title: '回访日期',
-                width: 150,
+                width: 200,
                 dataIndex: 'visitDate',
                 key: 'visitDate'
             }, {

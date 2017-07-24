@@ -46,27 +46,27 @@ class RepairList extends Component {
                 }
             }, {
                 title: '检查日期',
-                width: 150,
+                width: 200,
                 dataIndex: 'inspectDate',
                 key: 'inspectDate'
             }, {
                 title: '公司名称',
-                width: 150,
+                width: 200,
                 dataIndex: 'clientName',
                 key: 'clientName'
             }, {
                 title: '所属楼宇',
-                width: 150,
+                width: 200,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '所属房间',
-                width: 150,
+                width: 200,
                 dataIndex: 'roomNums',
                 key: 'roomNums'
             }, {
                 title: '整改项目',
-                width: 150,
+                width: 200,
                 dataIndex: 'rectificationContent',
                 key: 'rectificationContent',
                 render: function (text, record, index) {
