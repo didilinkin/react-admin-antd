@@ -103,7 +103,7 @@ class Counter extends Component {
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>物品名称:&nbsp;&nbsp;</span>
+                    <span>物品名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>

@@ -174,10 +174,10 @@ class ReceiveStatistics extends Component {
             <div>
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>截止日期:&nbsp;&nbsp;</span>
+                    <span>截止日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <DatePicker style={{width: 200,
                         marginRight: '5px'}} onChange={this.getDate} />
-                    <span>仓库类型:&nbsp;&nbsp;</span>
+                    <span>仓库类型&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{ width: 200,
@@ -191,7 +191,7 @@ class ReceiveStatistics extends Component {
                         <Option key="1">保洁用品库</Option>
                         <Option key="2">行政库</Option>
                     </Select>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;材料名称:&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;材料名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>

@@ -82,8 +82,15 @@ class TableAddUp extends React.Component {
                     clientList: result.data
                 })
                 this.props.form.resetFields()
+                let date = new Date()
+                let year = date.getFullYear()
+                let month = date.getMonth() + 1
+                let day = date.getDate()
+                let hour = date.getHours()
+                let minute = date.getMinutes()
+                let second = date.getSeconds()
                 this.props.form.setFieldsValue({
-                    repairNum: new Date().getTime()
+                    repairNum: year.toString() + month.toString() + day.toString() + hour.toString() + minute.toString() + second.toString()
                 })
             }
         }
@@ -197,15 +204,15 @@ class TableAddUp extends React.Component {
                                             message: '请输入'
                                         }]
                                     })(
-                                        <DatePicker />
+                                        <DatePicker style={{width: '100%'}} />
                                     )}
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修人" labelCol={{ span: 6 }}
+                                <FormItem label="报修单号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('repairMan', {
+                                    {getFieldDecorator('repairNum', {
                                         rules: [ {
                                             required: true,
                                             message: '请输入'
@@ -217,9 +224,9 @@ class TableAddUp extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={12}>
-                                <FormItem label="公司名称" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
+                            <Col span={24}>
+                                <FormItem label="公司名称" labelCol={{ span: 3 }}
+                                    wrapperCol={{ span: 20 }}
                                 >
                                     {getFieldDecorator('clientNameOne', {
                                         rules: [ {
@@ -229,31 +236,17 @@ class TableAddUp extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            dropdownStyle={{ width: '100%' }}
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getClient}
                                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option style={{ width: 300 }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
+                                                return <Option style={{ width: '100%' }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="联系方式" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('phone', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请输入'
-                                        }]
-                                    })(
-                                        <Input />
                                     )}
                                 </FormItem>
                             </Col>
@@ -274,10 +267,10 @@ class TableAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修单号" labelCol={{ span: 6 }}
+                                <FormItem label="所在房间" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('repairNum', {
+                                    {getFieldDecorator('roomNum', {
                                         rules: [ {
                                             required: true,
                                             message: '请输入'
@@ -288,20 +281,36 @@ class TableAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                         </Row>
-
-                        <FormItem label="所在房间" labelCol={{ span: 3 }}
-                            wrapperCol={{ span: 20 }}
-                        >
-                            {getFieldDecorator('roomNum', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请输入'
-                                }]
-                            })(
-                                <Input disabled />
-                            )}
-                        </FormItem>
-
+                        <Row>
+                            <Col span={12}>
+                                <FormItem label="报修人" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('repairMan', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={12}>
+                                <FormItem label="联系方式" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('phone', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </Row>
 
                         <FormItem label="报修内容" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}

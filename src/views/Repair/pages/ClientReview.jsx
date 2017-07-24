@@ -153,9 +153,9 @@ class ClientReview extends React.Component {
             <div>
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>回访日期:&nbsp;&nbsp;</span>
+                    <span>回访日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>

@@ -22,11 +22,12 @@ class ReturnVisit extends React.Component {
         } else {
             Repair['ratedStatus'] = <div><Rate disabled defaultValue={Repair.star} /><p>{Repair.ratedContent}</p></div>
         }
-        let j = 0
-        Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
+        Repair['repairProjectList'] = Repair.repairProjectList.map((RepairProject, j) => {
             if (RepairProject !== null) {
-                j++
-                return <tr key={j}><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                return <tr key={j}>
+                    <td>{RepairProject.materialName}</td>
+                    <td>{RepairProject.number}</td>
+                    <td>{RepairProject.money}</td></tr>
             } else {
                 return null
             }
@@ -69,16 +70,24 @@ class ReturnVisit extends React.Component {
             <div className="box2">
                 <div style={{paddingLeft: '100px'}}>
                     <Timeline>
-                        <Timeline.Item color="green"><h2 style={{display: 'inline-block',
-                            position: 'absolute',
-                            left: '-90px'}}>提交报修单</h2><p className="time">{this.state.data.repairDate}</p>受理人： {this.state.data.pieMan}</Timeline.Item>
-                        <Timeline.Item color="green"><h2 style={{display: 'inline-block',
-                            position: 'absolute',
-                            left: '-90px'}}>已派单</h2><p className="time">{this.state.data.pieDate}</p>维修人： {this.state.data.repairedMan}</Timeline.Item>
                         <Timeline.Item color="green">
                             <h2 style={{display: 'inline-block',
                                 position: 'absolute',
-                                left: '-90px'}}>完工登记</h2><p className="time">{this.state.data.repairedDate}</p>
+                                left: '-90px'}}
+                            >提交报修单
+                            </h2>
+                            <p className="time">{this.state.data.repairDate}</p>受理人： {this.state.data.pieMan}</Timeline.Item>
+                        <Timeline.Item color="green">
+                            <h2 style={{display: 'inline-block',
+                                position: 'absolute',
+                                left: '-90px'}}
+                            >已派单
+                            </h2><p className="time">{this.state.data.pieDate}</p>维修人： {this.state.data.repairedMan}</Timeline.Item>
+                        <Timeline.Item color="green">
+                            <h2 style={{display: 'inline-block',
+                                position: 'absolute',
+                                left: '-90px'}}
+                            >完工登记</h2><p className="time">{this.state.data.repairedDate}</p>
                             <p>{this.state.data.repairedContent}</p>
                             <table className="tb">
                                 <tbody>
@@ -102,17 +111,19 @@ class ReturnVisit extends React.Component {
                         <Timeline.Item color="green">
                             <h2 style={{display: 'inline-block',
                                 position: 'absolute',
-                                left: '-90px'}}>客户评价</h2><p className="time">{this.state.data.ratedDate}</p>
+                                left: '-90px'}}
+                            >客户评价</h2><p className="time">{this.state.data.ratedDate}</p>
                             {this.state.data.ratedStatus}
                         </Timeline.Item>
                     </Timeline>
                 </div>
                 <h2 style={{display: 'inline-block',
                     position: 'absolute',
-                    left: '-90px'}}>回访情况</h2><p className="time"></p>
+                    left: '-90px'}}
+                >回访情况</h2>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <p className="linevisit" />
-                <Button onClick={this.handleSubmit}>确定</Button>
+                <Button type="primary" onClick={this.handleSubmit}>确定</Button>
             </div>
         )
     }

@@ -110,13 +110,8 @@ class HeaderBar extends React.Component {
                             <i className="on bottom b-white" />
                         </UserDiv>}
                     >
-                        <MenuItemGroup title="用户中心">
-                            <Menu.Item key="setting:1">你好 - UserA</Menu.Item>
-                            <Menu.Item key="setting:2">个人信息</Menu.Item>
-                        </MenuItemGroup>
-                        <MenuItemGroup title="设置中心">
+                        <MenuItemGroup title="">
                             <Menu.Item key="setting:3">个人设置</Menu.Item>
-                            <Menu.Item key="setting:4">系统设置</Menu.Item>
                             <Menu.Item key="setting:5">
                                 <span onClick={this.Logout}>退出</span>
                             </Menu.Item>

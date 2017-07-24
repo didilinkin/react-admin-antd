@@ -1,5 +1,5 @@
 import {Modal, Input, Form, notification, Icon, Select, Row, Col,
-    DatePicker, InputNumber, Button   } from 'antd'
+    DatePicker, InputNumber, Button, Table   } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 const FormItem = Form.Item
@@ -15,7 +15,9 @@ class Lease extends React.Component {
             ListBuildingInfo: [],
             listRoom: [],
             MapDict: {},
-            ListclientName: []
+            ListclientName: [],
+            columns: [],
+            dataSource: []
         }
     }
     handleSubmit = async () => {
@@ -151,8 +153,58 @@ class Lease extends React.Component {
             clientId: clientId
         })
     }
-    generate = () => {
-        alert('生成租金')
+    generate = async () => {
+        let json = this.props.form.getFieldsValue()
+        json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
+        json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
+        json['leaseRooms'] = json.leaseRooms.toString()
+        json['signDate'] = json.signDate.format('YYYY-MM-DD')
+        if (json.payCycle.toString() === '季付') {
+            json['payCycle'] = 3
+        } else if (json.payCycle.toString() === '半年付') {
+            json['payCycle'] = 6
+        } else {
+            json['payCycle'] = 12
+        }
+        if (json.payType.toString() === '按首年租金递增') {
+            json['payType'] = 0
+        } else {
+            json['payType'] = 1
+        }
+        let list = await apiPost(
+            '/contract/InsertRentContractInfo',
+            json
+        )
+        this.setState({
+            columns: [
+                {
+                    title: '租赁开始时间',
+                    dataIndex: 'startDate'
+                },
+                {
+                    title: '租赁结束时间',
+                    dataIndex: 'endDate'
+                },
+                {
+                    title: '交费期限',
+                    dataIndex: 'payDeadline'
+                },
+                {
+                    title: '金额',
+                    dataIndex: 'currentPeriodMoney'
+                },
+                {
+                    title: '优惠金额',
+                    dataIndex: 'discountMoney'
+                },
+                {
+                    title: '实际应收',
+                    dataIndex: 'actualPaidMoney'
+                }
+            ],
+            dataSource: list.data
+        })
+        console.log(list)
     }
     Calculation = (data) => {
         let json = this.props.form.getFieldsValue(['serviceArea', 'fuzq', 'unitPrice', 'mzq'])
@@ -325,7 +377,7 @@ class Lease extends React.Component {
                                         optionFilterProp="children"
                                     >
                                         {this.state.ListclientName.map(clientName => {
-                                            return <Option key={clientName.id}>{clientName.rentClientName}</Option>
+                                            return <Option key={clientName.rentClientName}>{clientName.rentClientName}</Option>
                                         })}
                                     </Select>
                                 )}
@@ -477,7 +529,11 @@ class Lease extends React.Component {
                 </Form>
                 <Button onClick={this.generate}>生成每期租金</Button>
                 <div>
-                    暂无数据
+                    <Table
+                        bordered
+                        dataSource={this.state.dataSource}
+                        columns={this.state.columns}
+                    />
                 </div>
                 <Button onClick={this.handleSubmit}>保存</Button>
             </Modal>
