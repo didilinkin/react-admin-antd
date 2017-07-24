@@ -9,16 +9,19 @@ const WAREHOUSE_DIR = {
             title: '库存管理',
             key: 'inventoryManage',
             routekey: '/wareHouse/inventoryManage',
+            ancestor: ['wareHouse'],
             compObj: require('./containers/InventoryManage')
         }, {
             title: '领用统计',
             key: 'receiveStatistics',
             routekey: '/wareHouse/receiveStatistics',
+            ancestor: ['wareHouse'],
             compObj: require('./containers/ReceiveStatistics')
         }, {
             title: '材料管理',
             key: 'meterialManagement',
             routekey: '/wareHouse/meterialManagement',
+            ancestor: ['wareHouse'],
             compObj: require('./containers/MeterialManagement')
         }
     ]

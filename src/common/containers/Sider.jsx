@@ -13,6 +13,9 @@ class Sider extends React.Component {
         openKeys: [] // 只展开父级: 当前展开的 SubMenu 菜单项 key 数组
     }
 
+    // 判断是否 有折叠; 返回值(Boolean)
+    hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute')
+
     // 缩起内嵌菜单(使用)
     toggleCollapsed = () => {
         this.setState({
@@ -22,7 +25,6 @@ class Sider extends React.Component {
 
     // 只展开父级: 点击事件
     handleClick = (e) => {
-        console.log('Clicked: ', e)
         this.setState({ current: e.key })
     }
 
@@ -31,11 +33,9 @@ class Sider extends React.Component {
         const state = this.state
         // 最后打开的 Key
         const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1))
-        console.log('latestOpenKey:' + latestOpenKey)
 
         // 最后关闭的 key
         const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1))
-        console.log('latestCloseKey:' + latestCloseKey)
 
         // 新打开的 key
         let nextOpenKeys = []
@@ -51,37 +51,31 @@ class Sider extends React.Component {
 
     // 只展开父级: 获取祖先级 Key
     getAncestorKeys = (key) => {
-        console.log(globalDir)
-        const map = {
-            // sub3: ['sub2'],
-            // 新改: 仓库管理
-            inventoryManage: ['wareHouse'],
-            receiveStatistics: ['wareHouse'],
-            meterialManagement: ['wareHouse'],
-            // 新改: 仓库管理
-            account: ['equipment'],
-            computerRoomManagement: ['equipment'],
-            maintain: ['equipment'],
-            // 新改: 仓库管理 - 设备维保
-            maintenancePlan: ['equipment', 'maintain'],
-            repairRecord: ['equipment', 'maintain'],
-            // 新改: 仓库管理 - 设备巡检
-            inspection: ['equipment'],
-            // 新改: 仓库管理 - 设备巡检 - 电器系统
-            electric: ['equipment', 'inspection'],
-            distributionRoom: ['equipment', 'inspection', 'electric'],
-            weakRoom: ['equipment', 'inspection', 'electric'],
-            generatorLog: ['equipment', 'inspection', 'electric'],
-            // 新改: 仓库管理 - 设备巡检 - 电梯系统
-            elevator: ['equipment', 'inspection'],
-            elevatorRoom: ['equipment', 'inspection', 'elevator'],
-            dailyInspection: ['equipment', 'inspection', 'elevator']
+        let map = {} // 创建 map
+
+        // (调用者: 下面 迭代) 判断 item 内是否 需要 迭代; 如果不需要 => 保存对象
+        let setItemKey = (item) => {
+            let itemArray = item.childRoute
+            if (this.hasChildRoute(item)) {
+                for (let item of itemArray) {
+                    let obj = item.key // 需要先保存一下 它的 key 与 ancestor
+                    map[obj] = item.ancestor
+
+                    setItemKey(item)
+                }
+            } else {
+                let obj = item.key // key 从 字符串转换为 对象
+                map[obj] = item.ancestor
+            }
         }
+
+        // 迭代 globalDir 中的 module 配置
+        for (let moduleItem of globalDir) {
+            setItemKey(moduleItem)
+        }
+
         return map[key] || []
     }
-
-    // 判断是否 有折叠; 返回值(Boolean)
-    hasChildRoute = (childItem) => childItem.hasOwnProperty('childRoute')
 
     // 渲染 导航菜单
     renderChildRoute = (obj) => {
@@ -153,7 +147,7 @@ class Sider extends React.Component {
                 <Menu
                     // 折叠
                     defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组
-                    defaultOpenKeys={['wareHouse']} // 初始展开的 SubMenu 菜单项 key 数组
+                    defaultOpenKeys={[]} // 初始展开的 SubMenu 菜单项 key 数组
                     // mode={ this.state.collapsed ? 'inline' : 'vertical' } // 排版模式 => 后期改
                     mode="inline"
                     theme="dark" // 主题色
