@@ -47,7 +47,7 @@ class App extends React.Component {
         return (
             <div>
                 <div id="box2">
-                    <div id="box1" className="box1">
+                    <div id="box1" className="box1" style={{marginBottom: '10'}}>
                         <h2>整改通知</h2>
                         <Row>
                             <Col span={12}><b>检查日期：</b> {this.state.data.inspectDate}</Col>
@@ -75,7 +75,7 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
-                <Button onClick={() => this.preview()}>打印</Button>
+                <Button type="primary" onClick={() => this.preview()}>打印</Button>
             </div>
         )
     }
