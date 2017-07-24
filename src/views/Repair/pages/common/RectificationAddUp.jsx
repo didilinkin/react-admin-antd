@@ -246,15 +246,15 @@ class RectificationAddUp extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            style={{ width: '100%' }}
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getClient}
                                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option style={{ width: 300 }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
+                                                return <Option style={{ width: '100%' }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
@@ -303,12 +303,12 @@ class RectificationAddUp extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    style={{ width: '100%' }}
+                                    placeholder="请选择"
                                     onChange={this.getUser}
                                 >
                                     {this.state.userList.map(d => {
-                                        return <Option key={d.loginName}>{d.loginName}</Option>
+                                        return <Option style={{ width: '100%' }} key={d.loginName}>{d.loginName}</Option>
                                     })}
                                 </Select>
                             )}
