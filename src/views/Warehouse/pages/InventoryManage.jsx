@@ -115,8 +115,8 @@ class InventoryManage extends Component {
                     let url = '/warehouse/warehouseDetail/' + record.warehouseId
                     return (
                         <div>
-                            <a href={url}> 明细 </a>
-                            <a onClick={() => handleUpdate(record.warehouseId, record.amount, record.number, record.unitPrice)} >出库</a>
+                            <a href={url}> 明细 &nbsp;</a>
+                            <a onClick={() => handleUpdate(record.warehouseId, record.amount, record.number, record.unitPrice)} >&nbsp; 出库</a>
                         </div>
                     )
                 }

@@ -67,37 +67,49 @@ class ReturnVisit extends React.Component {
     render () {
         return (
             <div className="box2">
-                <Timeline>
-                    <Timeline.Item color="green"><h2>提交报修单<em className="time">{this.state.data.repairDate}</em></h2>受理人： {this.state.data.pieMan}</Timeline.Item>
-                    <Timeline.Item color="green"><h2>已派单<em className="time">{this.state.data.pieDate}</em></h2>维修人： {this.state.data.repairedMan}</Timeline.Item>
-                    <Timeline.Item color="green">
-                        <h2>完工登记 <em className="time">{this.state.data.repairedDate}</em></h2>
-                        <p>{this.state.data.repairedContent}</p>
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>材料名称</td>
-                                    <td>数量</td>
-                                    <td>收费小计</td>
-                                </tr>
-                                {this.state.data.repairProjectList}
-                            </tbody>
-                        </table>
-                        <p>维修费： <span className="red">{this.state.data.amountMoney}</span> 元</p>
-                        <p>维修人： {this.state.data.repairedMan}</p>
-                        <p>协作人： {this.state.data.withMan}</p>
-                        <ul>
-                            <li>
-                                {this.state.data.repairedPic}
-                            </li>
-                        </ul>
-                    </Timeline.Item>
-                    <Timeline.Item color="green">
-                        <h2>客户评价<em className="time">{this.state.data.ratedDate}</em></h2>
-                        {this.state.data.ratedStatus}
-                    </Timeline.Item>
-                </Timeline>
-                <h2>回访情况<em className="time"></em></h2>
+                <div style={{paddingLeft: '100px'}}>
+                    <Timeline>
+                        <Timeline.Item color="green"><h2 style={{display: 'inline-block',
+                            position: 'absolute',
+                            left: '-90px'}}>提交报修单</h2><p className="time">{this.state.data.repairDate}</p>受理人： {this.state.data.pieMan}</Timeline.Item>
+                        <Timeline.Item color="green"><h2 style={{display: 'inline-block',
+                            position: 'absolute',
+                            left: '-90px'}}>已派单</h2><p className="time">{this.state.data.pieDate}</p>维修人： {this.state.data.repairedMan}</Timeline.Item>
+                        <Timeline.Item color="green">
+                            <h2 style={{display: 'inline-block',
+                                position: 'absolute',
+                                left: '-90px'}}>完工登记</h2><p className="time">{this.state.data.repairedDate}</p>
+                            <p>{this.state.data.repairedContent}</p>
+                            <table className="tb">
+                                <tbody>
+                                    <tr className="hd">
+                                        <td>材料名称</td>
+                                        <td>数量</td>
+                                        <td>收费小计</td>
+                                    </tr>
+                                    {this.state.data.repairProjectList}
+                                </tbody>
+                            </table>
+                            <p>维修费： <span className="red">{this.state.data.amountMoney}</span> 元</p>
+                            <p>维修人： {this.state.data.repairedMan}</p>
+                            <p>协作人： {this.state.data.withMan}</p>
+                            <ul>
+                                <li>
+                                    {this.state.data.repairedPic}
+                                </li>
+                            </ul>
+                        </Timeline.Item>
+                        <Timeline.Item color="green">
+                            <h2 style={{display: 'inline-block',
+                                position: 'absolute',
+                                left: '-90px'}}>客户评价</h2><p className="time">{this.state.data.ratedDate}</p>
+                            {this.state.data.ratedStatus}
+                        </Timeline.Item>
+                    </Timeline>
+                </div>
+                <h2 style={{display: 'inline-block',
+                    position: 'absolute',
+                    left: '-90px'}}>回访情况</h2><p className="time">2017-7-21 13:21:55</p>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <p className="linevisit" />
                 <Button onClick={this.handleSubmit}>确定</Button>
