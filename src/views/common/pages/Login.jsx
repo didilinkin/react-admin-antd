@@ -34,8 +34,8 @@ function info () {
         title: '忘记密码',
         content: (
             <div>
-                <p>如果忘记密码你就拍拍手</p>
-                <p>哈哈哈！！！</p>
+                <p>请联系管理员</p>
+                <p>修改密码。</p>
             </div>
         ),
         onOk () {}
