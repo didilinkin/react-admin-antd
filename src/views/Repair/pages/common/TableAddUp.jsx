@@ -209,10 +209,10 @@ class TableAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修人" labelCol={{ span: 6 }}
+                                <FormItem label="报修单号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('repairMan', {
+                                    {getFieldDecorator('repairNum', {
                                         rules: [ {
                                             required: true,
                                             message: '请输入'
@@ -267,10 +267,10 @@ class TableAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <FormItem label="报修单号" labelCol={{ span: 6 }}
+                                <FormItem label="所在房间" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('repairNum', {
+                                    {getFieldDecorator('roomNum', {
                                         rules: [ {
                                             required: true,
                                             message: '请输入'
@@ -283,10 +283,10 @@ class TableAddUp extends React.Component {
                         </Row>
                         <Row>
                             <Col span={12}>
-                                <FormItem label="所在房间" labelCol={{ span: 6 }}
+                                <FormItem label="报修人" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('roomNum', {
+                                    {getFieldDecorator('repairMan', {
                                         rules: [ {
                                             required: true,
                                             message: '请输入'
