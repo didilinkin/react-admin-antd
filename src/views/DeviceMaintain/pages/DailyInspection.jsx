@@ -146,9 +146,9 @@ class DailyInspection extends Component {
             <div>
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>巡检日期:&nbsp;&nbsp;</span>
+                    <span>巡检日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;梯号:&nbsp;&nbsp;</span>

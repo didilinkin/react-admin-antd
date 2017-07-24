@@ -108,7 +108,7 @@ class Counter extends Component {
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}
                 >
-                    <span>仓库类型:&nbsp;&nbsp;</span>
+                    <span>仓库类型:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200,
@@ -122,7 +122,7 @@ class Counter extends Component {
                         <Option key="1">保洁用品库</Option>
                         <Option key="2">行政库</Option>
                     </Select>
-                    <span>物品名称:&nbsp;&nbsp;</span>
+                    <span>物品名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />

@@ -227,9 +227,9 @@ class Account extends Component {
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>设备名称:&nbsp;&nbsp;</span>
+                    <span>设备名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;设备状态:&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;设备状态:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200,

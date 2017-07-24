@@ -182,10 +182,10 @@ class CollectRentConduct extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
+                    <span>房间编号:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNumberOnChange} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Select
