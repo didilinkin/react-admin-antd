@@ -229,7 +229,7 @@ class TableAddUp extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
+                                            dropdownStyle={{ width: 300 }}
                                             placeholder="Select a person"
                                             optionFilterProp="children"
                                             onChange={this.getClient}
@@ -298,7 +298,7 @@ class TableAddUp extends React.Component {
                                     message: '请输入'
                                 }]
                             })(
-                                <Input disabled />
+                                <Input />
                             )}
                         </FormItem>
 

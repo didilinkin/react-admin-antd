@@ -355,6 +355,9 @@ class Sidebar extends React.Component {
                         <Menu.Item key="/financial/rentReview">
                             <Link to="/financial/rentReview">租金审核</Link>
                         </Menu.Item>
+                        <Menu.Item key="/financial/propertyCostsReview">
+                            <Link to="/financial/propertyCostsReview">物业费审核</Link>
+                        </Menu.Item>
                     </SubMenu>
                 </Menu>
                 {/* 样式描述 */}

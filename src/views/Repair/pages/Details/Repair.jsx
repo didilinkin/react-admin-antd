@@ -32,9 +32,9 @@ class App extends React.Component {
             return <p key={j}>{span}</p>
         })
         if (Repair.fromType === 1) {
-            Repair['fromType'] = '微信'
+            Repair['fromType'] = '微信录入'
         } else {
-            Repair['fromType'] = '客服'
+            Repair['fromType'] = '客服录入'
         }
         if (Repair.pieStatus === 1) {
             Repair['pieStatus'] = '已派单'

@@ -48,7 +48,7 @@ class App extends React.Component {
             <div>
                 <div id="box2">
                     <div id="box1" className="box1">
-                        <h2>整改信息明细</h2>
+                        <h2>整改通知</h2>
                         <Row>
                             <Col span={12}><b>检查日期：</b> {this.state.data.inspectDate}</Col>
                             <Col span={12}><b>所属楼宇：</b>{this.state.data.buildName}</Col>

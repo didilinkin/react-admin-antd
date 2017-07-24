@@ -26,7 +26,11 @@ class App extends React.Component {
         Repair['repairProjectList'] = Repair.repairProjectList.map(RepairProject => {
             if (RepairProject !== null) {
                 j++
-                return <tr key={j}><td>{RepairProject.materialName}</td> <td>{RepairProject.number}</td><td>{RepairProject.money}</td></tr>
+                return <tr key={j}>
+                    <td>{RepairProject.materialName}</td>
+                    <td>{RepairProject.number}</td>
+                    <td>{RepairProject.money}</td>
+                </tr>
             } else {
                 return null
             }
