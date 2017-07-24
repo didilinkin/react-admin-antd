@@ -4,13 +4,6 @@ import { Row, Col } from 'antd'
 import '../../../../style/test.less'
 import { apiPost, baseURL } from '../../../../api'
 
-import styled       from 'styled-components'
-import { lighten }  from 'polished'
-
-const RowTitle = styled.b `
-    font-weight: bold;
-    color: ${lighten(0.1, '#000')};
-`
 
 class App extends React.Component {
     constructor (props) {
@@ -62,14 +55,14 @@ class App extends React.Component {
             <div className="box1">
                 <h2>报修人信息</h2>
                 <Row>
-                    <Col span={8}><RowTitle>报修人：</RowTitle>{this.state.data.repairMan}</Col>
-                    <Col span={8}><RowTitle>联系方式：</RowTitle>{this.state.data.phone}</Col>
-                    <Col span={8}><RowTitle>报修日期：</RowTitle>{this.state.data.repairDate}</Col>
+                    <Col span={8}><b>报修人：</b>{this.state.data.repairMan}</Col>
+                    <Col span={8}><b>联系方式：</b>{this.state.data.phone}</Col>
+                    <Col span={8}><b>报修日期：</b>{this.state.data.repairDate}</Col>
                 </Row>
                 <Row>
-                    <Col span={8}><RowTitle>报修房间：</RowTitle>{this.state.data.roomNum}</Col>
-                    <Col span={8}><RowTitle>公司名称：</RowTitle>{this.state.data.clientName}</Col>
-                    <Col span={8}><RowTitle>报修来源：</RowTitle>{this.state.data.fromType}</Col>
+                    <Col span={8}><b>报修房间：</b>{this.state.data.roomNum}</Col>
+                    <Col span={8}><b>公司名称：</b>{this.state.data.clientName}</Col>
+                    <Col span={8}><b>报修来源：</b>{this.state.data.fromType}</Col>
                 </Row>
                 <Row>
                     <Col span={8}><b>报修单号：</b>{this.state.data.repairNum}</Col>
