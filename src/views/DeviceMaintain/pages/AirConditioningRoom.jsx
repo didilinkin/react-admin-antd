@@ -176,7 +176,7 @@ class AirConditioningRoom extends Component {
             <div>
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>巡检日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>巡检日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker style={{marginRight: '5px'}} onChange={this.getDate} />
                     <Select
                         showSearch
@@ -190,7 +190,7 @@ class AirConditioningRoom extends Component {
                         <Option key="8:00">8:00</Option>
                         <Option key="13:30">13:30</Option>
                     </Select>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button type="primary" onClick={this.query}>查询</Button>
