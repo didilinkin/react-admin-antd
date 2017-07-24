@@ -204,7 +204,7 @@ class TableAddUp extends React.Component {
                                             message: '请输入'
                                         }]
                                     })(
-                                        <DatePicker />
+                                        <DatePicker style={{width: '100%'}} />
                                     )}
                                 </FormItem>
                             </Col>
@@ -236,7 +236,7 @@ class TableAddUp extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            dropdownStyle={{ width: 300 }}
+                                            dropdownStyle={{ width: '100%' }}
                                             placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getClient}
@@ -244,7 +244,7 @@ class TableAddUp extends React.Component {
                                         >
                                             {this.state.clientList.map(d => {
                                                 let key = d.clientId + ':' + d.roomNum + ':' + d.clientType
-                                                return <Option style={{ width: 300 }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
+                                                return <Option style={{ width: '100%' }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
                                     )}
