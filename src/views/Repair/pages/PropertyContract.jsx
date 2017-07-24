@@ -14,7 +14,11 @@ class PropertyContract extends React.Component {
             id: 0,
             columns: [],
             dataSource: [],
-            ListBuildingInfo: [],
+            map: {
+                ListBuildingInfo: [],
+                MapDict: {},
+                ListCustomerInfo: []
+            },
             PropertyContractAddedComOpen: false,
             HydropowerContractAdditionComOpen: false,
             PropertyContractAddedComOpenUP: false,
@@ -52,7 +56,7 @@ class PropertyContract extends React.Component {
         let repairList = result.data
         let updatePm = this.updatePm
         this.setState({loading: false,
-            ListBuildingInfo: ListBuildingInfo.data.ListBuildingInfo,
+            map: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -196,7 +200,7 @@ class PropertyContract extends React.Component {
                 <ContractHeadComponent
                     refresh={this.refresh}
                     type={this.state.type}
-                    ListBuildingInfo={this.state.ListBuildingInfo.ListBuildingInfo}
+                    ListBuildingInfo={this.state.map.ListBuildingInfo}
                 />
                 <Button style={{ marginBottom: 10}} type="primary" onClick={this.openPropertyContractAddedCom}>添加物业合同</Button>&nbsp;&nbsp;
                 <Button style={{ marginBottom: 10}} type="primary" onClick={this.openHydropowerContractAdditionCom}>添加仅水电合同</Button>
