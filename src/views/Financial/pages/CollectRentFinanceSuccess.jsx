@@ -146,7 +146,7 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentReviewDetailNoPaid/' + record.id
                         return (
                             <div>
-                                <a href={url}> 收款 </a>
+                                <a href={url}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                     <a href="javascript:" > 撤回 </a>
                                 </Popconfirm>
@@ -156,7 +156,7 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentReviewDetailNoLate/' + record.id
                         return (
                             <div>
-                                <a href={url}> 收款 </a>
+                                <a href={url}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                     <a href="javascript:" > 撤回 </a>
                                 </Popconfirm>
@@ -166,9 +166,9 @@ class CollectRentConduct extends Component {
                         let url = '/financial/NoLateAndRentFinish/' + record.id
                         return (
                             <div>
-                                <a href={url}> 收款 </a>
+                                <a href={url}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a href="javascript:" > 撤回 </a>
+                                    <a href="javascript:" >&nbsp; 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )
@@ -176,9 +176,9 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentFinishAndLate/' + record.id
                         return (
                             <div>
-                                <a href={url}> 收款 </a>
+                                <a href={url}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a href="javascript:" > 撤回 </a>
+                                    <a href="javascript:" >&nbsp; 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )
@@ -186,9 +186,9 @@ class CollectRentConduct extends Component {
                         let url = '/financial/RentReviewDetail/' + record.id
                         return (
                             <div>
-                                <a href={url}> 收款 </a>
+                                <a href={url}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a href="javascript:" > 撤回 </a>
+                                    <a href="javascript:" >&nbsp; 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )

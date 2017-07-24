@@ -87,10 +87,10 @@ class ComputerRoom extends Component {
                     let url = '/deviceMaintain/serverRoom/' + record.id
                     return (
                         <div>
-                            <a href={url}> 详情 </a>
-                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}> 修改 </a>
+                            <a href={url}> 详情 &nbsp;</a>
+                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
                             <Popconfirm title="确定修改吗?" onConfirm={() => delect(record.id)}>
-                                <a href="javascript:"> 删除 </a>
+                                <a href="javascript:">&nbsp; 删除 </a>
                             </Popconfirm>
                         </div>
                     )

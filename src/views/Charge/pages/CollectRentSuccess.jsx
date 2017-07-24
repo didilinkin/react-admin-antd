@@ -174,19 +174,19 @@ class CollectRentSuccess extends Component {
                     if (record.whetherRentPaid === 0) {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     }

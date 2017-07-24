@@ -128,9 +128,9 @@ class Account extends Component {
                     let url = '/deviceMaintain/equipmentLedger/' + record.id
                     return (
                         <div>
-                            <a href={url}> 详情 </a>
-                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}> 修改 </a>
-                            <a href="javascript:" onClick={() => openSS(record.id)}> 启停设备 </a>
+                            <a href={url}> 详情 &nbsp;</a>
+                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
+                            <a href="javascript:" onClick={() => openSS(record.id)}>&nbsp; 启停设备 </a>
                         </div>
                     )
                 }

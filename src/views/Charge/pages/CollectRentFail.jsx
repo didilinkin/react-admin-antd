@@ -134,8 +134,8 @@ class CollectRentFail extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} > 明细 </a>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate2(record.id)} > 重新收租 </a>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <a href="javascript:" type="primary" onClick={() => handleUpdate2(record.id)} >&nbsp; 重新收租 </a>
                         </div>
                     )
                 }
