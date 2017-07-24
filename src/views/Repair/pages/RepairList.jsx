@@ -95,20 +95,6 @@ class RepairList extends Component {
                     )
                 }
             }, {
-                title: '来源',
-                width: 150,
-                dataIndex: 'fromType',
-                key: 'fromType',
-                render: function (text, record, index) {
-                    let fromType = '客服'
-                    if (text === '1') {
-                        fromType = '微信'
-                    }
-                    return (
-                        <span>{fromType}</span>
-                    )
-                }
-            }, {
                 title: '派工状态',
                 width: 150,
                 dataIndex: 'pieStatus',
