@@ -97,7 +97,7 @@ class Sider extends React.Component {
             if (obj.hasOwnProperty('icon')) {
                 return (
                     <SubMenu
-                        key={ obj.path }
+                        key={ obj.key }
                         title={
                             <span>
                                 <Icon type={ obj.icon } />
@@ -111,7 +111,7 @@ class Sider extends React.Component {
             } else {
                 return (
                     <SubMenu
-                        key={ obj.path }
+                        key={ obj.key }
                         title={ obj.title }
                     >
                         { childHtml }
@@ -120,7 +120,7 @@ class Sider extends React.Component {
             }
         } else {
             return (
-                <Menu.Item key={ obj.path }>
+                <Menu.Item key={ obj.key }>
                     { obj.title }
                 </Menu.Item>
             )
@@ -133,7 +133,7 @@ class Sider extends React.Component {
                 return this.renderChildRoute(childItem)
             } else {
                 return (
-                    <Menu.Item key={childItem.path}>
+                    <Menu.Item key={childItem.key}>
                         { childItem.title }
                     </Menu.Item>
                 )
@@ -157,7 +157,7 @@ class Sider extends React.Component {
                     // mode={ this.state.collapsed ? 'inline' : 'vertical' } // 排版模式 => 后期改
                     mode="inline"
                     theme="dark" // 主题色
-                    inlineCollapsed="false" // inline 时菜单是否收起状态 => 切换 mode 类型
+                    inlineCollapsed={ this.state.collapsed } // inline 时菜单是否收起状态 => 切换 mode 类型
 
                     // 只展开父级
                     openKeys={ this.state.openKeys } // 当前展开的 SubMenu 菜单项 key 数组

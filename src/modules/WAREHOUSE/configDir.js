@@ -1,24 +1,24 @@
 // 仓库管理 - 目录配置
 const WAREHOUSE_DIR = {
     title: '仓库管理',
-    path: 'wareHouse',
-    routePath: '/wareHouse',
+    key: 'wareHouse',
+    routekey: '/wareHouse',
     icon: 'database',
     childRoute: [
         {
             title: '库存管理',
-            path: 'inventoryManage',
-            routePath: '/wareHouse/inventoryManage',
+            key: 'inventoryManage',
+            routekey: '/wareHouse/inventoryManage',
             compObj: require('./containers/InventoryManage')
         }, {
             title: '领用统计',
-            path: 'receiveStatistics',
-            routePath: '/wareHouse/receiveStatistics',
+            key: 'receiveStatistics',
+            routekey: '/wareHouse/receiveStatistics',
             compObj: require('./containers/ReceiveStatistics')
         }, {
             title: '材料管理',
-            path: 'meterialManagement',
-            routePath: '/wareHouse/meterialManagement',
+            key: 'meterialManagement',
+            routekey: '/wareHouse/meterialManagement',
             compObj: require('./containers/MeterialManagement')
         }
     ]

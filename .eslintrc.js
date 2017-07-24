@@ -160,13 +160,15 @@ module.exports = {
         "no-undefined": "error",                                                    // 禁止将 undefined 作为标识符
         "require-yield": "error",                                                   // 禁用函数内没有yield的 generator 函数
         "no-restricted-globals": 0,                                                 // 禁用特定的全局变量
+        "no-script-url": "error",                                                   // 禁用 Script URL
+        "array-callback-return": "error",                                           // 回调函数必须使用 return
 
         // React JSX内容
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
-        "react/jsx-space-before-closing": 1,                                        // 总是在自动关闭的标签前加一个空格，正常情况下也不需要换行
+        "react/jsx-space-before-closing": "error",                                  // 总是在自动关闭的标签前加一个空格，正常情况下也不需要换行
         "jsx-quotes": ["error", "prefer-double"],                                   // JSX 强制使用双引号
-        "react/jsx-closing-bracket-location": 1,                                    // 遵循JSX语法缩进/格式
+        "react/jsx-closing-bracket-location": "error",                              // 遵循JSX语法缩进/格式
         "react/jsx-boolean-value": 1,                                               // 如果属性值为 true, 可以直接省略
         "react/no-string-refs": 1,                                                  // 总是在Refs里使用回调函数
         "react/self-closing-comp": 1,                                               // 对于没有子元素的标签来说总是自己关闭标签
