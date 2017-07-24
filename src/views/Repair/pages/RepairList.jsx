@@ -151,9 +151,9 @@ class RepairList extends Component {
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
-                    return (
-                        <a onClick={() => maintenanceProject(record.id)}>查看明细</a>
-                    )
+                    if (record.startDate !== null) {
+                        return (<a onClick={() => maintenanceProject(record.id)}>查看明细</a>)
+                    }
                 }
             }, {
                 title: '维修明细',
