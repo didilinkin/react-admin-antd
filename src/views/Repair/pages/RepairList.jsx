@@ -6,6 +6,7 @@ import { apiPost } from '../../../api'
 import CancelRepairComponent from './common/CancelRepair'
 import DistributeLeafletsComponent from './common/DistributeLeaflets'
 import TableAddUpComponent from './common/TableAddUp'
+import App from './Details/MaintenanceProject'
 const { RangePicker } = DatePicker
 // React component
 class RepairList extends Component {
@@ -17,6 +18,7 @@ class RepairList extends Component {
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
+            openMaintenanceProject: false,
             columns: [],
             dataSource: [],
             id: 0
@@ -27,6 +29,7 @@ class RepairList extends Component {
             opendispatch: true,
             openinvalid: false,
             openTableAddUp: false,
+            openMaintenanceProject: false,
             openUpdate: false,
             id: id
         })
@@ -35,6 +38,7 @@ class RepairList extends Component {
         this.setState({
             openinvalid: true,
             opendispatch: false,
+            openMaintenanceProject: false,
             openTableAddUp: false,
             openUpdate: false,
             id: id
@@ -45,7 +49,18 @@ class RepairList extends Component {
             openinvalid: false,
             opendispatch: false,
             openTableAddUp: false,
+            openMaintenanceProject: false,
             openUpdate: true,
+            id: id
+        })
+    }
+    maintenanceProject = (id) => {
+        this.setState({
+            openinvalid: false,
+            opendispatch: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            openMaintenanceProject: true,
             id: id
         })
     }
@@ -59,6 +74,7 @@ class RepairList extends Component {
         const distributeLeaflets = this.distributeLeaflets
         const handleUpdate = this.handleUpdate
         const handleUpdateRepair = this.handleUpdateRepair
+        const maintenanceProject = this.maintenanceProject
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -135,9 +151,8 @@ class RepairList extends Component {
                 dataIndex: 'maintenanceProject',
                 key: 'maintenanceProject',
                 render: function (text, record, index) {
-                    let url = '/upkeep/maintenanceProject/' + record.id
                     return (
-                        <a href={url}>查看明细</a>
+                        <a onClick={() => maintenanceProject(record.id)}>查看明细</a>
                     )
                 }
             }, {
@@ -204,6 +219,7 @@ class RepairList extends Component {
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
+            openMaintenanceProject: false,
             dataSource: result.data,
             id: 0
         })
@@ -214,6 +230,7 @@ class RepairList extends Component {
             opendispatch: false,
             openinvalid: false,
             openUpdate: false,
+            openMaintenanceProject: false,
             openTableAddUp: true
         })
     }
@@ -258,6 +275,11 @@ class RepairList extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
+                />
+                <App
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openMaintenanceProject}
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
