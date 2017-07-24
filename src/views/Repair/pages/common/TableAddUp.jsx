@@ -217,9 +217,9 @@ class TableAddUp extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={12}>
-                                <FormItem label="公司名称" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
+                            <Col span={24}>
+                                <FormItem label="公司名称" labelCol={{ span: 3 }}
+                                    wrapperCol={{ span: 20 }}
                                 >
                                     {getFieldDecorator('clientNameOne', {
                                         rules: [ {
@@ -230,7 +230,7 @@ class TableAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             dropdownStyle={{ width: 300 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getClient}
                                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -240,20 +240,6 @@ class TableAddUp extends React.Component {
                                                 return <Option style={{ width: 300 }} key={key}>{d.clientName + '(' + d.roomNum + ')'}</Option>
                                             })}
                                         </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="联系方式" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('phone', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请输入'
-                                        }]
-                                    })(
-                                        <Input />
                                     )}
                                 </FormItem>
                             </Col>
@@ -288,20 +274,36 @@ class TableAddUp extends React.Component {
                                 </FormItem>
                             </Col>
                         </Row>
-
-                        <FormItem label="所在房间" labelCol={{ span: 3 }}
-                            wrapperCol={{ span: 20 }}
-                        >
-                            {getFieldDecorator('roomNum', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请输入'
-                                }]
-                            })(
-                                <Input />
-                            )}
-                        </FormItem>
-
+                        <Row>
+                            <Col span={12}>
+                                <FormItem label="所在房间" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('roomNum', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={12}>
+                                <FormItem label="联系方式" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('phone', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入'
+                                        }]
+                                    })(
+                                        <Input />
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </Row>
 
                         <FormItem label="报修内容" labelCol={{ span: 3 }}
                             wrapperCol={{ span: 20 }}
