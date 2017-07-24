@@ -63,6 +63,7 @@ class App extends React.Component {
                 title="维修项目"
                 style={{top: 20}}
                 width="800"
+                footer={null}
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
             >
