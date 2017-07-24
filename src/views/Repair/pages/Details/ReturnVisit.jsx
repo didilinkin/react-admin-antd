@@ -123,7 +123,7 @@ class ReturnVisit extends React.Component {
                 >回访情况</h2>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <p className="linevisit" />
-                <Button onClick={this.handleSubmit}>确定</Button>
+                <Button type="primary" onClick={this.handleSubmit}>确定</Button>
             </div>
         )
     }

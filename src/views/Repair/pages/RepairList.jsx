@@ -180,13 +180,13 @@ class RepairList extends Component {
                             </Popconfirm>)
                         arr.push(
                             <Popconfirm key="2" title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
-                                <a href="javascript:">&nbsp; 修改 </a>
+                                <a href="javascript:">&nbsp; 修改&nbsp; </a>
                             </Popconfirm>)
                     }
                     if (record.pieStatus === 0) {
                         arr.push(
                             <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a href="javascript:" > 作废 </a>
+                                <a href="javascript:" > &nbsp;作废 </a>
                             </Popconfirm>
                         )
                     }
