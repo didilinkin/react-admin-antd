@@ -109,7 +109,7 @@ class ReturnVisit extends React.Component {
                 </div>
                 <h2 style={{display: 'inline-block',
                     position: 'absolute',
-                    left: '-90px'}}>回访情况</h2><p className="time">2017-7-21 13:21:55</p>
+                    left: '-90px'}}>回访情况</h2><p className="time"></p>
                 <div className="txtbox"><Input onChange={this.getValue} type="textarea" rows={4} /></div>
                 <p className="linevisit" />
                 <Button onClick={this.handleSubmit}>确定</Button>
