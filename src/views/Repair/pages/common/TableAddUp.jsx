@@ -82,8 +82,15 @@ class TableAddUp extends React.Component {
                     clientList: result.data
                 })
                 this.props.form.resetFields()
+                let date = new Date()
+                let year = date.getFullYear()
+                let month = date.getMonth() + 1
+                let day = date.getDate()
+                let hour = date.getHours()
+                let minute = date.getMinutes()
+                let second = date.getSeconds()
                 this.props.form.setFieldsValue({
-                    repairNum: new Date().getTime()
+                    repairNum: year.toString() + month.toString() + day.toString() + hour.toString() + minute.toString() + second.toString()
                 })
             }
         }
