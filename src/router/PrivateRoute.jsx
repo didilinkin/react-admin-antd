@@ -1,8 +1,9 @@
 // 私有 容器组件 => 必须 本地登录状态 才可以访问
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom' // Redirect
+import { Redirect } from 'react-router-dom' // Route
 
-import Protected from './Protected'
+// import Protected from './Protected'
+import ProtectedRoute from './ProtectedRoute'
 
 class PrivateRoute extends React.Component {
     render () {
@@ -11,9 +12,9 @@ class PrivateRoute extends React.Component {
 
         if (isAuthenticate) {
             return (
-                <Route path={ path }>
-                    <Protected />
-                </Route>
+                <div className="PrivateRoute">
+                    <ProtectedRoute path={ path } />
+                </div>
             )
         } else {
             return (

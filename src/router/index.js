@@ -5,13 +5,11 @@ import {
     // Home,
     // Count,
     // View,
-    PrivateRoute,
-    Protected,
     Login,
-    Sider,
-    SiderA,
-    SiderOne
+    Sider
 } from '../common/containers'
+
+import PrivateRoute from '../router/PrivateRoute'
 
 class Routes extends React.Component {
     render () {
@@ -21,11 +19,9 @@ class Routes extends React.Component {
             <Route>
                 <div>
                     {/* 内容 展示 */}
-                    <PrivateRoute exact path="/" component={ Protected } isAuthenticate={ isAuthenticate } />
+                    <PrivateRoute path="/" isAuthenticate={ isAuthenticate } />
                     <Route exact path="/login" component={ Login } />
                     <Route exact path="/sider" component={ Sider } />
-                    <Route exact path="/siderA" component={ SiderA } />
-                    <Route exact path="/siderOne" component={ SiderOne } />
                 </div>
             </Route>
         )
