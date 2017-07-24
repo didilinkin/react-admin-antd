@@ -283,9 +283,9 @@ class RepairList extends Component {
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>报修日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>报修日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
