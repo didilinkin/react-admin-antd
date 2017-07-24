@@ -180,7 +180,7 @@ class ComputerRoom extends Component {
                 />
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>所属系统:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>所属系统&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 200}}
@@ -192,7 +192,7 @@ class ComputerRoom extends Component {
                             return <Option key={sys.systemName}>{sys.systemName}</Option>
                         })}
                     </Select>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;机房名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;机房名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.machineRoomNameFn} />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>

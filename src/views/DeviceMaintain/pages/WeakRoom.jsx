@@ -162,9 +162,9 @@ class WeakRoom extends React.Component {
             <div>
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}>
-                    <span>巡查日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>巡查日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡查人:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡查人&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange} />
                     <span>楼层:&nbsp;&nbsp;&nbsp;&nbsp;</span>
