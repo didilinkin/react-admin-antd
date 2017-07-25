@@ -234,7 +234,7 @@ class Account extends Component {
                         showSearch
                         style={{width: 200,
                             marginRight: '5px'}}
-                        placeholder="Select a person"
+                        placeholder="请选择"
                         optionFilterProp="children"
                         onChange={this.equipmentStatusOne}
                     >

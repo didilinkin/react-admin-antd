@@ -103,7 +103,7 @@ class EnabledState extends React.Component {
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择"
                                     optionFilterProp="children"
                                     onChange={this.equipmentStatus}
                                 >

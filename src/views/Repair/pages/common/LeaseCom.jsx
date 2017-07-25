@@ -2,6 +2,8 @@ import {Modal, Input, Form, notification, Icon, Select, Row, Col,
     DatePicker, InputNumber, Button, Table   } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
+import EditableCell from './EditableCell'
+import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
 const { RangePicker } = DatePicker
@@ -53,11 +55,14 @@ class Lease extends React.Component {
             this.props.refreshTable()
         }
     }
-    handleCancel = () => {
+    handleCancel = async () => {
         this.setState({
             visible: false,
             isFirst: true
         })
+        await apiPost(
+            '/contract/delectContractInfo',
+        )
         this.props.form.resetFields()
     }
 
@@ -179,27 +184,84 @@ class Lease extends React.Component {
             columns: [
                 {
                     title: '租赁开始时间',
-                    dataIndex: 'startDate'
+                    dataIndex: 'startDate',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={moment(text)}
+                            record={record}
+                            type={DatePicker}
+                            style={{width: '150px'}}
+                        />
+                    )
                 },
                 {
                     title: '租赁结束时间',
-                    dataIndex: 'endDate'
+                    dataIndex: 'endDate',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={moment(text)}
+                            record={record}
+                            type={DatePicker}
+                            style={{width: '150px'}}
+                        />
+                    )
                 },
                 {
                     title: '交费期限',
-                    dataIndex: 'payDeadline'
+                    dataIndex: 'payDeadline',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={moment(text)}
+                            record={record}
+                            type={DatePicker}
+                            style={{width: '150px'}}
+                        />
+                    )
                 },
                 {
                     title: '金额',
-                    dataIndex: 'currentPeriodMoney'
+                    dataIndex: 'currentPeriodMoney',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={text}
+                            record={record}
+                            type={Input}
+                            style={{width: '150px'}}
+                        />
+                    )
                 },
                 {
                     title: '优惠金额',
-                    dataIndex: 'discountMoney'
+                    dataIndex: 'discountMoney',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={text}
+                            record={record}
+                            type={Input}
+                            style={{width: '150px'}}
+                        />
+                    )
                 },
                 {
                     title: '实际应收',
-                    dataIndex: 'actualPaidMoney'
+                    dataIndex: 'actualPaidMoney',
+                    render: (text, record, index) => (
+                        <EditableCell
+                            value={text}
+                            record={record}
+                            type={Input}
+                            style={{width: '150px'}}
+                        />
+                    )
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'opt',
+                    render: function (text, record, index) {
+                        return (
+                            <a href="javascript:void(0)"> 删除 </a>
+                        )
+                    }
                 }
             ],
             dataSource: list.data

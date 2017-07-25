@@ -239,7 +239,7 @@ class EquipmentAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getSys}
                                         >
@@ -279,7 +279,7 @@ class EquipmentAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.getCategoryId}
                                         >
@@ -393,7 +393,7 @@ class EquipmentAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.equipmentStatus}
                                         >
@@ -436,7 +436,7 @@ class EquipmentAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.maintenanceName}
                                         >
@@ -476,7 +476,7 @@ class EquipmentAddUp extends React.Component {
                                         <Select
                                             showSearch
                                             style={{ width: 200 }}
-                                            placeholder="Select a person"
+                                            placeholder="请选择"
                                             optionFilterProp="children"
                                             onChange={this.patrolName}
                                         >

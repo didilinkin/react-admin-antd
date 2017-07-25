@@ -221,7 +221,7 @@ class RoomAddUp extends React.Component {
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择"
                                     optionFilterProp="children"
                                     onChange={this.getSys}
                                 >
@@ -243,7 +243,7 @@ class RoomAddUp extends React.Component {
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择"
                                     optionFilterProp="children"
                                     onChange={this.getCategoryId}
                                 >
@@ -289,7 +289,7 @@ class RoomAddUp extends React.Component {
                                 <Select
                                     showSearch
                                     style={{ width: 200 }}
-                                    placeholder="Select a person"
+                                    placeholder="请选择"
                                     optionFilterProp="children"
                                 >
                                     <Option key="1">1</Option>

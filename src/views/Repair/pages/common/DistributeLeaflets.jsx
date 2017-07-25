@@ -107,7 +107,7 @@ class DistributeLeaflets extends React.Component {
                             <Select
                                 showSearch
                                 style={{ width: 200 }}
-                                placeholder="Select a person"
+                                placeholder="请选择"
                                 optionFilterProp="children"
                                 onChange={this.getUser}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
