@@ -4,7 +4,7 @@ import matchingRoutes from './matchingRoutes'
 import basicRoutes from './basicRoutes'
 
 const configRoutes = [
-    ...matchingRoutes, // 映射
+    ...matchingRoutes, // 内容映射
     ...basicRoutes // 常用匹配
 ]
 
