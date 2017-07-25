@@ -60,7 +60,7 @@ class Sidebar extends React.Component {
 
     // 只展开父级: 获取祖先级 Key
     getAncestorKeys = (key) => {
-        let map = {} // 创建 map
+        // let map = {} // 创建 map
 
         // // (调用者: 下面 迭代) 判断 item 内是否 需要 迭代; 如果不需要 => 保存对象
         // let setItemKey = (item) => {
@@ -82,6 +82,20 @@ class Sidebar extends React.Component {
         // for (let moduleItem of globalDir) {
         //     setItemKey(moduleItem)
         // }
+
+        const map = {
+            // sub3: ['sub2']
+            // 静态配置(简略不需要的, 做最基本展示)
+            // 客户管理:
+            repairList: ['upkeep'],
+            clientReview: ['upkeep'],
+            upkeepList: ['upkeep'],
+            rectification: ['upkeep'],
+            // 仓库管理:
+            receiveStatistics: ['warehouse'],
+            materialManagement: ['warehouse'],
+            inventoryManage: ['warehouse']
+        }
 
         return map[key] || []
     }
@@ -152,34 +166,36 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <SubMenu key="/upkeep/contractManagement" title={
-                            <span>
-                                <span className="nav-text">合同管理</span>
-                            </span>
-                        }
-                        >
-                            <Menu.Item key="/upkeep/contractManagement/leaseContract">
-                                <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
-                            </Menu.Item>
+                        {/*
+                            <SubMenu key="/upkeep/contractManagement" title={
+                                <span>
+                                    <span className="nav-text">合同管理</span>
+                                </span>
+                            }
+                            >
+                                <Menu.Item key="/upkeep/contractManagement/leaseContract">
+                                    <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
+                                </Menu.Item>
 
-                            <Menu.Item key="/upkeep/contractManagement/propertyContract">
-                                <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
-                            </Menu.Item>
-                        </SubMenu>
+                                <Menu.Item key="/upkeep/contractManagement/propertyContract">
+                                    <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
+                                </Menu.Item>
+                            </SubMenu>
+                        */}
 
-                        <Menu.Item key="/upkeep/repairList">
+                        <Menu.Item key="repairList">
                             <Link to="/upkeep/repairList">客户报修</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/upkeep/clientReview">
+                        <Menu.Item key="clientReview">
                             <Link to="/upkeep/clientReview">客户回访</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/upkeep/upkeepList">
+                        <Menu.Item key="upkeepList">
                             <Link to="/upkeep/upkeepList">维修费设置</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/upkeep/rectification">
+                        <Menu.Item key="rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
                         </Menu.Item>
                     </SubMenu>
@@ -194,15 +210,15 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/warehouse/inventoryManage">
+                        <Menu.Item key="inventoryManage">
                             <Link to="/warehouse/inventoryManage">库存管理</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/warehouse/receiveStatistics">
+                        <Menu.Item key="receiveStatistics">
                             <Link to="/warehouse/receiveStatistics">领用统计</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/warehouse/materialManagement">
+                        <Menu.Item key="materialManagement">
                             <Link to="/warehouse/materialManagement">材料管理</Link>
                         </Menu.Item>
                     </SubMenu>
