@@ -157,6 +157,7 @@ class RepairList extends Component {
                 }
             }, {
                 title: '维修明细',
+                width: 200,
                 dataIndex: 'MaintenanceDetails',
                 key: 'MaintenanceDetails',
                 render: function (text, record, index) {
