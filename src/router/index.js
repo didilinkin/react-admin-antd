@@ -2,9 +2,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import {
-    // Home,
-    // Count,
-    // View,
     Login,
     Sider
 } from '../common/containers'
