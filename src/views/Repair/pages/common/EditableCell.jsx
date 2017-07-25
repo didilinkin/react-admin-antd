@@ -1,5 +1,7 @@
-import { Icon } from 'antd'
+import { Icon, Input, DatePicker } from 'antd'
 import React from 'react'
+import moment from 'moment'
+import { apiPost } from '../../../../api/index'
 class EditableCell extends React.Component {
     state = {
         value: this.props.value,
@@ -9,11 +11,23 @@ class EditableCell extends React.Component {
         const value = e.target.value
         this.setState({ value })
     }
-    check = () => {
+    handleChangeDate = (date, dateStrings) => {
+        this.setState({ value: dateStrings })
+    }
+    check = async () => {
+        let json = this.props.record
+        json[this.props.name] = this.state.value
+        console.log(json)
+        console.log(this.props.name + ':' + this.state.value)
+        let data = await apiPost(
+            '/contract/updateRentContractInfo',
+            json
+        )
         this.setState({ editable: false })
         if (this.props.onChange) {
             this.props.onChange(this.state.value)
         }
+        console.log(data.data)
     }
     edit = () => {
         this.setState({ editable: true })
@@ -25,12 +39,22 @@ class EditableCell extends React.Component {
                 {
                     editable ?
                         <div className="editable-cell-input-wrapper">
-                            {<this.props.type
-                                value={value}
-                                style={this.props.style}
-                                onChange={this.handleChange}
-                                onPressEnter={this.check}
-                            />}
+                            { this.props.type.toString() === 'Input' &&
+                                <Input
+                                    value={value}
+                                    style={this.props.style}
+                                    onChange={this.handleChange}
+                                    onPressEnter={this.check}
+                                />
+                            }
+                            { this.props.type.toString() === 'DatePicker' &&
+                                <DatePicker
+                                    value={moment(value)}
+                                    style={this.props.style}
+                                    onChange={this.handleChangeDate}
+                                    onPressEnter={this.check}
+                                />
+                            }
                             <Icon
                                 type="check"
                                 className="editable-cell-icon-check"

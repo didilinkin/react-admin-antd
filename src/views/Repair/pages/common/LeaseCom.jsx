@@ -1,9 +1,8 @@
 import {Modal, Input, Form, notification, Icon, Select, Row, Col,
-    DatePicker, InputNumber, Button, Table   } from 'antd'
+    DatePicker, InputNumber, Button, Table, Popconfirm   } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import EditableCell from './EditableCell'
-import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
 const { RangePicker } = DatePicker
@@ -58,12 +57,13 @@ class Lease extends React.Component {
     handleCancel = async () => {
         this.setState({
             visible: false,
-            isFirst: true
+            isFirst: true,
+            dataSource: []
         })
         await apiPost(
             '/contract/delectContractInfo',
         )
-        this.props.form.resetFields()
+        // this.props.form.resetFields()
     }
 
     async initialRemarks2 (nextProps) {
@@ -187,9 +187,10 @@ class Lease extends React.Component {
                     dataIndex: 'startDate',
                     render: (text, record, index) => (
                         <EditableCell
-                            value={moment(text)}
+                            name={'startDate'}
+                            value={text}
                             record={record}
-                            type={DatePicker}
+                            type={'DatePicker'}
                             style={{width: '150px'}}
                         />
                     )
@@ -199,9 +200,10 @@ class Lease extends React.Component {
                     dataIndex: 'endDate',
                     render: (text, record, index) => (
                         <EditableCell
-                            value={moment(text)}
+                            name={'endDate'}
+                            value={text}
                             record={record}
-                            type={DatePicker}
+                            type={'DatePicker'}
                             style={{width: '150px'}}
                         />
                     )
@@ -211,9 +213,10 @@ class Lease extends React.Component {
                     dataIndex: 'payDeadline',
                     render: (text, record, index) => (
                         <EditableCell
-                            value={moment(text)}
+                            name={'payDeadline'}
+                            value={text}
                             record={record}
-                            type={DatePicker}
+                            type={'DatePicker'}
                             style={{width: '150px'}}
                         />
                     )
@@ -223,9 +226,10 @@ class Lease extends React.Component {
                     dataIndex: 'currentPeriodMoney',
                     render: (text, record, index) => (
                         <EditableCell
+                            name={'currentPeriodMoney'}
                             value={text}
                             record={record}
-                            type={Input}
+                            type={'Input'}
                             style={{width: '150px'}}
                         />
                     )
@@ -235,9 +239,10 @@ class Lease extends React.Component {
                     dataIndex: 'discountMoney',
                     render: (text, record, index) => (
                         <EditableCell
+                            name={'discountMoney'}
                             value={text}
                             record={record}
-                            type={Input}
+                            type={'Input'}
                             style={{width: '150px'}}
                         />
                     )
@@ -247,9 +252,10 @@ class Lease extends React.Component {
                     dataIndex: 'actualPaidMoney',
                     render: (text, record, index) => (
                         <EditableCell
+                            name={'actualPaidMoney'}
                             value={text}
                             record={record}
-                            type={Input}
+                            type={'Input'}
                             style={{width: '150px'}}
                         />
                     )
@@ -257,9 +263,11 @@ class Lease extends React.Component {
                 {
                     title: '操作',
                     dataIndex: 'opt',
-                    render: function (text, record, index) {
+                    render: (text, record, index) => {
                         return (
-                            <a href="javascript:void(0)"> 删除 </a>
+                            <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record.id)}>
+                                <a href="javascript:void(0)">删除</a>
+                            </Popconfirm>
                         )
                     }
                 }
@@ -267,6 +275,13 @@ class Lease extends React.Component {
             dataSource: list.data
         })
         console.log(list)
+    }
+    onDelete = async (id) => {
+        let data = await apiPost(
+            '/contract/delectRentContractInfoId',
+            {id: id}
+        )
+        this.setState({ dataSource: data.data })
     }
     Calculation = (data) => {
         let json = this.props.form.getFieldsValue(['serviceArea', 'fuzq', 'unitPrice', 'mzq'])
