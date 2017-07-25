@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux' // push
 
 import { renderRoutes } from 'react-router-config' // 渲染静态 Route 配置
 
-import Routes from '../../../router'
+import rootRoutes from '../../../router'
 
 // react-router-redux: Now you can dispatch navigation actions from anywhere!
 // react-router-redux: store.dispatch(push('/foo'))
@@ -20,8 +20,7 @@ class Root extends React.Component {
             <Provider store={store}>
                 <ConnectedRouter history={ history }>
                     <div>
-                        { renderRoutes(Routes) }
-
+                        { renderRoutes(rootRoutes) }
                         {/* <DevTools /> */}
                     </div>
                 </ConnectedRouter>
