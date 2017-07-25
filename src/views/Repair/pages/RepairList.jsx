@@ -295,7 +295,7 @@ class RepairList extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
-                        scroll={{ x: 1650 }}
+                        scroll={{ x: 1850 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
