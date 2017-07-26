@@ -44,7 +44,7 @@ const Ringdiagram = React.createClass({
                 {
                     name: '访问来源',
                     type: 'pie',
-                    radius: ['50%', '70%'],
+                    radius: ['45%', '55%'],
                     center: ['50%', '60%'],
                     data: [
                         {
@@ -95,13 +95,13 @@ const Ringdiagram = React.createClass({
 
         return (
             <div className="examples" style={{
-                width: '50%',
+                width: '450',
                 float: 'left'}}
             >
                 <ParentBox className="parent">
                     <ReactEcharts
                         option={this.getOtion()}
-                        style={{ height: 300 }}
+                        style={{ height: 350 }}
                         onChartReady={this.onChartReady}
                         onEvents={onEvents}
                     />
