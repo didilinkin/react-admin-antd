@@ -1,8 +1,9 @@
 // 收费管理 - 物业费管理
 import React from 'react'
-import {Row, Col, Input, DatePicker, Select, Modal} from 'antd'
+import {Row, Form, Col, Input, DatePicker, Select, Modal} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
+const FormItem = Form.Item
 function onChange1 (date, dateString) {
     console.log(date, dateString)
 }
@@ -66,41 +67,92 @@ class App extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <div>
-                        <Row>
-                            <Col span={12}><i>本次周期：</i><DatePicker onChange={onChange1} /></Col>
-                            <Col span={12}><i>所属楼宇：</i><Input placeholder="" style={{ width: 120 }} disabled="disabled" /></Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}><i>交费期限：</i><DatePicker onChange={onChange2} /></Col>
-                            <Col span={12}><i>房间编号：</i><Input placeholder="" style={{ width: 120 }} disabled="disabled" /></Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}><i>客户名称：</i>
-                                <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange1}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
-                            </Col>
-                            <Col span={12}><i>房间面积：</i><Input placeholder="" style={{ width: 120 }} disabled="disabled" /></Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}><i>转租客户：</i>
-                                <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange1}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
-                                </Select>
-                            </Col>
-                            <Col span={12}><i>年物业费：</i><Input placeholder="" style={{ width: 120 }} disabled="disabled" /></Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}><i>下单日期：</i><DatePicker onChange={onChange3} /></Col>
-                            <Col span={12}><i>年空调费：</i><Input placeholder="" style={{ width: 120 }} disabled="disabled" /></Col>
-                        </Row>
-                        <Row>
-                            <Col span={12} />
-                        </Row>
+                        <Form layout="horizontal">
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <DatePicker onChange={onChange1} />
+                                    </FormItem>
+                                </Col>
+                                <Col span={12}>
+                                    <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Input placeholder="" style={{ width: 120 }} disabled="disabled" />
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <DatePicker onChange={onChange2} />
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange1}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span={12}>
+                                    <FormItem label="房间面积" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Input placeholder="" style={{ width: 120 }} disabled="disabled" />
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange1}>
+                                            <Option value="jack">Jack</Option>
+                                            <Option value="lucy">Lucy</Option>
+                                            <Option value="Yiminghe">yiminghe</Option>
+                                        </Select>
+                                    </FormItem>
+                                </Col>
+                                <Col span={12}>
+                                    <FormItem label="年物业费" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Input placeholder="" style={{ width: 120 }} disabled="disabled" />
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12}>
+                                    <FormItem label="下单日期" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <DatePicker onChange={onChange3} />
+                                    </FormItem>
+                                </Col>
+                                <Col span={12}>
+                                    <FormItem label="年空调费" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        <Input placeholder="" style={{ width: 120 }} disabled="disabled" />
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={12} />
+                            </Row>
+                        </Form>
                     </div>
                     <div className="bt">
                         <Input style={{ width: 520 }} placeholder="这里默认显示付款通知单名，可修改，打印时读该名" /> 物业费统计表
