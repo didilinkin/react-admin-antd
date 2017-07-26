@@ -298,34 +298,38 @@ class HomeIndex extends React.Component {
                 <div>
                     <h2 style={{ 'lineHeight': 'normal',
                         'fontSize': '18px',
+                        'paddingLeft': '60px',
                         'color': '#333'}}
                     >设备故障情况</h2>
-                    <div>
+                    <div style={{
+                        'paddingLeft': '50px'
+                    }}>
                         <div style={{'float': 'left',
                             'width': '300px'}}
                         >
                             <ul style={{'padding': '15px',
+                                'marginTop': '20px',
                                 'lineHeight': '1.9'}}
                             >
-                                <li>
+                                <li style={{paddingBottom: '20px'}}>
                                     <img src={require('../../../assets/images/ico_sbzs_60px.png')} width={60} height={60} style={{float: 'left',
                                         marginRight: '20',
                                         marginTop: '10'}} alt=""
                                     /><p>设备总数</p><span style={{'fontSize': '30px'}}>124,345</span>
                                 </li>
-                                <li>
+                                <li style={{paddingBottom: '20px'}}>
                                     <img src={require('../../../assets/images/ico_in use_60px.png')} width={60} height={60} style={{float: 'left',
                                         marginRight: '20',
                                         marginTop: '10'}} alt=""
                                     /><p>在用</p><span style={{'fontSize': '30px'}}>23,345</span>
                                 </li>
-                                <li>
+                                <li style={{paddingBottom: '20px'}}>
                                     <img src={require('../../../assets/images/ico_xz_60px.png')} width={60} height={60} style={{float: 'left',
                                         marginRight: '20',
                                         marginTop: '10'}} alt=""
                                     /><p>闲置</p><span style={{'fontSize': '30px'}}>23,345</span>
                                 </li>
-                                <li>
+                                <li style={{paddingBottom: '20px'}}>
                                     <img src={require('../../../assets/images/ico_bf_60px.png')} width={60} height={60} style={{float: 'left',
                                         marginRight: '20',
                                         marginTop: '10'}} alt=""
