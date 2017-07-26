@@ -38,8 +38,10 @@ class Lease extends React.Component {
             json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
             json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
             json['fuzq'] = []
-            json['freeStartDate'] = json.mzq[0].format('YYYY-MM-DD')
-            json['freeEndDate'] = json.mzq[1].format('YYYY-MM-DD')
+            if (typeof (json.mzq) !== 'undefined') {
+                json['freeStartDate'] = json.mzq[0].format('YYYY-MM-DD')
+                json['freeEndDate'] = json.mzq[1].format('YYYY-MM-DD')
+            }
             json['mzq'] = []
             json['leaseRooms'] = json.leaseRooms.toString()
             json['signDate'] = json.signDate.format('YYYY-MM-DD')
@@ -220,7 +222,7 @@ class Lease extends React.Component {
                     startIncNum: contract.startIncNum,
                     rentIncrRate: contract.rentIncrRate,
                     payType: contract.payType.toString() === '1' ? '按首年租金递增' : '按单价递增',
-                    mzq: [moment(contract.freeStartDate), moment(contract.freeEndDate)],
+                    mzq: contract.freeStartDate ? [moment(contract.freeStartDate), moment(contract.freeEndDate)] : [],
                     payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : '年付',
                     freeRent: contract.freeRent,
                     firstYearRent: contract.firstYearRent,

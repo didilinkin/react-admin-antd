@@ -3,6 +3,7 @@ import {Modal, Input, Form, notification, Icon, Select, Row, Col,
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import EditableCell from './EditableCell'
+import moment from 'moment'
 const FormItem = Form.Item
 const Option = Select.Option
 const { RangePicker } = DatePicker
@@ -48,8 +49,13 @@ class Happy extends React.Component {
             }
             json['contractSplit'] = 2
             if (this.props.id > 0) {
+                json['id'] = this.props.id
+                let date = await apiPost(
+                    '/contract/updaterentContractInfo',
+                    json
+                )
                 notification.open({
-                    message: '修改成功',
+                    message: date.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
             } else {
@@ -85,12 +91,130 @@ class Happy extends React.Component {
         if (this.state.isFirst && nextProps.visible) {
             this.props.form.resetFields()
             if (nextProps.id > 0) {
+                let PmContract = await apiPost(
+                    '/contract/getcontract',
+                    {type: 2,
+                        id: nextProps.id}
+                )
+                let contract = PmContract.data.contract
+                let listRoom = await apiPost(
+                    '/contract/ListRoom',
+                    {BuildId: contract.buildId}
+                )
+                listRoom = listRoom.data
                 this.setState({
                     isFirst: false,
+                    listRoom: listRoom,
+                    dataSource: PmContract.data.list,
+                    columns: [
+                        {
+                            title: '租赁开始时间',
+                            dataIndex: 'startDate',
+                            render: (text, record, index) => (
+                                <EditableCell
+                                    name={'startDate'}
+                                    value={text}
+                                    record={record}
+                                    type={'DatePicker'}
+                                    callback = {this.callback}
+                                    style={{width: '150px'}}
+                                />
+                            )
+                        },
+                        {
+                            title: '租赁结束时间',
+                            dataIndex: 'endDate',
+                            render: (text, record, index) => (
+                                <EditableCell
+                                    name={'endDate'}
+                                    value={text}
+                                    record={record}
+                                    type={'DatePicker'}
+                                    callback = {this.callback}
+                                    style={{width: '150px'}}
+                                />
+                            )
+                        },
+                        {
+                            title: '交费期限',
+                            dataIndex: 'payDeadline',
+                            render: (text, record, index) => (
+                                <EditableCell
+                                    name={'payDeadline'}
+                                    value={text}
+                                    record={record}
+                                    type={'DatePicker'}
+                                    callback = {this.callback}
+                                    style={{width: '150px'}}
+                                />
+                            )
+                        },
+                        {
+                            title: '金额',
+                            dataIndex: 'currentPeriodMoney',
+                            render: (text, record, index) => (
+                                <EditableCell
+                                    name={'currentPeriodMoney'}
+                                    value={text}
+                                    record={record}
+                                    type={'Input'}
+                                    callback = {this.callback}
+                                    style={{width: '150px'}}
+                                />
+                            )
+                        },
+                        {
+                            title: '优惠金额',
+                            dataIndex: 'discountMoney',
+                            render: (text, record, index) => (
+                                <EditableCell
+                                    name={'discountMoney'}
+                                    value={text}
+                                    record={record}
+                                    type={'Input'}
+                                    callback = {this.callback}
+                                    style={{width: '150px'}}
+                                />
+                            )
+                        },
+                        {
+                            title: '实际应收',
+                            dataIndex: 'actualPaidMoney'
+                        },
+                        {
+                            title: '操作',
+                            dataIndex: 'opt',
+                            render: (text, record, index) => {
+                                return (
+                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record.id)}>
+                                        <a href="javascript:void(0)">删除</a>
+                                    </Popconfirm>
+                                )
+                            }
+                        }
+                    ],
                     ListBuildingInfo: nextProps.map.ListBuildingInfo,
                     ListclientName: nextProps.map.ListCustomerInfo,
                     MapDict: nextProps.map.MapDict,
                     visible: nextProps.visible
+                })
+                this.props.form.setFieldsValue({
+                    buildIdOne: contract.buildName,
+                    buildId: contract.buildId,
+                    leaseRooms: contract.leaseRooms.split(','),
+                    signDate: moment(contract.signDate),
+                    leaseArea: contract.leaseArea,
+                    contractCode: contract.contractCode,
+                    fuzq: [moment(contract.startDate), moment(contract.endDate)],
+                    clientName: contract.clientName,
+                    depositMoney: contract.depositMoney,
+                    unitPrice: contract.unitPrice,
+                    startIncNum: contract.startIncNum,
+                    rentIncrRate: contract.rentIncrRate,
+                    payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : '年付',
+                    firstYearRent: contract.firstYearRent,
+                    roomIds: contract.roomIds,
+                    clientId: contract.clientId
                 })
             } else {
                 this.setState({
@@ -570,7 +694,9 @@ class Happy extends React.Component {
                         <Input type="hidden" />
                     )}
                 </Form>
-                <Button onClick={this.generate}>生成每期租金</Button>
+                {!this.props.id > 0 &&
+                    <Button onClick={this.generate}>生成每期租金</Button>
+                }
                 <div>
                     <Table
                         bordered
