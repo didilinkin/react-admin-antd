@@ -1,9 +1,9 @@
 // Elf 样式配置文件
-import * as c   from './helpers/Color'
-import * as e   from './helpers/Extend'
-import * as m   from './helpers/Mixins'
-import * as f   from './helpers/Font'
-import * as d   from './helpers/Distance'
+import * as c from './helpers/Color'
+import * as e from './helpers/Extend'
+import * as m from './helpers/Mixins'
+import * as f from './helpers/Font'
+import * as d from './helpers/Distance'
 
 class Elf {
     constructor (c, e, m, f, d) {

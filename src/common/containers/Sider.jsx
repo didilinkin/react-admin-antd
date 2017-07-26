@@ -1,10 +1,17 @@
 // 导航菜单 测试
 import React from 'react'
 
+import styled from 'styled-components'
+
 import globalDir from '../../utils/globalDir'
 
-import { Menu, Icon, Button } from 'antd'
+import { Menu, Icon } from 'antd' // Button
 const SubMenu = Menu.SubMenu
+
+const SiderBox = styled.div `
+    display: inline-block;
+    width: 230px;
+`
 
 class Sider extends React.Component {
     state = {
@@ -135,14 +142,16 @@ class Sider extends React.Component {
         })
 
         return (
-            <div style={{ width: 230 }}>
-                <Button
-                    type="primary"
-                    onClick={ this.toggleCollapsed }
-                    style={{ marginBottom: 16 }}
-                >
-                    <Icon type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } />
-                </Button>
+            <SiderBox>
+                {/*
+                    <Button
+                        type="primary"
+                        onClick={ this.toggleCollapsed }
+                        style={{ marginBottom: 16 }}
+                    >
+                        <Icon type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } />
+                    </Button>
+                */}
 
                 <Menu
                     // 折叠
@@ -161,7 +170,7 @@ class Sider extends React.Component {
                 >
                     { renderMenu }
                 </Menu>
-            </div >
+            </SiderBox>
         )
     }
 }
