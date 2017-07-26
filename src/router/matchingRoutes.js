@@ -11,7 +11,7 @@ const Spicy = () => <h3>辣条</h3>
 const Chips = () => <h3>薯片</h3>
 
 // 判断是否 有 compObj; 返回值(Boolean)
-const hasCompObj = (obj) => obj.hasOwnProperty('compObj')
+const hasCompObj = (obj) => obj.hasOwnProperty('component')
 
 // 储存 迭代 globalDir中的路由数据(需要处理)
 let globalRoutes = []
@@ -26,42 +26,27 @@ let testRoutes = [
     }
 ]
 
-// 判断 / 保存到数组: 传入的item 方法
-// const setCompObj = (obj) => {
-//     // 判断 item 内是否有 'compObj'对象
-//     if (hasCompObj(obj)) {
-//         return globalRoutes.push(obj) // 如果有 compObj
-//     } else {
-//         // 迭代 item 中的 childRoute 数组对象
-//         // console.log(obj)
-//         mapItem(obj)
-//     }
-// }
-
-// 迭代
+// 初始循环
 const mapItem = (obj) => {
-    obj.map((item) => {
-        item.childRoute.map((itemChildRoute) => {
-            // console.log(itemChildRoute) // 返回一个对象
+    for (let item of obj) {
+        let childItem = item.childRoute
+        mapChildRoute(childItem)
+    }
 
-            if (hasCompObj(itemChildRoute)) { // 判断是否有 childRoute 属性
-                // globalRoutes.concat(itemChildRoute) // 不好用
+    console.dir(globalRoutes)
+}
 
-                // let b = globalRoutes.push(itemChildRoute) // globalRoutes 用于保存的数组
-                // console.log(b)
+// 再次循环: 没有 component 属性的对象中的 childRoute 数组
+const mapChildRoute = (childRouteArr) => {
+    for (let itemChildRoute of childRouteArr) {
+        if (hasCompObj(itemChildRoute)) {
+            globalRoutes.push(itemChildRoute) // 有 component, 无 childRoute
+        } else {
+            // console.dir(itemChildRoute) // "设备维保" => 无 component, 有 childRoute
 
-                globalRoutes = globalRoutes.push(itemChildRoute)
-                console.log(globalRoutes)
-            } else {
-                console.log('无 compObj')
-            }
-
-            return {}
-        })
-        return {}
-    })
-
-    console.log(globalRoutes)
+            mapChildRoute(itemChildRoute.childRoute) // 将 带有 childRoute的对象, 只拿它的 childRoute 属性值(数组), 再次进入方法遍历
+        }
+    }
 }
 
 // 迭代 globalDir

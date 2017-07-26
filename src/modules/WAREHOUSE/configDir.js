@@ -2,27 +2,27 @@
 const WAREHOUSE_DIR = {
     title: '仓库管理',
     key: 'wareHouse',
-    routekey: '/wareHouse',
+    path: '/home/wareHouse',
     icon: 'database',
     childRoute: [
         {
             title: '库存管理',
             key: 'inventoryManage',
-            routekey: '/wareHouse/inventoryManage',
+            path: '/home/wareHouse/inventoryManage',
             ancestor: ['wareHouse'],
-            compObj: require('./containers/InventoryManage')
+            component: require('./containers/InventoryManage.jsx').default
         }, {
             title: '领用统计',
             key: 'receiveStatistics',
-            routekey: '/wareHouse/receiveStatistics',
+            path: '/home/wareHouse/receiveStatistics',
             ancestor: ['wareHouse'],
-            compObj: require('./containers/ReceiveStatistics')
+            component: require('./containers/ReceiveStatistics').default
         }, {
             title: '材料管理',
             key: 'meterialManagement',
-            routekey: '/wareHouse/meterialManagement',
+            path: '/home/wareHouse/meterialManagement',
             ancestor: ['wareHouse'],
-            compObj: require('./containers/MeterialManagement')
+            component: require('./containers/MeterialManagement').default
         }
     ]
 }

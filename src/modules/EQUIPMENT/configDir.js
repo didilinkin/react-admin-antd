@@ -1,92 +1,92 @@
 // 设备管理 - 目录配置
 const EQUIPMENT_DIR = {
     title: '设备管理',
-    routePath: '/equipment',
+    path: '/home/equipment',
     key: 'equipment',
     icon: 'tool',
     childRoute: [
         {
             title: '设备台账',
             key: 'account',
-            routePath: '/equipment/account',
+            path: '/home/equipment/account',
             ancestor: ['equipment'],
-            compObj: require('./containers/Account')
+            component: require('./containers/Account').default
         }, {
             title: '机房管理',
             key: 'computerRoomManagement',
-            routePath: '/equipment/computerRoomManagement',
+            path: '/home/equipment/computerRoomManagement',
             ancestor: ['equipment'],
-            compObj: require('./containers/ComputerRoomManagement')
+            component: require('./containers/ComputerRoomManagement').default
         }, {
             title: '设备维保',
             key: 'maintain',
-            routePath: '/equipment/maintain',
+            path: '/home/equipment/maintain',
             ancestor: ['equipment'],
             childRoute: [
                 {
                     title: '保养记录',
                     key: 'maintenancePlan',
-                    routePath: '/equipment/maintenancePlan',
+                    path: '/home/equipment/maintenancePlan',
                     ancestor: ['equipment', 'maintain'],
-                    compObj: require('./containers/maintain/MaintenancePlan')
+                    component: require('./containers/maintain/MaintenancePlan').default
                 }, {
                     title: '维修记录',
                     key: 'repairRecord',
-                    routePath: '/equipment/repairRecord',
+                    path: '/home/equipment/repairRecord',
                     ancestor: ['equipment', 'maintain'],
-                    compObj: require('./containers/maintain/RepairRecord')
+                    component: require('./containers/maintain/RepairRecord').default
                 }
             ]
         }, {
             title: '设备巡检',
             key: 'inspection',
-            routePath: '/equipment/inspection',
+            path: '/home/equipment/inspection',
             ancestor: ['equipment'],
             childRoute: [
                 {
                     title: '电器系统',
                     key: 'electric',
-                    routePath: '/equipment/inspection/electric',
+                    path: '/home/equipment/inspection/electric',
                     ancestor: ['equipment', 'inspection'],
                     childRoute: [
                         {
                             title: '配电房巡检记录',
                             key: 'distributionRoom',
-                            routePath: '/equipment/electric/distributionRoom',
+                            path: '/home/equipment/electric/distributionRoom',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            compObj: require('./containers/inspection/electric/DistributionRoom')
+                            component: require('./containers/inspection/electric/DistributionRoom').default
                         }, {
                             title: '弱电间巡检记录',
                             key: 'weakRoom',
-                            routePath: '/equipment/electric/weakRoom',
+                            path: '/home/equipment/electric/weakRoom',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            compObj: require('./containers/inspection/electric/WeakRoom')
+                            component: require('./containers/inspection/electric/WeakRoom').default
                         }, {
                             title: '发电机运行记录',
                             key: 'generatorLog',
-                            routePath: '/equipment/electric/generatorLog',
+                            path: '/home/equipment/electric/generatorLog',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            compObj: require('./containers/inspection/electric/GeneratorLog')
+                            component: require('./containers/inspection/electric/GeneratorLog').default
                         }
                     ]
                 }, {
                     title: '电梯系统',
                     key: 'elevator',
-                    routePath: '/equipment/inspection/elevator',
+                    path: '/home/equipment/inspection/elevator',
                     ancestor: ['equipment', 'inspection'],
                     childRoute: [
                         {
                             title: '电梯机房',
                             key: 'elevatorRoom',
-                            routePath: '/equipment/elevator/elevatorRoom',
+                            path: '/home/equipment/elevator/elevatorRoom',
                             ancestor: ['equipment', 'inspection', 'elevator'],
-                            compObj: require('./containers/inspection/elevator/ElevatorRoom')
+                            component: require('./containers/inspection/elevator/ElevatorRoom').default
                         }, {
                             title: '日常巡检',
                             key: 'dailyInspection',
-                            routePath: '/equipment/elevator/dailyInspection',
+                            path: '/home/equipment/elevator/dailyInspection',
                             ancestor: ['equipment', 'inspection', 'elevator'],
-                            compObj: require('./containers/inspection/elevator/DailyInspection')
+                            component: require('./containers/inspection/elevator/DailyInspection').default
                         }
                     ]
                 }
