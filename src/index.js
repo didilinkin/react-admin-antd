@@ -2,7 +2,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { authenticate } from './utils/LocalStore' // 验证 localStorage 状态
+import { authenticate } from './utils/LocalStore'
 import { configureStore, history } from './store/configureStore/index'
 import Root from './common/containers/Root'
 
