@@ -28,6 +28,7 @@ class EditableCell extends React.Component {
             this.props.onChange(this.state.value)
         }
         console.log(data.data)
+        this.props.callback(data.data)
     }
     edit = () => {
         this.setState({ editable: true })
@@ -40,20 +41,20 @@ class EditableCell extends React.Component {
                     editable ?
                         <div className="editable-cell-input-wrapper">
                             { this.props.type.toString() === 'Input' &&
-                                <Input
-                                    value={value}
-                                    style={this.props.style}
-                                    onChange={this.handleChange}
-                                    onPressEnter={this.check}
-                                />
+                            <Input
+                                value={value}
+                                style={this.props.style}
+                                onChange={this.handleChange}
+                                onPressEnter={this.check}
+                            />
                             }
                             { this.props.type.toString() === 'DatePicker' &&
-                                <DatePicker
-                                    value={moment(value)}
-                                    style={this.props.style}
-                                    onChange={this.handleChangeDate}
-                                    onPressEnter={this.check}
-                                />
+                            <DatePicker
+                                value={moment(value)}
+                                style={this.props.style}
+                                onChange={this.handleChangeDate}
+                                onPressEnter={this.check}
+                            />
                             }
                             <Icon
                                 type="check"

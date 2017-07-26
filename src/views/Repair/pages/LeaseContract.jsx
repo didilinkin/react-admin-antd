@@ -4,6 +4,7 @@ import { apiPost } from '../../../api'
 import {Table, Spin, Button } from 'antd'
 import ContractHeadComponent from './common/ContractHead'
 import LeaseCom from './common/LeaseCom'
+import HappyCom from './common/HappyCom'
 class PropertyContract extends React.Component {
     constructor (props) {
         super(props)
@@ -19,7 +20,28 @@ class PropertyContract extends React.Component {
                 ListCustomerInfo: []
             },
             openLeaseCom: false,
-            openHappyCom: false
+            openHappyCom: false,
+            openLeaseComUp: false,
+            openHappyComUp: false
+        }
+    }
+    updateRent = (contractSplit, id) => {
+        if (contractSplit === 1) {
+            this.setState({
+                openLeaseCom: false,
+                openHappyCom: false,
+                openLeaseComUp: true,
+                openHappyComUp: false,
+                id: id
+            })
+        } else {
+            this.setState({
+                openLeaseCom: false,
+                openHappyCom: false,
+                openHappyComUp: true,
+                openLeaseComUp: false,
+                id: id
+            })
         }
     }
     async initialRemarks () {
@@ -32,6 +54,7 @@ class PropertyContract extends React.Component {
             '/contract/ListBuildingInfo'
         )
         let repairList = result.data
+        let updateRent = this.updateRent
         this.setState({loading: false,
             map: ListBuildingInfo.data,
             columns: [{
@@ -52,7 +75,7 @@ class PropertyContract extends React.Component {
                     if (text === 1) {
                         text = '范本合同'
                     } else {
-                        text = '仅水电合同'
+                        text = '欢乐颂合同'
                     }
                     return (
                         <span>{text}</span>
@@ -77,7 +100,7 @@ class PropertyContract extends React.Component {
             }, {
                 title: '合同面积',
                 width: 100,
-                dataIndex: 'serviceArea'
+                dataIndex: 'leaseArea'
             }, {
                 title: '合同开始日期',
                 width: 100,
@@ -117,7 +140,7 @@ class PropertyContract extends React.Component {
                         <a href="javascript:" key="1"> 查看 &nbsp;</a>
                     )
                     arr.push(
-                        <a href="javascript:" key="2">&nbsp; 编辑 </a>
+                        <a href="javascript:" key="2" onClick={() => updateRent(record.contractSplit, record.id)}>&nbsp; 编辑 </a>
                     )
 
                     return arr
@@ -131,6 +154,9 @@ class PropertyContract extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         // 刷新表格
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['type'] = this.state.type
         let result = await apiPost(
             '/contract/contractlist',
@@ -141,21 +167,27 @@ class PropertyContract extends React.Component {
             type: filters['type'],
             id: 0,
             openLeaseCom: false,
-            openHappyCom: false
+            openHappyCom: false,
+            openLeaseComUp: false,
+            openHappyComUp: false
         })
     }
     openLeaseCom = () => {
         this.setState({
             id: 0,
             openLeaseCom: true,
-            openHappyCom: false
+            openHappyCom: false,
+            openLeaseComUp: false,
+            openHappyComUp: false
         })
     }
     openHappyCom = () => {
         this.setState({
             id: 0,
             openLeaseCom: false,
-            openHappyCom: true
+            openHappyCom: true,
+            openLeaseComUp: false,
+            openHappyComUp: false
         })
     }
     render () {
@@ -182,6 +214,26 @@ class PropertyContract extends React.Component {
                     visible={this.state.openLeaseCom}
                     map={this.state.map}
                     title="添加范本租赁合同"
+                />
+                <HappyCom
+                    refreshTable={this.refresh}
+                    visible={this.state.openHappyCom}
+                    map={this.state.map}
+                    title="添加欢乐颂租赁合同"
+                />
+                <LeaseCom
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openLeaseComUp}
+                    map={this.state.map}
+                    title="修改范本租赁合同"
+                />
+                <HappyCom
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openHappyComUp}
+                    map={this.state.map}
+                    title="修改欢乐颂租赁合同"
                 />
             </div>
         )
