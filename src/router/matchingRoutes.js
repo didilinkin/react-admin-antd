@@ -27,19 +27,16 @@ globalDir.map((moduleItem) => {
 
     mapChildRoute(childRouteItem)
 
-    console.log(globalRoutes) // 查看 globalRoutes 存放内容
     return {}
 })
 
 // 合并 数据(测试 + 迭代出来的路由数据)
 let routesArr = [ ...globalRoutes ]
 
-const matchingRoutes = [
-    {
-        path: '/home',
-        component: Layout,
-        routes: routesArr
-    }
-]
+const matchingRoutes = [{
+    path: '/home',
+    component: Layout,
+    routes: routesArr
+}]
 
 export default matchingRoutes
