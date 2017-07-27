@@ -698,7 +698,7 @@ class Happy extends React.Component {
                     )}
                 </Form>
                 {!this.props.id > 0 &&
-                    <Button style={{marginBottom: '10px'}} onClick={this.generate}>生成每期租金</Button>
+                    <Button style={{margin: '10px 0'}} onClick={this.generate}>生成每期租金</Button>
                 }
                 <div style={{marginBottom: '10px'}}>
                     <Table
