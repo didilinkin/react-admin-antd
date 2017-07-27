@@ -60,29 +60,6 @@ class Sidebar extends React.Component {
 
     // 只展开父级: 获取祖先级 Key
     getAncestorKeys = (key) => {
-        // let map = {} // 创建 map
-
-        // // (调用者: 下面 迭代) 判断 item 内是否 需要 迭代; 如果不需要 => 保存对象
-        // let setItemKey = (item) => {
-        //     let itemArray = item.childRoute
-        //     if (this.hasChildRoute(item)) {
-        //         for (let item of itemArray) {
-        //             let obj = item.key // 需要先保存一下 它的 key 与 ancestor
-        //             map[obj] = item.ancestor
-
-        //             setItemKey(item)
-        //         }
-        //     } else {
-        //         let obj = item.key // key 从 字符串转换为 对象
-        //         map[obj] = item.ancestor
-        //     }
-        // }
-
-        // // 迭代 globalDir 中的 module 配置
-        // for (let moduleItem of globalDir) {
-        //     setItemKey(moduleItem)
-        // }
-
         const map = {
             // sub3: ['sub2']
             // 静态配置(简略不需要的, 做最基本展示)
@@ -91,6 +68,10 @@ class Sidebar extends React.Component {
             clientReview: ['upkeep'],
             upkeepList: ['upkeep'],
             rectification: ['upkeep'],
+            // 客户管理 - 合同管理
+            contractManagement: ['upkeep'],
+            leaseContract: ['upkeep', 'contractManagement'],
+            propertyContract: ['upkeep', 'contractManagement'],
             // 仓库管理:
             receiveStatistics: ['warehouse'],
             materialManagement: ['warehouse'],
@@ -202,17 +183,17 @@ class Sidebar extends React.Component {
                         }
                     >
 
-                        <SubMenu key="/upkeep/contractManagement" title={
+                        <SubMenu key="contractManagement" title={
                             <span>
                                 <span className="nav-text">合同管理</span>
                             </span>
                         }
                         >
-                            <Menu.Item key="/upkeep/contractManagement/leaseContract">
+                            <Menu.Item key="leaseContract">
                                 <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
                             </Menu.Item>
 
-                            <Menu.Item key="/upkeep/contractManagement/propertyContract">
+                            <Menu.Item key="propertyContract">
                                 <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
                             </Menu.Item>
                         </SubMenu>
