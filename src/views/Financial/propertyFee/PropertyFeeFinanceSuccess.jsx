@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Spin, Popconfirm} from 'antd'
+import {Table, Spin, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../api'
 import PropertyFeeHeadComponent from './components/PropertyFeeHead'
 // 引入组件
@@ -18,29 +18,16 @@ class PropertyFeeFinanceSuccess extends Component {
             ListBuildingInfo: []
         }
     }
-    handleUpdate = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: false,
-            openUpdate: true,
-            id: id
+    handleUpdate = async (id) => {
+        await apiPost(
+            '/propertyFee/updatePropertyFeeByRecall',
+            {id: id}
+        )
+        notification.open({
+            message: '撤回成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-    }
-    handleUpdate2 = (id) => {
-        this.setState({
-            openAdd: true,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }
-    handleUpdate3 = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: true,
-            openUpdate: false,
-            id: id
-        })
+        this.refresh1()
     }
     async initialRemarks () {
         this.setState({loading: true})
