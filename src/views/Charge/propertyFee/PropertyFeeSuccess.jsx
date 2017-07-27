@@ -3,12 +3,12 @@ import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../api'
 import PropertyFeeHeadComponent from './components/PropertyFeeHead'
-import NoPaidComponent from './Details/RentReviewDetailNoPaid'
+import NoPaidComponent from './Details/PropertyFeeDetailNoPaid'
 import NoLateAndRentFinishComponent from './Details/NoLateAndRentFinish'
 import AllPaidComponent from './Details/RentReviewDetail'
 // 引入组件
 // React component
-class CollectRentConduct extends Component {
+class PropertyFeeSuccess extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -259,6 +259,6 @@ class CollectRentConduct extends Component {
         )
     }
 }
-export default CollectRentConduct
+export default PropertyFeeSuccess
 
 

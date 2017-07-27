@@ -180,6 +180,15 @@ class WarehouseAddUp extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="备注" labelCol={{ span: 5 }} wrapperCol={{ span: 15 }}>
+                                {getFieldDecorator('remark')(
+                                    <textarea />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
                     <FormItem label="上传图片" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
