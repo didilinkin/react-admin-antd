@@ -31,13 +31,10 @@ class propertyLateConfirm extends React.Component {
             }
             this.props.form.setFieldsValue({
                 lateMoney: resulData.data.lateMoney,
-                thisActualLateMoney: (resulData.data.lateMoney - resulData.data.paidLateMoney),
+                thisActualLateMoney: resulData.data.unpaidLateMoney,
                 unpaidLateMoney: resulData.data.unpaidLateMoney,
-                periodRent: resulData.data.periodRent,
                 feeId: resulData.data.id,
-                id: resulData.data.id,
-                rentClientName: resulData.data.rentClientName,
-                payDeadline: resulData.data.payDeadline
+                id: resulData.data.id
             })
             this.setState({
                 isFirst: false,
@@ -53,6 +50,8 @@ class propertyLateConfirm extends React.Component {
         let json = this.props.form.getFieldsValue()
         console.log(json)
         json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        json['feeType'] = 4
+        json['latePaidWay'] = this.props.form.getFieldValue('paidWay')
         await apiPost(
             '/propertyFee/updatePropertyFeeByLate',
             json
@@ -201,9 +200,6 @@ class propertyLateConfirm extends React.Component {
                                 {getFieldDecorator('feeId')(
                                     <Input type="hidden" />
                                 )}
-                                {getFieldDecorator('feeType')(
-                                    <Input value={4} type="hidden" />
-                                )}
                                 {getFieldDecorator('id')(
                                     <Input type="hidden" />
                                 )}
@@ -217,12 +213,6 @@ class propertyLateConfirm extends React.Component {
                                     <Input type="hidden" />
                                 )}
                                 {getFieldDecorator('lastLateMoney')(
-                                    <Input type="hidden" />
-                                )}
-                                {getFieldDecorator('payDeadline')(
-                                    <Input type="hidden" />
-                                )}
-                                {getFieldDecorator('lastReceiptDate')(
                                     <Input type="hidden" />
                                 )}
                             </Col>

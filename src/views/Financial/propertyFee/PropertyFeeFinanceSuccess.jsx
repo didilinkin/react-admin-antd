@@ -206,6 +206,16 @@ class PropertyFeeFinanceSuccess extends Component {
                                 </Popconfirm>
                             </div>
                         )
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
+                        let url = '/financial/PropertyFeeDetail/' + record.id
+                        return (
+                            <div>
+                                <a href={url}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
+                            </div>
+                        )
                     }
                 }
             }],

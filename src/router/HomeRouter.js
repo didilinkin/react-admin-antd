@@ -101,6 +101,7 @@ import PropertyFeeDetailNoPaid      from '../views/Financial/propertyFee/Details
 import PropertyFeeDetailNoLate      from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoLate'
 import NoLateAndPropertyFinish      from '../views/Financial/propertyFee/Details/NoLateAndPropertyFinish'
 import PropertyFinishAndLate      from '../views/Financial/propertyFee/Details/PropertyFinishAndLate'
+import PropertyFeeDetail      from '../views/Financial/propertyFee/Details/PropertyFeeDetail'
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -386,6 +387,9 @@ const routes = [
             }, {
                 path: '/financial/PropertyFinishAndLate/:id',                                                 // 财务管理 - 物业费审核
                 component: PropertyFinishAndLate
+            }, {
+                path: '/financial/PropertyFeeDetail/:id',                                                 // 财务管理 - 物业费审核
+                component: PropertyFeeDetail
             }
         ]
     }

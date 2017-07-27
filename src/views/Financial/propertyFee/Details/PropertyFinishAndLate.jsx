@@ -106,6 +106,24 @@ class PropertyFinishAndLate extends React.Component {
         })
         this.refresh()
     }
+    delayNext = async () => {
+        await apiPost(
+            '/propertyFee/updatePropertyFeeByNext',
+            {id: this.props.match.params.id,
+                invoiceLateStatus: 1,
+                unpaidLateMoney: 0,
+                unpaidMoney: 0,
+                paidMoney: this.state.data.lateMoney,
+                latePaidWay: 6,
+                paidWay: 6,
+                whetherLatePaid: 1}
+        )
+        notification.open({
+            message: '操作成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        location.href = '/financial/PropertyFinishAndLate/' + this.props.match.params.id
+    }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,
@@ -351,7 +369,10 @@ class PropertyFinishAndLate extends React.Component {
                     </div>
                 </div>
                 <div className="wrapbox">
-                    <Button type="primary" onClick={this.handleUpdate} >确认收违约金</Button>
+                    <Button type="primary" onClick={this.handleUpdate} >实收违约金</Button>
+                    <Popconfirm title="确定违约金延期下月电费吗?" onConfirm={this.delayNext}>
+                        <a href="javascript:" >&nbsp; 延期下月电费 </a>
+                    </Popconfirm>
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a href="javascript:" >&nbsp; 物业费开票 </a>
                     </Popconfirm>
