@@ -5,13 +5,14 @@ import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
 
 
-class NoLateAndRentFinish extends React.Component {
+class RentFinishAndLate extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             auditStatus: 2,
             payPeriod: '',
             invoiceRentStatus: '',
+            invoiceLateStatus: '',
             id: 0,
             remark: '',
             openUpdate: false,
@@ -19,6 +20,7 @@ class NoLateAndRentFinish extends React.Component {
             view: true,
             isFirst: true,
             data2: [],
+            data3: [],
             data: {}
         }
     }
@@ -49,6 +51,13 @@ class NoLateAndRentFinish extends React.Component {
                     feeType: 0
                 }
             )
+            let result3 = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {
+                    feeId: nextProps.id,
+                    feeType: 1
+                }
+            )
             if (resulData.data.invoiceRentStatus === 0) {
                 this.setState({
                     invoiceRentStatus: '未开票'
@@ -56,6 +65,15 @@ class NoLateAndRentFinish extends React.Component {
             } else if (resulData.data.invoiceRentStatus === 1) {
                 this.setState({
                     invoiceRentStatus: '已开票'
+                })
+            }
+            if (resulData.data.invoiceLateStatus === 0) {
+                this.setState({
+                    invoiceLateStatus: '未开票'
+                })
+            } else if (resulData.data.invoiceLateStatus === 1) {
+                this.setState({
+                    invoiceLateStatus: '已开票'
                 })
             }
             if (resulData.data.payCycle === 3) {
@@ -74,30 +92,19 @@ class NoLateAndRentFinish extends React.Component {
             this.setState({
                 data: resulData.data,
                 data2: result2.data,
+                data3: result3.data,
                 visible: nextProps.visible,
                 isFirst: false,
                 view: true
             })
-            console.log(this.state.data2)
         }
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
     }
-    refresh = async () => {
-        // 刷新表格
-        let result = await apiPost(
-            '/collectRent/getCollectRentById',
-            {id: this.props.match.params.id}
-        )
-        this.setState({
-            openUpdate: false,
-            dataSource: result.data,
-            id: 0
-        })
-    }
     render () {
         let chargeList = this.state.data2
+        let chargeList2 = this.state.data3
         return (
             <div style={this.props.style} className="contract">
                 <Modal maskClosable={false}
@@ -217,6 +224,81 @@ class NoLateAndRentFinish extends React.Component {
                                     })}
                                 </tbody>
                             </table>
+                            <p className="line" />
+                            <h2>确认违约金</h2>
+                            <Row>
+                                <Col span={8}><b>违约金额：</b>{this.state.data.lateMoney}  元 </Col>
+                                <Col span={8}><b>开票状态：</b>{this.state.invoiceLateStatus}</Col>
+                            </Row>
+                            <table className="tb">
+                                <tbody>
+                                    <tr className="hd">
+                                        <td>时间</td>
+                                        <td>实收金额</td>
+                                        <td>未收金额</td>
+                                        <td>优惠金额</td>
+                                        <td>收款方式</td>
+                                        <td>经手人</td>
+                                    </tr>
+                                    {chargeList2.map(collectRent => {
+                                        if (collectRent.paidWay === 0) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>银行转账</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        } else if (collectRent.paidWay === 1) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>支付宝</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        } else if (collectRent.paidWay === 2) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>微信</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        } else if (collectRent.paidWay === 3) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>支票</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        } else if (collectRent.paidWay === 4) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>现金</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        } else if (collectRent.paidWay === 5) {
+                                            return <tr>
+                                                <td>{collectRent.receiptDate}</td>
+                                                <td>{collectRent.paidMoney}</td>
+                                                <td>{collectRent.unpaidMoney}</td>
+                                                <td>{collectRent.discountMoney}</td>
+                                                <td>其他</td>
+                                                <td>{collectRent.createName}</td>
+                                            </tr>
+                                        }
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </Modal>
@@ -225,5 +307,5 @@ class NoLateAndRentFinish extends React.Component {
     }
 }
 
-export default NoLateAndRentFinish
+export default RentFinishAndLate
 

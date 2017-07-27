@@ -97,6 +97,10 @@ import RentReviewDetailNoPaid   from '../views/Financial/pages/Details/RentRevie
 import NoLateAndRentFinish      from '../views/Financial/pages/Details/NoLateAndRentFinish'
 import RentFinishAndLate        from '../views/Financial/pages/Details/RentFinishAndLate'
 import PropertyCostsReview      from '../views/Financial/propertyFee/PropertyCostsReview'                     // 财务管理 - 物业费审核
+import PropertyFeeDetailNoPaid      from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoPaid'
+import PropertyFeeDetailNoLate      from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoLate'
+import NoLateAndPropertyFinish      from '../views/Financial/propertyFee/Details/NoLateAndPropertyFinish'
+import PropertyFinishAndLate      from '../views/Financial/propertyFee/Details/PropertyFinishAndLate'
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -370,6 +374,18 @@ const routes = [
             }, {
                 path: '/financial/propertyCostsReview',                                                 // 财务管理 - 物业费审核
                 component: PropertyCostsReview
+            }, {
+                path: '/financial/PropertyFeeDetailNoPaid/:id',                                                 // 财务管理 - 物业费审核
+                component: PropertyFeeDetailNoPaid
+            }, {
+                path: '/financial/PropertyFeeDetailNoLate/:id',                                                 // 财务管理 - 物业费审核
+                component: PropertyFeeDetailNoLate
+            }, {
+                path: '/financial/NoLateAndPropertyFinish/:id',                                                 // 财务管理 - 物业费审核
+                component: NoLateAndPropertyFinish
+            }, {
+                path: '/financial/PropertyFinishAndLate/:id',                                                 // 财务管理 - 物业费审核
+                component: PropertyFinishAndLate
             }
         ]
     }

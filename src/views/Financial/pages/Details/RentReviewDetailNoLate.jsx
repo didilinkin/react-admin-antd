@@ -1,6 +1,6 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, Button, notification, Icon} from 'antd'
+import {Row, Col, Button, notification, Icon, Popconfirm} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentConfirm'
@@ -82,16 +82,7 @@ class RentReviewDetailNoLate extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        // 刷新表格
-        let result = await apiPost(
-            '/collectRent/getCollectRentById',
-            {id: this.props.match.params.id}
-        )
-        this.setState({
-            openUpdate: false,
-            dataSource: result.data,
-            id: 0
-        })
+        '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
     }
     render () {
         let chargeList = this.state.data2
@@ -214,7 +205,9 @@ class RentReviewDetailNoLate extends React.Component {
                     </div>
                 </div>
                 <Button type="primary" onClick={this.handleUpdate} >收租金</Button>
-                <Button type="primary" onClick={this.invoiceRent} >租金开票</Button>
+                <Popconfirm title="确定修改吗?" onConfirm={this.invoiceRent}>
+                    <a href="javascript:" >&nbsp; 租金开票 </a>
+                </Popconfirm>
             </div>
         )
     }

@@ -5,7 +5,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 
 
-class collectRentConfirm extends React.Component {
+class propertyLateConfirm extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -21,34 +21,23 @@ class collectRentConfirm extends React.Component {
         })
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
-                '/collectRent/getCollectRentById',
+                '/propertyFee/getPropertyFeeById',
                 { 'id': nextProps.id }
             )
-            if (resulData.data.lastLateMoney !== null) {
-                this.props.form.setFieldsValue({
-                    lastLateMoney: resulData.data.lastLateMoney
-                })
-            } else {
-                this.props.form.setFieldsValue({
-                    lastLateMoney: 0
-                })
-            }
             if (resulData.data.receiptDate !== null) {
                 this.props.form.setFieldsValue({
                     lastReceiptDate: resulData.data.receiptDate
                 })
             }
             this.props.form.setFieldsValue({
-                currentPeriodMoney: resulData.data.currentPeriodMoney,
-                actualPaidMoney: resulData.data.actualPaidMoney,
-                thisActualPaidMoney: resulData.data.unpaidMoney,
+                lateMoney: resulData.data.lateMoney,
+                thisActualLateMoney: (resulData.data.lateMoney - resulData.data.paidLateMoney),
+                unpaidLateMoney: resulData.data.unpaidLateMoney,
                 periodRent: resulData.data.periodRent,
+                feeId: resulData.data.id,
                 id: resulData.data.id,
                 rentClientName: resulData.data.rentClientName,
-                lastUnpaidMoney: resulData.data.unpaidMoney,
-                paidMoney: resulData.data.paidMoney,
-                payDeadline: resulData.data.payDeadline,
-                unpaidMoney: resulData.data.unpaidMoney
+                payDeadline: resulData.data.payDeadline
             })
             this.setState({
                 isFirst: false,
@@ -65,11 +54,11 @@ class collectRentConfirm extends React.Component {
         console.log(json)
         json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
         await apiPost(
-            '/collectRent/updateCollectRentVoByPaid',
+            '/propertyFee/updatePropertyFeeByLate',
             json
         )
         notification.open({
-            message: '收租成功',
+            message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.props.refreshTable()
@@ -85,24 +74,46 @@ class collectRentConfirm extends React.Component {
         if (typeof (thisPaidMoney) === 'undefined') {
             thisPaidMoney = 0
         }
-        let unpaidMoney1 = this.props.form.getFieldValue('unpaidMoney')
+        this.props.form.setFieldsValue({
+            paidMoney: parseFloat(thisPaidMoney).toFixed(1)
+        })
+        let unpaidMoney1 = this.props.form.getFieldValue('unpaidLateMoney')
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
         let unpaidMoney2 = unpaidMoney1 - thisPaidMoney
         if (unpaidMoney2 < 0) {
-            this.props.form.setFields({
-                unpaidMoney: {
-                    value: unpaidMoney1,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                unpaidLateMoney: parseFloat(unpaidMoney1).toFixed(1),
+                unpaidMoney: parseFloat(unpaidMoney1).toFixed(1)
             })
         } else {
-            this.props.form.setFields({
-                unpaidMoney: {
-                    value: unpaidMoney2,
-                    errors: ''
-                }
+            this.props.form.setFieldsValue({
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1),
+                unpaidMoney: parseFloat(unpaidMoney2).toFixed(1)
+            })
+        }
+    }
+    sumMoney2 = (e) => {
+        let discountMoney = e.target.value
+        if (typeof (discountMoney) === 'undefined') {
+            discountMoney = 0
+        }
+        let thisActualLateMoney = this.props.form.getFieldValue('thisActualLateMoney')
+        if (typeof (thisActualLateMoney) === 'undefined') {
+            thisActualLateMoney = 0
+        }
+        let unpaidMoney2 = thisActualLateMoney - discountMoney
+        if (unpaidMoney2 < 0) {
+            this.props.form.setFieldsValue({
+                thisActualLateMoney: parseFloat(thisActualLateMoney).toFixed(1),
+                discountMoney: 0,
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1)
+            })
+        } else {
+            this.props.form.setFieldsValue({
+                thisActualLateMoney: parseFloat(unpaidMoney2).toFixed(1),
+                unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1)
             })
         }
     }
@@ -136,28 +147,35 @@ class collectRentConfirm extends React.Component {
                                 <FormItem label="本期应收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('actualPaidMoney')(
+                                    {getFieldDecorator('lateMoney')(
                                         <Input disabled />
                                     )}
                                 </FormItem>
                                 <FormItem label="本次应收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('thisActualPaidMoney')(
+                                    {getFieldDecorator('thisActualLateMoney')(
                                         <Input disabled />
+                                    )}
+                                </FormItem>
+                                <FormItem label="优惠金额" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('discountMoney')(
+                                        <Input onBlur={this.sumMoney2} />
                                     )}
                                 </FormItem>
                                 <FormItem label="本次实收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('thisPaidMoney')(
+                                    {getFieldDecorator('thisLateMoney')(
                                         <Input onBlur={this.sumMoney} />
                                     )}
                                 </FormItem>
                                 <FormItem label="未收金额" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('unpaidMoney')(
+                                    {getFieldDecorator('unpaidLateMoney')(
                                         <Input disabled />
                                     )}
                                 </FormItem>
@@ -180,22 +198,22 @@ class collectRentConfirm extends React.Component {
                                         </Select>
                                     )}
                                 </FormItem>
+                                {getFieldDecorator('feeId')(
+                                    <Input type="hidden" />
+                                )}
+                                {getFieldDecorator('feeType')(
+                                    <Input value={4} type="hidden" />
+                                )}
                                 {getFieldDecorator('id')(
-                                    <Input type="hidden" />
-                                )}
-                                {getFieldDecorator('periodRent')(
-                                    <Input type="hidden" />
-                                )}
-                                {getFieldDecorator('rentClientName')(
-                                    <Input type="hidden" />
-                                )}
-                                {getFieldDecorator('lastUnpaidMoney')(
                                     <Input type="hidden" />
                                 )}
                                 {getFieldDecorator('paidMoney')(
                                     <Input type="hidden" />
                                 )}
-                                {getFieldDecorator('currentPeriodMoney')(
+                                {getFieldDecorator('unpaidMoney')(
+                                    <Input type="hidden" />
+                                )}
+                                {getFieldDecorator('lateMoney')(
                                     <Input type="hidden" />
                                 )}
                                 {getFieldDecorator('lastLateMoney')(
@@ -216,6 +234,6 @@ class collectRentConfirm extends React.Component {
     }
 }
 
-let CollectRentConfirm = Form.create()(collectRentConfirm)
+let PropertyLateConfirm = Form.create()(propertyLateConfirm)
 
-export default CollectRentConfirm
+export default PropertyLateConfirm

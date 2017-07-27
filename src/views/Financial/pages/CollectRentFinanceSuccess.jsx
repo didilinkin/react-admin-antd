@@ -152,7 +152,7 @@ class CollectRentConduct extends Component {
                                 </Popconfirm>
                             </div>
                         )
-                    } else if (record.lateMoney === 0 && record.whetherRentPaid !== 1) {
+                    } else if (record.whetherRentPaid !== 1) {
                         let url = '/financial/RentReviewDetailNoLate/' + record.id
                         return (
                             <div>

@@ -1,11 +1,8 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Spin } from 'antd'
+import {Table, Spin, Popconfirm} from 'antd'
 import { apiPost } from '../../../api'
 import PropertyFeeHeadComponent from './components/PropertyFeeHead'
-import NoPaidComponent from './Details/RentReviewDetailNoPaid'
-import NoLateAndRentFinishComponent from './Details/NoLateAndRentFinish'
-import AllPaidComponent from './Details/RentReviewDetail'
 // 引入组件
 // React component
 class PropertyFeeFinanceSuccess extends Component {
@@ -55,8 +52,6 @@ class PropertyFeeFinanceSuccess extends Component {
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
-        const handleUpdate3 = this.handleUpdate3
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -171,22 +166,44 @@ class PropertyFeeFinanceSuccess extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.whetherRentPaid === 0) {
+                    if (record.lateMoney === 0 && record.paidMoney === 0) {
+                        let url = '/financial/PropertyFeeDetailNoPaid/' + record.id
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href={url}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
-                    } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
+                    } else if (record.whetherRentPaid !== 1) {
+                        let url = '/financial/PropertyFeeDetailNoLate/' + record.id
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 明细 </a>
+                                <a href={url}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
-                    } else {
+                    } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
+                        let url = '/financial/NoLateAndPropertyFinish/' + record.id
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 明细 </a>
+                                <a href={url}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
+                            </div>
+                        )
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
+                        let url = '/financial/PropertyFinishAndLate/' + record.id
+                        return (
+                            <div>
+                                <a href={url}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a href="javascript:" > 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     }
@@ -234,21 +251,6 @@ class PropertyFeeFinanceSuccess extends Component {
                 <PropertyFeeHeadComponent
                     refresh={this.refresh}
                     ListBuildingInfo={this.state.ListBuildingInfo}
-                />
-                <NoLateAndRentFinishComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openAdd}
-                />
-                <NoPaidComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />
-                <AllPaidComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
                 />
                 <Spin spinning={this.state.loading}>
                     <Table

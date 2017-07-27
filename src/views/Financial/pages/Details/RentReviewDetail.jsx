@@ -1,6 +1,6 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, Button, notification, Icon} from 'antd'
+import {Row, Col, notification, Icon, Popconfirm} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentLateConfirm'
@@ -316,8 +316,12 @@ class RentReviewDetail extends React.Component {
                         </table>
                     </div>
                 </div>
-                <Button type="primary" onClick={this.invoiceRent} >租金开票</Button>
-                <Button type="primary" onClick={this.invoiceLate} >违约金开票</Button>
+                <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
+                    <a href="javascript:" >&nbsp; 租金开票 </a>
+                </Popconfirm>
+                <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
+                    <a href="javascript:" >&nbsp; 违约金开票 </a>
+                </Popconfirm>
             </div>
         )
     }

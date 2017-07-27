@@ -7,7 +7,7 @@ const Option = Select.Option
 const { RangePicker } = DatePicker
 
 
-class addUpkeep extends React.Component {
+class paidConfirrm extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -172,6 +172,6 @@ class addUpkeep extends React.Component {
     }
 }
 
-let Addupkeep = Form.create()(addUpkeep)
+let PaidConfirrm = Form.create()(paidConfirrm)
 
-export default Addupkeep
+export default PaidConfirrm

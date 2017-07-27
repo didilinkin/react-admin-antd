@@ -163,33 +163,33 @@ class Sidebar extends React.Component {
                     </Menu.Item>
 
                     {/* 测试 */}
-                    {/*
-                        <SubMenu
-                            key="test"
-                            title={
-                                <span>
-                                    <Icon type="schedule" />
-                                    <span className="nav-text" style={ this.state.titleStyle }>测试</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="/test/table">
-                                <Link to="/test/table">测试-异步表格</Link>
-                            </Menu.Item>
 
-                            <Menu.Item key="/test/echarts">
-                                <Link to="/test/echarts">测试 echarts组建(简单例子)</Link>
-                            </Menu.Item>
+                    <SubMenu
+                        key="test"
+                        title={
+                            <span>
+                                <Icon type="schedule" />
+                                <span className="nav-text" style={ this.state.titleStyle }>测试</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/test/table">
+                            <Link to="/test/table">测试-异步表格</Link>
+                        </Menu.Item>
 
-                            <Menu.Item key="/test/recharts">
-                                <Link to="/test/recharts">Recharts组件(饼状图)</Link>
-                            </Menu.Item>
+                        <Menu.Item key="/test/echarts">
+                            <Link to="/test/echarts">测试 echarts组建(简单例子)</Link>
+                        </Menu.Item>
 
-                            <Menu.Item key="/test/simpleBarChart">
-                                <Link to="/test/simpleBarChart">测试 Recharts组件(柱状图)</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                    */}
+                        <Menu.Item key="/test/recharts">
+                            <Link to="/test/recharts">Recharts组件(饼状图)</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/test/simpleBarChart">
+                            <Link to="/test/simpleBarChart">测试 Recharts组件(柱状图)</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
 
                     {/* 客户管理 */}
                     <SubMenu
@@ -201,22 +201,22 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        {/*
-                            <SubMenu key="/upkeep/contractManagement" title={
-                                <span>
-                                    <span className="nav-text">合同管理</span>
-                                </span>
-                            }
-                            >
-                                <Menu.Item key="/upkeep/contractManagement/leaseContract">
-                                    <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
-                                </Menu.Item>
 
-                                <Menu.Item key="/upkeep/contractManagement/propertyContract">
-                                    <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
-                                </Menu.Item>
-                            </SubMenu>
-                        */}
+                        <SubMenu key="/upkeep/contractManagement" title={
+                            <span>
+                                <span className="nav-text">合同管理</span>
+                            </span>
+                        }
+                        >
+                            <Menu.Item key="/upkeep/contractManagement/leaseContract">
+                                <Link to="/upkeep/contractManagement/leaseContract">租赁合同</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="/upkeep/contractManagement/propertyContract">
+                                <Link to="/upkeep/contractManagement/propertyContract">物业合同</Link>
+                            </Menu.Item>
+                        </SubMenu>
+
 
                         <Menu.Item key="repairList">
                             <Link to="/upkeep/repairList">客户报修</Link>
@@ -407,45 +407,45 @@ class Sidebar extends React.Component {
                     </SubMenu>
 
                     {/* 收费管理 */}
-                    {/*
-                        <SubMenu
-                            key="charge"
-                            title={
-                                <span>
-                                    <Icon type="database" />
-                                    <span className="nav-text" style={ this.state.titleStyle }>收费管理</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="/charge/receivableRent">
-                                <Link to="/charge/receivableRent">应收租金</Link>
-                            </Menu.Item>
 
-                            <Menu.Item key="/charge/propertyManagement">
-                                <Link to="/charge/propertyManagement">物业费管理</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                    */}
+                    <SubMenu
+                        key="charge"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>收费管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/charge/receivableRent">
+                            <Link to="/charge/receivableRent">应收租金</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="/charge/propertyManagement">
+                            <Link to="/charge/propertyManagement">物业费管理</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
 
                     {/* 财务管理 */}
-                    {/*
-                        <SubMenu
-                            key="financial"
-                            title={
-                                <span>
-                                    <Icon type="database" />
-                                    <span className="nav-text" style={ this.state.titleStyle }>财务管理</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="/financial/rentReview">
-                                <Link to="/financial/rentReview">租金审核</Link>
-                            </Menu.Item>
-                            <Menu.Item key="/financial/propertyCostsReview">
-                                <Link to="/financial/propertyCostsReview">物业费审核</Link>
-                            </Menu.Item>
-                        </SubMenu>
-                    */}
+
+                    <SubMenu
+                        key="financial"
+                        title={
+                            <span>
+                                <Icon type="database" />
+                                <span className="nav-text" style={ this.state.titleStyle }>财务管理</span>
+                            </span>
+                        }
+                    >
+                        <Menu.Item key="/financial/rentReview">
+                            <Link to="/financial/rentReview">租金审核</Link>
+                        </Menu.Item>
+                        <Menu.Item key="/financial/propertyCostsReview">
+                            <Link to="/financial/propertyCostsReview">物业费审核</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
                 </Menu>
                 {/* 样式描述 */}
                 <style>{`
