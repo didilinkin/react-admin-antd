@@ -148,16 +148,6 @@ class Sider extends React.Component {
 
         return (
             <SiderBox>
-                {/*
-                    <Button
-                        type="primary"
-                        onClick={ this.toggleCollapsed }
-                        style={{ marginBottom: 16 }}
-                    >
-                        <Icon type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' } />
-                    </Button>
-                */}
-
                 <Menu
                     // 折叠
                     defaultSelectedKeys={['1']} // 初始选中的菜单项 key 数组

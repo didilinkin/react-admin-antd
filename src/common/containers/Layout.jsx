@@ -1,6 +1,6 @@
 // 布局
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { size } from 'polished'
@@ -37,8 +37,6 @@ const Layout = ({ route }) => (
         {/* 侧面导航栏 */}
         <AsideBox>
             <Sider />
-            <Link to="/home/spicy"> 辣条 </Link>
-            <Link to="/home/chips"> 薯片 </Link>
         </AsideBox>
 
         {/* 顶部导航 */}
