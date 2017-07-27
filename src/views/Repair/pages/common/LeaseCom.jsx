@@ -468,7 +468,7 @@ class Lease extends React.Component {
         }
         this.props.form.setFieldsValue({
             firstYearRent: (unitPrice * leaseArea * 365).toFixed(2),
-            freeRent: (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2) === 'NaN' ? 0 : (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2)
+            freeRent: freeEndDate === 0 ? 0 : (unitPrice * leaseArea * parseInt(((freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000) + 1).toFixed(0))).toFixed(2)
         })
     }
     render () {
@@ -486,32 +486,32 @@ class Lease extends React.Component {
                 <Form layout="horizontal">
                     <h2>房源信息</h2>
                     <Row>
-                        <Col span={12}>
-                            <FormItem label="所在房间:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 18 }}
-                            >
-                                {getFieldDecorator('buildIdOne', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请选择所属楼宇!'
-                                    }]
-                                })(
-                                    <Select
-                                        showSearch
-                                        style={{ width: 200,
-                                            marginRight: '10px' }}
-                                        placeholder="请选择所属楼宇"
-                                        onChange={this.selectbuildId}
-                                        optionFilterProp="children"
-                                    >
-                                        {this.state.ListBuildingInfo.map(Building => {
-                                            return <Option key={Building.id}>{Building.buildName}</Option>
-                                        })}
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={12}>
+                        <Col style={{marginBottom: '20px',
+                            paddingLeft: '25px'}} span={24}>
+                            <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
+                                fontSize: '12px',
+                                color: 'red',
+                                marginRight: '4px',
+                                fontFamily: 'SimSun'}}>*</a>所在房间 :&nbsp;&nbsp;</em>
+                            {getFieldDecorator('buildIdOne', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请选择所属楼宇!'
+                                }]
+                            })(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200,
+                                        marginRight: '10px' }}
+                                    placeholder="请选择所属楼宇"
+                                    onChange={this.selectbuildId}
+                                    optionFilterProp="children"
+                                >
+                                    {this.state.ListBuildingInfo.map(Building => {
+                                        return <Option key={Building.id}>{Building.buildName}</Option>
+                                    })}
+                                </Select>
+                            )}
                             {getFieldDecorator('leaseRooms', {
                                 rules: [ {
                                     required: true,
@@ -520,7 +520,7 @@ class Lease extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
+                                    style={{ width: 370 }}
                                     placeholder="请选择所属房间"
                                     onChange={this.selectRoom}
                                     optionFilterProp="children"
@@ -534,29 +534,27 @@ class Lease extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
-                            <FormItem label="服务面积:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('leaseArea', {
-                                    rules: [{
-                                        required: true,
-                                        message: '请填写服务面积!'
-                                    }]
-                                }
-                                )(
-                                    <Input style={{ width: 200 }} disabled />
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={12}>
-                            <FormItem label="减免面积:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15}}
-                            >
-                                {getFieldDecorator('reliefArea')(
-                                    <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} />
-                                )}
-                            </FormItem>
+                        <Col style={{marginBottom: '20px',
+                            paddingLeft: '25px'}} span={24}>
+                            <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
+                                fontSize: '12px',
+                                color: 'red',
+                                marginRight: '4px',
+                                fontFamily: 'SimSun'}}>*</a>服务面积 :&nbsp;&nbsp;</em>
+                            {getFieldDecorator('leaseArea', {
+                                rules: [{
+                                    required: true,
+                                    message: '请填写服务面积!'
+                                }]
+                            }
+                            )(
+                                <Input style={{ width: 200 }} disabled />
+                            )}
+                            <span style={{color: 'red',
+                                padding: '0 5px'}}>减免</span>
+                            {getFieldDecorator('reliefArea')(
+                                <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} />
+                            )}
                         </Col>
                     </Row>
                     <h2>合同信息</h2>
@@ -744,7 +742,7 @@ class Lease extends React.Component {
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('freeRent')(
-                                    <Input style={{ width: 200 }} addonAfter="元" disabled />
+                                    <Input style={{ width: 200 }} addonAfter="元" />
                                 )}
                             </FormItem>
                         </Col>
@@ -775,9 +773,9 @@ class Lease extends React.Component {
                     )}
                 </Form>
                 {!this.props.id > 0 &&
-                    <Button onClick={this.generate}>生成每期租金</Button>
+                    <Button style={{marginBottom: '10px'}} onClick={this.generate}>生成每期租金</Button>
                 }
-                <div>
+                <div style={{marginBottom: '10px'}}>
                     <Table
                         bordered
                         dataSource={this.state.dataSource}
