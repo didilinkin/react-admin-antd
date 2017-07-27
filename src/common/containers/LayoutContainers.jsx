@@ -8,6 +8,8 @@ import elf from '../../elf'
 
 import SiderContainers from './SiderContainers'
 
+import { cloneDeep } from 'lodash'
+
 // Antd 布局组件
 import { Layout, Icon } from 'antd'
 const { Header, Sider, Content, Footer } = Layout
@@ -60,6 +62,19 @@ class LayoutContainers extends React.Component {
 
     render () {
         const { route } = this.props
+
+        const objA = {
+            a: 'A',
+            customizer: function (value) {
+                if (typeof value === 'string') {
+                    console.log('字符串')
+                }
+            }
+        }
+
+        const objB = cloneDeep(objA)
+
+        objB.customizer('aaaa')
 
         return (
             <Layout>
