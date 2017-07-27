@@ -224,7 +224,7 @@ class Lease extends React.Component {
                     unitPrice: contract.unitPrice,
                     startIncNum: contract.startIncNum,
                     rentIncrRate: contract.rentIncrRate,
-                    payType: contract.payType.toString() === '1' ? '按首年租金递增' : '按单价递增',
+                    payType: contract.payType.toString() === '1' ? '按单价递增' : '按首年租金递增',
                     mzq: contract.freeStartDate ? [moment(contract.freeStartDate), moment(contract.freeEndDate)] : [],
                     payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : contract.payCycle.toString() === '12' ? '年付' : '月付',
                     freeRent: contract.freeRent,
