@@ -66,17 +66,12 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>收费方式：</b>单价递增</Col>
                             <Col span={8}><b>合同单价：</b>2.0 元/㎡/天</Col>
-                            <Col span={8}><b>首年租金：</b>123,456 元 </Col>
+                            <Col span={8}><b>交费周期：</b>单价递增</Col>
+                            <Col span={8}><b>首年服务费：</b>123,456 元 </Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>交费周期：</b>季付</Col>
-                            <Col span={8}><b>免租期：</b>2017/1/1-2017/1/15</Col>
-                            <Col span={8}><b>免租金额：</b>10000 元</Col>
-                        </Row>
-                        <Row>
-                            <Col span={24}><b>租赁保证金：</b>1,378.42 元 （当前余额：123.00 元） &nbsp; 1 年后租金每年递增 5 %</Col>
+                            <Col span={24}><b>管理押金：</b>1,378.42 元 （当前余额：123.00 元） &nbsp; 1 年后租金每年递增 5 %</Col>
                         </Row>
                         <p className="line" />
                         <table className="tb">
@@ -120,8 +115,24 @@ class App extends React.Component {
                             </tbody>
                         </table>
                     </div>
-                    <Button type="primary">终止合同</Button>
                 </div>
+                <div className="wrapbox">
+                    <div className="title">
+                        首期费用
+                    </div>
+                    <div className="main">
+                        <Row>
+                            <Col span={8}><b>首次周期：</b>2015-10-02  ~ 2015-10-10</Col>
+                            <Col span={8}><b>管理押金：</b>1378.4 元</Col>
+                            <Col span={8}><b>首期服务费：</b>123,456.00元（已优惠金额 0.12元）</Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}><b>费用合计：</b> 321,654.4 元</Col>
+                        </Row>
+                    </div>
+                </div>
+                <Button type="primary">终止合同</Button>
+                <Button type="primary">打印新入住客户信息表</Button>
             </div>
         )
     }
