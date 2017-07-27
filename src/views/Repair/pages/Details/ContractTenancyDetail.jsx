@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, Table } from 'antd'
+import { Row, Col, Button, Table } from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
 
@@ -142,6 +142,7 @@ class App extends React.Component {
                             dataSource={this.state.dataSource}
                             columns={this.state.columns}
                         />
+                        <Button type="primary">终止合同</Button>
                     </div>
                 </div>
             </div>

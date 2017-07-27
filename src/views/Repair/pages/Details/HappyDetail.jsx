@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 欢乐颂合同 [详情]
 import React from 'react'
-import { Row, Col} from 'antd'
+import { Row, Button, Col} from 'antd'
 import '../../../../style/test.less'
 
 class App extends React.Component {
@@ -120,6 +120,7 @@ class App extends React.Component {
                             </tbody>
                         </table>
                     </div>
+                    <Button type="primary">终止合同</Button>
                 </div>
             </div>
         )
