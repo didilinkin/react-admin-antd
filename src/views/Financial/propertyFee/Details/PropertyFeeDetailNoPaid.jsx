@@ -45,7 +45,7 @@ class PropertyFeeDetailNoPaid extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        location.href = '/financial/PropertyFeeDetailNoPaid/' + this.props.match.params.id
+        location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
     }
     handleCancel = (e) => {
         this.isFirst = true
