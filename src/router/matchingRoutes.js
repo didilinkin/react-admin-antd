@@ -1,6 +1,6 @@
 // 映射 路由配置表(项目逻辑)
 // 布局组件
-import { Layout } from '../common/containers'
+import { LayoutContainers } from '../common/containers'
 
 // 将 globalDir 中的映射处理好
 import globalDir from '../utils/globalDir'
@@ -35,7 +35,7 @@ let routesArr = [ ...globalRoutes ]
 
 const matchingRoutes = [{
     path: '/home',
-    component: Layout,
+    component: LayoutContainers,
     routes: routesArr
 }]
 

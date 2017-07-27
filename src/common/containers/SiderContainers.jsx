@@ -14,7 +14,7 @@ const SiderBox = styled.div `
     width: 230px;
 `
 
-class Sider extends React.Component {
+class SiderContainers extends React.Component {
     state = {
         collapsed: false, // 缩起内嵌菜单(使用)
         current: '1', // 只展开父级:  当前选中的菜单项 key 数组
@@ -170,4 +170,4 @@ class Sider extends React.Component {
     }
 }
 
-export default Sider
+export default SiderContainers
