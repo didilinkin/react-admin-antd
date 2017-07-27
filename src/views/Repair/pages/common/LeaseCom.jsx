@@ -468,7 +468,7 @@ class Lease extends React.Component {
         }
         this.props.form.setFieldsValue({
             firstYearRent: (unitPrice * leaseArea * 365).toFixed(2),
-            freeRent: (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2) === 'NaN' ? 0 : (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2)
+            freeRent: freeEndDate === 0 ? 0 : (unitPrice * leaseArea * parseInt(((freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000) + 1).toFixed(0))).toFixed(2)
         })
     }
     render () {
@@ -744,7 +744,7 @@ class Lease extends React.Component {
                                 wrapperCol={{ span: 15 }}
                             >
                                 {getFieldDecorator('freeRent')(
-                                    <Input style={{ width: 200 }} addonAfter="元" disabled />
+                                    <Input style={{ width: 200 }} addonAfter="元" />
                                 )}
                             </FormItem>
                         </Col>
