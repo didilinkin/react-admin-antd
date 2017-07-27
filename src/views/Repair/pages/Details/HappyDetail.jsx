@@ -1,9 +1,63 @@
 // 客户管理 - 合同管理 - 欢乐颂合同 [详情]
 import React from 'react'
-import { Row, Button, Col} from 'antd'
+import { Row, Button, Col, Table} from 'antd'
 import '../../../../style/test.less'
+import { apiPost } from '../../../../api'
 
 class App extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            contract: {},
+            dataSource: [],
+            columns: [
+                {
+                    title: '租赁开始时间',
+                    dataIndex: 'startDate'
+                },
+                {
+                    title: '租赁结束时间',
+                    dataIndex: 'endDate'
+                },
+                {
+                    title: '交费期限',
+                    dataIndex: 'payDeadline'
+                },
+                {
+                    title: '金额',
+                    dataIndex: 'currentPeriodMoney'
+                },
+                {
+                    title: '优惠金额',
+                    dataIndex: 'discountMoney'
+                },
+                {
+                    title: '实际应收',
+                    dataIndex: 'actualPaidMoney'
+                },
+                {
+                    title: '未收租金',
+                    dataIndex: 'unpaidMoney'
+                }
+            ]
+        }
+    }
+    async initialRemarks () {
+        let contract = await apiPost(
+            '/contract/getcontract',
+            {'id': this.props.match.params.id,
+                type: 2}
+        )
+        this.setState({
+            dataSource: contract.data.list,
+            contract: contract.data.contract
+        })
+        console.log(contract.data.contract)
+        console.log(contract.data.subletInfoList)
+    }
+    componentWillMount () {
+        this.initialRemarks()
+    }
     render () {
         return (
             <div className="contract">
@@ -11,12 +65,12 @@ class App extends React.Component {
                     <div className="title">房源信息</div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>所属楼宇：</b>长江中心A座 </Col>
-                            <Col span={8}><b>服务面积：</b>d</Col>
-                            <Col span={8}><b>房间别名：</b>123</Col>
+                            <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName}</Col>
+                            <Col span={8}><b>服务面积：</b>{this.state.contract.leaseArea}</Col>
+                            <Col span={8}></Col>
                         </Row>
                         <Row>
-                            <Col span={24}><b>房间编号：</b>2301/2302/2303/2305/2306 </Col>
+                            <Col span={24}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
                         </Row>
                     </div>
                 </div>
@@ -26,17 +80,17 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>租赁客户名称：</b>张三的公司</Col>
-                            <Col span={8}><b>联系人：</b>王小明</Col>
-                            <Col span={8}><b>经理电话：</b>123456789</Col>
+                            <Col span={8}><b>租赁客户名称：</b>{this.state.contract.rentClientName}</Col>
+                            <Col span={8}><b>联系人：</b>{this.state.contract.contactPerson}</Col>
+                            <Col span={8}><b>经理电话：</b>{this.state.contract.phoneManager}</Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>行政电话：</b>123456789 </Col>
-                            <Col span={8}><b>财务电话：</b>123456789</Col>
-                            <Col span={8}><b>E-mail：</b>123456789@123.com</Col>
+                            <Col span={8}><b>行政电话：</b>{this.state.contract.phoneAdmin} </Col>
+                            <Col span={8}><b>财务电话：</b>{this.state.contract.phoneFinance}</Col>
+                            <Col span={8}><b>E-mail：</b>{this.state.contract.email}</Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>签约日期：</b>2017-7-11 15:23:19 </Col>
+                            <Col span={8}><b>签约日期：</b>{this.state.contract.signDate}</Col>
                             <Col span={16} />
                         </Row>
                     </div>
@@ -47,17 +101,19 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>租赁周期：</b>2015-10-02  ~ 2015-10-10</Col>
-                            <Col span={16}><b>录入时间：</b>王小明      2016-09-26    12:12:12</Col>
+                            <Col span={8}><b>租赁周期：</b>{this.state.contract.startDate}  ~ {this.state.contract.endDate}</Col>
+                            <Col span={16}><b>录入时间：</b>{this.state.contract.createName} ({this.state.contract.createDate})</Col>
                         </Row>
                         <Row>
-                            <Col span={8}><b>合同编号：</b>ABC-123456789 </Col>
-                            <Col span={16}><b>最后修改：</b>王小明      2016-09-26    12:12:12</Col>
+                            <Col span={8}><b>合同编号：</b>{this.state.contract.contractCode} </Col>
+                            <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
                         </Row>
+                        {this.state.contract.contractStatus === '1' &&
                         <Row>
-                            <Col span={8}><b>终止日期：</b>王小明      2016-09-26    12:12:12</Col>
-                            <Col span={16}><b>终止原因：</b>终止原因终止原因终止原因终止原因</Col>
+                            <Col span={8}><b>终止日期：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
+                            <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
                         </Row>
+                        }
                     </div>
                 </div>
                 <div className="wrapbox">
@@ -66,73 +122,25 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>合同单价：</b>2.0 元/㎡/天</Col>
-                            <Col span={8}><b>交费周期：</b>单价递增</Col>
-                            <Col span={8}><b>首年服务费：</b>123,456 元 </Col>
+                            <Col span={8}><b>合同单价：</b>{this.state.contract.unitPrice}  元/㎡/天</Col>
+                            <Col span={8}><b>交费周期：</b>
+                                {this.state.contract.payType === 0 && '按单价递增'}
+                                {this.state.contract.payType === 1 && '按金额递增'}
+                            </Col>
+                            <Col span={8}><b>首年服务费：</b>{this.state.contract.firstYearRent} 元 </Col>
                         </Row>
                         <Row>
-                            <Col span={24}><b>管理押金：</b>1,378.42 元 （当前余额：123.00 元） &nbsp; 1 年后租金每年递增 5 %</Col>
+                            <Col span={24}><b>管理押金：</b>{this.state.contract.depositMoney} 元 （当前余额：{this.state.contract.currentBalance} 元） &nbsp; {this.state.contract.startIncNum} 年后租金每年递增 {this.state.contract.rentIncrRate} %</Col>
                         </Row>
                         <p className="line" />
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>租赁周期</td>
-                                    <td>交费期限</td>
-                                    <td>金额 （元）</td>
-                                    <td>优惠（元）</td>
-                                    <td>应收租金（元）</td>
-                                    <td>实收租金（元）</td>
-                                    <td>未收租金（元）</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                    <td>23</td>
-                                    <td>23</td>
-                                    <td>11</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div className="wrapbox">
-                    <div className="title">
-                        首期费用
-                    </div>
-                    <div className="main">
-                        <Row>
-                            <Col span={8}><b>首次周期：</b>2015-10-02  ~ 2015-10-10</Col>
-                            <Col span={8}><b>管理押金：</b>1378.4 元</Col>
-                            <Col span={8}><b>首期服务费：</b>123,456.00元（已优惠金额 0.12元）</Col>
-                        </Row>
-                        <Row>
-                            <Col span={24}><b>费用合计：</b> 321,654.4 元</Col>
-                        </Row>
+                        <Table
+                            bordered
+                            dataSource={this.state.dataSource}
+                            columns={this.state.columns}
+                        />
                     </div>
                 </div>
                 <Button type="primary">终止合同</Button>
-                <Button type="primary">打印新入住客户信息表</Button>
             </div>
         )
     }
