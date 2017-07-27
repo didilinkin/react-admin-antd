@@ -136,8 +136,12 @@ class PropertyContract extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     let arr = []
+                    let url = '/upkeep/contractTenancyDetail/' + record.id
+                    if (record.contractSplit.toString() === '2') {
+                        url = '/upkeep/happyDetail/' + record.id
+                    }
                     arr.push(
-                        <a href="javascript:" key="1"> 查看 &nbsp;</a>
+                        <a href={url} key="1"> 查看 &nbsp;</a>
                     )
                     arr.push(
                         <a href="javascript:" key="2" onClick={() => updateRent(record.contractSplit, record.id)}>&nbsp; 编辑 </a>

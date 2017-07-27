@@ -44,6 +44,8 @@ class Happy extends React.Component {
                 json['payCycle'] = 3
             } else if (json.payCycle.toString() === '半年付') {
                 json['payCycle'] = 6
+            } else if (json.payCycle.toString() === '月付') {
+                json['payCycle'] = 1
             } else {
                 json['payCycle'] = 12
             }
@@ -186,8 +188,8 @@ class Happy extends React.Component {
                             dataIndex: 'opt',
                             render: (text, record, index) => {
                                 return (
-                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record.id)}>
-                                        <a href="javascript:void(0)">删除</a>
+                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record)}>
+                                        <a href="javascript:">删除</a>
                                     </Popconfirm>
                                 )
                             }
@@ -211,7 +213,7 @@ class Happy extends React.Component {
                     unitPrice: contract.unitPrice,
                     startIncNum: contract.startIncNum,
                     rentIncrRate: contract.rentIncrRate,
-                    payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : '年付',
+                    payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : contract.payCycle.toString() === '12' ? '年付' : '月付',
                     firstYearRent: contract.firstYearRent,
                     roomIds: contract.roomIds,
                     clientId: contract.clientId
@@ -318,6 +320,8 @@ class Happy extends React.Component {
                 json['payCycle'] = 3
             } else if (json.payCycle.toString() === '半年付') {
                 json['payCycle'] = 6
+            } else if (json.payCycle.toString() === '月付') {
+                json['payCycle'] = 1
             } else {
                 json['payCycle'] = 12
             }
@@ -406,8 +410,8 @@ class Happy extends React.Component {
                         dataIndex: 'opt',
                         render: (text, record, index) => {
                             return (
-                                <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record.id)}>
-                                    <a href="javascript:void(0)">删除</a>
+                                <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record)}>
+                                    <a href="javascript:">删除</a>
                                 </Popconfirm>
                             )
                         }
@@ -417,10 +421,10 @@ class Happy extends React.Component {
             })
         }
     }
-    onDelete = async (id) => {
+    onDelete = async (record) => {
         let data = await apiPost(
             '/contract/delectRentContractInfoId',
-            {id: id}
+            record
         )
         this.setState({ dataSource: data.data })
     }
@@ -662,6 +666,7 @@ class Happy extends React.Component {
                                         placeholder="请选择交费周期"
                                         optionFilterProp="children"
                                     >
+                                        <Option key="月付">月付</Option>
                                         <Option key="季付">季付</Option>
                                         <Option key="半年付">半年付</Option>
                                         <Option key="年付">年付</Option>

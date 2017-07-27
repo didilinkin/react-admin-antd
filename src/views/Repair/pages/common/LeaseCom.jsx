@@ -38,7 +38,8 @@ class Lease extends React.Component {
             json['startDate'] = json.fuzq[0].format('YYYY-MM-DD')
             json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
             json['fuzq'] = []
-            if (typeof (json.mzq) !== 'undefined') {
+            console.log(typeof (json.mzq))
+            if (typeof (json.mzq) !== 'undefined' && json.mzq.length > 0) {
                 json['freeStartDate'] = json.mzq[0].format('YYYY-MM-DD')
                 json['freeEndDate'] = json.mzq[1].format('YYYY-MM-DD')
             }
@@ -49,6 +50,8 @@ class Lease extends React.Component {
                 json['payCycle'] = 3
             } else if (json.payCycle.toString() === '半年付') {
                 json['payCycle'] = 6
+            } else if (json.payCycle.toString() === '月付') {
+                json['payCycle'] = 1
             } else {
                 json['payCycle'] = 12
             }
@@ -197,8 +200,8 @@ class Lease extends React.Component {
                             dataIndex: 'opt',
                             render: (text, record, index) => {
                                 return (
-                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record.id)}>
-                                        <a href="javascript:void(0)">删除</a>
+                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record)}>
+                                        <a href="javascript:">删除</a>
                                     </Popconfirm>
                                 )
                             }
@@ -223,7 +226,7 @@ class Lease extends React.Component {
                     rentIncrRate: contract.rentIncrRate,
                     payType: contract.payType.toString() === '1' ? '按首年租金递增' : '按单价递增',
                     mzq: contract.freeStartDate ? [moment(contract.freeStartDate), moment(contract.freeEndDate)] : [],
-                    payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : '年付',
+                    payCycle: contract.payCycle.toString() === '3' ? '季付' : contract.payCycle.toString() === '6' ? '半年付' : contract.payCycle.toString() === '12' ? '年付' : '月付',
                     freeRent: contract.freeRent,
                     firstYearRent: contract.firstYearRent,
                     roomIds: contract.roomIds,
@@ -331,6 +334,8 @@ class Lease extends React.Component {
                 json['payCycle'] = 3
             } else if (json.payCycle.toString() === '半年付') {
                 json['payCycle'] = 6
+            } else if (json.payCycle.toString() === '月付') {
+                json['payCycle'] = 1
             } else {
                 json['payCycle'] = 12
             }
@@ -425,7 +430,7 @@ class Lease extends React.Component {
                         render: (text, record, index) => {
                             return (
                                 <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record)}>
-                                    <a href="javascript:void(0)">删除</a>
+                                    <a href="javascript:">删除</a>
                                 </Popconfirm>
                             )
                         }
@@ -463,7 +468,7 @@ class Lease extends React.Component {
         }
         this.props.form.setFieldsValue({
             firstYearRent: (unitPrice * leaseArea * 365).toFixed(2),
-            freeRent: (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2)
+            freeRent: (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2) === 'NaN' ? 0 : (unitPrice * leaseArea * (freeEndDate - freeStartDate) / (24 * 60 * 60 * 1000)).toFixed(2)
         })
     }
     render () {
@@ -726,6 +731,7 @@ class Lease extends React.Component {
                                         placeholder="请选择交费周期"
                                         optionFilterProp="children"
                                     >
+                                        <Option key="月付">月付</Option>
                                         <Option key="季付">季付</Option>
                                         <Option key="半年付">半年付</Option>
                                         <Option key="年付">年付</Option>
