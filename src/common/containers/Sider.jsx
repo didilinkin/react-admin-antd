@@ -1,5 +1,6 @@
 // 导航菜单 测试
 import React from 'react'
+import Link from 'react-router-redux-dom-link'
 
 import styled from 'styled-components'
 
@@ -122,7 +123,9 @@ class Sider extends React.Component {
         } else {
             return (
                 <Menu.Item key={ obj.key }>
-                    { obj.title }
+                    <Link to={ obj.path }>
+                        { obj.title }
+                    </Link>
                 </Menu.Item>
             )
         }
@@ -135,7 +138,9 @@ class Sider extends React.Component {
             } else {
                 return (
                     <Menu.Item key={childItem.key}>
-                        { childItem.title }
+                        <Link to={ childItem.path }>
+                            { childItem.title }
+                        </Link>
                     </Menu.Item>
                 )
             }

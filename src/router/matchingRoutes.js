@@ -26,32 +26,6 @@ let testRoutes = [
     }
 ]
 
-// // 初始循环
-// const mapItem = (obj) => {
-//     for (let item of obj) {
-//         let childItem = item.childRoute
-//         mapChildRoute(childItem)
-//     }
-
-//     console.dir(globalRoutes)
-// }
-
-// // 再次循环: 没有 component 属性的对象中的 childRoute 数组
-// const mapChildRoute = (childRouteArr) => {
-//     for (let itemChildRoute of childRouteArr) {
-//         if (hasCompObj(itemChildRoute)) {
-//             globalRoutes.push(itemChildRoute) // 有 component, 无 childRoute
-//         } else {
-//             // console.dir(itemChildRoute) // "设备维保" => 无 component, 有 childRoute
-
-//             mapChildRoute(itemChildRoute.childRoute) // 将 带有 childRoute的对象, 只拿它的 childRoute 属性值(数组), 再次进入方法遍历
-//         }
-//     }
-// }
-
-// // 迭代 globalDir
-// mapItem(globalDir)
-
 // 根据是否存在 component属性, 保存对象
 const mapChildRoute = (item) => {
     item.map((itemChildRoute) => {
