@@ -3,11 +3,13 @@ import React from 'react'
 import { Row, Button, Col, Table} from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
+import TerminationComponent from '../common/Termination'
 
 class App extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            TerminationComponentOpen: false,
             contract: {},
             dataSource: [],
             columns: [
@@ -57,6 +59,22 @@ class App extends React.Component {
     }
     componentWillMount () {
         this.initialRemarks()
+    }
+    refresh = async () => {
+        let contract = await apiPost(
+            '/contract/getcontract',
+            {'id': this.props.match.params.id,
+                type: 2}
+        )
+        this.setState({
+            contract: contract.data.contract,
+            TerminationComponentOpen: false
+        })
+    }
+    TerminationComponent = () => {
+        this.setState({
+            TerminationComponentOpen: true
+        })
     }
     render () {
         return (
@@ -108,7 +126,7 @@ class App extends React.Component {
                             <Col span={8}><b>合同编号：</b>{this.state.contract.contractCode} </Col>
                             <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
                         </Row>
-                        {this.state.contract.contractStatus === '1' &&
+                        {this.state.contract.contractStatus === 1 &&
                         <Row>
                             <Col span={8}><b>终止日期：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
                             <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
@@ -140,7 +158,13 @@ class App extends React.Component {
                         />
                     </div>
                 </div>
-                <Button type="primary">终止合同</Button>
+                <Button type="primary" onClick={this.TerminationComponent}>终止合同</Button>
+                <TerminationComponent
+                    id={this.props.match.params.id}
+                    type="2"
+                    refreshTable={this.refresh}
+                    visible={this.state.TerminationComponentOpen}
+                />
             </div>
         )
     }

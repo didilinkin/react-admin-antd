@@ -37,10 +37,17 @@ class Termination extends React.Component {
                 let json = this.props.form.getFieldsValue()
                 json['id'] = this.props.id
                 console.log(json)
-                await apiPost(
-                    '/contract/terminationPm',
-                    json
-                )
+                if (typeof (this.props.type) !== 'undefined' && this.props.type !== null && this.props.type.toString() === '2') {
+                    await apiPost(
+                        '/contract/terminationRentContractInfo',
+                        json
+                    )
+                } else {
+                    await apiPost(
+                        '/contract/terminationPm',
+                        json
+                    )
+                }
                 notification.open({
                     message: '终止成功',
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
