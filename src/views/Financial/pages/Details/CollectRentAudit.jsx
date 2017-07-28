@@ -139,7 +139,7 @@ class App extends React.Component {
                             </Row>
                         </div>
                     </div>
-                    <textarea placeholder="请输入审批意见" onChange={this.onValueChange} />
+                    <textarea style={{width: '100%'}} placeholder="请输入审批意见" onChange={this.onValueChange} />
                 </Modal>
             </div>
         )
