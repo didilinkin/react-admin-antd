@@ -16,7 +16,7 @@ const PrivateRoute = ({ match }) => (
                 (
                     <Redirect
                         to={{
-                            pathname: '/home',
+                            pathname: '/home/index',
                             state: { from: match.params.id }
                         }}
                     />

@@ -1,6 +1,6 @@
 // 映射 路由配置表(项目逻辑)
 // 布局组件
-import { LayoutContainers } from '../common/containers'
+import { LayoutContainers, HomeContainers } from '../common/containers'
 
 // 将 globalDir 中的映射处理好
 import globalDir from '../utils/globalDir'
@@ -10,6 +10,12 @@ const hasCompObj = (obj) => obj.hasOwnProperty('component')
 
 // 储存 迭代 globalDir中的路由数据(需要处理)
 let globalRoutes = []
+
+// 首页内容(柱状图 等信息展示)
+const HomeIndexRoute = [{
+    path: '/home/index',
+    component: HomeContainers
+}]
 
 // 根据是否存在 component属性, 保存对象
 const mapChildRoute = (item) => {
@@ -31,7 +37,10 @@ globalDir.map((moduleItem) => {
 })
 
 // 合并 数据(测试 + 迭代出来的路由数据)
-let routesArr = [ ...globalRoutes ]
+let routesArr = [
+    ...globalRoutes,
+    ...HomeIndexRoute
+]
 
 const matchingRoutes = [{
     path: '/home',
