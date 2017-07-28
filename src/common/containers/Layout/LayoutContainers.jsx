@@ -1,36 +1,16 @@
 // 布局
 import React from 'react'
-import { Route } from 'react-router-dom'
 
-// import styled from 'styled-components'
 import { padding, margin } from 'polished'
 import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
 import HeaderContainers from './HeaderContainers'
+import TabsContainers from './TabsContainers'
 
 // Antd 布局组件
 import { Layout } from 'antd'
 const { Header, Sider, Content, Footer } = Layout
-
-const RouteWithSubRoutes = (route) => (
-    <Route path={ route.path } render={ props => (
-        // 把自路由向下传递来达到嵌套。
-        <route.component { ...props } routes={ route.routes } />
-    )}
-    />
-)
-
-const MainContent = ({ route }) => (
-    <div>
-        {/* Main 内容 */}
-        {
-            route.routes.map((route, i) => (
-                <RouteWithSubRoutes key={ i } { ...route } />
-            ))
-        }
-    </div>
-)
 
 class LayoutContainers extends React.Component {
     state = {
@@ -70,8 +50,7 @@ class LayoutContainers extends React.Component {
                     <Header
                         style={{
                             background: '#fff',
-                            ...padding('0', '0', '0', elf.f.title),
-                            top: `${elf.f.title}`
+                            ...padding('0', '0', '0', elf.f.title)
                         }}
                     >
                         {/*
@@ -87,13 +66,12 @@ class LayoutContainers extends React.Component {
                     {/* 内容 */}
                     <Content
                         style={{
-                            ...margin(elf.f.title, elf.f.title, null, elf.f.title),
-                            padding: elf.f.title,
-                            background: '#fff'
+                            ...margin(elf.f.title, elf.f.title, null, elf.f.title)
                         }}
                     >
                         {/* 无状态组件, 传递 props: route */}
-                        <MainContent route={ route } />
+                        {/* <MainContent route={ route } /> */}
+                        <TabsContainers route={ route } />
                     </Content>
 
                     {/* 底部 */}

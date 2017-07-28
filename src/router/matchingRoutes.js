@@ -13,6 +13,8 @@ let globalRoutes = []
 
 // 首页内容(柱状图 等信息展示)
 const HomeIndexRoute = [{
+    title: '首页',
+    key: 'index',
     path: '/home/index',
     component: HomeContainers
 }]

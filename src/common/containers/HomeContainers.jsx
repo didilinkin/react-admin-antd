@@ -1,13 +1,11 @@
 // 首页内容
 import React from 'react'
 
-import { TabsContainers } from './Layout'
-
 class HomeContainers extends React.Component {
     render () {
         return (
             <div>
-                <TabsContainers />
+                <h1> 首页 </h1>
             </div>
         )
     }

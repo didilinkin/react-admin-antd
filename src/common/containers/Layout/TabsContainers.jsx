@@ -1,89 +1,71 @@
 // 自定义新增页签触发器
 import React from 'react'
+import { Route } from 'react-router-dom'
 
-import { Tabs, Button } from 'antd'
-
+import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
-class TabsContainers extends React.Component {
-    constructor (props) {
-        super(props)
-        this.newTabIndex = 0
-        const panes = [
-            {
-                title: 'Tab 1',
-                content: 'Content of Tab Pane 1',
-                key: '1'
-            }, {
-                title: 'Tab 2',
-                content: 'Content of Tab Pane 2',
-                key: '2'
-            }
-        ]
-        this.state = {
-            activeKey: panes[0].key,
-            panes
-        }
-    }
+// 负责 渲染传递进来的 compObj
+const RouteWithSubRoutes = (route) => (
+    <Route path={ route.path } render={ props => (
+        // 把自路由向下传递来达到嵌套。
+        // <route.component { ...props } routes={ route.routes }>
+        //     {
+        //         console.log('1')
+        //     }
+        // </route.component>
+        <div>
+            <h1> { route.title } </h1>
 
-    onChange = (activeKey) => {
-        this.setState({ activeKey })
-    }
-    onEdit = (targetKey, action) => {
-        this[action](targetKey)
-    }
-    add = () => {
-        const panes = this.state.panes
-        const activeKey = `newTab${this.newTabIndex++}`
-        panes.push({
-            title: 'New Tab',
-            content: 'New Tab Pane',
-            key: activeKey
-        })
-        this.setState({
-            panes,
-            activeKey
-        })
-    }
-    remove = (targetKey) => {
-        let activeKey = this.state.activeKey
-        let lastIndex
-        this.state.panes.forEach((pane, i) => {
-            if (pane.key === targetKey) {
-                lastIndex = i - 1
-            }
-        })
-        const panes = this.state.panes.filter(pane => pane.key !== targetKey)
-        if (lastIndex >= 0 && activeKey === targetKey) {
-            activeKey = panes[lastIndex].key
+            <route.component { ...props } routes={ route.routes }>
+                {
+                    // console.log(route)
+                    console.log(props)
+                }
+            </route.component>
+        </div>
+    )}
+    />
+)
+
+
+// 渲染内容
+const MainContent = ({ route }) => (
+    <div>
+        {/* Main 内容 */}
+        {
+            route.routes.map((route, i) => (
+                <RouteWithSubRoutes key={ i } { ...route } />
+            ))
         }
-        this.setState({
-            panes,
-            activeKey
-        })
+    </div>
+)
+
+class TabsContainers extends React.Component {
+    state = {
+        title: ''
     }
 
     render () {
+        const { route } = this.props
+
+        let callback = (key) => {
+            console.log(key)
+        }
+
         return (
             <div>
-                <div style={{ marginBottom: 16 }}>
-                    <Button onClick={ this.add }> ADD </Button>
-                </div>
-                <Tabs
-                    hideAdd
-                    onChange={ this.onChange }
-                    activeKey={ this.state.activeKey }
-                    type="editable-card"
-                    onEdit={ this.onEdit }
-                >
-                    {
-                        this.state.panes.map(pane =>
-                            <TabPane tab={ pane.title } key={ pane.key }>
-                                { pane.content }
-                            </TabPane>
-                        )
-                    }
+                <Tabs onChange={ callback } type="card">
+                    <TabPane tab="Tab 1" key="1">
+                        <MainContent route={ route } />
+                    </TabPane>
+
+                    <TabPane tab="Tab 2" key="2">
+                        Content of Tab Pane 2
+                    </TabPane>
                 </Tabs>
+
+
             </div>
         )
     }
