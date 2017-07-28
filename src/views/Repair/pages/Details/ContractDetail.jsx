@@ -89,7 +89,7 @@ class App extends React.Component {
                 <h2>房源信息</h2>
                 <Row>
                     <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
-                    <Col span={8}><b>服务面积：</b>{this.state.contract.serviceArea}</Col>
+                    <Col span={8}><b>服务面积：</b>{this.state.contract.serviceArea} &nbsp;㎡</Col>
                     <Col span={8} />
                 </Row>
                 <Row>

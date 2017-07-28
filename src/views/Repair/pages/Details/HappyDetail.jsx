@@ -84,7 +84,7 @@ class App extends React.Component {
                     <div className="main">
                         <Row>
                             <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName}</Col>
-                            <Col span={8}><b>服务面积：</b>{this.state.contract.leaseArea}</Col>
+                            <Col span={8}><b>服务面积：</b>{this.state.contract.leaseArea} &nbsp;㎡</Col>
                             <Col span={8}></Col>
                         </Row>
                         <Row>
