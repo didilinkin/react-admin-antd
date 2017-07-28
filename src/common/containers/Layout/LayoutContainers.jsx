@@ -1,7 +1,8 @@
 // 布局
 import React from 'react'
+import { Route } from 'react-router-dom'
 
-import { padding, margin } from 'polished'
+import { padding } from 'polished'
 import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
@@ -11,6 +12,30 @@ import TabsContainers from './TabsContainers'
 // Antd 布局组件
 import { Layout } from 'antd'
 const { Header, Sider, Content, Footer } = Layout
+
+// 负责 渲染传递进来的 compObj
+const RouteWithSubRoutes = (route) => (
+    <Route path={ route.path } render={ props => (
+        // 把自路由向下传递来达到嵌套。
+        <TabsContainers
+            route={ route }
+            tabsProps={ props }
+        />
+    )}
+    />
+)
+
+
+// 渲染内容
+const MainContent = ({ route }) => (
+    <div>
+        {
+            route.routes.map((route, i) => (
+                <RouteWithSubRoutes key={ i } { ...route } />
+            ))
+        }
+    </div>
+)
 
 class LayoutContainers extends React.Component {
     state = {
@@ -45,7 +70,7 @@ class LayoutContainers extends React.Component {
                 </Sider>
 
                 {/* 内容部分 */}
-                <Layout>
+                <Layout style={{ background: '#FFF' }}>
                     {/* 顶部 */}
                     <Header
                         style={{
@@ -66,29 +91,24 @@ class LayoutContainers extends React.Component {
                     {/* 内容 */}
                     <Content
                         style={{
-                            ...margin(elf.f.title, elf.f.title, null, elf.f.title)
+                            ...padding(elf.f.title, elf.f.title, null, elf.f.title),
+                            borderTop: '2px solid rgb(233, 233, 233)'
                         }}
                     >
-                        {/* 无状态组件, 传递 props: route */}
-                        {/* <MainContent route={ route } /> */}
-                        <TabsContainers route={ route } />
+                        <MainContent route={ route } />
                     </Content>
 
                     {/* 底部 */}
                     <Footer
                         style={{
+                            padding: elf.f.assist,
                             textAlign: 'center',
-                            padding: elf.f.assist
+                            background: elf.c.background
                         }}
                     >
                         长江中心 PMS 物业管理系统 ©2016 Created by 上朝科技
                     </Footer>
                 </Layout>
-                {/* 样式描述 */}
-                <style>
-                    {`
-                    `}
-                </style>
             </Layout>
         )
     }
