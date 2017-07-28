@@ -111,14 +111,14 @@ class propertyPaidConfirm extends React.Component {
                 <Modal maskClosable={false}
                     title={this.props.title}
                     style={{top: 20}}
-                    width={700}
+                    width={400}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
                         <Row>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <FormItem label="交费日期" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
