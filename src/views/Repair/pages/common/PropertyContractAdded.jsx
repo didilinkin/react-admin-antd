@@ -322,10 +322,13 @@ class PropertyContractAdded extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Spin spinning={this.state.loading}>
-                    <Steps current={this.state.current}>
-                        <Step key="合同信息" title="合同信息" />
-                        <Step key="设置物业费" title="设置物业费" />
-                    </Steps>
+                    <div style={{ width: '400px',
+                        margin: '10px auto 20px auto'}}>
+                        <Steps current={this.state.current}>
+                            <Step key="合同信息" title="合同信息" />
+                            <Step key="设置物业费" title="设置物业费" />
+                        </Steps>
+                    </div>
                     <Form layout="horizontal">
                         <div style={{display: this.state.none1}}>
                             <h2>房源信息</h2>
