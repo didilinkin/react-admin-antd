@@ -13,6 +13,10 @@ class CollectRentHead extends React.Component {
             none: 'none'
         }
     }
+    // 清除
+    handleReset = () => {
+        this.props.form.resetFields()
+    }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let adopt = false
@@ -179,12 +183,9 @@ class CollectRentHead extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={8}><div style={{paddingLeft: '25%',
-                        marginBottom: 10}}>
-                        <Button onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                        <Button onClick={this.open}>{this.state.open}</Button></div>
-                    </Col>
                     <Col span={16}/>
+                    <Col span={8}><div style={{paddingLeft: '25%',
+                        marginBottom: 10}}><Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
                 </Row>
             </Form>
         )
