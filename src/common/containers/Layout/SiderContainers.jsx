@@ -4,7 +4,7 @@ import Link from 'react-router-redux-dom-link'
 
 import styled from 'styled-components'
 
-import globalDir from '../../utils/globalDir'
+import globalDir from '../../../utils/globalDir'
 
 import { Menu, Icon } from 'antd' // Button
 const SubMenu = Menu.SubMenu

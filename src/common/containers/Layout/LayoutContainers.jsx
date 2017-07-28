@@ -3,15 +3,16 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 // import styled from 'styled-components'
-import { size } from 'polished'
-import elf from '../../elf'
+import { padding } from 'polished'
+import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
+import HeaderContainers from './HeaderContainers'
 
 import { cloneDeep } from 'lodash'
 
 // Antd 布局组件
-import { Layout, Icon } from 'antd'
+import { Layout } from 'antd'
 const { Header, Sider, Content, Footer } = Layout
 
 // 样式
@@ -83,9 +84,10 @@ class LayoutContainers extends React.Component {
                     trigger={ null }
                     collapsible
                     collapsed={ this.state.collapsed }
+                    width= {'230px'}
                     style={{
                         flex: '0 0 230px',
-                        ...size('100vh', '230px'),
+                        height: '100vh',
                         backgroundColor: elf.c.dark
                     }}
                 >
@@ -99,14 +101,18 @@ class LayoutContainers extends React.Component {
                     <Header
                         style={{
                             background: '#fff',
-                            padding: 0
+                            ...padding('0', '0', '0', elf.f.title),
+                            top: `${elf.f.title}`
                         }}
                     >
-                        <Icon
-                            className="trigger"
-                            type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' }
-                            onClick={ this.toggle }
-                        />
+                        {/*
+                            <Icon
+                                className="trigger"
+                                type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' }
+                                onClick={ this.toggle }
+                            />
+                        */}
+                        <HeaderContainers />
                     </Header>
 
                     {/* 内容 */}
@@ -131,16 +137,12 @@ class LayoutContainers extends React.Component {
                             padding: elf.f.assist
                         }}
                     >
-                        Ant Design ©2016 Created by Ant UED
+                        长江中心 PMS 物业管理系统 ©2016 Created by 上朝科技
                     </Footer>
                 </Layout>
                 {/* 样式描述 */}
                 <style>
                     {`
-                        .ant-layout-sider {
-                            flex: 0 0 230px !important;
-                            width: 230px !important;
-                        }
                     `}
                 </style>
             </Layout>
