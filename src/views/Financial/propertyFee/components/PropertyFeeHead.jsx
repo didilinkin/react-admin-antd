@@ -104,7 +104,7 @@ class CollectRentHead extends React.Component {
                 </Row>
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
-                        <FormItem label="开票状态" labelCol={{ span: 8 }}
+                        <FormItem label="开票状态" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('invoicePropertyStatus')(
