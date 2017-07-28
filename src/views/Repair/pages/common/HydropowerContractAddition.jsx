@@ -246,32 +246,32 @@ class HydropowerContractAddition extends React.Component {
                 <Form layout="horizontal">
                     <h2>房源信息</h2>
                     <Row>
-                        <Col span={12}>
-                            <FormItem label="所在房间:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 18 }}
-                            >
-                                {getFieldDecorator('buildIdOne', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请选择所属楼宇!'
-                                    }]
-                                })(
-                                    <Select
-                                        showSearch
-                                        style={{ width: 200,
-                                            marginRight: '10px' }}
-                                        placeholder="请选择所属楼宇"
-                                        onChange={this.selectbuildId}
-                                        optionFilterProp="children"
-                                    >
-                                        {this.state.ListBuildingInfo.map(Building => {
-                                            return <Option key={Building.id}>{Building.buildName}</Option>
-                                        })}
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={12}>
+                        <Col style={{marginBottom: '20px',
+                            paddingLeft: '25px'}} span={24}>
+                            <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
+                                fontSize: '12px',
+                                color: 'red',
+                                marginRight: '4px',
+                                fontFamily: 'SimSun'}}>*</a>所在房间 :&nbsp;&nbsp;</em>
+                            {getFieldDecorator('buildIdOne', {
+                                rules: [ {
+                                    required: true,
+                                    message: '请选择所属楼宇!'
+                                }]
+                            })(
+                                <Select
+                                    showSearch
+                                    style={{ width: 200,
+                                        marginRight: '10px' }}
+                                    placeholder="请选择所属楼宇"
+                                    onChange={this.selectbuildId}
+                                    optionFilterProp="children"
+                                >
+                                    {this.state.ListBuildingInfo.map(Building => {
+                                        return <Option key={Building.id}>{Building.buildName}</Option>
+                                    })}
+                                </Select>
+                            )}
                             {getFieldDecorator('leaseRooms', {
                                 rules: [ {
                                     required: true,
@@ -293,29 +293,27 @@ class HydropowerContractAddition extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
-                            <FormItem label="服务面积:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('serviceArea', {
-                                    rules: [{
-                                        required: true,
-                                        message: '请填写服务面积!'
-                                    }]
-                                }
-                                )(
-                                    <Input style={{ width: 200 }} disabled />
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={12}>
-                            <FormItem label="减免面积:" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15}}
-                            >
-                                {getFieldDecorator('reliefArea')(
-                                    <InputNumber onChange={this.reliefArea} style={{ width: 200 }} />
-                                )}
-                            </FormItem>
+                        <Col style={{marginBottom: '20px',
+                            paddingLeft: '25px'}} span={24}>
+                            <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
+                                fontSize: '12px',
+                                color: 'red',
+                                marginRight: '4px',
+                                fontFamily: 'SimSun'}}>*</a>服务面积 :&nbsp;&nbsp;</em>
+                            {getFieldDecorator('serviceArea', {
+                                rules: [{
+                                    required: true,
+                                    message: '请填写服务面积!'
+                                }]
+                            }
+                            )(
+                                <Input style={{ width: 200 }} disabled />
+                            )}
+                            <span style={{color: 'red',
+                                padding: '0 5px'}}>减免</span>
+                            {getFieldDecorator('reliefArea')(
+                                <InputNumber onChange={this.reliefArea} style={{ width: 200 }} />
+                            )}
                         </Col>
                     </Row>
                     <h2>合同信息</h2>

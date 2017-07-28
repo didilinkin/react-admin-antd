@@ -490,7 +490,7 @@ class Happy extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
+                                    style={{ width: 370 }}
                                     placeholder="请选择所属房间"
                                     onChange={this.selectRoom}
                                     optionFilterProp="children"
