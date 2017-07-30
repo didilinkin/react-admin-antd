@@ -2,7 +2,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import { padding } from 'polished'
 import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
@@ -74,8 +73,9 @@ class LayoutContainers extends React.Component {
                     {/* 顶部 */}
                     <Header
                         style={{
-                            background: '#fff',
-                            ...padding('0', '0', '0', elf.f.title)
+                            padding: 0,
+                            paddingLeft: elf.f.title,
+                            background: '#fff'
                         }}
                     >
                         {/*
@@ -91,7 +91,8 @@ class LayoutContainers extends React.Component {
                     {/* 内容 */}
                     <Content
                         style={{
-                            ...padding(elf.f.title, elf.f.title, null, elf.f.title),
+                            padding: elf.f.title,
+                            paddingBottom: null,
                             borderTop: '2px solid rgb(233, 233, 233)'
                         }}
                     >

@@ -10,7 +10,7 @@ const cloneObj = function (obj) {
     let str
     let newobj = obj.constructor === Array ? [] : {}
     if (typeof obj !== 'object') {
-        return
+        return newobj
     } else if (window.JSON) {
         str = JSON.stringify(obj) // 系列化对象
         newobj = JSON.parse(str) // 还原
