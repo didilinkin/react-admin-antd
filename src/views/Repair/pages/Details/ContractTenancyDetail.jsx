@@ -137,21 +137,23 @@ class App extends React.Component {
                     <div className="main">
                         <Row>
                             <Col span={8}><b>收费方式：</b>
-                                {this.state.contract.payType === 0 && '按单价递增'}
-                                {this.state.contract.payType === 1 && '按金额递增'}
+                                <span className="color1">
+                                    {this.state.contract.payType === 0 && '按单价递增'}
+                                    {this.state.contract.payType === 1 && '按金额递增'}
+                                </span>
                             </Col>
-                            <Col span={8}><b>合同单价：</b>{this.state.contract.unitPrice} 元/㎡/天</Col>
-                            <Col span={8}><b>首年租金：</b>{this.state.contract.firstYearRent} 元 </Col>
+                            <Col span={8}><b>合同单价：</b><span className="color1">{this.state.contract.unitPrice}</span> 元/㎡/天</Col>
+                            <Col span={8}><b>首年租金：</b><span className="color1">{this.state.contract.firstYearRent}</span> 元 </Col>
                         </Row>
                         <Row>
                             <Col span={8}><b>交费周期：</b>
                                 {this.state.contract.payCycle === 1 ? '月付' : this.state.contract.payCycle === 3 ? '季付' : this.state.contract.payCycle === 6 ? '半年付' : '年付' }
                             </Col>
                             <Col span={8}><b>免租期：</b>{this.state.contract.freeStartDate} - {this.state.contract.freeEndDate}</Col>
-                            <Col span={8}><b>免租金额：</b>{this.state.contract.freeRent} 元</Col>
+                            <Col span={8}><b>免租金额：</b><span className="color1">{this.state.contract.freeRent}</span> 元</Col>
                         </Row>
                         <Row>
-                            <Col span={24}><b>租赁保证金：</b>{this.state.contract.depositMoney} 元 （当前余额：{this.state.contract.currentBalance} 元） &nbsp; {this.state.contract.startIncNum} 年后租金每年递增 {this.state.contract.rentIncrRate} %</Col>
+                            <Col span={24}><b>租赁保证金：</b><span className="color1">{this.state.contract.depositMoney}</span> 元 （当前余额：<span className="color1">{this.state.contract.currentBalance}</span> 元） &nbsp; <span className="color1">{this.state.contract.startIncNum}</span> 年后租金每年递增 <span className="color1">{this.state.contract.rentIncrRate}</span> %</Col>
                         </Row>
                         <p className="line" />
                         <Table
