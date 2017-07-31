@@ -83,15 +83,15 @@ class PropertyContract extends React.Component {
                 }
             }, {
                 title: '客户名称',
-                width: 100,
+                width: 200,
                 dataIndex: 'clientName'
             }, {
                 title: '合同编号',
-                width: 100,
+                width: 150,
                 dataIndex: 'contractCode'
             }, {
                 title: '所属楼宇',
-                width: 100,
+                width: 150,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
@@ -103,11 +103,11 @@ class PropertyContract extends React.Component {
                 dataIndex: 'leaseArea'
             }, {
                 title: '合同开始日期',
-                width: 100,
+                width: 150,
                 dataIndex: 'startDate'
             }, {
                 title: '合同结束日期',
-                width: 100,
+                width: 150,
                 dataIndex: 'endDate'
             }, {
                 title: '合同状态',
