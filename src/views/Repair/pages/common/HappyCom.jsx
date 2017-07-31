@@ -490,7 +490,7 @@ class Happy extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
+                                    style={{ width: 370 }}
                                     placeholder="请选择所属房间"
                                     onChange={this.selectRoom}
                                     optionFilterProp="children"
@@ -633,7 +633,6 @@ class Happy extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                <span> 递增情况:</span>
                                 {getFieldDecorator('startIncNum')(
                                     <Input style={{ width: 40 }} />
                                 )}
@@ -698,7 +697,8 @@ class Happy extends React.Component {
                     )}
                 </Form>
                 {!this.props.id > 0 &&
-                    <Button style={{margin: '10px 0'}} onClick={this.generate}>生成每期租金</Button>
+                    <Button type="primary" style={{margin: '10px auto',
+                        display: 'block'}} onClick={this.generate}>生成每期租金</Button>
                 }
                 <div style={{marginBottom: '10px'}}>
                     <Table
@@ -707,7 +707,7 @@ class Happy extends React.Component {
                         columns={this.state.columns}
                     />
                 </div>
-                <Button onClick={this.handleSubmit}>保存</Button>
+                <Button type="primary" onClick={this.handleSubmit}>保存</Button>
             </Modal>
         )
     }

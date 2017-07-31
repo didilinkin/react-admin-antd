@@ -103,7 +103,6 @@ class InventoryManage extends Component {
                 key: 'number'
             }, {
                 title: '金额',
-                width: 150,
                 dataIndex: 'amount',
                 key: 'amount'
             }, {

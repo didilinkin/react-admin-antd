@@ -89,88 +89,90 @@ class InReview extends React.Component {
                 <Modal maskClosable={false}
                     title= "物业费明细"
                     style={{top: 20}}
-                    width={700}
+                    width={900}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
                 >
-                    <spn ><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</spn>
-                    <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
-                    <Row>
-                        <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
-                        <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
-                        <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
-                    </Row>
-                    <table className="tb">
-                        <tbody>
-                            <tr className="hd">
-                                <td>费用项目</td>
-                                <td>面积</td>
-                                <td />
-                                <td>单价</td>
-                                <td />
-                                <td>月份</td>
-                                <td>金额</td>
-                            </tr>
-                            <tr>
-                                <td>物业管理费</td>
-                                <td>{this.state.data.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.data.pmUnitPrice}</td>
-                                <td>*</td>
-                                <td>{this.state.monthDay}</td>
-                                <td>{this.state.data.pmFee}</td>
-                            </tr>
-                            <tr>
-                                <td>电梯费</td>
-                                <td>{this.state.data.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.data.elevUnitPrice}</td>
-                                <td>*</td>
-                                <td>{this.state.monthDay}</td>
-                                <td>{this.state.data.elevatorFee}</td>
-                            </tr>
-                            <tr>
-                                <td>空调费</td>
-                                <td>{this.state.data.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.data.acUnitPrice}</td>
-                                <td>*</td>
-                                <td>{this.state.monthDay}</td>
-                                <td>{this.state.data.airFee}</td>
-                            </tr>
-                            <tr>
-                                <td>水费</td>
-                                <td>{this.state.data.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.data.waterUnitPrice}</td>
-                                <td>*</td>
-                                <td>{this.state.monthDay}</td>
-                                <td>{this.state.data.waterFee}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
+                    <div className="contract">
+                        <span><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</span>
+                        <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
+                        <Row>
+                            <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
+                            <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
+                            <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
+                        </Row>
+                        <table className="tb">
+                            <tbody>
+                                <tr className="hd">
+                                    <td>费用项目</td>
+                                    <td>面积</td>
+                                    <td />
+                                    <td>单价</td>
+                                    <td />
+                                    <td>月份</td>
+                                    <td>金额</td>
+                                </tr>
+                                <tr>
+                                    <td>物业管理费</td>
+                                    <td>{this.state.data.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.data.pmUnitPrice}</td>
+                                    <td>*</td>
+                                    <td>{this.state.monthDay}</td>
+                                    <td>{this.state.data.pmFee}</td>
+                                </tr>
+                                <tr>
+                                    <td>电梯费</td>
+                                    <td>{this.state.data.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.data.elevUnitPrice}</td>
+                                    <td>*</td>
+                                    <td>{this.state.monthDay}</td>
+                                    <td>{this.state.data.elevatorFee}</td>
+                                </tr>
+                                <tr>
+                                    <td>空调费</td>
+                                    <td>{this.state.data.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.data.acUnitPrice}</td>
+                                    <td>*</td>
+                                    <td>{this.state.monthDay}</td>
+                                    <td>{this.state.data.airFee}</td>
+                                </tr>
+                                <tr>
+                                    <td>水费</td>
+                                    <td>{this.state.data.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.data.waterUnitPrice}</td>
+                                    <td>*</td>
+                                    <td>{this.state.monthDay}</td>
+                                    <td>{this.state.data.waterFee}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style={{margin: '20px 0',
+                            textAlign: 'right'}}
+                        >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
 
-                    <div className="wrapbox">
-                        <div className="main">
-                            <p className="line" />
-                            <h2>其他信息</h2>
-                            <Row>
-                                <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                                <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-                            </Row>
-                            <Row>
-                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
-                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
-                                    <Radio value={3}>审核不通过</Radio>
-                                </RadioGroup>
-                            </Row>
+                        <div className="wrapbox">
+                            <div className="main">
+                                <p className="line" />
+                                <h2>其他信息</h2>
+                                <Row>
+                                    <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                    <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                                </Row>
+                                <Row>
+                                    <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
+                                        <b>审批意见：</b><Radio value={2}>审核通过</Radio>
+                                        <Radio value={3}>审核不通过</Radio>
+                                    </RadioGroup>
+                                </Row>
+                            </div>
                         </div>
+                        <textarea placeholder="请输入审批意见" onChange={this.onValueChange} />
                     </div>
-                    <textarea placeholder="请输入审批意见" onChange={this.onValueChange} />
                 </Modal>
             </div>
         )

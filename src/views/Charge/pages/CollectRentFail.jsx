@@ -235,7 +235,6 @@ class CollectRentFail extends Component {
                     </Select>
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
-
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 1500 }}

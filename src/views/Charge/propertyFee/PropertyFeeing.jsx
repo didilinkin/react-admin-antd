@@ -115,7 +115,6 @@ class PropertyFeeing extends Component {
                 key: 'actualPaidMoney'
             }, {
                 title: '交费期限',
-                width: 150,
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
