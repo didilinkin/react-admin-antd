@@ -89,7 +89,7 @@ class addUpkeep extends React.Component {
         return (
             <div>
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="发起收租"
                     style={{top: 20}}
                     width={700}
                     visible={this.state.visible}
