@@ -109,7 +109,8 @@ class App extends React.Component {
                         </Row>
                         <Row>
                             <Col span={8}><b>签约日期：</b>{this.state.contract.signDate}</Col>
-                            <Col span={16} />
+                            <Col span={8}><b>公司编号：</b>{this.state.contract.clientNum} </Col>
+                            <Col span={8} />
                         </Row>
                     </div>
                 </div>
