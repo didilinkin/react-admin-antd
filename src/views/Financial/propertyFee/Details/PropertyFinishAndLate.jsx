@@ -374,10 +374,10 @@ class PropertyFinishAndLate extends React.Component {
                         <a href="javascript:" >&nbsp; 延期下月电费 </a>
                     </Popconfirm>
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
-                        <a href="javascript:" >&nbsp; 物业费开票 </a>
+                        <a className="btnred ant-btn" href="javascript:" >&nbsp; 物业费开票 </a>
                     </Popconfirm>
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
-                        <a href="javascript:" >&nbsp; 违约金开票 </a>
+                        <a className="btnred ant-btn" href="javascript:" >&nbsp; 违约金开票 </a>
                     </Popconfirm>
                 </div>
             </div>

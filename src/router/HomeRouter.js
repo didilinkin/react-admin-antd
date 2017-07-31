@@ -85,9 +85,11 @@ import ElevatorErrorDevice      from '../views/DeviceMaintain/pages/Details/Elev
 // 引入 '收费管理' 版块
 import ReceivableRent           from '../views/Charge/pages/ReceivableRent'                             // 收费管理 - 应收租金
 import RentManagement           from '../views/Charge/pages/RentManagement'                             // 收费管理 - 租金管理
-import PropertyManagement       from '../views/Charge/propertyFee/ReceivablePropertyFee'                         // 收费管理 - 物业费管理
+import PropertyManagement       from '../views/Charge/propertyFee/ReceivablePropertyFee'                // 收费管理 - 物业费管理
 import InitiateRent             from '../views/Charge/components/InitiateRent'
 import PropertyDetail           from '../views/Charge/pages/Details/PropertyDetail'                     // [详情] - 物业费管理
+import ChargeWaterBill          from '../views/Charge/pages/ChargeWaterBill'                            // 收费管理 - 水费管理
+import ChargePowerBill          from '../views/Charge/pages/ChargePowerBill'                            // 收费管理 - 电费管理
 
 // 引入 '财务管理' 版块
 import RentReview               from '../views/Financial/pages/RentReview'                              // 财务管理 - 租金审核
@@ -96,12 +98,14 @@ import RentReviewDetailNoLate   from '../views/Financial/pages/Details/RentRevie
 import RentReviewDetailNoPaid   from '../views/Financial/pages/Details/RentReviewDetailNoPaid'
 import NoLateAndRentFinish      from '../views/Financial/pages/Details/NoLateAndRentFinish'
 import RentFinishAndLate        from '../views/Financial/pages/Details/RentFinishAndLate'
-import PropertyCostsReview      from '../views/Financial/propertyFee/PropertyCostsReview'                     // 财务管理 - 物业费审核
-import PropertyFeeDetailNoPaid      from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoPaid'
-import PropertyFeeDetailNoLate      from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoLate'
-import NoLateAndPropertyFinish      from '../views/Financial/propertyFee/Details/NoLateAndPropertyFinish'
-import PropertyFinishAndLate      from '../views/Financial/propertyFee/Details/PropertyFinishAndLate'
-import PropertyFeeDetail      from '../views/Financial/propertyFee/Details/PropertyFeeDetail'
+import PropertyCostsReview      from '../views/Financial/propertyFee/PropertyCostsReview'               // 财务管理 - 物业费审核
+import PropertyFeeDetailNoPaid  from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoPaid'
+import PropertyFeeDetailNoLate  from '../views/Financial/propertyFee/Details/PropertyFeeDetailNoLate'
+import NoLateAndPropertyFinish  from '../views/Financial/propertyFee/Details/NoLateAndPropertyFinish'
+import PropertyFinishAndLate    from '../views/Financial/propertyFee/Details/PropertyFinishAndLate'
+import PropertyFeeDetail        from '../views/Financial/propertyFee/Details/PropertyFeeDetail'
+import WaterBill                from '../views/Financial/pages/WaterBill'                               // 水费审核
+import PowerBill                from '../views/Financial/pages/PowerBill'                               // 电费审核
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -348,6 +352,12 @@ const routes = [
             }, {
                 path: '/charge/propertyDetail/:id',                                                     // [详情] - 物业费管理
                 component: PropertyDetail
+            }, {
+                path: '/charge/chargeWaterBill',                                                        // 收费管理(物业管理) - 水费管理
+                component: ChargeWaterBill
+            }, {
+                path: '/charge/chargePowerBill',                                                        // 收费管理(物业管理) - 电费管理
+                component: ChargePowerBill
             }
         ]
     }, {
@@ -376,20 +386,26 @@ const routes = [
                 path: '/financial/propertyCostsReview',                                                 // 财务管理 - 物业费审核
                 component: PropertyCostsReview
             }, {
-                path: '/financial/PropertyFeeDetailNoPaid/:id',                                                 // 财务管理 - 物业费审核
+                path: '/financial/PropertyFeeDetailNoPaid/:id',                                         // 财务管理 - 物业费审核
                 component: PropertyFeeDetailNoPaid
             }, {
-                path: '/financial/PropertyFeeDetailNoLate/:id',                                                 // 财务管理 - 物业费审核
+                path: '/financial/PropertyFeeDetailNoLate/:id',                                         // 财务管理 - 物业费审核
                 component: PropertyFeeDetailNoLate
             }, {
-                path: '/financial/NoLateAndPropertyFinish/:id',                                                 // 财务管理 - 物业费审核
+                path: '/financial/NoLateAndPropertyFinish/:id',                                         // 财务管理 - 物业费审核
                 component: NoLateAndPropertyFinish
             }, {
-                path: '/financial/PropertyFinishAndLate/:id',                                                 // 财务管理 - 物业费审核
+                path: '/financial/PropertyFinishAndLate/:id',                                           // 财务管理 - 物业费审核
                 component: PropertyFinishAndLate
             }, {
-                path: '/financial/PropertyFeeDetail/:id',                                                 // 财务管理 - 物业费审核
+                path: '/financial/PropertyFeeDetail/:id',                                               // 财务管理 - 物业费审核
                 component: PropertyFeeDetail
+            }, {
+                path: '/financial/waterBill',                                                           // 财务管理 - 水费
+                component: WaterBill
+            }, {
+                path: '/financial/powerBill',                                                           // 财务管理 - 电费
+                component: PowerBill
             }
         ]
     }

@@ -105,7 +105,7 @@ class NoLateAndRentFinish extends React.Component {
                     <Col span={16}><b>房间编号：</b>{this.state.data.roomNum} </Col>
                 </Row>
                 <div className="wrapbox">
-                    <div className="title" />
+                    <div className="title">租金信息</div>
                     <div className="main">
                         <h2>费用设置</h2>
                         <Row>
@@ -206,7 +206,7 @@ class NoLateAndRentFinish extends React.Component {
                     </div>
                 </div>
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
-                    <a href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
                 </Popconfirm>
             </div>
         )
