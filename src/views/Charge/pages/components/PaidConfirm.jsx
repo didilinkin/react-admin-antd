@@ -50,8 +50,6 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        json['payDeadline'] = json.payDeadline.format('YYYY-MM-DD')
-        console.log(json)
         await apiPost(
             '/collectRent/updateCollectRentVoByCommit',
             json
@@ -91,7 +89,7 @@ class addUpkeep extends React.Component {
         return (
             <div>
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="发起收租"
                     style={{top: 20}}
                     width={700}
                     visible={this.state.visible}
