@@ -317,10 +317,10 @@ class RentReviewDetail extends React.Component {
                     </div>
                 </div>
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
-                    <a href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
                 </Popconfirm>
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
-                    <a href="javascript:" >&nbsp; 违约金开票 </a>
+                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 违约金开票 </a>
                 </Popconfirm>
             </div>
         )
