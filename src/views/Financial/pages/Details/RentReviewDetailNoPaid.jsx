@@ -129,7 +129,7 @@ class RentReviewDetailNoPaid extends React.Component {
                 </div>
                 <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>
                 <Popconfirm title="确定修改吗?" onConfirm={this.invoiceRent}>
-                    <a href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
                 </Popconfirm>
             </div>
         )
