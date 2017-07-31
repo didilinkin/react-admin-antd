@@ -50,8 +50,6 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        json['payDeadline'] = json.payDeadline.format('YYYY-MM-DD')
-        console.log(json)
         await apiPost(
             '/collectRent/updateCollectRentVoByCommit',
             json
