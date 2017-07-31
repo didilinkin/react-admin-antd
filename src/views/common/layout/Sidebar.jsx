@@ -110,7 +110,17 @@ class Sidebar extends React.Component {
             firefighting: ['deviceMaintain', 'inspection'],
             waterTank: ['deviceMaintain', 'inspection', 'firefighting'],
             gasFireExtinguishing: ['deviceMaintain', 'inspection', 'firefighting'],
-            maintenanceRecords: ['deviceMaintain', 'inspection', 'firefighting']
+            maintenanceRecords: ['deviceMaintain', 'inspection', 'firefighting'],
+            // 收费管理
+            receivableRent: ['charge'],
+            propertyManagement: ['charge'],
+            chargeWaterBill: ['charge'], // (物业管理) - 水费管理
+            chargePowerBill: ['charge'], // (物业管理) - 电费管理
+            // 财务管理
+            rentReview: ['financial'],
+            propertyCostsReview: ['financial'],
+            waterBill: ['financial'],
+            powerBill: ['financial']
         }
 
         return map[key] || []
@@ -398,12 +408,20 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/charge/receivableRent">
+                        <Menu.Item key="receivableRent">
                             <Link to="/charge/receivableRent">应收租金</Link>
                         </Menu.Item>
 
-                        <Menu.Item key="/charge/propertyManagement">
+                        <Menu.Item key="propertyManagement">
                             <Link to="/charge/propertyManagement">物业费管理</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="chargeWaterBill">
+                            <Link to="/charge/chargeWaterBill">水费管理</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="chargePowerBill">
+                            <Link to="/charge/chargePowerBill">电费管理</Link>
                         </Menu.Item>
                     </SubMenu>
 
@@ -419,12 +437,19 @@ class Sidebar extends React.Component {
                             </span>
                         }
                     >
-                        <Menu.Item key="/financial/rentReview">
+                        <Menu.Item key="rentReview">
                             <Link to="/financial/rentReview">租金审核</Link>
                         </Menu.Item>
-                        <Menu.Item key="/financial/propertyCostsReview">
+                        <Menu.Item key="propertyCostsReview">
                             <Link to="/financial/propertyCostsReview">物业费审核</Link>
                         </Menu.Item>
+                        <Menu.Item key="waterBill">
+                            <Link to="/financial/waterBill">水费审核</Link>
+                        </Menu.Item>
+                        <Menu.Item key="powerBill">
+                            <Link to="/financial/powerBill">电费审核</Link>
+                        </Menu.Item>
+
                     </SubMenu>
 
                 </Menu>
