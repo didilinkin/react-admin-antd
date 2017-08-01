@@ -44,26 +44,20 @@ class TabsContainers extends React.Component {
                 this.setArrayTabs(arrayTabs) // 保存到 LS 中
 
                 // 此时 执行 actions事件, 将{ route, tabsProps } 拿出 => 将route, tabsProps 保存到 Redux
-                console.log(this.props)
+                // console.log(this.props)
 
                 // 将{ route, tabsProps } 保存到一个对象中 => 执行 Redux actions事件 => 保存创建的对象
-
-                // {
-                //     route: this.props.route,
-                //         tabsProps: this.props.tabsProps
-                // }
-
                 let obj = {
-                    a: 'A',
-                    b: 'B'
+                    route: this.props.route,
+                    tabsProps: this.props.tabsProps
                 }
-                // this.props.onAddPane(obj)
 
+                // console.log(obj)
                 this.props.onAddPane(obj)
             } else {
                 // 非 undefined => 能够找到 当前url字符串 => 无操作
                 console.log('当前数组中 存在该url => 无操作')
-                console.dir(arrayTabs)
+                // console.dir(arrayTabs)
             }
         } else {
             // arrayTabs非 数组(无信息) => 存储信息
