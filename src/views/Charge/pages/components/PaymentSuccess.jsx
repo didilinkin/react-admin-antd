@@ -1,4 +1,4 @@
-// 报修明细
+// 租金明细
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../../style/test.less'

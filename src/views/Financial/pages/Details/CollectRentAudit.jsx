@@ -89,7 +89,7 @@ class App extends React.Component {
         return (
             <div className="contract">
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="租金明细"
                     style={{top: 20}}
                     width={900}
                     visible={this.state.visible}
