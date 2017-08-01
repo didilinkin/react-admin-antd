@@ -9,7 +9,7 @@ import * as types from '../constants/ActionTypes'
 
 export const addPane = addObj => ({
     type: types.ADD_PANE,
-    addObj // 要添加的 标签对象
+    addObj
 })
 
 // export const removePane = panes => (dispatch, getState) => {

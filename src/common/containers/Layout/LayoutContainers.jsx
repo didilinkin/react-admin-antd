@@ -4,11 +4,10 @@ import { Route } from 'react-router-dom'
 
 import elf from '../../../elf'
 
-import { findIndex } from 'lodash'
-
 import SiderContainers from './SiderContainers'
 import HeaderContainers from './HeaderContainers'
-import TabsContainers from './TabsContainers'
+// import TabsContainers from './TabsContainers'
+import TabsBox from './TabsBox'
 
 // Antd 布局组件
 import { Layout } from 'antd'
@@ -18,7 +17,7 @@ const { Header, Sider, Content, Footer } = Layout
 const RouteWithSubRoutes = (route) => (
     <Route path={ route.path } render={ props => (
         // 把自路由向下传递来达到嵌套。
-        <TabsContainers
+        <TabsBox
             route={ route }
             tabsProps={ props }
         />
@@ -37,14 +36,8 @@ const MainContent = ({ route }) => (
     </div>
 )
 
-// 挑选 state中 router.url => 用于比较是否需要增加
-const select = (state) => {
-    return state.router.location.pathname
-}
-
 class LayoutContainers extends React.Component {
     state = {
-        arrayCurrentTabs: [], // 当前的 Tabs url信息; Array
         collapsed: false
     }
 
@@ -54,22 +47,8 @@ class LayoutContainers extends React.Component {
         })
     }
 
-    // 每次比较 Tabs 数组数据
-    handleChange = (strTabsUrl) => {
-        let arrayPreviousTabs = this.state.arrayCurrentTabs // 将 state中的 数组暂存
-
-        // 使用 lodash: _.findIndex 查找匹配对象; 示例 => _.findIndex(array, 'active')
-
-        // 优先比较 之前保存的
-        if (findIndex(arrayPreviousTabs, select(this.props.rootState)) < 0) {
-            // 数组中 没有 这个url值(返回值为-1) => 保存到数组中
-        } else {
-            // 数组中 有 这个url值(返回值 不小于0) => 无事件
-        }
-    }
-
     render () {
-        const { route, rootState } = this.props
+        const { route } = this.props
 
         return (
             <Layout>
@@ -118,9 +97,6 @@ class LayoutContainers extends React.Component {
                         }}
                     >
                         <MainContent route={ route } />
-                        {
-                            console.log(select(rootState))
-                        }
                     </Content>
 
                     {/* 底部 */}

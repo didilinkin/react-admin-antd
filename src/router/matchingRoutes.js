@@ -2,7 +2,7 @@
 // 布局组件
 import { HomeContainers } from '../common/containers' // LayoutContainers
 
-import LayoutBox from '../common/containers/Layout/LayoutBox'
+import LayoutContainers from '../common/containers/Layout/LayoutContainers'
 
 // 将 globalDir 中的映射处理好
 import globalDir from '../utils/globalDir'
@@ -48,7 +48,7 @@ let routesArr = [
 
 const matchingRoutes = [{
     path: '/home',
-    component: LayoutBox, // LayoutContainers
+    component: LayoutContainers,
     routes: routesArr
 }]
 

@@ -1,9 +1,9 @@
-// Tabs 标签内容 管理
+// panes - reducers - Tabs 标签内容 管理
 import { combineReducers } from 'redux'
 
 import { ADD_PANE, REMOVE_PANE } from '../constants/ActionTypes'
 
-import { clonedeep } from 'lodash' // 拷贝
+import { cloneDeep } from 'lodash' // 拷贝
 
 const initialState = {
     activeKey: '', // panes[0].key
@@ -13,7 +13,9 @@ const initialState = {
 const setPanes = (state = initialState, action) => {
     switch (action.type) {
         case ADD_PANE:
-            let addState = clonedeep(state)
+            console.log('执行 reducers')
+            console.log(action)
+            let addState = cloneDeep(state)
             addState.panes.push(action.addObj) // 将 action 传递过来的 obj, 存入数组
             return addState // 返回新的 addState
         case REMOVE_PANE:
