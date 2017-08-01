@@ -1,4 +1,15 @@
 // 设备管理 - 目录配置
+import Account from './containers/Account'
+import ComputerRoomManagement from './containers/ComputerRoomManagement'
+import MaintenancePlan from './containers/maintain/MaintenancePlan'
+import RepairRecord from './containers/maintain/RepairRecord'
+import DistributionRoom from './containers/inspection/electric/DistributionRoom'
+import WeakRoom from './containers/inspection/electric/WeakRoom'
+import GeneratorLog from './containers/inspection/electric/GeneratorLog'
+import ElevatorRoom from './containers/inspection/elevator/ElevatorRoom'
+import DailyInspection from './containers/inspection/elevator/DailyInspection'
+
+
 const EQUIPMENT_DIR = {
     title: '设备管理',
     key: 'equipment',
@@ -10,13 +21,13 @@ const EQUIPMENT_DIR = {
             key: 'account',
             path: '/home/equipment/account',
             ancestor: ['equipment'],
-            component: require('./containers/Account').default
+            component: Account
         }, {
             title: '机房管理',
             key: 'computerRoomManagement',
             path: '/home/equipment/computerRoomManagement',
             ancestor: ['equipment'],
-            component: require('./containers/ComputerRoomManagement').default
+            component: ComputerRoomManagement
         }, {
             title: '设备维保',
             key: 'maintain',
@@ -28,13 +39,13 @@ const EQUIPMENT_DIR = {
                     key: 'maintenancePlan',
                     path: '/home/equipment/maintain/maintenancePlan',
                     ancestor: ['equipment', 'maintain'],
-                    component: require('./containers/maintain/MaintenancePlan').default
+                    component: MaintenancePlan
                 }, {
                     title: '维修记录',
                     key: 'repairRecord',
                     path: '/home/equipment/maintain/repairRecord',
                     ancestor: ['equipment', 'maintain'],
-                    component: require('./containers/maintain/RepairRecord').default
+                    component: RepairRecord
                 }
             ]
         }, {
@@ -54,19 +65,19 @@ const EQUIPMENT_DIR = {
                             key: 'distributionRoom',
                             path: '/home/equipment/inspection/electric/distributionRoom',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            component: require('./containers/inspection/electric/DistributionRoom').default
+                            component: DistributionRoom
                         }, {
                             title: '弱电间巡检记录',
                             key: 'weakRoom',
                             path: '/home/equipment/inspection/electric/weakRoom',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            component: require('./containers/inspection/electric/WeakRoom').default
+                            component: WeakRoom
                         }, {
                             title: '发电机运行记录',
                             key: 'generatorLog',
                             path: '/home/equipment/inspection/electric/generatorLog',
                             ancestor: ['equipment', 'inspection', 'electric'],
-                            component: require('./containers/inspection/electric/GeneratorLog').default
+                            component: GeneratorLog
                         }
                     ]
                 }, {
@@ -80,13 +91,13 @@ const EQUIPMENT_DIR = {
                             key: 'elevatorRoom',
                             path: '/home/equipment/inspection/elevator/elevatorRoom',
                             ancestor: ['equipment', 'inspection', 'elevator'],
-                            component: require('./containers/inspection/elevator/ElevatorRoom').default
+                            component: ElevatorRoom
                         }, {
                             title: '日常巡检',
                             key: 'dailyInspection',
                             path: '/home/equipment/inspection/elevator/dailyInspection',
                             ancestor: ['equipment', 'inspection', 'elevator'],
-                            component: require('./containers/inspection/elevator/DailyInspection').default
+                            component: DailyInspection
                         }
                     ]
                 }

@@ -1,4 +1,8 @@
 // 仓库管理 - 目录配置
+import InventoryManage from './containers/InventoryManage'
+import ReceiveStatistics from './containers/ReceiveStatistics'
+import MeterialManagement from './containers/MeterialManagement'
+
 const WAREHOUSE_DIR = {
     title: '仓库管理',
     key: 'wareHouse',
@@ -10,19 +14,19 @@ const WAREHOUSE_DIR = {
             key: 'inventoryManage',
             path: '/home/wareHouse/inventoryManage',
             ancestor: ['wareHouse'],
-            component: require('./containers/InventoryManage.jsx').default
+            component: InventoryManage
         }, {
             title: '领用统计',
             key: 'receiveStatistics',
             path: '/home/wareHouse/receiveStatistics',
             ancestor: ['wareHouse'],
-            component: require('./containers/ReceiveStatistics').default
+            component: ReceiveStatistics
         }, {
             title: '材料管理',
             key: 'meterialManagement',
             path: '/home/wareHouse/meterialManagement',
             ancestor: ['wareHouse'],
-            component: require('./containers/MeterialManagement').default
+            component: MeterialManagement
         }
     ]
 }

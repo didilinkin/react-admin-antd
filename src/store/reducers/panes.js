@@ -13,10 +13,14 @@ const initialState = {
 const setPanes = (state = initialState, action) => {
     switch (action.type) {
         case ADD_PANE:
-            console.log('执行 reducers')
-            console.log(action)
+            // 深拷贝 state 与 action.addObj(传参)
             let addState = cloneDeep(state)
-            addState.panes.push(action.addObj) // 将 action 传递过来的 obj, 存入数组
+            let cloneObj = cloneDeep(action.addObj)
+
+            cloneObj === action.addObj ? console.log('相等') : console.log('不相等') // 全部'不相等' => 深拷贝
+
+            addState.panes.push(cloneObj) // 将 action 传递过来的 obj, 存入数组
+
             return addState // 返回新的 addState
         case REMOVE_PANE:
             let activeKey = action.activeKey
