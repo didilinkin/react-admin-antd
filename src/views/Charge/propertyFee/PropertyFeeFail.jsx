@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../api'
 import CollectRentFailComponent from './components/AfterAudit'
-import CollectRentRepaidComponent from './components/PaidConfirm'
+import PropertyAddComponent from './Details/PropertyFeeAdd'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -190,7 +190,7 @@ class PropertyFeeFail extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
-                <CollectRentRepaidComponent
+                <PropertyAddComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}

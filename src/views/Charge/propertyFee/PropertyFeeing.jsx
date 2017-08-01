@@ -2,7 +2,6 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../api'
-import CollectRentConductComponent from './components/PaidConfirm'
 import PropertyAddComponent from './Details/PropertyFeeAdd'
 // 引入组件
 const Option = Select.Option
@@ -19,14 +18,14 @@ class PropertyFeeing extends Component {
             columns: [],
             dataSource: [],
             ListBuildingInfo: [],
-            id: 0
+            id: null
         }
     }
     handleUpdate = (id) => {
         this.setState({
-            openAdd: false,
+            openAdd: true,
             openTableAddUp: false,
-            openUpdate: true,
+            openUpdate: false,
             id: id
         })
     }
@@ -181,13 +180,8 @@ class PropertyFeeing extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
-                <CollectRentConductComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                    accountLsit={this.state.accountList}
-                />
                 <PropertyAddComponent
+                    id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
                 />

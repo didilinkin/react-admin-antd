@@ -78,7 +78,6 @@ class NoLateAndRentFinish extends React.Component {
                 isFirst: false,
                 view: true
             })
-            console.log(this.state.data2)
         }
     }
     componentWillReceiveProps (nextProps) {
