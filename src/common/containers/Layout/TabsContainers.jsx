@@ -9,9 +9,12 @@ import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    state = {
-        activeKey: '', // 默认值: panes[0].key
-        panes: [] // 格式: [{ route, tabsProps, key }]
+    constructor (props, context) {
+        super(props, context)
+        this.state = {
+            activeKey: '', // 默认值: panes[0].key
+            panes: props.panesState.panes // 格式: [{ route, tabsProps, key }]
+        }
     }
 
     // 切换面板的回调 => 切换 state.activeKey
@@ -63,15 +66,14 @@ class TabsContainers extends React.Component {
             }
         } else { // 非 Array(无信息) => 保存 当前url
             this.setArrayTabs([currentUrl]) // 此时应该也触发一次 actions
-            this.setKeyNum(1)
+            this.setKeyNum(0) // 初始化为 0
             this.setPanes()
         }
     }
 
     // 发起 Action / 配置 Key
     setPanes = () => {
-        let previousKey = localStore.get('numTabsKey')
-        let previousPanes = this.state.panes
+        let previousKey = localStore.get('numTabsKey') // 获取 LS中的 key
 
         let actionsObj = cloneDeep({
             route: this.props.route,
@@ -81,26 +83,8 @@ class TabsContainers extends React.Component {
 
         this.props.onAddPane(actionsObj) // 发起 Actions
 
-        // this.setTime() // 延时测试获取 $store => 失败
-
-        // 配置 $state
-        this.setState({
-            panes: [
-                ...previousPanes,
-                actionsObj
-            ]
-        })
-
-        console.log(actionsObj)
+        // console.log(actionsObj)
         console.dir(this.state)
-    }
-
-    // 临时方法: 定时器获取 最新的 store
-    setTime = () => {
-        setTimeout(
-            console.dir(this),
-            500
-        )
     }
 
     // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
@@ -108,35 +92,44 @@ class TabsContainers extends React.Component {
         console.log('关闭 Tabs')
     }
 
-    // render 渲染之后
-    componentDidMount = () => {
+    // render 渲染之前
+    componentWillMount = () => {
         this.handleChange()
     }
 
-    render () {
-        const {
-            route,
-            tabsProps
-        } = this.props // route: 当前渲染组件信息; tabsProps: 当前路由信息
+    // render 渲染之后
+    componentDidMount = () => {
+        // this.handleChange()
+        console.log('Did, render之后')
+        console.dir(this.props.rootState)
+    }
 
-        let callback = (key) => {
-            console.log(key)
-        }
+    render () {
         return (
             <Tabs
-                onChange={callback}
-                type="card"
+                hideAdd
+                onChange={ this.onChange } // 切换面板的回调
+                activeKey={ this.state.activeKey } // 当前激活 tab 面板的 key
+                type="editable-card" // 页签的基本样式
+                onEdit={ this.onEdit } // 新增和删除页签的回调
             >
-                <TabPane
-                    tab={route.title}
-                    key={route.path} // 无法获取 key
-                    style={{ marginBottom: 0 }}
-                >
-                    <route.component { ...tabsProps } routes={route.routes} />
-                </TabPane>
+                {
+                    this.state.panes.map((pane) =>(
+                        <TabPane
+                            tab={ pane.route.title }
+                            key={ pane.key }
+                        >
+                            <pane.route.component { ...pane.tabsProps } routes={ pane.route.routes } />
+                        </TabPane>
+                    ))
+                }
             </Tabs>
         )
     }
 }
 
 export default TabsContainers
+
+// ToDo:
+// 1. 考虑将 Tabs 标签, 只保留 Title, 点击事件触发 路由跳转. 不再储存内容对象
+// 2. 当actions 触发之后, 依然无法获取 最新的 state. 需要再发起一次action改变 state后 才能获取到
