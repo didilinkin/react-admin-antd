@@ -52,6 +52,7 @@ class collectRentConfirm extends React.Component {
             })
             this.setState({
                 isFirst: false,
+                data: resulData.data,
                 visible: nextProps.visible
             })
         }
@@ -62,7 +63,6 @@ class collectRentConfirm extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        console.log(json)
         json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
         await apiPost(
             '/collectRent/updateCollectRentVoByPaid',
@@ -72,7 +72,13 @@ class collectRentConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
+        if (json.unpaidMoney !== 0) {
+            location.href = '/financial/RentReviewDetailNoLate' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate <= this.state.data.payDeadline) {
+            location.href = '/financial/NoLateAndRentFinish' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate > this.state.data.payDeadline) {
+            location.href = '/financial/RentFinishAndLate' + json.id
+        }
         this.setState({visible: false,
             isFirst: true })
     }

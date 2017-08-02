@@ -61,7 +61,11 @@ class addUpkeep extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
+        if (json.unpaidLateMoney !== 0) {
+            location.href = '/financial/RentFinishAndLate' + json.id
+        } else if (json.unpaidLateMoney === 0) {
+            location.href = '/financial/RentReviewDetail' + json.id
+        }
         this.setState({visible: false,
             isFirst: true })
     }
