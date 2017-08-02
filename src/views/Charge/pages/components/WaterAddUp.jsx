@@ -70,73 +70,80 @@ class WaterAddUp extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Form layout="horizontal">
-                    <Row>
-                        <Col span={8}>
-                            <FormItem label="本次周期" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('sfzq', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请选择本次周期!'
-                                    }]
-                                })(<RangePicker />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('overdueDate', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请填写交费期限!'
-                                    }]
-                                })(<DatePicker />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="抄表人员" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('readId', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请填写抄表人员!'
-                                    }]
-                                })(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8}>
-                            <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('voucherNo')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="转租客户" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('acceptor')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('rrr')(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
+                    <div style={{background: '#f7f7f7',
+                        width: 900,
+                        marginBottom: 20,
+                        paddingTop: '22px'}}
+                    >
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('sfzq', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择本次周期!'
+                                        }]
+                                    })(<RangePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('overdueDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请填写交费期限!'
+                                        }]
+                                    })(<DatePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="抄表人员" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('readId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请填写抄表人员!'
+                                        }]
+                                    })(<Input />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('voucherNo')(<Input />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('acceptor')(<Input />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('rrr')(<Input />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </div>
                     <span style={{textAlign: 'center',
-                        display: 'block'}}>
+                        display: 'block'}}
+                    >
                         {getFieldDecorator('eee')(<Input style={{width: '300px'}} />)}
                         <span>用水统计表</span>
                     </span>
-                    <br/>
+                    <br />
                     <div style={{width: 900,
                         marginBottom: 20}}
                     >
@@ -226,7 +233,7 @@ class WaterAddUp extends React.Component {
                             <FormItem label="备注" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('remark')(<textarea style={{width: '500px'}}/>)}
+                                {getFieldDecorator('remark')(<textarea style={{width: '500px'}} />)}
                             </FormItem>
                         </Col>
                     </Row>
