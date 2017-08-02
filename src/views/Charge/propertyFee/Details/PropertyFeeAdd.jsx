@@ -29,7 +29,8 @@ class propertyFeeAdd extends React.Component {
             '/propertyFee/getAccountList'
         )
         let pmContractList = await apiPost(
-            '/propertyFee/getPmContractList'
+            '/propertyFee/getPmContractList',
+            {contractStatus: 0}
         )
         this.setState({accountList: accountList.data,
             pmContractList: pmContractList.data})
