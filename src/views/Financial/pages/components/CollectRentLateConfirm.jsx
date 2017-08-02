@@ -63,9 +63,9 @@ class addUpkeep extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidLateMoney !== 0) {
-            location.href = '/financial/RentFinishAndLate' + json.id
+            location.href = '/financial/RentFinishAndLate/' + json.id
         } else if (json.unpaidLateMoney === 0) {
-            location.href = '/financial/RentReviewDetail' + json.id
+            location.href = '/financial/RentReviewDetail/' + json.id
         }
         this.setState({visible: false,
             isFirst: true })

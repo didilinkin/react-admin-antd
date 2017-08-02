@@ -75,11 +75,11 @@ class collectRentConfirm extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidMoney !== 0) {
-            location.href = '/financial/RentReviewDetailNoLate' + json.id
+            location.href = '/financial/RentReviewDetailNoLate/' + json.id
         } else if (json.unpaidMoney === 0 && json.receiptDate <= this.state.data.payDeadline) {
-            location.href = '/financial/NoLateAndRentFinish' + json.id
+            location.href = '/financial/NoLateAndRentFinish/' + json.id
         } else if (json.unpaidMoney === 0 && json.receiptDate > this.state.data.payDeadline) {
-            location.href = '/financial/RentFinishAndLate' + json.id
+            location.href = '/financial/RentFinishAndLate/' + json.id
         }
         this.setState({visible: false,
             isFirst: true })
@@ -101,14 +101,14 @@ class collectRentConfirm extends React.Component {
         if (unpaidMoney2 < 0) {
             this.props.form.setFields({
                 unpaidMoney: {
-                    value: unpaidMoney1,
+                    value: parseFloat(unpaidMoney1).toFixed(1),
                     errors: ''
                 }
             })
         } else {
             this.props.form.setFields({
                 unpaidMoney: {
-                    value: unpaidMoney2,
+                    value: parseFloat(unpaidMoney2).toFixed(1),
                     errors: ''
                 }
             })
