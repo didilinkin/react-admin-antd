@@ -3,6 +3,7 @@ import React from 'react'
 import {Row, Col, Input, DatePicker, Select, Modal, Form, Icon, notification} from 'antd'
 import '../../../../style/test.less'
 import { apiPost  } from '../../../../api'
+import moment from 'moment'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -24,24 +25,71 @@ class propertyFeeAdd extends React.Component {
         }
     }
     async initialRemarks (nextProps) {
-        this.setState({
-            view: false
-        })
         let accountList = await apiPost(
-            '/collectRent/getAccountList'
+            '/propertyFee/getAccountList'
         )
         let pmContractList = await apiPost(
             '/propertyFee/getPmContractList'
         )
         this.setState({accountList: accountList.data,
             pmContractList: pmContractList.data})
-        if (this.state.isFirst && nextProps.visible) {
-            this.setState({
-                visible: nextProps.visible,
-                isFirst: false,
-                view: true,
-                fileList: []
-            })
+        if (nextProps.id !== null) {
+            let json = this.state.json1
+            if (this.state.isFirst && nextProps.visible) {
+                let propertyFee = await apiPost(
+                    '/propertyFee/getPropertyFeeById',
+                    {id: nextProps.id}
+                )
+                json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
+                json['acUnitPrice'] = propertyFee.data.acUnitPrice
+                json['elevUnitPrice'] = propertyFee.data.elevUnitPrice
+                json['waterUnitPrice'] = propertyFee.data.waterUnitPrice
+                json['acUnitDay'] = propertyFee.data.acUnitDay
+                json['waterType'] = propertyFee.data.waterType
+                json['clientType'] = propertyFee.data.clientType
+                json['serviceArea'] = propertyFee.data.serviceArea
+                json['yearPmPrice'] = propertyFee.data.yearPmPrice
+                json['yearAcPrice'] = propertyFee.data.yearAcPrice
+                json['months'] = propertyFee.data.months
+                json['pmFee'] = propertyFee.data.pmFee
+                json['elevatorFee'] = propertyFee.data.elevatorFee
+                json['airFee'] = propertyFee.data.airFee
+                json['waterFee'] = propertyFee.data.waterFee
+                json['clientId'] = propertyFee.data.clientId
+                json['clientName'] = propertyFee.data.clientName
+                json['contractId'] = propertyFee.data.contractId
+                this.props.form.setFieldsValue({
+                    buildName: propertyFee.data.buildName,
+                    serviceArea: propertyFee.data.serviceArea,
+                    roomNum: propertyFee.data.roomNum,
+                    printClientName: propertyFee.data.printClientName,
+                    yearPmPrice: propertyFee.data.yearPmPrice,
+                    yearAcPrice: propertyFee.data.yearAcPrice,
+                    periodDate: [moment(propertyFee.data.startDate), moment(propertyFee.data.endDate)],
+                    payDeadline: moment(propertyFee.data.payDeadline),
+                    printDate: moment(propertyFee.data.printDate),
+                    clientName: propertyFee.data.clientName,
+                    tenant: propertyFee.data.tenant,
+                    accountId: propertyFee.data.accountName,
+                    actualPaidMoney: propertyFee.data.actualPaidMoney,
+                    discountMoney: propertyFee.data.discountMoney
+                })
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false,
+                    view: true,
+                    fileList: []
+                })
+            }
+        } else {
+            if (this.state.isFirst && nextProps.visible) {
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false,
+                    view: true,
+                    fileList: []
+                })
+            }
         }
     }
     componentWillReceiveProps (nextProps) {
@@ -50,23 +98,110 @@ class propertyFeeAdd extends React.Component {
     startDate = null
     endDate = null
     onChange1 = (date, dateString) =>{
-        this.startDate = date[0].format('YYYY-MM-DD')
-        this.endDate = date[1].format('YYYY-MM-DD')
-        let json = this.state.json1
-        json['startDate'] = this.startDate
-        json['endDate'] = this.endDate
+        if (date[0] !== null && date[1] !== null) {
+            this.startDate = date[0].format('YYYY-MM-DD')
+            this.endDate = date[1].format('YYYY-MM-DD')
+            let json = this.state.json1
+            json['startDate'] = this.startDate
+            json['endDate'] = this.endDate
+
+            let sd = this.startDate
+            let ed = this.endDate
+            let startDate = new Date(sd)
+            let endDate = new Date(ed)
+            let startDay = startDate.getDate()
+            let startMonth = startDate.getMonth()
+            let startYear = startDate.getFullYear()
+            let endYear = endDate.getFullYear()
+            let endMonth = endDate.getMonth()
+            let endDay = endDate.getDate()
+            if (startDay === 1) {
+                let month = (endMonth - startMonth)
+                let lastDay = this.mGetDate(endYear, endMonth + 1)
+                if ((endDay / lastDay) === 1) {
+                    json['months'] = (month + endDay / lastDay)
+                } else {
+                    json['months'] = parseFloat(month + endDay / lastDay).toFixed(5)
+                }
+
+                let airFee = parseFloat((json.acUnitDay) / 12 * month * json.serviceArea * (json.acUnitPrice) + (json.acUnitDay) / 12 * endDay / lastDay * json.serviceArea * (json.acUnitPrice)).toFixed(1)
+                let pmFee = parseFloat(month * json.serviceArea * (json.pmUnitPrice) + endDay / lastDay * json.serviceArea * (json.pmUnitPrice)).toFixed(1)
+                let waterFee = 0
+                if (json.waterType === 0) {
+                    waterFee = parseFloat(month * json.serviceArea * (json.waterUnitPrice) + endDay / lastDay * json.serviceArea * (json.waterUnitPrice)).toFixed(1)
+                    json['waterFee'] = waterFee
+                } else {
+                    json['waterFee'] = 0.0
+                }
+                let elevatorFee = parseFloat(month * json.serviceArea * (json.elevUnitPrice) + endDay / lastDay * json.serviceArea * (json.elevUnitPrice)).toFixed(1)
+                // alert(yearAcPrice);
+                json['elevatorFee'] = elevatorFee
+                if (json.yearPmPrice !== 0 || json.yearAcPrice !== 0) {
+                    // alert(1111);
+                    pmFee = json.yearPmPrice
+                    airFee = json.yearAcPrice
+                }
+                json['airFee'] = airFee
+                json['pmFee'] = pmFee
+                let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
+                json['currentPeriodMoney'] = currentPeriodMoney
+                json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                this.props.form.setFieldsValue({
+                    actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                })
+            } else { // 起始日期不完整
+                let waterFee = 0
+                let month = (endMonth - startMonth)
+                let lastDay = this.mGetDate(startYear, startMonth + 1)
+                if (((lastDay - startDay + 1) / lastDay) === 1) {
+                    json['months'] = month + (lastDay - startDay + 1) / lastDay
+                } else {
+                    json['months'] = parseFloat(month + (lastDay - startDay + 1) / lastDay).toFixed(5)
+                }
+                let pmFee = parseFloat((month * json.serviceArea * (json.pmUnitPrice)) + (lastDay - startDay + 1) / lastDay * json.serviceArea * (json.pmUnitPrice)).toFixed(1)
+                let airFee = parseFloat(((json.acUnitDay) / 12 * month * json.serviceArea * (json.acUnitPrice)) + (json.acUnitDay) / 12 * (lastDay - startDay + 1) / lastDay * json.serviceArea * (json.acUnitPrice)).toFixed(1)
+                if (json.waterType === 0) {
+                    waterFee = parseFloat((month * json.serviceArea * (json.waterUnitPrice)) + (lastDay - startDay + 1) / lastDay * json.serviceArea * (json.waterUnitPrice)).toFixed(1)
+                    json['waterFee'] = waterFee
+                } else {
+                    json['waterFee'] = 0.0
+                }
+                let elevatorFee = parseFloat((month * json.serviceArea * (json.elevUnitPrice)) + (lastDay - startDay + 1) / lastDay * json.serviceArea * (json.elevUnitPrice)).toFixed(1)
+                json['elevatorFee'] = elevatorFee
+                if (json.yearPmPrice !== 0 || json.yearAcPrice !== 0) {
+                    // alert(1111);
+                    pmFee = json.yearPmPrice
+                    airFee = json.yearAcPrice
+                }
+                json['airFee'] = airFee
+                json['pmFee'] = pmFee
+                let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
+                json['currentPeriodMoney'] = currentPeriodMoney
+                json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                this.props.form.setFieldsValue({
+                    actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                })
+            }
+            json['clientId'] = json.clientId
+            json['clientName'] = json.clientName
+            json['contractId'] = json.contractId
+        }
     }
     payDeadline = null
     onChange2 = (date, dateString) =>{
-        let json = this.state.json1
-        this.payDeadline = date.format('YYYY-MM-DD HH:MM:SS')
-        json['payDeadline'] = this.payDeadline
+        if (date !== null) {
+            let json = this.state.json1
+            this.payDeadline = date.format('YYYY-MM-DD HH:MM:SS')
+            json['payDeadline'] = this.payDeadline
+        }
     }
     printDate = null
     onChange3 = (date, dateString) =>{
-        this.printDate = date.format('YYYY-MM-DD HH:MM:SS')
-        let json = this.state.json1
-        json['printDate'] = this.printDate
+        if (date !== null) {
+            this.printDate = date.format('YYYY-MM-DD HH:MM:SS')
+            let json = this.state.json1
+            json['printDate'] = this.printDate
+        }
     }
     mGetDate (year, month) {
         let d = new Date(year, month, 0)
@@ -97,7 +232,7 @@ class propertyFeeAdd extends React.Component {
                 let subletNum = ''
                 let roomNumber = ''
                 if (this.state.tenantList.length !== 0) {
-                    alert(1111)
+                    // alert(1111)
                     this.state.tenantList.map(tenant => {
                         area += tenant.serviceArea
                         subletNum = subletNum + (tenant.leaseRooms + ',')
@@ -117,10 +252,12 @@ class propertyFeeAdd extends React.Component {
                     roomNumber = roomNumberarr
                     json['roomNum'] = roomNumber
                     json['serviceArea'] = serviceArea - area
+                    serviceArea = serviceArea - area
                     this.props.form.setFieldsValue({
                         buildName: pmContract.buildName,
-                        serviceArea: serviceArea - area,
+                        serviceArea: serviceArea,
                         roomNum: roomNumber,
+                        printClientName: pmContract.clientName,
                         yearPmPrice: pmContract.yearPmPrice,
                         yearAcPrice: pmContract.yearAcPrice
                     })
@@ -131,6 +268,7 @@ class propertyFeeAdd extends React.Component {
                         buildName: pmContract.buildName,
                         serviceArea: serviceArea,
                         roomNum: pmContract.leaseRooms,
+                        printClientName: pmContract.clientName,
                         yearPmPrice: pmContract.yearPmPrice,
                         yearAcPrice: pmContract.yearAcPrice
                     })
@@ -176,6 +314,9 @@ class propertyFeeAdd extends React.Component {
                     let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
                     json['currentPeriodMoney'] = currentPeriodMoney
                     json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                    this.props.form.setFieldsValue({
+                        actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                    })
                 } else { // 起始日期不完整
                     let waterFee = 0
                     let month = (endMonth - startMonth)
@@ -188,7 +329,7 @@ class propertyFeeAdd extends React.Component {
                     let pmFee = parseFloat((month * serviceArea * (pmContract.pmUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (pmContract.pmUnitPrice)).toFixed(1)
                     let airFee = parseFloat(((pmContract.acUnitDay) / 12 * month * serviceArea * (pmContract.acUnitPrice)) + (pmContract.acUnitDay) / 12 * (lastDay - startDay + 1) / lastDay * serviceArea * (pmContract.acUnitPrice)).toFixed(1)
                     if (pmContract.waterType === 0) {
-                        let waterFee = parseFloat((month * serviceArea * (pmContract.waterUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (pmContract.waterUnitPrice)).toFixed(1)
+                        waterFee = parseFloat((month * serviceArea * (pmContract.waterUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (pmContract.waterUnitPrice)).toFixed(1)
                         json['waterFee'] = waterFee
                     } else {
                         json['waterFee'] = 0.0
@@ -205,6 +346,9 @@ class propertyFeeAdd extends React.Component {
                     let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
                     json['currentPeriodMoney'] = currentPeriodMoney
                     json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                    this.props.form.setFieldsValue({
+                        actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                    })
                 }
                 json['clientId'] = pmContract.clientId
                 json['clientName'] = pmContract.clientName
@@ -212,8 +356,105 @@ class propertyFeeAdd extends React.Component {
             }
         })
     }
+    handleChange2 = (value) =>{
+        this.state.tenantList.map(pmContract =>{
+            let id = pmContract.clientId.toString()
+            if (value === id) {
+                this.props.form.setFieldsValue({
+                    serviceArea: pmContract.serviceArea,
+                    printClientName: pmContract.clientName,
+                    roomNum: pmContract.leaseRooms
+                })
+                let json = this.state.json1
+                json['printClientName'] = pmContract.clientName
+                json['roomNum'] = pmContract.leaseRooms
+                json['serviceArea'] = pmContract.serviceArea
+                json['clientType'] = 2
+                let serviceArea = pmContract.serviceArea
+
+                let sd = this.startDate
+                let ed = this.endDate
+                let startDate = new Date(sd)
+                let endDate = new Date(ed)
+                let startDay = startDate.getDate()
+                let startMonth = startDate.getMonth()
+                let startYear = startDate.getFullYear()
+                let endYear = endDate.getFullYear()
+                let endMonth = endDate.getMonth()
+                let endDay = endDate.getDate()
+                if (startDay === 1) {
+                    let month = (endMonth - startMonth)
+                    let lastDay = this.mGetDate(endYear, endMonth + 1)
+                    if ((endDay / lastDay) === 1) {
+                        json['months'] = (month + endDay / lastDay)
+                    } else {
+                        json['months'] = parseFloat(month + endDay / lastDay).toFixed(5)
+                    }
+
+                    let airFee = parseFloat((json.acUnitDay) / 12 * month * serviceArea * (json.acUnitPrice) + (json.acUnitDay) / 12 * endDay / lastDay * serviceArea * (json.acUnitPrice)).toFixed(1)
+                    let pmFee = parseFloat(month * serviceArea * (json.pmUnitPrice) + endDay / lastDay * serviceArea * (json.pmUnitPrice)).toFixed(1)
+                    let waterFee = 0
+                    if (json.waterType === 0) {
+                        waterFee = parseFloat(month * serviceArea * (json.waterUnitPrice) + endDay / lastDay * serviceArea * (json.waterUnitPrice)).toFixed(1)
+                        json['waterFee'] = waterFee
+                    } else {
+                        json['waterFee'] = 0.0
+                    }
+                    let elevatorFee = parseFloat(month * serviceArea * (json.elevUnitPrice) + endDay / lastDay * serviceArea * (json.elevUnitPrice)).toFixed(1)
+                    // alert(yearAcPrice);
+                    json['elevatorFee'] = elevatorFee
+                    if (json.yearPmPrice !== 0 || json.yearAcPrice !== 0) {
+                        // alert(1111);
+                        pmFee = json.yearPmPrice
+                        airFee = json.yearAcPrice
+                    }
+                    json['airFee'] = airFee
+                    json['pmFee'] = pmFee
+                    let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
+                    json['currentPeriodMoney'] = currentPeriodMoney
+                    json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                    this.props.form.setFieldsValue({
+                        actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                    })
+                } else { // 起始日期不完整
+                    let waterFee = 0
+                    let month = (endMonth - startMonth)
+                    let lastDay = this.mGetDate(startYear, startMonth + 1)
+                    if (((lastDay - startDay + 1) / lastDay) === 1) {
+                        json['months'] = month + (lastDay - startDay + 1) / lastDay
+                    } else {
+                        json['months'] = parseFloat(month + (lastDay - startDay + 1) / lastDay).toFixed(5)
+                    }
+                    let pmFee = parseFloat((month * serviceArea * (json.pmUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (json.pmUnitPrice)).toFixed(1)
+                    let airFee = parseFloat(((json.acUnitDay) / 12 * month * serviceArea * (json.acUnitPrice)) + (json.acUnitDay) / 12 * (lastDay - startDay + 1) / lastDay * serviceArea * (json.acUnitPrice)).toFixed(1)
+                    if (json.waterType === 0) {
+                        waterFee = parseFloat((month * serviceArea * (json.waterUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (json.waterUnitPrice)).toFixed(1)
+                        json['waterFee'] = waterFee
+                    } else {
+                        json['waterFee'] = 0.0
+                    }
+                    let elevatorFee = parseFloat((month * serviceArea * (json.elevUnitPrice)) + (lastDay - startDay + 1) / lastDay * serviceArea * (json.elevUnitPrice)).toFixed(1)
+                    json['elevatorFee'] = elevatorFee
+                    if (json.yearPmPrice !== 0 || json.yearAcPrice !== 0) {
+                        // alert(1111);
+                        pmFee = json.yearPmPrice
+                        airFee = json.yearAcPrice
+                    }
+                    json['airFee'] = airFee
+                    json['pmFee'] = pmFee
+                    let currentPeriodMoney = parseFloat(pmFee) + parseFloat(waterFee) + parseFloat(elevatorFee) + parseFloat(airFee)
+                    json['currentPeriodMoney'] = currentPeriodMoney
+                    json['actualPaidMoney'] = parseFloat(currentPeriodMoney).toFixed(1)
+                    this.props.form.setFieldsValue({
+                        actualPaidMoney: parseFloat(currentPeriodMoney).toFixed(1)
+                    })
+                }
+                json['clientId'] = pmContract.clientId
+                json['tenant'] = pmContract.clientName
+            }
+        })
+    }
     handleCancel = (e) => {
-        this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
     }
@@ -230,6 +471,10 @@ class propertyFeeAdd extends React.Component {
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })
+    }
+    handleChange3 = (e) =>{
+        let json = this.state.json1
+        json['accountId'] = e
     }
     sumMoney = (e) => {
         let discountMoney = e.target.value
@@ -251,12 +496,22 @@ class propertyFeeAdd extends React.Component {
             })
         } else {
             json['actualPaidMoney'] = parseFloat(money - discountMoney).toFixed(1)
+            this.props.form.setFieldsValue({
+                actualPaidMoney: parseFloat(money - discountMoney).toFixed(1)
+            })
         }
+    }
+    printClientName = ''
+    entryNameOnChange = (e) => {
+        this.printClientName = e.target.value
+        let json = this.state.json1
+        json['printClientName'] = this.printClientName
     }
     render () {
         const { getFieldDecorator } = this.props.form
         let pmContractList = this.state.pmContractList
         let tenantList = this.state.tenantList
+        let accountList = this.state.accountList
         return (
             <div className="property">
                 <Modal maskClosable={false}
@@ -273,7 +528,7 @@ class propertyFeeAdd extends React.Component {
                                 <FormItem label="本次周期" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('re')(
+                                    {getFieldDecorator('periodDate')(
                                         <RangePicker onChange={this.onChange1} />
                                     )}
                                 </FormItem>
@@ -385,67 +640,97 @@ class propertyFeeAdd extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={12} />
+                            <Col span={12}>
+                                <FormItem label="付款帐号" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('accountId')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 220 }}
+                                            placeholder="请选择付款帐号"
+                                            optionFilterProp="children"
+                                            onChange={this.handleChange3}
+                                        >
+                                            {accountList.map(Account => {
+                                                return <Option key={Account.accountId}>{Account.accountName}</Option>
+                                            })}
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
                         </Row>
-                    </Form>
-                    <div className="bt">
-                        <Input style={{ width: 520 }} value={this.state.json1.printClientName} placeholder="这里默认显示付款通知单名，可修改，打印时读该名" /> 物业费统计表
-                    </div>
+                        <FormItem label="" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 16 }}
+                        >
+                            {getFieldDecorator('printClientName')(
+                                <Input style={{ width: 320 }} onChange={this.entryNameOnChange} />
+                            )}
+                        </FormItem>
 
-                    <table className="tb">
-                        <tbody>
-                            <tr className="hd">
-                                <td>费用项目</td>
-                                <td>面积</td>
-                                <td />
-                                <td>单价</td>
-                                <td />
-                                <td>月份</td>
-                                <td>金额</td>
-                            </tr>
-                            <tr>
-                                <td>物业管理费</td>
-                                <td>{this.state.json1.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmUnitPrice : '--'}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.months}</td>
-                                <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmFee : this.state.json1.yearPmPrice}</td>
-                            </tr>
-                            <tr>
-                                <td>电梯费</td>
-                                <td>{this.state.json1.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.elevUnitPrice}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.months}</td>
-                                <td>{this.state.json1.elevatorFee}</td>
-                            </tr>
-                            <tr>
-                                <td>空调费</td>
-                                <td>{this.state.json1.serviceArea}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
-                                <td>*</td>
-                                <td>{this.state.json1.months}</td>
-                                <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
-                            </tr>
-                            {
+                        {/* <div className="bt">*/}
+                        {/* <Input style={{ width: 520 }} value={this.state.json1.printClientName} onChange={this.entryNameOnChange} /> 物业费统计表*/}
+                        {/* </div>*/}
+
+                        <table className="tb">
+                            <tbody>
+                                <tr className="hd">
+                                    <td>费用项目</td>
+                                    <td>面积</td>
+                                    <td />
+                                    <td>单价</td>
+                                    <td />
+                                    <td>月份</td>
+                                    <td>金额</td>
+                                </tr>
                                 <tr>
-                                    <td>水费</td>
+                                    <td>物业管理费</td>
                                     <td>{this.state.json1.serviceArea}</td>
                                     <td>*</td>
-                                    <td>{this.state.json1.waterType === 0 ? this.state.json1.waterUnitPrice : '--'}</td>
+                                    <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmUnitPrice : '--'}</td>
                                     <td>*</td>
                                     <td>{this.state.json1.months}</td>
-                                    <td>{this.state.json1.waterType === 0 ? this.state.json1.waterFee : '--'}</td>
+                                    <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmFee : this.state.json1.yearPmPrice}</td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额 &nbsp; <Input onBlur={this.sumMoney} style={{ width: 120 }} /> &nbsp; 本期应收 ¥{this.state.json1.actualPaidMoney}</p>
+                                <tr>
+                                    <td>电梯费</td>
+                                    <td>{this.state.json1.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.json1.elevUnitPrice}</td>
+                                    <td>*</td>
+                                    <td>{this.state.json1.months}</td>
+                                    <td>{this.state.json1.elevatorFee}</td>
+                                </tr>
+                                <tr>
+                                    <td>空调费</td>
+                                    <td>{this.state.json1.serviceArea}</td>
+                                    <td>*</td>
+                                    <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
+                                    <td>*</td>
+                                    <td>{this.state.json1.months}</td>
+                                    <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
+                                </tr>
+                                {
+                                    <tr>
+                                        <td>水费</td>
+                                        <td>{this.state.json1.serviceArea}</td>
+                                        <td>*</td>
+                                        <td>{this.state.json1.waterType === 0 ? this.state.json1.waterUnitPrice : '--'}</td>
+                                        <td>*</td>
+                                        <td>{this.state.json1.months}</td>
+                                        <td>{this.state.json1.waterType === 0 ? this.state.json1.waterFee : '--'}</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <p style={{margin: '20px 0',
+                            textAlign: 'right'}}
+                        >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
+                                <Input onBlur={this.sumMoney} style={{ width: 120 }} />
+                            )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
+                                <Input style={{ width: 120 }} disabled />
+                            )}</p>
+                    </Form>
                 </Modal>
             </div>
         )
