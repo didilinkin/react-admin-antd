@@ -51,8 +51,9 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        console.log(json)
-        json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        if (json.receiptDate !== null) {
+            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        }
         await apiPost(
             '/collectRent/updateCollectRentVoByLate',
             json
@@ -61,7 +62,11 @@ class addUpkeep extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
+        if (json.unpaidLateMoney !== 0) {
+            location.href = '/financial/RentFinishAndLate/' + json.id
+        } else if (json.unpaidLateMoney === 0) {
+            location.href = '/financial/RentReviewDetail/' + json.id
+        }
         this.setState({visible: false,
             isFirst: true })
     }

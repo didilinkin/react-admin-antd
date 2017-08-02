@@ -52,6 +52,7 @@ class collectRentConfirm extends React.Component {
             })
             this.setState({
                 isFirst: false,
+                data: resulData.data,
                 visible: nextProps.visible
             })
         }
@@ -62,8 +63,9 @@ class collectRentConfirm extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        console.log(json)
-        json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        if (json.receiptDate !== null) {
+            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        }
         await apiPost(
             '/collectRent/updateCollectRentVoByPaid',
             json
@@ -72,7 +74,13 @@ class collectRentConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
+        if (json.unpaidMoney !== 0) {
+            location.href = '/financial/RentReviewDetailNoLate/' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate <= this.state.data.payDeadline) {
+            location.href = '/financial/NoLateAndRentFinish/' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate > this.state.data.payDeadline) {
+            location.href = '/financial/RentFinishAndLate/' + json.id
+        }
         this.setState({visible: false,
             isFirst: true })
     }
@@ -93,14 +101,14 @@ class collectRentConfirm extends React.Component {
         if (unpaidMoney2 < 0) {
             this.props.form.setFields({
                 unpaidMoney: {
-                    value: unpaidMoney1,
+                    value: parseFloat(unpaidMoney1).toFixed(1),
                     errors: ''
                 }
             })
         } else {
             this.props.form.setFields({
                 unpaidMoney: {
-                    value: unpaidMoney2,
+                    value: parseFloat(unpaidMoney2).toFixed(1),
                     errors: ''
                 }
             })
