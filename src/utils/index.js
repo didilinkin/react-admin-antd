@@ -1,4 +1,5 @@
 // 常用方法
+import { isUndefined, isString } from 'lodash'
 
 // 深拷贝
 const stateCopy = (stateObj) => {
@@ -24,7 +25,14 @@ const cloneObj = function (obj) {
     return newobj
 }
 
+const hasString = (array, findString) => {
+    if (isString(findString)) {
+        return isUndefined(array.find((n) => n === findString)) // 无 => true; 有 => false
+    }
+}
+
 export {
     stateCopy,
-    cloneObj
+    cloneObj,
+    hasString
 }

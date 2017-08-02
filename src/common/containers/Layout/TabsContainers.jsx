@@ -1,75 +1,111 @@
 // 自定义新增页签触发器
 import React from 'react'
 
-import { isArray, isUndefined } from 'lodash'
+import { isArray, cloneDeep } from 'lodash'
 import localStore from '../../../utils/LocalStore'
+import { hasString } from '../../../utils'
 
 import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    constructor (props) {
-        super(props)
-        this.newTabIndex = 0
-    }
-
     state = {
-        activeKey: '',
-        panes: []
+        activeKey: '', // 默认值: panes[0].key
+        panes: [] // 格式: [{ route, tabsProps, key }]
     }
 
+    // 切换面板的回调 => 切换 state.activeKey
+    onChange = (activeKey) => {
+        this.setState({ activeKey })
+    }
+
+    // 新增和删除页签的回调
+    onEdit = (targetKey, action) => {
+        this[action](targetKey)
+    }
+
+    // 获取 rootState 中的 url信息
     select = (state) => {
         return state.router.location.pathname
     }
 
-    // 将 Tabs 信息(数组) 存储到 LS
+    // 将 Tabs 信息(数组) 存储到 LS的方法
     setArrayTabs = (arrayTabs) => {
-        localStore.set('arrayPreviousTabs', arrayTabs) // 存储信息
+        localStore.set('arrayPreviousTabs', arrayTabs)
     }
 
-    // 判断逻辑 / 存储逻辑
+    // 将 Tabs Key(数值) 存储到 LS的方法
+    setKeyNum = (key) => {
+        localStore.set('numTabsKey', key)
+    }
+
+    // 判断 标签显示条件
     handleChange = () => {
-        let rootState = this.select(this.props.rootState) // 简短命名(返回值是经过筛选的 url值, 而不是rootState)
-        let arrayTabs = localStore.get('arrayPreviousTabs') // 将本地LS的 Tabs数组获取出来
+        let currentUrl = this.select(this.props.rootState) // 当前的 url地址: 字符串
+        let arrLocalTabs = localStore.get('arrayPreviousTabs') // 获取本地LS中的 Tabs数组
 
-        // 判断: LS的arrayPreviousTabs是否是数组
-        if (isArray(arrayTabs)) {
-            // arrayTabs是 数组(存在信息) => 判断: LS的 Tabs数组信息是否存在 当前url
-            if (
-                isUndefined(arrayTabs.find((n) => n === rootState)
-                )
-            ) {
-                // undefined => 无法找到这个字符串
-                arrayTabs.push(rootState) // 存在数组中
-                this.setArrayTabs(arrayTabs) // 保存到 LS 中
+        if (isArray(arrLocalTabs)) { // 判断 LS中 arrayPreviousTabs是否是'Array'
+            if (hasString(arrLocalTabs, currentUrl)) { // Array(存在信息) => 判断 arrayPreviousTabs信息中是否存在 当前url
+                // 无法找到 该url => 保存 当前url到 LS
+                this.setArrayTabs([
+                    ...arrLocalTabs,
+                    currentUrl
+                ])
+                // 设置 Key
+                let currentKey = localStore.get('numTabsKey')
+                this.setKeyNum(currentKey + 1)
 
-                // 此时 执行 actions事件, 将{ route, tabsProps } 拿出 => 将route, tabsProps 保存到 Redux
-                // console.log(this.props)
-
-                // 将{ route, tabsProps } 保存到一个对象中 => 执行 Redux actions事件 => 保存创建的对象
-                let obj = {
-                    route: this.props.route,
-                    tabsProps: this.props.tabsProps
-                }
-
-                // console.log(obj)
-                this.props.onAddPane(obj)
+                // 触发 Actions事件
+                this.setPanes()
             } else {
-                // 非 undefined => 能够找到 当前url字符串 => 无操作
-                console.log('当前数组中 存在该url => 无操作')
-                // console.dir(arrayTabs)
+                // 此 url 已存在
+                console.log('当前数组中存在该 url') // 是否需要 setState, 待定; 不需要配置 key => key统一在 保存url 时执行;
             }
-        } else {
-            // arrayTabs非 数组(无信息) => 存储信息
-            let arr = [rootState] // 创建一个空数组, 存入当前地址信息
-            this.setArrayTabs(arr)
+        } else { // 非 Array(无信息) => 保存 当前url
+            this.setArrayTabs([currentUrl]) // 此时应该也触发一次 actions
+            this.setKeyNum(1)
+            this.setPanes()
         }
     }
 
-    // render 渲染之前
-    componentWillMount = () => {
-        // console.log('渲染之前')
-        // localStore.clear() // 清空本地状态 => 应该在全局第一次渲染的时候 执行清空. 此组件将重复多次 render => 在'关闭标签' 事件中, 删减LS数组
+    // 发起 Action / 配置 Key
+    setPanes = () => {
+        let previousKey = localStore.get('numTabsKey')
+        let previousPanes = this.state.panes
+
+        let actionsObj = cloneDeep({
+            route: this.props.route,
+            tabsProps: this.props.tabsProps,
+            key: previousKey + 1
+        })
+
+        this.props.onAddPane(actionsObj) // 发起 Actions
+
+        // this.setTime() // 延时测试获取 $store => 失败
+
+        // 配置 $state
+        this.setState({
+            panes: [
+                ...previousPanes,
+                actionsObj
+            ]
+        })
+
+        console.log(actionsObj)
+        console.dir(this.state)
+    }
+
+    // 临时方法: 定时器获取 最新的 store
+    setTime = () => {
+        setTimeout(
+            console.dir(this),
+            500
+        )
+    }
+
+    // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
+    remove = (targetKey) => {
+        console.log('关闭 Tabs')
     }
 
     // render 渲染之后
@@ -81,33 +117,22 @@ class TabsContainers extends React.Component {
         const {
             route,
             tabsProps
-            // render 内没有 以下 props 操作事件
-            // ,
-            // panesState, // Redux - panes state
-            // onAddPane, // Redux - panes action - Add
-            // onRemovePane // Redux - panes action - Remove
         } = this.props // route: 当前渲染组件信息; tabsProps: 当前路由信息
 
         let callback = (key) => {
             console.log(key)
         }
-
-        // let testObj = {
-        //     route: route,
-        //     tabsPorps: tabsProps
-        // }
-
         return (
             <Tabs
-                onChange={ callback }
+                onChange={callback}
                 type="card"
             >
                 <TabPane
-                    tab={ route.title }
-                    key={ route.path } // 无法获取 key
+                    tab={route.title}
+                    key={route.path} // 无法获取 key
                     style={{ marginBottom: 0 }}
                 >
-                    <route.component { ...tabsProps } routes={ route.routes } />
+                    <route.component { ...tabsProps } routes={route.routes} />
                 </TabPane>
             </Tabs>
         )
