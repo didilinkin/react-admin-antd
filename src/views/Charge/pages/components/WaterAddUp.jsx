@@ -16,6 +16,7 @@ class WaterAddUp extends React.Component {
         PmContract: [],
         users: [],
         WaterRecordlList: [],
+        Contract: {},
         waterLossRatio: 0,
         totalWater: 0,
         totalMoney: 0
@@ -25,7 +26,14 @@ class WaterAddUp extends React.Component {
             this.props.form.resetFields()
             this.setState({
                 visible: nextProps.visible,
-                isFirst: false
+                isFirst: false,
+                WaterRecordlList: [],
+                waterLossRatio: 0,
+                totalWater: 0,
+                totalMoney: 0,
+                Contract: {},
+                subletList: [],
+                roomNumberOne: []
             })
         }
     }
@@ -51,12 +59,44 @@ class WaterAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        this.setState({visible: false,
-            isFirst: true })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            this.setState({visible: false,
+                isFirst: true })
+            let json = this.props.form.getFieldsValue()
+            console.log(json)
+            console.log(this.state.Contract)
+            console.log(this.state.WaterRecordlList)
+            for (let item in this.state.Contract) {
+                json[item] = this.state.Contract[item]
+            }
+            json['preMeterDate'] = json.sfzq[0].format('YYYY-MM-DD')
+            json['meterDate'] = json.sfzq[1].format('YYYY-MM-DD')
+            json['overdueDate'] = json.overdueDate.format('YYYY-MM-DD')
+            let list = JSON.stringify(this.state.WaterRecordlList)
+            json['list'] = list
+            json['totalWater'] = this.state.totalWater
+            json['totalMoney'] = this.state.totalMoney
+            await apiPost(
+                '/water/insertwaterBill',
+                json
+            )
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
+        this.props.refreshTable()
     }
 
     delect = async (uuid) => {
@@ -70,7 +110,7 @@ class WaterAddUp extends React.Component {
                     WaterRecordlList: WaterRecordlList
                 })
                 this.props.form.setFieldsValue({
-                    receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money)).toFixed(2)
+                    receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(2)
                 })
             }
             return ''
@@ -94,49 +134,70 @@ class WaterAddUp extends React.Component {
             let formName = ''
             if (value.toString() === contract.id.toString()) {
                 formName = contract.clientName
+                let WaterRecord = await apiPost(
+                    '/water/LastDate',
+                    {contractId: value,
+                        id: this.props.id,
+                        clientId: contract.clientId,
+                        subletId: 0}
+                )
                 let subletList = await apiPost(
                     '/propertyFee/getSubletByPmId',
                     {id: value}
                 )
                 let roomNumber = contract.leaseRooms.split(',')
+                let roomIds = contract.roomIds.split(',')
                 subletList = subletList.data
                 if (subletList.length > 0) {
                     subletList.map(sublet => {
                         roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
+                        roomIds = this.complement(roomIds, sublet.roomNum.split(','))
                         return ''
                     })
                 }
                 this.setState({
+                    Contract: contract,
                     subletList: subletList,
                     roomNumberOne: roomNumber,
                     waterLossRatio: contract.waterLossRatio
                 })
+                let sfzq = WaterRecord.data ? [moment(WaterRecord.data.meterDate)] : null
+                console.log(sfzq)
                 this.props.form.setFieldsValue({
+                    roomId: roomIds.toString(),
+                    sfzq: sfzq,
                     roomNumber: roomNumber.toString(),
                     formName: formName,
                     waterUnitPrice: contract.waterUnitPrice,
                     subletId: null,
                     roomNumberOne: null,
-                    preMeterRead: null,
-                    sfzq: null
+                    preMeterRead: null
                 })
             }
         })
     }
     subletList = (value) => {
-        this.state.subletList.forEach(sub => {
+        this.state.subletList.forEach(async sub => {
             let formName = ''
             if (value.toString() === sub.clientId.toString()) {
                 formName = sub.clientName
+                let WaterRecord = await apiPost(
+                    '/water/LastDate',
+                    {subletId: value,
+                        id: this.props.id}
+                )
                 this.setState({
                     roomNumberOne: sub.leaseRooms.split(',')
                 })
+                let sfzq = WaterRecord.data ? [moment(WaterRecord.data.meterDate)] : null
                 this.props.form.setFieldsValue({
                     roomNumber: sub.leaseRooms.toString(),
+                    roomId: sub.roomNum.toString(),
+                    subletName: sub.clientName,
                     formName: formName,
                     roomNumberOne: null,
                     preMeterRead: null,
-                    sfzq: null
+                    sfzq: sfzq
                 })
             }
         })
@@ -150,8 +211,7 @@ class WaterAddUp extends React.Component {
         WaterRecord = WaterRecord.data
         if (WaterRecord !== null && WaterRecord !== '' && typeof (WaterRecord) !== 'undefined') {
             this.props.form.setFieldsValue({
-                preMeterRead: WaterRecord.meterRead,
-                sfzq: [moment(WaterRecord.meterDate)]
+                preMeterRead: WaterRecord.meterRead
             })
         }
     }
@@ -171,11 +231,13 @@ class WaterAddUp extends React.Component {
         jsontwo['meterRead'] = json.meterRead
         jsontwo['waterCount'] = json.waterCount
         jsontwo['meterLoss'] = parseFloat((this.state.waterLossRatio * json.waterCount / 100).toFixed(2))
-        jsontwo['sumWater'] = (parseFloat(jsontwo.meterLoss) + parseFloat(json.meterRead)).toFixed(2)
+        jsontwo['sumWater'] = (parseFloat(jsontwo.meterLoss) + parseFloat(json.waterCount)).toFixed(2)
         jsontwo['waterUnitPrice'] = json.waterUnitPrice
         jsontwo['money'] = (jsontwo.waterUnitPrice * jsontwo.sumWater).toFixed(2)
         jsontwo['remark'] = jsontwo.remark
         jsontwo['uuid'] = new Date().getTime()
+        jsontwo['roomNumberOne'] = json.roomNumber0ne
+        jsontwo['metertype'] = json.metertype
         let WaterRecordlList = this.state.WaterRecordlList
         WaterRecordlList.push(jsontwo)
         this.setState({
@@ -184,7 +246,7 @@ class WaterAddUp extends React.Component {
             WaterRecordlList: WaterRecordlList
         })
         this.props.form.setFieldsValue({
-            receivableMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money)).toFixed(2)
+            receivableMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(2)
         })
     }
     amountReceivable = (e) => {
@@ -209,55 +271,6 @@ class WaterAddUp extends React.Component {
                         marginBottom: 20,
                         paddingTop: '22px'}}
                     >
-                        <Row>
-                            <Col span={8}>
-                                <FormItem label="本次周期" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('sfzq', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择本次周期!'
-                                        }]
-                                    })(<RangePicker />)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('overdueDate', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请填写交费期限!'
-                                        }]
-                                    })(<DatePicker />)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="抄表人员" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('readId', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择抄表人员!'
-                                        }]
-                                    })(
-                                        <Select
-                                            showSearch
-                                            style={{ width: 200,
-                                                marginRight: '10px' }}
-                                            placeholder="请选择抄表人员"
-                                            optionFilterProp="children"
-                                        >
-                                            {this.state.users.map(user => {
-                                                return <Option key={user.id}>{user.loginName}</Option>
-                                            })}
-                                        </Select>)}
-                                </FormItem>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col span={8}>
                                 <FormItem label="客户名称" labelCol={{ span: 6 }}
@@ -307,6 +320,55 @@ class WaterAddUp extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('roomNumber')(<Input />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('sfzq', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择本次周期!'
+                                        }]
+                                    })(<RangePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('overdueDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请填写交费期限!'
+                                        }]
+                                    })(<DatePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="抄表人员" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('readId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择抄表人员!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择抄表人员"
+                                            optionFilterProp="children"
+                                        >
+                                            {this.state.users.map(user => {
+                                                return <Option key={user.id}>{user.loginName}</Option>
+                                            })}
+                                        </Select>)}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -492,6 +554,8 @@ class WaterAddUp extends React.Component {
                         </Row>
                     </div>
                     <Button type="primary" onClick={this.add}>添加一条记录</Button>
+                    {getFieldDecorator('roomId')(<Input type="hidden" />)}
+                    {getFieldDecorator('subletName')(<Input type="hidden" />)}
                 </Form>
             </Modal>
         )
