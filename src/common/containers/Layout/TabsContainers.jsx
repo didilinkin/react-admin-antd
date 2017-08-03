@@ -9,12 +9,17 @@ import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    constructor (props, context) {
-        super(props, context)
-        this.state = {
-            activeKey: '', // 默认值: panes[0].key
-            panes: props.panesState.panes // 格式: [{ route, tabsProps, key }]
-        }
+    // constructor (props, context) {
+    //     super(props, context)
+    //     this.state = {
+    //         activeKey: '', // 默认值: panes[0].key
+    //         panes: props.panesState.panes // 格式: [{ route, tabsProps, key }]
+    //     }
+    // }
+
+    state = {
+        activeKey: '', // 默认值: panes[0].key
+        panes: [] // 格式: [{ route, tabsProps, key }]
     }
 
     // 切换面板的回调 => 切换 state.activeKey
@@ -66,8 +71,24 @@ class TabsContainers extends React.Component {
             }
         } else { // 非 Array(无信息) => 保存 当前url
             this.setArrayTabs([currentUrl]) // 此时应该也触发一次 actions
-            this.setKeyNum(0) // 初始化为 0
-            this.setPanes()
+            this.setKeyNum(1) // 设置LS 初始化为 0
+            // this.setPanes()
+
+            // 设置默认数据
+            console.log('第一次走')
+            let initState = cloneDeep({
+                key: 1,
+                route: this.props.route,
+                tabsProps: this.props.tabsProps
+            })
+
+            // 先配置好 state
+            this.setState({
+                panes: [initState]
+            })
+
+            // 保存 redux
+            this.props.onAddPane(initState)
         }
     }
 
@@ -78,11 +99,13 @@ class TabsContainers extends React.Component {
         let actionsObj = cloneDeep({
             route: this.props.route,
             tabsProps: this.props.tabsProps,
-            key: previousKey + 1
+            key: previousKey
         })
-
+        debugger
+        console.dir(actionsObj)
         this.props.onAddPane(actionsObj) // 发起 Actions
 
+        debugger
         // console.log(actionsObj)
         console.dir(this.state)
     }
@@ -97,11 +120,32 @@ class TabsContainers extends React.Component {
         this.handleChange()
     }
 
-    // render 渲染之后
-    componentDidMount = () => {
-        // this.handleChange()
-        console.log('Did, render之后')
-        console.dir(this.props.rootState)
+    // // render 渲染之后
+    // componentDidMount = () => {
+    //     // this.handleChange()
+    //     console.log('Did, render之后')
+    //     console.dir(this.props.rootState)
+    // }
+
+    // 当 props改变时 触发
+    componentWillReceiveProps (nextProps) {
+        // if (nextProps.xxx !== this.props.xxx) {
+        //     // this.fetchData(nextProps.xxx)
+        //     console.log('props发生改变')
+        // }
+
+        // 判断是否是初始值
+        let previousKey = localStore.get('numTabsKey') // 获取 LS中的 key
+        if (!previousKey === 1) { // 非初始值
+            console.log('props发生改变')
+            console.log(nextProps.panesState)
+
+            let newPanes = cloneDeep(nextProps.panesState)
+            debugger
+            this.setState({
+                panes: newPanes
+            })
+        }
     }
 
     render () {
