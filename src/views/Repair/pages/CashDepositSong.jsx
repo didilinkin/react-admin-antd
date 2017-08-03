@@ -1,12 +1,11 @@
-// 收费管理 - 应收租金
+// 欢乐颂管理押金
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
-import CollectRentAuditComponent from './Details/CollectRentAudit'
 // 引入组件
 const Option = Select.Option
 // React component
-class CollectRentConduct extends Component {
+class CashDepositRent extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -30,8 +29,8 @@ class CollectRentConduct extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {auditStatus: 1}
+            '/cashDeposit/cashDepositList',
+            {chargeItem: 3}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -63,43 +62,13 @@ class CollectRentConduct extends Component {
             }, {
                 title: '客户名称',
                 width: 300,
-                dataIndex: 'rentClientName',
-                key: 'rentClientName'
+                dataIndex: 'sublietName',
+                key: 'sublietName'
             }, {
-                title: '交费周期',
-                width: 150,
-                dataIndex: 'periodStatus',
-                key: 'periodStatus',
-                render: function (text, record, index) {
-                    let whType = ''
-                    if (record.periodStatus === 3) {
-                        whType = '季付'
-                    }
-                    if (record.periodStatus === 6) {
-                        whType = '半年付'
-                    }
-                    if (record.periodStatus === 12) {
-                        whType = '年付'
-                    }
-                    return (
-                        <span>{whType}</span>
-                    )
-                }
-            }, {
-                title: '本期租金周期',
+                title: '当前结余',
                 width: 250,
-                dataIndex: 'periodRent',
-                key: 'periodRent'
-            }, {
-                title: '本期租金',
-                width: 150,
-                dataIndex: 'actualPaidMoney',
-                key: 'actualPaidMoney'
-            }, {
-                title: '交费期限',
-                width: 150,
-                dataIndex: 'payDeadline',
-                key: 'payDeadline'
+                dataIndex: 'currentBalance',
+                key: 'currentBalance'
             }, {
                 title: '操作',
                 width: 200,
@@ -123,12 +92,11 @@ class CollectRentConduct extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
+            '/cashDeposit/cashDepositList',
+            {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'auditStatus': 1
+                'chargeItem': 0
             }
         )
         this.setState({
@@ -139,19 +107,15 @@ class CollectRentConduct extends Component {
             id: 0
         })
     }
-    rentClientName = ''
+    sublietName = null
     entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
+        this.sublietName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
     }
@@ -162,14 +126,10 @@ class CollectRentConduct extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
-                <CollectRentAuditComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
-                    display: 'block'}}>
+                    display: 'block'}}
+                >
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
@@ -184,31 +144,20 @@ class CollectRentConduct extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>房间编号:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
+                    />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
-                    <Select
-                        showSearch
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 1200 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
@@ -218,6 +167,6 @@ class CollectRentConduct extends Component {
         )
     }
 }
-export default CollectRentConduct
+export default CashDepositRent
 
 

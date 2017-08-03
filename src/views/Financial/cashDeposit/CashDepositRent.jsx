@@ -1,13 +1,11 @@
-// 收费管理 - 审核失败
+// 租赁保证金
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
-import CollectRentFailComponent from './components/AfterAudit'
-import CollectRentRepaidComponent from './components/PaidConfirm'
 // 引入组件
 const Option = Select.Option
 // React component
-class CollectRentFail extends Component {
+class CashDepositRent extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -28,25 +26,16 @@ class CollectRentFail extends Component {
             id: id
         })
     }
-    handleUpdate2 = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: true,
-            openUpdate: false,
-            id: id
-        })
-    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {auditStatus: 3}
+            '/cashDeposit/cashDepositList',
+            {chargeItem: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -73,58 +62,100 @@ class CollectRentFail extends Component {
             }, {
                 title: '客户名称',
                 width: 300,
-                dataIndex: 'rentClientName',
-                key: 'rentClientName'
+                dataIndex: 'sublietName',
+                key: 'sublietName'
             }, {
-                title: '交费周期',
-                width: 150,
-                dataIndex: 'periodStatus',
-                key: 'periodStatus',
+                title: '当前结余',
+                width: 100,
+                dataIndex: 'currentBalance',
+                key: 'currentBalance'
+            }, {
+                title: '收支类型',
+                width: 100,
+                dataIndex: 'revenueType',
+                key: 'revenueType',
                 render: function (text, record, index) {
                     let whType = ''
-                    if (record.periodStatus === 3) {
-                        whType = '季付'
+                    if (record.revenueType === 0) {
+                        whType = '收款'
                     }
-                    if (record.periodStatus === 6) {
-                        whType = '半年付'
+                    if (record.revenueType === 1) {
+                        whType = '扣款'
                     }
-                    if (record.periodStatus === 12) {
-                        whType = '年付'
+                    if (record.revenueType === 2) {
+                        whType = '退款'
                     }
                     return (
                         <span>{whType}</span>
                     )
                 }
             }, {
-                title: '本期租金周期',
-                width: 250,
-                dataIndex: 'periodRent',
-                key: 'periodRent'
+                title: '扣/退款金额',
+                width: 100,
+                dataIndex: 'operateMoney',
+                key: 'operateMoney'
             }, {
-                title: '本期租金',
-                width: 150,
-                dataIndex: 'actualPaidMoney',
-                key: 'actualPaidMoney'
+                title: '事由',
+                width: 100,
+                dataIndex: 'reason',
+                key: 'reason'
             }, {
-                title: '交费期限',
+                title: '收据号',
                 width: 150,
-                dataIndex: 'payDeadline',
-                key: 'payDeadline'
+                dataIndex: 'voucherNo',
+                key: 'voucherNo'
             }, {
-                title: '审核说明',
-                width: 150,
-                dataIndex: 'remark',
-                key: 'remark'
+                title: '收款方式',
+                width: 100,
+                dataIndex: 'receiptType',
+                key: 'receiptType',
+                render: function (text, record, index) {
+                    let whType = ''
+                    if (record.revenueType === 0) {
+                        whType = '现金'
+                    }
+                    if (record.revenueType === 1) {
+                        whType = '支票'
+                    }
+                    if (record.revenueType === 2) {
+                        whType = '银行代收'
+                    }
+                    if (record.revenueType === 3) {
+                        whType = 'POST机刷卡'
+                    }
+                    if (record.revenueType === 4) {
+                        whType = '转账'
+                    }
+                    if (record.revenueType === 5) {
+                        whType = '支付宝'
+                    }
+                    if (record.revenueType === 5) {
+                        whType = '其他'
+                    }
+                    return (
+                        <span>{whType}</span>
+                    )
+                }
             }, {
-                title: '审核时间',
-                width: 150,
+                title: '审核人',
+                width: 90,
+                dataIndex: 'auditName',
+                key: 'auditName'
+            }, {
+                title: '审核日期',
+                width: 100,
                 dataIndex: 'auditDate',
                 key: 'auditDate'
             }, {
-                title: '审核人',
-                width: 150,
-                dataIndex: 'auditName',
-                key: 'auditName'
+                title: '申请人',
+                width: 90,
+                dataIndex: 'createName',
+                key: 'createName'
+            }, {
+                title: '申请时间',
+                width: 100,
+                dataIndex: 'createDate',
+                key: 'createDate'
             }, {
                 title: '操作',
                 width: 200,
@@ -134,8 +165,7 @@ class CollectRentFail extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
-                            <a href="javascript:" type="primary" onClick={() => handleUpdate2(record.id)} >&nbsp; 重新收租 </a>
+                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
                         </div>
                     )
                 }
@@ -149,12 +179,12 @@ class CollectRentFail extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
+            '/cashDeposit/cashDepositList',
+            {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'auditStatus': 3
+                'revenueType': this.revenueType,
+                'chargeItem': 0
             }
         )
         this.setState({
@@ -165,21 +195,21 @@ class CollectRentFail extends Component {
             id: 0
         })
     }
-    rentClientName = ''
+    sublietName = null
     entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
+        this.sublietName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
+    }
+    revenueType = null
+    selectRevenueType = (e) => {
+        this.revenueType = e
     }
     query = () => {
         this.refresh()
@@ -188,24 +218,15 @@ class CollectRentFail extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
-                <CollectRentFailComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />
-                <CollectRentRepaidComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
-                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
-                    display: 'block'}}>
+                    display: 'block'}}
+                >
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         allowClear
-                        style={{width: 200,
+                        style={{width: 120,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
@@ -215,30 +236,34 @@ class CollectRentFail extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span>房间编号:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange} />
-                    <span>客户名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
+                    />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
+                    <span>收支类型:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
-                        style={{width: 150,
+                        allowClear
+                        style={{width: 120,
                             marginRight: '5px'}}
-                        placeholder="请选择交费周期"
+                        placeholder="请选择收支类型"
                         optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        onChange={this.selectRevenueType}
                     >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
+                        <Option key={0}>收款</Option>
+                        <Option key={1}>扣款</Option>
+                        <Option key={2}>退款</Option>
                     </Select>
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
+
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 1900 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
@@ -248,6 +273,6 @@ class CollectRentFail extends Component {
         )
     }
 }
-export default CollectRentFail
+export default CashDepositRent
 
 

@@ -48,7 +48,7 @@ class propertyFeeAdd extends React.Component {
                 json['acUnitDay'] = propertyFee.data.acUnitDay
                 json['waterType'] = propertyFee.data.waterType
                 json['clientType'] = propertyFee.data.clientType
-                json['serviceArea'] = propertyFee.data.serviceArea
+                json['serviceArea'] = parseFloat(propertyFee.data.serviceArea).toFixed(2)
                 json['yearPmPrice'] = propertyFee.data.yearPmPrice
                 json['yearAcPrice'] = propertyFee.data.yearAcPrice
                 json['months'] = propertyFee.data.months
