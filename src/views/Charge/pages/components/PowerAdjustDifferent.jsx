@@ -1,10 +1,9 @@
+// 调差
 import React from 'react'
-import {Form, Select, Input, Button  } from 'antd'
-
+import {Form, Input, Button  } from 'antd'
 const FormItem = Form.Item
-const Option = Select.Option
-const {TextArea} = Input
-class PowerMeterWrite extends React.Component {
+
+class PowerAdjustDifferent extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -53,58 +52,42 @@ class PowerMeterWrite extends React.Component {
                 border: '1px solid #999'
             }}
             >
-                <div style={titleLayout}>抄表录入</div>
+                <div style={titleLayout}>调差</div>
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem
                         {...formItemLayout}
-                        label="房间编号"
-                    >{getFieldDecorator('room')(<Select>
-                            <Option value="0001">0001</Option>
-                            <Option value="0002">0002</Option>
-                            <Option value="0003">0003</Option>
-                        </Select>)
-                        }
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="费用名称"
+                        label="本月单价："
                     >{getFieldDecorator('name')(<Input placeholder="请输入内容" />)
                         }
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="上次抄表数"
+                        label="上月单价："
                     >{getFieldDecorator('lastMeterNumber')(<Input placeholder="请输入内容" />)
                         }
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="本次抄表数"
+                        label="单价差额："
                     >{getFieldDecorator('meterNumber')(<Input placeholder="请输入内容" />)
                         }
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="本次用电量"
+                        label="上月总用量："
                     >{getFieldDecorator('useNumber')(<Input placeholder="请输入内容" />)
                         }
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="变比"
+                        label="差额："
                     >{getFieldDecorator('chenge')(<Input placeholder="请输入内容" />)
                         }
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        label="单价"
+                        label="单价："
                     >{getFieldDecorator('price')(<Input placeholder="请输入内容" />)
-                        }
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="备注"
-                    >{getFieldDecorator('note')(<TextArea rows={10} />)
                         }
                     </FormItem>
                     <FormItem {...tailFormItemLayout}>
@@ -115,5 +98,5 @@ class PowerMeterWrite extends React.Component {
     }
 }
 
-const PowerMeterWriteComponent = Form.create()(PowerMeterWrite)
-export default PowerMeterWriteComponent
+const PowerAdjustDifferentComponent = Form.create()(PowerAdjustDifferent)
+export default PowerAdjustDifferentComponent

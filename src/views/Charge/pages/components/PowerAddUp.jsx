@@ -1,6 +1,8 @@
 import React from 'react'
 import {Form, Row, Col, Input, Button, DatePicker} from 'antd'
 import PowerMeterWrite from './PowerMeterWrite'
+import PowerAdjustDifferent from './PowerAdjustDifferent'
+import PowerWritePenalty from './PowerWritePenalty'
 const FormItem = Form.Item
 const {RangePicker} = DatePicker
 class PowerAddUp extends React.Component {
@@ -14,67 +16,74 @@ class PowerAddUp extends React.Component {
         const { getFieldDecorator } = this.props.form
         return (
             <Form layout="horizontal">
-                <Row>
-                    <Col span={8}>
-                        <FormItem label="本次周期" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('sfzq', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请选择本次周期!'
-                                }]
-                            })(<RangePicker />)}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="交费期限" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('overdueDate', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请填写交费期限!'
-                                }]
-                            })(<DatePicker />)}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="抄表人员" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('readId', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请填写抄表人员!'
-                                }]
-                            })(<Input />)}
-                        </FormItem>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8}>
-                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('voucherNo')(<Input />)}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="转租客户" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('acceptor')(<Input />)}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 15 }}
-                        >
-                            {getFieldDecorator('rrr')(<Input />)}
-                        </FormItem>
-                    </Col>
-                </Row>
+                <div style={{background: '#f7f7f7',
+                    width: 1000,
+                    marginBottom: 20,
+                    paddingTop: '22px'}}
+                >
+                    <Row>
+                        <Col span={8}>
+                            <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('sfzq', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '请选择本次周期!'
+                                    }]
+                                })(<RangePicker />)}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('overdueDate', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '请填写交费期限!'
+                                    }]
+                                })(<DatePicker />)}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="抄表人员" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('readId', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '请填写抄表人员!'
+                                    }]
+                                })(<Input />)}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}>
+                            <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('voucherNo')(<Input />)}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('acceptor')(<Input />)}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 15 }}
+                            >
+                                {getFieldDecorator('rrr')(<Input />)}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                </div>
+
                 <span style={{textAlign: 'center',
                     display: 'block'}}
                 >
@@ -82,7 +91,7 @@ class PowerAddUp extends React.Component {
                     <span>电量统计表</span>
                 </span>
                 <br />
-                <div style={{width: 900,
+                <div style={{width: 1000,
                     marginBottom: 20}}
                 >
                     <table className="tb">
@@ -115,8 +124,18 @@ class PowerAddUp extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <PowerMeterWrite />
-                <Button type="primary" onClick={this.add}>提交</Button>
+                <Row>
+                    <Col span={8}>
+                        <PowerMeterWrite />
+                    </Col>
+                    <Col span={8}>
+                        <PowerAdjustDifferent />
+                    </Col>
+                    <Col span={8}>
+                        <PowerWritePenalty />
+                    </Col>
+                </Row>
+                <Button type="primary" onClick={this.add} style={{marginTop: 20}}>提交</Button>
             </Form>
         )
     }
