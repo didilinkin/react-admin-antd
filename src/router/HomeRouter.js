@@ -20,6 +20,9 @@ import Rectification            from '../views/Repair/pages/Rectification'      
 import LeaseContract            from '../views/Repair/pages/LeaseContract'                              // 租赁合同
 import PropertyContract         from '../views/Repair/pages/PropertyContract'                           // 物业合同
 
+import MarginManagement         from '../views/Repair/pages/MarginManagement'                           // 保证金管理
+import SecondaryDecoration      from '../views/Repair/pages/SecondaryDecoration'                        // 二次装修
+
 import ClientReviewDetails      from '../views/Repair/pages/Details/ClientReviewDetails'                // [详情] - 客户回访
 import ContractDetail           from '../views/Repair/pages/Details/ContractDetail'                     // [详情] - 合同详情
 import ContractTenancyDetail           from '../views/Repair/pages/Details/ContractTenancyDetail'                     // [详情] - 合同详情
@@ -107,6 +110,11 @@ import PropertyFeeDetail        from '../views/Financial/propertyFee/Details/Pro
 import WaterBill                from '../views/Financial/pages/WaterBill'                               // 水费审核
 import PowerBill                from '../views/Financial/pages/PowerBill'                               // 电费审核
 
+import SecondaryDecorationReview from '../views/Financial/pages/SecondaryDecorationReview'              // 财务管理 - 二次装修审核
+import LeaseMarginAudit         from '../views/Financial/pages/LeaseMarginAudit'                        // 财务管理 - 租赁保证金审核
+import HappyDepositcheck        from '../views/Financial/pages/HappyDepositcheck'                       // 财务管理 - 欢乐颂押金审核
+import EnergyDepositReview      from '../views/Financial/pages/EnergyDepositReview'                     // 财务管理 - 能源管理押金审核
+
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
         {
@@ -171,6 +179,12 @@ const routes = [
                 path: '/upkeep/contractManagement/propertyContract',                                    // 客户管理 - 合同管理 - 物业合同
                 component: PropertyContract
             }, {
+                path: '/upkeep/contractManagement/marginManagement',                                    // 客户管理 - 保证金管理
+                component: MarginManagement
+            }, {
+                path: '/upkeep/contractManagement/secondaryDecoration',                                 // 客户管理 - 二次装修
+                component: SecondaryDecoration
+            }, {
                 path: '/upkeep/clientReviewDetails/:id',                                                // [详情] - 客户回访
                 component: ClientReviewDetails
             }, {
@@ -195,7 +209,7 @@ const routes = [
                 path: '/upkeep/contractDetail/:id',                                                     // [详情] - 合同详情
                 component: ContractDetail
             }, {
-                path: '/upkeep/contractTenancyDetail/:id',                                                     // [详情] - 合同租赁详情
+                path: '/upkeep/contractTenancyDetail/:id',                                              // [详情] - 合同租赁详情
                 component: ContractTenancyDetail
             }, {
                 path: '/upkeep/electricityDetail/:id',                                                  // [详情] - 电费详情
@@ -406,6 +420,18 @@ const routes = [
             }, {
                 path: '/financial/powerBill',                                                           // 财务管理 - 电费
                 component: PowerBill
+            }, {
+                path: '/financial/secondaryDecorationReview',                                           // 财务管理 - 二次装修审核
+                component: SecondaryDecorationReview
+            }, {
+                path: '/financial/leaseMarginAudit',                                                    // 财务管理 - 租赁保证金审核
+                component: LeaseMarginAudit
+            }, {
+                path: '/financial/happyDepositcheck',                                                   // 财务管理 - 欢乐颂押金审核
+                component: HappyDepositcheck
+            }, {
+                path: '/financial/energyDepositReview',                                                 // 财务管理 - 能源管理押金审核
+                component: EnergyDepositReview
             }
         ]
     }
