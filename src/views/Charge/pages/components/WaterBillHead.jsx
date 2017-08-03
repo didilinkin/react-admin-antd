@@ -19,6 +19,11 @@ class WaterBillHead extends React.Component {
     handleReset = () => {
         this.props.form.resetFields()
     }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.order.toString() !== nextProps.type.toString()) {
+            this.props.form.resetFields()
+        }
+    }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let adopt = false
@@ -38,6 +43,10 @@ class WaterBillHead extends React.Component {
                 json['endDate'] = json.cxsj[1].format('YYYY-MM-DD')
                 json['cxsj'] = null
             }
+            json['type'] = this.props.type
+            this.setState({
+                openWaterAddUpComponent: false
+            })
             this.props.refresh(null, json, null)
         }
     }

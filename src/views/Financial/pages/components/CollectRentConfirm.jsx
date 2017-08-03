@@ -93,7 +93,7 @@ class collectRentConfirm extends React.Component {
         if (typeof (thisPaidMoney) === 'undefined') {
             thisPaidMoney = 0
         }
-        let unpaidMoney1 = this.props.form.getFieldValue('unpaidMoney')
+        let unpaidMoney1 = this.state.data.unpaidMoney
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
@@ -103,7 +103,15 @@ class collectRentConfirm extends React.Component {
                 unpaidMoney: {
                     value: parseFloat(unpaidMoney1).toFixed(1),
                     errors: ''
+                },
+                thisPaidMoney: {
+                    value: 0,
+                    errors: ''
                 }
+            })
+            notification.open({
+                message: '输入金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
         } else {
             this.props.form.setFields({
@@ -159,7 +167,7 @@ class collectRentConfirm extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('thisPaidMoney')(
-                                        <Input onBlur={this.sumMoney} />
+                                        <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>
                                 <FormItem label="未收金额" labelCol={{ span: 6 }}

@@ -116,8 +116,8 @@ class CollectRentConduct extends Component {
             }, {
                 title: '违约金',
                 width: 150,
-                dataIndex: 'actualLateMoney',
-                key: 'actualLateMoney'
+                dataIndex: 'lateMoney',
+                key: 'lateMoney'
             }, {
                 title: '租金开票状态',
                 width: 150,

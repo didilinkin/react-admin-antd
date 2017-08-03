@@ -38,7 +38,8 @@ class propertyLateConfirm extends React.Component {
             })
             this.setState({
                 isFirst: false,
-                visible: nextProps.visible
+                visible: nextProps.visible,
+                data: resulData.data
             })
         }
     }
@@ -81,7 +82,7 @@ class propertyLateConfirm extends React.Component {
         this.props.form.setFieldsValue({
             paidMoney: parseFloat(thisPaidMoney).toFixed(1)
         })
-        let unpaidMoney1 = this.props.form.getFieldValue('unpaidLateMoney')
+        let unpaidMoney1 = this.state.data.unpaidLateMoney
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
@@ -89,7 +90,12 @@ class propertyLateConfirm extends React.Component {
         if (unpaidMoney2 < 0) {
             this.props.form.setFieldsValue({
                 unpaidLateMoney: parseFloat(unpaidMoney1).toFixed(1),
-                unpaidMoney: parseFloat(unpaidMoney1).toFixed(1)
+                unpaidMoney: parseFloat(unpaidMoney1).toFixed(1),
+                thisLateMoney: 0
+            })
+            notification.open({
+                message: '输入金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
         } else {
             this.props.form.setFieldsValue({
@@ -113,6 +119,10 @@ class propertyLateConfirm extends React.Component {
                 thisActualLateMoney: parseFloat(thisActualLateMoney).toFixed(1),
                 discountMoney: 0,
                 unpaidLateMoney: parseFloat(unpaidMoney2).toFixed(1)
+            })
+            notification.open({
+                message: '优惠金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
         } else {
             this.props.form.setFieldsValue({
@@ -166,14 +176,14 @@ class propertyLateConfirm extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('discountMoney')(
-                                        <Input onBlur={this.sumMoney2} />
+                                        <Input onKeyUp={this.sumMoney2} />
                                     )}
                                 </FormItem>
                                 <FormItem label="本次实收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('thisLateMoney')(
-                                        <Input onBlur={this.sumMoney} />
+                                        <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>
                                 <FormItem label="未收金额" labelCol={{ span: 6 }}
