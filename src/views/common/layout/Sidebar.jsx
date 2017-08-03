@@ -68,6 +68,8 @@ class Sidebar extends React.Component {
             clientReview: ['upkeep'],
             upkeepList: ['upkeep'],
             rectification: ['upkeep'],
+            marginManagement: ['upkeep'],
+            secondaryDecoration: ['upkeep'],
             // 客户管理 - 合同管理
             contractManagement: ['upkeep'],
             leaseContract: ['upkeep', 'contractManagement'],
@@ -120,7 +122,11 @@ class Sidebar extends React.Component {
             rentReview: ['financial'],
             propertyCostsReview: ['financial'],
             waterBill: ['financial'],
-            powerBill: ['financial']
+            powerBill: ['financial'],
+            secondaryDecorationReview: ['financial'],
+            leaseMarginAudit: ['financial'],
+            happyDepositcheck: ['financial'],
+            energyDepositReview: ['financial']
         }
 
         return map[key] || []
@@ -223,6 +229,14 @@ class Sidebar extends React.Component {
 
                         <Menu.Item key="rectification">
                             <Link to="/upkeep/rectification">整改通知</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="marginManagement">
+                            <Link to="/upkeep/contractManagement/marginManagement">保证金管理</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="secondaryDecoration">
+                            <Link to="/upkeep/contractManagement/secondaryDecoration">二次装修</Link>
                         </Menu.Item>
                     </SubMenu>
 
@@ -450,6 +464,21 @@ class Sidebar extends React.Component {
                             <Link to="/financial/powerBill">电费审核</Link>
                         </Menu.Item>
 
+                        <Menu.Item key="secondaryDecorationReview">
+                            <Link to="/financial/secondaryDecorationReview">二次装修审核</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="leaseMarginAudit">
+                            <Link to="/financial/leaseMarginAudit">租赁保证金审核</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="happyDepositcheck">
+                            <Link to="/financial/happyDepositcheck">欢乐颂押金审核</Link>
+                        </Menu.Item>
+
+                        <Menu.Item key="energyDepositReview">
+                            <Link to="/financial/energyDepositReview">能源管理押金审核</Link>
+                        </Menu.Item>
                     </SubMenu>
 
                 </Menu>
