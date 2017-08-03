@@ -3,6 +3,8 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs  } from 'antd'
 import WaterBillHeadComponent from './components/WaterBillHead'
 import { apiPost } from '../../../api'
+
+
 const TabPane = Tabs.TabPane
 class ChargeWaterBill extends React.Component {
     constructor (props) {
