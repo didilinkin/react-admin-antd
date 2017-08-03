@@ -2,6 +2,7 @@
 import React from 'react'
 import {Table, Spin, Popconfirm, Tabs  } from 'antd'
 import WaterBillHeadComponent from './components/WaterBillHead'
+import WaterAddUpComponent from './components/WaterAddUp'
 import { apiPost } from '../../../api'
 const TabPane = Tabs.TabPane
 class ChargeWaterBill extends React.Component {
@@ -18,9 +19,43 @@ class ChargeWaterBill extends React.Component {
             dataSource3: [],
             dataSource4: [],
             ListBuildingInfo: [],
+            openWaterAddUpComponent: false,
+            order: 1,
             RowKeys: [],
             id: 0
         }
+    }
+    refreshTwo = async (activeKey) => {
+        this.setState({loading: true})
+        let result = await apiPost(
+            '/WaterBill/WaterBillList'
+        )
+        let WaterBillList = result.data
+        let dataSource1 = []
+        let dataSource2 = []
+        let dataSource3 = []
+        let dataSource4 = []
+        WaterBillList.map(WaterBill => {
+            if (WaterBill.examineState.toString() === '0') {
+                dataSource1.push(WaterBill)
+            } else if (WaterBill.examineState.toString() === '1') {
+                dataSource2.push(WaterBill)
+            } else if (WaterBill.examineState.toString() === '2') {
+                dataSource4.push(WaterBill)
+            } else if (WaterBill.examineState.toString() === '3') {
+                dataSource3.push(WaterBill)
+            }
+            return ''
+        })
+        this.setState({
+            loading: false,
+            dataSource1: dataSource1,
+            dataSource2: dataSource2,
+            dataSource3: dataSource3,
+            dataSource4: dataSource4,
+            openWaterAddUpComponent: false,
+            order: activeKey ? activeKey : 1
+        })
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true})
@@ -53,6 +88,12 @@ class ChargeWaterBill extends React.Component {
             dataSource4: dataSource4
         })
     }
+    openWaterAddUpComponent = (id) => {
+        this.setState({
+            openWaterAddUpComponent: true,
+            id: id
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -78,6 +119,7 @@ class ChargeWaterBill extends React.Component {
             }
             return ''
         })
+        let openWaterAddUpComponent = this.openWaterAddUpComponent
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -132,7 +174,7 @@ class ChargeWaterBill extends React.Component {
                         <span>
                             <a>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a>修改</a>
+                            <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm key="1" title="确定提交吗?">
                                 <a>提交</a>
@@ -360,12 +402,13 @@ class ChargeWaterBill extends React.Component {
     render () {
         return (
             <Spin spinning={this.state.loading}>
-                <Tabs defaultActiveKey="1">
+                <Tabs defaultActiveKey="1" onChange={this.refreshTwo}>
                     <TabPane tab="待发起" key="1">
                         <WaterBillHeadComponent
                             RowKeys={this.state.RowKeys}
                             refresh={this.refresh}
                             type={1}
+                            order={this.state.order}
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
@@ -373,9 +416,14 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            onChange={this.refresh}
+                            // onChange={this.refresh}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
+                        />
+                        <WaterAddUpComponent
+                            title="添加水费"
+                            refreshTable={this.refreshTwo}
+                            visible={this.state.openWaterAddUpComponent}
                         />
                     </TabPane>
                     <TabPane tab="审核中" key="2">
@@ -383,6 +431,7 @@ class ChargeWaterBill extends React.Component {
                             RowKeys={this.state.RowKeys}
                             refresh={this.refresh}
                             type={2}
+                            order={this.state.order}
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
@@ -390,7 +439,7 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            onChange={this.refresh}
+                            // onChange={this.refresh}
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
                         />
@@ -400,6 +449,7 @@ class ChargeWaterBill extends React.Component {
                             RowKeys={this.state.RowKeys}
                             refresh={this.refresh}
                             type={3}
+                            order={this.state.order}
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
@@ -407,7 +457,7 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            onChange={this.refresh}
+                            // onChange={this.refresh}
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />
@@ -417,6 +467,7 @@ class ChargeWaterBill extends React.Component {
                             RowKeys={this.state.RowKeys}
                             refresh={this.refresh}
                             type={4}
+                            order={this.state.order}
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
@@ -424,7 +475,7 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            onChange={this.refresh}
+                            // onChange={this.refresh}
                             scroll={{ x: 1450 }}
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
