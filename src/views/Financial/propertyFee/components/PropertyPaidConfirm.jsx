@@ -50,6 +50,7 @@ class propertyPaidConfirm extends React.Component {
             })
             this.setState({
                 isFirst: false,
+                data: resulData.data,
                 visible: nextProps.visible
             })
         }
@@ -60,8 +61,9 @@ class propertyPaidConfirm extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        console.log(json)
-        json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        if (json.receiptDate !== null) {
+            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+        }
         await apiPost(
             '/propertyFee/updatePropertyFeeByPaid',
             json
@@ -70,7 +72,13 @@ class propertyPaidConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
+        if (json.unpaidMoney !== 0) {
+            location.href = '/financial/PropertyFeeDetailNoLate/' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate <= this.state.data.payDeadline) {
+            location.href = '/financial/NoLateAndPropertyFinish/' + json.id
+        } else if (json.unpaidMoney === 0 && json.receiptDate > this.state.data.payDeadline) {
+            location.href = '/financial/PropertyFinishAndLate/' + json.id
+        }
         this.setState({visible: false,
             isFirst: true })
     }

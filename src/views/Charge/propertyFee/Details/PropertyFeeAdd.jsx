@@ -29,7 +29,8 @@ class propertyFeeAdd extends React.Component {
             '/propertyFee/getAccountList'
         )
         let pmContractList = await apiPost(
-            '/propertyFee/getPmContractList'
+            '/propertyFee/getPmContractList',
+            {contractStatus: 0}
         )
         this.setState({accountList: accountList.data,
             pmContractList: pmContractList.data})
@@ -208,6 +209,9 @@ class propertyFeeAdd extends React.Component {
         return d.getDate()
     }
     handleChange1= async (value) =>{
+        this.props.form.setFieldsValue({
+            tenant: null
+        })
         let tenantList = await apiPost(
             '/propertyFee/getSubletByPmId',
             {id: value}
@@ -572,6 +576,7 @@ class propertyFeeAdd extends React.Component {
                                         <Select placeholder="请选择客户"
                                             showSearch style={{ width: 220 }}
                                             onChange={this.handleChange1}
+                                            allowClear
                                             optionFilterProp="children"
                                         >
                                             {pmContractList.map(pmContract => {
@@ -599,6 +604,7 @@ class propertyFeeAdd extends React.Component {
                                     {getFieldDecorator('tenant')(
                                         <Select placeholder="请选择转租客户"
                                             onChange={this.handleChange2}
+                                            allowClear
                                             optionFilterProp="children"
                                             showSearch style={{ width: 220 }}
                                         >

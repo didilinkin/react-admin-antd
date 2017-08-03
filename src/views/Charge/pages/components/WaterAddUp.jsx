@@ -1,16 +1,24 @@
 // 水费
-import {Modal, Input, Form, DatePicker, Button, Row, Col } from 'antd'
+import {Modal, Input, Form, DatePicker, Button, Row, Col, Select } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import '../../../../style/test.less'
+import moment from 'moment'
 const { RangePicker } = DatePicker
 const FormItem = Form.Item
+const Option = Select.Option
 class WaterAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
+        subletList: [],
+        roomNumberOne: [],
         PmContract: [],
-        WaterRecordlList: []
+        users: [],
+        WaterRecordlList: [],
+        waterLossRatio: 0,
+        totalWater: 0,
+        totalMoney: 0
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
@@ -27,9 +35,15 @@ class WaterAddUp extends React.Component {
     async initialRemarks2 () {
         let PmContract = await apiPost(
             '/propertyFee/getPmContractList',
+            {contractStatus: 0}
+        )
+        let users = await apiPost(
+            '/water/getchaobiaouser',
+            {code: 'chaobiaoren'}
         )
         this.setState({
-            PmContract: PmContract.data
+            PmContract: PmContract.data,
+            users: users.data
         })
     }
     componentDidMount () {
@@ -44,18 +58,138 @@ class WaterAddUp extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    add = () => {
-    }
-    delect = (uuid) => {
+
+    delect = async (uuid) => {
         let WaterRecordlList = this.state.WaterRecordlList
         WaterRecordlList.map((WaterRecordl, i) => {
             if (WaterRecordl.uuid.toString() === uuid.toString()) {
                 WaterRecordlList.splice(i, 1)
+                this.setState({
+                    totalWater: (parseFloat(this.state.totalWater) - parseFloat(WaterRecordl.sumWater)).toFixed(2),
+                    totalMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money)).toFixed(2),
+                    WaterRecordlList: WaterRecordlList
+                })
+                this.props.form.setFieldsValue({
+                    receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money)).toFixed(2)
+                })
             }
-            this.setState({
-                WaterRecordlList: WaterRecordlList
-            })
             return ''
+        })
+    }
+    complement (arr1, arr2) {
+        const arr = arr1.toString().split(',')
+        let j = 0
+        arr1.forEach((a, i) => {
+            arr2.forEach((b) => {
+                if (a === b) {
+                    arr.splice(i - j, 1)
+                    j = j + 1
+                }
+            })
+        })
+        return arr
+    }
+    PmContract = (value) => {
+        this.state.PmContract.map(async (contract) => {
+            let formName = ''
+            if (value.toString() === contract.id.toString()) {
+                formName = contract.clientName
+                let subletList = await apiPost(
+                    '/propertyFee/getSubletByPmId',
+                    {id: value}
+                )
+                let roomNumber = contract.leaseRooms.split(',')
+                subletList = subletList.data
+                if (subletList.length > 0) {
+                    subletList.map(sublet => {
+                        roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
+                        return ''
+                    })
+                }
+                this.setState({
+                    subletList: subletList,
+                    roomNumberOne: roomNumber,
+                    waterLossRatio: contract.waterLossRatio
+                })
+                this.props.form.setFieldsValue({
+                    roomNumber: roomNumber.toString(),
+                    formName: formName,
+                    waterUnitPrice: contract.waterUnitPrice,
+                    subletId: null,
+                    roomNumberOne: null,
+                    preMeterRead: null,
+                    sfzq: null
+                })
+            }
+        })
+    }
+    subletList = (value) => {
+        this.state.subletList.forEach(sub => {
+            let formName = ''
+            if (value.toString() === sub.clientId.toString()) {
+                formName = sub.clientName
+                this.setState({
+                    roomNumberOne: sub.leaseRooms.split(',')
+                })
+                this.props.form.setFieldsValue({
+                    roomNumber: sub.leaseRooms.toString(),
+                    formName: formName,
+                    roomNumberOne: null,
+                    preMeterRead: null,
+                    sfzq: null
+                })
+            }
+        })
+    }
+    roomNumber = async (value) => {
+        let WaterRecord = await apiPost(
+            '/water/getLastTime',
+            {roomNumberOne: value,
+                waterFeeId: this.props.id}
+        )
+        WaterRecord = WaterRecord.data
+        if (WaterRecord !== null && WaterRecord !== '' && typeof (WaterRecord) !== 'undefined') {
+            this.props.form.setFieldsValue({
+                preMeterRead: WaterRecord.meterRead,
+                sfzq: [moment(WaterRecord.meterDate)]
+            })
+        }
+    }
+    Water = () => {
+        let json = this.props.form.getFieldsValue()
+        json['preMeterRead'] = json.preMeterRead ? json.preMeterRead : 0
+        json['meterRead'] = json.meterRead ? json.meterRead : 0
+        this.props.form.setFieldsValue({
+            waterCount: json.meterRead - json.preMeterRead
+        })
+    }
+    add = () => {
+        let json = this.props.form.getFieldsValue()
+        let jsontwo = {}
+        jsontwo['chargeName'] = json.chargeName
+        jsontwo['preMeterRead'] = json.preMeterRead
+        jsontwo['meterRead'] = json.meterRead
+        jsontwo['waterCount'] = json.waterCount
+        jsontwo['meterLoss'] = parseFloat((this.state.waterLossRatio * json.waterCount / 100).toFixed(2))
+        jsontwo['sumWater'] = (parseFloat(jsontwo.meterLoss) + parseFloat(json.meterRead)).toFixed(2)
+        jsontwo['waterUnitPrice'] = json.waterUnitPrice
+        jsontwo['money'] = (jsontwo.waterUnitPrice * jsontwo.sumWater).toFixed(2)
+        jsontwo['remark'] = jsontwo.remark
+        jsontwo['uuid'] = new Date().getTime()
+        let WaterRecordlList = this.state.WaterRecordlList
+        WaterRecordlList.push(jsontwo)
+        this.setState({
+            totalWater: (parseFloat(this.state.totalWater) + parseFloat(jsontwo.sumWater)).toFixed(2),
+            totalMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money)).toFixed(2),
+            WaterRecordlList: WaterRecordlList
+        })
+        this.props.form.setFieldsValue({
+            receivableMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money)).toFixed(2)
+        })
+    }
+    amountReceivable = (e) => {
+        this.props.form.setFieldsValue({
+            receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(e.target.value ? e.target.value : 0)).toFixed(2)
         })
     }
     render () {
@@ -70,73 +204,120 @@ class WaterAddUp extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Form layout="horizontal">
-                    <Row>
-                        <Col span={8}>
-                            <FormItem label="本次周期" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('sfzq', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请选择本次周期!'
-                                    }]
-                                })(<RangePicker />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('overdueDate', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请填写交费期限!'
-                                    }]
-                                })(<DatePicker />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="抄表人员" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('readId', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请填写抄表人员!'
-                                    }]
-                                })(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={8}>
-                            <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('voucherNo')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="转租客户" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('acceptor')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('rrr')(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
+                    <div style={{background: '#f7f7f7',
+                        width: 900,
+                        marginBottom: 20,
+                        paddingTop: '22px'}}
+                    >
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('sfzq', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择本次周期!'
+                                        }]
+                                    })(<RangePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('overdueDate', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请填写交费期限!'
+                                        }]
+                                    })(<DatePicker />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="抄表人员" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('readId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择抄表人员!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择抄表人员"
+                                            optionFilterProp="children"
+                                        >
+                                            {this.state.users.map(user => {
+                                                return <Option key={user.id}>{user.loginName}</Option>
+                                            })}
+                                        </Select>)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('clientName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择客户名称!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择客户名称"
+                                            optionFilterProp="children"
+                                            onChange={this.PmContract}
+                                        >
+                                            {this.state.PmContract.map(Contract => {
+                                                return <Option key={Contract.id}>{Contract.clientName + '(' + Contract.leaseRooms + ')'}</Option>
+                                            })}
+                                        </Select>)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('subletId')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择转租客户"
+                                            optionFilterProp="children"
+                                            onChange={this.subletList}
+                                        >
+                                            {this.state.subletList.map((sub, i) => {
+                                                return <Option key={sub.clientId}>{sub.clientName}</Option>
+                                            })}
+                                        </Select>)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('roomNumber')(<Input />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </div>
                     <span style={{textAlign: 'center',
-                        display: 'block'}}>
-                        {getFieldDecorator('eee')(<Input style={{width: '300px'}} />)}
-                        <span>用水统计表</span>
+                        display: 'block'}}
+                    >
+                        {getFieldDecorator('formName')(<Input style={{width: '300px'}} />)}
+                        <span>&nbsp;&nbsp;用水统计表</span>
                     </span>
-                    <br/>
+                    <br />
                     <div style={{width: 900,
                         marginBottom: 20}}
                     >
@@ -147,7 +328,7 @@ class WaterAddUp extends React.Component {
                                     <td>上次表读数 m³</td>
                                     <td>本次表读数 m³</td>
                                     <td>本次用水量 m³</td>
-                                    <td>损耗 10%</td>
+                                    <td>损耗 {this.state.waterLossRatio}%</td>
                                     <td>总用水量m³</td>
                                     <td>单价</td>
                                     <td>金额</td>
@@ -155,81 +336,161 @@ class WaterAddUp extends React.Component {
                                     <td>操作</td>
                                 </tr>
                                 {this.state.WaterRecordlList.map((WaterRecordl, i) => <tr key={i}>
-                                    <td>{WaterRecordl.whTypeName}</td>
-                                    <td>{WaterRecordl.storagePlace}</td>
-                                    <td>{WaterRecordl.name}</td>
-                                    <td>{WaterRecordl.standard}</td>
-                                    <td>{WaterRecordl.unit}</td>
-                                    <td>{WaterRecordl.unitPrice}</td>
-                                    <td>{WaterRecordl.number}</td>
-                                    <td>{WaterRecordl.amount}</td>
+                                    <td>{WaterRecordl.chargeName}</td>
+                                    <td>{WaterRecordl.preMeterRead}</td>
+                                    <td>{WaterRecordl.meterRead}</td>
+                                    <td>{WaterRecordl.waterCount}</td>
+                                    <td>{WaterRecordl.meterLoss}</td>
+                                    <td>{WaterRecordl.sumWater}</td>
+                                    <td>{WaterRecordl.waterUnitPrice}</td>
+                                    <td>{WaterRecordl.money}</td>
                                     <td>{WaterRecordl.remark}</td>
                                     <td><Button onClick={() => this.delect(WaterRecordl.uuid)}>删除</Button></td></tr>)}
+                                <tr>
+                                    <td>合计</td>
+                                    <td />
+                                    <td />
+                                    <td />
+                                    <td />
+                                    <td>{this.state.totalWater}</td>
+                                    <td />
+                                    <td>{this.state.totalMoney}</td>
+                                    <td />
+                                    <td />
+                                </tr>
                             </tbody>
                         </table>
                     </div>
+
                     <Row>
-                        <Col span={8}>
-                            <FormItem label="水费名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
+                        <Col span={12} />
+                        <Col span={6}>
+                            <FormItem label="本期应收" labelCol={{ span: 9 }}
+                                wrapperCol={{ span: 12 }}
                             >
-                                {getFieldDecorator('name')(<Input />)}
+                                {getFieldDecorator('receivableMoney', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '请填写本期应收!'
+                                    }]
+                                })(<Input style={{width: '100px'}} addonBefore="￥" />)}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
-                            <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
+                        <Col span={6}>
+                            <FormItem label="优惠金额" labelCol={{ span: 9 }}
+                                wrapperCol={{ span: 12 }}
                             >
-                                {getFieldDecorator('number')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="表计类型" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('number')(<Input />)}
+                                {getFieldDecorator('amountReceivable')(<Input onChange={this.amountReceivable} style={{width: '100px'}} />)}
                             </FormItem>
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={8}>
-                            <FormItem label="上次抄表数" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('unitPrice')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="本次抄表数" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('amount')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="本次用水量" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('lll')(<Input />)}
-                            </FormItem>
+                        <Col span={24} >
+                            <span style={{textAlign: 'center',
+                                display: 'block',
+                                backgroundColor: '#2788ce',
+                                color: 'aliceblue',
+                                width: 900,
+                                marginBottom: 20,
+                                height: '30px',
+                                fontSize: '20px'
+                            }}
+                            >抄表录入</span>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col span={8}>
-                            <FormItem label="水费单价" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('ff')(<Input />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="备注" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('remark')(<textarea style={{width: '500px'}}/>)}
-                            </FormItem>
-                        </Col>
-                    </Row>
+                    <div style={{textAlign: 'center',
+                        display: 'block',
+                        width: 900,
+                        marginBottom: 20,
+                        paddingTop: '22px'
+                    }}
+                    >
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="水费名称" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('chargeName')(<Input />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('roomNumberOne')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择房间编号"
+                                            optionFilterProp="children"
+                                            onChange={this.roomNumber}
+                                        >
+                                            {this.state.roomNumberOne.map((roomNumber, i) => {
+                                                return <Option key={roomNumber}>{roomNumber}</Option>
+                                            })}
+                                        </Select>)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="表计类型" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('meterType')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择表计类型"
+                                            optionFilterProp="children"
+                                        >
+                                            <Option key="1">自来水</Option>
+                                            <Option key="2">热水</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="上次抄表数" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('preMeterRead')(<Input onBlur={this.Water} />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="本次抄表数" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('meterRead')(<Input onBlur={this.Water} />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="本次用水量" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('waterCount')(<Input addonAfter="m³" />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <FormItem label="水费单价" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('waterUnitPrice')(<Input addonAfter="元/m³" />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <FormItem label="备注" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 15 }}
+                                >
+                                    {getFieldDecorator('remark')(<textarea style={{width: '500px'}} />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </div>
                     <Button type="primary" onClick={this.add}>添加一条记录</Button>
                 </Form>
             </Modal>

@@ -3,9 +3,9 @@ import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../api'
 import PropertyFeeHeadComponent from './components/PropertyFeeHead'
-import NoPaidComponent from './Details/PropertyFeeDetailNoPaid'
-import NoLateAndRentFinishComponent from './Details/NoLateAndRentFinish'
-import AllPaidComponent from './Details/RentReviewDetail'
+import NoPaidComponent from './components/AfterAudit'
+import NoLateAndPropertyFinish from './Details/NoLateAndPropertyFinish'
+import AllPaidComponent from './Details/PropertyAllPaid'
 // 引入组件
 // React component
 class PropertyFeeSuccess extends Component {
@@ -232,7 +232,7 @@ class PropertyFeeSuccess extends Component {
                     refresh={this.refresh}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <NoLateAndRentFinishComponent
+                <NoLateAndPropertyFinish
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}

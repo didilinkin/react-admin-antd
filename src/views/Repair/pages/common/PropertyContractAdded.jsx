@@ -576,7 +576,7 @@ class PropertyContractAdded extends React.Component {
                                             <Radio value={1}>每月单价
                                                 {getFieldDecorator('acUnitDay',
                                                     {
-                                                        initialValue: '277'
+                                                        initialValue: '227'
                                                     })(
                                                     <Select
                                                         showSearch
