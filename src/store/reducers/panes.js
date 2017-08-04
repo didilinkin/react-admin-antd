@@ -6,7 +6,7 @@ import { ADD_PANE, REMOVE_PANE, GET_PANE } from '../constants/ActionTypes'
 // import { cloneDeep } from 'lodash' // 拷贝
 
 const initialState = {
-    activeKey: '', // panes[0].key
+    activeKey: '0', // panes[0].key
     panes: []
 }
 
@@ -21,13 +21,11 @@ const setPanes = (state = initialState, action) => {
             // 尝试不使用深拷贝, 而使用浅拷贝
             // ES6的合并数组 [...arr1, ...arr2, ...arr3]; arr1.concat(arr2, arr3)
             // // state 用 对象包, 内部属性用 数组包
-            let arr = state.panes
             let addState = Object.assign({}, state, {
-                panes: [...arr, action.addObj]
+                activeKey: action.addObj.activeKey,
+                panes: action.addObj.panes
             })
-            console.log('reducers:' + addState)
-            console.log(addState)
-            debugger
+            console.dir(addState)
             return addState
         case REMOVE_PANE:
             let activeKey = action.activeKey

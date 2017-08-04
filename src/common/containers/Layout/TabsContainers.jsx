@@ -1,30 +1,21 @@
 // 自定义新增页签触发器
 import React from 'react'
-
-import { isArray, cloneDeep } from 'lodash'
-import localStore from '../../../utils/LocalStore'
+import { cloneDeep } from 'lodash' // isArray
 import { hasString } from '../../../utils'
 
 import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    // constructor (props, context) {
-    //     super(props, context)
-    //     this.state = {
-    //         activeKey: '', // 默认值: panes[0].key
-    //         panes: props.panesState.panes // 格式: [{ route, tabsProps, key }]
-    //     }
-    // }
-
     state = {
         activeKey: '', // 默认值: panes[0].key
-        panes: [] // 格式: [{ route, tabsProps, key }]
+        panes: [] // 默认值: [{ route, tabsProps, key }]
     }
 
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
-        this.setState({ activeKey })
+        // this.setState({ activeKey })
+        console.log('activeKey' + activeKey)
     }
 
     // 新增和删除页签的回调
@@ -33,81 +24,56 @@ class TabsContainers extends React.Component {
     }
 
     // 获取 rootState 中的 url信息
-    select = (state) => {
-        return state.router.location.pathname
-    }
-
-    // 将 Tabs 信息(数组) 存储到 LS的方法
-    setArrayTabs = (arrayTabs) => {
-        localStore.set('arrayPreviousTabs', arrayTabs)
-    }
-
-    // 将 Tabs Key(数值) 存储到 LS的方法
-    setKeyNum = (key) => {
-        localStore.set('numTabsKey', key)
+    selectUrl = (state) => {
+        return state.route.path
     }
 
     // 判断 标签显示条件
     handleChange = () => {
-        let currentUrl = this.select(this.props.rootState) // 当前的 url地址: 字符串
-        let arrLocalTabs = localStore.get('arrayPreviousTabs') // 获取本地LS中的 Tabs数组
+        console.log(this)
+        const arrayPanes = this.props.panesState.panes // 获取 store当中的 panes数组
+        const strUrl = this.selectUrl(this.props) // 根据当前路由状态 获取 url字符串
 
-        if (isArray(arrLocalTabs)) { // 判断 LS中 arrayPreviousTabs是否是'Array'
-            if (hasString(arrLocalTabs, currentUrl)) { // Array(存在信息) => 判断 arrayPreviousTabs信息中是否存在 当前url
-                // 无法找到 该url => 保存 当前url到 LS
-                this.setArrayTabs([
-                    ...arrLocalTabs,
-                    currentUrl
-                ])
-                // 设置 Key
-                let currentKey = localStore.get('numTabsKey')
-                this.setKeyNum(currentKey + 1)
+        // 判断数组中是否有此 字符串
+        if (hasString(arrayPanes, strUrl)) {
+            console.log('无 当前url')
 
-                // 触发 Actions事件
-                this.setPanes()
-            } else {
-                // 此 url 已存在
-                console.log('当前数组中存在该 url') // 是否需要 setState, 待定; 不需要配置 key => key统一在 保存url 时执行;
-            }
-        } else { // 非 Array(无信息) => 保存 当前url
-            this.setArrayTabs([currentUrl]) // 此时应该也触发一次 actions
-            this.setKeyNum(1) // 设置LS 初始化为 0
-            // this.setPanes()
-
-            // 设置默认数据
-            console.log('第一次走')
-            let initState = cloneDeep({
-                key: 1,
-                route: this.props.route,
-                tabsProps: this.props.tabsProps
-            })
-
-            // 先配置好 state
-            this.setState({
-                panes: [initState]
-            })
-
-            // 保存 redux
-            this.props.onAddPane(initState)
+            // setState 配置
+            let currentPanes = this.setPanes(this.setCloneObj())
+            this.setActions(`${arrayPanes.length + 1}`, currentPanes)
+        } else {
+            console.log('有 当前url')
         }
     }
 
-    // 发起 Action / 配置 Key
-    setPanes = () => {
-        let previousKey = localStore.get('numTabsKey') // 获取 LS中的 key
-
-        let actionsObj = cloneDeep({
-            route: this.props.route,
-            tabsProps: this.props.tabsProps,
-            key: previousKey
+    // 配置 actions / 发起 actions
+    setActions = (numKey, arrPanes) => {
+        this.props.onAddPane({
+            activeKey: numKey,
+            panes: arrPanes
         })
-        debugger
-        console.dir(actionsObj)
-        this.props.onAddPane(actionsObj) // 发起 Actions
+    }
 
-        debugger
-        // console.log(actionsObj)
-        console.dir(this.state)
+    // 配置 深拷贝的 cloneObj
+    setCloneObj = () => {
+        // 深拷贝 route 与 tabsPropss 组成的对象
+        let cloneObj = cloneDeep({
+            key: `${this.props.panesState.panes.length + 1}`,
+            title: this.props.route.title,
+            path: this.props.route.path
+        })
+
+        return cloneObj
+    }
+
+    // 配置 store.state.panes
+    setPanes = (cloneObj) => {
+        return cloneDeep([...this.state.panes, cloneObj])
+    }
+
+    // 配置 activeKey(设置显示 当前active 标签)
+    setActiveKey = () => {
+
     }
 
     // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
@@ -120,35 +86,15 @@ class TabsContainers extends React.Component {
         this.handleChange()
     }
 
-    // // render 渲染之后
-    // componentDidMount = () => {
-    //     // this.handleChange()
-    //     console.log('Did, render之后')
-    //     console.dir(this.props.rootState)
-    // }
-
-    // 当 props改变时 触发
-    componentWillReceiveProps (nextProps) {
-        // if (nextProps.xxx !== this.props.xxx) {
-        //     // this.fetchData(nextProps.xxx)
-        //     console.log('props发生改变')
-        // }
-
-        // 判断是否是初始值
-        let previousKey = localStore.get('numTabsKey') // 获取 LS中的 key
-        if (!previousKey === 1) { // 非初始值
-            console.log('props发生改变')
-            console.log(nextProps.panesState)
-
-            let newPanes = cloneDeep(nextProps.panesState)
-            debugger
-            this.setState({
-                panes: newPanes
-            })
-        }
+    // 当 props改变时 触发 => 调用 更改 setState的方法
+    componentWillReceiveProps = (nextProps) => {
+        console.log('store 发生改变')
+        let currentState = cloneDeep(nextProps.panesState)
+        this.setState(currentState)
     }
 
     render () {
+        const { route, tabsProps } = this.props
         return (
             <Tabs
                 hideAdd
@@ -157,13 +103,15 @@ class TabsContainers extends React.Component {
                 type="editable-card" // 页签的基本样式
                 onEdit={ this.onEdit } // 新增和删除页签的回调
             >
+                {/* 内容部分 与 state.panes数组无关系 */}
                 {
-                    this.state.panes.map((pane) =>(
+                    this.state.panes.map((pane) => (
                         <TabPane
-                            tab={ pane.route.title }
-                            key={ pane.key }
+                            key={ pane.key } // this.state.activeKey // 与 store中的 panesState 绑定
+                            tab={ pane.title }
+                            path={ pane.path }
                         >
-                            <pane.route.component { ...pane.tabsProps } routes={ pane.route.routes } />
+                            <route.component { ...tabsProps } routes={route.routes} />
                         </TabPane>
                     ))
                 }
@@ -173,7 +121,3 @@ class TabsContainers extends React.Component {
 }
 
 export default TabsContainers
-
-// ToDo:
-// 1. 考虑将 Tabs 标签, 只保留 Title, 点击事件触发 路由跳转. 不再储存内容对象
-// 2. 当actions 触发之后, 依然无法获取 最新的 state. 需要再发起一次action改变 state后 才能获取到
