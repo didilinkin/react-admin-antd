@@ -39,7 +39,7 @@ class TabsContainers extends React.Component {
             console.log('无 当前url')
 
             // setState 配置
-            let currentPanes = this.setPanes(this.setCloneObj())
+            let currentPanes = this.setPanes(this.setCloneObj()) // 单个
             this.setActions(`${arrayPanes.length + 1}`, currentPanes)
         } else {
             console.log('有 当前url')
@@ -48,9 +48,11 @@ class TabsContainers extends React.Component {
 
     // 配置 actions / 发起 actions
     setActions = (numKey, arrPanes) => {
+        const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj
+
         this.props.onAddPane({
             activeKey: numKey,
-            panes: arrPanes
+            panes: previousState
         })
     }
 
@@ -68,7 +70,7 @@ class TabsContainers extends React.Component {
 
     // 配置 store.state.panes
     setPanes = (cloneObj) => {
-        return cloneDeep([...this.state.panes, cloneObj])
+        return cloneDeep(cloneObj)
     }
 
     // 配置 activeKey(设置显示 当前active 标签)
