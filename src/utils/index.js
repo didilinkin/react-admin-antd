@@ -1,5 +1,5 @@
 // 常用方法
-import { isUndefined, isString } from 'lodash'
+import { isString, findIndex } from 'lodash'
 
 // 深拷贝
 const stateCopy = (stateObj) => {
@@ -25,9 +25,9 @@ const cloneObj = function (obj) {
     return newobj
 }
 
-const hasString = (array, findString) => {
+const hasString = (array, property, findString) => { // 检索数组, 检索属性, 检索值
     if (isString(findString)) {
-        return isUndefined(array.find((n) => n === findString)) // 无 => true; 有 => false
+        return findIndex(array, (o) => o[property] === findString) // True: 无 url; False: 有 url
     }
 }
 

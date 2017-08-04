@@ -33,25 +33,27 @@ class TabsContainers extends React.Component {
         console.log(this)
         const arrayPanes = this.props.panesState.panes // 获取 store当中的 panes数组
         const strUrl = this.selectUrl(this.props) // 根据当前路由状态 获取 url字符串
+        const hasUrl = hasString(arrayPanes, 'path', strUrl)
 
         // 判断数组中是否有此 字符串
-        if (hasString(arrayPanes, strUrl)) {
+        if (hasUrl < 0) {
             console.log('无 当前url')
 
             // setState 配置
-            let currentPanes = this.setPanes(this.setCloneObj()) // 单个
+            let currentPanes = this.setCloneObj() // 单个
             this.setActions(`${arrayPanes.length + 1}`, currentPanes)
         } else {
             console.log('有 当前url')
+            this.setActiveKey(`${hasUrl + 1}`) // 只需要修改 state.activeKey(字符串)
         }
     }
 
     // 配置 actions / 发起 actions
-    setActions = (numKey, arrPanes) => {
+    setActions = (strKey, arrPanes) => {
         const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj
 
         this.props.onAddPane({
-            activeKey: numKey,
+            activeKey: strKey,
             panes: previousState
         })
     }
@@ -68,14 +70,15 @@ class TabsContainers extends React.Component {
         return cloneObj
     }
 
-    // 配置 store.state.panes
-    setPanes = (cloneObj) => {
-        return cloneDeep(cloneObj)
-    }
-
     // 配置 activeKey(设置显示 当前active 标签)
-    setActiveKey = () => {
+    setActiveKey = (strKey) => {
+        // console.log(strKey)
+        const previousState = cloneDeep([...this.props.panesState.panes]) // 深拷贝 => 无 addObj
 
+        this.props.onAddPane({
+            activeKey: strKey,
+            panes: previousState
+        })
     }
 
     // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
