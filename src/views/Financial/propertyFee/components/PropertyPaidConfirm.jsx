@@ -72,11 +72,11 @@ class propertyPaidConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidMoney !== 0) {
+        if (json.unpaidMoney !== '0.0') {
             location.href = '/financial/PropertyFeeDetailNoLate/' + json.id
-        } else if (json.unpaidMoney === 0 && json.receiptDate <= this.state.data.payDeadline) {
+        } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
             location.href = '/financial/NoLateAndPropertyFinish/' + json.id
-        } else if (json.unpaidMoney === 0 && json.receiptDate > this.state.data.payDeadline) {
+        } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
             location.href = '/financial/PropertyFinishAndLate/' + json.id
         }
         this.setState({visible: false,
