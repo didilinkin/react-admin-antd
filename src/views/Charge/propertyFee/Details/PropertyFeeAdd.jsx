@@ -575,7 +575,7 @@ class propertyFeeAdd extends React.Component {
                                     {getFieldDecorator('clientName')(
                                         <Select placeholder="请选择客户"
                                             showSearch style={{ width: 220 }}
-                                            onChange={this.handleChange1}
+                                            onSelect={this.handleChange1}
                                             allowClear
                                             optionFilterProp="children"
                                         >
@@ -603,7 +603,7 @@ class propertyFeeAdd extends React.Component {
                                 >
                                     {getFieldDecorator('tenant')(
                                         <Select placeholder="请选择转租客户"
-                                            onChange={this.handleChange2}
+                                            onSelect={this.handleChange2}
                                             allowClear
                                             optionFilterProp="children"
                                             showSearch style={{ width: 220 }}
