@@ -7,16 +7,15 @@ export const addPane = addObj => ({
     addObj
 })
 
+// 更改 activeKey
+export const activePane = activeKey => ({
+    type: types.ACTIVE_PANE,
+    activeKey
+})
+
 // 删减 (参数: 当前激活 tabs面板的 Key, 目标 tabs面板的 Key)
 export const removePane = (activeKey, targetKey) => ({
     type: types.REMOVE_PANE,
     activeKey,
     targetKey
 })
-
-// 获取
-export const getPane = pane => (dispatch, getState) => {
-    dispatch({
-        type: types.GET_PANE
-    })
-}

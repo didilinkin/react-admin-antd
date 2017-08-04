@@ -1,7 +1,7 @@
 // panes - reducers - Tabs 标签内容 管理
 import { combineReducers } from 'redux'
 
-import { ADD_PANE, REMOVE_PANE, GET_PANE } from '../constants/ActionTypes'
+import { ADD_PANE, REMOVE_PANE, ACTIVE_PANE } from '../constants/ActionTypes'
 
 // import { cloneDeep } from 'lodash' // 拷贝
 
@@ -13,20 +13,18 @@ const initialState = {
 const setPanes = (state = initialState, action) => {
     switch (action.type) {
         case ADD_PANE:
-
-            // let addState = cloneDeep(state) // 深拷贝 state
-            // addState.panes.push(action.addObj) // 将 action 传递过来的 obj, 存入数组
-            // return addState // 返回新的 addState
-
-            // 尝试不使用深拷贝, 而使用浅拷贝
-            // ES6的合并数组 [...arr1, ...arr2, ...arr3]; arr1.concat(arr2, arr3)
-            // // state 用 对象包, 内部属性用 数组包
             let addState = Object.assign({}, state, {
                 activeKey: action.addObj.activeKey,
                 panes: action.addObj.panes
             })
-            console.dir(addState)
             return addState
+
+        case ACTIVE_PANE:
+            let activeState = Object.assign({}, state, {
+                activeKey: action.activeKey
+            })
+            return activeState
+
         case REMOVE_PANE:
             let activeKey = action.activeKey
             let lastIndex
@@ -51,8 +49,6 @@ const setPanes = (state = initialState, action) => {
             }
 
             return removeState
-        case GET_PANE:
-            return state
         default:
             return state
     }

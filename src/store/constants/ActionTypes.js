@@ -6,5 +6,5 @@ export const SIGN_OUT = 'SIGN_OUT' // 退出帐户
 
 export const ADD_PANE = 'ADD_PANE' // 增加 Tabs
 export const REMOVE_PANE = 'REMOVE_PANE' // 删减 Tabs
-export const GET_PANE = 'GET_PANE' // 获取 Tabs
+export const ACTIVE_PANE = 'ACTIVE_PANE' // 更改 Tabs activeKey
 
