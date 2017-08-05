@@ -15,7 +15,9 @@ class TabsContainers extends React.Component {
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
         // this.setState({ activeKey })
-        console.log('activeKey' + activeKey)
+        console.log('activeKey: ' + activeKey)
+
+        this.setActiveKey(`${activeKey}`)
     }
 
     // 新增和删除页签的回调
@@ -23,16 +25,10 @@ class TabsContainers extends React.Component {
         this[action](targetKey)
     }
 
-    // 获取 rootState 中的 url信息
-    selectUrl = (state) => {
-        return state.route.path
-    }
-
     // 判断 标签显示条件
     handleChange = () => {
-        console.log(this)
         const arrayPanes = this.props.panesState.panes // 获取 store当中的 panes数组
-        const strUrl = this.selectUrl(this.props) // 根据当前路由状态 获取 url字符串
+        const strUrl = this.props.route.path // 根据当前路由状态 获取 url字符串
         const hasUrl = hasString(arrayPanes, 'path', strUrl)
 
         // 判断数组中是否有此 字符串
@@ -72,12 +68,8 @@ class TabsContainers extends React.Component {
 
     // 配置 activeKey(设置显示 当前active 标签)
     setActiveKey = (strKey) => {
-        // console.log(strKey)
-        const previousState = cloneDeep([...this.props.panesState.panes]) // 深拷贝 => 无 addObj
-
-        this.props.onAddPane({
-            activeKey: strKey,
-            panes: previousState
+        this.props.onActivePane({
+            activeKey: strKey
         })
     }
 

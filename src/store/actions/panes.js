@@ -8,9 +8,9 @@ export const addPane = addObj => ({
 })
 
 // 更改 activeKey
-export const activePane = activeKey => ({
+export const activePane = stringKey => ({
     type: types.ACTIVE_PANE,
-    activeKey
+    stringKey
 })
 
 // 删减 (参数: 当前激活 tabs面板的 Key, 目标 tabs面板的 Key)

@@ -3,8 +3,6 @@ import { combineReducers } from 'redux'
 
 import { ADD_PANE, REMOVE_PANE, ACTIVE_PANE } from '../constants/ActionTypes'
 
-// import { cloneDeep } from 'lodash' // 拷贝
-
 const initialState = {
     activeKey: '0', // panes[0].key
     panes: []
@@ -21,7 +19,7 @@ const setPanes = (state = initialState, action) => {
 
         case ACTIVE_PANE:
             let activeState = Object.assign({}, state, {
-                activeKey: action.activeKey
+                activeKey: action.stringKey.activeKey
             })
             return activeState
 
