@@ -14,10 +14,12 @@ class TabsContainers extends React.Component {
 
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
-        // this.setState({ activeKey })
-        console.log('activeKey: ' + activeKey)
+        this.setActiveKey(`${activeKey}`) // 优先切换 标签, 然后走路由
 
-        this.setActiveKey(`${activeKey}`)
+        // console.dir(this.props.tabsProps.history)
+
+        let paneUrl = this.props.panesState.panes[activeKey - 1].path
+        this.props.tabsProps.history.push(paneUrl)
     }
 
     // 新增和删除页签的回调
