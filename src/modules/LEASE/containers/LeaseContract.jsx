@@ -10,4 +10,3 @@ class LeaseContract extends React.Component {
 }
 
 export default LeaseContract
-

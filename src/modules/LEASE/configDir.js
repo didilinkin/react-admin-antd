@@ -10,13 +10,13 @@ const LEASE_DIR = {
             key: 'leaseContract',
             path: '/home/lease/leaseContract',
             ancestor: ['lease'],
-            component: require('./LeaseContract').default
+            component: require('./containers/LeaseContract').default
         }, {
             title: '租金管理',
             key: 'rentManagement',
             path: '/home/lease/rentManagement',
             ancestor: ['lease'],
-            component: require('./RentManagement').default
+            component: require('./containers/RentManagement').default
         }
     ]
 }
