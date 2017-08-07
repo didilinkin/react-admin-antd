@@ -1,6 +1,6 @@
 // 物业管理 - 水费审核
 import React from 'react'
-import {Table, Spin, Popconfirm, Tabs  } from 'antd'
+import {Table, Spin, Popconfirm, Tabs, notification, Icon  } from 'antd'
 import WaterBillHeadComponent from './components/WaterBillHead'
 import WaterAddUpComponent from './components/WaterAddUp'
 import { apiPost } from '../../../api'
@@ -28,7 +28,8 @@ class ChargeWaterBill extends React.Component {
         }
     }
     refreshTwo = async (activeKey) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openWaterAddUpComponent: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList'
         )
@@ -96,6 +97,18 @@ class ChargeWaterBill extends React.Component {
             id: id
         })
     }
+    examine = async (id) => {
+        let data = await apiPost(
+            '/water/examineWaterBill',
+            {id: id,
+                examineState: 1}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -122,6 +135,7 @@ class ChargeWaterBill extends React.Component {
             return ''
         })
         let openWaterAddUpComponent = this.openWaterAddUpComponent
+        let examine = this.examine
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -178,7 +192,7 @@ class ChargeWaterBill extends React.Component {
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm key="1" title="确定提交吗?">
+                            <Popconfirm key="1" title="确定提交吗?" onConfirm={() => examine(record.id)}>
                                 <a>提交</a>
                             </Popconfirm>
                         </span>
@@ -375,17 +389,13 @@ class ChargeWaterBill extends React.Component {
                 }
             }, {
                 title: ' 操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <span>
                             <a>明细</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm key="1" title="确定提交吗?">
-                                <a>打印通知单</a>
-                            </Popconfirm>
                         </span>
                     )
                 }
@@ -423,7 +433,8 @@ class ChargeWaterBill extends React.Component {
                             columns={this.state.columns1}
                         />
                         <WaterAddUpComponent
-                            title="添加水费"
+                            title="修改水费"
+                            id={this.state.id}
                             refreshTable={this.refreshTwo}
                             visible={this.state.openWaterAddUpComponent}
                         />
