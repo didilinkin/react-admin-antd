@@ -6,7 +6,6 @@ import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
 import HeaderContainers from './HeaderContainers'
-// import TabsContainers from './TabsContainers'
 import TabsBox from './TabsBox'
 
 // Antd 布局组件
@@ -54,9 +53,10 @@ class LayoutContainers extends React.Component {
             <Layout>
                 {/* 侧导航 */}
                 <Sider
-                    trigger={ null }
+                    trigger={ null } // 自定义 trigger，设置为 null 时隐藏 trigger
+                    // collapsible= { this.state.collapsed } // 是否可收起
                     collapsible
-                    collapsed={ this.state.collapsed }
+                    collapsed={ this.state.collapsed } // collapsed
                     width= {'230px'}
                     style={{
                         flex: '0 0 230px',

@@ -78,6 +78,7 @@ class TabsContainers extends React.Component {
     // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
     remove = (targetKey) => {
         console.log('关闭 Tabs')
+        console.log('targetKey:' + targetKey)
     }
 
     // render 渲染之前
