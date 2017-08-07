@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CashDepositChargeComponent from './common/CashdepsitCharge'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -136,6 +137,12 @@ class CashDepositRent extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <CashDepositChargeComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="扣款"
+                    visible={this.state.openUpdate}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

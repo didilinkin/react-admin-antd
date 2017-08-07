@@ -109,7 +109,7 @@ class propertyLateConfirm extends React.Component {
         if (typeof (discountMoney) === 'undefined') {
             discountMoney = 0
         }
-        let thisActualLateMoney = this.props.form.getFieldValue('thisActualLateMoney')
+        let thisActualLateMoney = this.state.data.unpaidLateMoney
         if (typeof (thisActualLateMoney) === 'undefined') {
             thisActualLateMoney = 0
         }
