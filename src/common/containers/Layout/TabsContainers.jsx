@@ -76,9 +76,37 @@ class TabsContainers extends React.Component {
     }
 
     // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
-    remove = (targetKey) => {
-        console.log('关闭 Tabs')
+    remove = (targetKey) => { // targetKey === key
         console.log('targetKey:' + targetKey)
+
+        let activeKey = this.state.activeKey
+
+        let lastIndex
+
+        // 配置 lastIndex
+        this.state.panes.forEach((pane, i) => {
+            if (pane.key === targetKey) {
+                // console.log(pane)
+                lastIndex = i - 1
+            }
+        })
+
+        // 返回一个符合条件的 数组
+        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey) // targetKey: 要关闭的 key
+
+        if (lastIndex >= 0 && activeKey === targetKey) { // 如果 lastIndex 大于等于 0, 并且 当前的 key = 要关闭的 key
+            activeKey = currentPanes[lastIndex].key // 当前的 activeKey = 数组中 lastIndex下标的 key
+        }
+
+        // 设置 reducers
+        this.props.onAddPane({
+            activeKey: cloneDeep(activeKey),
+            panes: cloneDeep(currentPanes)
+        })
+
+        // 更新一下路由
+        let lastUrl = this.state.panes[lastIndex].path
+        this.props.tabsProps.history.push(lastUrl)
     }
 
     // render 渲染之前
