@@ -465,7 +465,7 @@ class propertyFeeAdd extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        if (this.state.json1.data.id !== null) {
+        if (this.state.json1.id !== null) {
             await apiPost(
                 'propertyFee/updatePropertyFee',
                 this.state.json1
