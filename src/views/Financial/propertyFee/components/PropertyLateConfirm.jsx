@@ -136,7 +136,7 @@ class propertyLateConfirm extends React.Component {
         return (
             <div>
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="确认收违约金"
                     style={{top: 20}}
                     width={400}
                     visible={this.state.visible}

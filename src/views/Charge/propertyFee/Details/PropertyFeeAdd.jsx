@@ -42,6 +42,7 @@ class propertyFeeAdd extends React.Component {
                     {id: nextProps.id}
                 )
                 json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
+                json['id'] = nextProps.id
                 json['acUnitPrice'] = propertyFee.data.acUnitPrice
                 json['elevUnitPrice'] = propertyFee.data.elevUnitPrice
                 json['waterUnitPrice'] = propertyFee.data.waterUnitPrice
@@ -464,17 +465,31 @@ class propertyFeeAdd extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        await apiPost(
-            'propertyFee/savePropertyFee',
-            this.state.json1
-        )
-        notification.open({
-            message: '添加成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.props.refreshTable()
-        this.setState({visible: false,
-            isFirst: true })
+        if (this.state.json1.data.id !== null) {
+            await apiPost(
+                'propertyFee/updatePropertyFee',
+                this.state.json1
+            )
+            notification.open({
+                message: '操作成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.refreshTable()
+            this.setState({visible: false,
+                isFirst: true })
+        } else {
+            await apiPost(
+                'propertyFee/savePropertyFee',
+                this.state.json1
+            )
+            notification.open({
+                message: '添加成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.refreshTable()
+            this.setState({visible: false,
+                isFirst: true })
+        }
     }
     handleChange3 = (e) =>{
         let json = this.state.json1
@@ -713,7 +728,7 @@ class propertyFeeAdd extends React.Component {
                                     <td>*</td>
                                     <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
                                     <td>*</td>
-                                    <td>{this.state.json1.months}</td>
+                                    <td>{this.state.json1.acUnitDay}/4</td>
                                     <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
                                 </tr>
                                 {
