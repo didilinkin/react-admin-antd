@@ -76,11 +76,21 @@ class CashDepositRent extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
-                        </div>
-                    )
+                    if (record.auditStatus !== 0) {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 扣款 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 退款 </a>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            </div>
+                        )
+                    }
                 }
             }],
             dataSource: result.data
