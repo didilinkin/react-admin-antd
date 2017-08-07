@@ -24,9 +24,9 @@ class propertyPaidConfirm extends React.Component {
                 '/propertyFee/getPropertyFeeById',
                 { 'id': nextProps.id }
             )
-            if (resulData.data.lastLateMoney !== null) {
+            if (resulData.data.lateMoney !== null) {
                 this.props.form.setFieldsValue({
-                    lastLateMoney: resulData.data.lastLateMoney
+                    lastLateMoney: resulData.data.lateMoney
                 })
             } else {
                 this.props.form.setFieldsValue({
