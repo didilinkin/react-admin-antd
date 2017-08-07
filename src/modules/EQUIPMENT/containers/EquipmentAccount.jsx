@@ -1,7 +1,7 @@
 // 设备管理 - 设备台账
 import React from 'react'
 
-class Account extends React.Component {
+class EquipmentAccount extends React.Component {
     render () {
         return (
             <div>
@@ -11,4 +11,4 @@ class Account extends React.Component {
     }
 }
 
-export default Account
+export default EquipmentAccount

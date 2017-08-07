@@ -3,7 +3,7 @@ const FINANCE_DIR = {
     title: '财务管理',
     key: 'finance',
     path: '/home/finance',
-    icon: 'user',
+    icon: 'pay-circle',
     childRoute: [
         {
             title: '财务设置',
@@ -33,10 +33,10 @@ const FINANCE_DIR = {
             component: require('./containers/RentReview').default
         }, {
             title: '物业费审核',
-            key: 'propertyCosts',
-            path: '/home/finance/propertyCosts',
+            key: 'propertyCostsReview',
+            path: '/home/finance/propertyCostsReview',
             ancestor: ['finance'],
-            component: require('./containers/PropertyCosts').default
+            component: require('./containers/PropertyCostsReview').default
         }, {
             title: '电费审核',
             key: 'electricity',
@@ -69,10 +69,10 @@ const FINANCE_DIR = {
             component: require('./containers/EnergyDeposit').default
         }, {
             title: '二次装修审核',
-            key: 'secondaryDecoration',
-            path: '/home/finance/secondaryDecoration',
+            key: 'secondReview',
+            path: '/home/finance/secondReview',
             ancestor: ['finance'],
-            component: require('./containers/SecondaryDecoration').default
+            component: require('./containers/SecondReview').default
         }
     ]
 }
