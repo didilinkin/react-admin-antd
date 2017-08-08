@@ -73,7 +73,6 @@ class InReview extends React.Component {
             'propertyFee/updatePropertyFee',
             {auditStatus: this.state.auditStatus,
                 remark: this.state.remark,
-                auditDate: new Date(),
                 id: this.state.data.id}
         )
         notification.open({

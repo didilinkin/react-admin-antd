@@ -77,10 +77,8 @@ class collectRentConfirm extends React.Component {
         if (json.unpaidMoney !== '0.0') {
             location.href = '/financial/RentReviewDetailNoLate/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-            alert(22222)
             location.href = '/financial/NoLateAndRentFinish/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-            alert(33333)
             location.href = '/financial/RentFinishAndLate/' + json.id
         }
         this.setState({visible: false,

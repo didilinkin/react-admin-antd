@@ -114,6 +114,7 @@ class propertyLateConfirm extends React.Component {
             thisActualLateMoney = 0
         }
         let unpaidMoney2 = thisActualLateMoney - discountMoney
+        console.log(unpaidMoney2)
         if (unpaidMoney2 < 0) {
             this.props.form.setFieldsValue({
                 thisActualLateMoney: parseFloat(thisActualLateMoney).toFixed(1),

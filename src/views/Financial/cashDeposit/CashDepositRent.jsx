@@ -149,13 +149,13 @@ class CashDepositRent extends Component {
             }, {
                 title: '申请人',
                 width: 90,
-                dataIndex: 'createName',
-                key: 'createName'
+                dataIndex: 'updateName',
+                key: 'updateName'
             }, {
                 title: '申请时间',
                 width: 100,
-                dataIndex: 'createDate',
-                key: 'createDate'
+                dataIndex: 'updateDate',
+                key: 'updateDate'
             }, {
                 title: '操作',
                 width: 200,
