@@ -23,9 +23,10 @@ class TabsContainers extends React.Component {
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
         let numkey = parseFloat(activeKey) // 转换为 浮点型数值
-
         this.setActiveKey(`${numkey}`) // 优先切换 标签, 然后走路由
 
+        console.log(this.props.panesState.panes)
+        // 删除 非最后一个标签时, 跳转事件存在问题
         let paneUrl = this.props.panesState.panes[numkey - 1].path
         this.props.tabsProps.history.push(paneUrl)
     }
