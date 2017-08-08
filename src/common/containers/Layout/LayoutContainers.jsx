@@ -2,15 +2,15 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import elf from '../../../elf'
+// import elf from '../../../elf'
 
 import SiderContainers from './SiderContainers'
-import HeaderContainers from './HeaderContainers'
+// import HeaderContainers from './HeaderContainers'
 import TabsBox from './TabsBox'
 
 // Antd 布局组件
-import { Layout } from 'antd'
-const { Header, Sider, Content, Footer } = Layout
+// import { Layout } from 'antd'
+// const { Header, Sider, Content, Footer } = Layout
 
 // 负责 渲染传递进来的 compObj
 const RouteWithSubRoutes = (route) => (
@@ -50,67 +50,29 @@ class LayoutContainers extends React.Component {
         const { route } = this.props
 
         return (
-            <Layout>
-                {/* 侧导航 */}
-                <Sider
-                    trigger={ null } // 自定义 trigger，设置为 null 时隐藏 trigger
-                    // collapsible= { this.state.collapsed } // 是否可收起
-                    collapsible
-                    collapsed={ this.state.collapsed } // collapsed
-                    width= {'230px'}
+            <div
+                style={{
+                    background: '#FFF',
+                    display: 'flex',
+                    flexDirection: 'row'
+                }}
+            >
+                {/* 侧导航栏 */}
+                <div
                     style={{
-                        flex: '0 0 230px',
-                        height: '100vh',
-                        backgroundColor: elf.c.dark
+                        flex: '0 0 240px'
                     }}
                 >
                     <div className="logo" />
                     <SiderContainers />
-                </Sider>
+                </div>
 
-                {/* 内容部分 */}
-                <Layout style={{ background: '#FFF' }}>
-                    {/* 顶部 */}
-                    <Header
-                        style={{
-                            padding: 0,
-                            paddingLeft: elf.f.title,
-                            background: '#fff'
-                        }}
-                    >
-                        {/*
-                            <Icon
-                                className="trigger"
-                                type={ this.state.collapsed ? 'menu-unfold' : 'menu-fold' }
-                                onClick={ this.toggle }
-                            />
-                        */}
-                        <HeaderContainers />
-                    </Header>
-
-                    {/* 内容 */}
-                    <Content
-                        style={{
-                            padding: elf.f.title,
-                            paddingBottom: null,
-                            borderTop: '2px solid rgb(233, 233, 233)'
-                        }}
-                    >
-                        <MainContent route={ route } />
-                    </Content>
-
-                    {/* 底部 */}
-                    <Footer
-                        style={{
-                            padding: elf.f.assist,
-                            textAlign: 'center',
-                            background: elf.c.background
-                        }}
-                    >
-                        长江中心 PMS 物业管理系统 ©2016 Created by 上朝科技
-                    </Footer>
-                </Layout>
-            </Layout>
+                {/* 内容 */}
+                <div>
+                    <h1> 右侧内容 </h1>
+                    <MainContent route={ route } />
+                </div>
+            </div>
         )
     }
 }
