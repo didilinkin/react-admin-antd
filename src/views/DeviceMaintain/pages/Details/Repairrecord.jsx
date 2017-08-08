@@ -85,7 +85,7 @@ class App extends React.Component {
                         </li>
                     </ul>
                     <p className="line" />
-                    <h3>报修信息</h3>
+                    <h3>维修情况</h3>
                     <Row>
                         <Col span={8}><b>完工时间：</b> {this.state.data.makespan}</Col>
                         <Col span={8}><b>维修人：</b>{this.state.data.repairerName}</Col>

@@ -1,6 +1,7 @@
-import {Form, Select, Input, Button, Row, Col, DatePicker  } from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon  } from 'antd'
 import React from 'react'
 import WaterAddUpComponent from './WaterAddUp'
+import { apiPost } from '../../../../api/index'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -67,6 +68,18 @@ class WaterBillHead extends React.Component {
         this.setState({
             openWaterAddUpComponent: true
         })
+    }
+    BatchAuditWaterBill = async () => {
+        let data = await apiPost(
+            '/water/BatchAuditWaterBill',
+            {ids: this.props.RowKeys.toString(),
+                examineState: 1}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.handleSubmit()
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -198,7 +211,7 @@ class WaterBillHead extends React.Component {
                                 添加水费
                                 </Button>
                                 &nbsp;&nbsp;
-                                <Button type="primary">
+                                <Button type="primary" onClick={this.BatchAuditWaterBill}>
                             提交财务
                                 </Button>
                             </span>

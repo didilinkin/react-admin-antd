@@ -60,7 +60,7 @@ class App extends React.Component {
                     <Col span={8}><b>报修日期：</b>{this.state.data.repairDate}</Col>
                 </Row>
                 <Row>
-                    <Col span={8}><b>报修房间：</b>{this.state.data.roomNum}</Col>
+                    <Col span={8}><b>报修房间：</b>{this.state.data.buildName}&nbsp;&nbsp;{this.state.data.roomNum}</Col>
                     <Col span={8}><b>公司名称：</b>{this.state.data.clientName}</Col>
                     <Col span={8}><b>报修来源：</b>{this.state.data.fromType}</Col>
                 </Row>

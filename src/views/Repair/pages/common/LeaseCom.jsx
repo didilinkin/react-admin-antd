@@ -548,12 +548,12 @@ class Lease extends React.Component {
                                 }]
                             }
                             )(
-                                <Input style={{ width: 200 }} disabled />
+                                <Input style={{ width: 200 }} disabled addonAfter="㎡" />
                             )}
                             <span style={{color: 'red',
                                 padding: '0 5px'}}>减免</span>
                             {getFieldDecorator('reliefArea')(
-                                <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} />
+                                <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                             )}
                         </Col>
                     </Row>
@@ -580,7 +580,7 @@ class Lease extends React.Component {
                                 {getFieldDecorator('contractCode', {
                                     rules: [ {
                                         required: true,
-                                        message: '请填写物业合同编号!'
+                                        message: '请填写租赁合同编号!'
                                     }]
                                 })(
                                     <Input style={{ width: 200 }} />
@@ -596,7 +596,7 @@ class Lease extends React.Component {
                                 {getFieldDecorator('fuzq', {
                                     rules: [ {
                                         required: true,
-                                        message: '请选择服务周期!'
+                                        message: '请选择租赁周期!'
                                     }]
                                 })(
                                     <RangePicker style={{ width: 200 }} />
