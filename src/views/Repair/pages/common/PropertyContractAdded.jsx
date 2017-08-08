@@ -45,7 +45,7 @@ class PropertyContractAdded extends React.Component {
             json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
             json['fuzq'] = ''
             json['leaseRooms'] = json.leaseRooms.toString()
-            json['roomIdsEnergy'] = json.roomIdsEnergy.toString()
+            json['roomIdsEnergy'] = json.roomIdsEnergy ? json.roomIdsEnergy.toString() : null
             json['signDate'] = json.signDate.format('YYYY-MM-DD')
             if (json.waterType.toString() === '0') {
                 json['waterUnitPrice'] = json.waterUnitPrice1
@@ -496,12 +496,7 @@ class PropertyContractAdded extends React.Component {
                                 <FormItem label="应收金额:" labelCol={{ span: 3 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('energy', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请填写应收金额!'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('energy')(
                                         <Input disabled ={this.state.isEdit} style={{ width: 500 }} />
                                     )}
                                 </FormItem>
