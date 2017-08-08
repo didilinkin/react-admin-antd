@@ -2,6 +2,7 @@
 import React from 'react'
 import {Table, Spin, Popconfirm, Tabs } from 'antd'
 import PowerBillHeadComponent from './components/PowerBillHead'
+import PowerAddUpComponent from './components/PowerAddUp'
 import { apiPost } from '../../../api'
 
 
@@ -421,7 +422,7 @@ class ChargeWaterBill extends React.Component {
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
-                        <PowerBillHeadComponent
+                        <PowerAddUpComponent
                             title="添加水费"
                             refreshTable={this.refreshTwo}
                             visible={this.state.openWaterAddUpComponent}

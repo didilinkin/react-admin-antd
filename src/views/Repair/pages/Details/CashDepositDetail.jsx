@@ -1,13 +1,11 @@
-// 能源管理押金
+// 保证金明细
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
-import { apiPost } from '../../../api'
-import CashDepositChargeComponent from './common/CashdepsitCharge'
-import CashDepositRefundComponent from './common/CashdepsitRefund'
+import { apiPost, baseURL } from '../../../api'
 // 引入组件
 const Option = Select.Option
 // React component
-class CashDepositProperty extends Component {
+class CashDepositDetail extends Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -28,25 +26,15 @@ class CashDepositProperty extends Component {
             id: id
         })
     }
-    handleUpdate2 = (id) => {
-        this.setState({
-            openAdd: true,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
-            {chargeItem: 2}
+            '/cashDeposit/cashDepositDetailList',
+            {'cashDepositId': this.props.match.params.id}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
-        const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -61,47 +49,78 @@ class CashDepositProperty extends Component {
                     )
                 }
             }, {
-                title: '所属楼宇',
+                title: '收支类型',
                 width: 150,
-                dataIndex: 'buildName',
-                key: 'buildName'
+                dataIndex: 'revenueType',
+                key: 'revenueType'
             }, {
-                title: '房间编号',
+                title: '金额',
                 width: 250,
-                dataIndex: 'roomNum',
-                key: 'roomNum'
+                dataIndex: 'operateMoney',
+                key: 'operateMoney'
             }, {
-                title: '客户名称',
+                title: '事由',
                 width: 300,
-                dataIndex: 'sublietName',
-                key: 'sublietName'
+                dataIndex: 'reason',
+                key: 'reason'
             }, {
                 title: '当前结余',
                 width: 250,
                 dataIndex: 'currentBalance',
                 key: 'currentBalance'
             }, {
-                title: '操作',
-                width: 200,
-                dataIndex: 'opt',
-                key: 'opt',
-                fixed: 'right',
+                title: '审核状态',
+                width: 250,
+                dataIndex: 'auditStatus',
+                key: 'auditStatus'
+            }, {
+                title: '审核说明',
+                width: 250,
+                dataIndex: 'remark',
+                key: 'remark'
+            }, {
+                title: '申请人',
+                width: 250,
+                dataIndex: 'createName',
+                key: 'createName'
+            }, {
+                title: '申请时间',
+                width: 250,
+                dataIndex: 'createDate',
+                key: 'createDate'
+            }, {
+                title: '审核人',
+                width: 250,
+                dataIndex: 'auditName',
+                key: 'auditName'
+            }, {
+                title: '审核状态',
+                width: 250,
+                dataIndex: 'auditStatus',
+                key: 'auditStatus'
+            }, {
+                title: '审核时间',
+                width: 250,
+                dataIndex: 'auditDate',
+                key: 'auditDate'
+            }, {
+                title: '附件',
+                width: 500,
+                dataIndex: 'fileUrl',
+                key: 'fileUrl',
                 render: function (text, record, index) {
-                    if (record.currentBalance !== 0) {
-                        return (
-                            <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 扣款 </a>
-                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 退款 </a>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
-                            </div>
-                        )
-                    }
+                    let i = 0
+                    let arr = []
+                    record.fileUrl.split('#').map(img => {
+                        if (img !== '') {
+                            i++
+                            arr.push(<img key={i} style={{width: '100px',
+                                height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
+                            />)
+                        }
+                        return ''
+                    })
+                    return arr
                 }
             }],
             dataSource: result.data
@@ -113,11 +132,11 @@ class CashDepositProperty extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
+            '/cashDeposit/cashDepositDetailList',
             {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'chargeItem': 2
+                'chargeItem': 0
             }
         )
         this.setState({
@@ -147,18 +166,6 @@ class CashDepositProperty extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
-                <CashDepositChargeComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    title="扣款"
-                    visible={this.state.openUpdate}
-                />
-                <CashDepositRefundComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    title="退款"
-                    visible={this.state.openAdd}
-                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}
@@ -200,6 +207,6 @@ class CashDepositProperty extends Component {
         )
     }
 }
-export default CashDepositProperty
+export default CashDepositDetail
 
 

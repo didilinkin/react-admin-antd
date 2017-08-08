@@ -2,6 +2,9 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CashDepositChargeComponent from './detail/CashdepsitCharge'
+import CashDepositRefundComponent from './detail/CashdepsitRefund'
+import CashDepositReceiptComponent from './detail/CashdepsitReceipt'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -26,16 +29,34 @@ class CashDepositRent extends Component {
             id: id
         })
     }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: true,
+            openTableAddUp: false,
+            openUpdate: false,
+            id: id
+        })
+    }
+    handleUpdate3 = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: true,
+            openUpdate: false,
+            id: id
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
+            '/cashDeposit/cashDepositDetailList',
             {chargeItem: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
+        const handleUpdate3 = this.handleUpdate3
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -149,13 +170,13 @@ class CashDepositRent extends Component {
             }, {
                 title: '申请人',
                 width: 90,
-                dataIndex: 'updateName',
-                key: 'updateName'
+                dataIndex: 'createName',
+                key: 'createName'
             }, {
                 title: '申请时间',
                 width: 100,
-                dataIndex: 'updateDate',
-                key: 'updateDate'
+                dataIndex: 'createDate',
+                key: 'createDate'
             }, {
                 title: '操作',
                 width: 200,
@@ -163,11 +184,29 @@ class CashDepositRent extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
-                        </div>
-                    )
+                    if (record.auditStatus === 0) {
+                        if (record.revenueType === 1) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        } else if (record.revenueType === 2) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        } else if (record.revenueType === 0) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        }
+                    } else {
+                        return ('')
+                    }
                 }
             }],
             dataSource: result.data
@@ -179,7 +218,7 @@ class CashDepositRent extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
+            '/cashDeposit/cashDepositDetailList',
             {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
@@ -218,6 +257,24 @@ class CashDepositRent extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <CashDepositChargeComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="扣款审核"
+                    visible={this.state.openUpdate}
+                />
+                <CashDepositRefundComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="退款审核"
+                    visible={this.state.openAdd}
+                />
+                <CashDepositReceiptComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="收款审核"
+                    visible={this.state.openTableAddUp}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

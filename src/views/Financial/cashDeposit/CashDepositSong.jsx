@@ -2,6 +2,9 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CashDepositChargeComponent from './detail/CashdepsitCharge'
+import CashDepositRefundComponent from './detail/CashdepsitRefund'
+import CashDepositReceiptComponent from './detail/CashdepsitReceipt'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -26,16 +29,34 @@ class CashDepositSong extends Component {
             id: id
         })
     }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: true,
+            openTableAddUp: false,
+            openUpdate: false,
+            id: id
+        })
+    }
+    handleUpdate3 = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: true,
+            openUpdate: false,
+            id: id
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
+            '/cashDeposit/cashDepositDetailList',
             {chargeItem: 3}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
+        const handleUpdate3 = this.handleUpdate3
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -163,11 +184,29 @@ class CashDepositSong extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
-                        </div>
-                    )
+                    if (record.auditStatus === 0) {
+                        if (record.revenueType === 1) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        } else if (record.revenueType === 2) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        } else if (record.revenueType === 0) {
+                            return (
+                                <div>
+                                    <a href="javascript:" onClick={() => handleUpdate3(record.id)} > 审核 </a>
+                                </div>
+                            )
+                        }
+                    } else {
+                        return ('')
+                    }
                 }
             }],
             dataSource: result.data
@@ -179,12 +218,12 @@ class CashDepositSong extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/cashDeposit/cashDepositList',
+            '/cashDeposit/cashDepositDetailList',
             {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
                 'revenueType': this.revenueType,
-                'chargeItem': 0
+                'chargeItem': 3
             }
         )
         this.setState({
@@ -218,6 +257,24 @@ class CashDepositSong extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <CashDepositChargeComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="扣款审核"
+                    visible={this.state.openUpdate}
+                />
+                <CashDepositRefundComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="退款审核"
+                    visible={this.state.openAdd}
+                />
+                <CashDepositReceiptComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="收款审核"
+                    visible={this.state.openTableAddUp}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

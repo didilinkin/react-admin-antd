@@ -1,8 +1,6 @@
 import {Form, Select, Input, Button, Row, Col, DatePicker  } from 'antd'
 import React from 'react'
 import PowerAddUpComponent from './PowerAddUp'
-import PowerInfomation from './PowerInfomation'
-import WaterInfomation from './WaterInfomation'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -23,9 +21,9 @@ class PowerBillHead extends React.Component {
         this.props.form.resetFields()
     }
     componentWillReceiveProps (nextProps) {
-        // if (nextProps.order.toString() !== nextProps.type.toString()) {
-        //     this.props.form.resetFields()
-        // }
+        if (nextProps.order.toString() !== nextProps.type.toString()) {
+            this.props.form.resetFields()
+        }
     }
     // 单击确定按钮提交表单q
     handleSubmit = async () => {
@@ -73,7 +71,7 @@ class PowerBillHead extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let { type } = this.props
+        let { type, ListBuildingInfo } = this.props
         return (
             <div>
                 <Form layout="horizontal">
@@ -89,6 +87,9 @@ class PowerBillHead extends React.Component {
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
                                     >
+                                        {ListBuildingInfo.map(BuildingInfo => {
+                                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                        })}
                                     </Select>
                                 )}
                             </FormItem>
@@ -226,8 +227,6 @@ class PowerBillHead extends React.Component {
                     refreshTable={this.handleSubmit}
                     visible={this.state.openPowerAddUpComponent}
                 />
-                <PowerInfomation/>
-                <WaterInfomation/>
             </div>
         )
     }
