@@ -52,9 +52,9 @@ class ContractHead extends React.Component {
         console.log(ListBuildingInfo)
         let contractSplit = []
         if (type === 1) {
-            contractSplit = [<Option key="1">正常</Option>, <Option key="2">水电</Option>]
+            contractSplit = [<Option key="1">范本合同</Option>, <Option key="2">仅水电合同</Option>]
         } else {
-            contractSplit = [<Option key="1">正常</Option>, <Option key="2">欢乐颂</Option>]
+            contractSplit = [<Option key="1">范本合同</Option>, <Option key="2">欢乐颂合同</Option>]
         }
         return (
             <Form layout="horizontal">
