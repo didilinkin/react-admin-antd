@@ -394,12 +394,12 @@ class PropertyContractAdded extends React.Component {
                                         }]
                                     }
                                     )(
-                                        <Input style={{ width: 200 }} disabled />
+                                        <Input style={{ width: 200 }} disabled addonAfter="㎡" />
                                     )}
                                     <span style={{color: 'red',
                                         padding: '0 5px'}}>减免</span>
                                     {getFieldDecorator('reliefArea')(
-                                        <InputNumber onChange={this.reliefArea} style={{ width: 200 }} />
+                                        <InputNumber onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                                     )}
                                 </Col>
                             </Row>
@@ -497,7 +497,7 @@ class PropertyContractAdded extends React.Component {
                                     wrapperCol={{ span: 15 }}
                                 >
                                     {getFieldDecorator('energy')(
-                                        <Input disabled ={this.state.isEdit} style={{ width: 500 }} />
+                                        <Input disabled ={this.state.isEdit} style={{ width: 500 }} addonAfter="元" />
                                     )}
                                 </FormItem>
                             </Row>
