@@ -7,18 +7,26 @@ import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    state = {
-        activeKey: '', // 默认值: panes[0].key
-        panes: [] // 默认值: [{ route, tabsProps, key }]
+    constructor (props) {
+        super(props)
+        this.state = {
+            activeKey: props.panesState.activeKey, // 默认值: panes[0].key
+            panes: props.panesState.panes // 默认值: [{ route, tabsProps, key }]
+        }
+    }
+
+    // render 渲染之前
+    componentWillMount = () => {
+        this.handleChange()
     }
 
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
-        this.setActiveKey(`${activeKey}`) // 优先切换 标签, 然后走路由
+        let numkey = parseFloat(activeKey) // 转换为 浮点型数值
 
-        // console.dir(this.props.tabsProps.history)
+        this.setActiveKey(`${numkey}`) // 优先切换 标签, 然后走路由
 
-        let paneUrl = this.props.panesState.panes[activeKey - 1].path
+        let paneUrl = this.props.panesState.panes[numkey - 1].path
         this.props.tabsProps.history.push(paneUrl)
     }
 
@@ -31,18 +39,19 @@ class TabsContainers extends React.Component {
     handleChange = () => {
         const arrayPanes = this.props.panesState.panes // 获取 store当中的 panes数组
         const strUrl = this.props.route.path // 根据当前路由状态 获取 url字符串
+        const isHomeIndex = strUrl === '/home/index'
         const hasUrl = hasString(arrayPanes, 'path', strUrl)
 
-        // 判断数组中是否有此 字符串
-        if (hasUrl < 0) {
-            console.log('无 当前url')
-
-            // setState 配置
-            let currentPanes = this.setCloneObj() // 单个
-            this.setActions(`${arrayPanes.length + 1}`, currentPanes)
-        } else {
-            console.log('有 当前url')
-            this.setActiveKey(`${hasUrl + 1}`) // 只需要修改 state.activeKey(字符串)
+        if (!isHomeIndex) {
+            console.log('不为首页, 开始检索')
+            if (hasUrl < 1) {
+                // console.log('无 当前url')
+                let currentPanes = this.setCloneObj() // 单个
+                this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store
+            } else {
+                // console.log('有 当前url')
+                this.setActiveKey(`${hasUrl + 1}`) // 只需要修改 state.activeKey(字符串)
+            }
         }
     }
 
@@ -64,7 +73,6 @@ class TabsContainers extends React.Component {
             title: this.props.route.title,
             path: this.props.route.path
         })
-
         return cloneObj
     }
 
@@ -109,11 +117,6 @@ class TabsContainers extends React.Component {
         this.props.tabsProps.history.push(lastUrl)
     }
 
-    // render 渲染之前
-    componentWillMount = () => {
-        this.handleChange()
-    }
-
     // 当 props改变时 触发 => 调用 更改 setState的方法
     componentWillReceiveProps = (nextProps) => {
         console.log('store 发生改变')
@@ -135,6 +138,7 @@ class TabsContainers extends React.Component {
                 {
                     this.state.panes.map((pane) => (
                         <TabPane
+                            closable={ pane.closable }
                             key={ pane.key } // this.state.activeKey // 与 store中的 panesState 绑定
                             tab={ pane.title }
                             path={ pane.path }

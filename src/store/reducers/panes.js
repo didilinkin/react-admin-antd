@@ -4,8 +4,13 @@ import { combineReducers } from 'redux'
 import { ADD_PANE, REMOVE_PANE, ACTIVE_PANE } from '../constants/ActionTypes'
 
 const initialState = {
-    activeKey: '0', // panes[0].key
-    panes: []
+    activeKey: '1', // panes[0].key
+    panes: [{
+        closable: false,
+        key: '1',
+        path: '/home/index',
+        title: '首页'
+    }]
 }
 
 const setPanes = (state = initialState, action) => {
