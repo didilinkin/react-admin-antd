@@ -62,9 +62,9 @@ class propertyLateConfirm extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidLateMoney !== 0) {
+        if (json.unpaidLateMoney !== '0.0') {
             location.href = '/financial/PropertyFinishAndLate/' + json.id
-        } else if (json.unpaidLateMoney === 0) {
+        } else if (json.unpaidLateMoney === '0.0') {
             location.href = '/financial/PropertyFeeDetail/' + json.id
         }
         this.setState({visible: false,
@@ -109,11 +109,12 @@ class propertyLateConfirm extends React.Component {
         if (typeof (discountMoney) === 'undefined') {
             discountMoney = 0
         }
-        let thisActualLateMoney = this.props.form.getFieldValue('thisActualLateMoney')
+        let thisActualLateMoney = this.state.data.unpaidLateMoney
         if (typeof (thisActualLateMoney) === 'undefined') {
             thisActualLateMoney = 0
         }
         let unpaidMoney2 = thisActualLateMoney - discountMoney
+        console.log(unpaidMoney2)
         if (unpaidMoney2 < 0) {
             this.props.form.setFieldsValue({
                 thisActualLateMoney: parseFloat(thisActualLateMoney).toFixed(1),
@@ -136,7 +137,7 @@ class propertyLateConfirm extends React.Component {
         return (
             <div>
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="确认收违约金"
                     style={{top: 20}}
                     width={400}
                     visible={this.state.visible}

@@ -42,13 +42,14 @@ class propertyFeeAdd extends React.Component {
                     {id: nextProps.id}
                 )
                 json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
+                json['id'] = nextProps.id
                 json['acUnitPrice'] = propertyFee.data.acUnitPrice
                 json['elevUnitPrice'] = propertyFee.data.elevUnitPrice
                 json['waterUnitPrice'] = propertyFee.data.waterUnitPrice
                 json['acUnitDay'] = propertyFee.data.acUnitDay
                 json['waterType'] = propertyFee.data.waterType
                 json['clientType'] = propertyFee.data.clientType
-                json['serviceArea'] = propertyFee.data.serviceArea
+                json['serviceArea'] = parseFloat(propertyFee.data.serviceArea).toFixed(2)
                 json['yearPmPrice'] = propertyFee.data.yearPmPrice
                 json['yearAcPrice'] = propertyFee.data.yearAcPrice
                 json['months'] = propertyFee.data.months
@@ -464,17 +465,32 @@ class propertyFeeAdd extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        await apiPost(
-            'propertyFee/savePropertyFee',
-            this.state.json1
-        )
-        notification.open({
-            message: '添加成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.props.refreshTable()
-        this.setState({visible: false,
-            isFirst: true })
+        if (this.props.id > 0) {
+            await apiPost(
+                'propertyFee/updatePropertyFee',
+                this.state.json1
+            )
+            notification.open({
+                message: '操作成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.refreshTable()
+            this.setState({visible: false,
+                isFirst: true })
+        } else {
+            alert(2222)
+            await apiPost(
+                'propertyFee/savePropertyFee',
+                this.state.json1
+            )
+            notification.open({
+                message: '添加成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.refreshTable()
+            this.setState({visible: false,
+                isFirst: true })
+        }
     }
     handleChange3 = (e) =>{
         let json = this.state.json1
@@ -575,7 +591,7 @@ class propertyFeeAdd extends React.Component {
                                     {getFieldDecorator('clientName')(
                                         <Select placeholder="请选择客户"
                                             showSearch style={{ width: 220 }}
-                                            onChange={this.handleChange1}
+                                            onSelect={this.handleChange1}
                                             allowClear
                                             optionFilterProp="children"
                                         >
@@ -603,7 +619,7 @@ class propertyFeeAdd extends React.Component {
                                 >
                                     {getFieldDecorator('tenant')(
                                         <Select placeholder="请选择转租客户"
-                                            onChange={this.handleChange2}
+                                            onSelect={this.handleChange2}
                                             allowClear
                                             optionFilterProp="children"
                                             showSearch style={{ width: 220 }}
@@ -713,7 +729,7 @@ class propertyFeeAdd extends React.Component {
                                     <td>*</td>
                                     <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
                                     <td>*</td>
-                                    <td>{this.state.json1.months}</td>
+                                    <td>{this.state.json1.acUnitDay}/4</td>
                                     <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
                                 </tr>
                                 {

@@ -42,11 +42,13 @@ class propertyPaidConfirm extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null) {
-            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
-        }
+        json['auditStatus'] = 0
+        json['id'] = this.state.data.id
+        json['revenueType'] = 1
+        json['updateDate'] = new Date()
+        json['fileUrl'] = this.fileUrl
         await apiPost(
-            '/propertyFee/updatePropertyFeeByPaid',
+            '/cashDeposit/updateCashDeposit',
             json
         )
         notification.open({
@@ -65,10 +67,10 @@ class propertyPaidConfirm extends React.Component {
         if (typeof (operateMoney) === 'undefined') {
             operateMoney = 0
         }
-        if (typeof (this.state.data.currentBanlance) === 'undefined') {
-            this.state.data.currentBanlance = 0
-        }
-        if (operateMoney > this.state.data.currentBanlance) {
+        if (operateMoney > this.state.data.currentBalance) {
+            this.props.form.setFieldsValue({
+                operateMoney: 0
+            })
             notification.open({
                 message: '金额不能大于余额！！',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
@@ -82,7 +84,7 @@ class propertyPaidConfirm extends React.Component {
                 <Modal maskClosable={false}
                     title={this.props.title}
                     style={{top: 20}}
-                    width={400}
+                    width={500}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
@@ -104,7 +106,7 @@ class propertyPaidConfirm extends React.Component {
                                         <textarea />
                                     )}
                                 </FormItem>
-                                <FormItem label="上传附件" labelCol={{ span: 3 }}
+                                <FormItem label="上传附件" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
                                     <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />

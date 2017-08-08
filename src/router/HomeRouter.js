@@ -111,9 +111,9 @@ import WaterBill                from '../views/Financial/pages/WaterBill'       
 import PowerBill                from '../views/Financial/pages/PowerBill'                               // 电费审核
 
 import SecondaryDecorationReview from '../views/Financial/pages/SecondaryDecorationReview'              // 财务管理 - 二次装修审核
-import LeaseMarginAudit         from '../views/Financial/pages/LeaseMarginAudit'                        // 财务管理 - 租赁保证金审核
-import HappyDepositcheck        from '../views/Financial/pages/HappyDepositcheck'                       // 财务管理 - 欢乐颂押金审核
-import EnergyDepositReview      from '../views/Financial/pages/EnergyDepositReview'                     // 财务管理 - 能源管理押金审核
+import LeaseMarginAudit         from '../views/Financial/cashDeposit/CashDepositRent'                        // 财务管理 - 租赁保证金审核
+import HappyDepositcheck        from '../views/Financial/cashDeposit/CashDepositSong'                       // 财务管理 - 欢乐颂押金审核
+import EnergyDepositReview      from '../views/Financial/cashDeposit/CashDepositProperty'                     // 财务管理 - 能源管理押金审核
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>

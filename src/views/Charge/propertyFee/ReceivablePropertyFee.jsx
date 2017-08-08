@@ -18,7 +18,7 @@ class ReceivableRent extends Component {
         console.log(key)
     }
     render () {
-        return (<Tabs defaultActiveKey="1" onChange={() => this.callback}>
+        return (<Tabs onChange={() => this.callback}>
             <TabPane tab="待收费" key="1"><PropertyFeeing /></TabPane>
             <TabPane tab="审核中" key="2"><PropertyFeeConduct /></TabPane>
             <TabPane tab="审核失败" key="3"><PropertyFeeFail /></TabPane>
