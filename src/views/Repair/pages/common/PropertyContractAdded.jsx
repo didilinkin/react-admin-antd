@@ -45,7 +45,7 @@ class PropertyContractAdded extends React.Component {
             json['endDate'] = json.fuzq[1].format('YYYY-MM-DD')
             json['fuzq'] = ''
             json['leaseRooms'] = json.leaseRooms.toString()
-            json['roomIdsEnergy'] = json.roomIdsEnergy.toString()
+            json['roomIdsEnergy'] = json.roomIdsEnergy ? json.roomIdsEnergy.toString() : null
             json['signDate'] = json.signDate.format('YYYY-MM-DD')
             if (json.waterType.toString() === '0') {
                 json['waterUnitPrice'] = json.waterUnitPrice1
@@ -394,12 +394,12 @@ class PropertyContractAdded extends React.Component {
                                         }]
                                     }
                                     )(
-                                        <Input style={{ width: 200 }} disabled />
+                                        <Input style={{ width: 200 }} disabled addonAfter="㎡" />
                                     )}
                                     <span style={{color: 'red',
                                         padding: '0 5px'}}>减免</span>
                                     {getFieldDecorator('reliefArea')(
-                                        <InputNumber onChange={this.reliefArea} style={{ width: 200 }} />
+                                        <InputNumber onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                                     )}
                                 </Col>
                             </Row>
@@ -496,13 +496,8 @@ class PropertyContractAdded extends React.Component {
                                 <FormItem label="应收金额:" labelCol={{ span: 3 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('energy', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请填写应收金额!'
-                                        }]
-                                    })(
-                                        <Input disabled ={this.state.isEdit} style={{ width: 500 }} />
+                                    {getFieldDecorator('energy')(
+                                        <Input disabled ={this.state.isEdit} style={{ width: 500 }} addonAfter="元" />
                                     )}
                                 </FormItem>
                             </Row>

@@ -139,8 +139,8 @@ class App extends React.Component {
                         <Row>
                             <Col span={8}><b>收费方式：</b>
                                 <span className="color1">
-                                    {this.state.contract.payType === 0 && '按单价递增'}
-                                    {this.state.contract.payType === 1 && '按金额递增'}
+                                    {this.state.contract.payType === 1 && '按单价递增'}
+                                    {this.state.contract.payType === 0 && '按金额递增'}
                                 </span>
                             </Col>
                             <Col span={8}><b>合同单价：</b><span className="color1">{this.state.contract.unitPrice}</span> 元/㎡/天</Col>

@@ -132,7 +132,7 @@ class NoLateAndPropertyFinish extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.acUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.acUnitDay}/4</td>
                             <td>{this.state.data.airFee}</td>
                         </tr>
                         <tr>

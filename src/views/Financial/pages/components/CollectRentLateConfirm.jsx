@@ -63,9 +63,9 @@ class addUpkeep extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidLateMoney !== 0) {
+        if (json.unpaidLateMoney !== '0.0') {
             location.href = '/financial/RentFinishAndLate/' + json.id
-        } else if (json.unpaidLateMoney === 0) {
+        } else if (json.unpaidLateMoney === '0.0') {
             location.href = '/financial/RentReviewDetail/' + json.id
         }
         this.setState({visible: false,
@@ -110,7 +110,7 @@ class addUpkeep extends React.Component {
         if (typeof (discountMoney) === 'undefined') {
             discountMoney = 0
         }
-        let thisActualLateMoney = this.props.form.getFieldValue('thisActualLateMoney')
+        let thisActualLateMoney = this.state.data.unpaidLateMoney
         if (typeof (thisActualLateMoney) === 'undefined') {
             thisActualLateMoney = 0
         }

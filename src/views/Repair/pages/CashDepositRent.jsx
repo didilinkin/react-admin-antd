@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CashDepositChargeComponent from './common/CashdepsitCharge'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -76,11 +77,21 @@ class CashDepositRent extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
-                        </div>
-                    )
+                    if (record.auditStatus !== 0) {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 扣款 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 退款 </a>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            </div>
+                        )
+                    }
                 }
             }],
             dataSource: result.data
@@ -126,6 +137,12 @@ class CashDepositRent extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <CashDepositChargeComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="扣款"
+                    visible={this.state.openUpdate}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, notification, Icon } from 'antd'
+import { Row, Col, notification, Icon, Popconfirm } from 'antd'
 import '../../../../style/test.less'
 import { apiPost } from '../../../../api'
 import SubletAddUpCom from '../common/SubletAddUp'
@@ -119,7 +119,11 @@ class App extends React.Component {
                         {this.state.ListSublet.map((sublet, i) => {
                             return <div key={i}>
                                 <p className="line" />
-                                <h3>转租信息 <span onClick={this.SubletOpen.bind(this, sublet.id)} className="green">编辑</span> <span onClick={this.deleteSublet.bind(this, sublet.id)} className="red">删除</span></h3>
+                                <h3>转租信息 <span onClick={this.SubletOpen.bind(this, sublet.id)} className="green">编辑</span>
+                                    <Popconfirm key="1" title="确定删除吗?" onConfirm={this.deleteSublet.bind(this, sublet.id)}>
+                                        <span className="red">删除</span>
+                                    </Popconfirm>
+                                </h3>
                                 <Row>
                                     <Col span={8}><b>租户名称：</b>{sublet.tenant} </Col>
                                     <Col span={8}><b>联系人：</b>{sublet.contactPerson}</Col>
@@ -161,7 +165,7 @@ class App extends React.Component {
                             <p className="line" />
                             <Row>
                                 <Col span={16}><b>终止原因：</b>{this.state.contract.remark}</Col>
-                                <Col span={8}></Col>
+                                <Col span={8} />
                             </Row>
                         </div>
                         }
@@ -202,7 +206,7 @@ class App extends React.Component {
                                 <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> </Col>
                             }
                             {this.state.contract.acUnitPrice > 0 &&
-                            <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/月 </Col>
+                            <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/天 </Col>
                             }
                             <Col span={16}><b>水费收费方式：</b>
                                 {this.state.contract.waterType === 0 &&
