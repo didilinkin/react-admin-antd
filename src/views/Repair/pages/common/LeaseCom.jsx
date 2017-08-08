@@ -580,7 +580,7 @@ class Lease extends React.Component {
                                 {getFieldDecorator('contractCode', {
                                     rules: [ {
                                         required: true,
-                                        message: '请填写物业合同编号!'
+                                        message: '请填写租赁合同编号!'
                                     }]
                                 })(
                                     <Input style={{ width: 200 }} />
@@ -596,7 +596,7 @@ class Lease extends React.Component {
                                 {getFieldDecorator('fuzq', {
                                     rules: [ {
                                         required: true,
-                                        message: '请选择服务周期!'
+                                        message: '请选择租赁周期!'
                                     }]
                                 })(
                                     <RangePicker style={{ width: 200 }} />
