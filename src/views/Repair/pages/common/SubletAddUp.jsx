@@ -29,7 +29,7 @@ class SubletAddUp extends React.Component {
                     email: SubletInfo.email,
                     subletStartDate: moment(SubletInfo.subletStartDate),
                     subletEndDate: moment(SubletInfo.subletEndDate),
-                    roomNum: SubletInfo.roomNum.split(','),
+                    roomNum: SubletInfo.leaseRooms.split(','),
                     energy: SubletInfo.energy
                 })
                 console.log(SubletInfo)
