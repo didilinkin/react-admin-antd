@@ -202,7 +202,7 @@ class App extends React.Component {
                                 <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> </Col>
                             }
                             {this.state.contract.acUnitPrice > 0 &&
-                            <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/月 </Col>
+                            <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/天 </Col>
                             }
                             <Col span={16}><b>水费收费方式：</b>
                                 {this.state.contract.waterType === 0 &&
