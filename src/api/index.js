@@ -21,6 +21,8 @@ export const apiGet = (url) => {
                     } else {
                         resolve(resulData)
                     }
+                } else {
+                    resolve(resulData)
                 }
             }
         ).catch(error => {
@@ -46,6 +48,8 @@ export const apiPost = (url, configObj) => {
                     } else {
                         resolve(resulData)
                     }
+                } else {
+                    resolve(resulData)
                 }
             }
         ).catch(error => {

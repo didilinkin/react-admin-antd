@@ -109,6 +109,7 @@ import PropertyFinishAndLate    from '../views/Financial/propertyFee/Details/Pro
 import PropertyFeeDetail        from '../views/Financial/propertyFee/Details/PropertyFeeDetail'
 import WaterBill                from '../views/Financial/pages/WaterBill'                               // 水费审核
 import PowerBill                from '../views/Financial/pages/PowerBill'                               // 电费审核
+import CollectionDetails        from '../views/Financial/pages/Details/CollectionDetails'
 
 import SecondaryDecorationReview from '../views/Financial/pages/SecondaryDecorationReview'              // 财务管理 - 二次装修审核
 import LeaseMarginAudit         from '../views/Financial/cashDeposit/CashDepositRent'                   // 财务管理 - 租赁保证金审核
@@ -420,6 +421,9 @@ const routes = [
             }, {
                 path: '/financial/waterBill',                                                           // 财务管理 - 水费
                 component: WaterBill
+            }, {
+                path: '/financial/CollectionDetails/:id',                                                           // 财务管理 - 水费详情
+                component: CollectionDetails
             }, {
                 path: '/financial/powerBill',                                                           // 财务管理 - 电费
                 component: PowerBill

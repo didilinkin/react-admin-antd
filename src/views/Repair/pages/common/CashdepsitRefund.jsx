@@ -28,7 +28,8 @@ class propertyPaidConfirm extends React.Component {
             this.props.form.setFieldsValue({
                 buildName: resulData.data.buildName,
                 roomNum: resulData.data.roomNum,
-                sublietName: resulData.data.sublietName
+                sublietName: resulData.data.sublietName,
+                currentBalance: resulData.data.currentBalance
             })
             this.setState({
                 isFirst: false,
@@ -49,10 +50,10 @@ class propertyPaidConfirm extends React.Component {
         let json = this.props.form.getFieldsValue()
         json['auditStatus'] = 0
         json['id'] = this.state.data.id
-        json['revenueType'] = 1
+        json['revenueType'] = 2
         json['chargeItem'] = this.state.data.chargeItem
         json['fileUrl'] = this.fileUrl
-        json['currentBalance'] = this.state.data.currentBalance
+        json['operateMoney'] = this.state.data.currentBalance
         json['buildId'] = this.state.data.buildId
         await apiPost(
             '/cashDeposit/updateCashDeposit',
@@ -70,21 +71,6 @@ class propertyPaidConfirm extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    sumMoney = (e) => {
-        let operateMoney = e.target.value
-        if (typeof (operateMoney) === 'undefined') {
-            operateMoney = 0
-        }
-        if (operateMoney > this.state.data.currentBalance) {
-            this.props.form.setFieldsValue({
-                operateMoney: 0
-            })
-            notification.open({
-                message: '金额不能大于余额！！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        }
-    }
     render () {
         const { getFieldDecorator } = this.props.form
         return (
@@ -100,14 +86,14 @@ class propertyPaidConfirm extends React.Component {
                     <Form layout="horizontal">
                         <Row>
                             <Col span={24}>
-                                <FormItem label="金额" labelCol={{ span: 6 }}
+                                <FormItem label="当前结余" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 9 }}
                                 >
-                                    {getFieldDecorator('operateMoney')(
-                                        <Input onKeyUp={this.sumMoney} />
+                                    {getFieldDecorator('currentBalance')(
+                                        <Input disabled/>
                                     )}
                                 </FormItem>
-                                <FormItem label="事由" labelCol={{ span: 6 }}
+                                <FormItem label="退款说明" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('reason')(
