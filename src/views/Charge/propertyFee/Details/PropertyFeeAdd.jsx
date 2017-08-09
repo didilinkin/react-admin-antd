@@ -478,7 +478,6 @@ class propertyFeeAdd extends React.Component {
             this.setState({visible: false,
                 isFirst: true })
         } else {
-            alert(2222)
             await apiPost(
                 'propertyFee/savePropertyFee',
                 this.state.json1

@@ -32,6 +32,8 @@ class ChargeWaterBill extends React.Component {
         let result = await apiPost(
             '/WaterBill/WaterBillList'
         )
+        console.log(result)
+        console.log(result.data)
         let WaterBillList = result.data
         let dataSource1 = []
         let dataSource2 = []
