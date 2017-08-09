@@ -1,7 +1,8 @@
 import React from 'react'
 import { apiPost } from '../../../../api/index'
-import { Row, Col, Table, Button } from 'antd'
+import { Row, Col, Table, Button, Popconfirm, notification, Icon } from 'antd'
 import PrincipalCollectionCom from '../components/PrincipalCollection'
+import PenaltyCom from '../components/Penalty'
 class CollectionDetails extends React.Component {
     state = {
         map: {
@@ -51,6 +52,65 @@ class CollectionDetails extends React.Component {
             openDefaultCollection: false,
             id: this.props.match.params.id
         })
+    }
+    penalty = () => {
+        this.setState({
+            openPrincipalCollection: false,
+            openDefaultCollection: true,
+            id: this.props.match.params.id
+        })
+    }
+    refresh = async () => {
+        let map = await apiPost(
+            '/propertyFee/getWaterBill',
+            {id: this.props.match.params.id}
+        )
+        map = map.data
+        let ChargeRecord5 = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {feeId: this.props.match.params.id,
+                feeType: 5}
+        )
+        let ChargeRecord6 = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {feeId: this.props.match.params.id,
+                feeType: 6}
+        )
+        this.setState({
+            ChargeRecord5: ChargeRecord5.data,
+            ChargeRecord6: ChargeRecord6.data,
+            openPrincipalCollection: false,
+            openDefaultCollection: false,
+            map: {
+                WaterRecordList: map.list,
+                waterBill: map.waterBill,
+                pmContract: map.pmContract
+            }
+        })
+    }
+    PrincipalBilling = async () => {
+        let Principal = await apiPost(
+            '/WaterBill/PrincipalBilling',
+            {id: this.props.match.params.id,
+                billingState: 1}
+        )
+        notification.open({
+            message: Principal.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    DefaultBilling = async () => {
+        let Principal = await apiPost(
+            '/WaterBill/PrincipalBilling',
+            {id: this.props.match.params.id,
+                principalDamagesBilling: 1}
+        )
+        notification.open({
+            message: Principal.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
     }
     render () {
         const columns = [{
@@ -120,7 +180,6 @@ class CollectionDetails extends React.Component {
         const lightGrayStyle = {
             color: '#989898'
         }
-
         return (
             <div>
                 <div>
@@ -383,15 +442,41 @@ class CollectionDetails extends React.Component {
                             textAlign: 'center'
                         }}
                         >
-                            <Button type="primary" size="large" onClick={this.openPrincipalCollection}>确认收租金</Button>
+                            {this.state.map.waterBill.paymentState !== 1 &&
+                            <Button type="primary" size="large" onClick={this.openPrincipalCollection}>确认收款</Button>
+                            }
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            {this.state.map.waterBill.billingState === 2 &&
+                            <Popconfirm title="确认开票吗?" onConfirm={this.PrincipalBilling}>
+                                <Button style={{
+                                    backgroundColor: 'red',
+                                    color: 'aliceblue'
+                                }} size="large"
+                                >确认开票</Button>
+                            </Popconfirm>
+                            }
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Button style={{backgroundColor: 'red',
-                                color: 'aliceblue'}} size="large" onClick={this.handleCancel}>确认租金开票</Button>
+                            {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.defaultPaymentStatus !== 1 && this.state.map.waterBill.penaltyTotalMoney > 0 &&
+                            <span>
+                                <Button type="primary" size="large" onClick={this.penalty}>确认违约金</Button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Button type="primary" size="large" onClick={this.handleCancel}>确认收违约金</Button>
+                                {!this.state.ChargeRecord6.length > 0 &&
+                                <Popconfirm title="确认放入下月电费吗?" onConfirm={this.PrincipalBilling}>
+                                    <a>放入下月电费</a>
+                                </Popconfirm>
+                                }
+                            </span>
+                            }
                                 &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Button style={{backgroundColor: 'red',
-                                color: 'aliceblue'}}size="large" onClick={this.handleCancel}>确认违约金开票</Button>
+                            {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.penaltyTotalMoney > 0 && this.state.map.waterBill.principalDamagesBilling === 2 &&
+                            <Popconfirm title="确认违约金开票?" onConfirm={this.DefaultBilling}>
+                                <Button style={{
+                                    backgroundColor: 'red',
+                                    color: 'aliceblue'
+                                }} size="large"
+                                >确认违约金开票</Button>
+                            </Popconfirm>
+                            }
                         </div>
                     </div>
 
@@ -399,6 +484,12 @@ class CollectionDetails extends React.Component {
                 <PrincipalCollectionCom
                     visible={this.state.openPrincipalCollection}
                     id={this.state.id}
+                    refresh={this.refresh}
+                />
+                <PenaltyCom
+                    visible={this.state.openDefaultCollection}
+                    id={this.state.id}
+                    refresh={this.refresh}
                 />
             </div>
         )

@@ -2,7 +2,7 @@
 // 财务管理 - 电费审核
 // 物业管理 - 水费审核
 import React from 'react'
-import {Table, Spin, Popconfirm, Tabs } from 'antd'
+import {Table, Spin, Popconfirm, Tabs, notification, Icon } from 'antd'
 import WaterBillHeadComponent from '../../Charge/pages/components/WaterBillHead'
 import WaterInfomation from  '../../Charge/pages/components/WaterInfomation'
 import { apiPost } from '../../../api'
@@ -99,8 +99,16 @@ class ChargeWaterBill extends React.Component {
             dataSource4: dataSource4
         })
     }
-    withdraw = (id) => {
-        console.log('撤回')
+    withdraw = async (id) => {
+        let result = await apiPost(
+            '/WaterBill/withdraw',
+            {id: id}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
     }
     async initialRemarks () {
         this.setState({loading: true})
