@@ -84,38 +84,46 @@ class TabsContainers extends React.Component {
         })
     }
 
-    // 删减 / 关闭 单个 Tabs标签 => 也应该修改 LS中的数组 & Redux 中的数据
+    // 删减 / 关闭 单个 Tabs标签 => 修改 Redux 中的数据
     remove = (targetKey) => { // targetKey === key
-        console.log('targetKey:' + targetKey)
-
         let activeKey = this.state.activeKey
 
-        let lastIndex
-
-        // 配置 lastIndex
-        this.state.panes.forEach((pane, i) => {
-            if (pane.key === targetKey) {
-                // console.log(pane)
-                lastIndex = i - 1
-            }
-        })
+        let currentIndex // 当前展示的下标位置
+        let currentKey // 如果要删除的标签是当前展示的, 删除后更新key 为当前位置(currentIndex)的 key
+        let currentUrl // 如果要删除的标签是当前展示的, 删除后 更改url
 
         // 返回一个符合条件的 数组
-        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey) // targetKey: 要关闭的 key
+        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey)
 
-        if (lastIndex >= 0 && activeKey === targetKey) { // 如果 lastIndex 大于等于 0, 并且 当前的 key = 要关闭的 key
-            activeKey = currentPanes[lastIndex].key // 当前的 activeKey = 数组中 lastIndex下标的 key
+        if (targetKey === activeKey) {
+            console.log('删除的是展示的标签, activeKey要改动')
+
+            //
+            this.state.panes.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                    currentIndex = i // 要删除的key === 展示的key => 要删除的 i 下标位置保存到 currentIndex(删除pane数组中当前对象; 然后到返回的数组中查找下标为 i的新对象, 拿出他的key 作为最新展示的key)
+                }
+            })
+
+            // 设置删除后 最新的 展示 Key 与 要跳转的 url
+            currentKey = currentPanes[currentIndex - 1].key
+            currentUrl = currentPanes[currentIndex - 1].path
+
+            this.props.onAddPane({
+                activeKey: cloneDeep(currentKey),
+                panes: cloneDeep(currentPanes)
+            })
+
+            this.props.tabsProps.history.push(currentUrl)
+        } else {
+            console.log('删除的不是展示的, activeKey不改动; 不跳路由')
+            currentKey = activeKey
+
+            this.props.onAddPane({
+                activeKey: cloneDeep(currentKey),
+                panes: cloneDeep(currentPanes)
+            })
         }
-
-        // 设置 reducers
-        this.props.onAddPane({
-            activeKey: cloneDeep(activeKey),
-            panes: cloneDeep(currentPanes)
-        })
-
-        // 更新一下路由
-        let lastUrl = this.state.panes[lastIndex].path
-        this.props.tabsProps.history.push(lastUrl)
     }
 
     // 当 props改变时 触发 => 调用 更改 setState的方法
