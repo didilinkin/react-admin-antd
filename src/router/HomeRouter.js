@@ -112,9 +112,12 @@ import PowerBill                from '../views/Financial/pages/PowerBill'       
 import CollectionDetails        from '../views/Financial/pages/Details/CollectionDetails'
 
 import SecondaryDecorationReview from '../views/Financial/pages/SecondaryDecorationReview'              // 财务管理 - 二次装修审核
-import LeaseMarginAudit         from '../views/Financial/cashDeposit/CashDepositRent'                        // 财务管理 - 租赁保证金审核
-import HappyDepositcheck        from '../views/Financial/cashDeposit/CashDepositSong'                       // 财务管理 - 欢乐颂押金审核
-import EnergyDepositReview      from '../views/Financial/cashDeposit/CashDepositProperty'                     // 财务管理 - 能源管理押金审核
+import LeaseMarginAudit         from '../views/Financial/cashDeposit/CashDepositRent'                   // 财务管理 - 租赁保证金审核
+import HappyDepositcheck        from '../views/Financial/cashDeposit/CashDepositSong'                   // 财务管理 - 欢乐颂押金审核
+import EnergyDepositReview      from '../views/Financial/cashDeposit/CashDepositProperty'               // 财务管理 - 能源管理押金审核
+
+import EditBuilding             from '../views/Building/containers/editAvailability/EditBuilding'       // 楼宇管理 - 编辑房源 - 编辑楼宇
+import EditRoom                 from '../views/Building/containers/editAvailability/EditRoom'           // 楼宇管理 - 编辑房源 - 编辑房间
 
 const HomeBox = ({ routes }) => (
     <HomeTemplate>
@@ -436,6 +439,18 @@ const routes = [
             }, {
                 path: '/financial/energyDepositReview',                                                 // 财务管理 - 能源管理押金审核
                 component: EnergyDepositReview
+            }
+        ]
+    }, {
+        path: '/building',
+        component: HomeBox,
+        routes: [
+            {
+                path: '/building/editAvailability/editBuilding',                                        // 楼与管理 - 编辑房源 - 编辑房间
+                component: EditBuilding
+            }, {
+                path: '/building/editAvailability/editRoom',                                            // 楼与管理 - 编辑房源 - 编辑房间
+                component: EditRoom
             }
         ]
     }

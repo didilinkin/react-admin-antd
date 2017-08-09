@@ -126,7 +126,11 @@ class Sidebar extends React.Component {
             secondaryDecorationReview: ['financial'],
             leaseMarginAudit: ['financial'],
             happyDepositcheck: ['financial'],
-            energyDepositReview: ['financial']
+            energyDepositReview: ['financial'],
+            // 楼宇管理
+            editAvailability: ['building'],
+            editRoom: ['building', 'editAvailability'],
+            editBuilding: ['building', 'editAvailability']
         }
 
         return map[key] || []
@@ -479,6 +483,33 @@ class Sidebar extends React.Component {
                         <Menu.Item key="energyDepositReview">
                             <Link to="/financial/energyDepositReview">能源管理押金审核</Link>
                         </Menu.Item>
+                    </SubMenu>
+
+                    {/* 楼宇管理 */}
+                    <SubMenu
+                        key="building"
+                        title={
+                            <span>
+                                <Icon type="home" />
+                                <span className="nav-text" style={this.state.titleStyle}>楼宇管理</span>
+                            </span>
+                        }
+                    >
+                        <SubMenu key="editAvailability" title={
+                            <span>
+                                <span className="nav-text">编辑房源</span>
+                            </span>
+                        }
+                        >
+                            <Menu.Item key="editRoom">
+                                <Link to="/building/editAvailability/editRoom">编辑房间</Link>
+                            </Menu.Item>
+
+                            <Menu.Item key="editBuilding">
+                                <Link to="/building/editAvailability/editBuilding">编辑楼宇</Link>
+                            </Menu.Item>
+                        </SubMenu>
+
                     </SubMenu>
 
                 </Menu>
