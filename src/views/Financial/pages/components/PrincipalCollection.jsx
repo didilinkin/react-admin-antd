@@ -62,6 +62,7 @@ class PrincipalCollection extends React.Component {
                 visible: false,
                 isFirst: true
             })
+            this.props.refresh()
         }
     }
     handleCancel = (e) => {
