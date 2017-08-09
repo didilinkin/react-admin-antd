@@ -16,7 +16,7 @@ class Root extends React.Component {
         return (
             <Provider store={store}>
                 <ConnectedRouter history={ history }>
-                    <div>
+                    <div style={{ height: '100%' }}>
                         { renderRoutes(rootRoutes) }
                     </div>
                 </ConnectedRouter>

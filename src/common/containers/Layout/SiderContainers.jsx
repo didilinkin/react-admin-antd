@@ -11,7 +11,7 @@ const SubMenu = Menu.SubMenu
 
 const SiderBox = styled.div `
     display: inline-block;
-    width: 230px;
+    width: 200px;
 `
 
 class SiderContainers extends React.Component {
