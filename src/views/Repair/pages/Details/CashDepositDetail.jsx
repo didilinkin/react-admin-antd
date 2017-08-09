@@ -1,7 +1,7 @@
 // 保证金明细
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
-import { apiPost, baseURL } from '../../../api'
+import {Table, Button, Spin, Select } from 'antd'
+import { apiPost, baseURL } from '../../../../api'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -94,11 +94,6 @@ class CashDepositDetail extends Component {
                 dataIndex: 'auditName',
                 key: 'auditName'
             }, {
-                title: '审核状态',
-                width: 250,
-                dataIndex: 'auditStatus',
-                key: 'auditStatus'
-            }, {
                 title: '审核时间',
                 width: 250,
                 dataIndex: 'auditDate',
@@ -106,8 +101,6 @@ class CashDepositDetail extends Component {
             }, {
                 title: '附件',
                 width: 500,
-                dataIndex: 'fileUrl',
-                key: 'fileUrl',
                 render: function (text, record, index) {
                     let i = 0
                     let arr = []
@@ -133,10 +126,8 @@ class CashDepositDetail extends Component {
         // 刷新表格
         let result = await apiPost(
             '/cashDeposit/cashDepositDetailList',
-            {'sublietName': this.sublietName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'chargeItem': 0
+            {'cashDepositId': this.props.match.params.id,
+                'revenueType': this.revenueType
             }
         )
         this.setState({
@@ -147,23 +138,14 @@ class CashDepositDetail extends Component {
             id: 0
         })
     }
-    sublietName = null
-    entryNameOnChange = (e) => {
-        this.sublietName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    buildId = null
+    revenueType = null
     selectBuild = (e) => {
-        this.buildId = e
+        this.revenueType = e
     }
     query = () => {
         this.refresh()
     }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <span style={{paddingBottom: '10px',
@@ -176,22 +158,14 @@ class CashDepositDetail extends Component {
                         allowClear
                         style={{width: 200,
                             marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
+                        placeholder="请选择收支类型"
                         optionFilterProp="children"
                         onChange={this.selectBuild}
                     >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
+                        <Option key="0">收款</Option>
+                        <Option key="1">扣款</Option>
+                        <Option key="2">退款</Option>
                     </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
 
