@@ -4,6 +4,7 @@ import {Table, Spin, Popconfirm, Tabs, notification, Icon  } from 'antd'
 import WaterBillHeadComponent from './components/WaterBillHead'
 import WaterAddUpComponent from './components/WaterAddUp'
 import { apiPost } from '../../../api'
+import WaterInfomation from  './components/WaterInfomation'
 
 
 const TabPane = Tabs.TabPane
@@ -24,12 +25,14 @@ class ChargeWaterBill extends React.Component {
             openWaterAddUpComponent: false,
             order: 1,
             RowKeys: [],
+            openInfo: false,
             id: 0
         }
     }
     refreshTwo = async (activeKey) => {
         this.setState({loading: true,
-            openWaterAddUpComponent: false})
+            openWaterAddUpComponent: false,
+            openInfo: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList'
         )
@@ -61,7 +64,8 @@ class ChargeWaterBill extends React.Component {
         })
     }
     refresh = async (pagination, filters, sorter) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openInfo: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters
@@ -109,6 +113,12 @@ class ChargeWaterBill extends React.Component {
         })
         this.refreshTwo(1)
     }
+    info = (id) => {
+        this.setState({
+            openInfo: true,
+            id: id
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -136,6 +146,7 @@ class ChargeWaterBill extends React.Component {
         })
         let openWaterAddUpComponent = this.openWaterAddUpComponent
         let examine = this.examine
+        let info = this.info
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -188,7 +199,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -244,7 +255,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -310,7 +321,7 @@ class ChargeWaterBill extends React.Component {
                                 <a>重新收费</a>
                             </Popconfirm>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -395,7 +406,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -495,6 +506,10 @@ class ChargeWaterBill extends React.Component {
                         />
                     </TabPane>
                 </Tabs>
+                <WaterInfomation
+                    id={this.state.id}
+                    visible={this.state.openInfo}
+                />
             </Spin>
         )
     }

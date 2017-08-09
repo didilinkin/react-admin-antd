@@ -2,6 +2,8 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../api'
+import CashDepositChargeComponent from './common/CashdepsitCharge'
+import CashDepositRefundComponent from './common/CashdepsitRefund'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -26,6 +28,14 @@ class CashDepositRent extends Component {
             id: id
         })
     }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: true,
+            openTableAddUp: false,
+            openUpdate: false,
+            id: id
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -36,6 +46,7 @@ class CashDepositRent extends Component {
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -76,11 +87,21 @@ class CashDepositRent extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    return (
-                        <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 审核 </a>
-                        </div>
-                    )
+                    if (record.currentBalance !== 0) {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 扣款 </a>
+                                <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 退款 </a>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div>
+                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            </div>
+                        )
+                    }
                 }
             }],
             dataSource: result.data
@@ -96,7 +117,7 @@ class CashDepositRent extends Component {
             {'sublietName': this.sublietName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'chargeItem': 0
+                'chargeItem': 3
             }
         )
         this.setState({
@@ -126,6 +147,18 @@ class CashDepositRent extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <CashDepositChargeComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="扣款"
+                    visible={this.state.openUpdate}
+                />
+                <CashDepositRefundComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    title="退款"
+                    visible={this.state.openAdd}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

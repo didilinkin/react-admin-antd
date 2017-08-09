@@ -4,7 +4,6 @@ import { apiPost } from '../../../../api/index'
 const FormItem = Form.Item
 const {RangePicker} = DatePicker
 const Option = Select.Option
-const {TextArea} = Input
 class PowerAddUp extends React.Component {
     state = {
         visible: false,
@@ -431,7 +430,7 @@ class PowerAddUp extends React.Component {
                                     <FormItem
                                         {...formItemLayout}
                                         label="备注"
-                                    >{getFieldDecorator('note')(<TextArea rows={6} />)
+                                    >{getFieldDecorator('note')(<Input type="textarea" rows={6} />)
                                         }
                                     </FormItem>
                                     <FormItem {...tailFormItemLayout}>

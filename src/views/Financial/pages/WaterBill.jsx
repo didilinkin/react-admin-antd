@@ -2,8 +2,9 @@
 // 财务管理 - 电费审核
 // 物业管理 - 水费审核
 import React from 'react'
-import {Table, Spin, Popconfirm, Tabs } from 'antd'
+import {Table, Spin, Popconfirm, Tabs, notification, Icon } from 'antd'
 import WaterBillHeadComponent from '../../Charge/pages/components/WaterBillHead'
+import WaterInfomation from  '../../Charge/pages/components/WaterInfomation'
 import { apiPost } from '../../../api'
 
 
@@ -24,11 +25,19 @@ class ChargeWaterBill extends React.Component {
             ListBuildingInfo: [],
             order: 1,
             RowKeys: [],
+            openInfo: false,
             id: 0
         }
     }
+    info = (id) => {
+        this.setState({
+            openInfo: true,
+            id: id
+        })
+    }
     refreshTwo = async (activeKey) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openInfo: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList'
         )
@@ -59,7 +68,8 @@ class ChargeWaterBill extends React.Component {
         })
     }
     refresh = async (pagination, filters, sorter) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openInfo: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters
@@ -89,8 +99,16 @@ class ChargeWaterBill extends React.Component {
             dataSource4: dataSource4
         })
     }
-    withdraw = (id) => {
-        console.log('撤回')
+    withdraw = async (id) => {
+        let result = await apiPost(
+            '/WaterBill/withdraw',
+            {id: id}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -118,6 +136,7 @@ class ChargeWaterBill extends React.Component {
             return ''
         })
         let withdraw = this.withdraw
+        let info = this.info
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -170,7 +189,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>审核</a>
+                            <a onClick={() => info(record.id)}>审核</a>
                         </span>
                     )
                 }
@@ -232,7 +251,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -315,9 +334,10 @@ class ChargeWaterBill extends React.Component {
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/financial/CollectionDetails/' + record.id
                     return (
                         <span>
-                            <a>明细</a>
+                            <a href={url}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
@@ -399,6 +419,12 @@ class ChargeWaterBill extends React.Component {
                         />
                     </TabPane>
                 </Tabs>
+                <WaterInfomation
+                    id={this.state.id}
+                    visible={this.state.openInfo}
+                    Finance={1}
+                    refresh={this.refreshTwo}
+                />
             </Spin>
         )
     }

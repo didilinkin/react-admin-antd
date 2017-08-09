@@ -206,7 +206,7 @@ class WarehouseAddUp extends React.Component {
                     >
                         <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                     </FormItem>
-                    <div  style={{width: 750,
+                    <div style={{width: 750,
                         marginBottom: 20}}>
                         <table className="tb">
                             <tr className="hd">
