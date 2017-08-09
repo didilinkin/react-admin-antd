@@ -317,9 +317,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <Popconfirm key="1" title="确定重新收费吗?">
-                                <a>重新收费</a>
-                            </Popconfirm>
+                            <a onClick={() => openWaterAddUpComponent(record.id)}>重新收费</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => info(record.id)}>明细</a>
                         </span>
