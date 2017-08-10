@@ -27,4 +27,14 @@ const WAREHOUSE_DIR = {
     ]
 }
 
-export default WAREHOUSE_DIR
+// 仓库管理 - 详情页路由表
+const WAREHOUSE_DETAILS = [
+    {
+        title: '库存管理',
+        key: 'Inventory',
+        path: '/home/wareHouse/inventory/:id',
+        component: require('./containers/details/Inventory').default
+    }
+]
+
+export { WAREHOUSE_DIR, WAREHOUSE_DETAILS }

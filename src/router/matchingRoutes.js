@@ -6,6 +6,8 @@ import LayoutContainers from '../common/containers/Layout/LayoutContainers'
 
 // 将 globalDir 中的映射处理好
 import globalDir from '../utils/globalDir'
+// 映射全局 详情页面 路由配置
+import globalDetailsRoute from '../utils/globalDetailsRoute'
 
 // 判断是否 有 compObj; 返回值(Boolean)
 const hasCompObj = (obj) => obj.hasOwnProperty('component')
@@ -35,15 +37,14 @@ const mapChildRoute = (item) => {
 globalDir.map((moduleItem) => {
     let childRouteItem = moduleItem.childRoute
 
-    mapChildRoute(childRouteItem)
-
-    return {}
+    return mapChildRoute(childRouteItem)
 })
 
 // 合并 数据(测试 + 迭代出来的路由数据)
 let routesArr = [
     ...globalRoutes,
-    ...HomeIndexRoute
+    ...HomeIndexRoute,
+    ...globalDetailsRoute // 全局详情页面路由, 不需要处理
 ]
 
 const matchingRoutes = [{
