@@ -30,7 +30,7 @@ class ChargeWaterBill extends React.Component {
     refreshTwo = async (activeKey) => {
         this.setState({loading: true})
         let result = await apiPost(
-            '/WaterBill/WaterBillList'
+            '/ElectricityFees/list'
         )
         console.log(result)
         console.log(result.data)
@@ -64,7 +64,7 @@ class ChargeWaterBill extends React.Component {
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true})
         let result = await apiPost(
-            '/WaterBill/WaterBillList',
+            '/ElectricityFees/list',
             filters
         )
         let WaterBillList = result.data
@@ -101,7 +101,7 @@ class ChargeWaterBill extends React.Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/WaterBill/WaterBillList',
+            '/ElectricityFees/list',
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
@@ -123,15 +123,11 @@ class ChargeWaterBill extends React.Component {
             }
             return ''
         })
+
         let openWaterAddUpComponent = this.openWaterAddUpComponent
-        this.setState({
-            ListBuildingInfo: ListBuildingInfo.data,
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4,
-            columns1: [{
+
+        let arr = [
+            {
                 title: '序号',
                 width: 100,
                 dataIndex: 'id',
@@ -152,24 +148,48 @@ class ChargeWaterBill extends React.Component {
             }, {
                 title: '客户名称',
                 width: 100,
-                dataIndex: 'clientSubletName'
+                dataIndex: 'clientName'
             }, {
-                title: '本期水费周期',
+                title: '收费类型',
+                width: 200,
+                dataIndex: 'wattHourType',
+                render: function (text, record, index) {
+                    let dataIndex = '固定'
+                    if (text.toString() === '1') {
+                        dataIndex = '差额'
+                    } else if (text.toString() === '2') {
+                        dataIndex = '峰平谷'
+                    }
+                    return (
+                        <p>{dataIndex}</p>
+                    )
+                }
+            }, {
+                title: '本期电费周期',
                 width: 200,
                 dataIndex: 'cycle'
             }, {
-                title: '本次总水量',
+                title: '本次用电量',
                 width: 100,
-                dataIndex: 'totalWater'
+                dataIndex: 'sumElectricity'
             }, {
-                title: ' 本次应收',
+                title: '本次应收',
                 width: 100,
-                dataIndex: 'receivableMoney'
+                dataIndex: 'thisReceivable'
             }, {
                 title: ' 交费期限',
                 width: 100,
                 dataIndex: 'overdueDate'
-            }, {
+
+            }]
+        this.setState({
+            ListBuildingInfo: ListBuildingInfo.data,
+            loading: false,
+            dataSource1: dataSource1,
+            dataSource2: dataSource2,
+            dataSource3: dataSource3,
+            dataSource4: dataSource4,
+            columns1: arr.concat([{
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -186,46 +206,8 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
-            columns2: [{
-                title: '序号',
-                width: 100,
-                dataIndex: 'id',
-                render: function (text, record, index) {
-                    index++
-                    return (
-                        <span>{index}</span>
-                    )
-                }
-            }, {
-                title: '所属楼宇',
-                width: 100,
-                dataIndex: 'buildName'
-            }, {
-                title: '房间编号',
-                width: 100,
-                dataIndex: 'roomNumber'
-            }, {
-                title: '客户名称',
-                width: 100,
-                dataIndex: 'clientSubletName'
-            }, {
-                title: '本期水费周期',
-                width: 200,
-                dataIndex: 'cycle'
-            }, {
-                title: '本次总水量',
-                width: 100,
-                dataIndex: 'totalWater'
-            }, {
-                title: ' 本次应收',
-                width: 100,
-                dataIndex: 'receivableMoney'
-            }, {
-                title: ' 交费期限',
-                width: 100,
-                dataIndex: 'overdueDate'
-            }, {
+            }]),
+            columns2: arr.concat([{
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -236,46 +218,8 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
-            columns3: [{
-                title: '序号',
-                width: 100,
-                dataIndex: 'id',
-                render: function (text, record, index) {
-                    index++
-                    return (
-                        <span>{index}</span>
-                    )
-                }
-            }, {
-                title: '所属楼宇',
-                width: 100,
-                dataIndex: 'buildName'
-            }, {
-                title: '房间编号',
-                width: 100,
-                dataIndex: 'roomNumber'
-            }, {
-                title: '客户名称',
-                width: 100,
-                dataIndex: 'clientSubletName'
-            }, {
-                title: '本期水费周期',
-                width: 200,
-                dataIndex: 'cycle'
-            }, {
-                title: '本次总水量',
-                width: 100,
-                dataIndex: 'totalWater'
-            }, {
-                title: '本次应收',
-                width: 100,
-                dataIndex: 'receivableMoney'
-            }, {
-                title: '交费期限',
-                width: 100,
-                dataIndex: 'overdueDate'
-            }, {
+            }]),
+            columns3: arr.concat([{
                 title: '审核说明',
                 width: 100,
                 dataIndex: 'auditExplain'
@@ -302,53 +246,15 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
-            columns4: [{
-                title: '序号',
-                width: 100,
-                dataIndex: 'id',
-                render: function (text, record, index) {
-                    index++
-                    return (
-                        <span>{index}</span>
-                    )
-                }
-            }, {
-                title: '所属楼宇',
-                width: 100,
-                dataIndex: 'buildName'
-            }, {
-                title: '房间编号',
-                width: 100,
-                dataIndex: 'roomNumber'
-            }, {
-                title: '客户名称',
-                width: 100,
-                dataIndex: 'clientSubletName'
-            }, {
-                title: '本期水费周期',
-                width: 200,
-                dataIndex: 'cycle'
-            }, {
-                title: '本次总水量',
-                width: 100,
-                dataIndex: 'totalWater'
-            }, {
-                title: '本次应收',
-                width: 100,
-                dataIndex: 'receivableMoney'
-            }, {
-                title: '交费期限',
-                width: 100,
-                dataIndex: 'overdueDate'
-            }, {
+            }]),
+            columns4: arr.concat([{
                 title: '实交日期',
                 width: 100,
-                dataIndex: 'collectionDate'
+                dataIndex: 'principalCollectionDate'
             }, {
                 title: '逾期天数',
                 width: 100,
-                dataIndex: 'days'
+                dataIndex: 'overdueDays'
             }, {
                 title: '延期下月电费',
                 width: 100,
@@ -363,10 +269,24 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }, {
+                title: '打印状态',
+                width: 100,
+                dataIndex: 'printStatus',
+                render: function (text, record, index) {
+                    let printStatus = '否'
+                    if (text.toString() === '1') {
+                        printStatus = '是'
+                    }
+                    return (
+                        <p>{printStatus}</p>
+                    )
+                }
+            }, {
                 title: '开票状态',
                 width: 100,
-                dataIndex: 'billingState',
+                dataIndex: 'principalPrincipalBilling',
                 render: function (text, record, index) {
+                    text = text ? text : ''
                     let billingState = '未开票'
                     if (text.toString() === '1') {
                         billingState = '已开票'
@@ -376,10 +296,8 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }, {
-                title: ' 操作',
+                title: '操作',
                 width: 200,
-                dataIndex: 'opt',
-                fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <span>
@@ -391,7 +309,7 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }]
+            }])
         })
     }
     componentDidMount () {
