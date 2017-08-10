@@ -6,6 +6,8 @@ import localStore, { authenticate } from './utils/LocalStore'
 import { configureStore, history } from './store/configureStore/index'
 import Root from './common/containers/Root'
 
+import 'babel-polyfill'
+
 const store = configureStore()
 const authState = authenticate()
 
