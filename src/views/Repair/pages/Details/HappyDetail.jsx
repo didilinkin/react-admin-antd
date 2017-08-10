@@ -145,7 +145,7 @@ class App extends React.Component {
                             <Col span={8}><b>交费周期：</b>
                                 <span className="color1">
                                     {this.state.contract.payType === 0 && '按单价递增'}
-                                    {this.state.contract.payType === 1 && '按金额递增'}
+                                    {this.state.contract.payType === 1 && '按首年递增'}
                                 </span>
                             </Col>
                             <Col span={8}><b>首年服务费：</b><span className="color1">{this.state.contract.firstYearRent}</span> 元 </Col>
