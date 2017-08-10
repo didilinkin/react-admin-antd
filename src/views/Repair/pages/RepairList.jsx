@@ -177,17 +177,18 @@ class RepairList extends Component {
                     if (record.pieStatus === 0 || record.isCancel === 1) {
                         arr.push(
                             <Popconfirm key="1" title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                <a href="javascript:"> 派单 &nbsp;</a>
-                            </Popconfirm>)
+                                <a> 派单 &nbsp;</a>
+                            </Popconfirm>
+                        )
                         arr.push(
                             <Popconfirm key="2" title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
-                                <a href="javascript:">&nbsp; 修改&nbsp; </a>
+                                <a>&nbsp; 修改&nbsp; </a>
                             </Popconfirm>)
                     }
                     if (record.pieStatus === 0) {
                         arr.push(
                             <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a href="javascript:" > &nbsp;作废 </a>
+                                <a> &nbsp;作废 </a>
                             </Popconfirm>
                         )
                     }
@@ -283,12 +284,14 @@ class RepairList extends Component {
                     visible={this.state.openMaintenanceProject}
                 />
                 <span style={{paddingBottom: '10px',
-                    display: 'block'}}>
+                    display: 'block'}}
+                >
                     <span>报修日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加报单</Button>
                 </span>

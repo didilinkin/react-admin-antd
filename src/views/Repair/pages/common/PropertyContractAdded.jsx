@@ -362,13 +362,13 @@ class PropertyContractAdded extends React.Component {
                                     {getFieldDecorator('leaseRooms', {
                                         rules: [ {
                                             required: true,
-                                            message: '请选择所属房间!'
+                                            message: '请输入所在房间!'
                                         }]
                                     })(
                                         <Select
                                             mode="multiple"
                                             style={{ width: 200 }}
-                                            placeholder="请选择所属房间"
+                                            placeholder="请输入所在房间"
                                             onChange={this.selectRoom}
                                             optionFilterProp="children"
                                         >

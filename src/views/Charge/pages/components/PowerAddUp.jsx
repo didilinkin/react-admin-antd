@@ -1,6 +1,7 @@
 import React from 'react'
 import {Modal, Form, Row, Col, Input, Button, DatePicker, Select} from 'antd'
 import { apiPost } from '../../../../api/index'
+import moment from 'moment'
 const FormItem = Form.Item
 const {RangePicker} = DatePicker
 const Option = Select.Option
@@ -8,15 +9,29 @@ class PowerAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        PmContract: [],
+        ClientList: [],
         PowerRecordlList: [],
         subletList: [],
         roomNumberOne: [],
-        users: [],
+        meterReader: [],
         Contract: {},
         waterLossRatio: 0,
         totalPower: 0,
         totalMoney: 0
+    }
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
+    }
+    componentDidMount () {
+        this.getClientListAndUser()
+    }
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.props.form.validateFieldsAndScroll((err, values) => {
+            if (!err) {
+                console.log('Received values of form: ', values)
+            }
+        })
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
@@ -39,32 +54,134 @@ class PowerAddUp extends React.Component {
             })
         }
     }
-    componentWillReceiveProps (nextProps) {
-        this.initialRemarks(nextProps)
-    }
-    async initialRemarks2 () {
-        let PmContract = await apiPost(
+    async getClientListAndUser () {
+        let ClientList = await apiPost(
             '/propertyFee/getPmContractList',
             {contractStatus: 0}
         )
-        let users = await apiPost(
+        let meterReader = await apiPost(
             '/water/getchaobiaouser',
             {code: 'chaobiaoren'}
         )
         this.setState({
-            PmContract: PmContract.data,
-            users: users.data
+            ClientList: ClientList.data,
+            meterReader: meterReader.data
         })
     }
-    componentDidMount () {
-        this.initialRemarks2()
+    complement (arr1, arr2) {
+        const arr = arr1.toString().split(',')
+        let j = 0
+        arr1.forEach((a, i) => {
+            arr2.forEach((b) => {
+                if (a === b) {
+                    arr.splice(i - j, 1)
+                    j = j + 1
+                }
+            })
+        })
+        return arr
     }
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                console.log('Received values of form: ', values)
+    // 选择客户名称 参数：客户id
+    chooseClient = (clientId) => {
+        this.state.ClientList.map(async (contract) => {
+            let formName = ''
+            if (clientId.toString() === contract.id.toString()) {
+                formName = contract.clientName
+                let PowerRecord = await apiPost(
+                    '/ElectricityFees/LastTimeDate',
+                    {contractId: clientId,
+                        clientId: contract.clientId,
+                        clientType: 2}
+                )
+                let subletList = await apiPost(
+                    '/ElectricityFees/LastTimeNumber',
+                    {id: clientId}
+                )
+                let roomNumber = contract.leaseRooms.split(',')
+                let roomIds = contract.roomIds.split(',')
+                subletList = subletList.data
+                if (!subletList) {
+                    subletList = []
+                }
+                if (subletList.length > 0) {
+                    subletList.map(sublet => {
+                        roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
+                        roomIds = this.complement(roomIds, sublet.roomNum.split(','))
+                        return ''
+                    })
+                }
+                this.setState({
+                    Contract: contract,
+                    subletList: subletList,
+                    roomNumberOne: roomNumber,
+                    waterLossRatio: contract.waterLossRatio
+                })
+                let sfzq = PowerRecord.data ? [moment(PowerRecord.data.meterDate)] : null
+                console.log(sfzq)
+                this.props.form.setFieldsValue({
+                    roomId: roomIds.toString(),
+                    sfzq: sfzq,
+                    roomNumber: roomNumber.toString(),
+                    formName: formName,
+                    waterUnitPrice: contract.waterUnitPrice,
+                    subletId: null,
+                    roomNumberOne: null,
+                    preMeterRead: null
+                })
             }
+        })
+    }
+    readIdOne = (value) => {
+        this.props.form.setFieldsValue({
+            readId: value
+        })
+    }
+    subletList = (value) => {
+        this.state.subletList.forEach(async sub => {
+            let formName = ''
+            if (value.toString() === sub.clientId.toString()) {
+                formName = sub.clientName
+                let WaterRecord = await apiPost(
+                    '/ElectricityFees/LastTimeDate',
+                    {subletId: value,
+                        id: this.props.id}
+                )
+                this.setState({
+                    roomNumberOne: sub.leaseRooms.split(',')
+                })
+                let sfzq = WaterRecord.data ? [moment(WaterRecord.data.meterDate)] : null
+                this.props.form.setFieldsValue({
+                    roomNumber: sub.leaseRooms.toString(),
+                    roomId: sub.roomNum.toString(),
+                    subletName: sub.clientName,
+                    formName: formName,
+                    subletId: value,
+                    roomNumberOne: null,
+                    preMeterRead: null,
+                    sfzq: sfzq
+                })
+            }
+        })
+    }
+    chooseRoomNumber = async (value) => {
+        let WaterRecord = await apiPost(
+            '/water/getLastTime',
+            {roomNumberOne: value,
+                waterFeeId: this.props.id}
+        )
+        WaterRecord = WaterRecord.data
+        if (WaterRecord !== null && WaterRecord !== '' && typeof (WaterRecord) !== 'undefined') {
+            this.props.form.setFieldsValue({
+                preMeterRead: WaterRecord.meterRead
+            })
+        }
+    }
+    Water = () => {
+        let json = this.props.form.getFieldsValue()
+        json['preMeterRead'] = json.preMeterRead ? json.preMeterRead : 0
+        json['meterRead'] = json.meterRead ? json.meterRead : 0
+        this.props.form.setFieldsValue({
+            waterCount: json.meterRead - json.preMeterRead
         })
     }
     // 添加违约金
@@ -88,7 +205,6 @@ class PowerAddUp extends React.Component {
     }
     // 添加上月差额
     addBalance = () => {
-        console.log('上月差额')
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
         jsonTwo['price'] = json.unitPriceBalance
@@ -234,6 +350,7 @@ class PowerAddUp extends React.Component {
             >
                 <Form layout="horizontal">
                     <div style={{background: '#f7f7f7',
+                        width: 900,
                         marginBottom: 20,
                         paddingTop: '22px'}}
                     >
@@ -242,21 +359,50 @@ class PowerAddUp extends React.Component {
                                 <FormItem label="客户名称" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('voucherNo')(<Input />)}
+                                    {getFieldDecorator('clientName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择客户名称!'
+                                        }]
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择客户名称"
+                                            optionFilterProp="children"
+                                            onChange={this.chooseClient}
+                                        >
+                                            {this.state.ClientList.map(Contract => {
+                                                return <Option key={Contract.id}>{Contract.clientName + '(' + Contract.leaseRooms + ')'}</Option>
+                                            })}
+                                        </Select>)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>
                                 <FormItem label="转租客户" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('acceptor')(<Input />)}
+                                    {getFieldDecorator('subletIdOne')(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择转租客户"
+                                            optionFilterProp="children"
+                                            onChange={this.subletList}
+                                        >
+                                            {this.state.subletList.map((sub, i) => {
+                                                return <Option key={sub.clientId}>{sub.clientName}</Option>
+                                            })}
+                                        </Select>)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>
                                 <FormItem label="房间编号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('rrr')(<Input />)}
+                                    {getFieldDecorator('roomNumber')(<Input />)}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -289,17 +435,28 @@ class PowerAddUp extends React.Component {
                                 <FormItem label="抄表人员" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('readId', {
+                                    {getFieldDecorator('readIdOne', {
                                         rules: [ {
                                             required: true,
-                                            message: '请填写抄表人员!'
+                                            message: '请选择抄表人员!'
                                         }]
-                                    })(<Input />)}
+                                    })(
+                                        <Select
+                                            showSearch
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            placeholder="请选择抄表人员"
+                                            optionFilterProp="children"
+                                            onChange={this.readIdOne}
+                                        >
+                                            {this.state.meterReader.map(user => {
+                                                return <Option key={user.id}>{user.loginName}</Option>
+                                            })}
+                                        </Select>)}
                                 </FormItem>
                             </Col>
                         </Row>
                     </div>
-
                     <span style={{textAlign: 'center',
                         display: 'block'}}
                     >
@@ -384,11 +541,18 @@ class PowerAddUp extends React.Component {
                                     <FormItem
                                         {...formItemLayout}
                                         label="房间编号"
-                                    >{getFieldDecorator('room')(<Select>
-                                            <Option value="0001">0001</Option>
-                                            <Option value="0002">0002</Option>
-                                            <Option value="0003">0003</Option>
-                                        </Select>)
+                                    >{getFieldDecorator('room')(
+                                            <Select
+                                                showSearch
+                                                style={{ width: 200}}
+                                                placeholder="请选择房间编号"
+                                                optionFilterProp="children"
+                                                onChange={this.chooseRoomNumber}
+                                            >
+                                                {this.state.roomNumberOne.map((roomNumber, i) => {
+                                                    return <Option key={roomNumber}>{roomNumber}</Option>
+                                                })}
+                                            </Select>)
                                         }
                                     </FormItem>
                                     <FormItem
