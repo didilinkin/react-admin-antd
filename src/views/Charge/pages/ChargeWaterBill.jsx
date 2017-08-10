@@ -98,6 +98,7 @@ class ChargeWaterBill extends React.Component {
     openWaterAddUpComponent = (id) => {
         this.setState({
             openWaterAddUpComponent: true,
+            openInfo: false,
             id: id
         })
     }
@@ -116,6 +117,7 @@ class ChargeWaterBill extends React.Component {
     info = (id) => {
         this.setState({
             openInfo: true,
+            openWaterAddUpComponent: false,
             id: id
         })
     }
