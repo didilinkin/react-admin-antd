@@ -115,9 +115,9 @@ class PropertyContract extends React.Component {
                 dataIndex: 'contractStatus',
                 render: function (text, record, index) {
                     if (text === 1) {
-                        text = '终止'
+                        text = '已终止'
                     } else if (text === 0) {
-                        text = '正常'
+                        text = '执行中'
                     } else {
                         text = '未开始'
                     }
