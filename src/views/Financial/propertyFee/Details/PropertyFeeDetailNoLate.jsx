@@ -74,7 +74,7 @@ class PropertyFeeDetailNoLate extends React.Component {
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -246,9 +246,10 @@ class PropertyFeeDetailNoLate extends React.Component {
                 </div>
                 <div className="wrapbox">
                     <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>
+                    {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a href="javascript:" >&nbsp; 物业费开票 </a>
-                    </Popconfirm>
+                    </Popconfirm>}
                 </div>
             </div>
         )

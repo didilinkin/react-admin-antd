@@ -254,7 +254,8 @@ class propertyFeeAdd extends React.Component {
                             }
                         }
                     }
-                    roomNumber = roomNumberarr
+                    roomNumber = roomNumberarr.join(',')
+                    console.log(roomNumber)
                     json['roomNum'] = roomNumber
                     json['serviceArea'] = serviceArea - area
                     serviceArea = serviceArea - area
@@ -747,7 +748,7 @@ class propertyFeeAdd extends React.Component {
                         <p style={{margin: '20px 0',
                             textAlign: 'right'}}
                         >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
-                                <Input onBlur={this.sumMoney} style={{ width: 120 }} />
+                                <Input onKeyUp={this.sumMoney} style={{ width: 120 }} />
                             )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
                                 <Input style={{ width: 120 }} disabled />
                             )}</p>

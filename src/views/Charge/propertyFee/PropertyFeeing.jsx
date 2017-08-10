@@ -157,19 +157,18 @@ class PropertyFeeing extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
-            id: 0
+            dataSource: result.data
         })
     }
     clientName = null
     entryNameOnChange = (e) => {
         this.clientName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
     }

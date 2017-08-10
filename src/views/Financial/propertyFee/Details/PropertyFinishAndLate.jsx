@@ -92,7 +92,7 @@ class PropertyFinishAndLate extends React.Component {
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        location.href = '/financial/PropertyFinishAndLate/' + this.props.match.params.id
     }
     invoiceLate = async () => {
         await apiPost(
@@ -104,7 +104,7 @@ class PropertyFinishAndLate extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        location.href = '/financial/PropertyFinishAndLate/' + this.props.match.params.id
     }
     delayNext = async () => {
         await apiPost(
@@ -373,12 +373,14 @@ class PropertyFinishAndLate extends React.Component {
                     <Popconfirm title="确定违约金延期下月电费吗?" onConfirm={this.delayNext}>
                         <a href="javascript:" >&nbsp; 延期下月电费 </a>
                     </Popconfirm>
+                    {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn" href="javascript:" >&nbsp; 物业费开票 </a>
-                    </Popconfirm>
+                    </Popconfirm>}
+                    {this.state.data.invoiceLateStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
-                        <a className="btnred ant-btn" href="javascript:" >&nbsp; 违约金开票 </a>
-                    </Popconfirm>
+                        <a className="btnred ant-btn" href="javascript:">&nbsp; 违约金开票 </a>
+                    </Popconfirm>}
                 </div>
             </div>
         )
