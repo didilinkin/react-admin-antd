@@ -35,6 +35,7 @@ class RentReviewDetailNoPaid extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        location.href = '/financial/RentReviewDetailNoPaid/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({
@@ -128,9 +129,10 @@ class RentReviewDetailNoPaid extends React.Component {
                     </div>
                 </div>
                 <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>
+                {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
                     <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
-                </Popconfirm>
+                </Popconfirm>}
             </div>
         )
     }
