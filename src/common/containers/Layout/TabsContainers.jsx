@@ -22,13 +22,34 @@ class TabsContainers extends React.Component {
 
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
-        let numkey = parseFloat(activeKey) // 转换为 浮点型数值
-        this.setActiveKey(`${numkey}`) // 优先切换 标签, 然后走路由
-
-        console.log(this.props.panesState.panes)
         // 删除 非最后一个标签时, 跳转事件存在问题
-        let paneUrl = this.props.panesState.panes[numkey - 1].path
-        this.props.tabsProps.history.push(paneUrl)
+        console.log('activeKey值:' + activeKey)
+        console.log('切换标签, 检查panesState数据')
+        console.dir(this.state.panes)
+
+        let currentKey
+        let currentIndex
+        let currentUrl
+
+        this.state.panes.forEach((pane, i) => {
+            if (pane.key === activeKey) {
+                currentIndex = i
+            }
+        })
+
+
+        console.log(currentIndex)
+
+        currentKey = this.state.panes[currentIndex].key
+        currentUrl = this.state.panes[currentIndex].path
+
+        console.log('currentKey:' + currentKey)
+
+        console.log(typeof currentKey)
+
+        this.setActiveKey(currentKey) // 改变 activeKey
+
+        this.props.tabsProps.history.push(currentUrl)
     }
 
     // 新增和删除页签的回调
@@ -38,20 +59,27 @@ class TabsContainers extends React.Component {
 
     // 判断 标签显示条件
     handleChange = () => {
-        const arrayPanes = this.props.panesState.panes // 获取 store当中的 panes数组
+        const arrayPanes = this.state.panes // 获取 store当中的 panes数组
         const strUrl = this.props.route.path // 根据当前路由状态 获取 url字符串
         const isHomeIndex = strUrl === '/home/index'
         const hasUrl = hasString(arrayPanes, 'path', strUrl)
 
         if (!isHomeIndex) {
-            console.log('不为首页, 开始检索')
             if (hasUrl < 1) {
                 // console.log('无 当前url')
                 let currentPanes = this.setCloneObj() // 单个
                 this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store
             } else {
                 // console.log('有 当前url')
-                this.setActiveKey(`${hasUrl + 1}`) // 只需要修改 state.activeKey(字符串)
+                let currentKey
+
+                arrayPanes.forEach((pane, i) => {
+                    if (pane.path === strUrl) {
+                        currentKey = pane.key
+                    }
+                })
+
+                this.setActiveKey(currentKey)
             }
         }
     }
@@ -96,9 +124,8 @@ class TabsContainers extends React.Component {
         const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey)
 
         if (targetKey === activeKey) {
-            console.log('删除的是展示的标签, activeKey要改动')
+            // console.log('删除的是展示的标签, activeKey要改动')
 
-            //
             this.state.panes.forEach((pane, i) => {
                 if (pane.key === targetKey) {
                     currentIndex = i // 要删除的key === 展示的key => 要删除的 i 下标位置保存到 currentIndex(删除pane数组中当前对象; 然后到返回的数组中查找下标为 i的新对象, 拿出他的key 作为最新展示的key)
@@ -116,7 +143,7 @@ class TabsContainers extends React.Component {
 
             this.props.tabsProps.history.push(currentUrl)
         } else {
-            console.log('删除的不是展示的, activeKey不改动; 不跳路由')
+            // console.log('删除的不是展示的, activeKey不改动; 不跳路由')
             currentKey = activeKey
 
             this.props.onAddPane({
@@ -128,7 +155,7 @@ class TabsContainers extends React.Component {
 
     // 当 props改变时 触发 => 调用 更改 setState的方法
     componentWillReceiveProps = (nextProps) => {
-        console.log('store 发生改变')
+        // console.log('store 发生改变')
         let currentState = cloneDeep(nextProps.panesState)
         this.setState(currentState)
     }
