@@ -250,6 +250,7 @@ class CollectRentSuccess extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
+
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 2000 }}

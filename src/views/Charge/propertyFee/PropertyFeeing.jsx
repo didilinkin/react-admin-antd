@@ -16,6 +16,7 @@ class PropertyFeeing extends Component {
             openUpdate: false,
             AccountList: [],
             columns: [],
+            RowKeys: [],
             dataSource: [],
             ListBuildingInfo: [],
             id: null
@@ -61,6 +62,12 @@ class PropertyFeeing extends Component {
             openTableAddUp: false
         })
     }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -80,7 +87,6 @@ class PropertyFeeing extends Component {
                 title: '序号',
                 width: 100,
                 dataIndex: 'id',
-                key: 'id',
                 render: function (text, record, index) {
                     index++
                     return (
@@ -90,37 +96,31 @@ class PropertyFeeing extends Component {
             }, {
                 title: '所属楼宇',
                 width: 150,
-                dataIndex: 'buildName',
-                key: 'buildName'
+                dataIndex: 'buildName'
             }, {
                 title: '房间编号',
                 width: 250,
-                dataIndex: 'roomNum',
-                key: 'roomNum'
+                dataIndex: 'roomNum'
             }, {
                 title: '客户名称',
                 width: 300,
-                dataIndex: 'clientName',
-                key: 'clientName'
+                dataIndex: 'clientName'
             }, {
                 title: '本期物业费周期',
                 width: 250,
-                dataIndex: 'periodPropertyFee',
-                key: 'periodPropertyFee'
+                dataIndex: 'periodPropertyFee'
             }, {
                 title: '应收金额',
                 width: 150,
-                dataIndex: 'actualPaidMoney',
-                key: 'actualPaidMoney'
+                dataIndex: 'actualPaidMoney'
             }, {
                 title: '交费期限',
-                dataIndex: 'payDeadline',
-                key: 'payDeadline'
+                width: 150,
+                dataIndex: 'payDeadline'
             }, {
                 title: '操作',
                 width: 200,
                 dataIndex: 'opt',
-                key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
@@ -175,6 +175,18 @@ class PropertyFeeing extends Component {
     query = () => {
         this.refresh()
     }
+    BatchAuditPropertyFee = async () => {
+        await apiPost(
+            '/propertyFee/BatchAuditProperty',
+            {ids: this.state.RowKeys.toString(),
+                auditStatus: 1}
+        )
+        notification.open({
+            message: '提交成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
     render () {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
@@ -210,10 +222,14 @@ class PropertyFeeing extends Component {
                     />
                     <Button type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>收物业费</Button>
+                    <Button type="primary" onClick={this.BatchAuditPropertyFee}>批量提交</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
                         scroll={{ x: 1500 }}
                         bordered
                         dataSource={this.state.dataSource}
