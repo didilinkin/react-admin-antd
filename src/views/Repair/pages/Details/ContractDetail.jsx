@@ -210,12 +210,16 @@ class App extends React.Component {
                             }
                             <Col span={16}><b>水费收费方式：</b>
                                 {this.state.contract.waterType === 0 &&
-                                    <em className="color1">固定水表</em>
+                                    <em className="color1">按面积</em>
                                 }
                                 {this.state.contract.waterType === 1 &&
                                 <em className="color1">独立水表</em>
                                 }
-                                单价 <em className="color1">{this.state.contract.waterUnitPrice}</em> 元/立方米 耗损比 <em className="color1">{this.state.contract.waterLossRatio}</em>%</Col>
+                                单价 <em className="color1">{this.state.contract.waterUnitPrice}</em> 元/立方米
+                                {this.state.contract.waterType === 1 &&
+                                <span>耗损比 <em className="color1">{this.state.contract.waterLossRatio}</em>%</span>
+                                }
+                            </Col>
                         </Row>
                         <Row>
                             <Col span={8}><b>电梯费单价：</b><em className="color1">{this.state.contract.elevUnitPrice}</em> 元／㎡/月 </Col>
