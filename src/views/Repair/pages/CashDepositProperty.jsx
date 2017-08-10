@@ -87,10 +87,11 @@ class CashDepositProperty extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
+                    let url = '/upkeep/cashDepositDetail/' + record.id
                     if (record.currentBalance !== 0) {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href={url}> 明细 &nbsp;</a>
                                 <a href="javascript:" onClick={() => handleUpdate(record.id)} > 扣款 </a>
                                 <a href="javascript:" onClick={() => handleUpdate2(record.id)} > 退款 </a>
                             </div>
@@ -98,7 +99,7 @@ class CashDepositProperty extends Component {
                     } else {
                         return (
                             <div>
-                                <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a href={url}> 明细 &nbsp;</a>
                             </div>
                         )
                     }

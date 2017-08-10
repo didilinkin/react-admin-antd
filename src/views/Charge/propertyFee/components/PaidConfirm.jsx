@@ -38,7 +38,7 @@ class paidConfirrm extends React.Component {
                     errors: ''
                 },
                 actualPaidMoney: {
-                    value: resulData.data.currentPeriodMoney,
+                    value: resulData.data.actualPaidMoney,
                     errors: ''
                 },
                 discountMoney: {
@@ -83,7 +83,7 @@ class paidConfirrm extends React.Component {
         if (typeof (discountMoney) === 'undefined') {
             discountMoney = 0
         }
-        let currentPeriodMoney = this.props.form.getFieldValue('currentPeriodMoney')
+        let currentPeriodMoney = this.state.data.actualPaidMoney
         if (typeof (currentPeriodMoney) === 'undefined') {
             currentPeriodMoney = 0
         }
@@ -134,7 +134,7 @@ class paidConfirrm extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('discountMoney')(
-                                        <Input onBlur={this.sumMoney} />
+                                        <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>
                                 <FormItem label="实际应收" labelCol={{ span: 6 }}

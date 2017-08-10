@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../../api'
+import AddRoom from './RoomAdd'
 // 引入组件
 const Option = Select.Option
 // React component
@@ -13,6 +14,7 @@ class PropertyFeeConduct extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
+            title: '',
             columns: [],
             dataSource: [],
             ListBuildingInfo: []
@@ -20,19 +22,33 @@ class PropertyFeeConduct extends Component {
     }
     handleUpdate = (id) => {
         this.setState({
-            openAdd: false,
+            openAdd: true,
             openTableAddUp: false,
-            openUpdate: true,
+            openUpdate: false,
+            title: '编辑房间',
             id: id
+        })
+    }
+    add = () => {
+        this.setState({
+            openAdd: true,
+            openTableAddUp: false,
+            openUpdate: false,
+            title: '添加房间',
+            id: null
         })
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/build/buildList'
+            '/build/roomList'
+        )
+        let ListBuildingInfo = await apiPost(
+            '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -45,25 +61,88 @@ class PropertyFeeConduct extends Component {
                     )
                 }
             }, {
-                title: '楼宇名称',
+                title: '所属楼宇',
                 width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
-                title: '楼层数量',
+                title: '房间编号',
                 width: 250,
-                dataIndex: 'floorNum',
-                key: 'floorNum'
+                dataIndex: 'roomNum',
+                key: 'roomNum'
             }, {
-                title: '客梯数量',
+                title: '建筑面积（㎡）',
                 width: 300,
-                dataIndex: 'passengerElevatorNum',
-                key: 'passengerElevatorNum'
+                dataIndex: 'roomArea',
+                key: 'roomArea'
             }, {
-                title: '货梯数量',
+                title: '层高',
                 width: 250,
-                dataIndex: 'goodsElevatorNum',
-                key: 'goodsElevatorNum'
+                dataIndex: 'roomHeight',
+                key: 'roomHeight'
+            }, {
+                title: '房间状态',
+                width: 250,
+                dataIndex: 'roomStatus',
+                key: 'roomStatus',
+                render: function (text, record, index) {
+                    let whType = ''
+                    if (record.propertyType === 2) {
+                        whType = '--'
+                    }
+                    if (record.roomStatus === 0) {
+                        whType = '空置'
+                    }
+                    if (record.roomStatus === 1) {
+                        whType = '已租'
+                    }
+                    if (record.roomStatus === 2) {
+                        whType = '自用'
+                    }
+                    return (
+                        <span>{whType}</span>
+                    )
+                }
+            }, {
+                title: '产权性质',
+                width: 250,
+                dataIndex: 'propertyType',
+                key: 'propertyType',
+                render: function (text, record, index) {
+                    let whType = ''
+                    if (record.roomStatus === 0) {
+                        whType = '自有'
+                    }
+                    if (record.roomStatus === 1) {
+                        whType = '使用权'
+                    }
+                    if (record.roomStatus === 2) {
+                        whType = '出售'
+                    }
+                    return (
+                        <span>{whType}</span>
+                    )
+                }
+            }, {
+                title: '产权单位',
+                width: 250,
+                dataIndex: 'propertyOwner',
+                key: 'propertyOwner'
+            }, {
+                title: '产权联系人',
+                width: 250,
+                dataIndex: 'linkman',
+                key: 'linkman'
+            }, {
+                title: '联系方式',
+                width: 250,
+                dataIndex: 'phoneNum',
+                key: 'phoneNum'
+            }, {
+                title: '备注',
+                width: 250,
+                dataIndex: 'remark',
+                key: 'remark'
             }, {
                 title: '操作',
                 width: 200,
@@ -73,7 +152,7 @@ class PropertyFeeConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            <a href="javascript:" onClick={() => handleUpdate(record.id)} > 编辑 </a>
                         </div>
                     )
                 }
@@ -87,12 +166,11 @@ class PropertyFeeConduct extends Component {
     refresh = async () => {
         // 刷新表格
         let result = await apiPost(
-            '/propertyFee/propertyFeeList',
-            {'clientName': this.clientName,
+            '/build/roomList',
+            {'propertyType': this.propertyType,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
-                'contractStatus': 0,
-                'auditStatus': 1
+                'roomStatus': this.roomStatus
             }
         )
         this.setState({
@@ -103,17 +181,21 @@ class PropertyFeeConduct extends Component {
             id: 0
         })
     }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
+    }
+    propertyType = null
+    selectPropertyType = (e) => {
+        this.propertyType = e
+    }
+    roomStatus = null
+    selectRoomStatus = (e) => {
+        this.roomStatus = e
     }
     query = () => {
         this.refresh()
@@ -122,6 +204,12 @@ class PropertyFeeConduct extends Component {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <AddRoom
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openAdd}
+                    title={this.state.title}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}
@@ -129,7 +217,7 @@ class PropertyFeeConduct extends Component {
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
-                        style={{width: 200,
+                        style={{width: 150,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
@@ -140,19 +228,40 @@ class PropertyFeeConduct extends Component {
                         })}
                     </Select>
                     <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
+                    <Input style={{width: 100,
                         marginRight: '5px'}} onChange={this.entryNumberOnChange}
                     />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
+                    <span>产权性质:&nbsp;&nbsp;</span>
+                    <Select
+                        showSearch
+                        style={{ width: 150 }}
+                        placeholder="请选择产权性质"
+                        optionFilterProp="children"
+                        onSelect={this.selectPropertyType}
+                    >
+                        <Option key="0">自有</Option>
+                        <Option key="1">使用权</Option>
+                        <Option key="2">出售</Option>
+                    </Select>
+                    <span>房间状态:&nbsp;&nbsp;</span>
+                    <Select
+                        showSearch
+                        style={{ width: 150 }}
+                        placeholder="请选择房间状态"
+                        optionFilterProp="children"
+                        onSelect={this.selectRoomStatus}
+                    >
+                        <Option key="0">空置</Option>
+                        <Option key="1">已租</Option>
+                        <Option key="2">自用</Option>
+                    </Select>
                     <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.add}>添加房间</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 1900 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
