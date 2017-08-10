@@ -240,9 +240,11 @@ class App extends React.Component {
                         </ul>
                     </div>
                 </div>
+                {this.state.contract.contractStatus === 0 &&
                 <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>
+                }
                 <SubletAddUpCom
                     id={this.state.id}
                     refresh={this.refresh}

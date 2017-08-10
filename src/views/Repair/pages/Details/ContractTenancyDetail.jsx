@@ -162,7 +162,9 @@ class App extends React.Component {
                             dataSource={this.state.dataSource}
                             columns={this.state.columns}
                         />
-                        <Button type="primary" onClick={this.TerminationComponent} >终止合同</Button>
+                        {this.state.contract.contractStatus === 0 &&
+                        <Button type="primary" onClick={this.TerminationComponent}>终止合同</Button>
+                        }
                     </div>
                 </div>
                 <TerminationComponent

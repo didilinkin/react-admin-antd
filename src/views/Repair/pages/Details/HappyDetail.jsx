@@ -161,7 +161,9 @@ class App extends React.Component {
                         />
                     </div>
                 </div>
+                {this.state.contract.contractStatus === 0 &&
                 <Button type="primary" onClick={this.TerminationComponent}>终止合同</Button>
+                }
                 <TerminationComponent
                     id={this.props.match.params.id}
                     type="2"

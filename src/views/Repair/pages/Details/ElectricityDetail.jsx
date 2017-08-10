@@ -140,9 +140,11 @@ class App extends React.Component {
                         </Row>
                     </div>
                 </div>
+                {this.state.contract.contractStatus === 0 &&
                 <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>
+                }
                 <TerminationComponent
                     id={this.props.match.params.id}
                     refreshTable={this.refresh}
