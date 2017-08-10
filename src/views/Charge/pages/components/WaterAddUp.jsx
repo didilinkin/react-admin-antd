@@ -84,7 +84,8 @@ class WaterAddUp extends React.Component {
     async initialRemarks2 () {
         let PmContract = await apiPost(
             '/propertyFee/getPmContractList',
-            {contractStatus: 0}
+            {contractStatus: 0,
+                waterType: 1}
         )
         let users = await apiPost(
             '/water/getchaobiaouser',
