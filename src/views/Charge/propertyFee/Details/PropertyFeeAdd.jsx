@@ -260,7 +260,7 @@ class propertyFeeAdd extends React.Component {
                     serviceArea = serviceArea - area
                     this.props.form.setFieldsValue({
                         buildName: pmContract.buildName,
-                        serviceArea: serviceArea,
+                        serviceArea: parseFloat(serviceArea).toFixed(2),
                         roomNum: roomNumber,
                         printClientName: pmContract.clientName,
                         yearPmPrice: pmContract.yearPmPrice,
@@ -271,7 +271,7 @@ class propertyFeeAdd extends React.Component {
                     json['serviceArea'] = serviceArea
                     this.props.form.setFieldsValue({
                         buildName: pmContract.buildName,
-                        serviceArea: serviceArea,
+                        serviceArea: parseFloat(serviceArea).toFixed(2),
                         roomNum: pmContract.leaseRooms,
                         printClientName: pmContract.clientName,
                         yearPmPrice: pmContract.yearPmPrice,
@@ -366,7 +366,7 @@ class propertyFeeAdd extends React.Component {
             let id = pmContract.clientId.toString()
             if (value === id) {
                 this.props.form.setFieldsValue({
-                    serviceArea: pmContract.serviceArea,
+                    serviceArea: parseFloat(pmContract.serviceArea).toFixed(2),
                     printClientName: pmContract.clientName,
                     roomNum: pmContract.leaseRooms
                 })

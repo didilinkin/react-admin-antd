@@ -1,6 +1,6 @@
 // 收费管理 - 审核中
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin, Input, Select, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api'
 import AddRoom from './RoomAdd'
 // 引入组件
@@ -29,6 +29,18 @@ class PropertyFeeConduct extends Component {
             id: id
         })
     }
+    handleDelete = async (id) => {
+        await apiPost(
+            '/build/deleteRoom',
+            {id: id,
+                delFlag: 1}
+        )
+        notification.open({
+            message: '删除成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
     add = () => {
         this.setState({
             openAdd: true,
@@ -47,6 +59,7 @@ class PropertyFeeConduct extends Component {
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleDelete = this.handleDelete
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -110,13 +123,13 @@ class PropertyFeeConduct extends Component {
                 key: 'propertyType',
                 render: function (text, record, index) {
                     let whType = ''
-                    if (record.roomStatus === 0) {
+                    if (record.propertyType === 0) {
                         whType = '自有'
                     }
-                    if (record.roomStatus === 1) {
+                    if (record.propertyType === 1) {
                         whType = '使用权'
                     }
-                    if (record.roomStatus === 2) {
+                    if (record.propertyType === 2) {
                         whType = '出售'
                     }
                     return (
@@ -153,6 +166,9 @@ class PropertyFeeConduct extends Component {
                     return (
                         <div>
                             <a href="javascript:" onClick={() => handleUpdate(record.id)} > 编辑 </a>
+                            <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
+                                <a href="javascript:" > 删除 </a>
+                            </Popconfirm>
                         </div>
                     )
                 }
@@ -217,11 +233,12 @@ class PropertyFeeConduct extends Component {
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 150,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
-                        onSelect={this.selectBuild}
+                        onChange={this.selectBuild}
                     >
                         {ListBuildingInfo.map(BuildingInfo => {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
@@ -234,10 +251,11 @@ class PropertyFeeConduct extends Component {
                     <span>产权性质:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{ width: 150 }}
                         placeholder="请选择产权性质"
                         optionFilterProp="children"
-                        onSelect={this.selectPropertyType}
+                        onChange={this.selectPropertyType}
                     >
                         <Option key="0">自有</Option>
                         <Option key="1">使用权</Option>
@@ -246,10 +264,11 @@ class PropertyFeeConduct extends Component {
                     <span>房间状态:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{ width: 150 }}
                         placeholder="请选择房间状态"
                         optionFilterProp="children"
-                        onSelect={this.selectRoomStatus}
+                        onChange={this.selectRoomStatus}
                     >
                         <Option key="0">空置</Option>
                         <Option key="1">已租</Option>

@@ -98,6 +98,7 @@ class ChargeWaterBill extends React.Component {
     openWaterAddUpComponent = (id) => {
         this.setState({
             openWaterAddUpComponent: true,
+            openInfo: false,
             id: id
         })
     }
@@ -116,8 +117,20 @@ class ChargeWaterBill extends React.Component {
     info = (id) => {
         this.setState({
             openInfo: true,
+            openWaterAddUpComponent: false,
             id: id
         })
+    }
+    deleteWater = async (id) => {
+        let data = await apiPost(
+            '/WaterBill/deleteWaterBill',
+            {id: id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -147,6 +160,7 @@ class ChargeWaterBill extends React.Component {
         let openWaterAddUpComponent = this.openWaterAddUpComponent
         let examine = this.examine
         let info = this.info
+        let deleteWater = this.deleteWater
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -203,8 +217,12 @@ class ChargeWaterBill extends React.Component {
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm key="1" title="确定提交吗?" onConfirm={() => examine(record.id)}>
+                            <Popconfirm title="确定提交吗?" onConfirm={() => examine(record.id)}>
                                 <a>提交</a>
+                            </Popconfirm>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <Popconfirm title="确定删除吗?" onConfirm={() => deleteWater(record.id)}>
+                                <a>删除</a>
                             </Popconfirm>
                         </span>
                     )
