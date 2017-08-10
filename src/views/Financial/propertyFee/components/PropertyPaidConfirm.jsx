@@ -125,7 +125,7 @@ class propertyPaidConfirm extends React.Component {
         return (
             <div>
                 <Modal maskClosable={false}
-                    title={this.props.title}
+                    title="确认收款"
                     style={{top: 20}}
                     width={400}
                     visible={this.state.visible}

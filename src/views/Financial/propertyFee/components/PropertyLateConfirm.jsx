@@ -86,11 +86,20 @@ class propertyLateConfirm extends React.Component {
         if (typeof (unpaidMoney1) === 'undefined') {
             unpaidMoney1 = 0
         }
-        let unpaidMoney2 = unpaidMoney1 - thisPaidMoney
+        let discountMoney = this.props.form.getFieldValue('discountMoney')
+        if (typeof (discountMoney) === 'undefined') {
+            discountMoney = 0
+        }
+        let unpaidMoney2 = 0
+        if (discountMoney === 0) {
+            unpaidMoney2 = unpaidMoney1 - thisPaidMoney
+        } else {
+            unpaidMoney2 = unpaidMoney1 - thisPaidMoney - discountMoney
+        }
         if (unpaidMoney2 < 0) {
             this.props.form.setFieldsValue({
-                unpaidLateMoney: parseFloat(unpaidMoney1).toFixed(1),
-                unpaidMoney: parseFloat(unpaidMoney1).toFixed(1),
+                unpaidLateMoney: parseFloat(unpaidMoney1 - discountMoney).toFixed(1),
+                unpaidMoney: parseFloat(unpaidMoney1 - discountMoney).toFixed(1),
                 thisLateMoney: 0
             })
             notification.open({

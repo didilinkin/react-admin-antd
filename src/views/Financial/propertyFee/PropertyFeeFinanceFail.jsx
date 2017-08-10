@@ -179,6 +179,7 @@ class PropertyFeeFinanceFail extends Component {
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 200,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"

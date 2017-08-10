@@ -1,6 +1,6 @@
 // 楼宇列表
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input } from 'antd'
+import {Table, Button, Spin, Input, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api'
 import AddBuilding from './BuidAdd'
 // 引入组件
@@ -29,6 +29,18 @@ class EditBuilding extends Component {
             id: id
         })
     }
+    handleDelete = async (id) => {
+        await apiPost(
+            '/build/deleteBuild',
+            {id: id,
+                delFlag: 1}
+        )
+        notification.open({
+            message: '删除成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
     add = () => {
         this.setState({
             openAdd: true,
@@ -44,6 +56,7 @@ class EditBuilding extends Component {
             '/build/buildList'
         )
         const handleUpdate = this.handleUpdate
+        const handleDelete = this.handleDelete
         this.setState({loading: false,
             columns: [{
                 title: '序号',
@@ -86,6 +99,9 @@ class EditBuilding extends Component {
                     return (
                         <div>
                             <a href="javascript:" onClick={() => handleUpdate(record.id)} > 编辑 </a>
+                            <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
+                                <a href="javascript:" > 删除 </a>
+                            </Popconfirm>
                         </div>
                     )
                 }
