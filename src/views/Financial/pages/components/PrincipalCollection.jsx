@@ -120,7 +120,7 @@ class PrincipalCollection extends React.Component {
                                     message: '请输入本期应收!'
                                 }]
                             })(
-                                <Input type="text" style={{width: '200px'}} />
+                                <Input disabled type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="已收金额" labelCol={{ span: 7 }}
@@ -132,7 +132,7 @@ class PrincipalCollection extends React.Component {
                                     message: '请输入已收金额!'
                                 }]
                             })(
-                                <Input onBlur={this.onBlur} type="text" style={{width: '200px'}} />
+                                <Input disabled onBlur={this.onBlur} type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="本次实收" labelCol={{ span: 7 }}
