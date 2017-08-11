@@ -36,7 +36,7 @@ class RentReviewDetailNoLate extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
+        window.location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({

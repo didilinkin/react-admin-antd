@@ -75,11 +75,11 @@ class collectRentConfirm extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidMoney !== '0.0') {
-            location.href = '/financial/RentReviewDetailNoLate/' + json.id
+            window.location.href = '/financial/RentReviewDetailNoLate/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-            location.href = '/financial/NoLateAndRentFinish/' + json.id
+            window.location.href = '/financial/NoLateAndRentFinish/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-            location.href = '/financial/RentFinishAndLate/' + json.id
+            window.location.href = '/financial/RentFinishAndLate/' + json.id
         }
         this.setState({visible: false,
             isFirst: true })
