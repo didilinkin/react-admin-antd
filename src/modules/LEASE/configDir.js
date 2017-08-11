@@ -20,5 +20,19 @@ const LEASE_DIR = {
         }
     ]
 }
-
-export default LEASE_DIR
+// 详情页路由表
+const LEASE_DETAILS = [
+    {
+        title: '范本合同详情',
+        key: 'ContractTenancyDetail',
+        path: '/home/lease/LeaseContractDetails/contractTenancyDetail/:id',
+        component: require('./containers/details/LeaseContract/ContractTenancyDetail').default
+    },
+    {
+        title: '欢乐颂合同详情',
+        key: 'HappyDetail',
+        path: '/home/lease/LeaseContractDetails/happyDetail/:id',
+        component: require('./containers/details/LeaseContract/HappyDetail').default
+    }
+]
+export { LEASE_DIR, LEASE_DETAILS }
