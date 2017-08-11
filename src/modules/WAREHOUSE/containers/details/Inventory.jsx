@@ -3,7 +3,7 @@ import React from 'react'
 
 class Inventory extends React.Component {
     componentWillMount = () => {
-        console.dir(this.props)
+        console.dir(this.props.match.params.id)
     }
 
     render () {
