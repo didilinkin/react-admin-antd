@@ -9,7 +9,7 @@
 │   ├── LeaseContract.jsx           |   # 租赁合同
 │   └── RentManagement.jsx          |   # 租金管理
 │                                   |
-├—— components /                    # 视图组件(表现组件 - 展现逻辑内容, 不操作数据)
+├—— components /                    # 视图组件(表现组件 - 展现逻辑内容, 不操CollectRentHead.jsx作数据)
 │                                   |
 ├── store /                         # Redux 模块状态管理(非必需)
 │   ├── actions /                   |   # Actions(业务逻辑)
