@@ -139,6 +139,14 @@ class CollectRentConduct extends Component {
             id: 0
         })
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            opendispatch: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     rentClientName = ''
     entryNameOnChange = (e) => {
         this.rentClientName = e.target.value
@@ -165,6 +173,7 @@ class CollectRentConduct extends Component {
                 <CollectRentConductComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
+                    close={this.close}
                     visible={this.state.openAdd}
                 />
                 <span style={{paddingBottom: '10px',

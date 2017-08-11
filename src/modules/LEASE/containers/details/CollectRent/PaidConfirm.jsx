@@ -63,6 +63,7 @@ class addUpkeep extends React.Component {
             isFirst: true })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.setState({ visible: false,
             isFirst: true})
     }

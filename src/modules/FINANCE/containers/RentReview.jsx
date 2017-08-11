@@ -1,12 +1,30 @@
-// 财务管理 - 租金审核
-import React from 'react'
-
-class RentReview extends React.Component {
+// 收费管理 - 应收租金
+import React, {Component} from 'react'
+import { Tabs } from 'antd'
+import CollectRentFinanceConduct from './CollectRent/CollectRentFinanceConduct'
+import CollectRentFinanceFail from './CollectRent/CollectRentFinanceFail'
+import CollectRentFinanceSuccess from './CollectRent/CollectRentFinanceSuccess'
+// 引入组件
+const TabPane = Tabs.TabPane
+// React component
+class RentReview extends Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+        }
+    }
+    callback = (key) => {
+        console.log(key)
+    }
     render () {
-        return (
-            <h1> 财务管理 - 租金审核 </h1>
+        return (<Tabs defaultActiveKey="1" onChange={() => this.callback}>
+            <TabPane tab="待审核" key="1"><CollectRentFinanceConduct /></TabPane>
+            <TabPane tab="审核失败" key="2"><CollectRentFinanceFail /></TabPane>
+            <TabPane tab="审核成功" key="3"><CollectRentFinanceSuccess /></TabPane>
+        </Tabs>
         )
     }
 }
-
 export default RentReview
+
+

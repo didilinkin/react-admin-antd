@@ -165,6 +165,14 @@ class CollectRentFail extends Component {
             id: 0
         })
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            opendispatch: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     rentClientName = ''
     entryNameOnChange = (e) => {
         this.rentClientName = e.target.value
@@ -190,11 +198,13 @@ class CollectRentFail extends Component {
             <div>
                 <CollectRentFailComponent
                     id={this.state.id}
+                    close={this.close}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
                 <CollectRentRepaidComponent
                     id={this.state.id}
+                    close={this.close}
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />

@@ -1,7 +1,7 @@
 // 财务管理 - 租金审核
 import React from 'react'
 import {Row, Col, Modal} from 'antd'
-import '../../../style/test.less'
+import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 
 
@@ -47,6 +47,7 @@ class App extends React.Component {
                 view: true,
                 fileList: []
             })
+            console.log(this.state.data.rentClientName)
         }
     }
     componentWillReceiveProps (nextProps) {
@@ -58,7 +59,6 @@ class App extends React.Component {
         })
     }
     handleCancel = (e) => {
-        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
@@ -109,6 +109,10 @@ class App extends React.Component {
                                 <Row>
                                     <Col span={8}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
                                     <Col span={16}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={8}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
+                                    <Col span={16}><b>审核状态：</b>不通过，{this.state.data.remark}</Col>
                                 </Row>
                             </div>
                         </div>

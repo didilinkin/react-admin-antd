@@ -60,6 +60,7 @@ class RentReviewDetailNoPaid extends React.Component {
         this.initialRemarks(nextProps)
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})

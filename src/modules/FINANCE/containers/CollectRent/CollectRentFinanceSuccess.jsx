@@ -1,19 +1,17 @@
-// 收费管理 - 审核成功
-import React, {Component} from 'react'
-import {Table, Spin } from 'antd'
-import { apiPost } from '../../../../api/index'
-import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
-import NoPaidComponent from '../details/CollectRent/RentReviewDetailNoPaid'
-import NoLateAndRentFinishComponent from '../details/CollectRent/NoLateAndRentFinish'
-import AllPaidComponent from '../details/CollectRent/RentReviewDetail'
+// 收费管理 - 应收租金
+import React from 'react'
+import {Table, Spin, Popconfirm, notification, Icon} from 'antd'
+import { apiPost } from '../../../../api'
 // 引入组件
+import CollectRentHeadComponent from '../../components/CollectRentHead'
 // React component
-class CollectRentSuccess extends Component {
+class CollectRentFinanceSuccess extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             loading: false,
             openAdd: false,
+            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
@@ -21,29 +19,20 @@ class CollectRentSuccess extends Component {
             ListBuildingInfo: []
         }
     }
-    handleUpdate = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: false,
-            openUpdate: true,
-            id: id
+    handleUpdate = async (id) => {
+        await apiPost(
+            '/collectRent/updateCollectRentVoByRecall',
+            {id: id}
+        )
+        notification.open({
+            message: '撤回成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        this.refresh1()
     }
-    handleUpdate2 = (id) => {
-        this.setState({
-            openAdd: true,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }
-    handleUpdate3 = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: true,
-            openUpdate: false,
-            id: id
-        })
+    info = (url) => {
+        console.log(this.props)
+        this.props.history.push(url)
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -55,8 +44,7 @@ class CollectRentSuccess extends Component {
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
-        const handleUpdate3 = this.handleUpdate3
+        const info = this.info
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -126,10 +114,15 @@ class CollectRentSuccess extends Component {
                 dataIndex: 'receiptDate',
                 key: 'receiptDate'
             }, {
-                title: '逾期天数',
+                title: '未收金额',
                 width: 150,
-                dataIndex: 'overdueDay',
-                key: 'overdueDay'
+                dataIndex: 'unpaidMoney',
+                key: 'unpaidMoney'
+            }, {
+                title: '违约金',
+                width: 150,
+                dataIndex: 'lateMoney',
+                key: 'lateMoney'
             }, {
                 title: '租金开票状态',
                 width: 150,
@@ -148,45 +141,55 @@ class CollectRentSuccess extends Component {
                     )
                 }
             }, {
-                title: '打印状态',
-                width: 150,
-                dataIndex: 'whetherPrinted',
-                key: 'whetherPrinted',
-                render: function (text, record, index) {
-                    let whetherPrinted = ''
-                    if (record.whetherPrinted === 0) {
-                        whetherPrinted = '未打印'
-                    }
-                    if (record.whetherPrinted === 1) {
-                        whetherPrinted = '已打印'
-                    }
-                    return (
-                        <span>{whetherPrinted}</span>
-                    )
-                }
-            }, {
                 title: '操作',
-                width: 100,
+                width: 200,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.whetherRentPaid === 0) {
+                    if (record.lateMoney === 0 && record.paidMoney === 0) {
+                        let url = '/financial/RentReviewDetailNoPaid/' + record.id
+                        return (
+                            <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                        )
+                    } else if (record.whetherRentPaid !== 1) {
+                        let url = '/financial/RentReviewDetailNoLate/' + record.id
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a> 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
-                    } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
+                    } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
+                        let url = '/financial/NoLateAndRentFinish/' + record.id
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a>&nbsp; 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
-                    } else {
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
+                        let url = '/financial/RentFinishAndLate/' + record.id
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a>&nbsp; 撤回 </a>
+                                </Popconfirm>
+                            </div>
+                        )
+                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
+                        let url = '/financial/RentReviewDetail/' + record.id
+                        return (
+                            <div>
+                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a>&nbsp; 撤回 </a>
+                                </Popconfirm>
                             </div>
                         )
                     }
@@ -195,8 +198,23 @@ class CollectRentSuccess extends Component {
             dataSource: result.data
         })
     }
-    componentDidMount () {
+    componentWillMount () {
         this.initialRemarks()
+    }
+    refresh1 = async () => {
+        // 刷新表格
+        let result = await apiPost(
+            '/collectRent/collectRentList',
+            {'auditStatus': 2
+            }
+        )
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            dataSource: result.data,
+            id: 0
+        })
     }
     refresh = async (pagination, filters, sorter) => {
         filters['auditStatus'] = 2
@@ -213,41 +231,16 @@ class CollectRentSuccess extends Component {
             id: 0
         })
     }
-    close = async () => {
-        this.setState({
-            openAdd: false,
-            opendispatch: false,
-            openTableAddUp: false,
-            openUpdate: false
-        })
+    query = () => {
+        this.refresh()
     }
     render () {
         return (
             <div>
                 <CollectRentHeadComponent
                     refresh={this.refresh}
-                    close={this.close}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <NoLateAndRentFinishComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openAdd}
-                />
-                <NoPaidComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />
-                <AllPaidComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
-                />
-
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{ x: 2000 }}
@@ -260,6 +253,6 @@ class CollectRentSuccess extends Component {
         )
     }
 }
-export default CollectRentSuccess
+export default CollectRentFinanceSuccess
 
 
