@@ -2,6 +2,10 @@
 import React from 'react'
 
 class Inventory extends React.Component {
+    componentWillMount = () => {
+        console.dir(this.props)
+    }
+
     render () {
         const { match } = this.props
 

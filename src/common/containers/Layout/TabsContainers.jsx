@@ -45,7 +45,7 @@ class TabsContainers extends React.Component {
     // 判断 标签显示条件
     handleChange = () => {
         const arrayPanes = this.state.panes // 获取 store当中的 panes数组
-        const strUrl = this.props.route.path // 根据当前路由状态 获取 url字符串
+        const strUrl = this.props.tabsProps.match.url // 根据当前路由状态 获取 url字符串
         const isHomeIndex = strUrl === '/home/index'
         const hasUrl = hasString(arrayPanes, 'path', strUrl)
 
@@ -80,7 +80,7 @@ class TabsContainers extends React.Component {
         let cloneObj = cloneDeep({
             key: `${this.props.panesState.panes.length + 1}`,
             title: this.props.route.title,
-            path: this.props.route.path
+            path: this.props.tabsProps.match.url
         })
         return cloneObj
     }
