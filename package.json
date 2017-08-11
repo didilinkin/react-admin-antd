@@ -4,7 +4,7 @@
   "description": "长江中心-物业管理系统-2.0(React + Antd-UI)",
   "private": true,
   "author": "yanxiaodi 929213769@qq.com",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "engines": {
     "node": ">=6"
   },
