@@ -4,28 +4,39 @@
 >
 > *NPM* 版本请 升级到 `5.0.3` 以上
 >
-> *Nodejs* 版本 尽量使用 `7.9.0` 版本以上
+> *Nodejs* 版本 尽量使用 `7.9.0` 版本(可能在 node v8 版本有错误; 不推荐使用 v8以上)
 >
 > 开发环境, 请务必使用 *chrome* 作为调试浏览器; 并且安装 *react-devtools* 与 *redux-devtools* 调试插件;
 
 * [**React** v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
-* 使用 `ESLint` 进行代码检测
-* 使用 `Redux` 进行状态管理
+* 使用 [ESlint](http://eslint.cn/) 进行代码检测
+* 使用 [Redux](http://cn.redux.js.org/) 进行状态管理
 
 ## 使用技术:
-| 技术名称                                               | 作用                |  版本   |
+| 全家桶                                                 | 作用                |  版本   |
 | --------                                              | -----:              | :----:  |
-| [React](https://facebook.github.io/react/)            | 视图库              | 15.5.4  |
-| [AntDesign](https://ant.design/index-cn)              | UI框架              | 2.10.4  |
-| [Redux](http://cn.redux.js.org/)                      | 状态管理             | 3.6.0  |
-| [React-router](https://reacttraining.cn/)             | 路由管理            |  3.0.2  |
-| [Axios](https://github.com/mzabriskie/axios)          | 交互处理            |  0.16.1  |
-| [Less](http://www.bootcss.com/p/lesscss/)             | 样式预处理器(AntD)  |  2.7.2  |
-| [Sass](https://www.sass.hk/)                          | 样式预处理器        |  4.5.2  |
+| [react](https://facebook.github.io/react/)            | 视图库              | 15.6.1  |
+| [redux](http://cn.redux.js.org/)                      | 状态管理             | 3.7.1  |
+| [react-redux](http://cn.redux.js.org/docs/react-redux/index.html)                      | Redux的 React 绑定库             | 5.0.5  |
+| [react-router](https://reacttraining.cn/)             | 路由管理            |  4.1.1 |
+| [react-router-redux](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux)       | 路由状态            |  5.0.0-alpha.6 |
+| [react-router-config](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config)     | 静态路由配置            |  1.0.0-beta.3 |
+
+
+| 开发依赖                                               | 作用                |  版本   |
+| --------                                              | -----:              | :----:  |
+| [ant-design](https://ant.design/index-cn)              | UI框架              | 2.10.4  |
+| [axios](https://github.com/mzabriskie/axios)          | 交互处理            |  0.16.1  |
+| [less](http://www.bootcss.com/p/lesscss/)             | 样式预处理器(AntD)  |  2.7.2  |
+| [history](https://github.com/reacttraining/history)   | 路由历史  |  4.6.3  |
 | [webpack](https://doc.webpack-china.org/)             | 模块打包            | 1.14.0  |
-| [Babel](http://babeljs.cn/)                           | ES6转译ES5          |  6.24.1  |
-| [Mockjs](http://mockjs.com/)                          | 模拟接口            |  1.0.1-beta3  |
+| [babel](http://babeljs.cn/)                           | ES6转译ES5          |  6.24.1  |
+| [mockjs](http://mockjs.com/)                          | 模拟接口            |  1.0.1-beta3  |
 | [Elf-ES]()                                            | ES版本Elf(管理样式) | 2.2.1 |
+| [lodash](https://wizardforcel.gitbooks.io/lodash-doc-45/content/)   | 实用工具库  |  4.17.4  |
+| [styled-components](https://www.styled-components.com/)   | CSS in JS实现方法  |  2.0.0  |
+| [polished](https://polished.js.org/)   | JS风格的轻量样式工具集  |  1.1.3  |
+| [store.js](https://github.com/marcuswestin/store.js)   | 操作local storage  |  2.0.12  |
 
 ## 使用插件:
 | 插件名称                                                                     | 作用                                           |   版本  |
@@ -38,8 +49,6 @@
 | [react-quill](https://github.com/zenoamaro/react-quill)                      | React的 Quill组件(富文本)                      | 1.0.0-rc.2  |
 | [recharts](https://github.com/recharts/recharts)                             | 另一个基于React封装的echarts图表(备用)          | 1.0.0-alpha.0  |
 | [screenfull](https://github.com/sindresorhus/screenfull.js)                  | 全屏插件                                       | 3.2.0  |
-| [styled-components](https://github.com/styled-components/styled-components)  | 样式组件                                       | 2.0.0  |
-| [polished](https://github.com/styled-components/polished)                    | CSS in JS功能插件(可以用js写CSS, 内部封装函数)   | 1.1.3  |
 | [animate.css](https://daneden.github.io/animate.css/)                        | CSS3 动画功能                                  | 3.5.2  |
 | [qs](https://github.com/ljharb/qs)                                           | 字符串解析库(配合axios)                         | 6.4.0  |
 | [moment](https://momentjs.com/)                                              | JS处理 / 操作 / 转换 时间日期                   | 2.18.1  |
@@ -90,11 +99,5 @@
 ***
 
 ## **ToDoList**
-- [ ]  `webpack` report打包的体积分析报告( 类似 Vue的 `npm run build --report` )
-- [ ]  `src` 目录 功能划分的调整( 参考`Redux` 推荐目录结构 )
-- [ ] [**webpack 巧解环境配置问题**](https://segmentfault.com/a/1190000004053607)
-- [ ] `redux-devtools` 配置说明
-- [ ] 优化项目结构果
-- [ ] 将 `store` 独立出来, 作为一个模块
 - [ ] 在 `redux` 中使用 异步`thunk`
 

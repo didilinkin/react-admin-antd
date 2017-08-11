@@ -22,7 +22,7 @@ export const px2rem = (px) => {
     }
 }
 
-// flex混合
+// flex 居中混合
 export const flexCenter = () => {
     return {
         'display': 'flex',

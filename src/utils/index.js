@@ -1,7 +1,7 @@
 // 常用方法
 import { isString, findIndex } from 'lodash'
 
-// 深拷贝
+// 深拷贝(简单实现)
 const stateCopy = (stateObj) => {
     return JSON.parse(JSON.stringify(stateObj))
 }
