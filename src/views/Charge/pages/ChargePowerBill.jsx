@@ -4,6 +4,7 @@ import {Table, Spin, Popconfirm, Tabs } from 'antd'
 import PowerBillHeadComponent from './components/PowerBillHead'
 import PowerAddUpComponent from './components/PowerAddUp'
 import { apiPost } from '../../../api'
+import PowerInfomation from './components/PowerInfomation'
 
 
 const TabPane = Tabs.TabPane
@@ -24,6 +25,7 @@ class ChargeWaterBill extends React.Component {
             openWaterAddUpComponent: false,
             order: 1,
             RowKeys: [],
+            openInfo: false,
             id: 0
         }
     }
@@ -154,11 +156,11 @@ class ChargeWaterBill extends React.Component {
                 width: 200,
                 dataIndex: 'wattHourType',
                 render: function (text, record, index) {
-                    let dataIndex = '固定'
+                    let dataIndex = '固定单价'
                     if (text.toString() === '1') {
-                        dataIndex = '差额'
+                        dataIndex = '差额单价'
                     } else if (text.toString() === '2') {
-                        dataIndex = '峰平谷'
+                        dataIndex = '功峰平谷'
                     }
                     return (
                         <p>{dataIndex}</p>
@@ -182,6 +184,7 @@ class ChargeWaterBill extends React.Component {
                 dataIndex: 'overdueDate'
 
             }]
+        let info = this.info
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -196,7 +199,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -214,7 +217,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -242,7 +245,6 @@ class ChargeWaterBill extends React.Component {
                                 <a>重新收费</a>
                             </Popconfirm>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a>明细</a>
                         </span>
                     )
                 }
@@ -301,7 +303,7 @@ class ChargeWaterBill extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a>明细</a>
+                            <a onClick={() => info(record.id)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm key="1" title="确定提交吗?">
                                 <a>打印通知单</a>
@@ -310,6 +312,13 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }])
+        })
+    }
+    info = (id) => {
+        this.setState({
+            openInfo: true,
+            openWaterAddUpComponent: false,
+            id: id
         })
     }
     componentDidMount () {
@@ -393,18 +402,21 @@ class ChargeWaterBill extends React.Component {
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
-                            // pagination = <Pagination showSizeChanger total={500}/>
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            // onChange={this.refresh}
                             scroll={{ x: 1450 }}
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
                         />
                     </TabPane>
                 </Tabs>
+                <PowerInfomation
+                    id={this.state.id}
+                    visible={this.state.openInfo}
+                />
             </Spin>
+
         )
     }
 }
