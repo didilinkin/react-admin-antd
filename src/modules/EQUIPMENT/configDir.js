@@ -46,5 +46,13 @@ const EQUIPMENT_DIR = {
         }
     ]
 }
-
-export default EQUIPMENT_DIR
+// 详情页路由表
+const EQUIPMENT_DETAILS = [
+    {
+        title: '设备明细',
+        key: 'equipmentledgerDetails',
+        path: '/home/equipment/Details/equipmentledgerDetails/:id',
+        component: require('./containers/details/EquipmentAccount/EquipmentledgerDetails').default
+    }
+]
+export { EQUIPMENT_DIR, EQUIPMENT_DETAILS }
