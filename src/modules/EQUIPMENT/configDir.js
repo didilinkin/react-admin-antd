@@ -46,5 +46,31 @@ const EQUIPMENT_DIR = {
         }
     ]
 }
-
-export default EQUIPMENT_DIR
+// 详情页路由表
+const EQUIPMENT_DETAILS = [
+    {
+        title: '设备明细',
+        key: 'equipmentledgerDetails',
+        path: '/home/equipment/Details/equipmentledgerDetails/:id',
+        component: require('./containers/details/EquipmentAccount/EquipmentledgerDetails').default
+    },
+    {
+        title: '机房明细',
+        key: 'ServerRoomDetails',
+        path: '/home/equipment/Details/serverRoomDetails/:id',
+        component: require('./containers/details/ComputerRoomManagement/ServerRoomDetails').default
+    },
+    {
+        title: '保养情况',
+        key: 'MaintenancerecordDetails',
+        path: '/home/equipment/Details/maintain/maintenancerecordDetails/:id',
+        component: require('./containers/details/maintain/MaintenancePlan/MaintenancerecordDetails').default
+    },
+    {
+        title: '维修情况',
+        key: 'RepairrecordDetails',
+        path: '/home/equipment/Details/maintain/repairrecordDetails/:id',
+        component: require('./containers/details/maintain/RepairRecord/RepairrecordDetails').default
+    }
+]
+export { EQUIPMENT_DIR, EQUIPMENT_DETAILS }

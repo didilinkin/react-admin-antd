@@ -32,5 +32,19 @@ const PROPERTY_DIR = {
         }
     ]
 }
-
-export default PROPERTY_DIR
+// 详情页路由表
+const PROPERTY_DETAILS = [
+    {
+        title: '范本合同详情',
+        key: 'ContractDetail',
+        path: '/home/property/contractDetails/contractDetail/:id',
+        component: require('./containers/details/Contract/ContractDetail').default
+    },
+    {
+        title: '水电合同详情',
+        key: 'ElectricityDetail',
+        path: '/home/property/contractDetails/electricityDetail/:id',
+        component: require('./containers/details/Contract/ElectricityDetail').default
+    }
+]
+export { PROPERTY_DIR, PROPERTY_DETAILS}

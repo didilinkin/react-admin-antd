@@ -79,4 +79,31 @@ const CLIENT_DIR = {
     ]
 }
 
-export default CLIENT_DIR
+// 详情页路由表
+const CLIENT_DETAILS = [
+    {
+        title: '报修内容',
+        key: 'RepairDetail',
+        path: '/home/client/repair/repairDetail/:id',
+        component: require('./containers/details/repair/RepairDetail').default
+    },
+    {
+        title: '维修明细',
+        key: 'MaintenanceDetail',
+        path: '/home/client/repair/MaintenanceDetail/:id',
+        component: require('./containers/details/repair/MaintenanceDetail').default
+    },
+    {
+        title: '回访情况',
+        key: 'ReturnVisitDetail',
+        path: '/home/client/repair/ReturnVisitDetail/:id',
+        component: require('./containers/details/repair/ReturnVisitDetail').default
+    },
+    {
+        title: '回访登记',
+        key: 'ReturnDetail',
+        path: '/home/client/repair/ReturnDetail/:id',
+        component: require('./containers/details/repair/ReturnDetail').default
+    }
+]
+export {CLIENT_DIR, CLIENT_DETAILS}
