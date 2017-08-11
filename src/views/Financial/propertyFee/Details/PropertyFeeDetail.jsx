@@ -198,7 +198,7 @@ class PropertyFeeDetail extends React.Component {
                         <h2>确认收款</h2>
                         <Row>
                             <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
-                            <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
+                            <Col span={16}><i>开票状态：</i>{this.state.invoiceRentStatus}</Col>
                         </Row>
                         <table className="tb">
                             <tbody>

@@ -65,7 +65,8 @@ class ChargeWaterBill extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
-            openInfo: false})
+            openInfo: false,
+            openWaterAddUpComponent: false})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters

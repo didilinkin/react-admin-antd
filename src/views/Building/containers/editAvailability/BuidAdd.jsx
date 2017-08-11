@@ -93,7 +93,7 @@ class WarehouseAddUp extends React.Component {
             <Modal maskClosable={false}
                 title={this.state.title}
                 style={{top: 20}}
-                width="400"
+                width={400}
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}

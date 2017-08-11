@@ -205,9 +205,10 @@ class NoLateAndRentFinish extends React.Component {
                         </table>
                     </div>
                 </div>
+                {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
                     <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
-                </Popconfirm>
+                </Popconfirm>}
             </div>
         )
     }

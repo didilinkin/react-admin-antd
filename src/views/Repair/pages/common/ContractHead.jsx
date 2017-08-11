@@ -106,8 +106,8 @@ class ContractHead extends React.Component {
                                     placeholder="请选择合同状态"
                                     optionFilterProp="children"
                                 >
-                                    <Option key="0">正常</Option>
-                                    <Option key="1">终止</Option>
+                                    <Option key="0">执行中</Option>
+                                    <Option key="1">已终止</Option>
                                     <Option key="2">未开始</Option>
                                 </Select>
                             )}

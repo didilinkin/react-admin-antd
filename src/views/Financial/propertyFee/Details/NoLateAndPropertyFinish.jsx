@@ -239,9 +239,10 @@ class NoLateAndPropertyFinish extends React.Component {
                     </div>
                 </div>
                 <div className="wrapbox">
+                    {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
-                        <a href="javascript:" >&nbsp; 物业费开票 </a>
-                    </Popconfirm>
+                        <a className="btnred ant-btn" href="javascript:" >&nbsp; 物业费开票 </a>
+                    </Popconfirm>}
                 </div>
             </div>
         )
