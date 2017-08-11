@@ -53,6 +53,12 @@ const EQUIPMENT_DETAILS = [
         key: 'equipmentledgerDetails',
         path: '/home/equipment/Details/equipmentledgerDetails/:id',
         component: require('./containers/details/EquipmentAccount/EquipmentledgerDetails').default
+    },
+    {
+        title: '机房明细',
+        key: 'ServerRoomDetails',
+        path: '/home/equipment/Details/serverRoomDetails/:id',
+        component: require('./containers/details/ComputerRoomManagement/ServerRoomDetails').default
     }
 ]
 export { EQUIPMENT_DIR, EQUIPMENT_DETAILS }
