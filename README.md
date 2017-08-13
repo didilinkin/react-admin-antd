@@ -99,5 +99,7 @@
 ***
 
 ## **ToDoList**
+- [ ] 关于: 首次运行 `yarn start` 开发模式, 只进入首页 无法登录的问题解决方案;(因 目前登录服务是在局域网内进行, 所以需要手动配置一下 localStore本地数据), 会尽快完善 这个测试功能;
 - [ ] 在 `redux` 中使用 异步`thunk`
+- [ ] 在 `redux` 中使用 [redux-saga](https://github.com/redux-saga/redux-saga); [中文文档](http://leonshi.com/redux-saga-in-chinese/)
 
