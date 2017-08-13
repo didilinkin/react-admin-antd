@@ -188,6 +188,7 @@ module.exports = {
             "SwitchCase": 1,
             "VariableDeclarator": 1
         }],                                                                         // 四格缩进( SwitchCase 保持同步缩进; 多行声明变量保持同步缩进 )
+        "jsx-a11y/href-no-hash": "off",                                             // 推荐不使用 a 标签内使用 空 # 作为地址(规则: https://github.com/humanmade/coding-standards/blob/master/node_modules/eslint-plugin-jsx-a11y/docs/rules/href-no-hash.md); 暂时关闭此功能
 
         // 临时关闭规则
         "react/sort-comp": 0
