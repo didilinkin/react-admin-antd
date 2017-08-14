@@ -4,12 +4,14 @@ import { CLIENT_DETAILS } from '../modules/CLIENT/configDir' // 客户管理
 import { PROPERTY_DETAILS } from '../modules/PROPERTY/configDir' // 物业管理'
 import { LEASE_DETAILS } from '../modules/LEASE/configDir' // 租赁管理
 import { EQUIPMENT_DETAILS } from '../modules/EQUIPMENT/configDir' // 设备管理
+import { FINANCE_DETAILS } from '../modules/FINANCE/configDir' // 财务详情
 const globalDetailsRoute = [
     ...WAREHOUSE_DETAILS,
     ...CLIENT_DETAILS,
     ...PROPERTY_DETAILS,
     ...LEASE_DETAILS,
-    ...EQUIPMENT_DETAILS
+    ...EQUIPMENT_DETAILS,
+    ...FINANCE_DETAILS
 ]
 
 export default globalDetailsRoute
