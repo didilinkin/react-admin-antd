@@ -101,6 +101,11 @@ const CLIENT_DETAILS = [
         key: 'ReturnDetail',
         path: '/home/client/repair/ReturnDetail/:id',
         component: require('./containers/details/repair/ReturnDetail').default
+    }, {
+        title: '保证金详情',
+        key: 'CashDepositDetail',
+        path: '/home/client/cashDepositDetail/cashDepositDetail/:id',
+        component: require('./containers/details/cashDeposit/CashDepositDetail').default
     }
 ]
 export { CLIENT_DIR, CLIENT_DETAILS }
