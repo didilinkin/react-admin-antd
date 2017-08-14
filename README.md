@@ -7,6 +7,8 @@
 > *Nodejs* 版本 尽量使用 `7.9.0` 版本(可能在 node v8 版本有错误; 不推荐使用 v8以上)
 >
 > 开发环境, 请务必使用 *chrome* 作为调试浏览器; 并且安装 *react-devtools* 与 *redux-devtools* 调试插件;
+>
+> 因登录验证为 项目局域网内进行验证所以需要进行配置 Local Storage服务. [详细方法](#auth)
 
 * [**React** v15.5.0更新说明 & v16.0.0更新预告](https://zhuanlan.zhihu.com/p/26250968)
 * 使用 [ESlint](http://eslint.cn/) 进行代码检测
@@ -95,6 +97,22 @@
 ***
 
 # 说明: [`dev`开发模式 / 打包输出 的操作方法](./docs/打包输出&开发模式.md)
+
+***
+
+## 登录验证, Local Storage配置 方法
+
+在 `chrome` 点击 `F12`, 在 调试台选择 `Application` 选项. 配置 `Key` 与 `Value`
+
+```js
+// key          :       value
+isAuthenticate: true
+token: 0b4c544c-ca0b-4c09-94eb-e27a16593823
+```
+
+### **配置如图**
+
+![](./docs/Auth.png)
 
 ***
 
