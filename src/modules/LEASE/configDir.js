@@ -27,8 +27,7 @@ const LEASE_DETAILS = [
         key: 'ContractTenancyDetail',
         path: '/home/lease/LeaseContractDetails/contractTenancyDetail/:id',
         component: require('./containers/details/LeaseContract/ContractTenancyDetail').default
-    },
-    {
+    }, {
         title: '欢乐颂合同详情',
         key: 'HappyDetail',
         path: '/home/lease/LeaseContractDetails/happyDetail/:id',

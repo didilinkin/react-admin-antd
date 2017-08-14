@@ -1,11 +1,11 @@
-// 收费管理 - 应收租金
+// 收费管理 - 审核成功
 import React from 'react'
-import {Table, Spin, Popconfirm, notification, Icon} from 'antd'
+import {Table, Spin, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api'
+import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
-import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // React component
-class CollectRentFinanceSuccess extends React.Component {
+class PropertyFeeFinanceSuccess extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -20,7 +20,7 @@ class CollectRentFinanceSuccess extends React.Component {
     }
     handleUpdate = async (id) => {
         await apiPost(
-            '/collectRent/updateCollectRentVoByRecall',
+            '/propertyFee/updatePropertyFeeByRecall',
             {id: id}
         )
         notification.open({
@@ -38,7 +38,7 @@ class CollectRentFinanceSuccess extends React.Component {
             '/collectRent/ListBuildingInfo'
         )
         let result = await apiPost(
-            '/collectRent/collectRentList',
+            '/propertyFee/propertyFeeList',
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
@@ -69,35 +69,15 @@ class CollectRentFinanceSuccess extends React.Component {
             }, {
                 title: '客户名称',
                 width: 320,
-                dataIndex: 'rentClientName',
-                key: 'rentClientName'
+                dataIndex: 'clientName',
+                key: 'clientName'
             }, {
-                title: '交费周期',
-                width: 150,
-                dataIndex: 'periodStatus',
-                key: 'periodStatus',
-                render: function (text, record, index) {
-                    let whType = ''
-                    if (record.periodStatus === 3) {
-                        whType = '季付'
-                    }
-                    if (record.periodStatus === 6) {
-                        whType = '半年付'
-                    }
-                    if (record.periodStatus === 12) {
-                        whType = '年付'
-                    }
-                    return (
-                        <span>{whType}</span>
-                    )
-                }
-            }, {
-                title: '本期租金周期',
+                title: '本期物业费周期',
                 width: 280,
-                dataIndex: 'periodRent',
-                key: 'periodRent'
+                dataIndex: 'periodPropertyFee',
+                key: 'periodPropertyFee'
             }, {
-                title: '本期租金',
+                title: '应收金额',
                 width: 150,
                 dataIndex: 'actualPaidMoney',
                 key: 'actualPaidMoney'
@@ -107,31 +87,43 @@ class CollectRentFinanceSuccess extends React.Component {
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
-                title: '实收租金日期',
+                title: '实收物业费日期',
                 width: 150,
                 dataIndex: 'receiptDate',
                 key: 'receiptDate'
             }, {
-                title: '未收金额',
+                title: '逾期天数',
                 width: 150,
-                dataIndex: 'unpaidMoney',
-                key: 'unpaidMoney'
+                dataIndex: 'overdueDay',
+                key: 'overdueDay'
             }, {
-                title: '违约金',
+                title: '延期下个月电费',
                 width: 150,
-                dataIndex: 'lateMoney',
-                key: 'lateMoney'
-            }, {
-                title: '租金开票状态',
-                width: 150,
-                dataIndex: 'invoiceRentStatus',
-                key: 'invoiceRentStatus',
+                dataIndex: 'lateConductWay',
+                key: 'lateConductWay',
                 render: function (text, record, index) {
                     let whType = ''
-                    if (record.invoiceRentStatus === 0) {
+                    if (record.lateConductWay === 0) {
+                        whType = '否'
+                    }
+                    if (record.lateConductWay === 1) {
+                        whType = '是'
+                    }
+                    return (
+                        <span>{whType}</span>
+                    )
+                }
+            }, {
+                title: '物业费开票状态',
+                width: 150,
+                dataIndex: 'invoicePropertyStatus',
+                key: 'invoicePropertyStatus',
+                render: function (text, record, index) {
+                    let whType = ''
+                    if (record.invoicePropertyStatus === 0) {
                         whType = '未开票'
                     }
-                    if (record.invoiceRentStatus === 1) {
+                    if (record.invoicePropertyStatus === 1) {
                         whType = '已开票'
                     }
                     return (
@@ -139,19 +131,44 @@ class CollectRentFinanceSuccess extends React.Component {
                     )
                 }
             }, {
+                title: '审核时间',
+                width: 150,
+                dataIndex: 'auditDate',
+                key: 'auditDate'
+            }, {
+                title: '审核人',
+                width: 150,
+                dataIndex: 'auditName',
+                key: 'auditName'
+            }, {
+                title: '申请人',
+                width: 150,
+                dataIndex: 'updateName',
+                key: 'updateName'
+            }, {
+                title: '申请日期',
+                width: 150,
+                dataIndex: 'updateDate',
+                key: 'updateDate'
+            }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     if (record.lateMoney === 0 && record.paidMoney === 0) {
-                        let url = '/home/finance/collectRentDetails/RentReviewDetailNoPaid/' + record.id
+                        let url = '/home/financial/propertyFeeDetails/PropertyFeeDetailNoPaid/' + record.id
                         return (
-                            <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                            <div>
+                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a> 撤回 </a>
+                                </Popconfirm>
+                            </div>
                         )
                     } else if (record.whetherRentPaid !== 1) {
-                        let url = '/home/finance/collectRentDetails/RentReviewDetailNoLate/' + record.id
+                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/' + record.id
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 收款 &nbsp;</a>
@@ -161,32 +178,32 @@ class CollectRentFinanceSuccess extends React.Component {
                             </div>
                         )
                     } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
-                        let url = '/home/finance/collectRentDetails/NoLateAndRentFinish/' + record.id
+                        let url = '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/' + record.id
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a>&nbsp; 撤回 </a>
+                                    <a> 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
-                        let url = '/home/finance/collectRentDetails/RentFinishAndLate/' + record.id
+                        let url = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + record.id
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a>&nbsp; 撤回 </a>
+                                    <a> 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )
                     } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
-                        let url = '/home/finance/collectRentDetails/RentReviewDetail/' + record.id
+                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + record.id
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 收款 &nbsp;</a>
                                 <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a>&nbsp; 撤回 </a>
+                                    <a> 撤回 </a>
                                 </Popconfirm>
                             </div>
                         )
@@ -196,29 +213,14 @@ class CollectRentFinanceSuccess extends React.Component {
             dataSource: result.data
         })
     }
-    componentWillMount () {
+    componentDidMount () {
         this.initialRemarks()
-    }
-    refresh1 = async () => {
-        // 刷新表格
-        let result = await apiPost(
-            '/collectRent/collectRentList',
-            {'auditStatus': 2
-            }
-        )
-        this.setState({
-            openAdd: false,
-            openTableAddUp: false,
-            openUpdate: false,
-            dataSource: result.data,
-            id: 0
-        })
     }
     refresh = async (pagination, filters, sorter) => {
         filters['auditStatus'] = 2
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
+            '/propertyFee/propertyFeeList',
             filters
         )
         this.setState({
@@ -229,19 +231,27 @@ class CollectRentFinanceSuccess extends React.Component {
             id: 0
         })
     }
+    clientName = null
+    entryNameOnChange = (e) => {
+        this.clientName = e.target.value
+    }
+    roomNum = ''
+    entryNumberOnChange = (e) => {
+        this.roomNum = e.target.value
+    }
     query = () => {
         this.refresh()
     }
     render () {
         return (
             <div>
-                <CollectRentHeadComponent
+                <PropertyFeeHeadComponent
                     refresh={this.refresh}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 2000 }}
+                        scroll={{ x: 2200 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
@@ -251,6 +261,6 @@ class CollectRentFinanceSuccess extends React.Component {
         )
     }
 }
-export default CollectRentFinanceSuccess
+export default PropertyFeeFinanceSuccess
 
 

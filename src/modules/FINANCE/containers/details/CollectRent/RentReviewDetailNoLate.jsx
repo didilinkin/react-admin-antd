@@ -3,7 +3,7 @@ import React from 'react'
 import {Row, Col, Button, notification, Icon, Popconfirm} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
-import CollectRentAuditComponent from '../components/CollectRentConfirm'
+import CollectRentAuditComponent from '../../../components/CollectRent/CollectRentConfirm'
 
 
 class RentReviewDetailNoLate extends React.Component {
@@ -36,7 +36,8 @@ class RentReviewDetailNoLate extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
+        // location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
+        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetailNoLate/' + this.props.match.params.id)
     }
     async initialRemarks () {
         this.setState({
@@ -83,7 +84,8 @@ class RentReviewDetailNoLate extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
+        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetailNoLate/' + this.props.match.params.id)
+        // location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
     }
     render () {
         let chargeList = this.state.data2
@@ -200,6 +202,7 @@ class RentReviewDetailNoLate extends React.Component {
                                             <td>{collectRent.createName}</td>
                                         </tr>
                                     }
+                                    return ''
                                 })}
                             </tbody>
                         </table>
@@ -208,7 +211,7 @@ class RentReviewDetailNoLate extends React.Component {
                 <Button type="primary" onClick={this.handleUpdate} >收租金</Button>
                 {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
-                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn">&nbsp; 租金开票 </a>
                 </Popconfirm>}
             </div>
         )

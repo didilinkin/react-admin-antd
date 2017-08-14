@@ -3,7 +3,7 @@ import React from 'react'
 import {Row, Col, Button, notification, Icon, Popconfirm} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
-import CollectRentAuditComponent from '../components/CollectRentLateConfirm'
+import CollectRentAuditComponent from '../../../components/CollectRent/CollectRentLateConfirm'
 
 
 class RentFinishAndLate extends React.Component {
@@ -38,7 +38,8 @@ class RentFinishAndLate extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentFinishAndLate/' + this.props.match.params.id
+        this.props.history.push('/home/financial/collectRentDetails/RentFinishAndLate/' + this.props.match.params.id)
+        // location.href = '/financial/RentFinishAndLate/' + this.props.match.params.id
     }
     invoiceLate = async () => {
         await apiPost(
@@ -50,7 +51,8 @@ class RentFinishAndLate extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentFinishAndLate/' + this.props.match.params.id
+        this.props.history.push('/home/financial/collectRentDetails/RentFinishAndLate/' + this.props.match.params.id)
+        // location.href = '/financial/RentFinishAndLate/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({
@@ -238,6 +240,7 @@ class RentFinishAndLate extends React.Component {
                                             <td>{collectRent.createName}</td>
                                         </tr>
                                     }
+                                    return ''
                                 })}
                             </tbody>
                         </table>
@@ -313,6 +316,7 @@ class RentFinishAndLate extends React.Component {
                                             <td>{collectRent.createName}</td>
                                         </tr>
                                     }
+                                    return ''
                                 })}
                             </tbody>
                         </table>
@@ -321,11 +325,11 @@ class RentFinishAndLate extends React.Component {
                 <Button type="primary" onClick={this.handleUpdate} >收违约金</Button>
                 {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
-                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn">&nbsp; 租金开票 </a>
                 </Popconfirm>}
                 {this.state.data.invoiceLateStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
-                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 违约金开票 </a>
+                    <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
                 </Popconfirm>}
             </div>
         )

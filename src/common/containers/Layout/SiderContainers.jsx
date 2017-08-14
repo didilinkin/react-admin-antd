@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'react-router-redux-dom-link'
 
 import styled from 'styled-components'
+import elf from '../../../elf'
 
 import globalDir from '../../../utils/globalDir'
 
@@ -11,7 +12,7 @@ const SubMenu = Menu.SubMenu
 
 const SiderBox = styled.div `
     display: inline-block;
-    width: 200px;
+    width: ${elf.d.asideWidth}px;
 `
 
 class SiderContainers extends React.Component {

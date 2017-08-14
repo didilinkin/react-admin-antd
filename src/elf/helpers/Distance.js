@@ -4,4 +4,4 @@ export const autoMargin = 20
 
 export const autoPadding = 20
 
-export const asideWidth = 200
+export const asideWidth = 220
