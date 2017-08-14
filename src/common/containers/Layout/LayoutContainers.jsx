@@ -36,6 +36,14 @@ const MainContent = ({ route }) => (
     </div>
 )
 
+// Logo 图片
+const logoObj = require('../../../assets/images/logo200X50.png')
+
+const LogoBox = styled.div `
+    width: 100%;
+    object-fit: cover;
+`
+
 class LayoutContainers extends React.Component {
     state = {
         collapsed: false
@@ -62,7 +70,9 @@ class LayoutContainers extends React.Component {
                     collapsible
                     collapsed={ this.state.collapsed }
                 >
-                    <div className="logo" />
+                    <LogoBox className="logo">
+                        <img src={ logoObj } alt="Logo" />
+                    </LogoBox>
 
                     <SiderContainers />
                 </Sider>
