@@ -77,4 +77,14 @@ const FINANCE_DIR = {
     ]
 }
 
-export default FINANCE_DIR
+// 详情页路由表
+const FINANCE_DETAILS = [
+    {
+        title: '水费明细收款',
+        key: 'WaterFeeDetails',
+        path: '/home/finance/waterFeeDetails/waterFeeDetails/:id',
+        component: require('./containers/details/WaterFee/WaterFeeDetails').default
+    }
+]
+
+export { FINANCE_DIR, FINANCE_DETAILS }
