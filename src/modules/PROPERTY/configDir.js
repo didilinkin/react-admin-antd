@@ -39,8 +39,7 @@ const PROPERTY_DETAILS = [
         key: 'ContractDetail',
         path: '/home/property/contractDetails/contractDetail/:id',
         component: require('./containers/details/Contract/ContractDetail').default
-    },
-    {
+    }, {
         title: '水电合同详情',
         key: 'ElectricityDetail',
         path: '/home/property/contractDetails/electricityDetail/:id',
