@@ -1,9 +1,9 @@
 // 租金明细
 import React from 'react'
 import {Row, Col, notification, Icon, Popconfirm} from 'antd'
-import '../../../../style/test.less'
+import '../../style/test.less'
 import { apiPost } from '../../../../../api'
-import CollectRentAuditComponent from '../components/CollectRentConfirm'
+import CollectRentAuditComponent from '../../../components/CollectRent/CollectRentConfirm'
 
 
 class NoLateAndRentFinish extends React.Component {
@@ -83,7 +83,8 @@ class NoLateAndRentFinish extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        '/financial/NoLateAndRentFinish/' + this.props.match.params.id
+        this.props.history.push('/home/financial/collectRentDetails/NoLateAndRentFinish/' + this.props.match.params.id)
+        // location.href = '/financial/NoLateAndRentFinish/' + this.props.match.params.id
     }
     render () {
         let chargeList = this.state.data2
@@ -200,6 +201,7 @@ class NoLateAndRentFinish extends React.Component {
                                             <td>{collectRent.createName}</td>
                                         </tr>
                                     }
+                                    return ''
                                 })}
                             </tbody>
                         </table>
@@ -207,7 +209,7 @@ class NoLateAndRentFinish extends React.Component {
                 </div>
                 {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
-                    <a className="btnred ant-btn" href="javascript:" >&nbsp; 租金开票 </a>
+                    <a className="btnred ant-btn">&nbsp; 租金开票 </a>
                 </Popconfirm>}
             </div>
         )
