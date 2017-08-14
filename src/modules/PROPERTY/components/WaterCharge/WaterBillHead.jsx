@@ -48,6 +48,11 @@ class WaterBillHead extends React.Component {
             this.setState({
                 openWaterAddUpComponent: false
             })
+            for (let key in json) {
+                if (json[key] === '') {
+                    json[key] = null
+                }
+            }
             this.props.refresh(null, json, null)
         }
     }
