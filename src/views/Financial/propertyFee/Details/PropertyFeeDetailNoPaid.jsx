@@ -45,7 +45,7 @@ class PropertyFeeDetailNoPaid extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
+        window.location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
     }
     handleCancel = (e) => {
         this.isFirst = true
@@ -68,7 +68,7 @@ class PropertyFeeDetailNoPaid extends React.Component {
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/PropertyFeeDetailNoPaid/' + this.props.match.params.id
+        window.location.href = '/financial/PropertyFeeDetailNoPaid/' + this.props.match.params.id
     }
     render () {
         return (

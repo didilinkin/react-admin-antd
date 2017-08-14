@@ -235,7 +235,7 @@ class CentralAirConditioning extends Component {
             {parentId: id,
                 parentType: type})
         if (resulData.data !== null) {
-            location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',7'
+            window.location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',7'
         } else {
             message.info('无异常信息')
         }

@@ -17,7 +17,7 @@ export const apiGet = (url) => {
                 if (resulData.data !== null && resulData.data !== '') {
                     if (resulData.data.toString() === '登录过期') {
                         localStorage.removeItem('token')
-                        window.location.href = '/login'
+                        window.window.location.href = '/login'
                     } else {
                         resolve(resulData)
                     }

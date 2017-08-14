@@ -61,7 +61,7 @@ class NoLateAndPropertyFinish extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        location.href = '/financial/NoLateAndPropertyFinish/' + this.props.match.params.id
+        window.location.href = '/financial/NoLateAndPropertyFinish/' + this.props.match.params.id
     }
     invoiceProperty = async () => {
         await apiPost(

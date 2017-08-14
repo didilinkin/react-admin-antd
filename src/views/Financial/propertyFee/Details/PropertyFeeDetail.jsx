@@ -109,7 +109,7 @@ class PropertyFeeDetail extends React.Component {
         this.refresh()
     }
     refresh = async () => {
-        location.href = '/financial/PropertyFeeDetail/' + this.props.match.params.id
+        window.location.href = '/financial/PropertyFeeDetail/' + this.props.match.params.id
     }
     render () {
         let chargeList = this.state.data2
