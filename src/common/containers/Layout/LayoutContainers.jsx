@@ -66,9 +66,11 @@ class LayoutContainers extends React.Component {
             >
                 {/* 左侧导航栏 */}
                 <Sider
+                    width={ elf.d.asideWidth }
                     trigger={ null }
                     collapsible
                     collapsed={ this.state.collapsed }
+                    style={{ overflowY: 'auto' }}
                 >
                     <LogoBox className="logo">
                         <img src={ logoObj } alt="Logo" />
@@ -114,21 +116,23 @@ class LayoutContainers extends React.Component {
 }
 
 // 样式
-const FooterBox = styled.footer `
+const ContentBox = styled.div `
+    padding: 24px;
+    margin-bottom: ${elf.d.autoMargin}px;
+    background: #fff;
+    min-height: 280px;
+    overflow: auto;
+    border-top: 2px solid rgb(233, 233, 233);
+`
+
+const FooterBox = styled.footer`
     position: fixed;
     bottom: 0;
-    width: calc(100% - 200px);
+    width: calc(100% - 220px);
     height: ${elf.d.autoPadding * 2}px;
     text-align: center;
     line-height: ${elf.d.autoPadding * 2}px;
     background: ${elf.c.background};
-`
-
-const ContentBox = styled.div `
-    padding: 24px;
-    background: #fff;
-    min-height: 280px;
-    border-top: 2px solid rgb(233, 233, 233);
 `
 
 export default LayoutContainers
