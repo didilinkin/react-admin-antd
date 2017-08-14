@@ -1,7 +1,7 @@
 // 客户管理 - 合同管理(非详情页)
 import React from 'react'
 import { apiPost } from '../../../api'
-import {Table, Button, Spin, Radio } from 'antd'
+import {Table, Spin, Radio } from 'antd'
 import ContractHeadComponent from './common/ContractHead'
 class ContractManagement extends React.Component {
     constructor (props) {
