@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Row, Col, Input, Button, DatePicker, Select} from 'antd'
+import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table} from 'antd'
 import { apiPost } from '../../../../api/index'
 import moment from 'moment'
 const FormItem = Form.Item
@@ -17,7 +17,49 @@ class PowerAddUp extends React.Component {
         Contract: {},
         waterLossRatio: 0,
         totalPower: 0,
-        totalMoney: 0
+        totalMoney: 0,
+        tableColumns: [{
+            title: '电费名称',
+            dataIndex: 'name'
+        }, {
+            title: '房间编号',
+            dataIndex: 'roomNumber'
+        }, {
+            title: '上次抄表数',
+            dataIndex: 'lastMeterNumber'
+        }, {
+            title: '本次抄表数',
+            dataIndex: 'meterNumber'
+        }, {
+            title: '本次用电量',
+            dataIndex: 'useNumber'
+        }, {
+            title: '变比',
+            dataIndex: 'change'
+        }, {
+            title: '电损0%',
+            dataIndex: 'electricalLoss'
+        }, {
+            title: '总电量',
+            dataIndex: 'power'
+        }, {
+            title: '单价(1.0685)',
+            dataIndex: 'price'
+        }, {
+            title: '金额',
+            dataIndex: 'money'
+        }, {
+            title: '备注',
+            dataIndex: 'note'
+        }, {
+            title: '操作',
+            dataIndex: 'uuid',
+            render: function (text, record, index) {
+                return (
+                    <Button onClick={this.deleteRecord(text)}>删除</Button>
+                )
+            }
+        }]
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
@@ -86,6 +128,7 @@ class PowerAddUp extends React.Component {
         this.state.ClientList.map(async (contract) => {
             let formName = ''
             if (clientId.toString() === contract.id.toString()) {
+                console.log(contract)
                 formName = contract.clientName
                 let PowerRecord = await apiPost(
                     '/ElectricityFees/LastTimeDate',
@@ -97,6 +140,154 @@ class PowerAddUp extends React.Component {
                     '/ElectricityFees/LastTimeNumber',
                     {id: clientId}
                 )
+                let deleteRecord = this.deleteRecord
+                if (contract.powerType.toString() === '0') {
+                    // 固定单价
+                    this.setState({
+                        tableColumns: [{
+                            title: '电费名称',
+                            dataIndex: 'name'
+                        }, {
+                            title: '房间编号',
+                            dataIndex: 'roomNumber'
+                        }, {
+                            title: '上次抄表数',
+                            dataIndex: 'lastMeterNumber'
+                        }, {
+                            title: '本次抄表数',
+                            dataIndex: 'meterNumber'
+                        }, {
+                            title: '本次用电量',
+                            dataIndex: 'useNumber'
+                        }, {
+                            title: '变比',
+                            dataIndex: 'change'
+                        }, {
+                            title: '电损0%',
+                            dataIndex: 'electricalLoss'
+                        }, {
+                            title: '总电量',
+                            dataIndex: 'power'
+                        }, {
+                            title: '单价(1.0685)',
+                            dataIndex: 'price'
+                        }, {
+                            title: '金额',
+                            dataIndex: 'money'
+                        }, {
+                            title: '备注',
+                            dataIndex: 'note'
+                        }, {
+                            title: '操作',
+                            render: function (text, record, index) {
+                                return (
+                                    <a onClick={() => deleteRecord(record.uuid)}>删除</a>
+                                )
+                            }
+                        }]
+                    })
+                } else if (contract.powerType.toString() === '1') {
+                    // 差额单价
+                    this.setState({
+                        tableColumns: [{
+                            title: '电费名称',
+                            dataIndex: 'name'
+                        }, {
+                            title: '房间编号',
+                            dataIndex: 'roomNumber'
+                        }, {
+                            title: '上次抄表数',
+                            dataIndex: 'lastMeterNumber'
+                        }, {
+                            title: '本次抄表数',
+                            dataIndex: 'meterNumber'
+                        }, {
+                            title: '本次用电量',
+                            dataIndex: 'useNumber'
+                        }, {
+                            title: '变比',
+                            dataIndex: 'change'
+                        }, {
+                            title: '电损10%',
+                            dataIndex: 'electricalLoss'
+                        }, {
+                            title: '总电量',
+                            dataIndex: 'power'
+                        }, {
+                            title: '单价(1.0685)',
+                            dataIndex: 'price'
+                        }, {
+                            title: '金额',
+                            dataIndex: 'money'
+                        }, {
+                            title: '备注',
+                            dataIndex: 'note'
+                        }, {
+                            title: '操作',
+                            dataIndex: 'uuid',
+                            render: function (text, record, index) {
+                                return (
+                                    <Button onClick={this.deleteRecord(text)}>删除</Button>
+                                )
+                            }
+                        }]
+                    })
+                } else {
+                    // 功峰平谷
+                    this.setState({
+                        tableColumns: [{
+                            title: '电费名称',
+                            dataIndex: 'name'
+                        }, {
+                            title: '房间编号',
+                            dataIndex: 'roomNumber'
+                        }, {
+                            title: '上次抄表数',
+                            dataIndex: 'lastMeterNumber'
+                        }, {
+                            title: '本次抄表数',
+                            dataIndex: 'meterNumber'
+                        }, {
+                            title: '本次用电量',
+                            dataIndex: 'useNumber'
+                        }, {
+                            title: '变比',
+                            dataIndex: 'change'
+                        }, {
+                            title: '电损10%',
+                            dataIndex: 'electricalLoss'
+                        }, {
+                            title: '总电量',
+                            dataIndex: 'power'
+                        }, {
+                            title: '峰谷比例',
+                            dataIndex: 'scale'
+                        }, {
+                            title: '单价(1.0685)',
+                            dataIndex: 'price'
+                        }, {
+                            title: '金额',
+                            dataIndex: 'money'
+                        }, {
+                            title: '备注',
+                            dataIndex: 'note'
+                        }, {
+                            title: '操作',
+                            dataIndex: 'uuid',
+                            render: function (text, record, index) {
+                                return (
+                                    <Button onClick={this.deleteRecord(text)}>删除</Button>
+                                )
+                            }
+                        }]
+                    })
+                    // 查询峰谷比利
+                    let bili = await apiPost(
+                        '/ElectricityFees/AverageElectricityFee',
+                        {id: clientId}
+                    )
+                    console.log(bili)
+                }
                 let roomNumber = contract.leaseRooms.split(',')
                 let roomIds = contract.roomIds.split(',')
                 subletList = subletList.data
@@ -228,23 +419,23 @@ class PowerAddUp extends React.Component {
         let json = this.props.form.getFieldsValue()
         console.log(json)
         let jsontwo = {}
-        jsontwo['room'] = json.room
+        jsontwo['uuid'] = new Date().getTime()
+        jsontwo['roomNumber'] = json.roomNumber
         jsontwo['name'] = json.name
         jsontwo['lastMeterNumber'] = json.lastMeterNumber ? json.lastMeterNumber : 0
         jsontwo['meterNumber'] = json.meterNumber ? json.meterNumber : 0
-        jsontwo['useNumber'] = (json.meterNumber - json.lastMeterNumber) ? json.meterNumber - json.lastMeterNumber : 0
-        jsontwo['chenge'] = json.chenge ? json.chenge : 0
+        jsontwo['ratio'] = json.ratio ? json.ratio : 0
         jsontwo['price'] = json.price ? json.price : 0
-        jsontwo['electricalLoss'] = jsontwo.chenge * jsontwo.useNumber
-        jsontwo['power'] = jsontwo.useNumber * jsontwo.chenge + jsontwo.electricalLoss
-        jsontwo['money'] = (jsontwo.power * jsontwo.price) ? (jsontwo.power * jsontwo.price) : 0
+        jsontwo['useNumber'] = (json.meterNumber - json.lastMeterNumber) ? json.meterNumber - json.lastMeterNumber : 0
         jsontwo['note'] = json.note
+        jsontwo['electricalLoss'] = jsontwo.ratio * jsontwo.useNumber
+        jsontwo['power'] = jsontwo.useNumber * jsontwo.ratio + jsontwo.electricalLoss
+        jsontwo['money'] = (jsontwo.power * jsontwo.price) ? (jsontwo.power * jsontwo.price) : 0
         jsontwo['lastMouthUnitPrice'] = json.lastMouthUnitPrice
         jsontwo['lastMouthTotalDosage'] = json.lastMouthTotalDosage
         jsontwo['unitPriceBalance'] = json.unitPriceBalance
         jsontwo['lastMouthTotalDosage'] = json.lastMouthTotalDosage
         jsontwo['Balance'] = json.Balance
-        jsontwo['uuid'] = new Date().getTime()
         let PowerRecordlList = this.state.PowerRecordlList
         PowerRecordlList.push(jsontwo)
         this.setState({
@@ -257,7 +448,7 @@ class PowerAddUp extends React.Component {
         })
     }
     // 删除条目
-    delete = (uuid) => {
+    deleteRecord = (uuid) => {
         console.log(uuid)
         let PowerRecordlList = this.state.PowerRecordlList
         PowerRecordlList.map((PowerRecord, i) => {
@@ -350,7 +541,7 @@ class PowerAddUp extends React.Component {
             >
                 <Form layout="horizontal">
                     <div style={{background: '#f7f7f7',
-                        width: 900,
+                        width: 1050,
                         marginBottom: 20,
                         paddingTop: '22px'}}
                     >
@@ -461,55 +652,16 @@ class PowerAddUp extends React.Component {
                         display: 'block'}}
                     >
                         {getFieldDecorator('eee')(<Input style={{width: '300px'}} />)}
-                        <span>电量统计表</span>
+                        <span style={{marginLeft: '20px'}}>电量统计表</span>
                     </span>
                     <br />
                     <div style={{marginBottom: 20}}>
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>电费名称</td>
-                                    <td>上次抄表数</td>
-                                    <td>本次抄表数</td>
-                                    <td>本次用电量</td>
-                                    <td>变比</td>
-                                    <td>电损</td>
-                                    <td>总电量</td>
-                                    <td>峰谷比例</td>
-                                    <td>单价</td>
-                                    <td>金额</td>
-                                    <td>备注</td>
-                                    <td>操作</td>
-                                </tr>
-                                {this.state.PowerRecordlList.map((PowerRecord, i) => <tr key={i}>
-                                    <td>{PowerRecord.name}</td>
-                                    <td>{PowerRecord.lastMeterNumber}</td>
-                                    <td>{PowerRecord.meterNumber}</td>
-                                    <td>{PowerRecord.useNumber}</td>
-                                    <td>{PowerRecord.chenge}</td>
-                                    <td>{PowerRecord.electricalLoss}</td>
-                                    <td>{PowerRecord.power}</td>
-                                    <td>{PowerRecord.fenggubili}</td>
-                                    <td>{PowerRecord.price}</td>
-                                    <td>{PowerRecord.money}</td>
-                                    <td>{PowerRecord.note}</td>
-                                    <td><Button onClick={() => this.delete(PowerRecord.uuid)}>删除</Button></td></tr>)}
-                                <tr>
-                                    <td>合计</td>
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td>{this.state.totalPower}</td>
-                                    <td />
-                                    <td />
-                                    <td>{this.state.totalMoney}</td>
-                                    <td />
-                                    <td />
-                                </tr>
-                            </tbody>
-                        </table>
+                        <Table
+                            columns={this.state.tableColumns}
+                            dataSource={this.state.PowerRecordlList}
+                            bordered
+                            pagination={false}
+                        />
                     </div>
                     <Row>
                         <Col span={12} />
@@ -541,7 +693,7 @@ class PowerAddUp extends React.Component {
                                     <FormItem
                                         {...formItemLayout}
                                         label="房间编号"
-                                    >{getFieldDecorator('room')(
+                                    >{getFieldDecorator('roomNumber')(
                                             <Select
                                                 showSearch
                                                 style={{ width: 200}}
@@ -575,20 +727,20 @@ class PowerAddUp extends React.Component {
                                     </FormItem>
                                     <FormItem
                                         {...formItemLayout}
-                                        label="本次用电量"
-                                    >{getFieldDecorator('useNumber')(<Input addonAfter="Kwh" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
                                         label="变比"
-                                    >{getFieldDecorator('chenge')(<Input placeholder="请输入内容" />)
+                                    >{getFieldDecorator('ratio')(<Input placeholder="请输入内容" />)
                                         }
                                     </FormItem>
                                     <FormItem
                                         {...formItemLayout}
                                         label="单价"
                                     >{getFieldDecorator('price')(<Input placeholder="请输入内容" addonAfter="元/度" />)
+                                        }
+                                    </FormItem>
+                                    <FormItem
+                                        {...formItemLayout}
+                                        label="本次用电量"
+                                    >{getFieldDecorator('useNumber')(<Input addonAfter="Kwh" />)
                                         }
                                     </FormItem>
                                     <FormItem

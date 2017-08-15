@@ -38,7 +38,7 @@ class RentReviewDetail extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
+        window.location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
     }
     invoiceLate = async () => {
         await apiPost(
@@ -50,7 +50,7 @@ class RentReviewDetail extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
+        window.location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({

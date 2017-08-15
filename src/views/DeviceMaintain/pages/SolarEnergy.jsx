@@ -107,7 +107,7 @@ class SolarEnergy extends Component {
             {parentId: id,
                 parentType: type})
         if (resulData.data !== null) {
-            location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',13'
+            window.location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',13'
         } else {
             message.info('无异常信息')
         }

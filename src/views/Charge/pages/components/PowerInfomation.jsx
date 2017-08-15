@@ -1,61 +1,46 @@
 import React from 'react'
-import { Modal, Button, Row, Col, Table} from 'antd'
+import { Modal, Row, Col, Table} from 'antd'
+import { apiPost } from '../../../../api/index'
 class PowerInfomation extends React.Component {
     state = {
+        map: {
+            list: [],
+            receipt: [],
+            liquidatedDamagesList: [],
+            electricityFees: {}
+        },
+        isFirst: true,
         visible: false,
-        WaterRecordlList: [{
-            name: 'hehe',
-            lastMeterNumber: 1,
-            meterNumber: 2,
-            useNumber: 1,
-            change: 1,
-            electricalLoss: 1,
-            power: 1,
-            price: 0.5,
-            money: 0.5,
-            note: 'just note'
-        }, {
-            name: 'hehe2',
-            lastMeterNumber: 3,
-            meterNumber: 6,
-            useNumber: 3,
-            change: 1,
-            electricalLoss: 0,
-            power: 3,
-            price: 0.5,
-            money: 1.5,
-            note: 'just note too'
-        }],
         mainColumns: [{
             title: '房间编号',
-            dataIndex: 'name'
+            dataIndex: 'roomNumberOne'
         }, {
             title: '上次抄表数',
-            dataIndex: 'lastMeterNumber'
+            dataIndex: 'lastSurfaceNumber'
         }, {
             title: '本次抄表数',
-            dataIndex: 'meterNumber'
+            dataIndex: 'surfaceNumber'
         }, {
             title: '电量（Kwh）',
-            dataIndex: 'useNumber'
+            dataIndex: 'needElectricity'
         }, {
             title: '变比',
-            dataIndex: 'change'
+            dataIndex: 'ratio'
         }, {
-            title: '损耗10%',
-            dataIndex: 'electricalLoss'
+            title: '电损10%',
+            dataIndex: 'electricLoss'
         }, {
             title: '总电量',
-            dataIndex: 'power'
+            dataIndex: 'sumElectricity'
         }, {
             title: '单价',
-            dataIndex: 'price'
+            dataIndex: 'unitPrice'
         }, {
             title: '金额',
-            dataIndex: 'money'
+            dataIndex: 'singleMoney'
         }, {
             title: '备注',
-            dataIndex: 'note'
+            dataIndex: 'remarks'
         }],
         // 确认收款
         confirmReceipt: [{
@@ -69,7 +54,7 @@ class PowerInfomation extends React.Component {
             dataIndex: 'noChargeMoney'
         }, {
             title: '收款方式',
-            dataIndex: 'paymentMethod'
+            dataIndex: 'principalMethod'
         }, {
             title: '经手人',
             dataIndex: 'person'
@@ -77,67 +62,72 @@ class PowerInfomation extends React.Component {
         // 确认违约金
         confirmLiquidatedDamages: [{
             title: '时间',
-            dataIndex: 'time'
+            dataIndex: 'liquidatedDamagesDate'
         }, {
             title: '优惠金额',
             dataIndex: 'discountAmount'
         }, {
             title: '实收金额',
-            dataIndex: 'chargeMoney'
+            dataIndex: 'liquidatedDamagesReceived'
         }, {
             title: '未收金额',
             dataIndex: 'noChargeMoney'
         }, {
             title: '收款方式',
-            dataIndex: 'paymentMethod'
+            dataIndex: 'damagesMethod'
         }, {
             title: '经手人',
             dataIndex: 'person'
-        }],
-        liquidatedDamagesList: [{
-            time: '2016-09-05 15:00',
-            discountAmount: '50.00',
-            chargeMoney: '2000.00',
-            noChargeMoney: '600.00',
-            paymentMethod: '你猜',
-            person: '李狗蛋'
-        }, {
-            time: '2016-10-05 14:00',
-            discountAmount: '55.00',
-            chargeMoney: '2340.00',
-            noChargeMoney: '650.00',
-            paymentMethod: '打劫',
-            person: '张三'
-        }],
-        receipt: [{
-            time: '2016-09-05 15:00',
-            chargeMoney: '2000.00',
-            noChargeMoney: '600.00',
-            paymentMethod: '你猜',
-            person: '李狗蛋'
-        }, {
-            time: '2016-10-05 14:00',
-            chargeMoney: '2340.00',
-            noChargeMoney: '650.00',
-            paymentMethod: '打劫',
-            person: '张三'
         }]
     }
-    showModal = () => {
-        this.setState({
-            visible: true
-        })
+    async initialRemarks (nextProps) {
+        if (this.state.isFirst && nextProps.visible) {
+            let electricityFeeInfo = await apiPost(
+                '/ElectricityFees/ElectricityFeeInfo',
+                {id: nextProps.id}
+            )
+            electricityFeeInfo = electricityFeeInfo.data
+            let ChargeRecord5 = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {feeId: nextProps.id,
+                    feeType: 5}
+            )
+            let ChargeRecord6 = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {feeId: nextProps.id,
+                    feeType: 6}
+            )
+            this.setState({
+                ChargeRecord5: ChargeRecord5.data,
+                ChargeRecord6: ChargeRecord6.data,
+                map: {
+                    list: electricityFeeInfo.list,
+                    electricityFees: electricityFeeInfo.electricityFees
+                },
+                visible: nextProps.visible,
+                isFirst: false
+            })
+        }
     }
-    handleOk = (e) => {
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
+    }
+    handleOk = async (e) => {
         console.log(e)
         this.setState({
+            value: 2,
+            text: '',
+            isFirst: true,
             visible: false
         })
     }
     handleCancel = (e) => {
         console.log(e)
         this.setState({
-            visible: false
+            value: 2,
+            text: '',
+            visible: false,
+            isFirst: true
         })
     }
     render () {
@@ -151,12 +141,12 @@ class PowerInfomation extends React.Component {
         }
         return (
             <div>
-                <Button type="primary" onClick={this.showModal}>电费详情</Button>
                 <Modal
+                    footer={null}
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
-                    width="1200"
+                    width="1000px"
                     style={{top: 20}}
                 >
                     <div>
@@ -167,8 +157,8 @@ class PowerInfomation extends React.Component {
                                     fontWeight: 'bold',
                                     lineHeight: '40px'}}
                                 >
-                                    <span>青岛石大胜华贸易有限公司</span>
-                                    <span>&ensp;&ensp;电量统计表</span>
+                                    <span>{this.state.map.electricityFees.clientName}</span>
+                                    <span>&nbsp;&nbsp;电量统计表</span>
                                 </div>
                             </Col>
                         </Row>
@@ -179,7 +169,7 @@ class PowerInfomation extends React.Component {
                                     fontSize: '14px',
                                     lineHeight: '18px'}}
                                 >
-                                    （ 2015-09-10 ~ 2015-10-10 ）
+                                    （ {this.state.map.electricityFees.cycle} ）
                                 </div>
                             </Col>
                         </Row>
@@ -191,7 +181,7 @@ class PowerInfomation extends React.Component {
                                     <span style={lightGrayStyle} >房间编号：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
-                                    >2401/2402/2403</span>
+                                    >{this.state.map.electricityFees.roomNumber}</span>
                                 </div>
                             </Col>
                             <Col span={8}>
@@ -199,7 +189,7 @@ class PowerInfomation extends React.Component {
                                     <span style={lightGrayStyle} >所在楼宇：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
-                                    >长江中心A座</span>
+                                    >{this.state.map.electricityFees.buildName}</span>
                                 </div>
                             </Col>
                             <Col span={8}>
@@ -207,14 +197,14 @@ class PowerInfomation extends React.Component {
                                     <span style={lightGrayStyle} >缴费期限：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
-                                    >2017-07-10</span>
+                                    >{this.state.map.electricityFees.wattDate}</span>
                                 </div>
                             </Col>
                         </Row>
                         <div style={{marginTop: 10}}>
                             <Table
                                 columns={this.state.mainColumns}
-                                dataSource={this.state.WaterRecordlList}
+                                dataSource={this.state.map.list}
                                 bordered
                                 pagination={false}
                             />
@@ -222,18 +212,48 @@ class PowerInfomation extends React.Component {
                         <Row type="flex" justify="end" style={{marginTop: 20,
                             fontSize: '12px',
                             lineHeight: '18px',
-                            color: '#666'}}
+                            color: '#666',
+                            textAlign: 'right',
+                            marginRight: '20px'}}
                         >
                             <Col span={6}>
                                 <div>
                                     <span>优惠金额：</span>
-                                    <span>&ensp;￥500.00</span>
+                                    <span>&nbsp;￥{this.state.map.electricityFees.principalDiscount}</span>
                                 </div>
                             </Col>
                             <Col span={6}>
                                 <div>
                                     <span>本期应收：</span>
-                                    <span style={{fontSize: '18px'}}>&ensp;￥5000.00</span>
+                                    <span style={{fontSize: '18px'}}>&nbsp;{this.state.map.electricityFees.thisReceivable}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row type="flex" style={{marginTop: 20,
+                            fontSize: '13px',
+                            lineHeight: '18px',
+                            color: '#108EE9',
+                            textAlign: 'center'}}
+                        >
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交物业费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{this.state.map.electricityFees.propertyMoney}</span>
+                                    <span>({this.state.map.electricityFees.isPropertyMoney === 1 ? '已含' : '未包含'})</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交电费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{this.state.map.electricityFees.electricMoney}</span>
+                                    <span>({this.state.map.electricityFees.isElectricMoney === 1 ? '已含' : '未包含'})</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交水费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{this.state.map.electricityFees.waterMoney}</span>
+                                    <span>({this.state.map.electricityFees.isWaterMoney === 1 ? '已含' : '未包含'})</span>
                                 </div>
                             </Col>
                         </Row>
@@ -263,13 +283,13 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>录入日期：</span>
-                                            <span>王小明 2016-09-26 12:12:12</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.createDate}</span>
                                         </div>
                                     </Col>
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
-                                            <span>王小明 2016-09-26 12:12:12</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
@@ -280,13 +300,13 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>审核人：</span>
-                                            <span>李某明 2016-09-27 12:12:12</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.auditName}&nbsp;{this.state.map.electricityFees.auditDate}</span>
                                         </div>
                                     </Col>
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>审核状态：</span>
-                                            <span>不通过，某某原因某某原因某某原因某某原因某某原因某某原因</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.examineState === 2 ? '审核通过' : '审核失败'}&nbsp;{this.state.map.electricityFees.auditExplain}</span>
                                         </div>
                                     </Col>
                                 </Row>
@@ -318,16 +338,15 @@ class PowerInfomation extends React.Component {
                                     >
                                         <Col span={8}>
                                             <div>
-                                                <span style={lightGrayStyle}>应收金额：&ensp;</span>
-                                                <span style={blueBlodStyle}
-                                                >1,234</span>
-                                                <span>&ensp;元</span>
+                                                <span style={lightGrayStyle}>应收金额：&nbsp;</span>
+                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.thisReceivable}</span>
+                                                <span>&nbsp;元</span>
                                             </div>
                                         </Col>
                                         <Col span={8}>
                                             <div>
-                                                <span style={lightGrayStyle}>开票状态：&ensp;</span>
-                                                <span>已开票</span>
+                                                <span style={lightGrayStyle}>开票状态：&nbsp;</span>
+                                                <span>{this.state.map.electricityFees.principalPrincipalBilling === 1 ? '已开票' : '未开票'}</span>
                                             </div>
                                         </Col>
                                     </Row>
@@ -335,7 +354,7 @@ class PowerInfomation extends React.Component {
                                 <div style={{marginTop: 10}}>
                                     <Table
                                         columns={this.state.confirmReceipt}
-                                        dataSource={this.state.receipt}
+                                        dataSource={this.state.map.receipt}
                                         bordered
                                         pagination={false}
                                     />
@@ -354,22 +373,22 @@ class PowerInfomation extends React.Component {
                                     >
                                         <Col span={8}>
                                             <div>
-                                                <span style={lightGrayStyle}>逾期天数：&ensp;</span>
-                                                <span style={blueBlodStyle}>1</span>
-                                                <span>&ensp;天</span>
+                                                <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
+                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.overdueDate}</span>
+                                                <span>&nbsp;天</span>
                                             </div>
                                         </Col>
                                         <Col span={8}>
                                             <div>
-                                                <span style={lightGrayStyle}>违约金额：&ensp;</span>
-                                                <span style={blueBlodStyle}>1,234</span>
-                                                <span>&ensp;元</span>
+                                                <span style={lightGrayStyle}>违约金额：&nbsp;</span>
+                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.liquidatedDamages}</span>
+                                                <span>&nbsp;元</span>
                                             </div>
                                         </Col>
                                         <Col span={8}>
                                             <div>
-                                                <span style={lightGrayStyle}>开票状态：&ensp;</span>
-                                                <span>已开票</span>
+                                                <span style={lightGrayStyle}>开票状态：&nbsp;</span>
+                                                <span>{this.state.map.electricityFees.principalDamagesBilling === 1 ? '已开票' : '未开票'}</span>
                                             </div>
                                         </Col>
                                     </Row>
@@ -379,7 +398,7 @@ class PowerInfomation extends React.Component {
                                 >
                                     <Table
                                         columns={this.state.confirmLiquidatedDamages}
-                                        dataSource={this.state.liquidatedDamagesList}
+                                        dataSource={this.state.map.liquidatedDamagesList}
                                         bordered
                                         pagination={false}
                                     />
