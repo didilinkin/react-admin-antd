@@ -214,11 +214,12 @@ class CollectRenting extends Component {
                     />
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 150,
                             marginRight: '5px'}}
                         placeholder="请选择交费周期"
                         optionFilterProp="children"
-                        onSelect={this.selectOnChange}
+                        onChange={this.selectOnChange}
                         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
                         <Option key="3">季付</Option>

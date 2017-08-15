@@ -92,14 +92,14 @@ class addUpkeep extends React.Component {
                 <Modal maskClosable={false}
                     title="发起收租"
                     style={{top: 20}}
-                    width={700}
+                    width={400}
                     visible={this.state.visible}
                     onOk={this.handleSubmit}
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
                         <Row>
-                            <Col span={12}>
+                            <Col span={24}>
                                 <FormItem label="本期周期" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
@@ -139,7 +139,7 @@ class addUpkeep extends React.Component {
                                     {getFieldDecorator('accountId')(
                                         <Select
                                             showSearch
-                                            style={{ width: 200 }}
+                                            style={{ width: 245 }}
                                             placeholder="请选择付款帐号"
                                             optionFilterProp="children"
                                         >

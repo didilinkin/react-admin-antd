@@ -68,7 +68,7 @@ class NoLateAndPropertyFinish extends React.Component {
         await apiPost(
             '/propertyFee/updatePropertyFee',
             {id: this.props.match.params.id,
-                invoicePropertyFeeStatus: 1}
+                invoicePropertyStatus: 1}
         )
         notification.open({
             message: '物业费开票成功',
