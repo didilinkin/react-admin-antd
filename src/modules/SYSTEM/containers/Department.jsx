@@ -25,7 +25,7 @@ class Department extends React.Component {
                     },
                     {
                         title: '备注',
-                        width: 200,
+                        width: 400,
                         dataIndex: 'remarks'
                     },
                     {
@@ -143,7 +143,7 @@ class Department extends React.Component {
         const { getFieldDecorator } = this.props.form
         return (
             <div>
-                <Button onClick={this.add}>添加部门</Button>
+                <Button type="primary" onClick={this.add}>添加部门</Button>
                 <Table
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
