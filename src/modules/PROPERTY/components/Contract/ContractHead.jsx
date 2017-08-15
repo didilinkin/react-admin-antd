@@ -30,6 +30,11 @@ class ContractHead extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
+            for (let key in json) {
+                if (json[key] === '') {
+                    json[key] = null
+                }
+            }
             this.props.refresh(null, json, null)
         }
     }
