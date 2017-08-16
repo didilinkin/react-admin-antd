@@ -11,37 +11,7 @@ class PowerInfomation extends React.Component {
         },
         isFirst: true,
         visible: false,
-        mainColumns: [{
-            title: '房间编号',
-            dataIndex: 'roomNumberOne'
-        }, {
-            title: '上次抄表数',
-            dataIndex: 'lastSurfaceNumber'
-        }, {
-            title: '本次抄表数',
-            dataIndex: 'surfaceNumber'
-        }, {
-            title: '电量（Kwh）',
-            dataIndex: 'needElectricity'
-        }, {
-            title: '变比',
-            dataIndex: 'ratio'
-        }, {
-            title: '电损10%',
-            dataIndex: 'electricLoss'
-        }, {
-            title: '总电量',
-            dataIndex: 'sumElectricity'
-        }, {
-            title: '单价',
-            dataIndex: 'unitPrice'
-        }, {
-            title: '金额',
-            dataIndex: 'singleMoney'
-        }, {
-            title: '备注',
-            dataIndex: 'remarks'
-        }],
+        mainColumns: [],
         // 确认收款
         confirmReceipt: [{
             title: '时间',
@@ -97,6 +67,40 @@ class PowerInfomation extends React.Component {
                 {feeId: nextProps.id,
                     feeType: 6}
             )
+            let mainColumn = [{
+                title: '房间编号',
+                dataIndex: 'roomNumberOne'
+            }, {
+                title: '上次抄表数',
+                dataIndex: 'lastSurfaceNumber'
+            }, {
+                title: '本次抄表数',
+                dataIndex: 'surfaceNumber'
+            }, {
+                title: '电量（Kwh）',
+                dataIndex: 'needElectricity'
+            }, {
+                title: '变比',
+                dataIndex: 'ratio'
+            }, {
+                title: '总电量',
+                dataIndex: 'sumElectricity'
+            }, {
+                title: '单价',
+                dataIndex: 'unitPrice'
+            }, {
+                title: '金额',
+                dataIndex: 'singleMoney'
+            }, {
+                title: '备注',
+                dataIndex: 'remarks'
+            }]
+            if (this.state.map.electricityFees.wattHourType !== 0) {
+                mainColumn.splice(5, 0, {
+                    title: '电损10%',
+                    dataIndex: 'electricLoss'
+                })
+            }
             this.setState({
                 ChargeRecord5: ChargeRecord5.data,
                 ChargeRecord6: ChargeRecord6.data,
@@ -105,7 +109,8 @@ class PowerInfomation extends React.Component {
                     electricityFees: electricityFeeInfo.electricityFees
                 },
                 visible: nextProps.visible,
-                isFirst: false
+                isFirst: false,
+                mainColumns: mainColumn
             })
         }
     }
@@ -141,7 +146,7 @@ class PowerInfomation extends React.Component {
         }
         return (
             <div>
-                <Modal
+                <Modal maskClosable={false}
                     footer={null}
                     visible={this.state.visible}
                     onOk={this.handleOk}
@@ -289,10 +294,11 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
-                                            <span>&nbsp;{this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.createDate}</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.updateName ? this.state.map.electricityFees.updateName : this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.updateDate ? this.state.map.electricityFees.updateDatethis.state.map.electricityFees.updateDate : this.state.map.electricityFees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
+                                {this.state.map.electricityFees.examineState !== 0 &&
                                 <Row style={{marginTop: 20,
                                     lineHeight: '18px',
                                     color: '#363636'}}
@@ -306,40 +312,54 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>审核状态：</span>
-                                            <span>&nbsp;{this.state.map.electricityFees.examineState === 2 ? '审核通过' : '审核失败'}&nbsp;{this.state.map.electricityFees.auditExplain}</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.auditExplain}</span>
                                         </div>
                                     </Col>
                                 </Row>
+                                }
                             </div>
                         </div>
-                        <div style={{marginTop: 20,
-                            border: '1px solid #EBEBEB'}}
+                        {this.state.map.electricityFees.examineState !== 0 &&
+                        <div style={{
+                            marginTop: 20,
+                            border: '1px solid #EBEBEB'
+                        }}
                         >
-                            <div style={{backgroundColor: '#EBEBEB',
+                            <div style={{
+                                backgroundColor: '#EBEBEB',
                                 height: '44px',
                                 fontSize: '14px',
-                                lineHeight: '44px'}}
+                                lineHeight: '44px'
+                            }}
                             >
                                 <span style={{marginLeft: '20px'}}>收款信息</span>
                             </div>
-                            <div style={{padding: '0 20px',
-                                fontSize: '14px'}}
+                            <div style={{
+                                padding: '0 20px',
+                                fontSize: '14px'
+                            }}
                             >
-                                <div style={{fontWeight: 'bold',
-                                    marginTop: 10}}
+                                <div style={{
+                                    fontWeight: 'bold',
+                                    marginTop: 10
+                                }}
                                 >
                                     <div style={{fontWeight: 'bold'}}>确认收款</div>
-                                    <Row style={{marginTop: 10,
+                                    <Row style={{
+                                        marginTop: 10,
                                         backgroundColor: '#F3F3F3',
                                         height: '32px',
                                         lineHeight: '32px',
                                         paddingLeft: '10px',
-                                        fontWeight: 'normal'}}
+                                        fontWeight: 'normal'
+                                    }}
                                     >
                                         <Col span={8}>
                                             <div>
                                                 <span style={lightGrayStyle}>应收金额：&nbsp;</span>
-                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.thisReceivable}</span>
+                                                <span
+                                                    style={blueBlodStyle}
+                                                >{this.state.map.electricityFees.thisReceivable}</span>
                                                 <span>&nbsp;元</span>
                                             </div>
                                         </Col>
@@ -360,28 +380,36 @@ class PowerInfomation extends React.Component {
                                     />
                                 </div>
                                 <hr style={{marginTop: 20}} />
-                                <div style={{fontWeight: 'bold',
-                                    marginTop: 10}}
+                                <div style={{
+                                    fontWeight: 'bold',
+                                    marginTop: 10
+                                }}
                                 >
                                     <div style={{fontWeight: 'bold'}}>确认违约金</div>
-                                    <Row style={{marginTop: 10,
+                                    <Row style={{
+                                        marginTop: 10,
                                         backgroundColor: '#F3F3F3',
                                         height: '32px',
                                         lineHeight: '32px',
                                         paddingLeft: '10px',
-                                        fontWeight: 'normal'}}
+                                        fontWeight: 'normal'
+                                    }}
                                     >
                                         <Col span={8}>
                                             <div>
                                                 <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
-                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.overdueDate}</span>
+                                                <span
+                                                    style={blueBlodStyle}
+                                                >{this.state.map.electricityFees.days}</span>
                                                 <span>&nbsp;天</span>
                                             </div>
                                         </Col>
                                         <Col span={8}>
                                             <div>
                                                 <span style={lightGrayStyle}>违约金额：&nbsp;</span>
-                                                <span style={blueBlodStyle}>{this.state.map.electricityFees.liquidatedDamages}</span>
+                                                <span
+                                                    style={blueBlodStyle}
+                                                >{this.state.map.electricityFees.liquidatedDamages}</span>
                                                 <span>&nbsp;元</span>
                                             </div>
                                         </Col>
@@ -393,8 +421,10 @@ class PowerInfomation extends React.Component {
                                         </Col>
                                     </Row>
                                 </div>
-                                <div style={{marginTop: 10,
-                                    marginBottom: 20}}
+                                <div style={{
+                                    marginTop: 10,
+                                    marginBottom: 20
+                                }}
                                 >
                                     <Table
                                         columns={this.state.confirmLiquidatedDamages}
@@ -405,6 +435,7 @@ class PowerInfomation extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        }
                     </div>
                 </Modal>
             </div>

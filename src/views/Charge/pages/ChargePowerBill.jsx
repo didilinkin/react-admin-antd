@@ -30,7 +30,9 @@ class ChargeWaterBill extends React.Component {
         }
     }
     refreshTwo = async (activeKey) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openWaterAddUpComponent: false,
+            openInfo: false})
         let result = await apiPost(
             '/ElectricityFees/list'
         )
@@ -64,7 +66,9 @@ class ChargeWaterBill extends React.Component {
         })
     }
     refresh = async (pagination, filters, sorter) => {
-        this.setState({loading: true})
+        this.setState({loading: true,
+            openWaterAddUpComponent: false,
+            openInfo: false})
         let result = await apiPost(
             '/ElectricityFees/list',
             filters
@@ -95,8 +99,10 @@ class ChargeWaterBill extends React.Component {
         })
     }
     openWaterAddUpComponent = (id) => {
+        console.log(id)
         this.setState({
             openWaterAddUpComponent: true,
+            openInfo: false,
             id: id
         })
     }
@@ -128,7 +134,7 @@ class ChargeWaterBill extends React.Component {
 
         let openWaterAddUpComponent = this.openWaterAddUpComponent
 
-        let arr = [
+        const arr = [
             {
                 title: '序号',
                 width: 100,
@@ -192,7 +198,7 @@ class ChargeWaterBill extends React.Component {
             dataSource2: dataSource2,
             dataSource3: dataSource3,
             dataSource4: dataSource4,
-            columns1: arr.concat([{
+            columns1: arr.slice().concat([{
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -203,14 +209,18 @@ class ChargeWaterBill extends React.Component {
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm key="1" title="确定提交吗?">
+                            <Popconfirm title="确定提交吗?">
                                 <a>提交</a>
+                            </Popconfirm>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <Popconfirm title="确定删除吗?">
+                                <a>删除</a>
                             </Popconfirm>
                         </span>
                     )
                 }
             }]),
-            columns2: arr.concat([{
+            columns2: arr.slice().concat([{
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -222,7 +232,7 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }]),
-            columns3: arr.concat([{
+            columns3: arr.slice().concat([{
                 title: '审核说明',
                 width: 100,
                 dataIndex: 'auditExplain'
@@ -249,7 +259,7 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }]),
-            columns4: arr.concat([{
+            columns4: arr.slice().concat([{
                 title: '实交日期',
                 width: 100,
                 dataIndex: 'principalCollectionDate'
@@ -304,10 +314,6 @@ class ChargeWaterBill extends React.Component {
                     return (
                         <span>
                             <a onClick={() => info(record.id)}>明细</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm key="1" title="确定提交吗?">
-                                <a>打印通知单</a>
-                            </Popconfirm>
                         </span>
                     )
                 }
@@ -353,6 +359,7 @@ class ChargeWaterBill extends React.Component {
                         />
                         <PowerAddUpComponent
                             title="添加水费"
+                            id={this.state.id}
                             refreshTable={this.refreshTwo}
                             visible={this.state.openWaterAddUpComponent}
                         />
