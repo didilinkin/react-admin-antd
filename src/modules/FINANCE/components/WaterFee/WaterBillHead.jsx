@@ -43,6 +43,11 @@ class WaterBillHead extends React.Component {
                 json['cxsj'] = null
             }
             json['type'] = this.props.type
+            for (let key in json) {
+                if (json[key] === '') {
+                    json[key] = null
+                }
+            }
             this.props.refresh(null, json, null)
         }
     }

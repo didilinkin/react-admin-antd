@@ -113,6 +113,17 @@ class CollectionDetails extends React.Component {
         })
         this.refresh()
     }
+    nextMonth = async () => {
+        let data = await apiPost(
+            '/WaterBill/nextMonth',
+            {id: this.props.match.params.id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
     render () {
         const columns = [{
             title: '房间编号',
@@ -462,7 +473,7 @@ class CollectionDetails extends React.Component {
                                 <Button type="primary" size="large" onClick={this.penalty}>确认违约金</Button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 {!this.state.ChargeRecord6.length > 0 &&
-                                <Popconfirm title="确认放入下月电费吗?" onConfirm={this.PrincipalBilling}>
+                                <Popconfirm title="确认放入下月电费吗?" onConfirm={this.nextMonth}>
                                     <a>放入下月电费</a>
                                 </Popconfirm>
                                 }
