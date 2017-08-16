@@ -62,19 +62,19 @@ class PropertyFeeDetailNoLate extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
+        window.location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
     }
     invoiceProperty = async () => {
         await apiPost(
             '/propertyFee/updatePropertyFee',
             {id: this.props.match.params.id,
-                invoicePropertyFeeStatus: 1}
+                invoicePropertyStatus: 1}
         )
         notification.open({
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
+        window.location.href = '/financial/PropertyFeeDetailNoLate/' + this.props.match.params.id
     }
     handleCancel = (e) => {
         this.isFirst = true

@@ -130,7 +130,7 @@ class AirConditioningRoom extends Component {
             {parentId: id,
                 parentType: type})
         if (resulData.data !== null) {
-            location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',6'
+            window.location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',6'
         } else {
             message.info('无异常信息')
         }

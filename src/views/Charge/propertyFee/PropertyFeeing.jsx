@@ -202,11 +202,12 @@ class PropertyFeeing extends Component {
                     <span>所属楼宇:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 200,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
-                        onSelect={this.selectBuild}
+                        onChange={this.selectBuild}
                     >
                         {ListBuildingInfo.map(BuildingInfo => {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>

@@ -18,7 +18,7 @@ class WeakRoom extends React.Component {
             {parentId: id,
                 parentType: type})
         if (resulData.data !== null) {
-            location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',1'
+            window.location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',1'
         } else {
             message.info('无异常信息')
         }

@@ -184,7 +184,7 @@ class PropertyFeeFinanceFail extends Component {
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
-                        onSelect={this.selectBuild}
+                        onChange={this.selectBuild}
                     >
                         {ListBuildingInfo.map(BuildingInfo => {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>

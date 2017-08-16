@@ -72,6 +72,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('buildId')(
                                 <Select
                                     showSearch
+                                    allowClear
                                     style={{ width: 200 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
@@ -110,6 +111,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('invoicePropertyStatus')(
                                 <Select
                                     showSearch
+                                    allowClear
                                     style={{ width: 200 }}
                                     placeholder="请选择开票状态"
                                     optionFilterProp="children"
@@ -127,6 +129,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('whetherRentPaid')(
                                 <Select
                                     showSearch
+                                    allowClear
                                     style={{ width: 200 }}
                                     placeholder="请选择收费状态"
                                     optionFilterProp="children"
@@ -145,6 +148,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('whetherPrinted')(
                                 <Select
                                     showSearch
+                                    allowClear
                                     style={{ width: 200 }}
                                     placeholder="请选择打印状态"
                                     optionFilterProp="children"
@@ -164,6 +168,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('dateSelect')(
                                 <Select
                                     showSearch
+                                    allowClear
                                     style={{ width: 200 }}
                                     placeholder="请选择查询类型"
                                     optionFilterProp="children"
