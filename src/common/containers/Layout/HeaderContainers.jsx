@@ -1,6 +1,6 @@
 // 顶部导航条
 import React from 'react'
-import { Menu, Icon, Layout, Badge } from 'antd' // Layout
+import { Menu, Icon, Layout, Badge } from 'antd'
 
 import screenfull from 'screenfull'
 
@@ -49,11 +49,6 @@ const UserDiv = styled.span`
     }
 `
 
-// const HeaderBox = styled.header `
-//     padding: 0;
-//     height: 65;
-// `
-
 class HeaderContainers extends React.Component {
     // 展开状态
     state = {
@@ -65,10 +60,18 @@ class HeaderContainers extends React.Component {
             screenfull.request()
         }
     }
+
     Logout = () => {
         localStorage.removeItem('token')
         window.location.href = '/login'
     }
+
+    // 打开 '个人设置'页面
+    toOptions = () => {
+        // console.log(this)
+        this.props.route.history.push('/home/system/options')
+    }
+
     render () {
         return (
             <Header className="custom-theme"
@@ -120,8 +123,10 @@ class HeaderContainers extends React.Component {
                             </UserDiv>
                         }
                     >
-                        <MenuItemGroup style={{ paddingRight: '0' }} title="">
-                            <Menu.Item key="setting:3">个人设置</Menu.Item>
+                        <MenuItemGroup style={{ paddingRight: '0' }}>
+                            <Menu.Item key="setting:3">
+                                <a onClick={this.toOptions}>个人设置</a>
+                            </Menu.Item>
                             <Menu.Item key="setting:5">
                                 <span onClick={this.Logout}>退出</span>
                             </Menu.Item>

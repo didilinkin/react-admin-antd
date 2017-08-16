@@ -93,7 +93,7 @@ class LayoutContainers extends React.Component {
                                 onClick={this.toggle}
                             />
                         */}
-                        <HeaderContainers />
+                        <HeaderContainers route={ this.props } />
                     </Header>
 
                     <ContentBox>

@@ -39,4 +39,13 @@ const SYSTEM_DIR = {
     ]
 }
 
-export default SYSTEM_DIR
+const SYSTEM_DETAILS = [
+    {
+        title: '个人设置',
+        key: 'Options',
+        path: '/home/system/options',
+        component: require('./containers/details/Options').default
+    }
+]
+
+export { SYSTEM_DIR, SYSTEM_DETAILS }

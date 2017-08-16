@@ -5,13 +5,16 @@ import { PROPERTY_DETAILS } from '../modules/PROPERTY/configDir' // 物业管理
 import { LEASE_DETAILS } from '../modules/LEASE/configDir' // 租赁管理
 import { EQUIPMENT_DETAILS } from '../modules/EQUIPMENT/configDir' // 设备管理
 import { FINANCE_DETAILS } from '../modules/FINANCE/configDir' // 财务详情
+import { SYSTEM_DETAILS } from '../modules/SYSTEM/configDir' // 系统设置
+
 const globalDetailsRoute = [
     ...WAREHOUSE_DETAILS,
     ...CLIENT_DETAILS,
     ...PROPERTY_DETAILS,
     ...LEASE_DETAILS,
     ...EQUIPMENT_DETAILS,
-    ...FINANCE_DETAILS
+    ...FINANCE_DETAILS,
+    ...SYSTEM_DETAILS
 ]
 
 export default globalDetailsRoute
