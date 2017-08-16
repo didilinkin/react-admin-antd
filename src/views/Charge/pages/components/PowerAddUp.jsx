@@ -1,10 +1,11 @@
 import React from 'react'
-import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table} from 'antd'
+import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table, Tag} from 'antd'
 import { apiPost } from '../../../../api/index'
 import moment from 'moment'
 const FormItem = Form.Item
 const {RangePicker} = DatePicker
 const Option = Select.Option
+const { CheckableTag } = Tag
 class sumElectricityAddUp extends React.Component {
     state = {
         visible: false,
@@ -19,7 +20,14 @@ class sumElectricityAddUp extends React.Component {
         thisReceivable: 0,
         powerType: 0,
         bili: [],
-        balanceUUID: 0
+        balanceUUID: 0,
+        isPropertyMoney: false,
+        isWaterMoney: false,
+        isElectricMoney: false,
+        propertyMoney: 0,
+        waterMoney: 0,
+        electricMoney: 0
+
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
@@ -159,6 +167,7 @@ class sumElectricityAddUp extends React.Component {
 
         this.setState({tableColumns: tableColumns})
     }
+    // 查询峰谷比利
     searchBili = async (clientId) => {
         let bili = await apiPost(
             '/ElectricityFees/AverageElectricityFee',
@@ -168,6 +177,7 @@ class sumElectricityAddUp extends React.Component {
             bili: bili.data
         })
     }
+    // nextProps改变时候调用
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
             this.props.form.resetFields()
@@ -209,7 +219,13 @@ class sumElectricityAddUp extends React.Component {
                     thisReceivable: electricityFees.thisReceivable,
                     subletList: subletList,
                     roomNumberOne: electricityFees.roomNumber.split(','),
-                    balanceUUID: balanceUUID
+                    balanceUUID: balanceUUID,
+                    isPropertyMoney: electricityFees.isPropertyMoney === 1,
+                    isWaterMoney: electricityFees.isWaterMoney === 1,
+                    isElectricMoney: electricityFees.isElectricMoney === 1,
+                    propertyMoney: electricityFees.propertyMoney ? electricityFees.propertyMoney : 0,
+                    waterMoney: electricityFees.waterMoney ? electricityFees.waterMoney : 0,
+                    electricMoney: electricityFees.electricMoney ? electricityFees.electricMoney : 0
                 })
                 this.props.form.setFieldsValue({
                     clientName: electricityFees.clientName,
@@ -285,6 +301,7 @@ class sumElectricityAddUp extends React.Component {
                         clientId: contract.clientId,
                         clientType: 1}
                 )
+                let electricityFees = lastTimeData.data.electricityFees
                 let subletList = await apiPost(
                     '/propertyFee/getSubletByPmId',
                     {id: clientId}
@@ -307,7 +324,13 @@ class sumElectricityAddUp extends React.Component {
                     Contract: contract,
                     subletList: subletList,
                     roomNumberOne: roomNumber,
-                    powerType: contract.powerType
+                    powerType: contract.powerType,
+                    isPropertyMoney: electricityFees.isPropertyMoney === 1,
+                    isWaterMoney: electricityFees.isWaterMoney === 1,
+                    isElectricMoney: electricityFees.isElectricMoney === 1,
+                    propertyMoney: electricityFees.propertyMoney ? electricityFees.propertyMoney : 0,
+                    waterMoney: electricityFees.waterMoney ? electricityFees.waterMoney : 0,
+                    electricMoney: electricityFees.electricMoney ? electricityFees.electricMoney : 0
                 })
                 let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
                 this.props.form.setFieldsValue({
@@ -317,8 +340,8 @@ class sumElectricityAddUp extends React.Component {
                     roomNumber: roomNumber.toString(),
                     formName: formName,
                     ratio: contract.powerRatio,
-                    lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0,
-                    lastMouthTotalDosage: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
+                    lastMouthUnitPrice: electricityFees.powerUnitPrice ? electricityFees.powerUnitPrice : 0,
+                    lastMouthTotalDosage: electricityFees.sumElectricity ? electricityFees.sumElectricity : 0
                 })
             }
         })
@@ -879,6 +902,24 @@ class sumElectricityAddUp extends React.Component {
                                     >{getFieldDecorator('liquidatedDamagessingleMoney')(<Input placeholder="请输入内容" addonAfter="元" />)
                                         }
                                     </FormItem>
+                                    <CheckableTag id="isPropertyMoney" onChange={(state) => {
+                                        this.setState({isPropertyMoney: state})
+                                    }} checked={this.state.isPropertyMoney} style={{
+                                        marginLeft: '50px',
+                                        marginBottom: '20px'}}
+                                    >确认已收{this.state.propertyMoney}元物业违约金欠费</CheckableTag>
+                                    <CheckableTag id="isElectricMoney" onChange={(state) => {
+                                        this.setState({isElectricMoney: state})
+                                    }} checked={this.state.isElectricMoney} style={{
+                                        marginLeft: '50px',
+                                        marginBottom: '20px'}}
+                                    >确认已收{this.state.electricMoney}元电费违约金欠费</CheckableTag>
+                                    <CheckableTag id="isWaterMoney" onChange={(state) => {
+                                        this.setState({isWaterMoney: state})
+                                    }} checked={this.state.isWaterMoney} style={{
+                                        marginLeft: '50px',
+                                        marginBottom: '20px'}}
+                                    >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
                                     <FormItem {...tailFormItemLayout}>
                                         <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={greenButtonStyle} >增加本条记录</Button>
                                     </FormItem>
