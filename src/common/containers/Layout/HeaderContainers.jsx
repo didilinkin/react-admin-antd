@@ -1,6 +1,6 @@
 // 顶部导航条
 import React from 'react'
-import { Menu, Icon, Layout, Badge } from 'antd'
+import { Menu, Icon, Layout, Badge } from 'antd' // Layout
 
 import screenfull from 'screenfull'
 
@@ -48,6 +48,12 @@ const UserDiv = styled.span`
         width: 100%;
     }
 `
+
+// const HeaderBox = styled.header `
+//     padding: 0;
+//     height: 65;
+// `
+
 class HeaderContainers extends React.Component {
     // 展开状态
     state = {
@@ -65,10 +71,12 @@ class HeaderContainers extends React.Component {
     }
     render () {
         return (
-            <Header className="custom-theme" style={{
-                backgroundColor: '#FFF',
-                padding: 0,
-                height: 65 }}
+            <Header className="custom-theme"
+                style={{
+                    padding: 0,
+                    height: 65,
+                    background: elf.c.content
+                }}
             >
                 <Icon
                     className="trigger custom-trigger"
@@ -86,6 +94,7 @@ class HeaderContainers extends React.Component {
                 <Menu
                     mode="horizontal"
                     style={{
+                        background: elf.c.content,
                         lineHeight: '64px',
                         float: 'right'
                     }}

@@ -85,12 +85,7 @@ class LayoutContainers extends React.Component {
                         background: '#FFF'
                     }}
                 >
-                    <Header
-                        style={{
-                            background: '#fff',
-                            padding: 0
-                        }}
-                    >
+                    <Header style={{ padding: 0 }} >
                         {/*
                             <Icon
                                 className="trigger"
