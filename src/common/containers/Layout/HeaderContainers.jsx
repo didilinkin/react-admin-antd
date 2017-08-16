@@ -48,6 +48,7 @@ const UserDiv = styled.span`
         width: 100%;
     }
 `
+
 class HeaderContainers extends React.Component {
     // 展开状态
     state = {
@@ -59,16 +60,26 @@ class HeaderContainers extends React.Component {
             screenfull.request()
         }
     }
+
     Logout = () => {
         localStorage.removeItem('token')
         window.location.href = '/login'
     }
+
+    // 打开 '个人设置'页面
+    toOptions = () => {
+        // console.log(this)
+        this.props.route.history.push('/home/system/options')
+    }
+
     render () {
         return (
-            <Header className="custom-theme" style={{
-                backgroundColor: '#FFF',
-                padding: 0,
-                height: 65 }}
+            <Header className="custom-theme"
+                style={{
+                    padding: 0,
+                    height: 65,
+                    background: elf.c.content
+                }}
             >
                 <Icon
                     className="trigger custom-trigger"
@@ -86,6 +97,7 @@ class HeaderContainers extends React.Component {
                 <Menu
                     mode="horizontal"
                     style={{
+                        background: elf.c.content,
                         lineHeight: '64px',
                         float: 'right'
                     }}
@@ -111,8 +123,10 @@ class HeaderContainers extends React.Component {
                             </UserDiv>
                         }
                     >
-                        <MenuItemGroup style={{ paddingRight: '0' }} title="">
-                            <Menu.Item key="setting:3">个人设置</Menu.Item>
+                        <MenuItemGroup style={{ paddingRight: '0' }}>
+                            <Menu.Item key="setting:3">
+                                <a onClick={this.toOptions}>个人设置</a>
+                            </Menu.Item>
                             <Menu.Item key="setting:5">
                                 <span onClick={this.Logout}>退出</span>
                             </Menu.Item>

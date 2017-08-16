@@ -7,7 +7,7 @@ import { FINANCE_DIR } from '../modules/FINANCE/configDir' // 财务管理
 import STATISTICS_DIR from '../modules/STATISTICS/configDir' // 统计报表
 import { WAREHOUSE_DIR } from '../modules/WAREHOUSE/configDir' // 仓库管理
 import { EQUIPMENT_DIR } from '../modules/EQUIPMENT/configDir' // 设备管理
-import SYSTEM_DIR from '../modules/SYSTEM/configDir' // 系统设置
+import { SYSTEM_DIR } from '../modules/SYSTEM/configDir' // 系统设置
 
 const globalDir = [
     BUILDING_DIR,
