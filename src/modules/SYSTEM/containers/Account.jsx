@@ -84,9 +84,9 @@ class Account extends React.Component {
     }
     close = async (id) => {
         await apiPost(
-            'system/updateSysUser',
+            'system/updateUser',
             {id: id,
-                delFlag: 1}
+                loginFlag: 2}
         )
         notification.open({
             message: '关闭成功',
@@ -96,7 +96,7 @@ class Account extends React.Component {
     }
     reset = async (id) => {
         await apiPost(
-            'system/updateSysUser',
+            'system/updateUser',
             {id: id,
                 passWord: 'cj123456'}
         )
@@ -106,15 +106,6 @@ class Account extends React.Component {
         })
     }
     edit = async (id) => {
-        let Department = await apiPost(
-            'system/getDepartment',
-            {id: id}
-        )
-        this.props.form.setFieldsValue({
-            departmentNumber: Department.data.departmentNumber,
-            departmentName: Department.data.departmentName,
-            remarks: Department.data.remarks
-        })
         this.setState({
             open: true,
             id: id

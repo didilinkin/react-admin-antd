@@ -18,10 +18,37 @@ class UserAddUp extends React.Component {
 
     initialization = async (nextProps) => {
         if (this.state.isFirst && nextProps.visible) {
-            this.setState({
-                visible: nextProps.visible,
-                isFirst: false
-            })
+            this.props.form.resetFields()
+            if (nextProps.id > 0) {
+                let user = await apiPost(
+                    'system/getUser',
+                    {id: nextProps.id}
+                )
+                user = user.data
+                let RoleList = await apiPost(
+                    'system/RoleListDepartmentId',
+                    {departmentId: user.departmentId}
+                )
+                this.setState({
+                    roles: RoleList.data,
+                    visible: nextProps.visible,
+                    isFirst: false
+                })
+                this.props.form.setFieldsValue({
+                    departmentId: user.departmentName,
+                    jobNum: user.jobNum,
+                    loginName: user.loginName,
+                    phone: user.phone,
+                    roleId: user.roleId,
+                    loginFlag: user.loginFlag,
+                    remark: user.remark
+                })
+            } else {
+                this.setState({
+                    visible: nextProps.visible,
+                    isFirst: false
+                })
+            }
         }
     }
     componentWillReceiveProps (nextProps) {
@@ -49,6 +76,9 @@ class UserAddUp extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
+            if (!(json.departmentId > 0)) {
+                json['departmentId'] = null
+            }
             if (this.props.id > 0) {
                 json['id'] = this.props.id
                 let data = await apiPost(
@@ -60,14 +90,18 @@ class UserAddUp extends React.Component {
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
                 })
             } else {
-                let data = await apiPost(
-                    'system/insertUser',
-                    json
-                )
-                notification.open({
-                    message: data.data,
-                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-                })
+                if (json.password === json.passwordTwo) {
+                    let data = await apiPost(
+                        'system/insertUser',
+                        json
+                    )
+                    notification.open({
+                        message: data.data,
+                        icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                    })
+                } else {
+                    alert('两次密码输入不一致')
+                }
             }
             this.setState({
                 visible: false,
@@ -81,6 +115,13 @@ class UserAddUp extends React.Component {
             visible: false,
             isFirst: true
         })
+    }
+    confirm = () => {
+        let passWord = this.props.form.getFieldValue('passWord')
+        let passWordTwo = this.props.form.getFieldValue('passWordTwo')
+        if (passWord !== passWordTwo) {
+            alert('两次密码输入不一致')
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -155,6 +196,25 @@ class UserAddUp extends React.Component {
                             <Input placeholder="请输入手机" />
                         )}
                     </FormItem>
+                    {!this.props.id > 0 &&
+                    <FormItem label="初始密码" labelCol={{span: 5}}
+                        wrapperCol={{span: 15}}
+                    >
+                        {getFieldDecorator('passWord')(
+                            <Input placeholder="请输入初始密码" />
+                        )}
+                    </FormItem>
+                    }
+                    {!this.props.id > 0 &&
+                    <FormItem label="确认密码" labelCol={{span: 5}}
+                        wrapperCol={{span: 15}}
+                    >
+                        {getFieldDecorator('passWordTwo')(
+                            <Input onBlur={this.confirm} placeholder="请输入确认密码" />
+                        )}
+
+                    </FormItem>
+                    }
                     <FormItem label="所属角色" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
@@ -167,7 +227,7 @@ class UserAddUp extends React.Component {
                             <RadioGroup>
                                 {
                                     this.state.roles.map((role, i) => {
-                                        return <RadioButton style={{width: '150px'}} key={i} value={role.id}>{role.roleName}</RadioButton>
+                                        return <RadioButton key={i} value={role.id}>{role.roleName}</RadioButton>
                                     })
                                 }
                             </RadioGroup>
@@ -176,14 +236,17 @@ class UserAddUp extends React.Component {
                     <FormItem label="账号状态" labelCol={{ span: 5 }}
                         wrapperCol={{ span: 15 }}
                     >
-                        {getFieldDecorator('delFlag', {
+                        {getFieldDecorator('loginFlag', {
                             rules: [ {
                                 required: true,
                                 message: '请选择账号状态!'
                             }]
                         })(
 
-                            <Input placeholder="请选择账号状态" />
+                            <RadioGroup>
+                                <RadioButton value={1}>正常</RadioButton>
+                                <RadioButton value={2}>关闭</RadioButton>
+                            </RadioGroup>
                         )}
                     </FormItem>
                     <FormItem label="备注" labelCol={{ span: 5 }}

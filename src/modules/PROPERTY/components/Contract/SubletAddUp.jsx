@@ -14,6 +14,7 @@ class SubletAddUp extends React.Component {
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
+            this.props.form.resetFields()
             if (nextProps.id > 0) {
                 let SubletInfo = await apiPost(
                     '/contract/getSubletInfo',
