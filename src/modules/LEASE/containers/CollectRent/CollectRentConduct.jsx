@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../../api/index'
-import CollectRentConductComponent from '../details/CollectRent/InReview'
+import CollectRentConductComponent from '../details/CollectRent/RentReviewDetail'
 // 引入组件
 const Option = Select.Option
 // React component

@@ -86,49 +86,9 @@ const FINANCE_DETAILS = [
         component: require('./containers/details/WaterFee/WaterFeeDetails').default
     }, {
         title: '租金明细收款',
-        key: 'RentReviewDetailNoPaid',
-        path: '/home/finance/collectRentDetails/RentReviewDetailNoPaid/:id',
-        component: require('./containers/details/CollectRent/RentReviewDetailNoPaid').default
-    }, {
-        title: '租金明细收款',
-        key: 'RentReviewDetailNoLate',
-        path: '/home/finance/collectRentDetails/RentReviewDetailNoLate/:id',
-        component: require('./containers/details/CollectRent/RentReviewDetailNoLate').default
-    }, {
-        title: '租金明细收款',
-        key: 'NoLateAndRentFinish',
-        path: '/home/finance/collectRentDetails/NoLateAndRentFinish/:id',
-        component: require('./containers/details/CollectRent/NoLateAndRentFinish').default
-    }, {
-        title: '租金明细收款',
-        key: 'RentFinishAndLate',
-        path: '/home/finance/collectRentDetails/RentFinishAndLate/:id',
-        component: require('./containers/details/CollectRent/RentFinishAndLate').default
-    }, {
-        title: '租金明细收款',
         key: 'RentReviewDetail',
         path: '/home/finance/collectRentDetails/RentReviewDetail/:id',
         component: require('./containers/details/CollectRent/RentReviewDetail').default
-    }, {
-        title: '物业费明细收款',
-        key: 'PropertyFeeDetailNoPaid',
-        path: '/home/finance/propertyFeeDetails/PropertyFeeDetailNoPaid/:id',
-        component: require('./containers/details/PropertyFee/PropertyFeeDetailNoPaid').default
-    }, {
-        title: '物业费明细收款',
-        key: 'PropertyFeeDetailNoLate',
-        path: '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/:id',
-        component: require('./containers/details/PropertyFee/PropertyFeeDetailNoLate').default
-    }, {
-        title: '物业费明细收款',
-        key: 'NoLateAndPropertyFinish',
-        path: '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/:id',
-        component: require('./containers/details/PropertyFee/NoLateAndPropertyFinish').default
-    }, {
-        title: '物业费明细收款',
-        key: 'PropertyFinishAndLate',
-        path: '/home/finance/propertyFeeDetails/PropertyFinishAndLate/:id',
-        component: require('./containers/details/PropertyFee/PropertyFinishAndLate').default
     }, {
         title: '物业费明细收款',
         key: 'PropertyFeeDetail',

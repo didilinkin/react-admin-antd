@@ -5,7 +5,7 @@ import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
 
-class RentFinishAndLate extends React.Component {
+class RentDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -31,7 +31,6 @@ class RentFinishAndLate extends React.Component {
         })
     }
     handleCancel = (e) => {
-        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
@@ -152,15 +151,17 @@ class RentFinishAndLate extends React.Component {
                                     <Col span={8}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
                                     <Col span={16}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
                                 </Row>
+                                {this.state.data.auditStatus !== 1 && this.state.data.auditStatus !== 0 &&
                                 <Row>
                                     <Col span={8}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
                                     <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
-                                </Row>
+                                </Row>}
                             </div>
                         </div>
+                        {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
                             <div className="title">
-                            收款信息
+                                收款信息
                             </div>
                             <div className="main">
                                 <h2>确认收款</h2>
@@ -231,10 +232,12 @@ class RentFinishAndLate extends React.Component {
                                         })}
                                     </tbody>
                                 </table>
-                                <p className="line" />
+                            </div>
+                            {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
+                            <div className="wrapbox">
                                 <h2>确认违约金</h2>
                                 <Row>
-                                    <Col span={8}><b>违约金额：</b>{this.state.data.lateMoney}  元 </Col>
+                                    <Col span={8}><b>违约金额：</b>{this.state.data.lateMoney} 元 </Col>
                                     <Col span={8}><b>开票状态：</b>{this.state.invoiceLateStatus}</Col>
                                 </Row>
                                 <table className="tb">
@@ -308,7 +311,9 @@ class RentFinishAndLate extends React.Component {
                                     </tbody>
                                 </table>
                             </div>
+                            }
                         </div>
+                        }
                     </div>
                 </Modal>
             </div>
@@ -316,5 +321,5 @@ class RentFinishAndLate extends React.Component {
     }
 }
 
-export default RentFinishAndLate
+export default RentDetail
 

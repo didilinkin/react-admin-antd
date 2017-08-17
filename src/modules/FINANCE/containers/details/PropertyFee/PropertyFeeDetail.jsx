@@ -1,8 +1,10 @@
 // 物业费明细
 import React from 'react'
-import {Row, Col, Popconfirm, Icon, notification} from 'antd'
+import {Row, Col, Popconfirm, Icon, notification, Button} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
+import PropertyFeePaidComponent from '../../../components/PropertyFee/PropertyPaidConfirm'
+import PropertyFeeLateComponent from '../../../components/PropertyFee/PropertyLateConfirm'
 
 
 class PropertyFeeDetail extends React.Component {
@@ -16,6 +18,7 @@ class PropertyFeeDetail extends React.Component {
             id: 0,
             remark: '',
             openUpdate: false,
+            openUpdate2: false,
             visible: false,
             view: true,
             isFirst: true,
@@ -27,6 +30,12 @@ class PropertyFeeDetail extends React.Component {
     handleUpdate = () => {
         this.setState({
             openUpdate: true,
+            id: this.state.id
+        })
+    }
+    handleUpdate2 = () => {
+        this.setState({
+            openUpdate2: true,
             id: this.state.id
         })
     }
@@ -94,7 +103,7 @@ class PropertyFeeDetail extends React.Component {
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        this.initialRemarks()
     }
     invoiceLate = async () => {
         await apiPost(
@@ -106,17 +115,34 @@ class PropertyFeeDetail extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        this.initialRemarks()
     }
     refresh = async () => {
-        this.props.history.push('/home/financial/propertyFeeDetails/PropertyFeeDetail/' + this.props.match.params.id)
-        // location.href = '/financial/PropertyFeeDetail/' + this.props.match.params.id
+        this.initialRemarks()
+    }
+    close = async () => {
+        this.setState({
+            openUpdate: false,
+            openUpdate2: false
+        })
     }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
         return (
             <div style={this.props.style} className="contract">
+                <PropertyFeePaidComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    close={this.close}
+                    visible={this.state.openUpdate}
+                />
+                <PropertyFeeLateComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    close={this.close}
+                    visible={this.state.openUpdate2}
+                />
                 <spn ><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</spn>
                 <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
                 <Row>
@@ -191,6 +217,7 @@ class PropertyFeeDetail extends React.Component {
                         </Row>
                     </div>
                 </div>
+                {this.state.data.whetherRentPaid !== 0 &&
                 <div className="wrapbox">
                     <div className="title">
                         收款信息
@@ -264,6 +291,9 @@ class PropertyFeeDetail extends React.Component {
                                 })}
                             </tbody>
                         </table>
+                    </div>
+                    {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
+                    <div className="wrapbox">
                         <p className="line" />
                         <h2>确认违约金</h2>
                         <Row>
@@ -349,15 +379,21 @@ class PropertyFeeDetail extends React.Component {
                                 })}
                             </tbody>
                         </table>
-                    </div>
-                </div>
+                    </div>}
+                </div>}
                 <div className="wrapbox">
+                    {this.state.data.unpaidMoney !== 0 &&
+                    <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
+                    {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
+                    <Button type="primary" onClick={this.handleUpdate2} >收违约金</Button>}
+                    {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn">&nbsp; 物业费开票 </a>
-                    </Popconfirm>
+                    </Popconfirm>}
+                    {this.state.data.invoiceLateStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                         <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
-                    </Popconfirm>
+                    </Popconfirm>}
                 </div>
             </div>
         )

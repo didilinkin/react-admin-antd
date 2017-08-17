@@ -34,7 +34,7 @@ class addUpkeep extends React.Component {
             this.props.form.setFieldsValue({
                 repairDate: [moment(resulData.data.startDate), moment(resulData.data.endDate)],
                 currentPeriodMoney: resulData.data.currentPeriodMoney,
-                actualPaidMoney: resulData.data.currentPeriodMoney,
+                actualPaidMoney: resulData.data.actualPaidMoney,
                 discountMoney: resulData.data.discountMoney,
                 id: resulData.data.id
             })

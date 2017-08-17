@@ -3,8 +3,6 @@ import React from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
-import NoPaidComponent from '../details/CollectRent/RentReviewDetailNoPaid'
-import NoLateAndRentFinishComponent from '../details/CollectRent/NoLateAndRentFinish'
 import AllPaidComponent from '../details/CollectRent/RentReviewDetail'
 // 引入组件
 // React component
@@ -29,22 +27,6 @@ class CollectRentSuccess extends React.Component {
             id: id
         })
     }
-    handleUpdate2 = (id) => {
-        this.setState({
-            openAdd: true,
-            openTableAddUp: false,
-            openUpdate: false,
-            id: id
-        })
-    }
-    handleUpdate3 = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: true,
-            openUpdate: false,
-            id: id
-        })
-    }
     async initialRemarks () {
         this.setState({loading: true})
         let ListBuildingInfo = await apiPost(
@@ -55,8 +37,6 @@ class CollectRentSuccess extends React.Component {
             {auditStatus: 2}
         )
         const handleUpdate = this.handleUpdate
-        const handleUpdate2 = this.handleUpdate2
-        const handleUpdate3 = this.handleUpdate3
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -171,25 +151,11 @@ class CollectRentSuccess extends React.Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.whetherRentPaid === 0) {
-                        return (
-                            <div>
-                                <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
-                            </div>
-                        )
-                    } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
-                        return (
-                            <div>
-                                <a onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div>
-                                <a onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
-                            </div>
-                        )
-                    }
+                    return (
+                        <div>
+                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                        </div>
+                    )
                 }
             }],
             dataSource: result.data
@@ -230,23 +196,11 @@ class CollectRentSuccess extends React.Component {
                         close={this.close}
                         ListBuildingInfo={this.state.ListBuildingInfo}
                     />
-                    <NoLateAndRentFinishComponent
-                        id={this.state.id}
-                        close={this.close}
-                        refreshTable={this.refresh}
-                        visible={this.state.openAdd}
-                    />
-                    <NoPaidComponent
-                        id={this.state.id}
-                        close={this.close}
-                        refreshTable={this.refresh}
-                        visible={this.state.openUpdate}
-                    />
                     <AllPaidComponent
                         id={this.state.id}
                         close={this.close}
                         refreshTable={this.refresh}
-                        visible={this.state.openTableAddUp}
+                        visible={this.state.openUpdate}
                     />
 
                     <Table
