@@ -99,7 +99,7 @@ class EditBuilding extends Component {
                     return (
                         <div>
                             <a href="#" onClick={() => handleUpdate(record.id)} > 编辑 </a>
-                            <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
+                            <Popconfirm title="删除该楼宇将会删除楼宇下的所有房间，确定继续删除吗?" onConfirm={() => handleDelete(record.id)}>
                                 <a href="#" > 删除 </a>
                             </Popconfirm>
                         </div>

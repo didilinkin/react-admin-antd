@@ -1,5 +1,5 @@
 // 欢乐颂管理押金
-import React, {Component} from 'react'
+import React from 'react'
 import {Table, Button, Spin, Input, Select } from 'antd'
 import { apiPost } from '../../../../api'
 import CashDepositChargeComponent from '../../components/CashDeposit/CashdepsitCharge'
@@ -7,7 +7,7 @@ import CashDepositRefundComponent from '../../components/CashDeposit/CashdepsitR
 // 引入组件
 const Option = Select.Option
 // React component
-class CashDepositRent extends Component {
+class CashDepositRent extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -36,6 +36,9 @@ class CashDepositRent extends Component {
             id: id
         })
     }
+    info = (url) => {
+        this.props.pro.history.push(url)
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -47,6 +50,7 @@ class CashDepositRent extends Component {
         )
         const handleUpdate = this.handleUpdate
         const handleUpdate2 = this.handleUpdate2
+        const info = this.info
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -87,11 +91,11 @@ class CashDepositRent extends Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/upkeep/cashDepositDetail/' + record.id
+                    let url = '/home/client/cashDepositDetail/cashDepositDetail/' + record.id
                     if (record.currentBalance !== 0) {
                         return (
                             <div>
-                                <a href={url}> 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 明细 &nbsp;</a>
                                 <a onClick={() => handleUpdate(record.id)} > 扣款 </a>
                                 <a onClick={() => handleUpdate2(record.id)} > 退款 </a>
                             </div>
@@ -99,7 +103,7 @@ class CashDepositRent extends Component {
                     } else {
                         return (
                             <div>
-                                <a href={url}> 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 明细 &nbsp;</a>
                             </div>
                         )
                     }

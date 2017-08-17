@@ -4,7 +4,7 @@ import React from 'react'
 import { apiPost } from '../../../api/index'
 import '../style/test.less'
 const FormItem = Form.Item
-class WarehouseAddUp extends React.Component {
+class BuildAdd extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -93,14 +93,14 @@ class WarehouseAddUp extends React.Component {
             <Modal maskClosable={false}
                 title={this.state.title}
                 style={{top: 20}}
-                width={400}
+                width={300}
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}
             >
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={12}>
+                        <Col span={20}>
                             <FormItem label="楼宇名称" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
@@ -109,7 +109,7 @@ class WarehouseAddUp extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
+                        <Col span={20}>
                             <FormItem label="客梯数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
@@ -118,7 +118,7 @@ class WarehouseAddUp extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
+                        <Col span={20}>
                             <FormItem label="货梯数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
@@ -127,7 +127,7 @@ class WarehouseAddUp extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
+                        <Col span={20}>
                             <FormItem label="楼层数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
@@ -141,6 +141,6 @@ class WarehouseAddUp extends React.Component {
     }
 }
 
-let WarehouseAddUpComponent = Form.create()(WarehouseAddUp)
+let BuildAddComponent = Form.create()(BuildAdd)
 
-export default WarehouseAddUpComponent
+export default BuildAddComponent

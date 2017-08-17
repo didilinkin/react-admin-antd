@@ -99,7 +99,7 @@ class PropertyFeeConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="#" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            <a onClick={() => handleUpdate(record.id)} > 明细 </a>
                         </div>
                     )
                 }
@@ -171,7 +171,7 @@ class PropertyFeeConduct extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
+                    <span>房间编号:&nbsp;&nbsp;</span>r
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNumberOnChange}
                     />

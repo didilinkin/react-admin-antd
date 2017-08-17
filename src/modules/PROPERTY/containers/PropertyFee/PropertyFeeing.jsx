@@ -136,11 +136,11 @@ class PropertyFeeing extends Component {
                     return (
                         <div>
                             <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>
-                                <a href="#" > 提交 </a>
+                                <a> 提交 </a>
                             </Popconfirm>
-                            <a href="#" type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 </a>
+                            <a type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 </a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                                <a href="#" > 删除 </a>
+                                <a> 删除 </a>
                             </Popconfirm>
                         </div>
                     )
