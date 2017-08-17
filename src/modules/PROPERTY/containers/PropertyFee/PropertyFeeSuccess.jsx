@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
-import AllPaidComponent from '../details/PropertyFee/PropertyAllPaid'
+import AllPaidComponent from '../details/PropertyFee/PropertyDetail'
 // 引入组件
 // React component
 class PropertyFeeSuccess extends Component {

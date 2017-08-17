@@ -202,7 +202,6 @@ class CollectRentSuccess extends React.Component {
                         refreshTable={this.refresh}
                         visible={this.state.openUpdate}
                     />
-
                     <Table
                         scroll={{ x: 2000 }}
                         bordered

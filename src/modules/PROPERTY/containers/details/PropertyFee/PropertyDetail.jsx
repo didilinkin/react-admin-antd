@@ -5,7 +5,7 @@ import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
 
-class PropertyAllPaid extends React.Component {
+class PropertyDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -35,6 +35,9 @@ class PropertyAllPaid extends React.Component {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+    }
+    clienttNameChange = (e) => {
+        console.log(e.target.value)
     }
     async initialRemarks (nextProps) {
         this.setState({
@@ -104,7 +107,7 @@ class PropertyAllPaid extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <div className="contract">
-                        <spn ><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</spn>
+                        <spn ><input value={this.state.data.clientName} onChange={this.clienttNameChange} />&nbsp;&nbsp;物业服务费统计表</spn>
                         <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
                         <Row>
                             <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
@@ -349,5 +352,5 @@ class PropertyAllPaid extends React.Component {
     }
 }
 
-export default PropertyAllPaid
+export default PropertyDetail
 
