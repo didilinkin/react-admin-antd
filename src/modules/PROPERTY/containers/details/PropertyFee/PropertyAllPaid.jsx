@@ -178,6 +178,7 @@ class PropertyAllPaid extends React.Component {
                                 </Row>
                             </div>
                         </div>
+                        {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
                             <div className="title">
                                 收款信息
@@ -186,7 +187,7 @@ class PropertyAllPaid extends React.Component {
                                 <h2>确认收款</h2>
                                 <Row>
                                     <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
-                                    <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
+                                    <Col span={16}><i>开票状态：</i>{this.state.invoiceRentStatus}</Col>
                                 </Row>
                                 <table className="tb">
                                     <tbody>
@@ -251,6 +252,9 @@ class PropertyAllPaid extends React.Component {
                                         })}
                                     </tbody>
                                 </table>
+                            </div>
+                            {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
+                            <div className="wrapbox">
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
@@ -322,13 +326,22 @@ class PropertyAllPaid extends React.Component {
                                                     <td>其他</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
+                                            } else if (collectRent.paidWay === 6) {
+                                                return <tr>
+                                                    <td>{collectRent.receiptDate}</td>
+                                                    <td>{collectRent.paidMoney}</td>
+                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td>{collectRent.discountMoney}</td>
+                                                    <td>延期下月电费</td>
+                                                    <td>{collectRent.createName}</td>
+                                                </tr>
                                             }
                                             return ''
                                         })}
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+                            </div>}
+                        </div>}
                     </div>
                 </Modal>
             </div>

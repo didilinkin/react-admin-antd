@@ -65,15 +65,17 @@ class addUpkeep extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidLateMoney !== '0.0') {
-            // this.props.pro.history.push('/home/finance/collectRentDetails/RentFinishAndLate/' + json.id)
-            location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
-        } else if (json.unpaidLateMoney === '0.0') {
-            this.props.pro.history.push('/home/finance/collectRentDetails/RentReviewDetail/' + json.id)
-            // location.href = '/financial/RentReviewDetail/' + json.id
-        }
+        // if (json.unpaidLateMoney !== '0.0') {
+        //     // this.props.pro.history.push('/home/finance/collectRentDetails/RentFinishAndLate/' + json.id)
+        //     location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
+        // } else if (json.unpaidLateMoney === '0.0') {
+        //     this.props.pro.history.push('/home/finance/collectRentDetails/RentReviewDetail/' + json.id)
+        //     // location.href = '/financial/RentReviewDetail/' + json.id
+        // }
         this.setState({visible: false,
             isFirst: true })
+        this.props.close()
+        this.props.refreshTable()
     }
     handleCancel = (e) => {
         this.setState({ visible: false,

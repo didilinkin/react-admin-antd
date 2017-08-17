@@ -24,7 +24,7 @@ class collectRentConfirm extends React.Component {
                 '/collectRent/getCollectRentById',
                 { 'id': nextProps.id }
             )
-            if (resulData.data.lateMoney !== null) {
+            if (resulData.data.lateMoney !== 0) {
                 this.props.form.setFieldsValue({
                     lastLateMoney: resulData.data.lateMoney
                 })
@@ -74,15 +74,17 @@ class collectRentConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidMoney !== '0.0') {
-            location.href = '/home/finance/collectRentDetails/RentReviewDetailNoLate/' + json.id
-        } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-            location.href = '/home/finance/collectRentDetails/NoLateAndRentFinish/' + json.id
-        } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-            location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
-        }
+        // if (json.unpaidMoney !== '0.0') {
+        //     location.href = '/home/finance/collectRentDetails/RentReviewDetailNoLate/' + json.id
+        // } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
+        //     location.href = '/home/finance/collectRentDetails/NoLateAndRentFinish/' + json.id
+        // } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
+        //     location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
+        // }
         this.setState({visible: false,
             isFirst: true })
+        this.props.close()
+        this.props.refreshTable()
     }
     handleCancel = (e) => {
         this.setState({ visible: false,

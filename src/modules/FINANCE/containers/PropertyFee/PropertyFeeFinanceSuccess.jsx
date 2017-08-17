@@ -157,57 +157,15 @@ class PropertyFeeFinanceSuccess extends React.Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    if (record.lateMoney === 0 && record.paidMoney === 0) {
-                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoPaid/' + record.id
-                        return (
-                            <div>
-                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
-                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a> 撤回 </a>
-                                </Popconfirm>
-                            </div>
-                        )
-                    } else if (record.whetherRentPaid !== 1) {
-                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/' + record.id
-                        return (
-                            <div>
-                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
-                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a> 撤回 </a>
-                                </Popconfirm>
-                            </div>
-                        )
-                    } else if (record.lateMoney === 0 && record.whetherRentPaid === 1) {
-                        let url = '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/' + record.id
-                        return (
-                            <div>
-                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
-                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a> 撤回 </a>
-                                </Popconfirm>
-                            </div>
-                        )
-                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid !== 1) {
-                        let url = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + record.id
-                        return (
-                            <div>
-                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
-                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a> 撤回 </a>
-                                </Popconfirm>
-                            </div>
-                        )
-                    } else if (record.lateMoney !== 0 && record.whetherRentPaid === 1 && record.whetherLatePaid === 1) {
-                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + record.id
-                        return (
-                            <div>
-                                <a onClick={() => info(url)}> 收款 &nbsp;</a>
-                                <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                    <a> 撤回 </a>
-                                </Popconfirm>
-                            </div>
-                        )
-                    }
+                    let url = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + record.id
+                    return (
+                        <div>
+                            <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                            <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
+                                <a> 撤回 </a>
+                            </Popconfirm>
+                        </div>
+                    )
                 }
             }],
             dataSource: result.data
