@@ -63,9 +63,9 @@ class propertyLateConfirm extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidLateMoney !== '0.0') {
-            location.href = '/financial/PropertyFinishAndLate/' + json.id
+            location.href = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + json.id
         } else if (json.unpaidLateMoney === '0.0') {
-            location.href = '/financial/PropertyFeeDetail/' + json.id
+            location.href = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + json.id
         }
         this.setState({visible: false,
             isFirst: true })

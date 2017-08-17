@@ -83,7 +83,7 @@ class NoLateAndRentFinish extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        this.props.history.push('/home/financial/collectRentDetails/NoLateAndRentFinish/' + this.props.match.params.id)
+        location.href = '/home/financial/collectRentDetails/NoLateAndRentFinish/' + this.props.match.params.id
         // location.href = '/financial/NoLateAndRentFinish/' + this.props.match.params.id
     }
     render () {

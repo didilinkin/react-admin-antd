@@ -73,11 +73,11 @@ class propertyPaidConfirm extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidMoney !== '0.0') {
-            location.href = '/financial/PropertyFeeDetailNoLate/' + json.id
+            location.href = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-            location.href = '/financial/NoLateAndPropertyFinish/' + json.id
+            location.href = '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/' + json.id
         } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-            location.href = '/financial/PropertyFinishAndLate/' + json.id
+            location.href = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + json.id
         }
         this.setState({visible: false,
             isFirst: true })

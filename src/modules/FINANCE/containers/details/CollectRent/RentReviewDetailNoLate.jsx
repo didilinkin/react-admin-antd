@@ -37,7 +37,7 @@ class RentReviewDetailNoLate extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         // location.href = '/financial/RentReviewDetailNoLate/' + this.props.match.params.id
-        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetailNoLate/' + this.props.match.params.id)
+        location.href = '/home/financial/collectRentDetails/RentReviewDetailNoLate/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({
@@ -93,6 +93,7 @@ class RentReviewDetailNoLate extends React.Component {
             <div style={this.props.style} className="contract">
                 <CollectRentAuditComponent
                     id={this.state.id}
+                    pro={this.props}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
