@@ -5,7 +5,7 @@ import { apiPost } from '../../../api/index'
 import '../style/test.less'
 const FormItem = Form.Item
 const Option = Select.Option
-class WarehouseAddUp extends React.Component {
+class RoomAdd extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -300,6 +300,6 @@ class WarehouseAddUp extends React.Component {
     }
 }
 
-let WarehouseAddUpComponent = Form.create()(WarehouseAddUp)
+let RoomAddComponent = Form.create()(RoomAdd)
 
-export default WarehouseAddUpComponent
+export default RoomAddComponent

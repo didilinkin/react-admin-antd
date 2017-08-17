@@ -181,19 +181,19 @@ class PropertyFeeSuccess extends Component {
                     if (record.whetherRentPaid === 0) {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                                <a onClick={() => handleUpdate(record.id)} > 明细 </a>
                             </div>
                         )
                     } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate2(record.id)} > 明细 </a>
+                                <a onClick={() => handleUpdate2(record.id)} > 明细 </a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate3(record.id)} > 明细 </a>
+                                <a onClick={() => handleUpdate3(record.id)} > 明细 </a>
                             </div>
                         )
                     }

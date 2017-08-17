@@ -40,7 +40,8 @@ class addUpkeep extends React.Component {
             })
             this.setState({
                 isFirst: false,
-                visible: nextProps.visible
+                visible: nextProps.visible,
+                data: resulData.data
             })
         }
     }
@@ -72,7 +73,7 @@ class addUpkeep extends React.Component {
         if (typeof (discountMoney) === 'undefined') {
             discountMoney = 0
         }
-        let currentPeriodMoney = this.props.form.getFieldValue('currentPeriodMoney')
+        let currentPeriodMoney = this.state.data.currentPeriodMoney
         if (typeof (currentPeriodMoney) === 'undefined') {
             currentPeriodMoney = 0
         }
@@ -123,7 +124,7 @@ class addUpkeep extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('discountMoney')(
-                                        <Input onBlur={this.sumMoney} />
+                                        <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>
                                 <FormItem label="实际应收" labelCol={{ span: 6 }}

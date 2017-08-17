@@ -41,13 +41,16 @@ class InventoryManage extends React.Component {
             unitPrice: unitPrice
         })
     }
-
+    info = (url) => {
+        this.props.history.push(url)
+    }
     async initialRemarks () {
         this.setState({ loading: true })
         let result = await apiPost(
             '/warehouse/inventoryManage'
         )
         const handleUpdate = this.handleUpdate
+        const info = this.info
         this.setState({
             loading: false,
             columns: [{
@@ -119,10 +122,10 @@ class InventoryManage extends React.Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/warehouse/warehouseDetail/' + record.warehouseId
+                    let url = '/home/wareHouse/inventory/' + record.warehouseId
                     return (
                         <div>
-                            <a href={url}> 明细 &nbsp;</a>
+                            <a onClick={() => info(url)}> 明细 &nbsp;</a>
                             <a onClick={() => handleUpdate(record.warehouseId, record.amount, record.number, record.unitPrice)} >&nbsp; 出库</a>
                         </div>
                     )
@@ -224,13 +227,14 @@ class InventoryManage extends React.Component {
                     <span>仓库类型&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
+                        allowClear
                         style={{
                             width: 200,
                             marginRight: '5px'
                         }}
                         placeholder="请选择仓库"
                         optionFilterProp="children"
-                        onSelect={ this.selectOnChange }
+                        onChange={ this.selectOnChange }
                         filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
                         <Option key="0">工程库</Option>

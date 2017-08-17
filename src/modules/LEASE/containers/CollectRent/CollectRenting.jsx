@@ -118,7 +118,7 @@ class CollectRenting extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="#" type="primary" onClick={() => handleUpdate(record.id)} > 收租 &nbsp;</a>
+                            <a type="primary" onClick={() => handleUpdate(record.id)} > 收租 &nbsp;</a>
                         </div>
                     )
                 }
@@ -194,7 +194,7 @@ class CollectRenting extends Component {
                     <Select
                         showSearch
                         allowClear
-                        style={{width: 200,
+                        style={{width: 150,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
@@ -212,6 +212,7 @@ class CollectRenting extends Component {
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
+                    <span>交费周期:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         allowClear

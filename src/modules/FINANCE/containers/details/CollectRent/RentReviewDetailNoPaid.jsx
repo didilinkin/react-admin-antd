@@ -35,7 +35,7 @@ class RentReviewDetailNoPaid extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetailNoPaid/' + this.props.match.params.id)
+        location.href = '/home/financial/collectRentDetails/RentReviewDetailNoPaid/' + this.props.match.params.id
     }
     async initialRemarks () {
         this.setState({
@@ -88,6 +88,7 @@ class RentReviewDetailNoPaid extends React.Component {
             <div style={this.props.style} className="contract">
                 <CollectRentAuditComponent
                     id={this.state.id}
+                    pro={this.props}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />

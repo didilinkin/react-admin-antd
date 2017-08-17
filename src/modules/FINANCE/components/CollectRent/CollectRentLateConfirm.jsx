@@ -11,6 +11,7 @@ class addUpkeep extends React.Component {
         this.state = {
             visible: false,
             view: true,
+            refresh: false,
             isFirst: true,
             data: {}
         }
@@ -52,7 +53,7 @@ class addUpkeep extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null) {
+        if (json.receiptDate !== null || json.receiptDate !== 'undefined') {
             json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
         }
         json['feeType'] = 1
@@ -65,10 +66,10 @@ class addUpkeep extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         if (json.unpaidLateMoney !== '0.0') {
-            this.props.history.push('/home/financial/collectRentDetails/RentFinishAndLate/' + json.id)
-            // location.href = '/financial/RentFinishAndLate/' + json.id
+            // this.props.pro.history.push('/home/finance/collectRentDetails/RentFinishAndLate/' + json.id)
+            location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
         } else if (json.unpaidLateMoney === '0.0') {
-            this.props.history.push('/home/financial/collectRentDetails/RentReviewDetail/' + json.id)
+            this.props.pro.history.push('/home/finance/collectRentDetails/RentReviewDetail/' + json.id)
             // location.href = '/financial/RentReviewDetail/' + json.id
         }
         this.setState({visible: false,

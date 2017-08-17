@@ -1,12 +1,150 @@
-// 系统设置 - 个人设置
+import {Form, notification, Icon, Col, Row, Input, Tabs, Button} from 'antd'
 import React from 'react'
+import { apiPost, baseURL } from '../../../../api/index'
+const FormItem = Form.Item
+const TabPane = Tabs.TabPane
 
-class Options extends React.Component {
+
+class options extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            visible: false,
+            view: true,
+            auditStatus: 1,
+            fileList: [],
+            isFirst: true,
+            data: {}
+        }
+    }
+    async initialRemarks (nextProps) {
+        this.setState({
+            view: false
+        })
+        if (this.state.isFirst && nextProps.visible) {
+            let resulData = await apiPost(
+                '/cashDeposit/getCashDepositDetailById',
+                { 'id': nextProps.id }
+            )
+            let CashDepositDetail = resulData.data
+            let i = 0
+            CashDepositDetail['fileUrl'] = CashDepositDetail.fileUrl.split('#').map(img => {
+                if (img !== '') {
+                    i++
+                    return <img key={i} width={100} height={100} src={baseURL + 'storage/files/' + img} alt="" />
+                }
+                return ''
+            })
+            this.props.form.setFieldsValue({
+                buildName: resulData.data.buildName,
+                roomNum: resulData.data.roomNum,
+                sublietName: resulData.data.sublietName,
+                operateMoney: resulData.data.operateMoney,
+                reason: resulData.data.reason,
+                auditStatus: 1
+            })
+            this.setState({
+                isFirst: false,
+                data: CashDepositDetail,
+                visible: nextProps.visible
+            })
+        }
+    }
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
+    }
+    // 单击确定按钮提交表单
+    handleSubmit = async () => {
+        let json = this.props.form.getFieldsValue()
+        json['id'] = this.state.data.id
+        json['cashDepositId'] = this.state.data.cashDepositId
+        if (json.auditStatus === 1) {
+            json['currentBalance'] = this.state.data.currentBalance - this.state.data.operateMoney
+        } else if (json.auditStatus === 2) {
+            json['currentBalance'] = this.state.data.currentBalance
+        }
+        await apiPost(
+            '/cashDeposit/updateCashDepositByConfirm',
+            json
+        )
+        notification.open({
+            message: '操作成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.props.refreshTable()
+        this.setState({visible: false,
+            isFirst: true })
+    }
+    handleCancel = (e) => {
+        this.setState({ visible: false,
+            isFirst: true})
+    }
+    onChange = (e) => {
+        this.setState({
+            auditStatus: e.target.value
+        })
+    }
     render () {
+        const { getFieldDecorator } = this.props.form
         return (
-            <h1> 系统设置 - 个人设置 </h1>
+            <div>
+                <Tabs defaultActiveKey="1" onChange={this.refreshTwo}>
+                    <TabPane tab="修改密码" key="1">
+                        <Form layout="horizontal">
+                            <Row>
+                                <Col span={8}>
+                                    <FormItem label="旧密码" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        {getFieldDecorator('oldPassword')(
+                                            <Input />
+                                        )}
+                                    </FormItem>
+                                    <FormItem label="新密码" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        {getFieldDecorator('password')(
+                                            <Input />
+                                        )}
+                                    </FormItem>
+                                    <FormItem label="确认密码" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        {getFieldDecorator('confirmPassword')(
+                                            <Input />
+                                        )}
+                                    </FormItem>
+                                    <Button type="primary">
+                                        保存
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </TabPane>
+                    <TabPane tab="联系方式" key="2">
+                        <Form layout="horizontal">
+                            <Row>
+                                <Col span={8}>
+                                    <FormItem label="手机号码" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 16 }}
+                                    >
+                                        {getFieldDecorator('oldPassword')(
+                                            <Input />
+                                        )}
+                                    </FormItem>
+                                    <Button type="primary">
+                                        保存
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </TabPane>
+                </Tabs>
+            </div>
         )
     }
 }
+
+let Options = Form.create()(options)
 
 export default Options
