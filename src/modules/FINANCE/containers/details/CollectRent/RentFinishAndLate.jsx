@@ -131,6 +131,7 @@ class RentFinishAndLate extends React.Component {
             <div style={this.props.style} className="contract">
                 <CollectRentAuditComponent
                     id={this.state.id}
+                    pro={this.props}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />

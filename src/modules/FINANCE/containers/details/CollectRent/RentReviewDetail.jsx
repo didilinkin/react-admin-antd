@@ -38,7 +38,7 @@ class RentReviewDetail extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id)
+        location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
         // location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
     }
     invoiceLate = async () => {
@@ -51,7 +51,7 @@ class RentReviewDetail extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.history.push('/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id)
+        location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
         // location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
     }
     async initialRemarks () {
