@@ -158,7 +158,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     if (record.lateMoney === 0 && record.paidMoney === 0) {
-                        let url = '/home/financial/propertyFeeDetails/PropertyFeeDetailNoPaid/' + record.id
+                        let url = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoPaid/' + record.id
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 收款 &nbsp;</a>
