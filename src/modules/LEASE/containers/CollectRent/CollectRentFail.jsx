@@ -134,8 +134,8 @@ class CollectRentFail extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="#" type="primary" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
-                            <a href="#" type="primary" onClick={() => handleUpdate2(record.id)} >&nbsp; 重新收租 </a>
+                            <a type="primary" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <a type="primary" onClick={() => handleUpdate2(record.id)} >&nbsp; 重新收租 </a>
                         </div>
                     )
                 }
@@ -216,7 +216,7 @@ class CollectRentFail extends Component {
                     <Select
                         showSearch
                         allowClear
-                        style={{width: 200,
+                        style={{width: 150,
                             marginRight: '5px'}}
                         placeholder="请选择所属楼宇"
                         optionFilterProp="children"
@@ -234,6 +234,7 @@ class CollectRentFail extends Component {
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
+                    <span>交费周期:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         style={{width: 150,

@@ -1,5 +1,5 @@
 // 收费管理 - 审核成功
-import React, {Component} from 'react'
+import React from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
@@ -8,7 +8,7 @@ import NoLateAndRentFinishComponent from '../details/CollectRent/NoLateAndRentFi
 import AllPaidComponent from '../details/CollectRent/RentReviewDetail'
 // 引入组件
 // React component
-class CollectRentSuccess extends Component {
+class CollectRentSuccess extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -174,19 +174,19 @@ class CollectRentSuccess extends Component {
                     if (record.whetherRentPaid === 0) {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     } else if (record.whetherRentPaid !== 0 && record.lateMoney === 0) {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <a href="#" onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
+                                <a onClick={() => handleUpdate3(record.id)} > 明细 &nbsp;</a>
                             </div>
                         )
                     }
@@ -224,31 +224,31 @@ class CollectRentSuccess extends Component {
     render () {
         return (
             <div>
-                <CollectRentHeadComponent
-                    refresh={this.refresh}
-                    close={this.close}
-                    ListBuildingInfo={this.state.ListBuildingInfo}
-                />
-                <NoLateAndRentFinishComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openAdd}
-                />
-                <NoPaidComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openUpdate}
-                />
-                <AllPaidComponent
-                    id={this.state.id}
-                    close={this.close}
-                    refreshTable={this.refresh}
-                    visible={this.state.openTableAddUp}
-                />
-
                 <Spin spinning={this.state.loading}>
+                    <CollectRentHeadComponent
+                        refresh={this.refresh}
+                        close={this.close}
+                        ListBuildingInfo={this.state.ListBuildingInfo}
+                    />
+                    <NoLateAndRentFinishComponent
+                        id={this.state.id}
+                        close={this.close}
+                        refreshTable={this.refresh}
+                        visible={this.state.openAdd}
+                    />
+                    <NoPaidComponent
+                        id={this.state.id}
+                        close={this.close}
+                        refreshTable={this.refresh}
+                        visible={this.state.openUpdate}
+                    />
+                    <AllPaidComponent
+                        id={this.state.id}
+                        close={this.close}
+                        refreshTable={this.refresh}
+                        visible={this.state.openTableAddUp}
+                    />
+
                     <Table
                         scroll={{ x: 2000 }}
                         bordered

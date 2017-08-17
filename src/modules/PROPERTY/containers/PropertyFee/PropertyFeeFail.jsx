@@ -138,10 +138,10 @@ class PropertyFeeFail extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="#" type="primary" onClick={() => handleUpdate(record.id)} > 明细 </a>
-                            <a href="#" type="primary" onClick={() => handleUpdate2(record.id)} > 重新收费 </a>
+                            <a type="primary" onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            <a type="primary" onClick={() => handleUpdate2(record.id)} > 重新收费 </a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                                <a href="#" > 删除 </a>
+                                <a> 删除 </a>
                             </Popconfirm>
                         </div>
                     )
