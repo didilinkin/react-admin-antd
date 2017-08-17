@@ -1,6 +1,7 @@
 import React from 'react'
-import { Modal, Row, Col, Table} from 'antd'
+import { Modal, Row, Col, Table, Radio, Input, Button, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api/index'
+const RadioGroup = Radio.Group
 class PowerInfomation extends React.Component {
     state = {
         map: {
@@ -11,44 +12,7 @@ class PowerInfomation extends React.Component {
         },
         isFirst: true,
         visible: false,
-        mainColumns: [],
-        // 确认收款
-        confirmReceipt: [{
-            title: '时间',
-            dataIndex: 'time'
-        }, {
-            title: '实收金额',
-            dataIndex: 'chargeMoney'
-        }, {
-            title: '未收金额',
-            dataIndex: 'noChargeMoney'
-        }, {
-            title: '收款方式',
-            dataIndex: 'principalMethod'
-        }, {
-            title: '经手人',
-            dataIndex: 'person'
-        }],
-        // 确认违约金
-        confirmLiquidatedDamages: [{
-            title: '时间',
-            dataIndex: 'liquidatedDamagesDate'
-        }, {
-            title: '优惠金额',
-            dataIndex: 'discountAmount'
-        }, {
-            title: '实收金额',
-            dataIndex: 'liquidatedDamagesReceived'
-        }, {
-            title: '未收金额',
-            dataIndex: 'noChargeMoney'
-        }, {
-            title: '收款方式',
-            dataIndex: 'damagesMethod'
-        }, {
-            title: '经手人',
-            dataIndex: 'person'
-        }]
+        mainColumns: []
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
@@ -117,17 +81,28 @@ class PowerInfomation extends React.Component {
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
     }
-    handleOk = async (e) => {
-        console.log(e)
+    handleOk = async () => {
         this.setState({
             value: 2,
             text: '',
             isFirst: true,
             visible: false
         })
+        if (this.props.Finance > 0 && this.state.map.electricityFees.examineState === 1) {
+            let data = await apiPost(
+                '/ElectricityFees/updateAudit',
+                {id: this.props.id,
+                    examineState: this.state.value,
+                    auditExplain: this.state.text}
+            )
+            notification.open({
+                message: data.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.refresh()
+        }
     }
-    handleCancel = (e) => {
-        console.log(e)
+    handleCancel = () => {
         this.setState({
             value: 2,
             text: '',
@@ -135,14 +110,21 @@ class PowerInfomation extends React.Component {
             isFirst: true
         })
     }
+    stateChange = (e) => {
+        this.setState({
+            value: e.target.value
+        })
+        console.log(e.target.value)
+    }
+    text = (e) => {
+        this.setState({
+            text: e.target.value
+        })
+        console.log(e.target.value)
+    }
     render () {
         const lightGrayStyle = {
             color: '#989898'
-        }
-
-        const blueBlodStyle = {
-            color: '#09F',
-            fontWeight: 'bold'
         }
         return (
             <div>
@@ -294,148 +276,24 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
-                                            <span>&nbsp;{this.state.map.electricityFees.updateName ? this.state.map.electricityFees.updateName : this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.updateDate ? this.state.map.electricityFees.updateDatethis.state.map.electricityFees.updateDate : this.state.map.electricityFees.createDate}</span>
+                                            <span>&nbsp;{this.state.map.electricityFees.updateBy ? this.state.map.electricityFees.updateBy : this.state.map.electricityFees.createName}&nbsp;{this.state.map.electricityFees.updateDate ? this.state.map.electricityFees.updateDate : this.state.map.electricityFees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
-                                {this.state.map.electricityFees.examineState !== 0 &&
-                                <Row style={{marginTop: 20,
-                                    lineHeight: '18px',
-                                    color: '#363636'}}
-                                >
-                                    <Col span={12}>
-                                        <div>
-                                            <span style={lightGrayStyle}>审核人：</span>
-                                            <span>&nbsp;{this.state.map.electricityFees.auditName}&nbsp;{this.state.map.electricityFees.auditDate}</span>
-                                        </div>
-                                    </Col>
-                                    <Col span={12}>
-                                        <div>
-                                            <span style={lightGrayStyle}>审核状态：</span>
-                                            <span>&nbsp;{this.state.map.electricityFees.auditExplain}</span>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                }
+                                <Middle fees={this.state.map.electricityFees} financial = {this.props.Finance}/>
                             </div>
                         </div>
-                        {this.state.map.electricityFees.examineState !== 0 &&
-                        <div style={{
-                            marginTop: 20,
-                            border: '1px solid #EBEBEB'
-                        }}
-                        >
-                            <div style={{
-                                backgroundColor: '#EBEBEB',
-                                height: '44px',
-                                fontSize: '14px',
-                                lineHeight: '44px'
-                            }}
-                            >
-                                <span style={{marginLeft: '20px'}}>收款信息</span>
-                            </div>
-                            <div style={{
-                                padding: '0 20px',
-                                fontSize: '14px'
-                            }}
-                            >
-                                <div style={{
-                                    fontWeight: 'bold',
-                                    marginTop: 10
-                                }}
-                                >
-                                    <div style={{fontWeight: 'bold'}}>确认收款</div>
-                                    <Row style={{
-                                        marginTop: 10,
-                                        backgroundColor: '#F3F3F3',
-                                        height: '32px',
-                                        lineHeight: '32px',
-                                        paddingLeft: '10px',
-                                        fontWeight: 'normal'
-                                    }}
-                                    >
-                                        <Col span={8}>
-                                            <div>
-                                                <span style={lightGrayStyle}>应收金额：&nbsp;</span>
-                                                <span
-                                                    style={blueBlodStyle}
-                                                >{this.state.map.electricityFees.thisReceivable}</span>
-                                                <span>&nbsp;元</span>
-                                            </div>
-                                        </Col>
-                                        <Col span={8}>
-                                            <div>
-                                                <span style={lightGrayStyle}>开票状态：&nbsp;</span>
-                                                <span>{this.state.map.electricityFees.principalPrincipalBilling === 1 ? '已开票' : '未开票'}</span>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                <div style={{marginTop: 10}}>
-                                    <Table
-                                        columns={this.state.confirmReceipt}
-                                        dataSource={this.state.map.receipt}
-                                        bordered
-                                        pagination={false}
-                                    />
-                                </div>
-                                <hr style={{marginTop: 20}} />
-                                <div style={{
-                                    fontWeight: 'bold',
-                                    marginTop: 10
-                                }}
-                                >
-                                    <div style={{fontWeight: 'bold'}}>确认违约金</div>
-                                    <Row style={{
-                                        marginTop: 10,
-                                        backgroundColor: '#F3F3F3',
-                                        height: '32px',
-                                        lineHeight: '32px',
-                                        paddingLeft: '10px',
-                                        fontWeight: 'normal'
-                                    }}
-                                    >
-                                        <Col span={8}>
-                                            <div>
-                                                <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
-                                                <span
-                                                    style={blueBlodStyle}
-                                                >{this.state.map.electricityFees.days}</span>
-                                                <span>&nbsp;天</span>
-                                            </div>
-                                        </Col>
-                                        <Col span={8}>
-                                            <div>
-                                                <span style={lightGrayStyle}>违约金额：&nbsp;</span>
-                                                <span
-                                                    style={blueBlodStyle}
-                                                >{this.state.map.electricityFees.liquidatedDamages}</span>
-                                                <span>&nbsp;元</span>
-                                            </div>
-                                        </Col>
-                                        <Col span={8}>
-                                            <div>
-                                                <span style={lightGrayStyle}>开票状态：&nbsp;</span>
-                                                <span>{this.state.map.electricityFees.principalDamagesBilling === 1 ? '已开票' : '未开票'}</span>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                                <div style={{
-                                    marginTop: 10,
-                                    marginBottom: 20
-                                }}
-                                >
-                                    <Table
-                                        columns={this.state.confirmLiquidatedDamages}
-                                        dataSource={this.state.map.liquidatedDamagesList}
-                                        bordered
-                                        pagination={false}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        }
+                        <Bottom
+                            stateChange={this.stateChange}
+                            stateValue={this.state.value}
+                            textInput={this.text}
+                            handleOk={this.handleOk}
+                            handleCancel={this.handleCancel}
+                            financial = {this.props.Finance}
+                            fees={this.state.map.electricityFees}
+                            receipt={this.state.map.receipt}
+                            liquidatedDamagesList={this.state.map.liquidatedDamagesList}
+                        />
                     </div>
                 </Modal>
             </div>
@@ -444,3 +302,245 @@ class PowerInfomation extends React.Component {
 }
 
 export default PowerInfomation
+
+// 进行选择
+function Middle (props) {
+    const lightGrayStyle = {
+        color: '#989898'
+    }
+    if (props.fees.examineState > 1) {
+        return <Row style={{marginTop: 20,
+            lineHeight: '18px',
+            color: '#363636'}}
+        >
+            <Col span={12}>
+                <div>
+                    <span style={lightGrayStyle}>审核人：</span>
+                    <span>&nbsp;{props.fees.auditName}&nbsp;{props.fees.auditDate}</span>
+                </div>
+            </Col>
+            <Col span={12}>
+                <div>
+                    <span style={lightGrayStyle}>审核状态：</span>
+                    <span>&nbsp;{props.fees.auditExplain}</span>
+                </div>
+            </Col>
+        </Row>
+    } else {
+        return null
+    }
+}
+
+function ExaminingState (props) {
+    return <div>
+        <hr style={{
+            marginTop: 20,
+            color: '#EBEBEB'
+        }}
+        />
+        <div style={{
+            marginTop: '20px',
+            lineHeight: '18px'
+        }}
+        >
+            <span>审批意见：</span>
+            <RadioGroup onChange={props.stateChange} value={props.stateValue}>
+                <Radio value={2}>审批通过</Radio>
+                <Radio value={3}>审批不通过</Radio>
+            </RadioGroup>
+        </div>
+        <div style={{
+            marginTop: '20px',
+            lineHeight: '18px'
+        }}
+        >
+            <Input onChange={props.textInput} type="textarea" rows={1} placeholder="请输入审批意见" />
+        </div>
+        <div style={{
+            marginTop: '30px',
+            textAlign: 'center'
+        }}
+        >
+            <Button type="primary" size="large" onClick={props.handleOk}>确认</Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <Button size="large" onClick={props.handleCancel}>取消</Button>
+        </div>
+    </div>
+}
+function ExamineSuccessState (props) {
+    const lightGrayStyle = {
+        color: '#989898'
+    }
+
+    const blueBlodStyle = {
+        color: '#09F',
+        fontWeight: 'bold'
+    }
+    // 确认收款
+    const confirmReceipt = [{
+        title: '时间',
+        dataIndex: 'time'
+    }, {
+        title: '实收金额',
+        dataIndex: 'chargeMoney'
+    }, {
+        title: '未收金额',
+        dataIndex: 'noChargeMoney'
+    }, {
+        title: '收款方式',
+        dataIndex: 'principalMethod'
+    }, {
+        title: '经手人',
+        dataIndex: 'person'
+    }]
+    // 确认违约金
+    const confirmLiquidatedDamages = [{
+        title: '时间',
+        dataIndex: 'liquidatedDamagesDate'
+    }, {
+        title: '优惠金额',
+        dataIndex: 'discountAmount'
+    }, {
+        title: '实收金额',
+        dataIndex: 'liquidatedDamagesReceived'
+    }, {
+        title: '未收金额',
+        dataIndex: 'noChargeMoney'
+    }, {
+        title: '收款方式',
+        dataIndex: 'damagesMethod'
+    }, {
+        title: '经手人',
+        dataIndex: 'person'
+    }]
+    return <div style={{
+        marginTop: 20,
+        border: '1px solid #EBEBEB'
+    }}
+    >
+        <div style={{
+            backgroundColor: '#EBEBEB',
+            height: '44px',
+            fontSize: '14px',
+            lineHeight: '44px'
+        }}
+        >
+            <span style={{marginLeft: '20px'}}>收款信息</span>
+        </div>
+        <div style={{
+            padding: '0 20px',
+            fontSize: '14px'
+        }}
+        >
+            <div style={{
+                fontWeight: 'bold',
+                marginTop: 10
+            }}
+            >
+                <div style={{fontWeight: 'bold'}}>确认收款</div>
+                <Row style={{
+                    marginTop: 10,
+                    backgroundColor: '#F3F3F3',
+                    height: '32px',
+                    lineHeight: '32px',
+                    paddingLeft: '10px',
+                    fontWeight: 'normal'
+                }}
+                >
+                    <Col span={8}>
+                        <div>
+                            <span style={lightGrayStyle}>应收金额：&nbsp;</span>
+                            <span
+                                style={blueBlodStyle}
+                            >{props.fees.thisReceivable}</span>
+                            <span>&nbsp;元</span>
+                        </div>
+                    </Col>
+                    <Col span={8}>
+                        <div>
+                            <span style={lightGrayStyle}>开票状态：&nbsp;</span>
+                            <span>{props.fees.principalPrincipalBilling === 1 ? '已开票' : '未开票'}</span>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+            <div style={{marginTop: 10}}>
+                <Table
+                    columns={confirmReceipt}
+                    dataSource={props.receipt}
+                    bordered
+                    pagination={false}
+                />
+            </div>
+            <hr style={{marginTop: 20}} />
+            <div style={{
+                fontWeight: 'bold',
+                marginTop: 10
+            }}
+            >
+                <div style={{fontWeight: 'bold'}}>确认违约金</div>
+                <Row style={{
+                    marginTop: 10,
+                    backgroundColor: '#F3F3F3',
+                    height: '32px',
+                    lineHeight: '32px',
+                    paddingLeft: '10px',
+                    fontWeight: 'normal'
+                }}
+                >
+                    <Col span={8}>
+                        <div>
+                            <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
+                            <span
+                                style={blueBlodStyle}
+                            >{props.fees.days}</span>
+                            <span>&nbsp;天</span>
+                        </div>
+                    </Col>
+                    <Col span={8}>
+                        <div>
+                            <span style={lightGrayStyle}>违约金额：&nbsp;</span>
+                            <span
+                                style={blueBlodStyle}
+                            >{props.fees.liquidatedDamages}</span>
+                            <span>&nbsp;元</span>
+                        </div>
+                    </Col>
+                    <Col span={8}>
+                        <div>
+                            <span style={lightGrayStyle}>开票状态：&nbsp;</span>
+                            <span>{props.fees.principalDamagesBilling === 1 ? '已开票' : '未开票'}</span>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+            <div style={{
+                marginTop: 10,
+                marginBottom: 20
+            }}
+            >
+                <Table
+                    columns={confirmLiquidatedDamages}
+                    dataSource={props.liquidatedDamagesList}
+                    bordered
+                    pagination={false}
+                />
+            </div>
+        </div>
+    </div>
+}
+function ExamineFailureState () {
+    return null
+}
+// 进行选择
+function Bottom (props) {
+    if (props.fees.examineState === 0) {
+        return null
+    } else if (props.fees.examineState === 1) {
+        return props.financial ? <ExaminingState stateChange={props.stateChange} stateValue={props.stateValue} textInput={props.textInput} handleOk={props.handleOk} handleCancel={props.handleCancel}/> : null
+    } else if (props.fees.examineState === 2) {
+        return <ExamineSuccessState fees={props.fees} receipt={props.receipt} liquidatedDamagesList={props.liquidatedDamagesList}/>
+    } else {
+        return <ExamineFailureState />
+    }
+}

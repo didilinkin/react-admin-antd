@@ -26,7 +26,8 @@ class sumElectricityAddUp extends React.Component {
         isElectricMoney: false,
         propertyMoney: 0,
         waterMoney: 0,
-        electricMoney: 0
+        electricMoney: 0,
+        amountReceivable: 0
 
     }
     componentWillReceiveProps (nextProps) {
@@ -48,6 +49,7 @@ class sumElectricityAddUp extends React.Component {
             for (let item in this.state.Contract) {
                 json[item] = this.state.Contract[item]
             }
+            json['buildingId'] = json.buildId
             delete json['id']
             json['preWattDate'] = json.sfzq[0].format('YYYY-MM-DD')
             json['wattDate'] = json.sfzq[1].format('YYYY-MM-DD')
@@ -55,7 +57,7 @@ class sumElectricityAddUp extends React.Component {
             json['sumElectricity'] = this.state.sumElectricity
             json['thisReceivable'] = this.state.thisReceivable
             json['conteractId'] = this.state.Contract.id
-            let elecList = this.state.sumElectricityRecordlList
+            let elecList = this.state.sumElectricityRecordlList.slice()
             elecList.pop()
             elecList.map((record, i) => {
                 record['lastSurfaceDate'] = json.sfzq[0].format('YYYY-MM-DD')
@@ -68,11 +70,11 @@ class sumElectricityAddUp extends React.Component {
                     elecList.splice(i, 1)
                 }
             })
-            console.log(elecList)
             let list = JSON.stringify(elecList)
             json['list'] = list
+            console.log(this.props.id)
             if (this.props.id > 0) {
-                json['oldId'] = this.props.id
+                json['idOld'] = this.props.id
                 await apiPost(
                     '/ElectricityFees/addElectricityFee',
                     json
@@ -177,69 +179,110 @@ class sumElectricityAddUp extends React.Component {
             bili: bili.data
         })
     }
+    // 获取上次抄表记录
+    lastTimeRecord = async (contractId, clientId, clientType, isNew) => {
+        let lastTimeData = await apiPost(
+            '/ElectricityFees/LastTimeDate',
+            {contractId: contractId,
+                clientId: clientId,
+                clientType: clientType}
+        )
+        if (lastTimeData.data.electricityFees) {
+            this.props.form.setFieldsValue({
+                lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0,
+                lastMouthTotalDosage: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
+            })
+            if (isNew) {
+                let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
+                this.props.form.setFieldsValue({sfzq: sfzq})
+                this.setState({
+                    isPropertyMoney: lastTimeData.data.electricityFees.isPropertyMoney === 1,
+                    isWaterMoney: lastTimeData.data.electricityFees.isWaterMoney === 1,
+                    isElectricMoney: lastTimeData.data.electricityFees.isElectricMoney === 1,
+                    propertyMoney: lastTimeData.data.electricityFees.propertyMoney ? lastTimeData.data.electricityFees.propertyMoney : 0,
+                    waterMoney: lastTimeData.data.electricityFees.waterMoney ? lastTimeData.data.electricityFees.waterMoney : 0,
+                    electricMoney: lastTimeData.data.electricityFees.electricMoney ? lastTimeData.data.electricityFees.electricMoney : 0
+                })
+            }
+        }
+    }
+    // 获取转租客户
+    getSubletList = async (contractId) => {
+        let subletList = await apiPost(
+            '/propertyFee/getSubletByPmId',
+            {id: contractId}
+        )
+        this.setState({subletList: subletList.data ? subletList.data : []})
+    }
     // nextProps改变时候调用
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
             this.props.form.resetFields()
             if (nextProps.id > 0) {
+                // 获取电费详情 和 列表
                 let map = await apiPost(
                     '/ElectricityFees/ElectricityFeeInfo',
                     {id: nextProps.id}
                 )
-                let electricityFees = map.data.electricityFees
-                let subletList = await apiPost(
-                    '/propertyFee/getSubletByPmId',
-                    {id: electricityFees.contractId}
-                )
-                subletList = subletList.data
+                // 电费详情
+                let electricChargeInfo = map.data.electricityFees
+                let currentContract = null
+                this.state.ClientList.map(contract => {
+                    if (contract.id === electricChargeInfo.conteractId) {
+                        currentContract = contract
+                        this.setState({Contract: contract})
+                    }
+                })
                 // 设置表格标题
-                this.setTableColunms(map.data.electricityFees, 'wattHourType')
+                this.setTableColunms(electricChargeInfo, 'wattHourType')
+                this.lastTimeRecord(currentContract.id, currentContract.clientId, 1, false)
+                this.getSubletList(electricChargeInfo.contractId)
                 let list = map.data.list
                 list.map(record => {
                     record.uuid = new Date().getTime()
                 })
-                let balanceUUID = new Date().getTime()
-                list.push({
-                    unitPrice: map.data.electricityFees.differentialPrice,
-                    singleMoney: map.data.electricityFees.difference,
-                    electricCostName: '上月差额',
-                    uuid: balanceUUID})
-                this.addTotalColunm()
-                this.state.ClientList.map(contract => {
-                    if (contract.id === electricityFees.conteractId) {
-                        this.setState({Contract: contract})
-                    }
-                })
+                if (electricChargeInfo.differentialPrice || electricChargeInfo.difference) {
+                    let balanceUUID = new Date().getTime()
+                    list.push({
+                        unitPrice: electricChargeInfo.differentialPrice,
+                        singleMoney: electricChargeInfo.difference,
+                        electricCostName: '上月差额',
+                        uuid: balanceUUID})
+                    this.setState({balanceUUID: balanceUUID})
+                }
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
                     sumElectricityRecordlList: list,
-                    ratio: electricityFees.ratio,
-                    sumElectricity: electricityFees.sumElectricity,
-                    thisReceivable: electricityFees.thisReceivable,
-                    subletList: subletList,
-                    roomNumberOne: electricityFees.roomNumber.split(','),
-                    balanceUUID: balanceUUID,
-                    isPropertyMoney: electricityFees.isPropertyMoney === 1,
-                    isWaterMoney: electricityFees.isWaterMoney === 1,
-                    isElectricMoney: electricityFees.isElectricMoney === 1,
-                    propertyMoney: electricityFees.propertyMoney ? electricityFees.propertyMoney : 0,
-                    waterMoney: electricityFees.waterMoney ? electricityFees.waterMoney : 0,
-                    electricMoney: electricityFees.electricMoney ? electricityFees.electricMoney : 0
+                    ratio: electricChargeInfo.ratio,
+                    sumElectricity: electricChargeInfo.sumElectricity,
+                    thisReceivable: electricChargeInfo.thisReceivable,
+                    roomNumberOne: electricChargeInfo.roomNumber.split(','),
+                    isPropertyMoney: electricChargeInfo.isPropertyMoney === 1,
+                    isWaterMoney: electricChargeInfo.isWaterMoney === 1,
+                    isElectricMoney: electricChargeInfo.isElectricMoney === 1,
+                    propertyMoney: electricChargeInfo.propertyMoney ? electricChargeInfo.propertyMoney : 0,
+                    waterMoney: electricChargeInfo.waterMoney ? electricChargeInfo.waterMoney : 0,
+                    electricMoney: electricChargeInfo.electricMoney ? electricChargeInfo.electricMoney : 0
                 })
+                this.addTotalColunm()
                 this.props.form.setFieldsValue({
-                    clientName: electricityFees.clientName,
-                    subletIdOne: electricityFees.subletName,
-                    sfzq: [moment(electricityFees.preWattDate), moment(electricityFees.wattDate)],
-                    overdueDate: moment(electricityFees.overdueDate),
-                    formName: electricityFees.formName,
-                    receivablesingleMoney: electricityFees.receivablesingleMoney,
-                    principalDiscount: electricityFees.principalDiscount,
-                    subletName: electricityFees.subletName,
-                    roomId: electricityFees.roomId,
-                    roomNumber: electricityFees.roomNumber,
-                    readIdOne: electricityFees.readName,
-                    readId: electricityFees.readId
+                    clientName: electricChargeInfo.clientName,
+                    subletIdOne: electricChargeInfo.subletName,
+                    subletId: electricChargeInfo.subletId,
+                    sfzq: [moment(electricChargeInfo.preWattDate), moment(electricChargeInfo.wattDate)],
+                    overdueDate: moment(electricChargeInfo.overdueDate),
+                    formName: electricChargeInfo.formName,
+                    receivablesingleMoney: electricChargeInfo.receivablesingleMoney,
+                    principalDiscount: electricChargeInfo.principalDiscount,
+                    subletName: electricChargeInfo.subletName,
+                    roomId: electricChargeInfo.roomId,
+                    roomNumber: electricChargeInfo.roomNumber,
+                    readIdOne: electricChargeInfo.readName,
+                    readId: electricChargeInfo.readId,
+                    unitPrice: currentContract.powerUnitPrice,
+                    ratio: currentContract.powerRatio,
+                    currentMouthUnitPrice: currentContract.powerUnitPrice
                 })
             } else {
                 this.setState({
@@ -285,63 +328,36 @@ class sumElectricityAddUp extends React.Component {
         return arr
     }
     // 选择客户名称 参数：客户id
-    chooseClient = (clientId) => {
+    chooseClient = (contractId) => {
         this.props.form.resetFields()
         this.setState({
             sumElectricityRecordlList: []
         })
         this.state.ClientList.map(async (contract) => {
             let formName = ''
-            if (clientId.toString() === contract.id.toString()) {
-                console.log(contract)
+            if (contractId.toString() === contract.id.toString()) {
                 formName = contract.clientName
-                let lastTimeData = await apiPost(
-                    '/ElectricityFees/LastTimeDate',
-                    {contractId: clientId,
-                        clientId: contract.clientId,
-                        clientType: 1}
-                )
-                let electricityFees = lastTimeData.data.electricityFees
-                let subletList = await apiPost(
-                    '/propertyFee/getSubletByPmId',
-                    {id: clientId}
-                )
+                this.lastTimeRecord(contractId, contract.clientId, 1, true)
+                this.getSubletList(contractId)
                 this.setTableColunms(contract, 'powerType')
                 let roomNumber = contract.leaseRooms.split(',')
                 let roomIds = contract.roomIds.split(',')
-                subletList = subletList.data
-                if (!subletList) {
-                    subletList = []
-                }
-                if (subletList.length > 0) {
-                    subletList.map(sublet => {
-                        roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
-                        roomIds = this.complement(roomIds, sublet.roomNum.split(','))
-                        return ''
-                    })
-                }
+                this.state.subletList.map(sublet => {
+                    roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
+                    roomIds = this.complement(roomIds, sublet.roomNum.split(','))
+                    return ''
+                })
                 this.setState({
                     Contract: contract,
-                    subletList: subletList,
                     roomNumberOne: roomNumber,
-                    powerType: contract.powerType,
-                    isPropertyMoney: electricityFees.isPropertyMoney === 1,
-                    isWaterMoney: electricityFees.isWaterMoney === 1,
-                    isElectricMoney: electricityFees.isElectricMoney === 1,
-                    propertyMoney: electricityFees.propertyMoney ? electricityFees.propertyMoney : 0,
-                    waterMoney: electricityFees.waterMoney ? electricityFees.waterMoney : 0,
-                    electricMoney: electricityFees.electricMoney ? electricityFees.electricMoney : 0
+                    powerType: contract.powerType
                 })
-                let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
                 this.props.form.setFieldsValue({
                     unitPrice: contract.powerUnitPrice,
                     currentMouthUnitPrice: contract.powerUnitPrice,
-                    sfzq: sfzq,
                     roomNumber: roomNumber.toString(),
                     formName: formName,
-                    ratio: contract.powerRatio,
-                    lastMouthUnitPrice: electricityFees.powerUnitPrice ? electricityFees.powerUnitPrice : 0,
-                    lastMouthTotalDosage: electricityFees.sumElectricity ? electricityFees.sumElectricity : 0
+                    ratio: contract.powerRatio
                 })
             }
         })
@@ -357,22 +373,15 @@ class sumElectricityAddUp extends React.Component {
             let formName = ''
             if (value.toString() === sublet.clientId.toString()) {
                 formName = sublet.clientName
-                let lastTimeData = await apiPost(
-                    '/ElectricityFees/LastTimeDate',
-                    {clientId: sublet.clientId,
-                        clientType: 2,
-                        contractId: sublet.contractId}
-                )
+                this.lastTimeRecord(sublet.contractId, sublet.clientId, 2, true)
                 this.setState({
                     roomNumberOne: sublet.leaseRooms.split(',')
                 })
-                let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
                 this.props.form.setFieldsValue({
                     roomNumber: sublet.leaseRooms.toString(),
                     formName: formName,
-                    sfzq: sfzq,
-                    lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0,
-                    lastMouthTotalDosage: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
+                    subletName: sublet.clientName,
+                    subletId: value
                 })
             }
         })
@@ -395,7 +404,6 @@ class sumElectricityAddUp extends React.Component {
     }
     // 添加上月差额
     addBalance = () => {
-        console.log(this.state.balanceUUID)
         this.deleteTotalColunm()
         if (this.state.balanceUUID) {
             let recordList = this.state.sumElectricityRecordlList
@@ -421,7 +429,6 @@ class sumElectricityAddUp extends React.Component {
             balanceUUID: jsonTwo.uuid
         })
         this.addTotalColunm()
-        console.log(this.state.balanceUUID)
     }
     // 添加条目
     add = () => {
@@ -443,7 +450,8 @@ class sumElectricityAddUp extends React.Component {
         } else {
             jsonTwo['electricCostName'] = json.electricCostName
         }
-        jsonTwo['surfaceType'] = this.state.Contract.wattHourType
+        console.log(this.state.Contract)
+        jsonTwo['surfaceType'] = this.state.Contract.powerType
         jsonTwo['unitPrice'] = json.unitPrice ? json.unitPrice : 0
         jsonTwo['needElectricity'] = (json.surfaceNumber - json.lastSurfaceNumber) ? json.surfaceNumber - json.lastSurfaceNumber : 0
         jsonTwo['remarks'] = json.remarks
@@ -504,8 +512,7 @@ class sumElectricityAddUp extends React.Component {
         json['singleMoney'] = sumSingeMoney.toFixed(2)
         sumElectricityRecordlList.push(json)
         this.props.form.setFieldsValue({
-            receivablesingleMoney: sumSingeMoney.toFixed(2)
-
+            receivablesingleMoney: (parseFloat(sumSingeMoney) - parseFloat(this.state.amountReceivable ? this.state.amountReceivable : 0)).toFixed(2)
         })
         this.setState({
             sumElectricity: sumElec,
@@ -516,6 +523,7 @@ class sumElectricityAddUp extends React.Component {
     // 优惠金额
     amountReceivable = (e) => {
         let num = e.target.value
+        this.setState({amountReceivable: e.target.value})
         this.props.form.setFieldsValue({
             receivablesingleMoney: (parseFloat(this.state.thisReceivable) - parseFloat(num ? num : 0)).toFixed(2)
         })
@@ -604,6 +612,9 @@ class sumElectricityAddUp extends React.Component {
             backgroundColor: '#1FCA3E',
             borderColor: '#1FCA3E'
         }
+        const tagStyle = {
+            marginLeft: '50px',
+            marginBottom: '20px'}
         return (
             <Modal maskClosable={false}
                 title={this.props.title}
@@ -902,23 +913,17 @@ class sumElectricityAddUp extends React.Component {
                                     >{getFieldDecorator('liquidatedDamagessingleMoney')(<Input placeholder="请输入内容" addonAfter="元" />)
                                         }
                                     </FormItem>
-                                    <CheckableTag id="isPropertyMoney" onChange={(state) => {
+                                    <CheckableTag onChange={(state) => {
                                         this.setState({isPropertyMoney: state})
-                                    }} checked={this.state.isPropertyMoney} style={{
-                                        marginLeft: '50px',
-                                        marginBottom: '20px'}}
+                                    }} checked={this.state.isPropertyMoney} style={tagStyle}
                                     >确认已收{this.state.propertyMoney}元物业违约金欠费</CheckableTag>
-                                    <CheckableTag id="isElectricMoney" onChange={(state) => {
+                                    <CheckableTag onChange={(state) => {
                                         this.setState({isElectricMoney: state})
-                                    }} checked={this.state.isElectricMoney} style={{
-                                        marginLeft: '50px',
-                                        marginBottom: '20px'}}
+                                    }} checked={this.state.isElectricMoney} style={tagStyle}
                                     >确认已收{this.state.electricMoney}元电费违约金欠费</CheckableTag>
-                                    <CheckableTag id="isWaterMoney" onChange={(state) => {
+                                    <CheckableTag onChange={(state) => {
                                         this.setState({isWaterMoney: state})
-                                    }} checked={this.state.isWaterMoney} style={{
-                                        marginLeft: '50px',
-                                        marginBottom: '20px'}}
+                                    }} checked={this.state.isWaterMoney} style={tagStyle}
                                     >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
                                     <FormItem {...tailFormItemLayout}>
                                         <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={greenButtonStyle} >增加本条记录</Button>

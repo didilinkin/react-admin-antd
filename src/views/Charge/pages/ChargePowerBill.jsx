@@ -1,6 +1,6 @@
 // 物业管理 - 电费审核
 import React from 'react'
-import {Table, Spin, Popconfirm, Tabs } from 'antd'
+import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHeadComponent from './components/PowerBillHead'
 import PowerAddUpComponent from './components/PowerAddUp'
 import { apiPost } from '../../../api'
@@ -28,6 +28,31 @@ class ChargeWaterBill extends React.Component {
             openInfo: false,
             id: 0
         }
+    }
+    // 删除记录
+    deleteRecord = async (id) => {
+        let data = await apiPost(
+            '/ElectricityFees/deleteElectricityFees',
+            {id: id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
+    }
+    // 发起审核
+    examine = async (id) => {
+        let data = await apiPost(
+            '/ElectricityFees/updateAudit',
+            {id: id,
+                examineState: 1}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
     }
     refreshTwo = async (activeKey) => {
         this.setState({loading: true,
@@ -99,7 +124,6 @@ class ChargeWaterBill extends React.Component {
         })
     }
     openWaterAddUpComponent = (id) => {
-        console.log(id)
         this.setState({
             openWaterAddUpComponent: true,
             openInfo: false,
@@ -191,6 +215,8 @@ class ChargeWaterBill extends React.Component {
 
             }]
         let info = this.info
+        let examine = this.examine
+        let deleteRecord = this.deleteRecord
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -209,11 +235,11 @@ class ChargeWaterBill extends React.Component {
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm title="确定提交吗?">
+                            <Popconfirm title="确定提交吗?" onConfirm={() => examine(record.id)}>
                                 <a>提交</a>
                             </Popconfirm>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm title="确定删除吗?">
+                            <Popconfirm title="确定删除吗?" onConfirm={() => deleteRecord(record.id)}>
                                 <a>删除</a>
                             </Popconfirm>
                         </span>
