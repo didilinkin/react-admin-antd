@@ -223,15 +223,13 @@ class SubletAddUp extends React.Component {
                                 </Checkbox.Group>
                             )}
                         </FormItem>
-                        {!this.props.id > 0 &&
                         <FormItem label="能源管理押金" labelCol={{span: 6}}
                             wrapperCol={{span: 15}}
                         >
                             {getFieldDecorator('energy')(
-                                <Input style={{width: 200}} />
+                                <Input disabled={this.props.id > 0} style={{width: 200}} />
                             )}
                         </FormItem>
-                        }
                     </Form>
                 </Modal>
             </div>
