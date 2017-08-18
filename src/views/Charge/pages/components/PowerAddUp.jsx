@@ -37,7 +37,7 @@ class sumElectricityAddUp extends React.Component {
         this.getClientListAndUser()
         this.setTableColunms()
     }
-    handleSubmit = async (e) => {
+    handleSubmit = async () => {
         let adopt = false
         this.props.form.validateFields(
             (err) => {
@@ -49,6 +49,7 @@ class sumElectricityAddUp extends React.Component {
             for (let item in this.state.Contract) {
                 json[item] = this.state.Contract[item]
             }
+            json['wattHourType'] = this.state.Contract.wattHourType ? this.state.Contract.wattHourType : (this.state.Contract.powerType ? this.state.Contract.powerType : 0)
             json['buildingId'] = json.buildId
             delete json['id']
             json['preWattDate'] = json.sfzq[0].format('YYYY-MM-DD')
@@ -57,6 +58,19 @@ class sumElectricityAddUp extends React.Component {
             json['sumElectricity'] = this.state.sumElectricity
             json['thisReceivable'] = this.state.thisReceivable
             json['conteractId'] = this.state.Contract.id
+
+            json['isPropertyMoney'] = this.state.isPropertyMoney === true ? 1 : 2
+            json['isWaterMoney'] = this.state.isWaterMoney === true ? 1 : 2
+            json['isElectricMoney'] = this.state.isElectricMoney === true ? 1 : 2
+            json['propertyMoney'] = this.state.propertyMoney
+            json['waterMoney'] = this.state.waterMoney
+            json['electricMoney'] = this.state.electricMoney
+
+            json['amountReceivable'] = this.state.amountReceivable
+
+            json['roomId'] = this.state.roomId
+            json['peakValleyRatio'] = this.state.peakValleyRatio
+
             let elecList = this.state.sumElectricityRecordlList.slice()
             elecList.pop()
             elecList.map((record, i) => {
@@ -72,7 +86,7 @@ class sumElectricityAddUp extends React.Component {
             })
             let list = JSON.stringify(elecList)
             json['list'] = list
-            console.log(this.props.id)
+            console.log(json)
             if (this.props.id > 0) {
                 json['idOld'] = this.props.id
                 await apiPost(
@@ -96,6 +110,7 @@ class sumElectricityAddUp extends React.Component {
         this.props.refreshTable()
     }
     setTableColunms = (contract, powerType) => {
+        debugger
         let deleteRecord = this.deleteRecord
         let tableColumns = [{
             title: '电费名称',
@@ -201,7 +216,8 @@ class sumElectricityAddUp extends React.Component {
                     isElectricMoney: lastTimeData.data.electricityFees.isElectricMoney === 1,
                     propertyMoney: lastTimeData.data.electricityFees.propertyMoney ? lastTimeData.data.electricityFees.propertyMoney : 0,
                     waterMoney: lastTimeData.data.electricityFees.waterMoney ? lastTimeData.data.electricityFees.waterMoney : 0,
-                    electricMoney: lastTimeData.data.electricityFees.electricMoney ? lastTimeData.data.electricityFees.electricMoney : 0
+                    electricMoney: lastTimeData.data.electricityFees.electricMoney ? lastTimeData.data.electricityFees.electricMoney : 0,
+                    peakValleyRatio: lastTimeData.data.electricityFees.peakValleyRatio ? lastTimeData.data.electricityFees.peakValleyRatio : 0
                 })
             }
         }
@@ -237,9 +253,11 @@ class sumElectricityAddUp extends React.Component {
                 this.setTableColunms(electricChargeInfo, 'wattHourType')
                 this.lastTimeRecord(currentContract.id, currentContract.clientId, 1, false)
                 this.getSubletList(electricChargeInfo.contractId)
+                let uuid = new Date().getTime()
                 let list = map.data.list
                 list.map(record => {
-                    record.uuid = new Date().getTime()
+                    record.uuid = uuid += 1
+                    console.log(record.uuid)
                 })
                 if (electricChargeInfo.differentialPrice || electricChargeInfo.difference) {
                     let balanceUUID = new Date().getTime()
@@ -263,7 +281,8 @@ class sumElectricityAddUp extends React.Component {
                     isElectricMoney: electricChargeInfo.isElectricMoney === 1,
                     propertyMoney: electricChargeInfo.propertyMoney ? electricChargeInfo.propertyMoney : 0,
                     waterMoney: electricChargeInfo.waterMoney ? electricChargeInfo.waterMoney : 0,
-                    electricMoney: electricChargeInfo.electricMoney ? electricChargeInfo.electricMoney : 0
+                    electricMoney: electricChargeInfo.electricMoney ? electricChargeInfo.electricMoney : 0,
+                    peakValleyRatio: electricChargeInfo.peakValleyRatio
                 })
                 this.addTotalColunm()
                 this.props.form.setFieldsValue({
@@ -273,7 +292,7 @@ class sumElectricityAddUp extends React.Component {
                     sfzq: [moment(electricChargeInfo.preWattDate), moment(electricChargeInfo.wattDate)],
                     overdueDate: moment(electricChargeInfo.overdueDate),
                     formName: electricChargeInfo.formName,
-                    receivablesingleMoney: electricChargeInfo.receivablesingleMoney,
+                    actualReceivable: electricChargeInfo.actualReceivable,
                     principalDiscount: electricChargeInfo.principalDiscount,
                     subletName: electricChargeInfo.subletName,
                     roomId: electricChargeInfo.roomId,
@@ -419,8 +438,8 @@ class sumElectricityAddUp extends React.Component {
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
         jsonTwo['uuid'] = new Date().getTime()
-        jsonTwo['unitPrice'] = json.unitPriceBalance
-        jsonTwo['singleMoney'] = json.balance
+        jsonTwo['unitPrice'] = json.unitPriceBalance ? json.unitPriceBalance : 0
+        jsonTwo['singleMoney'] = json.balance ? json.balance : 0
         jsonTwo['electricCostName'] = '上月差额'
         let sumElectricityRecordlList = this.state.sumElectricityRecordlList
         sumElectricityRecordlList.push(jsonTwo)
@@ -512,7 +531,7 @@ class sumElectricityAddUp extends React.Component {
         json['singleMoney'] = sumSingeMoney.toFixed(2)
         sumElectricityRecordlList.push(json)
         this.props.form.setFieldsValue({
-            receivablesingleMoney: (parseFloat(sumSingeMoney) - parseFloat(this.state.amountReceivable ? this.state.amountReceivable : 0)).toFixed(2)
+            actualReceivable: (parseFloat(sumSingeMoney) - parseFloat(this.state.amountReceivable ? this.state.amountReceivable : 0)).toFixed(2)
         })
         this.setState({
             sumElectricity: sumElec,
@@ -525,7 +544,7 @@ class sumElectricityAddUp extends React.Component {
         let num = e.target.value
         this.setState({amountReceivable: e.target.value})
         this.props.form.setFieldsValue({
-            receivablesingleMoney: (parseFloat(this.state.thisReceivable) - parseFloat(num ? num : 0)).toFixed(2)
+            actualReceivable: (parseFloat(this.state.thisReceivable) - parseFloat(num ? num : 0)).toFixed(2)
         })
     }
     // 本次抄表数
@@ -754,7 +773,7 @@ class sumElectricityAddUp extends React.Component {
                             <FormItem label="本期应收" labelCol={{ span: 9 }}
                                 wrapperCol={{ span: 12 }}
                             >
-                                {getFieldDecorator('receivablesingleMoney', {
+                                {getFieldDecorator('actualReceivable', {
                                     rules: [ {
                                         required: true,
                                         message: '请填写本期应收!'

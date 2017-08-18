@@ -259,9 +259,10 @@ class PowerBill extends React.Component {
                 title: '操作',
                 width: 200,
                 render: function (text, record, index) {
+                    let url = '/financial/CollectionPowerDetails/' + record.id
                     return (
                         <span>
-                            <a onClick={() => info(record.id)}>明细</a>
+                            <a href={url}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定撤回吗?">
                                 <a>撤回</a>
