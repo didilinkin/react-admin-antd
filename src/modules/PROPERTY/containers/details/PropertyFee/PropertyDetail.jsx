@@ -93,6 +93,8 @@ class PropertyDetail extends React.Component {
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
     }
+    clientNameChange = (e) => {
+    }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
@@ -106,8 +108,32 @@ class PropertyDetail extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <div className="contract">
-                    <spn ><input value={this.state.data.clientName} onChange={this.clienttNameChange} />&nbsp;&nbsp;物业服务费统计表</spn>
-                    <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
+                    <Row style={{marginTop: 50}}>
+                        <Col>
+                            <div style={{textAlign: 'center',
+                                fontSize: '20px',
+                                fontWeight: 'bold',
+                                lineHeight: '40px'}}
+                            >
+                                <span>
+                                    <input style={{width: '300px',
+                                        height: '25px'}} value={this.state.data.clientName} onChange={this.clientNameChange}
+                                    /></span>
+                                <span>物业服务费统计表</span>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div style={{color: '#666',
+                                textAlign: 'center',
+                                fontSize: '14px',
+                                lineHeight: '18px'}}
+                            >
+                                （ {this.state.data.startDate} ~ {this.state.data.endDate} ）
+                            </div>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
                         <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
