@@ -96,14 +96,14 @@ class InReview extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <div className="contract">
-                    <Row style={{marginTop: 50}}>
+                    <Row style={{marginTop: 0}}>
                         <Col>
                             <div style={{textAlign: 'center',
                                 fontSize: '20px',
                                 fontWeight: 'bold',
                                 lineHeight: '40px'}}
                             >
-                                <span>{this.state.data.clientName}</span>
+                                <span>{this.state.data.printClientName}</span>
                                 <span>物业服务费统计表</span>
                             </div>
                         </Col>
@@ -193,7 +193,7 @@ class InReview extends React.Component {
                             </Row>
                         </div>
                     </div>
-                    <textarea placeholder="请输入审批意见" onChange={this.onValueChange} />
+                    <textarea style={{width: '50%'}} placeholder="请输入审批意见" onChange={this.onValueChange} />
                 </div>
             </Modal>
         )

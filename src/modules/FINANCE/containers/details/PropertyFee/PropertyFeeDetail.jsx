@@ -145,14 +145,14 @@ class PropertyFeeDetail extends React.Component {
                     close={this.close}
                     visible={this.state.openUpdate2}
                 />
-                <Row style={{marginTop: 50}}>
+                <Row style={{marginTop: 0}}>
                     <Col>
                         <div style={{textAlign: 'center',
                             fontSize: '20px',
                             fontWeight: 'bold',
                             lineHeight: '40px'}}
                         >
-                            <span>{this.state.data.clientName}</span>
+                            <span>{this.state.data.printClientName}</span>
                             <span>物业服务费统计表</span>
                         </div>
                     </Col>
