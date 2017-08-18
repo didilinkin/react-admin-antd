@@ -35,7 +35,6 @@ function myBrowser() {
 var versions = myBrowser()
 
 if (versions === 'IE55' || versions === 'IE6' || versions === 'IE7' || versions === 'IE8') {
-    // history.push('/navigator')
-    alert('您的浏览器版本过低, 请使用chrome浏览器 或者 使用极速模式')
+    // alert('您的浏览器版本过低, 请使用chrome浏览器 或者 使用极速模式')
     window.location.href = '/Navigator.html'
 }
