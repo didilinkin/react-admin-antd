@@ -10,11 +10,34 @@ class SubletAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
-        leaseRooms: []
+        leaseRooms: [],
+        roomIds: []
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
             this.props.form.resetFields()
+            let data = nextProps.data
+            let subArr = []
+            data.ListSublet.map(sub => {
+                sub.roomNum.split(',')
+                subArr.push.apply(subArr, sub.roomNum.split(','))
+                return ''
+            })
+            let leaseRooms = data.contract.leaseRooms.split(',')
+            let roomIds = data.contract.roomIds.split(',')
+            // leaseRooms.map((roomNum, i) => {
+            //     subArr.map(rommNum2 => {
+            //         if (roomNum === rommNum2) {
+            //             leaseRooms.splice(i, roomNum.length)
+            //         }
+            //     })
+            // })
+            this.setState({
+                visible: nextProps.visible,
+                isFirst: false,
+                leaseRooms: leaseRooms,
+                roomIds: roomIds
+            })
             if (nextProps.id > 0) {
                 let SubletInfo = await apiPost(
                     '/contract/getSubletInfo',
@@ -30,31 +53,11 @@ class SubletAddUp extends React.Component {
                     email: SubletInfo.email,
                     subletStartDate: moment(SubletInfo.subletStartDate),
                     subletEndDate: moment(SubletInfo.subletEndDate),
-                    roomNum: SubletInfo.leaseRooms.split(','),
+                    roomNum: SubletInfo.roomNum.split(','),
                     energy: SubletInfo.energy
                 })
                 console.log(SubletInfo)
             }
-            let data = nextProps.data
-            let subArr = []
-            data.ListSublet.map(sub => {
-                sub.roomNum.split(',')
-                subArr.push.apply(subArr, sub.roomNum.split(','))
-                return ''
-            })
-            let leaseRooms = data.contract.leaseRooms.split(',')
-            // leaseRooms.map((roomNum, i) => {
-            //     subArr.map(rommNum2 => {
-            //         if (roomNum === rommNum2) {
-            //             leaseRooms.splice(i, roomNum.length)
-            //         }
-            //     })
-            // })
-            this.setState({
-                visible: nextProps.visible,
-                isFirst: false,
-                leaseRooms: leaseRooms
-            })
         }
     }
     componentWillReceiveProps (nextProps) {
@@ -214,7 +217,7 @@ class SubletAddUp extends React.Component {
                                 <Checkbox.Group style={{ width: '100%' }}>
                                     <Row>
                                         {this.state.leaseRooms.map((room, i) => {
-                                            return <Col key={i} offset="1" span={4}><Checkbox value={room}>{room}</Checkbox></Col>
+                                            return <Col key={i} offset="1" span={4}><Checkbox value={this.state.roomIds[i]}>{room}</Checkbox></Col>
                                         })}
                                     </Row>
                                 </Checkbox.Group>
