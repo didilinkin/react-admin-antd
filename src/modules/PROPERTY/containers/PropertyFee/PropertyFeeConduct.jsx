@@ -171,7 +171,7 @@ class PropertyFeeConduct extends Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>r
+                    <span>房间编号:&nbsp;&nbsp;</span>
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNumberOnChange}
                     />

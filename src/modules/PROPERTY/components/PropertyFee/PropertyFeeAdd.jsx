@@ -42,6 +42,7 @@ class propertyFeeAdd extends React.Component {
                     {id: nextProps.id}
                 )
                 json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
+                json['printClientName'] = propertyFee.data.printClientName
                 json['id'] = nextProps.id
                 json['acUnitPrice'] = propertyFee.data.acUnitPrice
                 json['elevUnitPrice'] = propertyFee.data.elevUnitPrice
@@ -563,7 +564,12 @@ class propertyFeeAdd extends React.Component {
                             <FormItem label="本次周期" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('periodDate')(
+                                {getFieldDecorator('periodDate', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '本次周期不能为空'
+                                    }]
+                                })(
                                     <RangePicker onChange={this.onChange1} />
                                 )}
                             </FormItem>
@@ -583,7 +589,12 @@ class propertyFeeAdd extends React.Component {
                             <FormItem label="交费期限" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('payDeadline')(
+                                {getFieldDecorator('payDeadline', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '交费期限不能为空'
+                                    }]
+                                })(
                                     <DatePicker onChange={this.onChange2} style={{width: 220}} />
                                 )}
                             </FormItem>
@@ -603,7 +614,12 @@ class propertyFeeAdd extends React.Component {
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('clientName')(
+                                {getFieldDecorator('clientName', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '客户不能为空'
+                                    }]
+                                })(
                                     <Select placeholder="请选择客户"
                                         showSearch style={{ width: 220 }}
                                         onSelect={this.handleChange1}
@@ -661,7 +677,12 @@ class propertyFeeAdd extends React.Component {
                             <FormItem label="下单日期" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('printDate')(
+                                {getFieldDecorator('printDate', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '下单日期不能为空'
+                                    }]
+                                })(
                                     <DatePicker onChange={this.onChange3}style={{width: 220}} />
                                 )}
                             </FormItem>
@@ -681,7 +702,12 @@ class propertyFeeAdd extends React.Component {
                             <FormItem label="付款帐号" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('accountId')(
+                                {getFieldDecorator('accountId', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '付款帐号不能为空'
+                                    }]
+                                })(
                                     <Select
                                         showSearch
                                         style={{ width: 220 }}
@@ -697,18 +723,22 @@ class propertyFeeAdd extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
-                    <FormItem label="" labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 16 }}
-                    >
-                        {getFieldDecorator('printClientName')(
-                            <Input style={{ width: 320 }} onChange={this.entryNameOnChange} />
-                        )}
-                    </FormItem>
 
-                    {/* <div className="bt">*/}
-                    {/* <Input style={{ width: 520 }} value={this.state.json1.printClientName} onChange={this.entryNameOnChange} /> 物业费统计表*/}
-                    {/* </div>*/}
-
+                    <Row style={{marginTop: 50}}>
+                        <Col>
+                            <div style={{textAlign: 'center',
+                                fontSize: '20px',
+                                fontWeight: 'bold',
+                                lineHeight: '40px'}}
+                            >
+                                <span>
+                                    <input style={{width: '300px',
+                                        height: '25px'}} value={this.state.json1.printClientName} onChange={this.entryNameOnChange}
+                                    /></span>
+                                <span>物业服务费统计表</span>
+                            </div>
+                        </Col>
+                    </Row>
                     <table className="tb">
                         <tbody>
                             <tr className="hd">

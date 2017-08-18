@@ -57,6 +57,8 @@ class AfterAudit extends React.Component {
             auditStatus: e.target.value
         })
     }
+    clientNameChange = (e) => {
+    }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,
@@ -72,8 +74,29 @@ class AfterAudit extends React.Component {
                 footer={null}
                 onCancel={this.handleCancel}
             >
-                <spn ><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</spn>
-                <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
+                <Row style={{marginTop: 50}}>
+                    <Col>
+                        <div style={{textAlign: 'center',
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            lineHeight: '40px'}}
+                        >
+                            <span>{this.state.data.clientName}</span>
+                            <span>物业服务费统计表</span>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <div style={{color: '#666',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            lineHeight: '18px'}}
+                        >
+                            （ {this.state.data.startDate} ~ {this.state.data.endDate} ）
+                        </div>
+                    </Col>
+                </Row>
                 <Row>
                     <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
                     <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
