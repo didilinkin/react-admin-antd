@@ -168,7 +168,12 @@ class collectRentConfirm extends React.Component {
                                 <FormItem label="本次实收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('thisPaidMoney')(
+                                    {getFieldDecorator('thisPaidMoney', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '本次实收不能为空'
+                                        }]
+                                    })(
                                         <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>

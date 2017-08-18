@@ -10,7 +10,7 @@ class MaterialAdd extends React.Component {
         visible: false,
         isFirst: true,
         view: true,
-        whType: '',
+        whType: null,
         title: '',
         data: {}
     }
@@ -71,6 +71,7 @@ class MaterialAdd extends React.Component {
     // 单击确定按钮提交表单
     handleSubmit = async () => {
         let json = this.props.form.getFieldsValue()
+        json['whType'] = this.state.whType
         if (this.props.id > 0) {
             json['id'] = this.props.id
             await apiPost(
@@ -104,8 +105,9 @@ class MaterialAdd extends React.Component {
             isFirst: true})
     }
     onSelect = (e) => {
-        let json = this.props.form.getFieldsValue()
-        json['whType'] = e
+        this.setState({
+            whType: e
+        })
     }
     render () {
         const { getFieldDecorator } = this.props.form

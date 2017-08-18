@@ -99,22 +99,45 @@ class LeaseMargin extends Component {
                     let whType = ''
                     if (record.revenueType === 0) {
                         whType = '收款'
+                        return (
+                            <span>{whType}</span>
+                        )
                     }
                     if (record.revenueType === 1) {
                         whType = '扣款'
+                        return (
+                            <span>{whType}</span>
+                        )
                     }
                     if (record.revenueType === 2) {
                         whType = '退款'
+                        return (
+                            <span><p style={{color: 'red'}}>{whType}</p></span>
+                        )
                     }
-                    return (
-                        <span>{whType}</span>
-                    )
                 }
             }, {
-                title: '扣/退款金额',
+                title: '金额',
                 width: 100,
                 dataIndex: 'operateMoney',
-                key: 'operateMoney'
+                key: 'operateMoney',
+                render: function (text, record, index) {
+                    if (record.revenueType === 0) {
+                        return (
+                            <span><p style={{color: 'green'}}>+{record.operateMoney}</p></span>
+                        )
+                    }
+                    if (record.revenueType === 1) {
+                        return (
+                            <span><p style={{color: 'green'}}>+{record.operateMoney}</p></span>
+                        )
+                    }
+                    if (record.revenueType === 2) {
+                        return (
+                            <span><p style={{color: 'red'}}>-{record.operateMoney}</p></span>
+                        )
+                    }
+                }
             }, {
                 title: '事由',
                 width: 100,

@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Select, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api'
-import CollectRentFailComponent from '../details/PropertyFee/PropertyAllPaid'
+import CollectRentFailComponent from '../details/PropertyFee/PropertyDetail'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
 // 引入组件
 const Option = Select.Option
