@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览器升级提示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        }
+
+        html,
+        body {
+            background: #fff;
+            color: #9c9d9f;
+            font-size: 14px;
+            font-family: 微软雅黑, Arial, sans-serif
+        }
+
+        a {
+            color: #9c9d9f;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all .2s linear;
+            display: block;
+        }
+
+        .wrap {
+            width: 1000px;
+            height: auto;
+            padding-top: 190px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 26px;
+            color: #333;
+            font-weight: normal;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        P {
+            font-size: 16px;
+            color: #999;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        ul {
+            width: 1000px;
+            height: 180px;
+            padding: 0px;
+            margin: 70px auto 0 auto;
+            list-style-type: none;
+            text-align: center;
+        }
+
+        ul li {
+            width: 90px;
+            height: 180px;
+            vertical-align: top;
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        ul li span {
+            display: block;
+            width: 88px;
+            height: 26px;
+            text-align: center;
+            line-height: 26px;
+            border: 1px #ccc solid;
+            background: #e4e4e4;
+            border-radius: 2px;
+            margin-top: 25px;
+        }
+
+        ul li p {
+            font-size: 14px;
+            color: red;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h2>您当前版本过低，无法正常使用，请升级后再试！</h2>
+        <p>建议使用以下浏览器，请点击以下浏览器升级。</p>
+    </div>
+
+    <ul>
+        <li><a href="http://www.googlechromer.cn/"><img src="/images/chrome.png" width="60px" height="60px"> <span>谷歌浏览器</span></a>
+            <p>(强烈推荐)</p>
+        </li>
+        <li><a href="http://www.firefox.com.cn/"><img src="/images/Firefox.png" width="60px" height="60px"> <span>火狐浏览器</span></a></li>
+        <li><a href="http://se.360.cn/"><img src="/images/360.png" width="60px" height="60px"> <span>360浏览器</span></a></li>
+        <li><a href="http://browser.qq.com/"><img src="/images/qq.png" width="60px" height="60px"> <span>QQ浏览器</span></a></li>
+        <li><a href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads"><img src="/images/IE.png" width="60px" height="60px"> <span>IE9.0以上</span></a></li>
+    </ul>
+</body>
+</html>
