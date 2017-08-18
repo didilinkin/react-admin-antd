@@ -81,10 +81,7 @@ class AfterAudit extends React.Component {
                             fontWeight: 'bold',
                             lineHeight: '40px'}}
                         >
-                            <span>
-                                <input style={{width: '300px',
-                                    height: '25px'}} value={this.state.data.clientName} onChange={this.clientNameChange}
-                                /></span>
+                            <span>{this.state.data.clientName}</span>
                             <span>物业服务费统计表</span>
                         </div>
                     </Col>
