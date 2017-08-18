@@ -5,7 +5,7 @@ import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
 
-class PropertyAllPaid extends React.Component {
+class PropertyDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -35,6 +35,9 @@ class PropertyAllPaid extends React.Component {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+    }
+    clienttNameChange = (e) => {
+        console.log(e.target.value)
     }
     async initialRemarks (nextProps) {
         this.setState({
@@ -104,7 +107,7 @@ class PropertyAllPaid extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <div className="contract">
-                        <spn ><input value={this.state.data.clientName} />&nbsp;&nbsp;物业服务费统计表</spn>
+                        <spn ><input value={this.state.data.clientName} onChange={this.clienttNameChange} />&nbsp;&nbsp;物业服务费统计表</spn>
                         <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
                         <Row>
                             <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
@@ -178,6 +181,7 @@ class PropertyAllPaid extends React.Component {
                                 </Row>
                             </div>
                         </div>
+                        {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
                             <div className="title">
                                 收款信息
@@ -186,7 +190,7 @@ class PropertyAllPaid extends React.Component {
                                 <h2>确认收款</h2>
                                 <Row>
                                     <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
-                                    <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
+                                    <Col span={16}><i>开票状态：</i>{this.state.invoiceRentStatus}</Col>
                                 </Row>
                                 <table className="tb">
                                     <tbody>
@@ -251,6 +255,9 @@ class PropertyAllPaid extends React.Component {
                                         })}
                                     </tbody>
                                 </table>
+                            </div>
+                            {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
+                            <div className="wrapbox">
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
@@ -322,13 +329,22 @@ class PropertyAllPaid extends React.Component {
                                                     <td>其他</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
+                                            } else if (collectRent.paidWay === 6) {
+                                                return <tr>
+                                                    <td>{collectRent.receiptDate}</td>
+                                                    <td>{collectRent.paidMoney}</td>
+                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td>{collectRent.discountMoney}</td>
+                                                    <td>延期下月电费</td>
+                                                    <td>{collectRent.createName}</td>
+                                                </tr>
                                             }
                                             return ''
                                         })}
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+                            </div>}
+                        </div>}
                     </div>
                 </Modal>
             </div>
@@ -336,5 +352,5 @@ class PropertyAllPaid extends React.Component {
     }
 }
 
-export default PropertyAllPaid
+export default PropertyDetail
 

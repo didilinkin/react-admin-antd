@@ -1,9 +1,10 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, notification, Icon, Popconfirm} from 'antd'
+import {Row, Col, notification, Icon, Popconfirm, Button} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
-import CollectRentAuditComponent from '../../../components/CollectRent/CollectRentLateConfirm'
+import CollectRentLateConfirmComponent from '../../../components/CollectRent/CollectRentLateConfirm'
+import CollectRentConfirmComponent from '../../../components/CollectRent/CollectRentConfirm'
 
 
 class RentReviewDetail extends React.Component {
@@ -17,6 +18,7 @@ class RentReviewDetail extends React.Component {
             id: 0,
             remark: '',
             openUpdate: false,
+            openUpdate2: false,
             data2: [],
             data3: [],
             data: {}
@@ -25,6 +27,12 @@ class RentReviewDetail extends React.Component {
     handleUpdate = () => {
         this.setState({
             openUpdate: true,
+            id: this.state.id
+        })
+    }
+    handleUpdate2 = () => {
+        this.setState({
+            openUpdate2: true,
             id: this.state.id
         })
     }
@@ -38,8 +46,9 @@ class RentReviewDetail extends React.Component {
             message: '租金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
+        // location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
         // location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
+        this.initialRemarks()
     }
     invoiceLate = async () => {
         await apiPost(
@@ -51,8 +60,9 @@ class RentReviewDetail extends React.Component {
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
+        // location.href = '/home/financial/collectRentDetails/RentReviewDetail/' + this.props.match.params.id
         // location.href = '/financial/RentReviewDetail/' + this.props.match.params.id
+        this.initialRemarks()
     }
     async initialRemarks () {
         this.setState({
@@ -113,15 +123,12 @@ class RentReviewDetail extends React.Component {
         this.initialRemarks()
     }
     refresh = async () => {
-        // 刷新表格
-        let result = await apiPost(
-            '/collectRent/getCollectRentById',
-            {id: this.props.match.params.id}
-        )
+        this.initialRemarks()
+    }
+    close = async () => {
         this.setState({
             openUpdate: false,
-            dataSource: result.data,
-            id: 0
+            openUpdate2: false
         })
     }
     render () {
@@ -129,10 +136,17 @@ class RentReviewDetail extends React.Component {
         let chargeList2 = this.state.data3
         return (
             <div style={this.props.style} className="contract">
-                <CollectRentAuditComponent
+                <CollectRentConfirmComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
+                    close={this.close}
                     visible={this.state.openUpdate}
+                />
+                <CollectRentLateConfirmComponent
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    close={this.close}
+                    visible={this.state.openUpdate2}
                 />
                 <h2>租户信息</h2>
                 <Row>
@@ -175,6 +189,7 @@ class RentReviewDetail extends React.Component {
                         </Row>
                     </div>
                 </div>
+                {this.state.data.whetherRentPaid !== 0 &&
                 <div className="wrapbox">
                     <div className="title">
                         收款信息
@@ -248,10 +263,12 @@ class RentReviewDetail extends React.Component {
                                 })}
                             </tbody>
                         </table>
-                        <p className="line" />
+                    </div>
+                    {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
+                    <div className="wrapbox">
                         <h2>确认违约金</h2>
                         <Row>
-                            <Col span={8}><b>违约金额：</b>{this.state.data.lateMoney}  元 </Col>
+                            <Col span={8}><b>违约金额：</b>{this.state.data.lateMoney} 元 </Col>
                             <Col span={8}><b>开票状态：</b>{this.state.invoiceLateStatus}</Col>
                         </Row>
                         <table className="tb">
@@ -325,7 +342,13 @@ class RentReviewDetail extends React.Component {
                             </tbody>
                         </table>
                     </div>
+                    }
                 </div>
+                }
+                {this.state.data.unpaidMoney !== 0 &&
+                <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
+                {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
+                <Button type="primary" onClick={this.handleUpdate2} >收违约金</Button>}
                 {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
                     <a className="btnred ant-btn">&nbsp; 租金开票 </a>
