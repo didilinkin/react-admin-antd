@@ -16,28 +16,22 @@ class App extends React.Component {
                 {
                     title: '租赁开始时间',
                     dataIndex: 'startDate'
-                },
-                {
+                }, {
                     title: '租赁结束时间',
                     dataIndex: 'endDate'
-                },
-                {
+                }, {
                     title: '交费期限',
                     dataIndex: 'payDeadline'
-                },
-                {
+                }, {
                     title: '金额',
                     dataIndex: 'currentPeriodMoney'
-                },
-                {
+                }, {
                     title: '优惠金额',
                     dataIndex: 'discountMoney'
-                },
-                {
+                }, {
                     title: '实际应收',
                     dataIndex: 'actualPaidMoney'
-                },
-                {
+                }, {
                     title: '未收租金',
                     dataIndex: 'unpaidMoney'
                 }
@@ -46,9 +40,10 @@ class App extends React.Component {
     }
     async initialRemarks () {
         let contract = await apiPost(
-            '/contract/getcontract',
-            {'id': this.props.match.params.id,
-                type: 2}
+            '/contract/getcontract', {
+                'id': this.props.match.params.id,
+                type: 2
+            }
         )
         this.setState({
             dataSource: contract.data.list,
@@ -62,9 +57,10 @@ class App extends React.Component {
     }
     refresh = async () => {
         let contract = await apiPost(
-            '/contract/getcontract',
-            {'id': this.props.match.params.id,
-                type: 2}
+            '/contract/getcontract', {
+                'id': this.props.match.params.id,
+                type: 2
+            }
         )
         this.setState({
             contract: contract.data.contract,
@@ -81,12 +77,9 @@ class App extends React.Component {
             <div className="contract">
                 <h2>房源信息</h2>
                 <Row>
-                    <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
-                    <Col span={8}><b>服务面积：</b>{this.state.contract.leaseArea} &nbsp;㎡</Col>
-                    <Col span={8} />
-                </Row>
-                <Row>
-                    <Col span={24}><b>房间编号：</b>{this.state.contract.leaseRooms}</Col>
+                    <Col span={ 8 }><b>所属楼宇：</b>{ this.state.contract.buildName } </Col>
+                    <Col span={ 8 }><b>服务面积：</b>{ this.state.contract.leaseArea } &nbsp;㎡</Col>
+                    <Col span={ 8 }><b>房间编号：</b>{ this.state.contract.leaseRooms }</Col>
                 </Row>
                 <div className="wrapbox">
                     <div className="title">
