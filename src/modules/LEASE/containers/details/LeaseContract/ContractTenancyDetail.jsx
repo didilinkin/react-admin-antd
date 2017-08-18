@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, Table } from 'antd' // Button
+import { Row, Col, Table, Button } from 'antd' //
 import '../../../style/test.less'
 import styled from 'styled-components'
 import elf from '../../../../../elf'
@@ -187,7 +187,7 @@ class App extends React.Component {
                         <ButtonBox>
                             {
                                 this.state.contract.contractStatus === 0 &&
-                                <StateButton
+                                <Button
                                     type="danger"
                                     onClick={this.TerminationComponent}
                                 >
@@ -195,7 +195,7 @@ class App extends React.Component {
                                         console.dir(this)
                                     }
                                     终止合同
-                                </StateButton>
+                                </Button>
                             }
                         </ButtonBox>
                     </div>
@@ -216,11 +216,11 @@ const ButtonBox = styled.div `
     ${elf.m.flexCenter}
 `
 
-const StateButton = styled.button `
+// const StateButton = styled.button `
 
-`
+// `
 
-// background-color: ${props => props.active ? 'red' : 'yellow'};
+// background-color: ${props => props.active ? 'red' : 'yellow'}; // hover状态
 
 export default App
 
