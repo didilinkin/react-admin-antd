@@ -72,15 +72,17 @@ class propertyPaidConfirm extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        if (json.unpaidMoney !== '0.0') {
-            location.href = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/' + json.id
-        } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-            location.href = '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/' + json.id
-        } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-            location.href = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + json.id
-        }
+        // if (json.unpaidMoney !== '0.0') {
+        //     location.href = '/home/finance/propertyFeeDetails/PropertyFeeDetailNoLate/' + json.id
+        // } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
+        //     location.href = '/home/finance/propertyFeeDetails/NoLateAndPropertyFinish/' + json.id
+        // } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
+        //     location.href = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + json.id
+        // }
         this.setState({visible: false,
             isFirst: true })
+        this.props.close()
+        this.props.refreshTable()
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
