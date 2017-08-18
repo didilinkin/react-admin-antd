@@ -1,7 +1,9 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, Button, Table } from 'antd'
+import { Row, Col, Table } from 'antd' // Button
 import '../../../style/test.less'
+import styled from 'styled-components'
+import elf from '../../../../../elf'
 import { apiPost } from '../../../../../api'
 import TerminationComponent from '../../../components/LeaseContract/Termination'
 
@@ -75,12 +77,30 @@ class App extends React.Component {
     render () {
         return (
             <div className="contract">
-                <h2>房源信息</h2>
-                <Row>
-                    <Col span={ 8 }><b>所属楼宇：</b>{ this.state.contract.buildName } </Col>
-                    <Col span={ 8 }><b>服务面积：</b>{ this.state.contract.leaseArea } &nbsp;㎡</Col>
-                    <Col span={ 8 }><b>房间编号：</b>{ this.state.contract.leaseRooms }</Col>
-                </Row>
+                {/* 因特殊需求, 暂时隐藏此标题内容; 不确定后期是否要改回: start */}
+                {/*
+                    <h2>房源信息</h2>
+                    <Row>
+                        <Col span={ 8 }><b>所属楼宇：</b>{ this.state.contract.buildName } </Col>
+                        <Col span={ 8 }><b>服务面积：</b>{ this.state.contract.leaseArea } &nbsp;㎡</Col>
+                        <Col span={ 8 }><b>房间编号：</b>{ this.state.contract.leaseRooms }</Col>
+                    </Row>
+                */}
+                {/* 因特殊需求, 暂时隐藏此标题内容; 不确定后期是否要改回: end */}
+
+                {/* 测试修改 wrapbox: start */}
+                <div className="wrapbox">
+                    <div className="title"> 房源信息 </div>
+                    <div className="main">
+                        <Row>
+                            <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
+                            <Col span={8}><b>服务面积：</b>{this.state.contract.leaseArea} &nbsp;㎡</Col>
+                            <Col span={8}><b>房间编号：</b>{this.state.contract.leaseRooms}</Col>
+                        </Row>
+                    </div>
+                </div>
+                {/* 测试修改 wrapbox: end */}
+
                 <div className="wrapbox">
                     <div className="title">
                         客户信息
@@ -130,7 +150,8 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>收费方式：</b>
+                            <Col span={8}>
+                                <b>收费方式：</b>
                                 <span className="color1">
                                     {this.state.contract.payType === 1 && '按单价递增'}
                                     {this.state.contract.payType === 0 && '按首年递增'}
@@ -141,13 +162,21 @@ class App extends React.Component {
                         </Row>
                         <Row>
                             <Col span={8}><b>交费周期：</b>
-                                {this.state.contract.payCycle === 1 ? '月付' : this.state.contract.payCycle === 3 ? '季付' : this.state.contract.payCycle === 6 ? '半年付' : '年付' }
+                                <span className="color1">
+                                    {this.state.contract.payCycle === 1 ? '月付' : this.state.contract.payCycle === 3 ? '季付' : this.state.contract.payCycle === 6 ? '半年付' : '年付' }
+                                </span>
                             </Col>
                             <Col span={8}><b>免租期：</b>{this.state.contract.freeStartDate} - {this.state.contract.freeEndDate}</Col>
                             <Col span={8}><b>免租金额：</b><span className="color1">{this.state.contract.freeRent}</span> 元</Col>
                         </Row>
                         <Row>
-                            <Col span={24}><b>租赁保证金：</b><span className="color1">{this.state.contract.depositMoney}</span> 元 （当前余额：<span className="color1">{this.state.contract.currentBalance}</span> 元） &nbsp; <span className="color1">{this.state.contract.startIncNum}</span> 年后租金每年递增 <span className="color1">{this.state.contract.rentIncrRate}</span> %</Col>
+                            <Col span={8}>
+                                <span className="color1">{this.state.contract.startIncNum}</span> 年后租金每年递增 <span className="color1">{this.state.contract.rentIncrRate}</span> %
+                            </Col>
+                            <Col span={16}>
+                                <b>租赁保证金：</b>
+                                <span className="color1"> {this.state.contract.depositMoney} </span> 元(当前余额：<span className="color1">{this.state.contract.currentBalance}</span>元) &nbsp;
+                            </Col>
                         </Row>
                         <p className="line" />
                         <Table
@@ -155,9 +184,20 @@ class App extends React.Component {
                             dataSource={this.state.dataSource}
                             columns={this.state.columns}
                         />
-                        {this.state.contract.contractStatus === 0 &&
-                        <Button type="primary" onClick={this.TerminationComponent}>终止合同</Button>
-                        }
+                        <ButtonBox>
+                            {
+                                this.state.contract.contractStatus === 0 &&
+                                <StateButton
+                                    type="danger"
+                                    onClick={this.TerminationComponent}
+                                >
+                                    {
+                                        console.dir(this)
+                                    }
+                                    终止合同
+                                </StateButton>
+                            }
+                        </ButtonBox>
                     </div>
                 </div>
                 <TerminationComponent
@@ -170,6 +210,17 @@ class App extends React.Component {
         )
     }
 }
+
+// style
+const ButtonBox = styled.div `
+    ${elf.m.flexCenter}
+`
+
+const StateButton = styled.button `
+
+`
+
+// background-color: ${props => props.active ? 'red' : 'yellow'};
 
 export default App
 
