@@ -66,11 +66,11 @@ class PropertyFeeDetail extends React.Component {
                 feeType: 4
             }
         )
-        if (resulData.data.invoicePopertyStatus === 0) {
+        if (resulData.data.invoicePropertyStatus === 0) {
             this.setState({
                 invoiceRentStatus: '未开票'
             })
-        } else if (resulData.data.invoicePopertyStatus === 1) {
+        } else if (resulData.data.invoicePropertyStatus === 1) {
             this.setState({
                 invoiceRentStatus: '已开票'
             })
@@ -126,8 +126,6 @@ class PropertyFeeDetail extends React.Component {
             openUpdate2: false
         })
     }
-    clientNameChange = (e) => {
-    }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
@@ -145,14 +143,14 @@ class PropertyFeeDetail extends React.Component {
                     close={this.close}
                     visible={this.state.openUpdate2}
                 />
-                <Row style={{marginTop: 50}}>
+                <Row style={{marginTop: 0}}>
                     <Col>
                         <div style={{textAlign: 'center',
                             fontSize: '20px',
                             fontWeight: 'bold',
                             lineHeight: '40px'}}
                         >
-                            <span>{this.state.data.clientName}</span>
+                            <span>{this.state.data.printClientName}</span>
                             <span>物业服务费统计表</span>
                         </div>
                     </Col>
@@ -413,7 +411,7 @@ class PropertyFeeDetail extends React.Component {
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn">&nbsp; 物业费开票 </a>
                     </Popconfirm>}
-                    {this.state.data.invoiceLateStatus !== 1 &&
+                    {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                         <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
                     </Popconfirm>}
