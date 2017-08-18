@@ -16,6 +16,7 @@ class PropertyContractAdded extends React.Component {
             visible: false,
             loading: false,
             current: 0,
+            roomIds: [],
             isFirst: true,
             ListBuildingInfo: [],
             listRoom: [],
@@ -273,7 +274,8 @@ class PropertyContractAdded extends React.Component {
             roomIds: roomIds.toString()
         })
         this.setState({
-            rooms: value
+            rooms: value,
+            roomIds: roomIds
         })
     }
     reliefArea = (value) => {
@@ -520,7 +522,7 @@ class PropertyContractAdded extends React.Component {
                                         <Checkbox.Group style={{ width: '100%' }}>
                                             <Row>
                                                 {this.state.rooms.map((room, i) => {
-                                                    return <Col key={i} offset="1" span={4}><Checkbox value={room}>{room}</Checkbox></Col>
+                                                    return <Col key={i} offset="1" span={4}><Checkbox value={this.state.roomIds[i]}>{room}</Checkbox></Col>
                                                 })}
                                             </Row>
                                         </Checkbox.Group>
