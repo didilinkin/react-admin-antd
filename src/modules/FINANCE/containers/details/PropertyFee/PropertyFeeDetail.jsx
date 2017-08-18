@@ -66,11 +66,11 @@ class PropertyFeeDetail extends React.Component {
                 feeType: 4
             }
         )
-        if (resulData.data.invoicePopertyStatus === 0) {
+        if (resulData.data.invoicePropertyStatus === 0) {
             this.setState({
                 invoiceRentStatus: '未开票'
             })
-        } else if (resulData.data.invoicePopertyStatus === 1) {
+        } else if (resulData.data.invoicePropertyStatus === 1) {
             this.setState({
                 invoiceRentStatus: '已开票'
             })
@@ -125,8 +125,6 @@ class PropertyFeeDetail extends React.Component {
             openUpdate: false,
             openUpdate2: false
         })
-    }
-    clientNameChange = (e) => {
     }
     render () {
         let chargeList = this.state.data2
@@ -413,7 +411,7 @@ class PropertyFeeDetail extends React.Component {
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn">&nbsp; 物业费开票 </a>
                     </Popconfirm>}
-                    {this.state.data.invoiceLateStatus !== 1 &&
+                    {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                         <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
                     </Popconfirm>}

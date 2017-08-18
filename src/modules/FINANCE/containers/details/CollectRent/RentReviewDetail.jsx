@@ -353,7 +353,7 @@ class RentReviewDetail extends React.Component {
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
                     <a className="btnred ant-btn">&nbsp; 租金开票 </a>
                 </Popconfirm>}
-                {this.state.data.invoiceLateStatus !== 1 &&
+                {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                     <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
                 </Popconfirm>}</div>

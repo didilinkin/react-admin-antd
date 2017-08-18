@@ -57,8 +57,6 @@ class AfterAudit extends React.Component {
             auditStatus: e.target.value
         })
     }
-    clientNameChange = (e) => {
-    }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,

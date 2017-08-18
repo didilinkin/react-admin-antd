@@ -57,8 +57,6 @@ class InReview extends React.Component {
             auditStatus: e.target.value
         })
     }
-    clientNameChange = (e) => {
-    }
     onValueChange = (e) => {
         this.setState({
             remark: e.target.value

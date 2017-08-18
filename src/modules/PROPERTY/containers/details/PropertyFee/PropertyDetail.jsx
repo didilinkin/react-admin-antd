@@ -93,8 +93,6 @@ class PropertyDetail extends React.Component {
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
     }
-    clientNameChange = (e) => {
-    }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
@@ -212,7 +210,7 @@ class PropertyDetail extends React.Component {
                                 <h2>确认收款</h2>
                                 <Row>
                                     <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
-                                    <Col span={16}><i>开票状态：</i>{this.state.invoiceRentStatus}</Col>
+                                    <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
                                 </Row>
                                 <table className="tb">
                                     <tbody>
