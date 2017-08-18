@@ -104,7 +104,12 @@ class BuildAdd extends React.Component {
                             <FormItem label="楼宇名称" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('buildName')(<Input />)}
+                                {getFieldDecorator('buildName', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '楼宇名称不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>

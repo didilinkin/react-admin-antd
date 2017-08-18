@@ -97,91 +97,90 @@ class PropertyDetail extends React.Component {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
         return (
-            <div style={this.props.style} className="contract">
-                <Modal maskClosable={false}
-                    title= "租金明细"
-                    style={{top: 20}}
-                    width={900}
-                    visible={this.state.visible}
-                    footer={null}
-                    onCancel={this.handleCancel}
-                >
-                    <div className="contract">
-                        <spn ><input value={this.state.data.clientName} onChange={this.clienttNameChange} />&nbsp;&nbsp;物业服务费统计表</spn>
-                        <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
-                        <Row>
-                            <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
-                            <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
-                            <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
-                        </Row>
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>费用项目</td>
-                                    <td>面积</td>
-                                    <td />
-                                    <td>单价</td>
-                                    <td />
-                                    <td>月份</td>
-                                    <td>金额</td>
-                                </tr>
-                                <tr>
-                                    <td>物业管理费</td>
-                                    <td>{this.state.data.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.data.pmUnitPrice}</td>
-                                    <td>*</td>
-                                    <td>{this.state.monthDay}</td>
-                                    <td>{this.state.data.pmFee}</td>
-                                </tr>
-                                <tr>
-                                    <td>电梯费</td>
-                                    <td>{this.state.data.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.data.elevUnitPrice}</td>
-                                    <td>*</td>
-                                    <td>{this.state.monthDay}</td>
-                                    <td>{this.state.data.elevatorFee}</td>
-                                </tr>
-                                <tr>
-                                    <td>空调费</td>
-                                    <td>{this.state.data.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.data.acUnitPrice}</td>
-                                    <td>*</td>
-                                    <td>{this.state.data.acUnitDay}/4</td>
-                                    <td>{this.state.data.airFee}</td>
-                                </tr>
-                                <tr>
-                                    <td>水费</td>
-                                    <td>{this.state.data.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.data.waterUnitPrice}</td>
-                                    <td>*</td>
-                                    <td>{this.state.monthDay}</td>
-                                    <td>{this.state.data.waterFee}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <p style={{margin: '20px 0',
-                            textAlign: 'right'}}
-                        >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
+            <Modal maskClosable={false}
+                title= "租金明细"
+                style={{top: 20}}
+                width={900}
+                visible={this.state.visible}
+                footer={null}
+                onCancel={this.handleCancel}
+            >
+                <div className="contract">
+                    <spn ><input value={this.state.data.clientName} onChange={this.clienttNameChange} />&nbsp;&nbsp;物业服务费统计表</spn>
+                    <span>({this.state.data.startDate}～{this.state.data.endDate})</span>
+                    <Row>
+                        <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
+                        <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
+                        <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
+                    </Row>
+                    <table className="tb">
+                        <tbody>
+                            <tr className="hd">
+                                <td>费用项目</td>
+                                <td>面积</td>
+                                <td />
+                                <td>单价</td>
+                                <td />
+                                <td>月份</td>
+                                <td>金额</td>
+                            </tr>
+                            <tr>
+                                <td>物业管理费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.pmUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.pmFee}</td>
+                            </tr>
+                            <tr>
+                                <td>电梯费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.elevUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.elevatorFee}</td>
+                            </tr>
+                            <tr>
+                                <td>空调费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.acUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.data.acUnitDay}/4</td>
+                                <td>{this.state.data.airFee}</td>
+                            </tr>
+                            <tr>
+                                <td>水费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.waterUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.waterFee}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style={{margin: '20px 0',
+                        textAlign: 'right'}}
+                    >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
 
-                        <div className="wrapbox">
-                            <div className="main">
-                                <p className="line" />
-                                <h2>其他信息</h2>
-                                <Row>
-                                    <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                                    <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-                                </Row>
-                                <Row>
-                                    <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
-                                    <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
-                                </Row>
-                            </div>
+                    <div className="wrapbox">
+                        <div className="main">
+                            <p className="line" />
+                            <h2>其他信息</h2>
+                            <Row>
+                                <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                            </Row>
+                            <Row>
+                                <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
+                                <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
+                            </Row>
                         </div>
-                        {this.state.data.whetherRentPaid !== 0 &&
+                    </div>
+                    {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
                             <div className="title">
                                 收款信息
@@ -203,7 +202,7 @@ class PropertyDetail extends React.Component {
                                         </tr>
                                         {chargeList.map(propertyFee => {
                                             if (propertyFee.paidWay === 0) {
-                                                return <tr>
+                                                return <tr key={0}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -211,7 +210,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 1) {
-                                                return <tr>
+                                                return <tr key={1}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -219,7 +218,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 2) {
-                                                return <tr>
+                                                return <tr key={2}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -227,7 +226,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 3) {
-                                                return <tr>
+                                                return <tr key={3}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -235,7 +234,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 4) {
-                                                return <tr>
+                                                return <tr key={4}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -243,7 +242,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 5) {
-                                                return <tr>
+                                                return <tr key={5}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -276,7 +275,7 @@ class PropertyDetail extends React.Component {
                                         </tr>
                                         {chargeList2.map(collectRent => {
                                             if (collectRent.paidWay === 0) {
-                                                return <tr>
+                                                return <tr key={6}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -285,7 +284,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 1) {
-                                                return <tr>
+                                                return <tr key={7}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -294,7 +293,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 2) {
-                                                return <tr>
+                                                return <tr key={8}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -303,7 +302,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 3) {
-                                                return <tr>
+                                                return <tr key={9}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -312,7 +311,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 4) {
-                                                return <tr>
+                                                return <tr key={10}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -321,7 +320,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 5) {
-                                                return <tr>
+                                                return <tr key={11}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -330,7 +329,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 6) {
-                                                return <tr>
+                                                return <tr key={12}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -345,9 +344,8 @@ class PropertyDetail extends React.Component {
                                 </table>
                             </div>}
                         </div>}
-                    </div>
-                </Modal>
-            </div>
+                </div>
+            </Modal>
         )
     }
 }

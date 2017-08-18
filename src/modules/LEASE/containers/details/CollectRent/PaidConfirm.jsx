@@ -111,12 +111,7 @@ class addUpkeep extends React.Component {
                                 <FormItem label="本期租金" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('currentPeriodMoney', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请输入'
-                                        }]
-                                    })(
+                                    {getFieldDecorator('currentPeriodMoney')(
                                         <Input disabled />
                                     )}
                                 </FormItem>
@@ -137,7 +132,12 @@ class addUpkeep extends React.Component {
                                 <FormItem label="付款帐号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('accountId')(
+                                    {getFieldDecorator('accountId', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请选择付款帐号'
+                                        }]
+                                    })(
                                         <Select
                                             showSearch
                                             style={{ width: 245 }}

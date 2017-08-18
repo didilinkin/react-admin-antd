@@ -141,7 +141,7 @@ class propertyPaidConfirm extends React.Component {
                                     {getFieldDecorator('receiptDate', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入交费日期'
                                         }]
                                     })(
                                         <DatePicker />
@@ -164,7 +164,12 @@ class propertyPaidConfirm extends React.Component {
                                 <FormItem label="本次实收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('thisPaidMoney')(
+                                    {getFieldDecorator('thisPaidMoney', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入本次实收'
+                                        }]
+                                    })(
                                         <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>

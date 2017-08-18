@@ -103,7 +103,12 @@ class propertyPaidConfirm extends React.Component {
                                 <FormItem label="金额" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 9 }}
                                 >
-                                    {getFieldDecorator('operateMoney')(
+                                    {getFieldDecorator('operateMoney', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入金额'
+                                        }]
+                                    })(
                                         <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>
