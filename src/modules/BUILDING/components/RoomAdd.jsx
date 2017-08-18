@@ -174,7 +174,12 @@ class RoomAdd extends React.Component {
                             <FormItem label="所属楼宇" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('build')(
+                                {getFieldDecorator('build', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '所属楼宇不能为空'
+                                    }]
+                                })(
                                     <Select
                                         showSearch
                                         style={{width: 180,
@@ -193,7 +198,12 @@ class RoomAdd extends React.Component {
                             <FormItem label="产权性质" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('propertyType1')(
+                                {getFieldDecorator('propertyType1', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '产权性质不能为空'
+                                    }]
+                                })(
                                     <Select
                                         showSearch
                                         style={{width: 180,
@@ -214,14 +224,24 @@ class RoomAdd extends React.Component {
                             <FormItem label="所属楼层" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('roomFloor')(<Input />)}
+                                {getFieldDecorator('roomFloor', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '所属楼层不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                         <Col span={12}>
                             <FormItem label="产权单位" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('propertyOwner')(<Input />)}
+                                {getFieldDecorator('propertyOwner', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '产权单位不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>
@@ -230,7 +250,12 @@ class RoomAdd extends React.Component {
                             <FormItem label="房间编号" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('roomNum')(<Input />)}
+                                {getFieldDecorator('roomNum', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '房间编号不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                         <Col span={12}>
@@ -246,7 +271,12 @@ class RoomAdd extends React.Component {
                             <FormItem label="建筑面积" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('roomArea')(<Input />)}
+                                {getFieldDecorator('roomArea', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '建筑面积不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                         <Col span={12}>
@@ -262,7 +292,12 @@ class RoomAdd extends React.Component {
                             <FormItem label="层高" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('roomHeight')(<Input />)}
+                                {getFieldDecorator('roomHeight', {
+                                    rules: [ {
+                                        required: true,
+                                        message: '层高不能为空'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                         <Col span={12}>

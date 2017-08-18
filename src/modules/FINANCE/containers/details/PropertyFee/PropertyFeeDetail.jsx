@@ -239,7 +239,7 @@ class PropertyFeeDetail extends React.Component {
                                 </tr>
                                 {chargeList.map(propertyFee => {
                                     if (propertyFee.paidWay === 0) {
-                                        return <tr>
+                                        return <tr key={0}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>
@@ -247,7 +247,7 @@ class PropertyFeeDetail extends React.Component {
                                             <td>{propertyFee.createName}</td>
                                         </tr>
                                     } else if (propertyFee.paidWay === 1) {
-                                        return <tr>
+                                        return <tr key={1}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>
@@ -255,7 +255,7 @@ class PropertyFeeDetail extends React.Component {
                                             <td>{propertyFee.createName}</td>
                                         </tr>
                                     } else if (propertyFee.paidWay === 2) {
-                                        return <tr>
+                                        return <tr key={2}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>
@@ -263,7 +263,7 @@ class PropertyFeeDetail extends React.Component {
                                             <td>{propertyFee.createName}</td>
                                         </tr>
                                     } else if (propertyFee.paidWay === 3) {
-                                        return <tr>
+                                        return <tr key={3}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>
@@ -271,7 +271,7 @@ class PropertyFeeDetail extends React.Component {
                                             <td>{propertyFee.createName}</td>
                                         </tr>
                                     } else if (propertyFee.paidWay === 4) {
-                                        return <tr>
+                                        return <tr key={4}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>
@@ -279,7 +279,7 @@ class PropertyFeeDetail extends React.Component {
                                             <td>{propertyFee.createName}</td>
                                         </tr>
                                     } else if (propertyFee.paidWay === 5) {
-                                        return <tr>
+                                        return <tr key={5}>
                                             <td>{propertyFee.receiptDate}</td>
                                             <td>{propertyFee.paidMoney}</td>
                                             <td>{propertyFee.unpaidMoney}</td>

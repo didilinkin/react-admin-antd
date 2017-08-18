@@ -142,7 +142,12 @@ class propertyPaidConfirm extends React.Component {
                                 <FormItem label="审批意见" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('auditStatus')(
+                                    {getFieldDecorator('auditStatus', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入审批意见'
+                                        }]
+                                    })(
                                         <RadioGroup onChange={this.onChange}>
                                             <Radio value={1}>审核通过</Radio>
                                             <Radio value={2}>审核不通过</Radio>

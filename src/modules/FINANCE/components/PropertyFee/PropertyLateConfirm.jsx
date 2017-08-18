@@ -192,7 +192,12 @@ class propertyLateConfirm extends React.Component {
                                 <FormItem label="本次实收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('thisLateMoney')(
+                                    {getFieldDecorator('thisLateMoney', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入本次实收'
+                                        }]
+                                    })(
                                         <Input onKeyUp={this.sumMoney} />
                                     )}
                                 </FormItem>

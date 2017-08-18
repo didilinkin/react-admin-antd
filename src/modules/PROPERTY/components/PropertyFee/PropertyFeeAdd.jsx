@@ -549,228 +549,226 @@ class propertyFeeAdd extends React.Component {
         let tenantList = this.state.tenantList
         let accountList = this.state.accountList
         return (
-            <div className="property">
-                <Modal maskClosable={false}
-                    title= "物业费添加"
-                    style={{top: 20}}
-                    width={700}
-                    visible={this.state.visible}
-                    onCancel={this.handleCancel}
-                    onOk={this.handleSubmit}
-                >
-                    <Form layout="horizontal">
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="本次周期" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('periodDate')(
-                                        <RangePicker onChange={this.onChange1} />
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('buildName')(
-                                        <Input style={{ width: 120 }} disabled />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('payDeadline')(
-                                        <DatePicker onChange={this.onChange2} style={{width: 220}} />
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('roomNum')(
-                                        <Input style={{ width: 120 }} disabled />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('clientName')(
-                                        <Select placeholder="请选择客户"
-                                            showSearch style={{ width: 220 }}
-                                            onSelect={this.handleChange1}
-                                            allowClear
-                                            optionFilterProp="children"
-                                        >
-                                            {pmContractList.map(pmContract => {
-                                                return <Option key={pmContract.id}>{pmContract.clientName}：{pmContract.leaseRooms}</Option>
-                                            })}
-                                        </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="房间面积" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('serviceArea')(
-                                        <Input style={{ width: 120 }} disabled />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="转租客户" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('tenant')(
-                                        <Select placeholder="请选择转租客户"
-                                            onSelect={this.handleChange2}
-                                            allowClear
-                                            optionFilterProp="children"
-                                            showSearch style={{ width: 220 }}
-                                        >
-                                            {tenantList.map(tenant => {
-                                                return <Option key={tenant.clientId}>{tenant.clientName}</Option>
-                                            })}
-                                        </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="年物业费" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('yearPmPrice')(
-                                        <Input style={{ width: 120 }} disabled />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="下单日期" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('printDate')(
-                                        <DatePicker onChange={this.onChange3}style={{width: 220}} />
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={12}>
-                                <FormItem label="年空调费" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('yearAcPrice')(
-                                        <Input style={{ width: 120 }} disabled />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={12}>
-                                <FormItem label="付款帐号" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('accountId')(
-                                        <Select
-                                            showSearch
-                                            style={{ width: 220 }}
-                                            placeholder="请选择付款帐号"
-                                            optionFilterProp="children"
-                                            onChange={this.handleChange3}
-                                        >
-                                            {accountList.map(Account => {
-                                                return <Option key={Account.accountId}>{Account.accountName}</Option>
-                                            })}
-                                        </Select>
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <FormItem label="" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('printClientName')(
-                                <Input style={{ width: 320 }} onChange={this.entryNameOnChange} />
-                            )}
-                        </FormItem>
+            <Modal maskClosable={false}
+                title= "物业费添加"
+                style={{top: 20}}
+                width={700}
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                onOk={this.handleSubmit}
+            >
+                <Form layout="horizontal">
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('periodDate')(
+                                    <RangePicker onChange={this.onChange1} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('buildName')(
+                                    <Input style={{ width: 120 }} disabled />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('payDeadline')(
+                                    <DatePicker onChange={this.onChange2} style={{width: 220}} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('roomNum')(
+                                    <Input style={{ width: 120 }} disabled />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('clientName')(
+                                    <Select placeholder="请选择客户"
+                                        showSearch style={{ width: 220 }}
+                                        onSelect={this.handleChange1}
+                                        allowClear
+                                        optionFilterProp="children"
+                                    >
+                                        {pmContractList.map(pmContract => {
+                                            return <Option key={pmContract.id}>{pmContract.clientName}：{pmContract.leaseRooms}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="房间面积" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('serviceArea')(
+                                    <Input style={{ width: 120 }} disabled />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('tenant')(
+                                    <Select placeholder="请选择转租客户"
+                                        onSelect={this.handleChange2}
+                                        allowClear
+                                        optionFilterProp="children"
+                                        showSearch style={{ width: 220 }}
+                                    >
+                                        {tenantList.map(tenant => {
+                                            return <Option key={tenant.clientId}>{tenant.clientName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="年物业费" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('yearPmPrice')(
+                                    <Input style={{ width: 120 }} disabled />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="下单日期" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('printDate')(
+                                    <DatePicker onChange={this.onChange3}style={{width: 220}} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem label="年空调费" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('yearAcPrice')(
+                                    <Input style={{ width: 120 }} disabled />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <FormItem label="付款帐号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('accountId')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 220 }}
+                                        placeholder="请选择付款帐号"
+                                        optionFilterProp="children"
+                                        onChange={this.handleChange3}
+                                    >
+                                        {accountList.map(Account => {
+                                            return <Option key={Account.accountId}>{Account.accountName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    <FormItem label="" labelCol={{ span: 6 }}
+                        wrapperCol={{ span: 16 }}
+                    >
+                        {getFieldDecorator('printClientName')(
+                            <Input style={{ width: 320 }} onChange={this.entryNameOnChange} />
+                        )}
+                    </FormItem>
 
-                        {/* <div className="bt">*/}
-                        {/* <Input style={{ width: 520 }} value={this.state.json1.printClientName} onChange={this.entryNameOnChange} /> 物业费统计表*/}
-                        {/* </div>*/}
+                    {/* <div className="bt">*/}
+                    {/* <Input style={{ width: 520 }} value={this.state.json1.printClientName} onChange={this.entryNameOnChange} /> 物业费统计表*/}
+                    {/* </div>*/}
 
-                        <table className="tb">
-                            <tbody>
-                                <tr className="hd">
-                                    <td>费用项目</td>
-                                    <td>面积</td>
-                                    <td />
-                                    <td>单价</td>
-                                    <td />
-                                    <td>月份</td>
-                                    <td>金额</td>
-                                </tr>
+                    <table className="tb">
+                        <tbody>
+                            <tr className="hd">
+                                <td>费用项目</td>
+                                <td>面积</td>
+                                <td />
+                                <td>单价</td>
+                                <td />
+                                <td>月份</td>
+                                <td>金额</td>
+                            </tr>
+                            <tr>
+                                <td>物业管理费</td>
+                                <td>{this.state.json1.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmUnitPrice : '--'}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.months}</td>
+                                <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmFee : this.state.json1.yearPmPrice}</td>
+                            </tr>
+                            <tr>
+                                <td>电梯费</td>
+                                <td>{this.state.json1.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.elevUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.months}</td>
+                                <td>{this.state.json1.elevatorFee}</td>
+                            </tr>
+                            <tr>
+                                <td>空调费</td>
+                                <td>{this.state.json1.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
+                                <td>*</td>
+                                <td>{this.state.json1.acUnitDay}/4</td>
+                                <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
+                            </tr>
+                            {
                                 <tr>
-                                    <td>物业管理费</td>
+                                    <td>水费</td>
                                     <td>{this.state.json1.serviceArea}</td>
                                     <td>*</td>
-                                    <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmUnitPrice : '--'}</td>
+                                    <td>{this.state.json1.waterType === 0 ? this.state.json1.waterUnitPrice : '--'}</td>
                                     <td>*</td>
                                     <td>{this.state.json1.months}</td>
-                                    <td>{this.state.json1.yearPmPrice === 0 ? this.state.json1.pmFee : this.state.json1.yearPmPrice}</td>
+                                    <td>{this.state.json1.waterType === 0 ? this.state.json1.waterFee : '--'}</td>
                                 </tr>
-                                <tr>
-                                    <td>电梯费</td>
-                                    <td>{this.state.json1.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.json1.elevUnitPrice}</td>
-                                    <td>*</td>
-                                    <td>{this.state.json1.months}</td>
-                                    <td>{this.state.json1.elevatorFee}</td>
-                                </tr>
-                                <tr>
-                                    <td>空调费</td>
-                                    <td>{this.state.json1.serviceArea}</td>
-                                    <td>*</td>
-                                    <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.acUnitPrice : '--'}</td>
-                                    <td>*</td>
-                                    <td>{this.state.json1.acUnitDay}/4</td>
-                                    <td>{this.state.json1.yearAcPrice === 0 ? this.state.json1.airFee : this.state.json1.yearAcPrice}</td>
-                                </tr>
-                                {
-                                    <tr>
-                                        <td>水费</td>
-                                        <td>{this.state.json1.serviceArea}</td>
-                                        <td>*</td>
-                                        <td>{this.state.json1.waterType === 0 ? this.state.json1.waterUnitPrice : '--'}</td>
-                                        <td>*</td>
-                                        <td>{this.state.json1.months}</td>
-                                        <td>{this.state.json1.waterType === 0 ? this.state.json1.waterFee : '--'}</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <p style={{margin: '20px 0',
-                            textAlign: 'right'}}
-                        >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
-                                <Input onKeyUp={this.sumMoney} style={{ width: 120 }} />
-                            )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
-                                <Input style={{ width: 120 }} disabled />
-                            )}</p>
-                    </Form>
-                </Modal>
-            </div>
+                            }
+                        </tbody>
+                    </table>
+                    <p style={{margin: '20px 0',
+                        textAlign: 'right'}}
+                    >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
+                            <Input onKeyUp={this.sumMoney} style={{ width: 120 }} />
+                        )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
+                            <Input style={{ width: 120 }} disabled />
+                        )}</p>
+                </Form>
+            </Modal>
         )
     }
 }
