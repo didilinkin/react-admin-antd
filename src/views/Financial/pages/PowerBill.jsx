@@ -1,6 +1,6 @@
 // 财务管理 - 电费审核
 import React from 'react'
-import {Table, Spin, Popconfirm, Tabs} from 'antd'
+import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHeadComponent from '../../Charge/pages/components/PowerBillHead'
 import { apiPost } from '../../../api'
 import PowerInfomation from '../../Charge/pages/components/PowerInfomation'
@@ -32,8 +32,6 @@ class PowerBill extends React.Component {
         let result = await apiPost(
             '/ElectricityFees/list'
         )
-        console.log(result)
-        console.log(result.data)
         let PowerBillList = result.data
         let dataSource1 = []
         let dataSource2 = []
@@ -164,6 +162,7 @@ class PowerBill extends React.Component {
 
             }]
         let info = this.info
+        let withdraw = this.withdraw
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
             loading: false,
@@ -264,7 +263,7 @@ class PowerBill extends React.Component {
                         <span>
                             <a href={url}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm title="确定撤回吗?">
+                            <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
                             </Popconfirm>
                             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -274,6 +273,17 @@ class PowerBill extends React.Component {
                 }
             }])
         })
+    }
+    withdraw = async (id) => {
+        let result = await apiPost(
+            '/ElectricityFees/withdraw',
+            {id: id}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo()
     }
     info = (id) => {
         this.setState({

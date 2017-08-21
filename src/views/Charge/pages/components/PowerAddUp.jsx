@@ -110,7 +110,6 @@ class sumElectricityAddUp extends React.Component {
         this.props.refreshTable()
     }
     setTableColunms = (contract, powerType) => {
-        debugger
         let deleteRecord = this.deleteRecord
         let tableColumns = [{
             title: '电费名称',

@@ -90,7 +90,7 @@ class ChargeWaterBill extends React.Component {
             order: activeKey ? activeKey : 1
         })
     }
-    refresh = async (pagination, filters, sorter) => {
+    refresh = async (pagination, filters) => {
         this.setState({loading: true,
             openWaterAddUpComponent: false,
             openInfo: false})
@@ -185,7 +185,7 @@ class ChargeWaterBill extends React.Component {
                 title: '收费类型',
                 width: 200,
                 dataIndex: 'wattHourType',
-                render: function (text, record, index) {
+                render: function (text) {
                     let dataIndex = '固定单价'
                     if (text.toString() === '1') {
                         dataIndex = '差额单价'
@@ -228,7 +228,7 @@ class ChargeWaterBill extends React.Component {
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
-                render: function (text, record, index) {
+                render: function (text, record) {
                     return (
                         <span>
                             <a onClick={() => info(record.id)}>明细</a>
@@ -274,7 +274,8 @@ class ChargeWaterBill extends React.Component {
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
-                render: function (text, record, index) {
+                render: function (record) {
+                    console.log(record)
                     return (
                         <span>
                             <Popconfirm key="1" title="确定重新收费吗?">
@@ -297,7 +298,7 @@ class ChargeWaterBill extends React.Component {
                 title: '延期下月电费',
                 width: 100,
                 dataIndex: 'penaltyType',
-                render: function (text, record, index) {
+                render: function (text) {
                     let penaltyType = '否'
                     if (text.toString() === '1') {
                         penaltyType = '是'
@@ -310,7 +311,7 @@ class ChargeWaterBill extends React.Component {
                 title: '打印状态',
                 width: 100,
                 dataIndex: 'printStatus',
-                render: function (text, record, index) {
+                render: function (text) {
                     let printStatus = '否'
                     if (text.toString() === '1') {
                         printStatus = '是'
@@ -323,7 +324,7 @@ class ChargeWaterBill extends React.Component {
                 title: '开票状态',
                 width: 100,
                 dataIndex: 'principalPrincipalBilling',
-                render: function (text, record, index) {
+                render: function (text) {
                     text = text ? text : ''
                     let billingState = '未开票'
                     if (text.toString() === '1') {
@@ -336,7 +337,7 @@ class ChargeWaterBill extends React.Component {
             }, {
                 title: '操作',
                 width: 200,
-                render: function (text, record, index) {
+                render: function (text, record) {
                     return (
                         <span>
                             <a onClick={() => info(record.id)}>明细</a>
@@ -375,11 +376,9 @@ class ChargeWaterBill extends React.Component {
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
-                            // pagination = <Pagination showSizeChanger total={500}/>
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            // onChange={this.refresh}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
@@ -417,11 +416,9 @@ class ChargeWaterBill extends React.Component {
                             ListBuildingInfo={this.state.ListBuildingInfo}
                         />
                         <Table
-                            // pagination = <Pagination showSizeChanger total={500}/>
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            // onChange={this.refresh}
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />

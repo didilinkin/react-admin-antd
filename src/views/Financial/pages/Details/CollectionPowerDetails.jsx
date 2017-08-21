@@ -2,6 +2,7 @@ import React from 'react'
 import {Row, Col, Table, Button, Popconfirm, notification, Icon} from 'antd'
 import { apiPost } from '../../../../api/index'
 import PrincipalCollectionPower from '../components/PrincipalCollectionPower'
+import PrincipalCollectionPenal from '../components/PrincipalCollectionPowerPenal'
 class CollectionPowerDetails extends React.Component {
     state = {
         map: {
@@ -10,7 +11,9 @@ class CollectionPowerDetails extends React.Component {
             liquidatedDamagesList: [],
             electricityFees: {}
         },
-        mainColumns: []
+        mainColumns: [],
+        collectMoney: false,
+        collectPenal: false
     }
     componentDidMount () {
         this.initialRemarks()
@@ -18,8 +21,8 @@ class CollectionPowerDetails extends React.Component {
     refresh = () => {
         this.initialRemarks()
         this.setState({
-            openPrincipalCollection: false,
-            openDefaultCollection: false
+            collectMoney: false,
+            collectPenal: false
         })
     }
     initialRemarks = async () => {
@@ -86,18 +89,51 @@ class CollectionPowerDetails extends React.Component {
             mainColumns: mainColumn
         })
     }
-    openPrincipalCollection = () => {
+    collectMoney = () => {
         this.setState({
-            openPrincipalCollection: true,
-            openDefaultCollection: false,
+            collectMoney: true,
+            collectPenal: false,
             id: this.props.match.params.id
         })
     }
-    penalBilling = async () => {
+    collectPenal = () => {
+        this.setState({
+            collectMoney: false,
+            collectPenal: true,
+            id: this.props.match.params.id
+        })
+    }
+    // 放入下月电费
+    putNextMouth = async () => {
+        let data = await apiPost(
+            '/ElectricityFees/nextMonth',
+            {id: this.props.match.params.id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    // 确认开票（本金）
+    showBill = async () => {
         let Principal = await apiPost(
-            '/WaterBill/PrincipalBilling',
+            '/ElectricityFees/updatePrincipalPrincipalBilling',
             {id: this.props.match.params.id,
-                principalDamagesBilling: 1}
+                principalPrincipalBilling: 2}
+        )
+        notification.open({
+            message: Principal.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refresh()
+    }
+    // 确认违约金开票
+    showPenalBill = async () => {
+        let Principal = await apiPost(
+            '/ElectricityFees/updatePrincipalDamagesBilling',
+            {id: this.props.match.params.id,
+                principalPrincipalBilling: 2}
         )
         notification.open({
             message: Principal.data,
@@ -293,36 +329,35 @@ class CollectionPowerDetails extends React.Component {
                     }}
                     >
                         {feesInfo.principalPaymentStatus !== 1 &&
-                            <Button type="primary" style={{marginLeft: 20}} onClick={this.openPrincipalCollection}>确认收款</Button>
+                        <Button type="primary" style={{marginLeft: 20}} onClick={this.collectMoney}>确认收款</Button>
                         }
-                        {feesInfo.principalPrincipalBilling !== 1 && <Popconfirm title="确认开票吗?" onConfirm={this.PrincipalBilling}>
-                            <Button type="danger" style={dangerButtonStyle} >确认开票</Button>
+                        {feesInfo.principalPrincipalBilling === 2 &&
+                        <Popconfirm title="确认开票吗?" onConfirm={this.showBill}>
+                            <Button type="danger" style={dangerButtonStyle}>确认开票</Button>
                         </Popconfirm>
                         }
-                        {(feesInfo.liquidatedDamages > feesInfo.liquidatedDamagesReceived) &&
-                            <span>
-                                <Button type="primary" style={{marginLeft: 20}} >确认违约金收款</Button>
-                                {!this.state.ChargeRecord6.length > 0 &&
-                                <Popconfirm title="确认放入下月电费吗?" onConfirm={this.penalBilling}>
-                                    <a>放入下月电费</a>
-                                </Popconfirm>
-                                }
-                            </span>
+                        {feesInfo.principalPaymentStatus === 1 && feesInfo.defaultPaymentStatus !== 1 && feesInfo.liquidatedDamages > 0 &&
+                        <Popconfirm title="确认放入下月电费吗?" onConfirm={this.collectPenal} onCancel={this.putNextMouth} okText="实收违约金" cancelText="延期下月电费">
+                            <Button type="primary" style={{marginLeft: 20}} onClick={this.penalty}>确认违约金</Button>
+                        </Popconfirm>
                         }
-                        {feesInfo.principalDamagesBilling !== 1 &&
-                            <Popconfirm title="确认违约金开票?" onConfirm={this.DefaultBilling}>
-                                <Button type="danger" style={dangerButtonStyle} >确认违约金开票</Button>
-                            </Popconfirm>
+                        {feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
+                        <Popconfirm title="确认违约金开票?" onConfirm={this.showPenalBill}>
+                            <Button type="danger" style={dangerButtonStyle}>确认违约金开票</Button>
+                        </Popconfirm>
                         }
                     </div>
                 </div>
                 <PrincipalCollectionPower
-                    visible={this.state.openPrincipalCollection}
+                    visible={this.state.collectMoney}
                     id={this.state.id}
                     refresh={this.refresh}
-                >
-                    <Button type="primary" style={{marginLeft: 20}} onClick={this.openPrincipalCollection}>确认收款</Button>
-                </PrincipalCollectionPower>
+                />
+                <PrincipalCollectionPenal
+                    visible={this.state.collectPenal}
+                    id={this.state.id}
+                    refresh={this.refresh}
+                />
             </div>
         )
     }
