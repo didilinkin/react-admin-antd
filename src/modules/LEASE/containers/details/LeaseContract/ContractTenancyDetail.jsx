@@ -197,14 +197,6 @@ class App extends React.Component {
                                     终止合同
                                 </TerminationBtn>
                             }
-                            <style>
-                                {`
-                                    .termination :hover {
-                                        background-color: #FFF;
-                                        color: red;
-                                    }
-                                `}
-                            </style>
                         </ButtonBox>
                     </div>
                 </div>
@@ -225,8 +217,28 @@ const ButtonBox = styled.div `
 `
 
 const TerminationBtn = styled.button `
-    background-color: red;
     color: #FFF;
+    cursor: pointer;
+    border-radius: 4px;
+    user-select: none;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 12px;
+    line-height: 28px;
+    text-align: center;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #d9d9d9;
+    background-color: ${elf.c.danger};
+    margin-right: 8px;
+    font-family: Arial;
+    outline: 0;
+
+    &:hover {
+        background-color: #FFF;
+        color: red;
+    }
 `
 
 // background-color: ${props => props.active ? 'red' : 'yellow'}; // hover状态
