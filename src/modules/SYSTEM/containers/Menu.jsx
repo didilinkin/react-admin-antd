@@ -133,7 +133,7 @@ class MenuCom extends React.Component {
         let j = 0
         MenuList.forEach((menu) => {
             if (menu.parentId === i) {
-                arr[j] = <TreeNode title={<Button onClick={() => this.info(menu)} type={menu.menuType === 2 ? 'dashed' : menu.menuType === 3 ? 'primary' : null}>{menu.menuName}<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></Button>} key={menu.id} >
+                arr[j] = <TreeNode title={<Button onClick={() => this.info(menu)}><Icon type={menu.menuType === 2 ? 'file' : menu.menuType === 3 ? 'tag-o' : 'folder'} />{menu.menuName}<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></Button>} key={menu.id} >
                     {this.recursion(MenuList, menu.id)}
                 </TreeNode>
                 j = j + 1
@@ -184,7 +184,7 @@ class MenuCom extends React.Component {
                         defaultExpandAll
                         onSelect={this.onSelect}
                     >
-                        <TreeNode title={<Button>菜单结构<Icon type="caret-down" /></Button>} key="0-0">
+                        <TreeNode title={<Button><Icon type="folder" />菜单结构<Icon type="caret-down" /></Button>} key="0-0">
                             {this.recursion(this.state.MenuList, 3)}
                         </TreeNode>
                     </Tree>
