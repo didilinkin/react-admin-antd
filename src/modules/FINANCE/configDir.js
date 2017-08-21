@@ -94,6 +94,11 @@ const FINANCE_DETAILS = [
         key: 'PropertyFeeDetail',
         path: '/home/finance/propertyFeeDetails/PropertyFeeDetail/:id',
         component: require('./containers/details/PropertyFee/PropertyFeeDetail').default
+    }, {
+        title: '电费明细收款',
+        key: 'ElectricChargeDetails',
+        path: '/home/finance/electricChargeDetails/:id',
+        component: require('./containers/details/ElectricCharge/ElectricChargeDetails').default
     }
 ]
 
