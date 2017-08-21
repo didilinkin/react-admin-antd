@@ -5,15 +5,35 @@ import PrincipalCollectionPower from '../components/PrincipalCollectionPower'
 import PrincipalCollectionPenal from '../components/PrincipalCollectionPowerPenal'
 class CollectionPowerDetails extends React.Component {
     state = {
-        map: {
-            list: [],
-            receipt: [],
-            liquidatedDamagesList: [],
-            electricityFees: {}
-        },
+        list: [],
+        receipt: [],
+        liquidatedDamagesList: [],
+        electricityFees: {},
         mainColumns: [],
         collectMoney: false,
         collectPenal: false
+    }
+    // 添加合计行
+    addTotalColunm = () => {
+        let electricRecordlList = this.state.list
+        let sumElec = 0
+        let sumSingeMoney = 0
+        electricRecordlList.map((record) => {
+            if (record.sumElectricity) {
+                sumElec += record.sumElectricity
+                sumSingeMoney += (record.sumElectricity * record.unitPrice)
+            } else {
+                sumSingeMoney += Number(record.singleMoney)
+            }
+        })
+        let json = {}
+        json['roomNumberOne'] = '合计'
+        json['sumElectricity'] = sumElec
+        json['singleMoney'] = sumSingeMoney.toFixed(1)
+        electricRecordlList.push(json)
+        this.setState({
+            list: electricRecordlList
+        })
     }
     componentDidMount () {
         this.initialRemarks()
@@ -80,14 +100,13 @@ class CollectionPowerDetails extends React.Component {
             })
         }
         this.setState({
-            map: {
-                list: electricityFeeInfo.list,
-                receipt: electricityFeeInfo.receipt,
-                liquidatedDamagesList: electricityFeeInfo.liquidatedDamagesList,
-                electricityFees: electricityFeeInfo.electricityFees
-            },
+            list: electricityFeeInfo.list,
+            electricityFees: electricityFeeInfo.electricityFees,
+            receipt: electricityFeeInfo.receipt ? electricityFeeInfo.receipt : [],
+            liquidatedDamagesList: electricityFeeInfo.liquidatedDamagesList ? electricityFeeInfo.liquidatedDamagesList : [],
             mainColumns: mainColumn
         })
+        this.addTotalColunm()
     }
     collectMoney = () => {
         this.setState({
@@ -151,7 +170,7 @@ class CollectionPowerDetails extends React.Component {
         const lightGrayStyle = {
             color: '#989898'
         }
-        let feesInfo = this.state.map.electricityFees
+        let feesInfo = this.state.electricityFees
         return (
             <div>
                 <div>
@@ -209,7 +228,7 @@ class CollectionPowerDetails extends React.Component {
                     <div style={{marginTop: 10}}>
                         <Table
                             columns={this.state.mainColumns}
-                            dataSource={this.state.map.list}
+                            dataSource={this.state.list}
                             bordered
                             pagination={false}
                         />
@@ -320,8 +339,8 @@ class CollectionPowerDetails extends React.Component {
                     <ExamineSuccessState
                         stateChange={this.stateChange}
                         fees={feesInfo}
-                        receipt={this.state.map.receipt}
-                        liquidatedDamagesList={this.state.map.liquidatedDamagesList}
+                        receipt={this.state.receipt}
+                        liquidatedDamagesList={this.state.liquidatedDamagesList}
                     />
                     <hr style={{marginTop: 20}} />
                     <div style={{marginTop: 20,

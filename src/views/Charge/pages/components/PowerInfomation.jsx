@@ -4,12 +4,10 @@ import { apiPost } from '../../../../api/index'
 const RadioGroup = Radio.Group
 class PowerInfomation extends React.Component {
     state = {
-        map: {
-            list: [],
-            receipt: [],
-            liquidatedDamagesList: [],
-            electricityFees: {}
-        },
+        receipt: [],
+        liquidatedDamagesList: [],
+        electricityFees: {},
+        list: [],
         isFirst: true,
         visible: false,
         mainColumns: []
@@ -44,7 +42,12 @@ class PowerInfomation extends React.Component {
                 dataIndex: 'unitPrice'
             }, {
                 title: '金额',
-                dataIndex: 'singleMoney'
+                dataIndex: 'singleMoney',
+                render: function (text) {
+                    return (
+                        parseFloat(text).toFixed(1)
+                    )
+                }
             }, {
                 title: '备注',
                 dataIndex: 'remarks'
@@ -70,15 +73,38 @@ class PowerInfomation extends React.Component {
                 })
             }
             this.setState({
-                map: {
-                    list: electricityFeeInfo.list,
-                    electricityFees: electricityFeeInfo.electricityFees
-                },
+                list: electricityFeeInfo.list,
+                electricityFees: electricityFeeInfo.electricityFees,
+                receipt: electricityFeeInfo.receipt ? electricityFeeInfo.receipt : [],
+                liquidatedDamagesList: electricityFeeInfo.liquidatedDamagesList ? electricityFeeInfo.liquidatedDamagesList : [],
                 visible: nextProps.visible,
                 isFirst: false,
                 mainColumns: mainColumn
             })
+            this.addTotalColunm()
         }
+    }
+    // 添加合计行
+    addTotalColunm = () => {
+        let electricRecordlList = this.state.list
+        let sumElec = 0
+        let sumSingeMoney = 0
+        electricRecordlList.map((record) => {
+            if (record.sumElectricity) {
+                sumElec += record.sumElectricity
+                sumSingeMoney += (record.sumElectricity * record.unitPrice)
+            } else {
+                sumSingeMoney += Number(record.singleMoney)
+            }
+        })
+        let json = {}
+        json['roomNumberOne'] = '合计'
+        json['sumElectricity'] = sumElec
+        json['singleMoney'] = sumSingeMoney.toFixed(1)
+        electricRecordlList.push(json)
+        this.setState({
+            list: electricRecordlList
+        })
     }
     // props 更新
     componentWillReceiveProps (nextProps) {
@@ -129,7 +155,7 @@ class PowerInfomation extends React.Component {
         const lightGrayStyle = {
             color: '#989898'
         }
-        let fees = this.state.map.electricityFees
+        let fees = this.state.electricityFees
         return (
             <div>
                 <Modal maskClosable={false}
@@ -195,7 +221,7 @@ class PowerInfomation extends React.Component {
                         <div style={{marginTop: 10}}>
                             <Table
                                 columns={this.state.mainColumns}
-                                dataSource={this.state.map.list}
+                                dataSource={this.state.list}
                                 bordered
                                 pagination={false}
                             />
@@ -295,8 +321,8 @@ class PowerInfomation extends React.Component {
                             handleCancel={this.handleCancel}
                             financial = {this.props.Finance}
                             fees={fees}
-                            receipt={this.state.map.receipt}
-                            liquidatedDamagesList={this.state.map.liquidatedDamagesList}
+                            receipt={this.state.receipt}
+                            liquidatedDamagesList={this.state.liquidatedDamagesList}
                         />
                     </div>
                 </Modal>

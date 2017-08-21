@@ -86,7 +86,6 @@ class sumElectricityAddUp extends React.Component {
             })
             let list = JSON.stringify(elecList)
             json['list'] = list
-            console.log(json)
             if (this.props.id > 0) {
                 json['idOld'] = this.props.id
                 await apiPost(
@@ -113,31 +112,40 @@ class sumElectricityAddUp extends React.Component {
         let deleteRecord = this.deleteRecord
         let tableColumns = [{
             title: '电费名称',
-            dataIndex: 'electricCostName'
+            dataIndex: 'electricCostName',
+            key: 'electricCostName'
         }, {
             title: '房间编号',
-            dataIndex: 'roomNumberOne'
+            dataIndex: 'roomNumberOne',
+            key: 'roomNumberOne'
         }, {
             title: '上次抄表数',
-            dataIndex: 'lastSurfaceNumber'
+            dataIndex: 'lastSurfaceNumber',
+            key: 'lastSurfaceNumber'
         }, {
             title: '本次抄表数',
-            dataIndex: 'surfaceNumber'
+            dataIndex: 'surfaceNumber',
+            key: 'surfaceNumber'
         }, {
             title: '本次用电量',
-            dataIndex: 'needElectricity'
+            dataIndex: 'needElectricity',
+            key: 'needElectricity'
         }, {
             title: '变比',
-            dataIndex: 'ratio'
+            dataIndex: 'ratio',
+            key: 'ratio'
         }, {
             title: '总电量',
-            dataIndex: 'sumElectricity'
+            dataIndex: 'sumElectricity',
+            key: 'sumElectricity'
         }, {
             title: '单价(1.0685)',
-            dataIndex: 'unitPrice'
+            dataIndex: 'unitPrice',
+            key: 'unitPrice'
         }, {
             title: '金额',
             dataIndex: 'singleMoney',
+            key: 'singleMoney',
             render: function (text) {
                 return (
                     parseFloat(text).toFixed(2)
@@ -145,9 +153,11 @@ class sumElectricityAddUp extends React.Component {
             }
         }, {
             title: '备注',
-            dataIndex: 'remarks'
+            dataIndex: 'remarks',
+            key: 'remarks'
         }, {
             title: '操作',
+            key: 'done',
             render: function (text, record, index) {
                 return (
                     record.uuid ?
@@ -160,21 +170,25 @@ class sumElectricityAddUp extends React.Component {
             if (contract[powerType].toString() === '0') {
                 tableColumns.splice(6, 0, {
                     title: '电损0%',
-                    dataIndex: 'electricLoss'
+                    dataIndex: 'electricLoss',
+                    key: 'electricLoss'
                 })
             } else if (contract[powerType].toString() === '1') {
                 tableColumns.splice(6, 0, {
                     title: '电损' + contract.powerLossRatio + '%',
-                    dataIndex: 'electricLoss'
+                    dataIndex: 'electricLoss',
+                    key: 'electricLoss'
                 })
             } else {
                 tableColumns.splice(6, 0, {
                     title: '电损' + contract.powerLossRatio + '%',
-                    dataIndex: 'electricLoss'
+                    dataIndex: 'electricLoss',
+                    key: 'electricLoss'
                 })
                 tableColumns.splice(8, 0, {
                     title: '峰谷比例',
-                    dataIndex: 'valleysProportion'
+                    dataIndex: 'valleysProportion',
+                    key: 'valleysProportion'
                 })
                 // 查询峰谷比利
                 this.searchBili(contract.clientId)
@@ -256,7 +270,6 @@ class sumElectricityAddUp extends React.Component {
                 let list = map.data.list
                 list.map(record => {
                     record.uuid = uuid += 1
-                    console.log(record.uuid)
                 })
                 if (electricChargeInfo.differentialPrice || electricChargeInfo.difference) {
                     let balanceUUID = new Date().getTime()
@@ -468,7 +481,6 @@ class sumElectricityAddUp extends React.Component {
         } else {
             jsonTwo['electricCostName'] = json.electricCostName
         }
-        console.log(this.state.Contract)
         jsonTwo['surfaceType'] = this.state.Contract.powerType
         jsonTwo['unitPrice'] = json.unitPrice ? json.unitPrice : 0
         jsonTwo['needElectricity'] = (json.surfaceNumber - json.lastSurfaceNumber) ? json.surfaceNumber - json.lastSurfaceNumber : 0
