@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionTypes'
 
-export cosnt signIn = auth => (dispatch, getState) => {
+export const signIn = auth => (dispatch, getState) => {
     dispatch({
         type: types.SIGN_IN
     })
