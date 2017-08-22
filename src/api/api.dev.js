@@ -18,6 +18,7 @@ export const apiGet = (url) => {
                 if (resulData.data !== null && resulData.data !== '') {
                     if (resulData.data.toString() === '登录过期') {
                         localStore.remove('token')
+                        localStore.remove('PermissionsList')
                         window.location.href = '/login'
                     } else {
                         resolve(resulData)
@@ -45,6 +46,7 @@ export const apiPost = (url, configObj) => {
                 if (resulData.data !== null && resulData.data !== '') {
                     if (resulData.data.toString() === '登录过期') {
                         localStore.remove('token')
+                        localStore.remove('PermissionsList')
                         window.location.href = '/login'
                     } else {
                         resolve(resulData)

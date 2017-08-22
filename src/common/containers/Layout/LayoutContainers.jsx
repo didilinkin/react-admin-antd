@@ -68,6 +68,7 @@ const LogoBox = styled.div `
     width: 100%;
     object-fit: cover;
 `
+// let switchingValue = 1
 
 class LayoutContainers extends React.Component {
     state = {
@@ -79,10 +80,11 @@ class LayoutContainers extends React.Component {
             collapsed: !this.state.collapsed
         })
     }
-
+    // shouldComponentUpdate (nextProps, nextState) {
+    //     return false
+    // }
     render () {
         const { route } = this.props
-
         return (
             <Layout
                 style={{
