@@ -115,6 +115,7 @@ class UserAddUp extends React.Component {
             visible: false,
             isFirst: true
         })
+        this.props.refresh('cancel')
     }
     confirm = () => {
         let passWord = this.props.form.getFieldValue('passWord')

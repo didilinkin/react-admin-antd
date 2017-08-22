@@ -43,6 +43,11 @@ class MenuCom extends React.Component {
             <a onClick={() => this.deleteMenu()}>删除菜单</a>
         </Menu.Item>
     </Menu>
+    CaidanTwo = <Menu>
+        <Menu.Item key="1">
+            <a onClick={() => this.updateState(3)}>添加下级目录</a>
+        </Menu.Item>
+    </Menu>
     deleteMenu = async () => {
         let data = await apiPost(
             'system/deleteMenu',
@@ -133,7 +138,7 @@ class MenuCom extends React.Component {
         let j = 0
         MenuList.forEach((menu) => {
             if (menu.parentId === i) {
-                arr[j] = <TreeNode title={<Button onClick={() => this.info(menu)} type={menu.menuType === 2 ? 'dashed' : menu.menuType === 3 ? 'primary' : null}>{menu.menuName}<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></Button>} key={menu.id} >
+                arr[j] = <TreeNode title={<Button onClick={() => this.info(menu)}><Icon type={menu.menuType === 2 ? 'file' : menu.menuType === 3 ? 'tag-o' : 'folder'} />{menu.menuName}<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></Button>} key={menu.id} >
                     {this.recursion(MenuList, menu.id)}
                 </TreeNode>
                 j = j + 1
@@ -184,7 +189,7 @@ class MenuCom extends React.Component {
                         defaultExpandAll
                         onSelect={this.onSelect}
                     >
-                        <TreeNode title={<Button>菜单结构<Icon type="caret-down" /></Button>} key="0-0">
+                        <TreeNode title={<Button><Icon type="folder" />菜单结构<Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, 3)} type="caret-down" /></Dropdown></Button>} key="0-0">
                             {this.recursion(this.state.MenuList, 3)}
                         </TreeNode>
                     </Tree>

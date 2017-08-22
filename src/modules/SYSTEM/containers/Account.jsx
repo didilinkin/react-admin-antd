@@ -154,9 +154,16 @@ class Account extends React.Component {
             id: 0
         })
     }
-    query = () => {
-        let json = this.props.form.getFieldsValue()
-        this.refresh(json)
+    query = (value) => {
+        if (value === 'cancel') {
+            this.setState({
+                open: false,
+                id: 0
+            })
+        } else {
+            let json = this.props.form.getFieldsValue()
+            this.refresh(json)
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form

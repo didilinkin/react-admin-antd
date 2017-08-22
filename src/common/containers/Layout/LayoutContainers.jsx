@@ -11,8 +11,33 @@ import TabsBox from './TabsBox'
 
 // Antd 布局组件
 import { Layout } from 'antd' // Icon
+// import { Layout, Modal, Input } from 'antd' // Icon
 const { Header, Sider } = Layout // Sider
-
+// let num = 1
+// let timer = (num2) => setTimeout(
+//     () => {
+//         if (num2 === num) {
+//             Modal.info({
+//                 title: '你已经有五分钟没有操作了,请输入密码后在操作！',
+//                 content: (
+//                     <div>
+//                         <span>密码</span><Input />
+//                     </div>
+//                 ),
+//                 onOk () {
+//                     alert('验证成功')
+//                 },
+//                 okText: '确定'
+//             })
+//         }
+//     },
+//     30000
+// )
+// window.onmousemove = () => {
+//     num = num + 1
+//     let num2 = num
+//     timer(num2)
+// }
 // 负责 渲染传递进来的 compObj
 const RouteWithSubRoutes = (route) => (
     <Route path={ route.path } render={ props => (
@@ -43,6 +68,7 @@ const LogoBox = styled.div `
     width: 100%;
     object-fit: cover;
 `
+// let switchingValue = 1
 
 class LayoutContainers extends React.Component {
     state = {
@@ -54,10 +80,11 @@ class LayoutContainers extends React.Component {
             collapsed: !this.state.collapsed
         })
     }
-
+    // shouldComponentUpdate (nextProps, nextState) {
+    //     return false
+    // }
     render () {
         const { route } = this.props
-
         return (
             <Layout
                 style={{
