@@ -45,6 +45,7 @@ class HydropowerContractAddition extends React.Component {
             }
             if (json.powerType.toString() === '0') {
                 json['powerUnitPrice'] = json.powerUnitPrice1
+                json['powerRatio'] = json.biaobi
             } else if (json.powerType.toString() === '1') {
                 json['powerUnitPrice'] = json.powerUnitPrice2
                 json['powerRatio'] = json.biaobi1
@@ -136,6 +137,7 @@ class HydropowerContractAddition extends React.Component {
                     sunhao2: contract.powerType === 2 ? contract.powerLossRatio : null,
                     biaobi1: contract.powerType === 1 ? contract.powerRatio : null,
                     biaobi2: contract.powerType === 2 ? contract.powerRatio : null,
+                    biaobi: contract.powerType === 0 ? contract.powerRatio : null,
                     roomIds: contract.roomIds,
                     clientId: contract.clientId
                 })
@@ -464,6 +466,15 @@ class HydropowerContractAddition extends React.Component {
                                             <Input style={{ width: 140,
                                                 marginLeft: '10px',
                                                 display: this.props.form.getFieldValue('powerType') !== 0 && 'none'}} addonAfter="元／㎡"
+                                            />
+                                        )}
+                                        {getFieldDecorator('biaobi',
+                                            {
+                                                initialValue: this.state.MapDict.ratio
+                                            })(
+                                            <Input style={{ width: 140,
+                                                marginLeft: '10px',
+                                                display: this.props.form.getFieldValue('powerType') !== 0 && 'none'}} addonAfter="变比"
                                             />
                                         )}
                                     </Radio><br />
