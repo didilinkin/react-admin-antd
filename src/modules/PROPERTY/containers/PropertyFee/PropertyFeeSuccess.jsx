@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Spin } from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 import AllPaidComponent from '../details/PropertyFee/PropertyDetail'
@@ -17,6 +17,10 @@ class PropertyFeeSuccess extends Component {
             columns: [],
             id: null,
             dataSource: [],
+            total: 0,
+            page: 1,
+            rows: 30,
+            auditStatus: 2,
             ListBuildingInfo: []
         }
     }
@@ -44,10 +48,13 @@ class PropertyFeeSuccess extends Component {
         )
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {auditStatus: 2}
+            {auditStatus: this.state.auditStatus,
+                page: this.state.page,
+                rows: this.state.rows}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -165,13 +172,16 @@ class PropertyFeeSuccess extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['auditStatus'] = 2
         // 刷新表格
         let result = await apiPost(
@@ -182,29 +192,38 @@ class PropertyFeeSuccess extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data
+            dataSource: result.rows,
+            total: result.total
         })
     }
     clientName = null
     entryNameOnChange = (e) => {
         this.clientName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
+    onChange = (page, pageSize) => {
+        this.setState({
+            page: page
+        })
+    }
+    onSizeChange = (current, size) => {
+        this.setState({
+            rows: size
+        })
     }
     query = () => {
         this.refresh()
     }
+
     render () {
         return (
             <div>
                 <PropertyFeeHeadComponent
                     refresh={this.refresh}
+                    type={2}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
                 <AllPaidComponent
@@ -215,11 +234,27 @@ class PropertyFeeSuccess extends Component {
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh()}
                         scroll={{ x: 2000 }}
                         bordered
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: this.state.rows}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
+                    {/* <Pagination
+                        showQuickJumper
+                        showSizeChanger
+                        defaultCurrent={1}
+                        pageSizeOptions={['15', '30', '45']}
+                        defaultPageSize={this.state.rows}
+                        total={this.state.total}
+                        onShowSizeChange={this.onSizeChange}
+                        onChange={this.onChange}
+                    />*/}
                 </Spin>
             </div>
         )

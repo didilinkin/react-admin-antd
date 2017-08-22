@@ -98,7 +98,7 @@ class PropertyDetail extends React.Component {
         let chargeList2 = this.state.data3
         return (
             <Modal maskClosable={false}
-                title= "租金明细"
+                title= "物业费明细"
                 style={{top: 10}}
                 width={900}
                 visible={this.state.visible}
@@ -151,7 +151,7 @@ class PropertyDetail extends React.Component {
                                 <td>*</td>
                                 <td>{this.state.data.pmUnitPrice}</td>
                                 <td>*</td>
-                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.months}</td>
                                 <td>{this.state.data.pmFee}</td>
                             </tr>
                             <tr>
@@ -160,7 +160,7 @@ class PropertyDetail extends React.Component {
                                 <td>*</td>
                                 <td>{this.state.data.elevUnitPrice}</td>
                                 <td>*</td>
-                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.months}</td>
                                 <td>{this.state.data.elevatorFee}</td>
                             </tr>
                             <tr>
@@ -178,7 +178,7 @@ class PropertyDetail extends React.Component {
                                 <td>*</td>
                                 <td>{this.state.data.waterUnitPrice}</td>
                                 <td>*</td>
-                                <td>{this.state.monthDay}</td>
+                                <td>{this.state.data.months}</td>
                                 <td>{this.state.data.waterFee}</td>
                             </tr>
                         </tbody>

@@ -477,7 +477,7 @@ class propertyFeeAdd extends React.Component {
         })
     }
     handleCancel = (e) => {
-        this.props.close()
+        // this.props.close()
         this.setState({ visible: false,
             isFirst: true})
     }

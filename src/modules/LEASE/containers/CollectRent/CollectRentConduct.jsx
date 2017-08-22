@@ -1,6 +1,6 @@
 // 收费管理 - 审核中
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin, Input, Select, Pagination} from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentConductComponent from '../details/CollectRent/RentReviewDetail'
 // 引入组件
@@ -15,6 +15,9 @@ class CollectRentConduct extends Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -31,13 +34,16 @@ class CollectRentConduct extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {auditStatus: 1}
+            {auditStatus: 1,
+                page: this.state.page,
+                rows: this.state.rows}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -114,7 +120,7 @@ class CollectRentConduct extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.rows
         })
     }
     componentDidMount () {
@@ -128,6 +134,8 @@ class CollectRentConduct extends Component {
                 'rentClientName': this.rentClientName,
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
+                'page': this.state.page,
+                'rows': this.state.rows,
                 'auditStatus': 1
             }
         )
@@ -135,7 +143,8 @@ class CollectRentConduct extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.rows,
+            total: result.total,
             id: 0
         })
     }
@@ -147,23 +156,35 @@ class CollectRentConduct extends Component {
             openUpdate: false
         })
     }
-    rentClientName = ''
+    rentClientName = null
     entryNameOnChange = (e) => {
         this.rentClientName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
     }
-    periodStatus = ''
+    periodStatus = null
     selectOnChange = (e) => {
         this.periodStatus = e
     }
     query = () => {
+        this.refresh()
+    }
+    onChange = (page, pageSize) => {
+        this.setState({
+            page: page
+        })
+        this.refresh()
+    }
+    onSizeChange = (current, size) => {
+        this.setState({
+            rows: size
+        })
         this.refresh()
     }
     render () {
@@ -223,9 +244,11 @@ class CollectRentConduct extends Component {
                     <Table
                         scroll={{ x: 1500 }}
                         bordered
+                        pagination={false}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
+                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={[15, 30, 45]} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )

@@ -1,6 +1,6 @@
 // 收费管理 - 审核失败
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select, Icon, notification, Popconfirm} from 'antd'
+import {Table, Button, Spin, Input, Select, Icon, notification, Popconfirm, Pagination} from 'antd'
 import { apiPost } from '../../../../api'
 import CollectRentFailComponent from '../details/PropertyFee/PropertyDetail'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
@@ -17,6 +17,9 @@ class PropertyFeeFail extends Component {
             openUpdate: false,
             columns: [],
             id: null,
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -72,6 +75,7 @@ class PropertyFeeFail extends Component {
         const handleUpdate2 = this.handleUpdate2
         const handleDelete = this.handleDelete
         this.setState({loading: false,
+            total: result.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -147,7 +151,7 @@ class PropertyFeeFail extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.rows
         })
     }
     componentDidMount () {
@@ -161,6 +165,8 @@ class PropertyFeeFail extends Component {
                 'roomNum': this.roomNum,
                 'buildId': this.buildId,
                 'contractStatus': 0,
+                'page': this.state.page,
+                'rows': this.state.rows,
                 'auditStatus': 3
             }
         )
@@ -168,26 +174,35 @@ class PropertyFeeFail extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data
+            dataSource: result.rows,
+            total: result.total
         })
     }
     clientName = null
     entryNameOnChange = (e) => {
         this.clientName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
     }
     query = () => {
+        this.refresh()
+    }
+    onChange = (page, pageSize) => {
+        this.setState({
+            page: page
+        })
+        this.refresh()
+    }
+    onSizeChange = (current, size) => {
+        this.setState({
+            rows: size
+        })
         this.refresh()
     }
     render () {
@@ -239,9 +254,11 @@ class PropertyFeeFail extends Component {
                     <Table
                         scroll={{ x: 1500 }}
                         bordered
+                        pagination={false}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
+                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={[15, 30, 45]} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )

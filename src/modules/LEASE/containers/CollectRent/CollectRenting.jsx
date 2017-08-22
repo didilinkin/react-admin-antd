@@ -1,6 +1,6 @@
 // 收费管理 - 待收租
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Button, Spin, Input, Select, Pagination} from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentConductComponent from '../details/CollectRent/PaidConfirm'
 // 引入组件
@@ -17,6 +17,9 @@ class CollectRenting extends Component {
             openUpdate: false,
             AccountList: [],
             columns: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: [],
             id: 0
@@ -35,13 +38,16 @@ class CollectRenting extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/collectRent/rentingList',
-            {auditStatus: 0}
+            {auditStatus: 0,
+                page: this.state.page,
+                rows: this.state.rows}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -123,19 +129,21 @@ class CollectRenting extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (size, page) => {
         // 刷新表格
         let result = await apiPost(
             '/collectRent/rentingList',
             {'periodStatus': this.periodStatus,
                 'rentClientName': this.rentClientName,
                 'roomNum': this.roomNum,
+                'page': page,
+                'rows': size,
                 'buildId': this.buildId,
                 'auditStatus': 0
             }
@@ -145,7 +153,31 @@ class CollectRenting extends Component {
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.rows,
+            total: result.total,
+            id: 0
+        })
+    }
+    refresh1 = async () => {
+        // 刷新表格
+        let result = await apiPost(
+            '/collectRent/rentingList',
+            {'periodStatus': this.periodStatus,
+                'rentClientName': this.rentClientName,
+                'roomNum': this.roomNum,
+                'page': this.state.page,
+                'rows': this.state.rows,
+                'buildId': this.buildId,
+                'auditStatus': 0
+            }
+        )
+        this.setState({
+            openAdd: false,
+            opendispatch: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            dataSource: result.rows,
+            total: result.total,
             id: 0
         })
     }
@@ -157,24 +189,36 @@ class CollectRenting extends Component {
             openUpdate: false
         })
     }
-    rentClientName = ''
+    rentClientName = null
     entryNameOnChange = (e) => {
         this.rentClientName = e.target.value
     }
-    roomNum = ''
+    roomNum = null
     entryNumberOnChange = (e) => {
         this.roomNum = e.target.value
     }
-    periodStatus = ''
+    periodStatus = null
     selectOnChange = (e) => {
         this.periodStatus = e
     }
-    buildId = ''
+    buildId = null
     selectBuild = (e) => {
         this.buildId = e
     }
     query = () => {
-        this.refresh()
+        this.refresh1()
+    }
+    onChange = (page, pageSize) => {
+        this.setState({
+            page: page
+        })
+        this.refresh(this.state.rows, page)
+    }
+    onSizeChange = (current, size) => {
+        this.setState({
+            rows: size
+        })
+        this.refresh(size, this.state.page)
     }
     render () {
         let ListBuildingInfo = this.state.ListBuildingInfo
@@ -234,9 +278,11 @@ class CollectRenting extends Component {
                     <Table
                         scroll={{ x: 1500 }}
                         bordered
+                        pagination={false}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
+                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={['15', '30', '45']} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )

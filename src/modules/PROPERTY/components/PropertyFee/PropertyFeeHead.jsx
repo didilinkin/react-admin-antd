@@ -1,5 +1,7 @@
-import {Form, Select, Input, Button, Row, Col, DatePicker } from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
+import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
+import { apiPost } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -10,12 +12,19 @@ class CollectRentHead extends React.Component {
         super(props)
         this.state = {
             open: '展开',
-            none: 'none'
+            none: 'none',
+            openPropertyAdd: false
         }
     }
     // 清除
     handleReset = () => {
         this.props.form.resetFields()
+    }
+    // 弹出框设置
+    showModal = () => {
+        this.setState({
+            openPropertyAdd: true
+        })
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
@@ -59,50 +68,64 @@ class CollectRentHead extends React.Component {
             this.endDate = dateString[1]
         }
     }
+    BatchAuditPropertyFee = async () => {
+        await apiPost(
+            '/propertyFee/BatchAuditProperty',
+            {ids: this.props.RowKeys.toString(),
+                auditStatus: 1}
+        )
+        notification.open({
+            message: '提交成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.handleSubmit()
+    }
     render () {
         const { getFieldDecorator } = this.props.form
-        let {ListBuildingInfo} = this.props
+        let { type, ListBuildingInfo} = this.props
         return (
-            <Form layout="horizontal">
-                <Row>
-                    <Col span={8}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('buildId')(
-                                <Select
-                                    showSearch
-                                    allowClear
-                                    style={{ width: 200 }}
-                                    placeholder="请选择所属楼宇"
-                                    optionFilterProp="children"
-                                >
-                                    {ListBuildingInfo.map(BuildingInfo => {
-                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                    })}
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('clientName')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                </Row>
+            <div>
+                <Form layout="horizontal">
+                    <Row>
+                        <Col span={8}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('buildId')(
+                                    <Select
+                                        showSearch
+                                        allowClear
+                                        style={{ width: 200 }}
+                                        placeholder="请选择所属楼宇"
+                                        optionFilterProp="children"
+                                    >
+                                        {ListBuildingInfo.map(BuildingInfo => {
+                                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('clientName')(
+                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={8}>
+                            <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('roomNum')(
+                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="开票状态" labelCol={{ span: 6 }}
@@ -159,7 +182,8 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
+                    {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="查询类型" labelCol={{ span: 6 }}
@@ -186,15 +210,32 @@ class CollectRentHead extends React.Component {
                             <RangePicker onChange={this.getDate} />
                         </FormItem>
                     </Col>
-                </Row>
-                <Row>
-                    <Col span={16} />
-                    <Col span={8}>
-                        <div style={{paddingLeft: '25%',
-                            marginBottom: 10}}
-                        ><Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
-                </Row>
-            </Form>
+                </Row>}
+                    <Row>
+                        <Col span={16} />
+                        <Col span={8}>
+                            <div style={{paddingLeft: '25%',
+                                marginBottom: 10}}
+                            >
+                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                                {type === 2 &&
+                                <Button onClick={this.handleReset}>清除</Button>}&nbsp;&nbsp;
+                                {type === 2 &&
+                                <Button onClick={this.open}>{this.state.open}</Button>}
+                                {type === 0 &&
+                            <Button type="primary" onClick={this.showModal}>收物业费</Button>}
+                                {type === 0 &&
+                            <Button type="primary" onClick={this.BatchAuditPropertyFee}>批量提交</Button>}
+                            </div>
+                        </Col>
+                    </Row>
+                </Form>
+                <PropertyAddComponent
+                    id={null}
+                    refreshTable={this.handleSubmit}
+                    visible={this.state.openPropertyAdd}
+                />
+            </div>
         )
     }
 }
