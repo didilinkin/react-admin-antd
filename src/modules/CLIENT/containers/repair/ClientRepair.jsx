@@ -13,6 +13,8 @@ class ClientRepair extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            total: 0,
+            current: 1,
             loading: false,
             openinvalid: false,
             opendispatch: false,
@@ -73,13 +75,14 @@ class ClientRepair extends Component {
             'upkeep/repairList',
             {repairStatus: 0}
         )
-        let repairList = result.data
+        let repairList = result.data.rows
         const distributeLeaflets = this.distributeLeaflets
         const handleUpdate = this.handleUpdate
         const handleUpdateRepair = this.handleUpdateRepair
         const maintenanceProject = this.maintenanceProject
         const info = this.info
         this.setState({loading: false,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -211,22 +214,34 @@ class ClientRepair extends Component {
         if (typeof (sorter) !== 'undefined' && typeof (sorter.order) !== 'undefined') {
             order = sorter.columnKey + ' ' + sorter.order.substring(0, sorter.order.length - 3)
         }
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['startDate'] = this.startDate
+        filters['endDate'] = this.endDate
+        filters['clientName'] = this.clientName
+        filters['repairStatus'] = 0
+        filters['order'] = order
+        if (pagination === null || typeof (pagination) === 'undefined') {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             'upkeep/repairList',
-            {'startDate': this.startDate,
-                'endDate': this.endDate,
-                'clientName': this.clientName,
-                'repairStatus': 0,
-                'order': order
-            }
+            filters
         )
         this.setState({
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             openinvalid: false,
             opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             openMaintenanceProject: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
             id: 0
         })
     }
@@ -303,6 +318,12 @@ class ClientRepair extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
                         scroll={{ x: 1850 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
