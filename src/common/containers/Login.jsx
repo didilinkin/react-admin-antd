@@ -60,13 +60,14 @@ class Login extends React.Component {
             console.log(json)
             let token = await apiPost('/login',
                 json)
-            if (token.data.toString() === '登陆失败') {
+            if (typeof (token.data.eorr) !== 'undefined' && token.data.eorr.toString() === '登陆失败') {
                 notification.open({
                     message: '登陆失败',
                     Icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
                 })
             } else {
-                localStorage.setItem('token', token.data)
+                localStorage.setItem('token', token.data.token)
+                localStorage.setItem('PermissionsList', JSON.stringify(token.data.list))
                 window.location.href = '/home/index'
             }
         }

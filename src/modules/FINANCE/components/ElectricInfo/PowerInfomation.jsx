@@ -118,7 +118,7 @@ class PowerInfomation extends React.Component {
             isFirst: true,
             visible: false
         })
-        if (this.props.Finance > 0 && this.state.map.electricityFees.examineState === 1) {
+        if (this.props.Finance > 0 && this.state.electricityFees.examineState === 1) {
             let data = await apiPost(
                 '/ElectricityFees/updateAudit',
                 {id: this.props.id,

@@ -23,9 +23,8 @@ class TabsContainers extends React.Component {
     // 切换面板的回调 => 切换 state.activeKey
     onChange = (activeKey) => {
         let currentKey
-        let currentIndex
+        let currentIndex = 0
         let currentUrl
-
         this.state.panes.forEach((pane, i) => {
             if (pane.key === activeKey) {
                 currentIndex = i

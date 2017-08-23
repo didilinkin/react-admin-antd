@@ -4,6 +4,7 @@ import Link from 'react-router-redux-dom-link'
 
 import styled from 'styled-components'
 import elf from '../../../elf'
+import localStore from '../../../utils/LocalStore' // LS操作统一使用此方法
 
 import globalDir from '../../../utils/globalDir'
 
@@ -131,11 +132,25 @@ class SiderContainers extends React.Component {
             )
         }
     }
+    jurisdiction = (itemChildRoute) => {
+        let PermissionsList = localStore.get('PermissionsList')
+        let existence = false
+        PermissionsList.forEach(Permissions => {
+            if (Permissions.permissionCode.toString() === itemChildRoute.key.toString()) {
+                existence = true
+            }
+        })
+        return existence
+    }
 
     render () {
         const renderMenu = globalDir.map((childItem) => {
             if (this.hasChildRoute(childItem)) {
+                // if (this.jurisdiction(childItem)) {
                 return this.renderChildRoute(childItem)
+                // } else {
+                //     return null
+                // }
             } else {
                 return (
                     <Menu.Item key={childItem.key}>

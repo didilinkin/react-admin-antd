@@ -5,8 +5,8 @@ const qs = require('qs')
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
-axios.defaults.baseURL = 'http://192.168.5.8:18082/'
-export const baseURL = 'http://192.168.5.8:18082/'
+axios.defaults.baseURL = 'http://192.168.5.250:18082/'
+export const baseURL = 'http://192.168.5.250:18082/'
 
 // 查询
 export const apiGet = (url) => {
@@ -18,10 +18,13 @@ export const apiGet = (url) => {
                 if (resulData.data !== null && resulData.data !== '') {
                     if (resulData.data.toString() === '登录过期') {
                         localStore.remove('token')
+                        localStore.remove('PermissionsList')
                         window.location.href = '/login'
                     } else {
                         resolve(resulData)
                     }
+                } else {
+                    resolve(resulData)
                 }
             }
         ).catch(error => {
@@ -43,10 +46,13 @@ export const apiPost = (url, configObj) => {
                 if (resulData.data !== null && resulData.data !== '') {
                     if (resulData.data.toString() === '登录过期') {
                         localStore.remove('token')
+                        localStore.remove('PermissionsList')
                         window.location.href = '/login'
                     } else {
                         resolve(resulData)
                     }
+                } else {
+                    resolve(resulData)
                 }
             }
         ).catch(error => {
