@@ -11,6 +11,8 @@ class ChargeWaterBill extends React.Component {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             columns1: [],
             columns2: [],
             columns3: [],
@@ -27,49 +29,31 @@ class ChargeWaterBill extends React.Component {
             id: 0
         }
     }
+    activeKey = 1
     refreshTwo = async (activeKey) => {
-        this.setState({loading: true,
-            openWaterAddUpComponent: false,
-            openInfo: false})
-        let result = await apiPost(
-            '/WaterBill/WaterBillList'
-        )
-        let WaterBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
-            }
-            return ''
-        })
-        this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4,
-            openWaterAddUpComponent: false,
-            order: activeKey ? activeKey : 1
-        })
+        this.activeKey = activeKey
+        this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openInfo: false,
             openWaterAddUpComponent: false})
+        console.log(this.activeKey)
+        filters['examineState'] = this.activeKey === '1' ? 0 :
+            this.activeKey === '2' ? 1 :
+                this.activeKey === '4' ? 2 : 3
+        if (pagination === null) {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters
         )
-        let WaterBillList = result.data
+        let WaterBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -88,10 +72,13 @@ class ChargeWaterBill extends React.Component {
         })
         this.setState({
             loading: false,
+            current: pagination ? pagination.current : 1,
+            total: result.data.total,
             dataSource1: dataSource1,
             dataSource2: dataSource2,
             dataSource3: dataSource3,
-            dataSource4: dataSource4
+            dataSource4: dataSource4,
+            order: this.activeKey
         })
     }
     openWaterAddUpComponent = (id) => {
@@ -135,11 +122,12 @@ class ChargeWaterBill extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
+            {examineState: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
         )
-        let WaterBillList = result.data
+        let WaterBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -162,6 +150,7 @@ class ChargeWaterBill extends React.Component {
         let deleteWater = this.deleteWater
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             loading: false,
             dataSource1: dataSource1,
             dataSource2: dataSource2,
@@ -454,6 +443,13 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            refresh={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
                             // onChange={this.refresh}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
@@ -478,6 +474,13 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
                             // onChange={this.refresh}
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
@@ -496,6 +499,13 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
                             // onChange={this.refresh}
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
@@ -514,6 +524,13 @@ class ChargeWaterBill extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
                             // onChange={this.refresh}
                             scroll={{ x: 1450 }}
                             dataSource={this.state.dataSource4}

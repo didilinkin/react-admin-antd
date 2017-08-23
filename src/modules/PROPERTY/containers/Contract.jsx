@@ -13,6 +13,8 @@ class PropertyContract extends React.Component {
             type: 1,
             id: 0,
             columns: [],
+            total: 0,
+            current: 1,
             dataSource: [],
             map: {
                 ListBuildingInfo: [],
@@ -56,11 +58,12 @@ class PropertyContract extends React.Component {
         let ListBuildingInfo = await apiPost(
             '/contract/ListBuildingInfo'
         )
-        let repairList = result.data
+        let repairList = result.data.rows
         let updatePm = this.updatePm
         let info = this.info
         this.setState({loading: false,
             map: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -168,12 +171,21 @@ class PropertyContract extends React.Component {
             filters = []
         }
         filters['type'] = this.state.type
+        if (pagination === null) {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             '/contract/contractlist',
             filters
         )
         this.setState({
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             type: filters['type'],
             PropertyContractAddedComOpen: false,
             HydropowerContractAdditionComOpen: false,
@@ -213,6 +225,12 @@ class PropertyContract extends React.Component {
                         onChange={this.refresh}
                         scroll={{ x: 1300 }}
                         bordered
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
