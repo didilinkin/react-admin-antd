@@ -7,6 +7,8 @@ class ReturnVisit extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            total: 0,
+            current: 1,
             loading: false,
             columns: [],
             dataSource: [],
@@ -23,6 +25,7 @@ class ReturnVisit extends React.Component {
         )
         let info = this.info
         this.setState({
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -114,26 +117,38 @@ class ReturnVisit extends React.Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
         // 刷新表格
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['startDate'] = this.startDate
+        filters['endDate'] = this.endDate
+        filters['clientName'] = this.clientName
+        filters['type'] = 2
+        if (pagination === null || typeof (pagination) === 'undefined') {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             'upkeep/repairList',
-            {'startDate': this.startDate,
-                'endDate': this.endDate,
-                'clientName': this.clientName,
-                'type': 2
-            }
+            filters
         )
         this.setState({
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             loading: false,
             id: 0,
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     startDate = ''
@@ -171,6 +186,13 @@ class ReturnVisit extends React.Component {
                     <Table
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
+                        onChange={this.refresh}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
                     />
                 </Spin>
             </div>
