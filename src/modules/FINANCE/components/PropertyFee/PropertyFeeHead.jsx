@@ -49,8 +49,8 @@ class CollectRentHead extends React.Component {
             })
         }
     }
-    startDate = ''
-    endDate = ''
+    startDate = null
+    endDate = null
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
         if (dateString[1] > 0) {
@@ -61,7 +61,7 @@ class CollectRentHead extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let {ListBuildingInfo} = this.props
+        let {type, ListBuildingInfo} = this.props
         return (
             <Form layout="horizontal">
                 <Row>
@@ -103,6 +103,7 @@ class CollectRentHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="开票状态" labelCol={{ span: 6 }}
@@ -159,7 +160,8 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="查询类型" labelCol={{ span: 6 }}
@@ -186,14 +188,19 @@ class CollectRentHead extends React.Component {
                             <RangePicker onChange={this.getDate} />
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
                 <Row>
                     <Col span={16} />
                     <Col span={8}>
                         <div style={{paddingLeft: '25%',
                             marginBottom: 10}}
                         >
-                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                            <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
+                            {type === 2 &&
+                            <Button onClick={this.open}>{this.state.open}</Button>}
+                        </div>
+                    </Col>
                 </Row>
             </Form>
         )

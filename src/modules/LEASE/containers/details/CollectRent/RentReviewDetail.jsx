@@ -34,6 +34,7 @@ class RentDetail extends React.Component {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     async initialRemarks (nextProps) {
         this.setState({

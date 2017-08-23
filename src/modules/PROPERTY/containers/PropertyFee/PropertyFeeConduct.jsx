@@ -47,7 +47,6 @@ class PropertyFeeConduct extends Component {
             '/propertyFee/propertyFeeList',
             {auditStatus: 1,
                 page: this.state.page,
-                rows: this.state.rows,
                 contractStatus: 0}
         )
         let ListBuildingInfo = await apiPost(
@@ -55,7 +54,7 @@ class PropertyFeeConduct extends Component {
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
-            total: result.total,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -112,7 +111,7 @@ class PropertyFeeConduct extends Component {
                     )
                 }
             }],
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
@@ -123,6 +122,17 @@ class PropertyFeeConduct extends Component {
             filters = []
         }
         filters['auditStatus'] = 1
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -132,7 +142,7 @@ class PropertyFeeConduct extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     query = () => {
@@ -172,6 +182,7 @@ class PropertyFeeConduct extends Component {
                             showSizeChanger: true,
                             showQuickJumper: true,
                             pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
                             defaultPageSize: this.state.rows}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

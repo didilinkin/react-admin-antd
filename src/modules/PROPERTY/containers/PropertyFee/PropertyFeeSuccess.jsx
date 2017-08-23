@@ -17,6 +17,7 @@ class PropertyFeeSuccess extends Component {
             columns: [],
             id: null,
             dataSource: [],
+            RowKeys: [],
             total: 0,
             page: 1,
             rows: 30,
@@ -49,12 +50,11 @@ class PropertyFeeSuccess extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: this.state.auditStatus,
-                page: this.state.page,
-                rows: this.state.rows}
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
-            total: result.total,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -172,17 +172,29 @@ class PropertyFeeSuccess extends Component {
                     )
                 }
             }],
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        console.log(pagination)
         if (typeof (filters) === 'undefined') {
             filters = []
         }
         filters['auditStatus'] = 2
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -192,36 +204,24 @@ class PropertyFeeSuccess extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows,
-            total: result.total
-        })
-    }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    onChange = (page, pageSize) => {
-        this.setState({
-            page: page
-        })
-    }
-    onSizeChange = (current, size) => {
-        this.setState({
-            rows: size
+            dataSource: result.data.rows,
+            total: result.data.total
         })
     }
     query = () => {
         this.refresh()
     }
-
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
         return (
             <div>
                 <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
                     refresh={this.refresh}
                     type={2}
                     ListBuildingInfo={this.state.ListBuildingInfo}
@@ -234,27 +234,21 @@ class PropertyFeeSuccess extends Component {
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
-                        onChange={this.refresh()}
+                        onChange={this.refresh}
                         scroll={{ x: 2000 }}
                         bordered
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
                         pagination={{total: this.state.total,
                             showSizeChanger: true,
                             showQuickJumper: true,
                             pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
                             defaultPageSize: this.state.rows}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
-                    {/* <Pagination
-                        showQuickJumper
-                        showSizeChanger
-                        defaultCurrent={1}
-                        pageSizeOptions={['15', '30', '45']}
-                        defaultPageSize={this.state.rows}
-                        total={this.state.total}
-                        onShowSizeChange={this.onSizeChange}
-                        onChange={this.onChange}
-                    />*/}
                 </Spin>
             </div>
         )

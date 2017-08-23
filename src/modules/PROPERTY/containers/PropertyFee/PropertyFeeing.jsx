@@ -78,7 +78,6 @@ class PropertyFeeing extends Component {
             '/propertyFee/propertyFeeList',
             {auditStatus: 0,
                 page: this.state.page,
-                rows: this.state.rows,
                 contractStatus: 0}
         )
         let ListBuildingInfo = await apiPost(
@@ -142,18 +141,30 @@ class PropertyFeeing extends Component {
                     )
                 }
             }],
-            dataSource: result.rows,
-            total: result.total
+            dataSource: result.data.rows,
+            total: result.data.total
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        console.log(pagination)
         if (typeof (filters) === 'undefined') {
             filters = []
         }
         filters['auditStatus'] = 0
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -163,7 +174,7 @@ class PropertyFeeing extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     query = () => {
@@ -195,6 +206,7 @@ class PropertyFeeing extends Component {
                             showSizeChanger: true,
                             showQuickJumper: true,
                             pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
                             defaultPageSize: this.state.rows}}
                         scroll={{ x: 1500 }}
                         bordered

@@ -1,10 +1,10 @@
 // 收费管理 - 审核失败
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select} from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
+import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class PropertyFeeFinanceFail extends Component {
     constructor (props) {
@@ -15,6 +15,10 @@ class PropertyFeeFinanceFail extends Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -32,13 +36,15 @@ class PropertyFeeFinanceFail extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: 3,
-                contractStatus: 0}
+                contractStatus: 0,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -120,90 +126,77 @@ class PropertyFeeFinanceFail extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['auditStatus'] = 3
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {'clientName': this.clientName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'contractStatus': 0,
-                'auditStatus': 3
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
             id: 0
         })
-    }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = ''
-    selectBuild = (e) => {
-        this.buildId = e
     }
     query = () => {
         this.refresh()
     }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
+                    refresh={this.refresh}
+                    type={3}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <PropertyFeeFinanceFailComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
-                <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 200,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 2100 }}
                         bordered
                         dataSource={this.state.dataSource}

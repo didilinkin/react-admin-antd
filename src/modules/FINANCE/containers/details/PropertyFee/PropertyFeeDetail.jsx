@@ -130,7 +130,6 @@ class PropertyFeeDetail extends React.Component {
         await apiPost(
             '/propertyFee/updatePropertyFeeByNext',
             {id: this.props.match.params.id,
-                invoiceLateStatus: 1,
                 unpaidLateMoney: 0,
                 unpaidMoney: 0,
                 paidMoney: this.state.data.lateMoney,

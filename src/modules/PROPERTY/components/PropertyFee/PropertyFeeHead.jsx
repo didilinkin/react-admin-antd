@@ -123,7 +123,7 @@ class CollectRentHead extends React.Component {
                                 wrapperCol={{ span: 16 }}
                             >
                                 {getFieldDecorator('clientName')(
-                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                    <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                                 )}
                             </FormItem>
                         </Col>
@@ -132,7 +132,7 @@ class CollectRentHead extends React.Component {
                                 wrapperCol={{ span: 16 }}
                             >
                                 {getFieldDecorator('roomNum')(
-                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                    <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                                 )}
                             </FormItem>
                         </Col>
@@ -230,7 +230,7 @@ class CollectRentHead extends React.Component {
                                 marginBottom: 10}}
                             >
                                 <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                                {type === 2 &&
+                                {type !== 0 &&
                                 <Button onClick={this.handleReset}>清除</Button>}&nbsp;&nbsp;
                                 {type === 2 &&
                                 <Button onClick={this.open}>{this.state.open}</Button>}
