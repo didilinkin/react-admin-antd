@@ -137,7 +137,7 @@ class PropertyFeeFinanceFail extends Component {
             filters = []
         }
         filters['auditStatus'] = 3
-        if (pagination !== null) {
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
             this.setState({

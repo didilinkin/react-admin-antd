@@ -67,7 +67,6 @@ class PropertyFeeing extends Component {
         })
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })
@@ -149,12 +148,11 @@ class PropertyFeeing extends Component {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
-        console.log(pagination)
         if (typeof (filters) === 'undefined') {
             filters = []
         }
         filters['auditStatus'] = 0
-        if (pagination !== null) {
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
             this.setState({

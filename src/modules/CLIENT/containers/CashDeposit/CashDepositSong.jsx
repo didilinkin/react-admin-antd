@@ -1,11 +1,11 @@
 // 欢乐颂管理押金
 import React from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import CashDepositChargeComponent from '../../components/CashDeposit/CashdepsitCharge'
 import CashDepositRefundComponent from '../../components/CashDeposit/CashdepsitRefund'
+import CashDepositHeadComponent from '../../components/CashDeposit/CashDepositHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class CashDepositRent extends React.Component {
     constructor (props) {
@@ -17,6 +17,10 @@ class CashDepositRent extends React.Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -43,7 +47,8 @@ class CashDepositRent extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/cashDeposit/cashDepositList',
-            {chargeItem: 3}
+            {chargeItem: 3,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -53,6 +58,7 @@ class CashDepositRent extends React.Component {
         const info = this.info
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -109,92 +115,92 @@ class CashDepositRent extends React.Component {
                     }
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['chargeItem'] = 3
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/cashDeposit/cashDepositList',
-            {'sublietName': this.sublietName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'chargeItem': 3
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
-    }
-    sublietName = null
-    entryNameOnChange = (e) => {
-        this.sublietName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    buildId = null
-    selectBuild = (e) => {
-        this.buildId = e
     }
     query = () => {
         this.refresh()
     }
+    close = () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <CashDepositChargeComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
                     title="扣款"
+                    close={this.close}
                     visible={this.state.openUpdate}
                 />
                 <CashDepositRefundComponent
                     id={this.state.id}
                     refreshTable={this.refresh}
                     title="退款"
+                    close={this.close}
                     visible={this.state.openAdd}
                 />
-                <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 200,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
-
+                <CashDepositHeadComponent
+                    RowKeys={this.state.RowKeys}
+                    refresh={this.refresh}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1200 }}
                         bordered
                         dataSource={this.state.dataSource}

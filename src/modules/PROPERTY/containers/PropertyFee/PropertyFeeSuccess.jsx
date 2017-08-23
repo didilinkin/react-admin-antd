@@ -179,12 +179,11 @@ class PropertyFeeSuccess extends Component {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
-        console.log(pagination)
         if (typeof (filters) === 'undefined') {
             filters = []
         }
         filters['auditStatus'] = 2
-        if (pagination !== null) {
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
             this.setState({

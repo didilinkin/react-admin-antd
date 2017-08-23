@@ -182,7 +182,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         filters['auditStatus'] = 2
-        if (pagination !== null) {
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
             this.setState({

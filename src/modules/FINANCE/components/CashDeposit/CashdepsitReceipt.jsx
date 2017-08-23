@@ -60,10 +60,12 @@ class propertyPaidConfirm extends React.Component {
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })
+        this.props.close()
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     onChange = (e) => {
         this.setState({
