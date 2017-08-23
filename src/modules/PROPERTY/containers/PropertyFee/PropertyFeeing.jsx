@@ -1,6 +1,6 @@
 // 收费管理 - 待收费
 import React, {Component} from 'react'
-import {Table, Spin, Popconfirm, Icon, notification, Pagination} from 'antd'
+import {Table, Spin, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
@@ -56,15 +56,6 @@ class PropertyFeeing extends Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.refresh()
-    }
-    // 弹出框设置
-    showModal = () => {
-        this.setState({
-            openAdd: true,
-            openUpdate: false,
-            openTableAddUp: false,
-            id: null
-        })
     }
     close = async () => {
         this.setState({
@@ -175,31 +166,7 @@ class PropertyFeeing extends Component {
             dataSource: result.rows
         })
     }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    buildId = null
-    selectBuild = (e) => {
-        this.buildId = e
-    }
     query = () => {
-        this.refresh()
-    }
-    onChange = (page, pageSize) => {
-        this.setState({
-            page: page
-        })
-        this.refresh()
-    }
-    onSizeChange = (current, size) => {
-        this.setState({
-            rows: size
-        })
         this.refresh()
     }
     render () {
@@ -220,7 +187,7 @@ class PropertyFeeing extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        onChange={this.refresh()}
+                        onChange={this.refresh}
                         rowSelection={{
                             onChange: this.onSelectChange
                         }}
@@ -234,7 +201,6 @@ class PropertyFeeing extends Component {
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
-                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={[15, 30, 45]} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )

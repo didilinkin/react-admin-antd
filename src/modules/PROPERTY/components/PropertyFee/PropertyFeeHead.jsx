@@ -58,8 +58,14 @@ class CollectRentHead extends React.Component {
             })
         }
     }
-    startDate = ''
-    endDate = ''
+    close = async () => {
+        console.log(11111111)
+        this.setState({
+            openPropertyAdd: false
+        })
+    }
+    startDate = null
+    endDate = null
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
         if (dateString[1] > 0) {
@@ -85,6 +91,12 @@ class CollectRentHead extends React.Component {
         let { type, ListBuildingInfo} = this.props
         return (
             <div>
+                <PropertyAddComponent
+                    id={null}
+                    close={this.close}
+                    refreshTable={this.handleSubmit}
+                    visible={this.state.openPropertyAdd}
+                />
                 <Form layout="horizontal">
                     <Row>
                         <Col span={8}>
@@ -230,11 +242,6 @@ class CollectRentHead extends React.Component {
                         </Col>
                     </Row>
                 </Form>
-                <PropertyAddComponent
-                    id={null}
-                    refreshTable={this.handleSubmit}
-                    visible={this.state.openPropertyAdd}
-                />
             </div>
         )
     }

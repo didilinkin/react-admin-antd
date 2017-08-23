@@ -1,11 +1,11 @@
 // 收费管理 - 审核失败
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select, Icon, notification, Popconfirm, Pagination} from 'antd'
+import {Table, Spin, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api'
 import CollectRentFailComponent from '../details/PropertyFee/PropertyDetail'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
+import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class PropertyFeeFail extends Component {
     constructor (props) {
@@ -16,6 +16,7 @@ class PropertyFeeFail extends Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            RowKeys: [],
             id: null,
             total: 0,
             page: 1,
@@ -157,58 +158,35 @@ class PropertyFeeFail extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['auditStatus'] = 3
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {'clientName': this.clientName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'contractStatus': 0,
-                'page': this.state.page,
-                'rows': this.state.rows,
-                'auditStatus': 3
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows,
-            total: result.total
+            dataSource: result.rows
         })
-    }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    buildId = null
-    selectBuild = (e) => {
-        this.buildId = e
     }
     query = () => {
         this.refresh()
     }
-    onChange = (page, pageSize) => {
-        this.setState({
-            page: page
-        })
-        this.refresh()
-    }
-    onSizeChange = (current, size) => {
-        this.setState({
-            rows: size
-        })
-        this.refresh()
-    }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
+                <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
+                    refresh={this.refresh}
+                    type={3}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <CollectRentFailComponent
                     close={this.close}
                     id={this.state.id}
@@ -221,44 +199,23 @@ class PropertyFeeFail extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
-                <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 200,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1500 }}
                         bordered
-                        pagination={false}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
-                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={[15, 30, 45]} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )
