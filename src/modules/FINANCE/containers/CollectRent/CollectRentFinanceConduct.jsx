@@ -131,7 +131,7 @@ class CollectRentConduct extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 1
-        if (pagination !== null) {
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
             this.setState({
