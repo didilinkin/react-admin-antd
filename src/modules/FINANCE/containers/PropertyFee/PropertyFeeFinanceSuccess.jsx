@@ -14,6 +14,10 @@ class PropertyFeeFinanceSuccess extends React.Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -27,7 +31,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
             message: '撤回成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh1()
+        this.refresh()
     }
     info = (url) => {
         this.props.pro.history.push(url)
@@ -39,12 +43,14 @@ class PropertyFeeFinanceSuccess extends React.Component {
         )
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {auditStatus: 2}
+            {auditStatus: 2,
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const info = this.info
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -168,7 +174,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
@@ -176,6 +182,17 @@ class PropertyFeeFinanceSuccess extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         filters['auditStatus'] = 2
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -185,30 +202,41 @@ class PropertyFeeFinanceSuccess extends React.Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
             <div>
                 <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
                     refresh={this.refresh}
+                    type={2}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 2200 }}
                         bordered
                         dataSource={this.state.dataSource}

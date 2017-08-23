@@ -61,18 +61,18 @@ class CollectRentHead extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let {ListBuildingInfo} = this.props
+        let {type, ListBuildingInfo} = this.props
         return (
             <Form layout="horizontal">
                 <Row>
-                    <Col span={8}>
+                    <Col span={6}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
+                            wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('buildId')(
                                 <Select
                                     showSearch
-                                    style={{ width: 200 }}
+                                    style={{ width: 150 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
@@ -83,25 +83,44 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
+                            wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 150 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
+                    <Col span={6}>
                         <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
+                            wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
+                                <Input placeholder="请输入房间编号" style={{ width: 150 }} />
+                            )}
+                        </FormItem>
+                    </Col>
+                    <Col span={6}>
+                        <FormItem label="交费周期" labelCol={{ span: 6 }}
+                            wrapperCol={{ span: 12 }}
+                        >
+                            {getFieldDecorator('periodStatus')(
+                                <Select
+                                    showSearch
+                                    style={{ width: 150 }}
+                                    placeholder="请选择交费周期"
+                                    optionFilterProp="children"
+                                >
+                                    <Option key="3">季付</Option>
+                                    <Option key="6">半年付</Option>
+                                    <Option key="12">年付</Option>
+                                </Select>
                             )}
                         </FormItem>
                     </Col>
                 </Row>
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="开票状态" labelCol={{ span: 6 }}
@@ -155,7 +174,8 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="查询依据" labelCol={{ span: 6 }}
@@ -182,13 +202,18 @@ class CollectRentHead extends React.Component {
                             <RangePicker onChange={this.getDate} />
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
                 <Row>
                     <Col span={16} />
                     <Col span={8}>
                         <div style={{paddingLeft: '25%',
                             marginBottom: 10}}
-                        ><Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div>
+                        >
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                            <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
+                            {type === 2 &&
+                            <Button onClick={this.open}>{this.state.open}</Button>}
+                        </div>
                     </Col>
                 </Row>
             </Form>

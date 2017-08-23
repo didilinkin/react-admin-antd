@@ -68,6 +68,7 @@ class App extends React.Component {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {

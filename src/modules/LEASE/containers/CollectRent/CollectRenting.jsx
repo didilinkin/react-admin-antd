@@ -1,10 +1,10 @@
 // 收费管理 - 待收租
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select, Pagination} from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentConductComponent from '../details/CollectRent/PaidConfirm'
+import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class CollectRenting extends Component {
     constructor (props) {
@@ -17,6 +17,7 @@ class CollectRenting extends Component {
             openUpdate: false,
             AccountList: [],
             columns: [],
+            RowKeys: [],
             total: 0,
             page: 1,
             rows: 30,
@@ -39,15 +40,14 @@ class CollectRenting extends Component {
         let result = await apiPost(
             '/collectRent/rentingList',
             {auditStatus: 0,
-                page: this.state.page,
-                rows: this.state.rows}
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
-            total: result.total,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -129,55 +129,40 @@ class CollectRenting extends Component {
                     )
                 }
             }],
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async (size, page) => {
+    refresh = async (pagination, filters, sorter) => {
+        console.log(pagination)
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['auditStatus'] = 0
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/rentingList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
-                'roomNum': this.roomNum,
-                'page': page,
-                'rows': size,
-                'buildId': this.buildId,
-                'auditStatus': 0
-            }
+            '/collectRent/collectRentList',
+            filters
         )
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows,
-            total: result.total,
-            id: 0
-        })
-    }
-    refresh1 = async () => {
-        // 刷新表格
-        let result = await apiPost(
-            '/collectRent/rentingList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
-                'roomNum': this.roomNum,
-                'page': this.state.page,
-                'rows': this.state.rows,
-                'buildId': this.buildId,
-                'auditStatus': 0
-            }
-        )
-        this.setState({
-            openAdd: false,
-            opendispatch: false,
-            openTableAddUp: false,
-            openUpdate: false,
-            dataSource: result.rows,
-            total: result.total,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -189,39 +174,16 @@ class CollectRenting extends Component {
             openUpdate: false
         })
     }
-    rentClientName = null
-    entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
-    }
-    roomNum = null
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    periodStatus = null
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = null
-    selectBuild = (e) => {
-        this.buildId = e
-    }
     query = () => {
-        this.refresh1()
+        this.refresh()
     }
-    onChange = (page, pageSize) => {
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
-            page: page
+            RowKeys: selectedRowKeys
         })
-        this.refresh(this.state.rows, page)
-    }
-    onSizeChange = (current, size) => {
-        this.setState({
-            rows: size
-        })
-        this.refresh(size, this.state.page)
     }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <CollectRentConductComponent
@@ -231,58 +193,30 @@ class CollectRenting extends Component {
                     visible={this.state.openUpdate}
                     accountLsit={this.state.accountList}
                 />
-                <span style={{paddingBottom: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>客户名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <span>交费周期:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onChange={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
-
+                <CollectRentHeadComponent
+                    refresh={this.refresh}
+                    RowKeys={this.state.RowKeys}
+                    close={this.close}
+                    type={0}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: this.state.rows,
+                            current: this.state.page}}
                         scroll={{ x: 1500 }}
                         bordered
-                        pagination={false}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />
-                    <Pagination showQuickJumper showSizeChanger defaultCurrent={1}pageSizeOptions={['15', '30', '45']} defaultPageSize={this.state.rows} total={this.state.total} onShowSizeChange={this.onSizeChange} onChange={this.onChange} />
                 </Spin>
             </div>
         )

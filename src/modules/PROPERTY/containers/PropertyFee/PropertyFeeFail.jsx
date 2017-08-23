@@ -67,7 +67,8 @@ class PropertyFeeFail extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: 3,
-                contractStatus: 0}
+                contractStatus: 0,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -76,7 +77,7 @@ class PropertyFeeFail extends Component {
         const handleUpdate2 = this.handleUpdate2
         const handleDelete = this.handleDelete
         this.setState({loading: false,
-            total: result.total,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -152,7 +153,7 @@ class PropertyFeeFail extends Component {
                     )
                 }
             }],
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
@@ -163,6 +164,17 @@ class PropertyFeeFail extends Component {
             filters = []
         }
         filters['auditStatus'] = 3
+        if (pagination !== null) {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -172,11 +184,17 @@ class PropertyFeeFail extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.rows
+            dataSource: result.data.rows
         })
     }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
@@ -210,6 +228,7 @@ class PropertyFeeFail extends Component {
                             showSizeChanger: true,
                             showQuickJumper: true,
                             pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
                             defaultPageSize: this.state.rows}}
                         scroll={{ x: 1500 }}
                         bordered
