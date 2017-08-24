@@ -383,7 +383,7 @@ class ElectricCharge extends React.Component {
                             columns={this.state.columns1}
                         />
                         <PowerAddUpComponent
-                            title="添加水费"
+                            title="修改电费"
                             id={this.state.id}
                             refreshTable={this.refreshTwo}
                             visible={this.state.openWaterAddUpComponent}

@@ -48,7 +48,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
             json['id'] = this.props.id
             let data = await apiPost(
                 '/ElectricityFees/DefaultCollection',
-                {liquidatedDamagesDate: json.collectionDate.format('YYYY-MM-DD'),
+                {liquidatedDamagesDate: json.liquidatedDamagesDate.format('YYYY-MM-DD'),
                     defaultAmount: json.defaultAmount,
                     principalMethod: json.method,
                     money: json.liquidatedDamagesReceived,
@@ -65,7 +65,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
             this.props.refresh()
         }
     }
-    handleCancel = (e) => {
+    handleCancel = () => {
         this.setState({ visible: false,
             isFirst: true})
     }
