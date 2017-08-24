@@ -11,7 +11,22 @@ class HomeCollectFeeChart extends React.Component {
                 trigger: 'axis'
             },
             legend: {
-                data: ['物业费', '空调费', '电梯费', '水费', '电费'],
+                data: [{
+                    name: '物业费',
+                    icon: 'circle'
+                }, {
+                    name: '空调费',
+                    icon: 'circle'
+                }, {
+                    name: '电梯费',
+                    icon: 'circle'
+                }, {
+                    name: '水费',
+                    icon: 'circle'
+                }, {
+                    name: '电费',
+                    icon: 'circle'
+                }],
                 right: '20px',
                 top: '20px'
             },
@@ -74,9 +89,9 @@ class HomeCollectFeeChart extends React.Component {
     render () {
         return (
             <ReactEcharts
+                className="echart"
                 option={this.getOtion()}
                 style={{height: '350px',
-                    width: '750',
                     marginLeft: '20px'}}
             />
         )

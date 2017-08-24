@@ -48,7 +48,7 @@ class HomeHouseNowChart extends React.Component {
                 style={{height: '310px',
                     width: '400',
                     marginLeft: '20px'}}
-                className="react_for_echarts"
+                className="echart"
             />
         )
     }

@@ -11,7 +11,13 @@ class HomeRentChart extends React.Component {
                 trigger: 'axis'
             },
             legend: {
-                data: ['应收租金', '实收租金'],
+                data: [{
+                    name: '应收租金',
+                    icon: 'circle'
+                }, {
+                    name: '实收租金',
+                    icon: 'circle'
+                }],
                 orient: 'vertical',
                 right: '20px',
                 top: '30px'
@@ -62,9 +68,9 @@ class HomeRentChart extends React.Component {
     render () {
         return (
             <ReactEcharts
+                className="echart"
                 option={this.getOtion()}
                 style={{height: '350px',
-                    width: '750',
                     marginLeft: '20px'}}
             />
         )

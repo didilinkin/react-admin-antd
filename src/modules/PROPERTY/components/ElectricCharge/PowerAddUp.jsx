@@ -231,12 +231,17 @@ class sumElectricityAddUp extends React.Component {
                     isPropertyMoney: lastTimeData.data.electricityFees.isPropertyMoney === 1,
                     isWaterMoney: lastTimeData.data.electricityFees.isWaterMoney === 1,
                     isElectricMoney: lastTimeData.data.electricityFees.isElectricMoney === 1,
-                    propertyMoney: lastTimeData.data.electricityFees.propertyMoney ? lastTimeData.data.electricityFees.propertyMoney : 0,
-                    waterMoney: lastTimeData.data.electricityFees.waterMoney ? lastTimeData.data.electricityFees.waterMoney : 0,
-                    electricMoney: lastTimeData.data.electricityFees.electricMoney ? lastTimeData.data.electricityFees.electricMoney : 0,
                     peakValleyRatio: lastTimeData.data.electricityFees.peakValleyRatio ? lastTimeData.data.electricityFees.peakValleyRatio : 0
                 })
             }
+        }
+        if (lastTimeData.data.totalDefault) {
+            let totoalDefault = lastTimeData.data.totalDefault
+            this.setState({
+                propertyMoney: totoalDefault.propertyMoney ? totoalDefault.propertyMoney : 0,
+                waterMoney: totoalDefault.waterMoney ? totoalDefault.waterMoney : 0,
+                electricMoney: totoalDefault.electricMoney ? totoalDefault.electricMoney : 0
+            })
         }
     }
     // 获取转租客户
@@ -410,8 +415,9 @@ class sumElectricityAddUp extends React.Component {
         this.state.subletList.forEach(async sublet => {
             let formName = ''
             if (value.toString() === sublet.clientId.toString()) {
+                console.log(sublet)
                 formName = sublet.clientName
-                this.lastTimeRecord(sublet.contractId, sublet.clientId, 2, true)
+                this.lastTimeRecord(this.state.Contract.id, sublet.clientId, 2, true)
                 this.setState({
                     roomNumberOne: sublet.leaseRooms.split(',')
                 })

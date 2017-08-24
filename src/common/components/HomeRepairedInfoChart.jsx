@@ -127,14 +127,14 @@ class HomeRepairedInfoChart extends React.Component {
                             style={{height: '270px',
                                 width: '400',
                                 marginLeft: '20px'}}
-                            className="react_for_echarts"
+                            className="echart"
                         />) : (
                         <ReactEcharts
                             option={this.getOtion3()}
                             style={{height: '270px',
                                 width: '400',
                                 marginLeft: '20px'}}
-                            className="react_for_echarts"
+                            className="echart"
                         />
                     )}
                 </div>
