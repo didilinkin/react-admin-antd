@@ -229,12 +229,13 @@ class WaterBillHead extends React.Component {
                                 <Button type="primary" onClick={this.handleSubmit}>
                         搜索
                                 </Button>&nbsp;&nbsp;
-                                { type === 4 &&
-                            <span>
                                 <Button
                                     onClick={this.handleReset}
-                                >清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button>
-                            </span>
+                                >清除</Button>&nbsp;&nbsp;
+                                { type === 4 &&
+                                <span>
+                                    <Button onClick={this.open}>{this.state.open}</Button>
+                                </span>
                                 }
                             </div></Col>
                     </Row>

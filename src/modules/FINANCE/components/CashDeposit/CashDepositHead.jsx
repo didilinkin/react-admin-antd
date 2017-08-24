@@ -46,14 +46,15 @@ class CollectRentHead extends React.Component {
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={6}>
+                        <Col span={5}>
                             <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 12 }}
+                                wrapperCol={{ span: 10 }}
                             >
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
-                                        style={{ width: 150 }}
+                                        allowClear
+                                        style={{ width: 140 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
                                     >
@@ -69,7 +70,7 @@ class CollectRentHead extends React.Component {
                                 wrapperCol={{ span: 12 }}
                             >
                                 {getFieldDecorator('sublietName')(
-                                    <Input placeholder="请输入客户名称" style={{ width: 150 }} />
+                                    <Input placeholder="请输入客户名称" style={{ width: 140 }} />
                                 )}
                             </FormItem>
                         </Col>
@@ -78,39 +79,12 @@ class CollectRentHead extends React.Component {
                                 wrapperCol={{ span: 12 }}
                             >
                                 {getFieldDecorator('roomNum')(
-                                    <Input placeholder="请输入房间编号" style={{ width: 150 }} />
+                                    <Input placeholder="请输入房间编号" style={{ width: 140 }} />
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
-                            <FormItem label="收支类型" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 12 }}
-                            >
-                                {getFieldDecorator('revenueType')(
-                                    <Select
-                                        showSearch
-                                        style={{ width: 150 }}
-                                        placeholder="请选择收支类型"
-                                        optionFilterProp="children"
-                                    >
-                                        <Option key="0">收款</Option>
-                                        <Option key="1">扣款</Option>
-                                        <Option key="2">退款</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={16} />
-                        <Col span={8}>
-                            <div style={{paddingLeft: '25%',
-                                marginBottom: 10}}
-                            >
-                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                                <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                            </div>
-                        </Col>
+                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                        <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
                     </Row>
                 </Form>
             </div>

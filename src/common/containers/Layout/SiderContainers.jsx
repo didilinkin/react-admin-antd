@@ -146,11 +146,11 @@ class SiderContainers extends React.Component {
     render () {
         const renderMenu = globalDir.map((childItem) => {
             if (this.hasChildRoute(childItem)) {
-                // if (this.jurisdiction(childItem)) {
-                return this.renderChildRoute(childItem)
-                // } else {
-                //     return null
-                // }
+                if (this.jurisdiction(childItem)) {
+                    return this.renderChildRoute(childItem)
+                } else {
+                    return null
+                }
             } else {
                 return (
                     <Menu.Item key={childItem.key}>
