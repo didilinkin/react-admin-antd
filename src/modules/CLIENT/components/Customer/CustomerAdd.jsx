@@ -4,7 +4,7 @@ import React from 'react'
 import { apiPost } from '../../../../api/index'
 import '../../style/test.less'
 const FormItem = Form.Item
-class WarehouseAddUp extends React.Component {
+class CustomerAddUp extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -70,6 +70,7 @@ class WarehouseAddUp extends React.Component {
                 message: '修改成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
@@ -82,12 +83,14 @@ class WarehouseAddUp extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
         }
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
@@ -206,6 +209,6 @@ class WarehouseAddUp extends React.Component {
     }
 }
 
-let WarehouseAddUpComponent = Form.create()(WarehouseAddUp)
+let CustomerAddUpComponent = Form.create()(CustomerAddUp)
 
-export default WarehouseAddUpComponent
+export default CustomerAddUpComponent

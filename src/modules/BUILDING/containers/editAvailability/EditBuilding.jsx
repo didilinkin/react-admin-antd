@@ -154,8 +154,20 @@ class EditBuilding extends Component {
     entryNameOnChange = (e) => {
         this.buildName = e.target.value
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
@@ -164,6 +176,7 @@ class EditBuilding extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
+                    close={this.close}
                     title={this.state.title}
                 />
                 <span style={{paddingBottom: '10px',
@@ -180,6 +193,16 @@ class EditBuilding extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1100 }}
                         bordered
                         dataSource={this.state.dataSource}
