@@ -69,7 +69,7 @@ class propertyPaidConfirm extends React.Component {
             json
         )
         notification.open({
-            message: '收租成功',
+            message: '收款成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         // if (json.unpaidMoney !== '0.0') {

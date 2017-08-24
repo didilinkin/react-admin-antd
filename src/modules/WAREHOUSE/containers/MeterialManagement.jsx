@@ -18,6 +18,10 @@ class MeterialManagement extends Component {
             dataSource: [],
             title: '',
             id: null,
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -54,11 +58,13 @@ class MeterialManagement extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/warehouse/materialManagement'
+            '/warehouse/materialManagement',
+            {page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
         this.setState({loading: false,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -123,25 +129,40 @@ class MeterialManagement extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['name'] = this.name
+        filters['whType'] = this.whType
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/warehouse/materialManagement',
-            {'name': this.name,
-                'whType': this.whType
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -153,8 +174,20 @@ class MeterialManagement extends Component {
     selectBuild = (e) => {
         this.whType = e
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
@@ -163,6 +196,7 @@ class MeterialManagement extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
+                    close={this.close}
                     title={this.state.title}
                 />
                 <span style={{paddingBottom: '10px',
@@ -187,13 +221,23 @@ class MeterialManagement extends Component {
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="primary" onClick={this.add}>添加材料</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
                     <Table
-                        scroll={{ x: 1100 }}
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
+                        scroll={{ x: 1300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

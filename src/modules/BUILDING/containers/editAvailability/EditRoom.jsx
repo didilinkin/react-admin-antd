@@ -310,7 +310,7 @@ class EditRoom extends React.Component {
                         <Option key="1">已租</Option>
                         <Option key="2">自用</Option>
                     </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="primary" onClick={this.add}>添加房间</Button>
                 </span>
 

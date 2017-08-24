@@ -220,7 +220,7 @@ class PropertyDetail extends React.Component {
                                         </tr>
                                         {chargeList.map(propertyFee => {
                                             if (propertyFee.paidWay === 0) {
-                                                return <tr key={0}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -228,7 +228,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 1) {
-                                                return <tr key={1}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -236,7 +236,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 2) {
-                                                return <tr key={2}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -244,7 +244,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 3) {
-                                                return <tr key={3}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -252,7 +252,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 4) {
-                                                return <tr key={4}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -260,7 +260,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{propertyFee.createName}</td>
                                                 </tr>
                                             } else if (propertyFee.paidWay === 5) {
-                                                return <tr key={5}>
+                                                return <tr key={propertyFee.id}>
                                                     <td>{propertyFee.receiptDate}</td>
                                                     <td>{propertyFee.paidMoney}</td>
                                                     <td>{propertyFee.unpaidMoney}</td>
@@ -293,7 +293,7 @@ class PropertyDetail extends React.Component {
                                         </tr>
                                         {chargeList2.map(collectRent => {
                                             if (collectRent.paidWay === 0) {
-                                                return <tr key={6}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -302,7 +302,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 1) {
-                                                return <tr key={7}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -311,7 +311,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 2) {
-                                                return <tr key={8}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -320,7 +320,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 3) {
-                                                return <tr key={9}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -329,7 +329,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 4) {
-                                                return <tr key={10}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -338,7 +338,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 5) {
-                                                return <tr key={11}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>
@@ -347,7 +347,7 @@ class PropertyDetail extends React.Component {
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 6) {
-                                                return <tr key={12}>
+                                                return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
                                                     <td>{collectRent.paidMoney}</td>
                                                     <td>{collectRent.unpaidMoney}</td>

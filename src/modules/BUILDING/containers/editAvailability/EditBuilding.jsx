@@ -187,7 +187,7 @@ class EditBuilding extends Component {
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-                    <Button type="primary" onClick={this.query}>查询</Button>
+                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <Button type="primary" onClick={this.add}>添加楼宇</Button>
                 </span>
 

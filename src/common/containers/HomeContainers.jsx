@@ -15,29 +15,34 @@ const { MonthPicker } = DatePicker
 class HomeContainers extends React.Component {
     render () {
         return (
-            <div className="examples"style={{backgroundColor: '#F2F2F2'}} >
-                <div style={{height: '1200px',
-                    width: '1220px',
-                    margin: '0 auto'}}
-                >
-                    <div className="charts-box" >
-                        <HomeRentChart />
+            <div className="home-main-div" >
+                <div className="home-main-box" >
+                    <div className="charts-row">
+                        <div className="charts-box-left" >
+                            <HomeRentChart />
+                        </div>
+                        <div className="charts-box-right-box" >
+                            <div className="charts-box-right" >
+                                <div style={{height: '40px',
+                                    borderBottom: '1px solid #EBEBEB'}}
+                                >
+                                    <span className="chart-title">房屋现状</span>
+                                </div>
+                                <div>
+                                    <HomeHouseNowChart />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="charts-box-right" >
-                        <div style={{height: '40px',
-                            borderBottom: '1px solid #EBEBEB'}}
-                        >
-                            <span className="chart-title">房屋现状</span>
+                    <div className="charts-row">
+                        <div className="charts-box-left" >
+                            <HomeCollectFeeChart />
                         </div>
-                        <div>
-                            <HomeHouseNowChart />
+                        <div className="charts-box-right-box">
+                            <HomeRepairedInfoChart />
                         </div>
+                    </div>
 
-                    </div>
-                    <div className="charts-box" >
-                        <HomeCollectFeeChart />
-                    </div>
-                    <HomeRepairedInfoChart />
                     <div className="otherFee">
                         <div className="otherFee-top">
                             <div className="otherFee-top-title">
@@ -53,7 +58,7 @@ class HomeContainers extends React.Component {
                                     <img className="otherFee-bottom-image" src={moneyLogo} />
                                 </div>
                             </div>
-                            <div class="otherFee-bottom-right">
+                            <div className="otherFee-bottom-right">
                                 <div className="otherFee-bottom-right-parent" >
                                     <div className="otherFee-bottom-right-child" >
                                         <div className="otherFee-bottom-right-child-title">租金违约金</div>
@@ -79,23 +84,18 @@ class HomeContainers extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div style={{
-                        height: '120px',
-                        width: '1220px',
-                        float: 'left',
-                        margin: '20px 0'}}
-                    >
+                    <div className="home-bottom">
                         <Row gutter={24}>
-                            <Col className="gutter-row" span={6}>
+                            <Col span={6}>
                                 <CashDepositSurplus color="#1A9BFC" logo={rentLogo} title="租金保证金结余" number="177,486" />
                             </Col>
-                            <Col className="gutter-row" span={6}>
+                            <Col span={6}>
                                 <CashDepositSurplus color="#6ACA25" logo={newSeatLogo} title="欢乐颂保证金结余" number="177,486" />
                             </Col>
-                            <Col className="gutter-row" span={6}>
+                            <Col span={6}>
                                 <CashDepositSurplus color="#FECB2F" logo={newPowerLogo} title="能源管理押金结余" number="166,654" />
                             </Col>
-                            <Col className="gutter-row" span={6}>
+                            <Col span={6}>
                                 <CashDepositSurplus color="#FC361D" logo={fitmentLogo} title="装修押金结余" number="124,413" />
                             </Col>
                         </Row>
