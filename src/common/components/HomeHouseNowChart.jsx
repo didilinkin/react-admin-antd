@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 class HomeHouseNowChart extends React.Component {
-    getOtion= () => {
-        const option = {
+    state = {
+        option: {
             tooltip: {
                 trigger: 'item',
                 formatter: '{b}统计 <br/>{c}间 ({d}%)'
@@ -39,17 +39,26 @@ class HomeHouseNowChart extends React.Component {
                 }
             ]
         }
-        return option
+    }
+    componentWillReceiveProps (nextPorps) {
+        let option = this.state.option
+        option.series[0].data = nextPorps.buildingNow
     }
     render () {
         return (
-            <ReactEcharts
-                option={this.getOtion()}
-                style={{height: '310px',
-                    width: '400',
-                    marginLeft: '20px'}}
-                className="echart"
-            />
+            <div className="charts-box-right" >
+                <div style={{height: '40px',
+                    borderBottom: '1px solid #EBEBEB'}}
+                >
+                    <span className="chart-title">房屋现状</span>
+                </div>
+                <div>
+                    <ReactEcharts
+                        option={this.state.option}
+                        className="echart"
+                    />
+                </div>
+            </div>
         )
     }
 }

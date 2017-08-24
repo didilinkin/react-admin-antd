@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 class HomeCollectFeeChart extends React.Component {
-    getOtion = () => {
-        const option = {
+    state = {
+        option: {
             title: {
                 text: '本年度物业收费汇总',
                 top: '10px'
@@ -84,16 +84,22 @@ class HomeCollectFeeChart extends React.Component {
                 }
             ]
         }
-        return option
+    }
+    componentWillReceiveProps (nextPorps) {
+        let option = this.state.option
+        option.series[0].data = nextPorps.collectFee.property
+        option.series[1].data = nextPorps.collectFee.water
+        option.series[2].data = nextPorps.collectFee.power
+        option.series[3].data = nextPorps.collectFee.elevator
     }
     render () {
         return (
-            <ReactEcharts
-                className="echart"
-                option={this.getOtion()}
-                style={{height: '350px',
-                    marginLeft: '20px'}}
-            />
+            <div className="charts-box-left" >
+                <ReactEcharts
+                    className="charts-left"
+                    option={this.state.option}
+                />
+            </div>
         )
     }
 }
