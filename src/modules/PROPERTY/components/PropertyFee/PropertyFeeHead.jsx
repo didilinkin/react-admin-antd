@@ -233,9 +233,9 @@ class CollectRentHead extends React.Component {
                                 {type !== 0 &&
                                 <Button onClick={this.handleReset}>清除</Button>}&nbsp;&nbsp;
                                 {type === 2 &&
-                                <Button onClick={this.open}>{this.state.open}</Button>}
+                                <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
                                 {type === 0 &&
-                            <Button type="primary" onClick={this.showModal}>收物业费</Button>}
+                            <Button type="primary" onClick={this.showModal}>收物业费</Button>}&nbsp;&nbsp;
                                 {type === 0 &&
                             <Button type="primary" onClick={this.BatchAuditPropertyFee}>批量提交</Button>}
                             </div>

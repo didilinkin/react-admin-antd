@@ -82,6 +82,7 @@ class MaterialAdd extends React.Component {
                 message: '修改成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
@@ -94,12 +95,14 @@ class MaterialAdd extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
         }
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
