@@ -492,6 +492,7 @@ class propertyFeeAdd extends React.Component {
                 message: '操作成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })

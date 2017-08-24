@@ -31,10 +31,10 @@ class RentDetail extends React.Component {
         })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
-        this.props.close()
     }
     async initialRemarks (nextProps) {
         this.setState({
