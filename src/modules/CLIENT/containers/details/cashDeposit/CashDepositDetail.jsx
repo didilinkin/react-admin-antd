@@ -1,11 +1,11 @@
 // 保证金明细
-import React, {Component} from 'react'
+import React from 'react'
 import {Table, Button, Spin, Select } from 'antd'
 import { apiPost, baseURL } from '../../../../../api'
 // 引入组件
 const Option = Select.Option
 // React component
-class CashDepositDetail extends Component {
+class CashDepositDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -15,6 +15,10 @@ class CashDepositDetail extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -30,13 +34,15 @@ class CashDepositDetail extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/cashDeposit/cashDepositDetailList',
-            {'cashDepositId': this.props.match.params.id}
+            {'cashDepositId': this.props.match.params.id,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -104,38 +110,58 @@ class CashDepositDetail extends Component {
                 render: function (text, record, index) {
                     let i = 0
                     let arr = []
-                    record.fileUrl.split('#').map(img => {
-                        if (img !== '') {
-                            i++
-                            arr.push(
-                                <img key={i} style={{width: '100px',
-                                    height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
-                                />)
-                        }
-                        return ''
-                    })
+                    if (record.fileUrl !== null && record.fileUrl !== '') {
+                        record.fileUrl.split('#').map(img => {
+                            if (img !== '') {
+                                i++
+                                arr.push(
+                                    <img key={i} style={{
+                                        width: '100px',
+                                        height: '100px'
+                                    }} src={baseURL + 'storage/files/' + img} alt=""
+                                    />)
+                            }
+                            return ''
+                        })
+                    }
                     return arr
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['chargeItem'] = 0
+        filters['cashDepositId'] = this.props.match.params.id
+        filters['revenueType'] = this.revenueType
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/cashDeposit/cashDepositDetailList',
-            {'cashDepositId': this.props.match.params.id,
-                'revenueType': this.revenueType
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -146,6 +172,11 @@ class CashDepositDetail extends Component {
     query = () => {
         this.refresh()
     }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
         return (
             <div>
@@ -153,7 +184,7 @@ class CashDepositDetail extends Component {
                     paddingTop: '10px',
                     display: 'block'}}
                 >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
+                    <span>收支类型:&nbsp;&nbsp;</span>
                     <Select
                         showSearch
                         allowClear
@@ -172,6 +203,16 @@ class CashDepositDetail extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1200 }}
                         bordered
                         dataSource={this.state.dataSource}

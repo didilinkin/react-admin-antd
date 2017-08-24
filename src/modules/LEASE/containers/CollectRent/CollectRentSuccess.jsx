@@ -16,6 +16,10 @@ class CollectRentSuccess extends React.Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -34,11 +38,13 @@ class CollectRentSuccess extends React.Component {
         )
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {auditStatus: 2}
+            {auditStatus: 2,
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -158,14 +164,28 @@ class CollectRentSuccess extends React.Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['auditStatus'] = 2
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/collectRent/collectRentList',
@@ -175,7 +195,8 @@ class CollectRentSuccess extends React.Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -187,13 +208,21 @@ class CollectRentSuccess extends React.Component {
             openUpdate: false
         })
     }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
         return (
             <div>
                 <Spin spinning={this.state.loading}>
                     <CollectRentHeadComponent
                         refresh={this.refresh}
+                        RowKeys={this.state.RowKeys}
                         close={this.close}
+                        type={2}
                         ListBuildingInfo={this.state.ListBuildingInfo}
                     />
                     <AllPaidComponent
@@ -203,6 +232,16 @@ class CollectRentSuccess extends React.Component {
                         visible={this.state.openUpdate}
                     />
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 2000 }}
                         bordered
                         dataSource={this.state.dataSource}

@@ -1,13 +1,13 @@
 // 收费管理 - 审核失败
-import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import React from 'react'
+import {Table, Spin } from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentFailComponent from '../details/CollectRent/RentReviewDetail'
 import CollectRentRepaidComponent from '../details/CollectRent/PaidConfirm'
+import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // 引入组件
-const Option = Select.Option
 // React component
-class CollectRentFail extends Component {
+class CollectRentFail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -16,6 +16,10 @@ class CollectRentFail extends Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -40,7 +44,8 @@ class CollectRentFail extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {auditStatus: 3}
+            {auditStatus: 3,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -49,6 +54,7 @@ class CollectRentFail extends Component {
         const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -140,28 +146,39 @@ class CollectRentFail extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['auditStatus'] = 3
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/collectRent/collectRentList',
-            {'periodStatus': this.periodStatus,
-                'rentClientName': this.rentClientName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'auditStatus': 3
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -173,27 +190,16 @@ class CollectRentFail extends Component {
             openUpdate: false
         })
     }
-    rentClientName = ''
-    entryNameOnChange = (e) => {
-        this.rentClientName = e.target.value
-    }
-    roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
-    }
-    buildId = ''
-    selectBuild = (e) => {
-        this.buildId = e
-    }
     query = () => {
         this.refresh()
     }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <CollectRentFailComponent
@@ -208,50 +214,25 @@ class CollectRentFail extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                 />
-                <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>客户名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <span>交费周期:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        style={{width: 150,
-                            marginRight: '5px'}}
-                        placeholder="请选择交费周期"
-                        optionFilterProp="children"
-                        onSelect={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    >
-                        <Option key="3">季付</Option>
-                        <Option key="6">半年付</Option>
-                        <Option key="12">年付</Option>
-                    </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
+                <CollectRentHeadComponent
+                    refresh={this.refresh}
+                    RowKeys={this.state.RowKeys}
+                    close={this.close}
+                    type={3}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1500 }}
                         bordered
                         dataSource={this.state.dataSource}

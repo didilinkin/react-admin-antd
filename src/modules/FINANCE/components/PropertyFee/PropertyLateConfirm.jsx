@@ -94,9 +94,9 @@ class propertyLateConfirm extends React.Component {
         }
         let unpaidMoney2 = 0
         if (discountMoney === 0) {
-            unpaidMoney2 = unpaidMoney1 - thisPaidMoney
+            unpaidMoney2 = parseFloat(parseFloat(unpaidMoney1 - thisPaidMoney).toFixed(1))
         } else {
-            unpaidMoney2 = unpaidMoney1 - thisPaidMoney - discountMoney
+            unpaidMoney2 = parseFloat(parseFloat(unpaidMoney1 - thisPaidMoney - discountMoney).toFixed(1))
         }
         if (unpaidMoney2 < 0) {
             this.props.form.setFieldsValue({

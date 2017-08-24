@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Spin } from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 import AllPaidComponent from '../details/PropertyFee/PropertyDetail'
@@ -17,6 +17,11 @@ class PropertyFeeSuccess extends Component {
             columns: [],
             id: null,
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
+            auditStatus: 2,
             ListBuildingInfo: []
         }
     }
@@ -44,10 +49,12 @@ class PropertyFeeSuccess extends Component {
         )
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {auditStatus: 2}
+            {auditStatus: this.state.auditStatus,
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -165,14 +172,28 @@ class PropertyFeeSuccess extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['auditStatus'] = 2
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
@@ -182,29 +203,26 @@ class PropertyFeeSuccess extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data
+            dataSource: result.data.rows,
+            total: result.data.total
         })
-    }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    periodStatus = ''
-    selectOnChange = (e) => {
-        this.periodStatus = e
     }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
             <div>
                 <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
                     refresh={this.refresh}
+                    type={2}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
                 <AllPaidComponent
@@ -215,8 +233,18 @@ class PropertyFeeSuccess extends Component {
                 />
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
                         scroll={{ x: 2000 }}
                         bordered
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

@@ -64,12 +64,14 @@ class propertyPaidConfirm extends React.Component {
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.props.refreshTable()
+        this.props.close()
         this.setState({visible: false,
             isFirst: true })
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     render () {
         const { getFieldDecorator } = this.props.form

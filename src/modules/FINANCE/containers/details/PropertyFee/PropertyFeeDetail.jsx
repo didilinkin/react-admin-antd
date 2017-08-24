@@ -126,6 +126,23 @@ class PropertyFeeDetail extends React.Component {
             openUpdate2: false
         })
     }
+    delayNext = async () => {
+        await apiPost(
+            '/propertyFee/updatePropertyFeeByNext',
+            {id: this.props.match.params.id,
+                unpaidLateMoney: 0,
+                unpaidMoney: 0,
+                paidMoney: this.state.data.lateMoney,
+                latePaidWay: 6,
+                paidWay: 6,
+                whetherLatePaid: 1}
+        )
+        notification.open({
+            message: '操作成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.initialRemarks()
+    }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
@@ -188,7 +205,7 @@ class PropertyFeeDetail extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.pmUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.pmFee}</td>
                         </tr>
                         <tr>
@@ -197,7 +214,7 @@ class PropertyFeeDetail extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.elevUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.elevatorFee}</td>
                         </tr>
                         <tr>
@@ -215,7 +232,7 @@ class PropertyFeeDetail extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.waterUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.waterFee}</td>
                         </tr>
                     </tbody>
@@ -407,6 +424,10 @@ class PropertyFeeDetail extends React.Component {
                     <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
                     {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
                     <Button type="primary" onClick={this.handleUpdate2} >收违约金</Button>}
+                    {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
+                    <Popconfirm title="确定违约金延期下月电费吗?" onConfirm={this.delayNext}>
+                        <a>&nbsp; 延期下月电费 </a>
+                    </Popconfirm>}
                     {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn">&nbsp; 物业费开票 </a>

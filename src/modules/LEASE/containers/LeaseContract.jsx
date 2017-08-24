@@ -10,6 +10,8 @@ class LeaseContract extends React.Component {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             type: 2,
             id: 0,
             columns: [],
@@ -56,11 +58,12 @@ class LeaseContract extends React.Component {
         let ListBuildingInfo = await apiPost(
             '/contract/ListBuildingInfo'
         )
-        let repairList = result.data
+        let repairList = result.data.rows
         let updateRent = this.updateRent
         let info = this.info
         this.setState({loading: false,
             map: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -166,12 +169,21 @@ class LeaseContract extends React.Component {
             filters = []
         }
         filters['type'] = this.state.type
+        if (pagination === null || typeof (pagination) === 'undefined') {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             '/contract/contractlist',
             filters
         )
         this.setState({
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             type: filters['type'],
             id: 0,
             openLeaseCom: false,
@@ -213,6 +225,12 @@ class LeaseContract extends React.Component {
                         onChange={this.refresh}
                         scroll={{ x: 1300 }}
                         bordered
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.current,
+                            defaultPageSize: 30}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

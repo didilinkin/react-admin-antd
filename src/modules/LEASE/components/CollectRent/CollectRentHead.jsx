@@ -61,7 +61,7 @@ class CollectRentHead extends React.Component {
     }
     render () {
         const { getFieldDecorator } = this.props.form
-        let {ListBuildingInfo} = this.props
+        let {type, ListBuildingInfo} = this.props
         return (
             <Form layout="horizontal">
                 <Row>
@@ -88,7 +88,7 @@ class CollectRentHead extends React.Component {
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
@@ -97,11 +97,12 @@ class CollectRentHead extends React.Component {
                             wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入" style={{ width: 200 }} />
+                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
                 </Row>
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="开票状态" labelCol={{ span: 6 }}
@@ -155,7 +156,8 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
+                {type === 2 &&
                 <Row style={{display: this.state.none}}>
                     <Col span={8}>
                         <FormItem label="查询依据" labelCol={{ span: 6 }}
@@ -175,20 +177,25 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <FormItem label="" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
+                    <Col span={6}>
+                        <FormItem label="" labelCol={{ span: 0 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             <RangePicker onChange={this.getDate} />
                         </FormItem>
                     </Col>
-                </Row>
+                </Row>}
                 <Row>
                     <Col span={16} />
                     <Col span={8}>
                         <div style={{paddingLeft: '25%',
                             marginBottom: 10}}
-                        ><Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div>
+                        >
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                            <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
+                            {type === 2 &&
+                            <Button onClick={this.open}>{this.state.open}</Button>}
+                        </div>
                     </Col>
                 </Row>
             </Form>

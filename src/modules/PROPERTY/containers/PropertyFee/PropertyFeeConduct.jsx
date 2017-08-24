@@ -1,10 +1,10 @@
 // 收费管理 - 审核中
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Select } from 'antd'
+import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeConductComponent from '../details/PropertyFee/PropertyDetail'
+import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
-const Option = Select.Option
 // React component
 class PropertyFeeConduct extends Component {
     constructor (props) {
@@ -15,7 +15,11 @@ class PropertyFeeConduct extends Component {
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
+            RowKeys: [],
             id: null,
+            total: 0,
+            page: 1,
+            rows: 30,
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -42,6 +46,7 @@ class PropertyFeeConduct extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: 1,
+                page: this.state.page,
                 contractStatus: 0}
         )
         let ListBuildingInfo = await apiPost(
@@ -49,6 +54,7 @@ class PropertyFeeConduct extends Component {
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
+            total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
                 title: '序号',
@@ -89,7 +95,8 @@ class PropertyFeeConduct extends Component {
             }, {
                 title: '交费期限',
                 dataIndex: 'payDeadline',
-                key: 'payDeadline'
+                key: 'payDeadline',
+                width: 200
             }, {
                 title: '操作',
                 width: 200,
@@ -104,47 +111,50 @@ class PropertyFeeConduct extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['auditStatus'] = 1
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
-            {'clientName': this.clientName,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'contractStatus': 0,
-                'auditStatus': 1
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data
+            dataSource: result.data.rows
         })
-    }
-    clientName = null
-    entryNameOnChange = (e) => {
-        this.clientName = e.target.value
-    }
-    roomNum = ''
-    entryNumberOnChange = (e) => {
-        this.roomNum = e.target.value
-    }
-    buildId = ''
-    selectBuild = (e) => {
-        this.buildId = e
     }
     query = () => {
         this.refresh()
     }
+    onSelectChange = (selectedRowKeys) => {
+        console.log('selectedRowKeys changed: ', selectedRowKeys)
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
-        let ListBuildingInfo = this.state.ListBuildingInfo
         return (
             <div>
                 <PropertyFeeConductComponent
@@ -153,39 +163,27 @@ class PropertyFeeConduct extends Component {
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
-                <span style={{paddingBottom: '10px',
-                    paddingTop: '10px',
-                    display: 'block'}}
-                >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 200,
-                            marginRight: '5px'}}
-                        placeholder="请选择所属楼宇"
-                        optionFilterProp="children"
-                        onChange={this.selectBuild}
-                    >
-                        {ListBuildingInfo.map(BuildingInfo => {
-                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                        })}
-                    </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNumberOnChange}
-                    />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
-                    <Input style={{width: 150,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange}
-                    />
-                    <Button type="primary" onClick={this.query}>查询</Button>
-                </span>
+                <PropertyFeeHeadComponent
+                    RowKeys={this.state.RowKeys}
+                    refresh={this.refresh}
+                    type={1}
+                    ListBuildingInfo={this.state.ListBuildingInfo}
+                />
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
                         scroll={{ x: 1500 }}
                         bordered
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

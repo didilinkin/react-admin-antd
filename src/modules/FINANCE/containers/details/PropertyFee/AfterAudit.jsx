@@ -117,7 +117,7 @@ class AfterAudit extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.pmUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.pmFee}</td>
                         </tr>
                         <tr>
@@ -126,7 +126,7 @@ class AfterAudit extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.elevUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.elevatorFee}</td>
                         </tr>
                         <tr>
@@ -135,7 +135,7 @@ class AfterAudit extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.acUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.acUnitDay}/4</td>
                             <td>{this.state.data.airFee}</td>
                         </tr>
                         <tr>
@@ -144,7 +144,7 @@ class AfterAudit extends React.Component {
                             <td>*</td>
                             <td>{this.state.data.waterUnitPrice}</td>
                             <td>*</td>
-                            <td>{this.state.monthDay}</td>
+                            <td>{this.state.data.months}</td>
                             <td>{this.state.data.waterFee}</td>
                         </tr>
                     </tbody>
