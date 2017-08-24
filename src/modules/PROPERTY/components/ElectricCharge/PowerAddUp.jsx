@@ -1,6 +1,7 @@
 import React from 'react'
 import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table, Tag} from 'antd'
 import { apiPost } from '../../../../api/index'
+import '../../style/PowerAddUp.less'
 import moment from 'moment'
 const FormItem = Form.Item
 const {RangePicker} = DatePicker
@@ -87,6 +88,8 @@ class sumElectricityAddUp extends React.Component {
             })
             let list = JSON.stringify(elecList)
             json['list'] = list
+            console.log(json)
+            debugger
             if (this.props.id > 0) {
                 json['idOld'] = this.props.id
                 await apiPost(
@@ -256,6 +259,7 @@ class sumElectricityAddUp extends React.Component {
                 )
                 // 电费详情
                 let electricChargeInfo = map.data.electricityFees
+                electricChargeInfo.clientName = electricChargeInfo.clientNameTwo ? electricChargeInfo.clientNameTwo : ''
                 let currentContract = null
                 this.state.ClientList.map(contract => {
                     if (contract.id === electricChargeInfo.conteractId) {
@@ -495,7 +499,7 @@ class sumElectricityAddUp extends React.Component {
         let powerLossRatio = this.state.Contract.powerLossRatio ? this.state.Contract.powerLossRatio / 100 : 0
 
         if (this.state.powerType === 0) {
-            jsonTwo['electricLoss'] = this.state.Contract.powerLossRatio ? jsonTwo.needElectricity * jsonTwo.ratio * powerLossRatio : 0
+            jsonTwo['electricLoss'] = 0
             jsonTwo['sumElectricity'] = (jsonTwo.needElectricity * json.ratio) ? (json.needElectricity * json.ratio) : 0
         } else {
             jsonTwo['electricLoss'] = this.state.Contract.powerLossRatio ? jsonTwo.needElectricity * jsonTwo.ratio * powerLossRatio : 0
@@ -638,18 +642,6 @@ class sumElectricityAddUp extends React.Component {
                 }
             }
         }
-        const titleLayout = {
-            color: '#ffffff',
-            height: 48,
-            backgroundColor: '#0099EB',
-            textAlign: 'center',
-            fontSize: 16,
-            lineHeight: '48px'
-        }
-        const greenButtonStyle = {
-            backgroundColor: '#1FCA3E',
-            borderColor: '#1FCA3E'
-        }
         const tagStyle = {
             marginLeft: '50px',
             marginBottom: '20px'}
@@ -663,11 +655,7 @@ class sumElectricityAddUp extends React.Component {
                 onCancel={this.handleCancel}
             >
                 <Form layout="horizontal">
-                    <div style={{background: '#f7f7f7',
-                        width: 1050,
-                        marginBottom: 20,
-                        paddingTop: '22px'}}
-                    >
+                    <div className="main-div">
                         <Row>
                             <Col span={8}>
                                 <FormItem label="客户名称" labelCol={{ span: 6 }}
@@ -810,8 +798,8 @@ class sumElectricityAddUp extends React.Component {
                     </Row>
                     <Row gutter={32}>
                         <Col span={8}>
-                            <div style={{border: '1px solid #EBEBEB'}}>
-                                <div style={titleLayout}>抄表录入</div>
+                            <div className="bottom-card">
+                                <div className="bottom-cards-title">抄表录入</div>
                                 <div style={{marginTop: 20}}>
                                     <FormItem
                                         {...formItemLayout}
@@ -890,14 +878,14 @@ class sumElectricityAddUp extends React.Component {
                                         }
                                     </FormItem>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.add} type="primary" htmlType="submit" style={greenButtonStyle} >增加本条记录</Button>
+                                        <Button onClick={this.add} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>
                         </Col>
                         <Col span={8}>
-                            <div style={{border: '1px solid #EBEBEB'}}>
-                                <div style={titleLayout}>调差</div>
+                            <div className="bottom-card">
+                                <div className="bottom-cards-title">调差</div>
                                 <div style={{marginTop: 20}}>
                                     <FormItem
                                         {...formItemLayout}
@@ -930,14 +918,14 @@ class sumElectricityAddUp extends React.Component {
                                         }
                                     </FormItem>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addBalance} type="primary" htmlType="submit" style={greenButtonStyle} >增加本条记录</Button>
+                                        <Button onClick={this.addBalance} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>
                         </Col>
                         <Col span={8}>
-                            <div style={{border: '1px solid #EBEBEB'}}>
-                                <div style={titleLayout}>录入违约金</div>
+                            <div className="bottom-card">
+                                <div className="bottom-cards-title">录入违约金</div>
                                 <div onSubmit={this.handleSubmit} style={{marginTop: 20}}>
                                     <FormItem
                                         {...formItemLayout}
@@ -964,7 +952,7 @@ class sumElectricityAddUp extends React.Component {
                                     }} checked={this.state.isWaterMoney} style={tagStyle}
                                     >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={greenButtonStyle} >增加本条记录</Button>
+                                        <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>

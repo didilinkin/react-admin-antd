@@ -217,7 +217,7 @@ class PropertyDetail extends React.Component {
                                         <tr className="hd">
                                             <td>时间</td>
                                             <td>实收金额</td>
-                                            <td>未收收金额</td>
+                                            <td>未收金额</td>
                                             <td>收款方式</td>
                                             <td>经手人</td>
                                         </tr>
@@ -289,7 +289,7 @@ class PropertyDetail extends React.Component {
                                         <tr className="hd">
                                             <td>时间</td>
                                             <td>实收金额</td>
-                                            <td>未收收金额</td>
+                                            <td>未收金额</td>
                                             <td>优惠金额</td>
                                             <td>收款方式</td>
                                             <td>经手人</td>
