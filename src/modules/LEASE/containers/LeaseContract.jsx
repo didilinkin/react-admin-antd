@@ -169,7 +169,7 @@ class LeaseContract extends React.Component {
             filters = []
         }
         filters['type'] = this.state.type
-        if (pagination === null) {
+        if (pagination === null || typeof (pagination) === 'undefined') {
             filters['page'] = 1
             filters['rows'] = 30
         } else {
