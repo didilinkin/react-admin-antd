@@ -62,6 +62,7 @@ class addUpkeep extends React.Component {
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })
+        this.props.close()
     }
     handleCancel = (e) => {
         this.props.close()

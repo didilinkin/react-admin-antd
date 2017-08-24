@@ -81,11 +81,13 @@ class BuildAdd extends React.Component {
             this.setState({visible: false,
                 isFirst: true })
         }
+        this.props.close()
     }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     render () {
         const { getFieldDecorator } = this.props.form

@@ -131,11 +131,13 @@ class RoomAdd extends React.Component {
             this.setState({visible: false,
                 isFirst: true })
         }
+        this.props.close()
     }
     handleCancel = (e) => {
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+        this.props.close()
     }
     buildId = null
     buildName = null
