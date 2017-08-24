@@ -142,7 +142,8 @@ class PropertyContractAdded extends React.Component {
                     visible: nextProps.visible,
                     listRoom: listRoom,
                     isEdit: contract.isEdit !== 0,
-                    rooms: contract.leaseRooms.split(',')
+                    rooms: contract.leaseRooms.split(','),
+                    roomIds: contract.roomIds.split(',')
                 })
                 this.props.form.setFieldsValue({
                     buildIdOne: contract.buildName,
