@@ -87,6 +87,7 @@ class collectRentConfirm extends React.Component {
         this.props.refreshTable()
     }
     handleCancel = (e) => {
+        this.props.close()
         this.setState({ visible: false,
             isFirst: true})
     }

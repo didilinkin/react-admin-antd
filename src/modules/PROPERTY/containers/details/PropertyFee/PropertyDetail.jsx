@@ -36,9 +36,6 @@ class PropertyDetail extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    clienttNameChange = (e) => {
-        console.log(e.target.value)
-    }
     async initialRemarks (nextProps) {
         this.setState({
             view: false

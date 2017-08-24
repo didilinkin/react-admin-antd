@@ -17,6 +17,10 @@ class EditBuilding extends Component {
             dataSource: [],
             title: '',
             id: null,
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -53,11 +57,14 @@ class EditBuilding extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/build/buildList'
+            '/build/buildList',
+            {delFlag: 0,
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
         this.setState({loading: false,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -106,24 +113,40 @@ class EditBuilding extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['delFlag'] = 0
+        filters['buildName'] = this.buildName
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/build/buildList',
-            {'buildName': this.buildName
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }

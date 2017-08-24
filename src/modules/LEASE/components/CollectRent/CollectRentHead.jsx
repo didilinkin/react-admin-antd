@@ -49,8 +49,8 @@ class CollectRentHead extends React.Component {
             })
         }
     }
-    startDate = ''
-    endDate = ''
+    startDate = null
+    endDate = null
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
         if (dateString[1] > 0) {
