@@ -209,11 +209,14 @@ class CollectRentSuccess extends React.Component {
         })
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })
     }
+    /* foot = (currentPageData) =>{
+        console.log(currentPageData)
+        return currentPageData
+    }*/
     render () {
         return (
             <div>
