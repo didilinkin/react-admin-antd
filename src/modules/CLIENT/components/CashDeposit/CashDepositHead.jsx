@@ -46,15 +46,15 @@ class CollectRentHead extends React.Component {
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={8}>
+                        <Col span={5}>
                             <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
+                                wrapperCol={{ span: 10 }}
                             >
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
                                         allowClear
-                                        style={{ width: 200 }}
+                                        style={{ width: 140 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
                                     >
@@ -65,35 +65,26 @@ class CollectRentHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
+                        <Col span={6}>
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
+                                wrapperCol={{ span: 12 }}
                             >
                                 {getFieldDecorator('sublietName')(
-                                    <Input placeholder="请输入客户名称" style={{ width: 200 }} />
+                                    <Input placeholder="请输入客户名称" style={{ width: 140 }} />
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
+                        <Col span={6}>
                             <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
+                                wrapperCol={{ span: 12 }}
                             >
                                 {getFieldDecorator('roomNum')(
-                                    <Input placeholder="请输入房间编号" style={{ width: 200 }} />
+                                    <Input placeholder="请输入房间编号" style={{ width: 140 }} />
                                 )}
                             </FormItem>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col span={16} />
-                        <Col span={8}>
-                            <div style={{paddingLeft: '25%',
-                                marginBottom: 10}}
-                            >
-                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                                <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                            </div>
-                        </Col>
+                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                        <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
                     </Row>
                 </Form>
             </div>

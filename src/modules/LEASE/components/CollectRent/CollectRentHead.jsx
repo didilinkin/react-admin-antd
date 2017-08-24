@@ -88,7 +88,7 @@ class CollectRentHead extends React.Component {
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 12 }}
                         >
-                            {getFieldDecorator('clientName')(
+                            {getFieldDecorator('rentClientName')(
                                 <Input placeholder="请输入客户名称" style={{ width: 140 }} />
                             )}
                         </FormItem>
