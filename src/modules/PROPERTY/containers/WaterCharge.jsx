@@ -39,9 +39,9 @@ class ChargeWaterBill extends React.Component {
             openInfo: false,
             openWaterAddUpComponent: false})
         console.log(this.activeKey)
-        filters['examineState'] = this.activeKey === '1' ? 0 :
-            this.activeKey === '2' ? 1 :
-                this.activeKey === '4' ? 2 : 3
+        filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
+            this.activeKey.toString() === '2' ? 1 :
+                this.activeKey.toString() === '4' ? 2 : 3
         if (pagination === null) {
             filters['page'] = 1
             filters['rows'] = 30

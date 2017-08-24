@@ -37,15 +37,15 @@ class WaterFee extends React.Component {
     }
     activeKey = 2
     refreshTwo = async (activeKey) => {
-        this.activeKey = activeKey
+        this.activeKey = activeKey ? activeKey : 2
         this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openInfo: false})
-        filters['examineState'] = this.activeKey === '1' ? 0 :
-            this.activeKey === '2' ? 1 :
-                this.activeKey === '4' ? 2 : 3
+        filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
+            this.activeKey.toString() === '2' ? 1 :
+                this.activeKey.toString() === '4' ? 2 : 3
         if (pagination === null) {
             filters['page'] = 1
             filters['rows'] = 30
@@ -76,6 +76,7 @@ class WaterFee extends React.Component {
         })
         this.setState({
             loading: false,
+            current: pagination ? pagination.current : 1,
             total: result.data.total,
             dataSource1: dataSource1,
             dataSource2: dataSource2,
@@ -102,6 +103,7 @@ class WaterFee extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
+            {examineState: 1}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
