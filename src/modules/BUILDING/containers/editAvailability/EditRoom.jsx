@@ -1,12 +1,12 @@
 // 房间管理
-import React, {Component} from 'react'
+import React from 'react'
 import {Table, Button, Spin, Input, Select, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api'
 import AddRoom from '../../components/RoomAdd'
 // 引入组件
 const Option = Select.Option
 // React component
-class EditRoom extends Component {
+class EditRoom extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
@@ -17,6 +17,10 @@ class EditRoom extends Component {
             title: '',
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -53,7 +57,9 @@ class EditRoom extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/build/roomList'
+            '/build/roomList',
+            {delFlag: 0,
+                page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -62,6 +68,7 @@ class EditRoom extends Component {
         const handleDelete = this.handleDelete
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -173,27 +180,43 @@ class EditRoom extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['delFlag'] = 0
+        filters['roomNum'] = this.roomNum
+        filters['buildId'] = this.buildId
+        filters['propertyType'] = this.propertyType
+        filters['roomStatus'] = this.roomStatus
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/build/roomList',
-            {'propertyType': this.propertyType,
-                'roomNum': this.roomNum,
-                'buildId': this.buildId,
-                'roomStatus': this.roomStatus
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -213,8 +236,20 @@ class EditRoom extends Component {
     selectRoomStatus = (e) => {
         this.roomStatus = e
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         let ListBuildingInfo = this.state.ListBuildingInfo
@@ -224,6 +259,7 @@ class EditRoom extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
+                    close={this.close}
                     title={this.state.title}
                 />
                 <span style={{paddingBottom: '10px',
@@ -280,6 +316,16 @@ class EditRoom extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1900 }}
                         bordered
                         dataSource={this.state.dataSource}

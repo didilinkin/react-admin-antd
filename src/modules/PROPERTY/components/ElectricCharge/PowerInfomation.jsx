@@ -18,7 +18,19 @@ class PowerInfomation extends React.Component {
                 '/ElectricityFees/ElectricityFeeInfo',
                 {id: nextProps.id}
             )
+            let receipt = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {feeId: nextProps.id,
+                    feeType: 7}
+            )
+            let liquidatedDamagesList = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {feeId: nextProps.id,
+                    feeType: 8}
+            )
             electricityFeeInfo = electricityFeeInfo.data
+            receipt = receipt.data
+            liquidatedDamagesList = liquidatedDamagesList.data
             let mainColumn = [{
                 title: '房间编号',
                 dataIndex: 'roomNumberOne'
@@ -75,8 +87,8 @@ class PowerInfomation extends React.Component {
             this.setState({
                 list: electricityFeeInfo.list,
                 electricityFees: electricityFeeInfo.electricityFees,
-                receipt: electricityFeeInfo.receipt ? electricityFeeInfo.receipt : [],
-                liquidatedDamagesList: electricityFeeInfo.liquidatedDamagesList ? electricityFeeInfo.liquidatedDamagesList : [],
+                receipt: receipt ? receipt : [],
+                liquidatedDamagesList: liquidatedDamagesList ? liquidatedDamagesList : [],
                 visible: nextProps.visible,
                 isFirst: false,
                 mainColumns: mainColumn
@@ -118,7 +130,7 @@ class PowerInfomation extends React.Component {
             isFirst: true,
             visible: false
         })
-        if (this.props.Finance > 0 && this.state.map.electricityFees.examineState === 1) {
+        if (this.props.Finance > 0 && this.state.electricityFees.examineState === 1) {
             let data = await apiPost(
                 '/ElectricityFees/updateAudit',
                 {id: this.props.id,
@@ -411,39 +423,39 @@ function ExamineSuccessState (props) {
     // 确认收款
     const confirmReceipt = [{
         title: '时间',
-        dataIndex: 'time'
+        dataIndex: 'receiptDate'
     }, {
         title: '实收金额',
-        dataIndex: 'chargeMoney'
+        dataIndex: 'paidMoney'
     }, {
         title: '未收金额',
-        dataIndex: 'noChargeMoney'
+        dataIndex: 'unpaidMoney'
     }, {
         title: '收款方式',
-        dataIndex: 'principalMethod'
+        dataIndex: 'paidWayString'
     }, {
         title: '经手人',
-        dataIndex: 'person'
+        dataIndex: 'createName'
     }]
     // 确认违约金
     const confirmLiquidatedDamages = [{
         title: '时间',
-        dataIndex: 'liquidatedDamagesDate'
+        dataIndex: 'receiptDate'
     }, {
         title: '优惠金额',
-        dataIndex: 'discountAmount'
+        dataIndex: 'discountMoney'
     }, {
         title: '实收金额',
-        dataIndex: 'liquidatedDamagesReceived'
+        dataIndex: 'paidMoney'
     }, {
         title: '未收金额',
-        dataIndex: 'noChargeMoney'
+        dataIndex: 'unpaidMoney'
     }, {
         title: '收款方式',
-        dataIndex: 'damagesMethod'
+        dataIndex: 'paidWayString'
     }, {
         title: '经手人',
-        dataIndex: 'person'
+        dataIndex: 'createName'
     }]
     return (
         <div style={{
@@ -473,7 +485,6 @@ function ExamineSuccessState (props) {
                     <div style={{fontWeight: 'bold'}}>确认收款</div>
                     <Row style={{
                         marginTop: 10,
-                        backgroundColor: '#F3F3F3',
                         height: '32px',
                         lineHeight: '32px',
                         paddingLeft: '10px',
@@ -514,7 +525,6 @@ function ExamineSuccessState (props) {
                     <div style={{fontWeight: 'bold'}}>确认违约金</div>
                     <Row style={{
                         marginTop: 10,
-                        backgroundColor: '#F3F3F3',
                         height: '32px',
                         lineHeight: '32px',
                         paddingLeft: '10px',

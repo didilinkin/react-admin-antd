@@ -3,7 +3,7 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHead from '../components/ElectricInfo/PowerBillHead'
 import { apiPost } from '../../../api'
-import PowerInfomation from '../components/ElectricInfo/PowerInfomation'
+import PowerInfomation from '../../PROPERTY/components/ElectricCharge/PowerInfomation'
 
 
 const TabPane = Tabs.TabPane

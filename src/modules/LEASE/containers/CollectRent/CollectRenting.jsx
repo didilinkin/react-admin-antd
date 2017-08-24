@@ -12,7 +12,6 @@ class CollectRenting extends Component {
         this.state = {
             loading: false,
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             AccountList: [],
@@ -28,7 +27,6 @@ class CollectRenting extends Component {
     }
     handleUpdate = (id) => {
         this.setState({
-            openinvalid: false,
             openAdd: false,
             openTableAddUp: false,
             openUpdate: true,
@@ -39,8 +37,7 @@ class CollectRenting extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/collectRent/rentingList',
-            {auditStatus: 0,
-                page: this.state.page}
+            {page: this.state.page}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -136,11 +133,9 @@ class CollectRenting extends Component {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
-        console.log(pagination)
         if (typeof (filters) === 'undefined') {
             filters = []
         }
-        filters['auditStatus'] = 0
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
@@ -154,7 +149,7 @@ class CollectRenting extends Component {
         }
         // 刷新表格
         let result = await apiPost(
-            '/collectRent/collectRentList',
+            '/collectRent/rentingList',
             filters
         )
         this.setState({
@@ -169,7 +164,6 @@ class CollectRenting extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false
         })
@@ -178,7 +172,6 @@ class CollectRenting extends Component {
         this.refresh()
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

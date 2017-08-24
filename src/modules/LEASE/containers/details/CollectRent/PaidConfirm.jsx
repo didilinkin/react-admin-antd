@@ -19,6 +19,7 @@ class addUpkeep extends React.Component {
         }
     }
     async initialRemarks (nextProps) {
+        console.log(nextProps.visible)
         this.setState({
             view: false
         })
@@ -59,6 +60,7 @@ class addUpkeep extends React.Component {
             message: '收租成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        this.props.close()
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })

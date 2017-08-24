@@ -51,7 +51,19 @@ class ElectricChargeDetails extends React.Component {
             '/ElectricityFees/ElectricityFeeInfo',
             {id: this.props.match.params.id}
         )
+        let receipt = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {feeId: this.props.match.params.id,
+                feeType: 7}
+        )
+        let liquidatedDamagesList = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {feeId: this.props.match.params.id,
+                feeType: 8}
+        )
         electricityFeeInfo = electricityFeeInfo.data
+        receipt = receipt.data
+        liquidatedDamagesList = liquidatedDamagesList.data
         let mainColumn = [{
             title: '房间编号',
             dataIndex: 'roomNumberOne'
@@ -103,8 +115,8 @@ class ElectricChargeDetails extends React.Component {
         this.setState({
             list: electricityFeeInfo.list,
             electricityFees: electricityFeeInfo.electricityFees,
-            receipt: electricityFeeInfo.receipt ? electricityFeeInfo.receipt : [],
-            liquidatedDamagesList: electricityFeeInfo.liquidatedDamagesList ? electricityFeeInfo.liquidatedDamagesList : [],
+            receipt: receipt ? receipt : [],
+            liquidatedDamagesList: liquidatedDamagesList ? liquidatedDamagesList : [],
             mainColumns: mainColumn
         })
         this.addTotalColunm()
@@ -397,41 +409,41 @@ function ExamineSuccessState (props) {
     // 确认收款
     const confirmReceipt = [{
         title: '时间',
-        dataIndex: 'time'
+        dataIndex: 'receiptDate'
     }, {
         title: '实收金额',
-        dataIndex: 'chargeMoney'
+        dataIndex: 'paidMoney'
     }, {
         title: '未收金额',
-        dataIndex: 'noChargeMoney'
+        dataIndex: 'unpaidMoney'
     }, {
         title: '收款方式',
-        dataIndex: 'principalMethod'
+        dataIndex: 'paidWayString'
     }, {
         title: '经手人',
-        dataIndex: 'person'
+        dataIndex: 'createName'
     }]
     // 确认违约金
     const confirmLiquidatedDamages = [{
         title: '时间',
-        dataIndex: 'liquidatedDamagesDate'
+        dataIndex: 'receiptDate'
     }, {
         title: '优惠金额',
-        dataIndex: 'discountAmount'
+        dataIndex: 'discountMoney'
     }, {
         title: '实收金额',
-        dataIndex: 'liquidatedDamagesReceived'
+        dataIndex: 'paidMoney'
     }, {
         title: '未收金额',
-        dataIndex: 'noChargeMoney'
+        dataIndex: 'unpaidMoney'
     }, {
         title: '收款方式',
-        dataIndex: 'damagesMethod'
+        dataIndex: 'paidWayString'
     }, {
         title: '经手人',
-        dataIndex: 'person'
+        dataIndex: 'createName'
     }]
-    if (props.fees.principalPaymentStatus === 1) {
+    if (props.fees.principalPaymentStatus !== 2) {
         return (
             <div style={{
                 marginTop: 20,
@@ -460,7 +472,6 @@ function ExamineSuccessState (props) {
                         <div style={{fontWeight: 'bold'}}>确认收款</div>
                         <Row style={{
                             marginTop: 10,
-                            backgroundColor: '#F3F3F3',
                             height: '32px',
                             lineHeight: '32px',
                             paddingLeft: '10px',
@@ -484,7 +495,9 @@ function ExamineSuccessState (props) {
                             </Col>
                         </Row>
                     </div>
-                    <div style={{marginTop: 10}}>
+                    <div style={{marginTop: 10,
+                        marginBottom: 20}}
+                    >
                         <Table
                             columns={confirmReceipt}
                             dataSource={props.receipt}
@@ -492,60 +505,63 @@ function ExamineSuccessState (props) {
                             pagination={false}
                         />
                     </div>
-                    <hr style={{marginTop: 20}} />
-                    <div style={{
-                        fontWeight: 'bold',
-                        marginTop: 10
-                    }}
-                    >
-                        <div style={{fontWeight: 'bold'}}>确认违约金</div>
-                        <Row style={{
-                            marginTop: 10,
-                            backgroundColor: '#F3F3F3',
-                            height: '32px',
-                            lineHeight: '32px',
-                            paddingLeft: '10px',
-                            fontWeight: 'normal'
+                    {props.fees.defaultPaymentStatus !== 2 &&
+                    <div>
+                        <hr />
+                        <div style={{
+                            fontWeight: 'bold',
+                            marginTop: 10
                         }}
                         >
-                            <Col span={8}>
-                                <div>
-                                    <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
-                                    <span
-                                        style={blueBlodStyle}
-                                    >{props.fees.days ? props.fees.days : 0}</span>
-                                    <span>&nbsp;天</span>
-                                </div>
-                            </Col>
-                            <Col span={8}>
-                                <div>
-                                    <span style={lightGrayStyle}>违约金额：&nbsp;</span>
-                                    <span
-                                        style={blueBlodStyle}
-                                    >{props.fees.liquidatedDamages ? props.fees.liquidatedDamages : 0}</span>
-                                    <span>&nbsp;元</span>
-                                </div>
-                            </Col>
-                            <Col span={8}>
-                                <div>
-                                    <span style={lightGrayStyle}>开票状态：&nbsp;</span>
-                                    <span>{props.fees.principalDamagesBilling === 1 ? '已开票' : '未开票'}</span>
-                                </div>
-                            </Col>
-                        </Row>
+                            <div style={{fontWeight: 'bold'}}>确认违约金</div>
+                            <Row style={{
+                                marginTop: 10,
+                                height: '32px',
+                                lineHeight: '32px',
+                                paddingLeft: '10px',
+                                fontWeight: 'normal'
+                            }}
+                            >
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
+                                        <span
+                                            style={blueBlodStyle}
+                                        >{props.fees.days ? props.fees.days : 0}</span>
+                                        <span>&nbsp;天</span>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle}>违约金额：&nbsp;</span>
+                                        <span
+                                            style={blueBlodStyle}
+                                        >{props.fees.liquidatedDamages ? props.fees.liquidatedDamages : 0}</span>
+                                        <span>&nbsp;元</span>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle}>开票状态：&nbsp;</span>
+                                        <span>{props.fees.principalDamagesBilling === 1 ? '已开票' : '未开票'}</span>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div style={{
+                            marginTop: 10,
+                            marginBottom: 20
+                        }}
+                        >
+                            <Table
+                                columns={confirmLiquidatedDamages}
+                                dataSource={props.liquidatedDamagesList}
+                                bordered
+                                pagination={false}
+                            />
+                        </div>
                     </div>
-                    <div style={{
-                        marginTop: 10,
-                        marginBottom: 20
-                    }}
-                    >
-                        <Table
-                            columns={confirmLiquidatedDamages}
-                            dataSource={props.liquidatedDamagesList}
-                            bordered
-                            pagination={false}
-                        />
-                    </div>
+                    }
                 </div>
             </div>)
     } else {

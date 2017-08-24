@@ -49,8 +49,8 @@ class CollectRentHead extends React.Component {
             })
         }
     }
-    startDate = ''
-    endDate = ''
+    startDate = null
+    endDate = null
     getDate = (date, dateString) => {
         this.startDate = dateString[0]
         if (dateString[1] > 0) {
@@ -65,14 +65,14 @@ class CollectRentHead extends React.Component {
         return (
             <Form layout="horizontal">
                 <Row>
-                    <Col span={6}>
+                    <Col span={8}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
+                            wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('buildId')(
                                 <Select
                                     showSearch
-                                    style={{ width: 150 }}
+                                    style={{ width: 200 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
@@ -83,39 +83,21 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={8}>
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
+                            wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入客户名称" style={{ width: 150 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={8}>
                         <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
+                            wrapperCol={{ span: 16 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入房间编号" style={{ width: 150 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={6}>
-                        <FormItem label="交费周期" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
-                        >
-                            {getFieldDecorator('periodStatus')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 150 }}
-                                    placeholder="请选择交费周期"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="3">季付</Option>
-                                    <Option key="6">半年付</Option>
-                                    <Option key="12">年付</Option>
-                                </Select>
+                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
@@ -195,9 +177,9 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <FormItem label="" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
+                    <Col span={6}>
+                        <FormItem label="" labelCol={{ span: 0 }}
+                            wrapperCol={{ span: 20 }}
                         >
                             <RangePicker onChange={this.getDate} />
                         </FormItem>

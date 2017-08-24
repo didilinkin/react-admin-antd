@@ -17,6 +17,10 @@ class EditBuilding extends Component {
             dataSource: [],
             title: '',
             id: null,
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             ListBuildingInfo: []
         }
     }
@@ -53,11 +57,14 @@ class EditBuilding extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/build/buildList'
+            '/build/buildList',
+            {delFlag: 0,
+                page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
         this.setState({loading: false,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -106,24 +113,40 @@ class EditBuilding extends Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['delFlag'] = 0
+        filters['buildName'] = this.buildName
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/build/buildList',
-            {'buildName': this.buildName
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -131,8 +154,20 @@ class EditBuilding extends Component {
     entryNameOnChange = (e) => {
         this.buildName = e.target.value
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     query = () => {
         this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
     }
     render () {
         return (
@@ -141,6 +176,7 @@ class EditBuilding extends Component {
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
+                    close={this.close}
                     title={this.state.title}
                 />
                 <span style={{paddingBottom: '10px',
@@ -157,6 +193,16 @@ class EditBuilding extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1100 }}
                         bordered
                         dataSource={this.state.dataSource}

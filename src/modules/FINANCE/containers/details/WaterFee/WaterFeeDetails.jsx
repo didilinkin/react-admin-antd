@@ -359,7 +359,6 @@ class CollectionDetails extends React.Component {
                                 <div style={{fontWeight: 'bold'}}>确认收款</div>
                                 <Row style={{
                                     marginTop: 10,
-                                    backgroundColor: '#F3F3F3',
                                     height: '44px',
                                     lineHeight: '44px',
                                     paddingLeft: '10px',
@@ -404,7 +403,6 @@ class CollectionDetails extends React.Component {
                                 <div style={{fontWeight: 'bold'}}>确认违约金</div>
                                 <Row style={{
                                     marginTop: 10,
-                                    backgroundColor: '#F3F3F3',
                                     height: '44px',
                                     lineHeight: '44px',
                                     paddingLeft: '10px',

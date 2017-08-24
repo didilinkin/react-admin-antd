@@ -71,15 +71,15 @@ class propertyPaidConfirm extends React.Component {
             message: '操作成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.props.refreshTable()
         this.props.close()
+        this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.setState({ visible: false,
             isFirst: true})
-        this.props.close()
     }
     onChange = (e) => {
         this.setState({
