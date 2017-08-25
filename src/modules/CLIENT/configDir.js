@@ -6,6 +6,12 @@ const CLIENT_DIR = {
     icon: 'user',
     childRoute: [
         {
+            title: '客户资料',
+            key: 'information',
+            path: '/home/client/information',
+            ancestor: ['client'],
+            component: require('./containers/Information').default
+        }, {
             title: '客户报修',
             key: 'repair',
             path: '/home/client/repair',
@@ -32,6 +38,24 @@ const CLIENT_DIR = {
                 }
             ]
         }, {
+            title: '整改通知',
+            key: 'notice',
+            path: '/home/client/notice',
+            ancestor: ['client'],
+            component: require('./containers/Notice').default
+        }, {
+            title: '二次装修',
+            key: 'secondaryDecoration',
+            path: '/home/client/secondaryDecoration',
+            ancestor: ['client'],
+            component: require('./containers/SecondaryDecoration').default
+        }, {
+            title: '保证金管理',
+            key: 'margin',
+            path: '/home/client/margin',
+            ancestor: ['client'],
+            component: require('./containers/Margin').default
+        }, {
             title: '门禁卡管理',
             key: 'accessCard',
             path: '/home/client/accessCard',
@@ -51,30 +75,6 @@ const CLIENT_DIR = {
                     component: require('./containers/accessCard/Deposit').default
                 }
             ]
-        }, {
-            title: '客户资料',
-            key: 'information',
-            path: '/home/client/information',
-            ancestor: ['client'],
-            component: require('./containers/Information').default
-        }, {
-            title: '整改通知',
-            key: 'notice',
-            path: '/home/client/notice',
-            ancestor: ['client'],
-            component: require('./containers/Notice').default
-        }, {
-            title: '二次装修',
-            key: 'secondaryDecoration',
-            path: '/home/client/secondaryDecoration',
-            ancestor: ['client'],
-            component: require('./containers/SecondaryDecoration').default
-        }, {
-            title: '保证金管理',
-            key: 'margin',
-            path: '/home/client/margin',
-            ancestor: ['client'],
-            component: require('./containers/Margin').default
         }
     ]
 }

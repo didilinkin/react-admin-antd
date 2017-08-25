@@ -6,6 +6,12 @@ const BUILDING_DIR = {
     icon: 'home',
     childRoute: [
         {
+            title: '楼宇图示',
+            key: 'buildingShow',
+            path: '/home/building/buildingShow',
+            ancestor: ['building'],
+            component: require('./containers/BuildingShow').default
+        }, {
             title: '编辑房源',
             key: 'editAvailability',
             path: '/home/building/editAvailability',
@@ -25,12 +31,6 @@ const BUILDING_DIR = {
                     component: require('./containers/editAvailability/EditBuilding').default
                 }
             ]
-        }, {
-            title: '楼宇图示',
-            key: 'buildingShow',
-            path: '/home/building/buildingShow',
-            ancestor: ['building'],
-            component: require('./containers/BuildingShow').default
         }, {
             title: '注册信息',
             key: 'registrationMessage',

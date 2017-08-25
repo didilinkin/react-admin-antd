@@ -50,7 +50,7 @@ function CashDepositSurplus (props) {
     return (
         <div className="home-bottom-cord-div" style={{backgroundColor: props.color}} >
             <div>
-                <img className="home-bottom-cord-img" src={props.logo} />
+                <img className="home-bottom-cord-img" src={props.logo} alt="" />
             </div>
             <div className="home-bottom-cord-titles" >
                 <div className="home-bottom-cord-titles-title" >{props.title}</div>
