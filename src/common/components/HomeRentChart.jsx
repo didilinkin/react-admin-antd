@@ -51,7 +51,7 @@ class HomeRentChart extends React.Component {
                     showSymbol: false,
                     type: 'line',
                     areaStyle: {normal: {}},
-                    data: [120, 132, 101, 134, 90, 230, 210, 234, 290, 330, 310, 220]
+                    data: []
                 },
                 {
                     name: '实收租金',
@@ -59,7 +59,7 @@ class HomeRentChart extends React.Component {
                     showSymbol: false,
                     smooth: true,
                     areaStyle: {normal: {}},
-                    data: [220, 182, 191, 234, 290, 330, 310, 220, 182, 191, 234, 290]
+                    data: []
                 }
             ]
         }

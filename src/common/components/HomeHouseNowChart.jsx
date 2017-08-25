@@ -14,21 +14,7 @@ class HomeHouseNowChart extends React.Component {
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
-                    data: [
-                        {
-                            value: 335,
-                            name: '自用'
-                        }, {
-                            value: 310,
-                            name: '已租'
-                        }, {
-                            value: 234,
-                            name: '出售'
-                        }, {
-                            value: 135,
-                            name: '空置'
-                        }
-                    ],
+                    data: [],
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
