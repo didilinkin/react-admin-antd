@@ -83,7 +83,7 @@ class PrincipalCollectionPower extends React.Component {
             money = 0
         }
         this.props.form.setFieldsValue({
-            unprincipalReceived: (parseFloat(purchasePrice) - parseFloat(serviceCharge) - parseFloat(money)).toFixed(0)
+            unprincipalReceived: (parseFloat(purchasePrice) - parseFloat(serviceCharge) - parseFloat(money)).toFixed(1)
         })
     }
     render () {

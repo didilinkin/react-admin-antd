@@ -73,7 +73,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
         let liquidatedDamages = this.props.form.getFieldValue('liquidatedDamages')
         let defaultAmount = this.props.form.getFieldValue('defaultAmount')
         this.props.form.setFieldsValue({
-            liquidatedDamagesReceived: (parseFloat(liquidatedDamages) - parseFloat(defaultAmount)).toFixed(0)
+            liquidatedDamagesReceived: (parseFloat(liquidatedDamages) - parseFloat(defaultAmount)).toFixed(1)
         })
     }
     render () {

@@ -33,7 +33,7 @@ class PowerInfomation extends React.Component {
             liquidatedDamagesList = liquidatedDamagesList.data
             let mainColumn = [{
                 title: '房间编号',
-                dataIndex: 'roomNumberOne'
+                dataIndex: 'electricCostName'
             }, {
                 title: '上次抄表数',
                 dataIndex: 'lastSurfaceNumber'
@@ -531,15 +531,6 @@ function ExamineSuccessState (props) {
                         fontWeight: 'normal'
                     }}
                     >
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
-                                <span
-                                    style={blueBlodStyle}
-                                >{props.fees.days ? props.fees.days : 0}</span>
-                                <span>&nbsp;天</span>
-                            </div>
-                        </Col>
                         <Col span={8}>
                             <div>
                                 <span style={lightGrayStyle}>违约金额：&nbsp;</span>

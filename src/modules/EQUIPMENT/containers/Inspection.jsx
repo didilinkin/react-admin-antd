@@ -18,7 +18,7 @@ class Inspection extends React.Component {
         titles3: ['空调机房', '新风机房', '中央空调'],
         titles4: ['热交换设备巡检', '水暖管道', '水暖基建', '太阳能巡检', '换热站巡检'],
         titles5: ['高位消费水箱', '气体灭火巡检', '消防维保记录'],
-        urls1: ['distributionRoom', 'http://www.baidu.com', 'http://www.baidu.com'],
+        urls1: ['distributionRoom', 'WeakRoom', 'GeneratorLog'],
         urls2: ['http://www.baidu.com', 'http://www.baidu.com'],
         urls3: ['http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com'],
         urls4: ['http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com'],

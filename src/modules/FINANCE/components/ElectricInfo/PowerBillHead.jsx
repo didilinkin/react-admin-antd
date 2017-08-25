@@ -171,7 +171,7 @@ class PowerBillHead extends React.Component {
                     <Row>
                         <Col span={16} >
                             {
-                                type === 4 &&
+                                type === 3 &&
                                 <span>
                                     <Button >
                                 批量打印
@@ -190,7 +190,7 @@ class PowerBillHead extends React.Component {
                                 <Button type="primary" onClick={this.handleSubmit}>
                                     搜索
                                 </Button>&nbsp;&nbsp;
-                                { type === 4 &&
+                                { type === 3 &&
                                 <span>
                                     <Button
                                         onClick={this.handleReset}

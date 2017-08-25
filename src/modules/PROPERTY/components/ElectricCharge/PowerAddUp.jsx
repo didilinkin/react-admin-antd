@@ -885,7 +885,9 @@ class sumElectricityAddUp extends React.Component {
                                         }
                                     </FormItem>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.add} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
+                                        <Button onClick={this.add} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                            borderColor: '#1FCA3E'}}
+                                        >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>
@@ -925,7 +927,9 @@ class sumElectricityAddUp extends React.Component {
                                         }
                                     </FormItem>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addBalance} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
+                                        <Button onClick={this.addBalance} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                            borderColor: '#1FCA3E'}}
+                                        >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>
@@ -959,7 +963,9 @@ class sumElectricityAddUp extends React.Component {
                                     }} checked={this.state.isWaterMoney} style={tagStyle}
                                     >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
                                     <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" className="bottom-green-button" >增加本条记录</Button>
+                                        <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                            borderColor: '#1FCA3E'}}
+                                        >增加本条记录</Button>
                                     </FormItem>
                                 </div>
                             </div>

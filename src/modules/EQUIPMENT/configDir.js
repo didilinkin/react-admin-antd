@@ -44,11 +44,23 @@ const EQUIPMENT_DIR = {
             ancestor: ['equipment'],
             component: require('./containers/Inspection').default
         }, {
-            title: '配电房巡查记录',
+            title: '配电房巡检记录',
             key: 'distributionRoom',
             path: '/home/equipment/distributionRoom',
             ancestor: ['equipment'],
             component: require('./containers/ElectricSystem/DistributionRoom').default
+        }, {
+            title: '弱电间巡检记录',
+            key: 'WeakRoom',
+            path: '/home/equipment/WeakRoom',
+            ancestor: ['equipment'],
+            component: require('./containers/ElectricSystem/WeakRoom').default
+        }, {
+            title: '发电机运行记录',
+            key: 'GeneratorLog',
+            path: '/home/equipment/GeneratorLog',
+            ancestor: ['equipment'],
+            component: require('./containers/ElectricSystem/GeneratorLog').default
         }
     ]
 }
