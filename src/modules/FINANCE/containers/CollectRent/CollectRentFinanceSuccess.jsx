@@ -154,7 +154,7 @@ class CollectRentFinanceSuccess extends React.Component {
                     let url = '/home/finance/collectRentDetails/RentReviewDetail/' + record.id
                     return (
                         <div>
-                            <a onClick={() => info(url)}> 收款 &nbsp;&nbsp;&nbsp;</a>
+                            <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a>&nbsp; 撤回 </a>
                             </Popconfirm>
