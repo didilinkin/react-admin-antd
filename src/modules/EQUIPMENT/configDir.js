@@ -43,6 +43,12 @@ const EQUIPMENT_DIR = {
             path: '/home/equipment/inspection',
             ancestor: ['equipment'],
             component: require('./containers/Inspection').default
+        }, {
+            title: '配电房巡查记录',
+            key: 'distributionRoom',
+            path: '/home/equipment/distributionRoom',
+            ancestor: ['equipment'],
+            component: require('./containers/ElectricSystem/DistributionRoom').default
         }
     ]
 }
