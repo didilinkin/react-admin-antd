@@ -101,8 +101,8 @@ class CashDepositProperty extends React.Component {
                     if (record.currentBalance !== 0) {
                         return (
                             <div>
-                                <a onClick={() => info(url)}> 明细 &nbsp;</a>
-                                <a onClick={() => handleUpdate(record.id)} > 扣款 </a>
+                                <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleUpdate(record.id)} > 扣款&nbsp;&nbsp; </a>
                                 <a onClick={() => handleUpdate2(record.id)} > 退款 </a>
                             </div>
                         )
@@ -162,7 +162,6 @@ class CashDepositProperty extends React.Component {
         })
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

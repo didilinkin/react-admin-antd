@@ -159,7 +159,6 @@ class CollectRentConduct extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false
         })
@@ -168,7 +167,6 @@ class CollectRentConduct extends Component {
         this.refresh()
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

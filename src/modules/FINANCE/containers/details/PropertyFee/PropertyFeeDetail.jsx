@@ -131,6 +131,8 @@ class PropertyFeeDetail extends React.Component {
             '/propertyFee/updatePropertyFeeByNext',
             {id: this.props.match.params.id,
                 unpaidLateMoney: 0,
+                feeType: 4,
+                feeId: this.props.match.params.id,
                 unpaidMoney: 0,
                 paidMoney: this.state.data.lateMoney,
                 latePaidWay: 6,

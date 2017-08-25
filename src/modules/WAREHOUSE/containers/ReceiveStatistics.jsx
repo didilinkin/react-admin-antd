@@ -11,7 +11,6 @@ class ReceiveStatistics extends Component {
         this.state = {
             loading: false,
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
@@ -143,30 +142,29 @@ class ReceiveStatistics extends Component {
         )
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             dataSource: result.data,
             id: 0
         })
     }
-    name = ''
+    name = null
     entryNameOnChange = (e) => {
         this.name = e.target.value
     }
-    whType = ''
+    whType = null
     selectOnChange = (e) => {
         this.whType = e
     }
     query = () => {
         this.refresh()
     }
-    startDate = ''
+    startDate = null
     getDate = (e) => {
         if (e !== null) {
             this.startDate = e.format('YYYY-MM-DD 23:59:59')
         } else {
-            this.startDate = ''
+            this.startDate = null
         }
     }
     render () {
