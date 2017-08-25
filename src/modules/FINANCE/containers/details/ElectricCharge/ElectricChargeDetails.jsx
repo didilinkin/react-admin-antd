@@ -66,7 +66,7 @@ class ElectricChargeDetails extends React.Component {
         liquidatedDamagesList = liquidatedDamagesList.data
         let mainColumn = [{
             title: '房间编号',
-            dataIndex: 'roomNumberOne'
+            dataIndex: 'electricCostName'
         }, {
             title: '上次抄表数',
             dataIndex: 'lastSurfaceNumber'
@@ -152,7 +152,7 @@ class ElectricChargeDetails extends React.Component {
         let Principal = await apiPost(
             '/ElectricityFees/updatePrincipalPrincipalBilling',
             {id: this.props.match.params.id,
-                principalPrincipalBilling: 2}
+                principalPrincipalBilling: 1}
         )
         notification.open({
             message: Principal.data,
@@ -165,7 +165,7 @@ class ElectricChargeDetails extends React.Component {
         let Principal = await apiPost(
             '/ElectricityFees/updatePrincipalDamagesBilling',
             {id: this.props.match.params.id,
-                principalPrincipalBilling: 2}
+                principalDamagesBilling: 1}
         )
         notification.open({
             message: Principal.data,
@@ -355,7 +355,10 @@ class ElectricChargeDetails extends React.Component {
                         receipt={this.state.receipt}
                         liquidatedDamagesList={this.state.liquidatedDamagesList}
                     />
-                    <hr style={{marginTop: 20}} />
+                    {feesInfo.principalPrincipalBilling === 2 &&
+                        <hr style={{marginTop: 20}} />}
+                    {feesInfo.principalPrincipalBilling !== 2 && feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
+                        <hr style={{marginTop: 20}} />}
                     <div style={{marginTop: 20,
                         marginBottom: 50
                     }}
@@ -522,15 +525,6 @@ function ExamineSuccessState (props) {
                                 fontWeight: 'normal'
                             }}
                             >
-                                <Col span={8}>
-                                    <div>
-                                        <span style={lightGrayStyle}>逾期天数：&nbsp;</span>
-                                        <span
-                                            style={blueBlodStyle}
-                                        >{props.fees.days ? props.fees.days : 0}</span>
-                                        <span>&nbsp;天</span>
-                                    </div>
-                                </Col>
                                 <Col span={8}>
                                     <div>
                                         <span style={lightGrayStyle}>违约金额：&nbsp;</span>

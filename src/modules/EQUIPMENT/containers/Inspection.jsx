@@ -18,8 +18,8 @@ class Inspection extends React.Component {
         titles3: ['空调机房', '新风机房', '中央空调'],
         titles4: ['热交换设备巡检', '水暖管道', '水暖基建', '太阳能巡检', '换热站巡检'],
         titles5: ['高位消费水箱', '气体灭火巡检', '消防维保记录'],
-        urls1: ['distributionRoom', 'http://www.baidu.com', 'http://www.baidu.com'],
-        urls2: ['http://www.baidu.com', 'http://www.baidu.com'],
+        urls1: ['distributionRoom', 'WeakRoom', 'GeneratorLog'],
+        urls2: ['ElevatorRoom', 'http://www.baidu.com'],
         urls3: ['http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com'],
         urls4: ['http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com'],
         urls5: ['http://www.baidu.com', 'http://www.baidu.com', 'http://www.baidu.com'],
@@ -92,19 +92,19 @@ class Inspection extends React.Component {
                     <div className="pro-content">
                         <ul className="clearfix first-ul">
                             <li className={this.state.li1} onMouseOver={this.move1}>
-                                <Card logo={electricityLogo} urls={this.state.urls1} titles={this.state.titles1} bgColor={this.state.iconBackGound1} />
+                                <Card title="电器系统" logo={electricityLogo} urls={this.state.urls1} titles={this.state.titles1} bgColor={this.state.iconBackGound1} />
                             </li>
                             <li className={this.state.li2} onMouseOver={this.move2}>
-                                <Card logo={elevatorLogo} urls={this.state.urls2} titles={this.state.titles2} bgColor={this.state.iconBackGound2} />
+                                <Card title="电梯系统" logo={elevatorLogo} urls={this.state.urls2} titles={this.state.titles2} bgColor={this.state.iconBackGound2} />
                             </li>
                             <li className={this.state.li3} onMouseOver={this.move3}>
-                                <Card logo={airConditionerLogo} urls={this.state.urls3} titles={this.state.titles3} bgColor={this.state.iconBackGound3} />
+                                <Card title="空调系统" logo={airConditionerLogo} urls={this.state.urls3} titles={this.state.titles3} bgColor={this.state.iconBackGound3} />
                             </li>
                             <li className={this.state.li4} onMouseOver={this.move4}>
-                                <Card logo={waterHeatingLogo} urls={this.state.urls4} titles={this.state.titles4} bgColor={this.state.iconBackGound4} />
+                                <Card title="水暖系统" logo={waterHeatingLogo} urls={this.state.urls4} titles={this.state.titles4} bgColor={this.state.iconBackGound4} />
                             </li>
                             <li className={this.state.li5} onMouseOver={this.move5}>
-                                <Card logo={fireStationLogo} urls={this.state.urls5} titles={this.state.titles5} bgColor={this.state.iconBackGound5} />
+                                <Card title="消防系统" logo={fireStationLogo} urls={this.state.urls5} titles={this.state.titles5} bgColor={this.state.iconBackGound5} />
                             </li>
                         </ul>
                     </div>
@@ -130,7 +130,7 @@ function Card (props) {
                 <div className="icon-box" style={props.bgColor}>
                     <img className="card-icon" src={props.logo} />
                 </div>
-                <h3>消防系统</h3>
+                <h3>{props.title}</h3>
             </div>
             <div className="card-about">
                 <ul>

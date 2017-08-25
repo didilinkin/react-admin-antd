@@ -1,0 +1,176 @@
+// 客户管理 - 客户报修
+import React, {Component} from 'react'
+import {Table, Button, Spin, DatePicker, Input, message} from 'antd'
+import '../../style/test.less'
+import {apiPost} from '../../../../api/api.dev'
+// 引入组件
+const { RangePicker } = DatePicker
+
+// React component
+class DailyInspection extends Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            loading: false,
+            visible: false,
+            columns: [],
+            dataSource: []
+        }
+    }
+    async initialRemarks () {
+        let result = await apiPost(
+            'deviceMaintain/getElevatorSystemInspection'
+        )
+        const abnormal = this.abnormal
+        this.setState({
+            loading: false,
+            columns: [{
+                title: '序号',
+                width: 80,
+                dataIndex: 'id',
+                key: 'id',
+                render: function (text, record, index) {
+                    index++
+                    return (
+                        <span>{index}</span>
+                    )
+                }
+            }, {
+                title: '巡检日期 ',
+                width: 150,
+                dataIndex: 'inspectionDate',
+                key: 'inspectionDate'
+            }, {
+                title: '所属楼宇',
+                width: 100,
+                dataIndex: 'buildName',
+                key: 'buildName'
+            }, {
+                title: '设备编号',
+                width: 150,
+                dataIndex: 'elevatorNumber',
+                key: 'elevatorNumber'
+            }, {
+                title: '设备名称',
+                width: 150,
+                dataIndex: 'elevatorName',
+                key: 'elevatorName'
+            }, {
+                title: '检查结果',
+                children: [{
+                    title: '初始厅门',
+                    dataIndex: 'hallDoorState',
+                    key: 'hallDoorState'
+                }, {
+                    title: '轿箱',
+                    dataIndex: 'cageState',
+                    key: 'cageState'
+                }, {
+                    title: '标示',
+                    dataIndex: 'markState',
+                    key: 'markState'
+                }, {
+                    title: '监控与紧急呼叫装置',
+                    dataIndex: 'monitoringState',
+                    key: 'monitoringState'
+                }, {
+                    title: '电梯运行',
+                    dataIndex: 'elevatorState',
+                    key: 'elevatorState'
+                }]
+            }, {
+                title: '异常情况',
+                width: 200,
+                dataIndex: 'opt',
+                key: 'opt',
+                fixed: 'right',
+                render: function (text, record, index) {
+                    return (
+                        <Button onClick={() => abnormal(record.id, 5)}>查看</Button>
+                    )
+                }
+            }],
+            dataSource: result.data
+        })
+    }
+    componentDidMount () {
+        this.initialRemarks()
+    }
+    abnormal = async (id, type) => {
+        let resulData = await apiPost('/deviceMaintain/electricalErrorDevice',
+            {parentId: id,
+                parentType: type})
+        if (resulData.data !== null) {
+            window.location.href = '/deviceMaintain/electricalErrorDevice/' + id + ',5'
+        } else {
+            message.info('无异常信息')
+        }
+    }
+    refresh = async () => {
+        // 刷新表格
+        let result = await apiPost(
+            'deviceMaintain/getElevatorSystemInspection',
+            {'elevatorName': this.elevatorName,
+                'patrolName': this.patrolName,
+                'startTime': this.startTime,
+                'endTime': this.endTime
+            }
+        )
+        this.setState({
+            openinvalid: false,
+            opendispatch: false,
+            openElevatorRoom: false,
+            openUpdate: false,
+            dataSource: result.data,
+            id: 0
+        })
+    }
+    query = () => {
+        this.refresh()
+    }
+    patrolName = ''
+    entryNameOnChange = (e) => {
+        this.patrolName = e.target.value
+    }
+    elevatorName = ''
+    entryMachineRoomName = (e) => {
+        this.elevatorName = e.target.value
+    }
+    startTime = ''
+    endTime = ''
+    getDate = (date, dateString) => {
+        this.startTime = dateString[0]
+        this.endTime = dateString[1]
+    }
+    render () {
+        return (
+            <div>
+                <span style={{paddingBottom: '10px',
+                    display: 'block'}}
+                >
+                    <span>巡检日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <RangePicker onChange={this.getDate} />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryNameOnChange}
+                    />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;梯号:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryMachineRoomName}
+                    />
+                    <Button type="primary" onClick={this.query}>查询</Button>
+                </span>
+                <Spin spinning={this.state.loading}>
+                    <Table
+                        scroll={{ x: 2280 }}
+                        bordered={3}
+                        dataSource={this.state.dataSource}
+                        columns={this.state.columns}
+                    />
+                </Spin>
+            </div>
+        )
+    }
+}
+export default DailyInspection
+
