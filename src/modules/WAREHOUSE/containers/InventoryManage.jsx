@@ -21,6 +21,10 @@ class InventoryManage extends React.Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             warehouseId: 0,
             amount: 0,
             number: 0,
@@ -45,12 +49,14 @@ class InventoryManage extends React.Component {
     async initialRemarks () {
         this.setState({ loading: true })
         let result = await apiPost(
-            '/warehouse/inventoryManage'
+            '/warehouse/inventoryManage',
+            {page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const info = this.info
         this.setState({
             loading: false,
+            total: result.data.total,
             columns: [{
                 title: '序号',
                 width: 100,
@@ -129,28 +135,42 @@ class InventoryManage extends React.Component {
                     )
                 }
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
 
     componentDidMount = () => {
         this.initialRemarks()
     }
-
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['startDate'] = this.startDate
+        filters['name'] = this.name
+        filters['whType'] = this.whType
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
-            '/warehouse/inventoryManage', {
-                'startDate': this.startDate,
-                'name': this.name,
-                'whType': this.whType
-            }
+            '/warehouse/inventoryManage',
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -174,12 +194,7 @@ class InventoryManage extends React.Component {
         this.whType = e
     }
 
-    query = () => {
-        this.refresh()
-    }
-
     startDate = null
-
     getDate = (e) => {
         if (e !== null) {
             this.startDate = e.format('YYYY-MM-DD')
@@ -187,18 +202,34 @@ class InventoryManage extends React.Component {
             this.startDate = null
         }
     }
-
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
+    query = () => {
+        this.refresh()
+    }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
         return (
             <div>
                 <WarehouseAddUp
                     refreshTable={ this.refresh }
                     visible={ this.state.openAdd }
+                    close={this.close}
                 />
 
                 <WarehouseUpdate
                     refreshTable={ this.refresh }
                     visible={ this.state.openUpdate }
+                    close={this.close}
                     warehouseId={ this.state.warehouseId }
                     amount={ this.state.amount }
                     number={ this.state.number }
@@ -231,7 +262,6 @@ class InventoryManage extends React.Component {
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onChange={ this.selectOnChange }
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
                         <Option key="0">工程库</Option>
                         <Option key="1">保洁用品库</Option>
@@ -253,6 +283,16 @@ class InventoryManage extends React.Component {
 
                 <Spin spinning={ this.state.loading }>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1500 }}
                         bordered
                         dataSource={ this.state.dataSource }

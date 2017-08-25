@@ -90,7 +90,7 @@ class Information extends Component {
                 dataIndex: 'rentClientName'
 
             }, {
-                title: '物业费提示单名称',
+                title: '提示单名称',
                 width: 350,
                 dataIndex: 'printClientName'
             }, {

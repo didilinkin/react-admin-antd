@@ -71,16 +71,18 @@ class AddUp extends React.Component {
             message: result.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        this.props.close()
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: true })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
     }
-    imgUrl = ''
+    imgUrl = null
     Callback = (url) => {
         this.imgUrl = url
     }

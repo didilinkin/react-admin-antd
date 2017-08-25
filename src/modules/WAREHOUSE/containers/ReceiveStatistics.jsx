@@ -15,6 +15,10 @@ class ReceiveStatistics extends Component {
             openUpdate: false,
             columns: [],
             dataSource: [],
+            RowKeys: [],
+            total: 0,
+            page: 1,
+            rows: 30,
             warehouseId: 0,
             amount: 0,
             number: 0,
@@ -23,7 +27,8 @@ class ReceiveStatistics extends Component {
     }
     async initialRemarks () {
         let result2 = await apiPost(
-            '/warehouse/getRecipient'
+            '/warehouse/getRecipient',
+            {page: this.state.page}
         )
         let list = result2.data
         let number = {
@@ -125,26 +130,41 @@ class ReceiveStatistics extends Component {
                     key: 'amount'
                 }]
             }],
-            dataSource: result.data
+            dataSource: result.data.rows
         })
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
+    refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['startDate'] = this.startDate
+        filters['name'] = this.name
+        filters['whType'] = this.whType
+        if (pagination !== null && typeof (pagination) !== 'undefined') {
+            filters['rows'] = pagination.pageSize
+            filters['page'] = pagination.current
+            this.setState({
+                page: pagination.current
+            })
+        } else {
+            this.setState({
+                page: 1
+            })
+        }
         // 刷新表格
         let result = await apiPost(
             '/warehouse/receiveStatistics',
-            {'startDate': this.startDate,
-                'name': this.name,
-                'whType': this.whType
-            }
+            filters
         )
         this.setState({
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
+            total: result.data.total,
             id: 0
         })
     }
@@ -167,6 +187,11 @@ class ReceiveStatistics extends Component {
             this.startDate = null
         }
     }
+    onSelectChange = (selectedRowKeys) => {
+        this.setState({
+            RowKeys: selectedRowKeys
+        })
+    }
     render () {
         return (
             <div>
@@ -186,7 +211,6 @@ class ReceiveStatistics extends Component {
                         placeholder="请选择仓库"
                         optionFilterProp="children"
                         onChange={this.selectOnChange}
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                     >
                         <Option key="0">工程库</Option>
                         <Option key="1">保洁用品库</Option>
@@ -201,6 +225,16 @@ class ReceiveStatistics extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        onChange={this.refresh}
+                        rowSelection={{
+                            onChange: this.onSelectChange
+                        }}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            pageSizeOptions: ['15', '30', '45'],
+                            current: this.state.page,
+                            defaultPageSize: this.state.rows}}
                         scroll={{ x: 1900 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

@@ -60,6 +60,7 @@ class PropertyFeeing extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
+            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             id: null
@@ -151,6 +152,7 @@ class PropertyFeeing extends Component {
             filters = []
         }
         filters['auditStatus'] = 0
+        filters['contractStatus'] = 0
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
