@@ -86,8 +86,8 @@ class sumElectricityAddUp extends React.Component {
                 }
                 return ''
             })
-            let list = JSON.stringify(elecList)
-            json['list'] = list
+            let elecListJson = JSON.stringify(elecList)
+            json['list'] = elecListJson
             console.log(json)
             debugger
             if (this.props.id > 0) {
@@ -151,9 +151,7 @@ class sumElectricityAddUp extends React.Component {
             dataIndex: 'singleMoney',
             key: 'singleMoney',
             render: function (text) {
-                return (
-                    parseFloat(text).toFixed(2)
-                )
+                return parseFloat(text).toFixed(2)
             }
         }, {
             title: '备注',
@@ -177,32 +175,27 @@ class sumElectricityAddUp extends React.Component {
                     dataIndex: 'electricLoss',
                     key: 'electricLoss'
                 })
-            } else if (contract[powerType].toString() === '1') {
-                tableColumns.splice(6, 0, {
-                    title: '电损' + contract.powerLossRatio + '%',
-                    dataIndex: 'electricLoss',
-                    key: 'electricLoss'
-                })
             } else {
                 tableColumns.splice(6, 0, {
                     title: '电损' + contract.powerLossRatio + '%',
                     dataIndex: 'electricLoss',
                     key: 'electricLoss'
                 })
-                tableColumns.splice(8, 0, {
-                    title: '峰谷比例',
-                    dataIndex: 'valleysProportion',
-                    key: 'valleysProportion'
-                })
-                // 查询峰谷比利
-                this.searchBili(contract.clientId)
+                if (contract[powerType].toString() !== '1') {
+                    tableColumns.splice(8, 0, {
+                        title: '峰谷比例',
+                        dataIndex: 'valleysProportion',
+                        key: 'valleysProportion'
+                    })
+                    // 查询峰谷比利
+                    this.searchValleysProportion(contract.clientId)
+                }
             }
         }
-
         this.setState({tableColumns: tableColumns})
     }
     // 查询峰谷比利
-    searchBili = async (clientId) => {
+    searchValleysProportion = async (clientId) => {
         let bili = await apiPost(
             '/ElectricityFees/AverageElectricityFee',
             {id: clientId}
@@ -374,7 +367,14 @@ class sumElectricityAddUp extends React.Component {
     chooseClient = (contractId) => {
         this.props.form.resetFields()
         this.setState({
-            sumElectricityRecordlList: []
+            sumElectricityRecordlList: [],
+            isPropertyMoney: false,
+            isWaterMoney: false,
+            isElectricMoney: false,
+            propertyMoney: 0,
+            waterMoney: 0,
+            electricMoney: 0,
+            amountReceivable: 0
         })
         this.state.ClientList.map(async (contract) => {
             let formName = ''
@@ -435,7 +435,7 @@ class sumElectricityAddUp extends React.Component {
         this.deleteTotalColunm()
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
-        jsonTwo['singleMoney'] = json.liquidatedDamagessingleMoney
+        jsonTwo['singleMoney'] = json.liquidatedDamagessingleMoney ? json.liquidatedDamagessingleMoney : 0
         jsonTwo['electricCostName'] = json.liquidatedDamagesName
         jsonTwo['uuid'] = new Date().getTime()
         jsonTwo['surfaceType'] = 3
@@ -448,6 +448,7 @@ class sumElectricityAddUp extends React.Component {
     }
     // 添加上月差额
     addBalance = () => {
+        console.log(this.state.balanceUUID)
         this.deleteTotalColunm()
         if (this.state.balanceUUID) {
             let recordList = this.state.sumElectricityRecordlList
@@ -460,7 +461,6 @@ class sumElectricityAddUp extends React.Component {
                 }
                 return ''
             })
-            return ''
         }
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
