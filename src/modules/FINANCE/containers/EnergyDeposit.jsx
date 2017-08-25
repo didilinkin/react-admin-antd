@@ -286,7 +286,6 @@ class EnergyDeposit extends React.Component {
         })
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

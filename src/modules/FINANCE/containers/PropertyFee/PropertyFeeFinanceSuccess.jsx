@@ -166,7 +166,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                     let url = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + record.id
                     return (
                         <div>
-                            <a onClick={() => info(url)}> 收款 &nbsp;</a>
+                            <a onClick={() => info(url)}> 收款 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a> 撤回 </a>
                             </Popconfirm>
@@ -211,7 +211,6 @@ class PropertyFeeFinanceSuccess extends React.Component {
         this.refresh()
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

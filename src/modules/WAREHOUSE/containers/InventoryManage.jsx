@@ -17,7 +17,6 @@ class InventoryManage extends React.Component {
         this.state = {
             loading: false,
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             columns: [],
@@ -31,7 +30,6 @@ class InventoryManage extends React.Component {
 
     handleUpdate = (id, amount, number, unitPrice) => {
         this.setState({
-            openinvalid: false,
             openAdd: false,
             openTableAddUp: false,
             openUpdate: true,
@@ -150,7 +148,6 @@ class InventoryManage extends React.Component {
         )
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             dataSource: result.data,
@@ -161,19 +158,18 @@ class InventoryManage extends React.Component {
     // 弹出框设置
     showModal = () => {
         this.setState({
-            opendispatch: false,
             openAdd: true,
             openUpdate: false,
             openTableAddUp: false
         })
     }
 
-    name = ''
+    name = null
     entryNameOnChange = (e) => {
         this.name = e.target.value
     }
 
-    whType = ''
+    whType = null
     selectOnChange = (e) => {
         this.whType = e
     }
@@ -182,13 +178,13 @@ class InventoryManage extends React.Component {
         this.refresh()
     }
 
-    startDate = ''
+    startDate = null
 
     getDate = (e) => {
         if (e !== null) {
             this.startDate = e.format('YYYY-MM-DD')
         } else {
-            this.startDate = ''
+            this.startDate = null
         }
     }
 

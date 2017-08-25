@@ -121,7 +121,7 @@ class MeterialManagement extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a href="#" onClick={() => handleUpdate(record.id)} > 编辑 </a>
+                            <a href="#" onClick={() => handleUpdate(record.id)} > 编辑 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
                                 <a href="#" > 删除 </a>
                             </Popconfirm>
