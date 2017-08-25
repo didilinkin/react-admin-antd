@@ -6,10 +6,8 @@ const RadioGroup = Radio.Group
 const {RangePicker } = DatePicker
 class HomeRepairedInfoChart extends React.Component {
     state = {
-        showAppraise: true
-    }
-    getOtion = () => {
-        const option = {
+        showAppraise: true,
+        repair: {
             tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -41,11 +39,8 @@ class HomeRepairedInfoChart extends React.Component {
                     ]
                 }
             ]
-        }
-        return option
-    }
-    getOtion3= () => {
-        const option = {
+        },
+        appraise: {
             tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b} : {c} ({d}%)'
@@ -88,7 +83,12 @@ class HomeRepairedInfoChart extends React.Component {
                 }
             ]
         }
-        return option
+    }
+    componentWillReceiveProps (nextPorps) {
+        let repair = this.state.repair
+        let appraise = this.state.appraise
+        repair.series[0].data = nextPorps.repairStatistics
+        appraise.series[0].data = nextPorps.appraise
     }
     chooes = (e) => {
         this.setState({showAppraise: (e.target.value === 'a')})
@@ -123,17 +123,14 @@ class HomeRepairedInfoChart extends React.Component {
                 <div>
                     {this.state.showAppraise ? (
                         <ReactEcharts
-                            option={this.getOtion()}
+                            option={this.state.repair}
                             style={{height: '270px',
                                 width: '400',
                                 marginLeft: '20px'}}
                             className="echart"
                         />) : (
                         <ReactEcharts
-                            option={this.getOtion3()}
-                            style={{height: '270px',
-                                width: '400',
-                                marginLeft: '20px'}}
+                            option={this.state.appraise}
                             className="echart"
                         />
                     )}

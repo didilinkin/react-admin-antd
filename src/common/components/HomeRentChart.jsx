@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 class HomeRentChart extends React.Component {
-    getOtion= () => {
-        const option = {
+    state = {
+        option: {
             title: {
                 text: '本年度 (2016-12 ~ 2017-11） 收租汇总',
                 top: '10px'
@@ -63,16 +63,22 @@ class HomeRentChart extends React.Component {
                 }
             ]
         }
-        return option
+    }
+    componentWillReceiveProps (nextPorps) {
+        let option = this.state.option
+        let yearNumber = nextPorps.rent.year.substring(0, 4)
+        option.title.text = '本年度 (' + yearNumber + '-12 ~ ' + (parseInt(yearNumber, 0) + 1) + '-11） 收租汇总'
+        option.series[0].data = nextPorps.rent.receivable
+        option.series[1].data = nextPorps.rent.actualReceipt
     }
     render () {
         return (
-            <ReactEcharts
-                className="echart"
-                option={this.getOtion()}
-                style={{height: '350px',
-                    marginLeft: '20px'}}
-            />
+            <div className="charts-box-left" >
+                <ReactEcharts
+                    className="charts-left"
+                    option={this.state.option}
+                />
+            </div>
         )
     }
 }
