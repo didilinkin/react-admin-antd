@@ -162,7 +162,6 @@ class CollectRentConduct extends React.Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false
         })

@@ -132,7 +132,7 @@ class RoomAddUp extends React.Component {
                     visible: false,
                     isFirst: true
                 })
-                this.props.refreshTable(baseURL + 'storage/files/' + url.data, json.machineRoomNumber)
+                this.props.refreshTable(null, baseURL + 'storage/files/' + url.data, json.machineRoomNumber)
             }
         }
     }

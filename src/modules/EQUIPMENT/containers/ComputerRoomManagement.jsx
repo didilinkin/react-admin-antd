@@ -11,6 +11,8 @@ class ComputerRoom extends Component {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             openAdd: false,
             openUpdate: false,
             previewVisible: false,
@@ -49,7 +51,7 @@ class ComputerRoom extends Component {
             '/equipment/machineRoomList'
         )
         let systList = await apiPost('equipment/systList')
-        let repairList = result.data
+        let repairList = result.data.rows
         const handleUpdateEquipment = this.handleUpdateEquipment
         const delect = this.delect
         const info = this.info
@@ -108,22 +110,31 @@ class ComputerRoom extends Component {
         this.initialRemarks()
     }
 
-    refresh = async (url, equipmentNumber) => {
+    refresh = async (pagination, url, equipmentNumber) => {
         // 刷新表格
-        if (typeof (url) !== 'undefined') {
+        if (typeof (url) !== 'undefined' && pagination === null) {
             this.info(url, equipmentNumber)
+        }
+        let filters = []
+        filters['systemName'] = this.systemName
+        filters['machineRoomName'] = this.machineRoomName
+        if (pagination === null || typeof (pagination) === 'undefined') {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
         }
         let result = await apiPost(
             '/equipment/machineRoomList',
-            {
-                'machineRoomName': this.machineRoomName,
-                'systemName': this.systemName
-            }
+            filters
         )
         this.setState({
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             openAdd: false,
             openUpdate: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
             id: 0
         })
     }
@@ -207,6 +218,13 @@ class ComputerRoom extends Component {
 
                 <Spin spinning={this.state.loading}>
                     <Table
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
+                        onChange={this.refresh}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

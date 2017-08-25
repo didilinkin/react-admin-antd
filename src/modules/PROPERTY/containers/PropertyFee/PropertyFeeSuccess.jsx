@@ -36,7 +36,6 @@ class PropertyFeeSuccess extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             id: null
@@ -211,7 +210,6 @@ class PropertyFeeSuccess extends Component {
         this.refresh()
     }
     onSelectChange = (selectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys)
         this.setState({
             RowKeys: selectedRowKeys
         })

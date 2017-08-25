@@ -60,7 +60,6 @@ class PropertyFeeing extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             id: null
@@ -130,9 +129,9 @@ class PropertyFeeing extends Component {
                     return (
                         <div>
                             <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>
-                                <a> 提交 </a>
+                                <a> 提交 &nbsp;&nbsp;</a>
                             </Popconfirm>
-                            <a type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 </a>
+                            <a type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
                                 <a> 删除 </a>
                             </Popconfirm>
