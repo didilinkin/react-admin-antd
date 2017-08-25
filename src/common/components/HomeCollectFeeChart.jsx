@@ -64,23 +64,23 @@ class HomeCollectFeeChart extends React.Component {
                 {
                     name: '物业费',
                     type: 'bar',
-                    data: [20000, 49000, 70000, 67000]
+                    data: []
                 }, {
                     name: '空调费',
                     type: 'bar',
-                    data: [30000, 43000, 73000, 43000]
+                    data: []
                 }, {
                     name: '电梯费',
                     type: 'bar',
-                    data: [34000, 43900, 45000, 52000]
+                    data: []
                 }, {
                     name: '水费',
                     type: 'bar',
-                    data: [26000, 46900, 60000, 60000]
+                    data: []
                 }, {
                     name: '电费',
                     type: 'bar',
-                    data: [23600, 59000, 40000, 54300]
+                    data: []
                 }
             ]
         }

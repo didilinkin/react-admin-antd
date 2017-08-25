@@ -19,24 +19,7 @@ class HomeRepairedInfoChart extends React.Component {
                     type: 'pie',
                     radius: ['50%', '70%'],
                     avoidLabelOverlap: false,
-                    data: [
-                        {
-                            value: 335,
-                            name: '作废工单'
-                        }, {
-                            value: 310,
-                            name: '取消工单'
-                        }, {
-                            value: 234,
-                            name: '未派单'
-                        }, {
-                            value: 135,
-                            name: '已完工'
-                        }, {
-                            value: 148,
-                            name: '进行中'
-                        }
-                    ]
+                    data: []
                 }
             ]
         },
@@ -52,27 +35,7 @@ class HomeRepairedInfoChart extends React.Component {
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
-                    data: [
-                        {
-                            value: 335,
-                            name: '1星'
-                        }, {
-                            value: 310,
-                            name: '2星'
-                        }, {
-                            value: 234,
-                            name: '3星'
-                        }, {
-                            value: 135,
-                            name: '4星'
-                        }, {
-                            value: 265,
-                            name: '5星'
-                        }, {
-                            value: 210,
-                            name: '未评价'
-                        }
-                    ],
+                    data: [],
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
