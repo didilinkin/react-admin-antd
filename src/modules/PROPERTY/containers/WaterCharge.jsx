@@ -31,7 +31,7 @@ class ChargeWaterBill extends React.Component {
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
-        this.activeKey = activeKey
+        this.activeKey = activeKey ? activeKey : 1
         this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
