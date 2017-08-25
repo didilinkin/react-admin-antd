@@ -74,16 +74,18 @@ class CollectRentHead extends React.Component {
         }
     }
     BatchAuditPropertyFee = async () => {
-        await apiPost(
-            '/propertyFee/BatchAuditProperty',
-            {ids: this.props.RowKeys.toString(),
-                auditStatus: 1}
-        )
-        notification.open({
-            message: '提交成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.handleSubmit()
+        if (this.props.RowKeys !== null && this.props.RowKeys !== '') {
+            await apiPost(
+                '/propertyFee/BatchAuditProperty',
+                {ids: this.props.RowKeys.toString(),
+                    auditStatus: 1}
+            )
+            notification.open({
+                message: '提交成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.handleSubmit()
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form

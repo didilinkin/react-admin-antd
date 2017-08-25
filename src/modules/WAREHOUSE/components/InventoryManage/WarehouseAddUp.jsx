@@ -34,11 +34,12 @@ class AddUp extends React.Component {
         if (this.state.isFirst && nextProps.visible) {
             let resulData = await apiPost(
                 '/warehouse/materialManagement',
+                {rows: 100000000}
             )
             this.props.form.resetFields()
             this.setState({
                 visible: nextProps.visible,
-                material: resulData.data,
+                material: resulData.data.rows,
                 isFirst: false,
                 view: true,
                 fileList: []
@@ -72,25 +73,26 @@ class AddUp extends React.Component {
             message: result.data,
             icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />
         })
+        this.props.close()
         this.props.refreshTable()
-        console.log(JSON.stringify(list1))
         this.setState({
             visible: false,
             isFirst: true
         })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({
             visible: false,
             isFirst: true
         })
     }
-    imgUrl = ''
+    imgUrl = null
     Callback = (url) => {
         this.imgUrl = url
     }
-    materialId = ''
+    materialId = null
     getMaterial = (value) => {
         this.state.material.map(material => {
             if (material.id.toString() === value) {
