@@ -94,7 +94,11 @@ class SiderContainers extends React.Component {
 
         if (obj.hasOwnProperty('childRoute')) {
             childHtml = childArray.map((item) => {
-                return this.renderChildRoute(item)
+                if (this.jurisdiction(item)) {
+                    return this.renderChildRoute(item)
+                } else {
+                    return null
+                }
             })
 
             // 判断是否需要 图标
@@ -135,6 +139,10 @@ class SiderContainers extends React.Component {
     jurisdiction = (itemChildRoute) => {
         let PermissionsList = localStore.get('PermissionsList')
         let existence = false
+        if (typeof (PermissionsList) === 'undefined' || PermissionsList === null) {
+            window.location.href = '/login'
+            return existence
+        }
         PermissionsList.forEach(Permissions => {
             if (Permissions.permissionCode.toString() === itemChildRoute.key.toString()) {
                 existence = true
