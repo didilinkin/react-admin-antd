@@ -12,6 +12,8 @@ class Account extends Component {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             openAdd: false,
             openUpdate: false,
             previewVisible: false,
@@ -49,7 +51,7 @@ class Account extends Component {
         let result = await apiPost(
             '/equipment/equipmentList'
         )
-        let repairList = result.data
+        let repairList = result.data.rows
         const handleUpdateEquipment = this.handleUpdateEquipment
         const openSS = this.openSS
         const info = this.info
@@ -104,9 +106,9 @@ class Account extends Component {
                 render: function (text, record, index) {
                     let equipmentStatus = '使用'
                     if (text === 1) {
-                        equipmentStatus = '闲置'
-                    } else if (text === 2) {
                         equipmentStatus = '报废'
+                    } else if (text === 2) {
+                        equipmentStatus = '闲置'
                     }
                     return (
                         <span>{equipmentStatus}</span>
@@ -146,23 +148,32 @@ class Account extends Component {
         this.initialRemarks()
     }
 
-    refresh = async (url, equipmentNumber) => {
+    refresh = async (pagination, url, equipmentNumber) => {
         // 刷新表格
-        if (typeof (url) !== 'undefined') {
+        if (typeof (url) !== 'undefined' && pagination === null) {
             this.info(url, equipmentNumber)
+        }
+        let filters = []
+        filters['equipmentName'] = this.equipmentName
+        filters['equipmentStatus'] = this.equipmentStatus
+        if (pagination === null || typeof (pagination) === 'undefined') {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
         }
         let result = await apiPost(
             '/equipment/equipmentList',
-            {
-                'equipmentName': this.equipmentName,
-                'equipmentStatus': this.equipmentStatus
-            }
+            filters
         )
         this.setState({
+            total: result.data.total,
+            current: pagination ? pagination.current : 1,
             openAdd: false,
             openUpdate: false,
             openSS: false,
-            dataSource: result.data,
+            dataSource: result.data.rows,
             id: 0
         })
     }
@@ -243,8 +254,8 @@ class Account extends Component {
                         onChange={this.equipmentStatusOne}
                     >
                         <Option key="0">使用</Option>
-                        <Option key="2">报废</Option>
-                        <Option key="1">闲置</Option>
+                        <Option key="1">报废</Option>
+                        <Option key="2">闲置</Option>
                     </Select>
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加设备</Button>
@@ -253,6 +264,13 @@ class Account extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         scroll={{x: 1550}}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
+                        onChange={this.refresh}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

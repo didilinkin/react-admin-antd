@@ -149,7 +149,7 @@ class EquipmentAddUp extends React.Component {
                     visible: false,
                     isFirst: true
                 })
-                this.props.refreshTable(baseURL + 'storage/files/' + url.data, json.equipmentNumber)
+                this.props.refreshTable(null, baseURL + 'storage/files/' + url.data, json.equipmentNumber)
             }
         }
     }
