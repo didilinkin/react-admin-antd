@@ -117,8 +117,8 @@ const EQUIPMENT_DIR = {
             component: require('./containers/WaterSystem/SolarEnergy').default
         }, {
             title: '换热站巡检',
-            key: 'GeneratorLog',
-            path: '/home/equipment/GeneratorLog',
+            key: 'HeatTransferStation',
+            path: '/home/equipment/HeatTransferStation',
             ancestor: ['equipment'],
             component: require('./containers/WaterSystem/HeatTransferStation').default
         }, {

@@ -162,6 +162,7 @@ class Electricity extends React.Component {
 
             }]
         let info = this.info
+        let infoTwo = this.infoTwo
         let withdraw = this.withdraw
         this.setState({
             ListBuildingInfo: ListBuildingInfo.data,
@@ -261,7 +262,7 @@ class Electricity extends React.Component {
                     let url = '/home/finance/electricChargeDetails/' + record.id
                     return (
                         <span>
-                            <a href={url}>明细</a>
+                            <a onClick={() => infoTwo(url)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
@@ -299,6 +300,9 @@ class Electricity extends React.Component {
         this.setState({
             RowKeys: selectedRowKeys
         })
+    }
+    infoTwo = (url) => {
+        this.props.history.push(url)
     }
     render () {
         return (
