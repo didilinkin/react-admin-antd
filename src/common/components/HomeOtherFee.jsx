@@ -18,15 +18,8 @@ class HomeOtherFee extends React.Component {
 
     formatMoney = (number) => {
         let negative = number < 0 ? '-' : ''
-        let numberString = parseInt(number, 0).toString()
-        let flag = numberString % 3
-        for (let i = 0; i < numberString.length; i++) {
-            negative = negative + numberString.substr(i, 1)
-            if (i % 3 === flag) {
-                negative = negative + ','
-            }
-        }
-        negative = negative.substring(0, negative.length - 1)
+        let numberString = parseInt(number, 0)
+        negative = negative + (numberString || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
         return negative + '.' + number.toFixed(2).slice(-2)
     }
 
