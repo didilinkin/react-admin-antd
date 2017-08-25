@@ -10,7 +10,7 @@ class HomeRepairedInfoChart extends React.Component {
         repair: {
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b}: {c} ({d}%)'
+                formatter: '{b}: {c} ({d}%)'
             },
             color: ['#EF877F', '#FDD67D', '#5BBBF9', '#D7D7D7', '#9CD685'],
             series: [
@@ -26,7 +26,7 @@ class HomeRepairedInfoChart extends React.Component {
         appraise: {
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                formatter: '{b} : {c} ({d}%)'
             },
             color: ['#5BBBF9', '#D7D7D7', '#9CD685', '#FDD67D', '#EF877F', '#8B9AE1'],
             series: [
@@ -88,12 +88,13 @@ class HomeRepairedInfoChart extends React.Component {
                         <ReactEcharts
                             option={this.state.repair}
                             style={{height: '270px',
-                                width: '400',
-                                marginLeft: '20px'}}
+                                width: '400'}}
                             className="echart"
                         />) : (
                         <ReactEcharts
                             option={this.state.appraise}
+                            style={{height: '270px',
+                                width: '400'}}
                             className="echart"
                         />
                     )}

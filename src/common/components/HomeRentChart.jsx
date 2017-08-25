@@ -76,6 +76,7 @@ class HomeRentChart extends React.Component {
             <div className="charts-box-left" >
                 <ReactEcharts
                     className="charts-left"
+                    style={{height: '350px'}}
                     option={this.state.option}
                 />
             </div>

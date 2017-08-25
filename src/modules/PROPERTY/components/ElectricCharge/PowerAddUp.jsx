@@ -608,7 +608,8 @@ class sumElectricityAddUp extends React.Component {
         lastTimeData = lastTimeData.data
         if (lastTimeData !== null && lastTimeData !== '' && typeof (lastTimeData) !== 'undefined') {
             this.props.form.setFieldsValue({
-                lastSurfaceNumber: this.props.id ? lastTimeData.lastSurfaceNumber : lastTimeData.surfaceNumber
+                lastSurfaceNumber: this.props.id ? lastTimeData.lastSurfaceNumber : lastTimeData.surfaceNumber,
+                electricCostName: this.state.powerType !== 2 ? value : ''
             })
         }
     }
