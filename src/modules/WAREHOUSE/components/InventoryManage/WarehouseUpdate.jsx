@@ -1,4 +1,8 @@
 // 出库
+<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseUpdate.jsx
+=======
+import {Modal, Input, Form, Row, notification, Col, Icon, Select } from 'antd'
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseUpdate.jsx
 import React from 'react'
 
 import {Modal, Input, Form, Row, notification, Col, Icon, Select } from 'antd'

@@ -1,7 +1,11 @@
 // [详情] - 出入库详情
 import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
+<<<<<<< HEAD:src/modules/WAREHOUSE/containers/details/Inventory.jsx
 import { apiPost, baseURL } from '../../../../api'
+=======
+import { apiPost, baseURL } from '../../../api'
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/WarehouseDetail.jsx
 // 引入组件
 
 // React component
@@ -108,10 +112,16 @@ class WarehouseDetail extends Component {
                     record.fileUrl.split('#').map(img => {
                         if (img !== '') {
                             i++
+<<<<<<< HEAD:src/modules/WAREHOUSE/containers/details/Inventory.jsx
                             arr.push(
                                 <img key={i} style={{width: '100px',
                                     height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
                                 />)
+=======
+                            arr.push(<img key={i} style={{width: '100px',
+                                height: '100px'}} src={baseURL + 'storage/files/' + img} alt=""
+                            />)
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/WarehouseDetail.jsx
                         }
                         return ''
                     })

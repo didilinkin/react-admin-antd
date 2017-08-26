@@ -94,7 +94,10 @@ class ReturnVisit extends React.Component {
                 key: 'visitDate'
             }, {
                 title: '回访情况',
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ReturnVisit.jsx
                 width: 200,
+=======
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/ClientReview.jsx
                 dataIndex: 'visitContent',
                 key: 'visitContent',
                 render: function (text, record, index) {
@@ -113,7 +116,11 @@ class ReturnVisit extends React.Component {
                 render: function (text, record, index) {
                     let url = '/home/client/repair/ReturnDetail/' + record.id
                     return (
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ReturnVisit.jsx
                         <a onClick={() => info(url)}> 回访登记 </a>
+=======
+                        <a href={url}> 回访登记 </a>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/ClientReview.jsx
                     )
                 }
             }],
@@ -172,14 +179,22 @@ class ReturnVisit extends React.Component {
         return (
             <div>
                 <span style={{paddingBottom: '10px',
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ReturnVisit.jsx
                     display: 'block'}}
                 >
+=======
+                    display: 'block'}}>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/ClientReview.jsx
                     <span>回访日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;公司名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ReturnVisit.jsx
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
+=======
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/ClientReview.jsx
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>

@@ -133,9 +133,15 @@ class Account extends Component {
                     let url = '/home/equipment/Details/equipmentledgerDetails/' + record.id
                     return (
                         <div>
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/EquipmentAccount.jsx
                             <a onClick={() => info(url)}> 详情 &nbsp;</a>
                             <a onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
                             <a onClick={() => openSS(record.id)}>&nbsp; 启停设备 </a>
+=======
+                            <a href={url}> 详情 &nbsp;</a>
+                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
+                            <a href="javascript:" onClick={() => openSS(record.id)}>&nbsp; 启停设备 </a>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/Account.jsx
                         </div>
                     )
                 }
@@ -240,8 +246,12 @@ class Account extends Component {
                     visible={this.state.openSS}
                 />
                 <span style={{paddingBottom: '10px',
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/EquipmentAccount.jsx
                     display: 'block'}}
                 >
+=======
+                    display: 'block'}}>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/Account.jsx
                     <span>设备名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200}} onChange={this.entryNameOnChange} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;设备状态&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>

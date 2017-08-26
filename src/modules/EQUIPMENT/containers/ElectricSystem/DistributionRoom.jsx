@@ -165,14 +165,22 @@ class DistributionRoom extends React.Component {
         return (
             <div>
                 <span style={{paddingBottom: '10px',
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ElectricSystem/DistributionRoom.jsx
                     display: 'block'}}
                 >
+=======
+                    display: 'block'}}>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/DistributionRoom.jsx
                     <span>巡查日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;巡查人&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ElectricSystem/DistributionRoom.jsx
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
+=======
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/DistributionRoom.jsx
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>

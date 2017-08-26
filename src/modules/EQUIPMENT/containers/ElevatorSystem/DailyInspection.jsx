@@ -1,8 +1,12 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
 import {Table, Button, Spin, DatePicker, Input, message} from 'antd'
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ElevatorSystem/DailyInspection.jsx
 import '../../style/test.less'
 import {apiPost} from '../../../../api/api.dev'
+=======
+import { apiPost } from '../../../api'
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/DailyInspection.jsx
 // 引入组件
 const { RangePicker } = DatePicker
 
@@ -146,18 +150,29 @@ class DailyInspection extends Component {
         return (
             <div>
                 <span style={{paddingBottom: '10px',
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ElevatorSystem/DailyInspection.jsx
                     display: 'block'}}
                 >
+=======
+                    display: 'block'}}>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/DailyInspection.jsx
                     <span>巡检日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
+<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ElevatorSystem/DailyInspection.jsx
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;梯号:&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryMachineRoomName}
                     />
+=======
+                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;梯号:&nbsp;&nbsp;</span>
+                    <Input style={{width: 200,
+                        marginRight: '5px'}} onChange={this.entryMachineRoomName} />
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/DailyInspection.jsx
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
                 <Spin spinning={this.state.loading}>

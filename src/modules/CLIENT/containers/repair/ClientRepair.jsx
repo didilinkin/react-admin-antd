@@ -3,10 +3,17 @@ import React, {Component} from 'react'
 import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
 import { apiPost } from '../../../../api'
 // 引入组件
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
 import CancelRepairComponent from '../../components/repair/ClientRepair/CancelRepair'
 import DistributeLeafletsComponent from '../../components/repair/ClientRepair/DistributeLeaflets'
 import TableAddUpComponent from '../../components/repair/ClientRepair/TableAddUp'
 import App from '../../components/repair/ClientRepair/MaintenanceProject'
+=======
+import CancelRepairComponent from './common/CancelRepair'
+import DistributeLeafletsComponent from './common/DistributeLeaflets'
+import TableAddUpComponent from './common/TableAddUp'
+import App from './Details/MaintenanceProject'
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
 const { RangePicker } = DatePicker
 // React component
 class ClientRepair extends Component {
@@ -66,9 +73,12 @@ class ClientRepair extends Component {
             id: id
         })
     }
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
     info = (url) => {
         this.props.history.push(url)
     }
+=======
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -80,7 +90,10 @@ class ClientRepair extends Component {
         const handleUpdate = this.handleUpdate
         const handleUpdateRepair = this.handleUpdateRepair
         const maintenanceProject = this.maintenanceProject
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
         const info = this.info
+=======
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
         this.setState({loading: false,
             total: result.data.total,
             columns: [{
@@ -112,9 +125,15 @@ class ClientRepair extends Component {
                 key: 'repairContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
                     let url = '/home/client/repair/repairDetail/' + record.id
                     return (
                         <a onClick={() => info(url)}>{text}</a>
+=======
+                    let url = '/upkeep/repai/' + record.id
+                    return (
+                        <a href={url}>{text}</a>
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
                     )
                 }
             }, {
@@ -231,7 +250,16 @@ class ClientRepair extends Component {
         }
         let result = await apiPost(
             'upkeep/repairList',
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
             filters
+=======
+            {'startDate': this.startDate,
+                'endDate': this.endDate,
+                'clientName': this.clientName,
+                'repairStatus': 0,
+                'order': order
+            }
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
         )
         this.setState({
             total: result.data.total,
@@ -241,7 +269,11 @@ class ClientRepair extends Component {
             openTableAddUp: false,
             openUpdate: false,
             openMaintenanceProject: false,
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
             dataSource: result.data.rows,
+=======
+            dataSource: result.data,
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
             id: 0
         })
     }
@@ -318,12 +350,15 @@ class ClientRepair extends Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
+<<<<<<< HEAD:src/modules/CLIENT/containers/repair/ClientRepair.jsx
                         pagination={{total: this.state.total,
                             showSizeChanger: true,
                             showQuickJumper: true,
                             current: this.state.current,
                             pageSizeOptions: ['15', '30', '45'],
                             defaultPageSize: 30}}
+=======
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/RepairList.jsx
                         scroll={{ x: 1850 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
