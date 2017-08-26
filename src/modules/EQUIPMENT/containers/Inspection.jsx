@@ -13,11 +13,11 @@ class Inspection extends React.Component {
         li3: 'pro-list pro-list js-pro-list',
         li4: 'pro-list pro-list js-pro-list',
         li5: 'pro-list pro-list js-pro-list',
-        titles1: ['配电房巡检记录', '弱电间巡检记录', '发电机运行记录'],
+        titles1: ['配电房记录', '弱电间记录', '发电机记录'],
         titles2: ['电梯机房', '日常巡检'],
         titles3: ['空调机房', '新风机房', '中央空调'],
-        titles4: ['热交换设备巡检', '水暖管道', '水暖基建', '太阳能巡检', '换热站巡检'],
-        titles5: ['高位消费水箱', '气体灭火巡检', '消防维保记录'],
+        titles4: ['热交换设备', '水暖管道', '水暖基建', '太阳能巡检', '换热站巡检'],
+        titles5: ['高位消防水箱', '气体灭火巡检', '消防维保记录'],
         urls1: ['distributionRoom', 'WeakRoom', 'GeneratorLog'],
         urls2: ['ElevatorRoom', 'DailyInspection'],
         urls3: ['AirConditioningRoom', 'NewWindRoom', 'CentralAirConditioning'],
@@ -92,6 +92,9 @@ class Inspection extends React.Component {
     render () {
         return (
             <div>
+                <div>
+                    <h1 className="h1-title">查看设备巡检情况入口</h1>
+                </div>
                 <div style={{marginTop: '50px'}} className="idx_box_wp index-product">
                     <div className="pro-content">
                         <ul className="clearfix first-ul">
@@ -124,7 +127,7 @@ function Card (props) {
     let list = (arr, urls) => {
         let res = []
         for (let i = 0; i < arr.length; i++) {
-            res.push(<li><a onClick={() => props.pushNewPage(urls[i])}>{arr[i]}</a></li>)
+            res.push(<li><a className="main-li-a" onClick={() => props.pushNewPage(urls[i])}>{arr[i]}</a></li>)
         }
         return res
     }
