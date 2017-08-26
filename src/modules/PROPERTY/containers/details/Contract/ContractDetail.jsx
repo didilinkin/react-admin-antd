@@ -20,9 +20,10 @@ class ContractDetail extends React.Component {
     }
     async initialRemarks () {
         let contract = await apiPost(
-            '/contract/getcontract',
-            {'id': this.props.match.params.id,
-                type: 1}
+            '/contract/getcontract', {
+                'id': this.props.match.params.id,
+                type: 1
+            }
         )
         this.setState({
             ListSublet: contract.data.subletInfoList,
@@ -90,10 +91,7 @@ class ContractDetail extends React.Component {
                 <Row>
                     <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
                     <Col span={8}><b>服务面积：</b>{this.state.contract.serviceArea} &nbsp;㎡</Col>
-                    <Col span={8} />
-                </Row>
-                <Row>
-                    <Col span={24}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
+                    <Col span={8}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
                 </Row>
                 <div className="wrapbox">
                     <div className="title">
@@ -240,10 +238,11 @@ class ContractDetail extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
-                <div onClick={this.TerminationComponent} className="submit">
-                    终止合同
-                </div>
+                {
+                    this.state.contract.contractStatus === 0 &&
+                    <div onClick={this.TerminationComponent} className="submit">
+                        终止合同
+                    </div>
                 }
                 <SubletAddUpCom
                     id={this.state.id}

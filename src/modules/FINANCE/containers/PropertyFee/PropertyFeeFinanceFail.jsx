@@ -4,6 +4,7 @@ import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
+
 // 引入组件
 // React component
 class PropertyFeeFinanceFail extends Component {
@@ -34,10 +35,11 @@ class PropertyFeeFinanceFail extends Component {
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
-            '/propertyFee/propertyFeeList',
-            {auditStatus: 3,
+            '/propertyFee/propertyFeeList', {
+                auditStatus: 3,
                 contractStatus: 0,
-                page: this.state.page}
+                page: this.state.page
+            }
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -54,7 +56,7 @@ class PropertyFeeFinanceFail extends Component {
                 render: function (text, record, index) {
                     index++
                     return (
-                        <span>{index}</span>
+                        <span>{ index }</span>
                     )
                 }
             }, {
@@ -206,6 +208,7 @@ class PropertyFeeFinanceFail extends Component {
         )
     }
 }
+
 export default PropertyFeeFinanceFail
 
 
