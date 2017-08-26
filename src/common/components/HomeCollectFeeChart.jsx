@@ -5,7 +5,11 @@ class HomeCollectFeeChart extends React.Component {
         option: {
             title: {
                 text: '本年度物业收费汇总',
-                top: '10px'
+                top: '10px',
+                left: '20px'
+            },
+            grid: {
+                bottom: '40px'
             },
             tooltip: {
                 trigger: 'axis'
