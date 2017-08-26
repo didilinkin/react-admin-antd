@@ -738,7 +738,7 @@ class propertyFeeAdd extends React.Component {
                                     <input style={{width: '300px',
                                         height: '25px'}} value={this.state.json1.printClientName} onChange={this.entryNameOnChange}
                                     /></span>
-                                <span>物业服务费统计表</span>
+                                <span style={{marginLeft: '20px'}}>物业服务费统计表</span>
                             </div>
                         </Col>
                     </Row>

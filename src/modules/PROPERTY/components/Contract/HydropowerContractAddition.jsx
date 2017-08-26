@@ -285,7 +285,7 @@ class HydropowerContractAddition extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
+                                    style={{ width: 380 }}
                                     placeholder="请输入所在房间"
                                     onChange={this.selectRoom}
                                     optionFilterProp="children"

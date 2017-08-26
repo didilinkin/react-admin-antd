@@ -12,10 +12,16 @@ class HomeRepairedInfoChart extends React.Component {
                 trigger: 'item',
                 formatter: '{b}: {c} ({d}%)'
             },
+            grid: {
+                bottom: '20%',
+                left: '10%',
+                right: '10%',
+                top: '0%'
+            },
             color: ['#EF877F', '#FDD67D', '#5BBBF9', '#D7D7D7', '#9CD685'],
             series: [
                 {
-                    name: '访问来源',
+                    name: '报修统计',
                     type: 'pie',
                     radius: ['50%', '70%'],
                     avoidLabelOverlap: false,
@@ -28,13 +34,18 @@ class HomeRepairedInfoChart extends React.Component {
                 trigger: 'item',
                 formatter: '{b} : {c} ({d}%)'
             },
+            grid: {
+                bottom: '20%',
+                left: '10%',
+                right: '10%',
+                top: '0%'
+            },
             color: ['#5BBBF9', '#D7D7D7', '#9CD685', '#FDD67D', '#EF877F', '#8B9AE1'],
             series: [
                 {
-                    name: '访问来源',
+                    name: '评价等级',
                     type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
+                    radius: '70%',
                     data: [],
                     itemStyle: {
                         emphasis: {
@@ -88,13 +99,13 @@ class HomeRepairedInfoChart extends React.Component {
                         <ReactEcharts
                             option={this.state.repair}
                             style={{height: '270px',
-                                width: '400'}}
+                                width: '400px'}}
                             className="echart"
                         />) : (
                         <ReactEcharts
                             option={this.state.appraise}
                             style={{height: '270px',
-                                width: '400'}}
+                                width: '400px'}}
                             className="echart"
                         />
                     )}

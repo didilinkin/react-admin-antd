@@ -111,8 +111,8 @@ const EQUIPMENT_DIR = {
             component: require('./containers/WaterSystem/PlumbingInfrastructure').default
         }, {
             title: '太阳能巡检',
-            key: 'GeneratorLog',
-            path: '/home/equipment/GeneratorLog',
+            key: 'SolarEnergy',
+            path: '/home/equipment/SolarEnergy',
             ancestor: ['equipment'],
             component: require('./containers/WaterSystem/SolarEnergy').default
         }, {
