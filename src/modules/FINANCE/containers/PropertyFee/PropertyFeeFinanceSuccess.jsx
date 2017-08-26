@@ -166,7 +166,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                     let url = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + record.id
                     return (
                         <div>
-                            <a onClick={() => info(url)}> 收款 &nbsp;&nbsp;</a>
+                            <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a> 撤回 </a>
                             </Popconfirm>
@@ -181,6 +181,9 @@ class PropertyFeeFinanceSuccess extends React.Component {
         this.initialRemarks()
     }
     refresh = async (pagination, filters, sorter) => {
+        if (typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['auditStatus'] = 2
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize

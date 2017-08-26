@@ -42,6 +42,7 @@ class propertyFeeAdd extends React.Component {
                     {id: nextProps.id}
                 )
                 json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
+                json['auditStatus'] = 0
                 json['printClientName'] = propertyFee.data.printClientName
                 json['id'] = nextProps.id
                 json['acUnitPrice'] = propertyFee.data.acUnitPrice
