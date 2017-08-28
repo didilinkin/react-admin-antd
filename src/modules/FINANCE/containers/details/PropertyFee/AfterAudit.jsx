@@ -1,6 +1,6 @@
-// 财务管理 - 物业费明细
+// 财务管理 - 物业费明细( 审核失败 )
 import React from 'react'
-import {Row, Col, Modal} from 'antd'
+import { Row, Col, Modal, Card} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 
@@ -80,7 +80,7 @@ class AfterAudit extends React.Component {
                             lineHeight: '40px'}}
                         >
                             <span>{this.state.data.printClientName}</span>
-                            <span>物业服务费统计表</span>
+                            <span>物业服务费统计表A</span>
                         </div>
                     </Col>
                 </Row>
@@ -153,20 +153,16 @@ class AfterAudit extends React.Component {
                     textAlign: 'right'}}
                 >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
 
-                <div className="wrapbox">
-                    <div className="main">
-                        <p className="line" />
-                        <h2>其他信息</h2>
-                        <Row>
-                            <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                            <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-                        </Row>
-                        <Row>
-                            <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
-                            <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
-                        </Row>
-                    </div>
-                </div>
+                <Card title="其他信息">
+                    <Row>
+                        <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                        <Col span={8}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                        <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}><b>审核说明：</b>{this.state.data.remark}</Col>
+                    </Row>
+                </Card>
             </Modal>
         )
     }

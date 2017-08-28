@@ -135,7 +135,7 @@ function Card (props) {
         <div className="con-card">
             <div className="card-t">
                 <div className="icon-box" style={props.bgColor}>
-                    <img className="card-icon" src={props.logo} />
+                    <img className="card-icon" src={props.logo} alt="" />
                 </div>
                 <h3>{props.title}</h3>
             </div>

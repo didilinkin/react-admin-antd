@@ -5,7 +5,11 @@ import '../../../style/test.less'
 import { apiPost, baseURL } from '../../../../../api'
 
 
+<<<<<<< HEAD:src/modules/CLIENT/containers/details/repair/RepairDetail.jsx
 class RepairDetail extends React.Component {
+=======
+class App extends React.Component {
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/Details/Repair.jsx
     constructor (props) {
         super(props)
         this.state = {

@@ -4,6 +4,8 @@ import {Row, Col, Modal} from 'antd'
 import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
+import styled from 'styled-components'
+import elf from '../../../../../elf'
 
 class RentDetail extends React.Component {
     constructor (props) {
@@ -131,19 +133,37 @@ class RentDetail extends React.Component {
                         <div className="main">
                             <h2>费用设置</h2>
                             <Row>
-                                <Col span={8}><b>合同单价：</b>{this.state.data.unitPrice} 元/㎡/天</Col>
+                                <Col span={8}><b>合同单价：</b>
+                                    <MoneySpan>
+                                        {this.state.data.unitPrice}
+                                    </MoneySpan>
+                                    元/㎡/天
+                                </Col>
                                 <Col span={8}><b>交费方式：</b>{this.state.payPeriod}</Col>
-                                <Col span={8}><b>首年租金：</b>{this.state.data.firstYearRent}  元</Col>
+                                <Col span={8}><b>首年租金：</b>
+                                    <MoneySpan>
+                                        {this.state.data.firstYearRent}
+                                    </MoneySpan>
+                                    元</Col>
                             </Row>
                             <Row>
-                                <Col span={24}> {this.state.data.startIncNum} 年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
+                                <Col span={24}>
+                                    <MoneySpan>
+                                        {this.state.data.startIncNum}
+                                    </MoneySpan>
+                                    年后租金每年递增 {this.state.data.rentIncrRate} %
+                                </Col>
                             </Row>
                             <p className="line" />
                             <h2>本期租金</h2>
                             <Row>
                                 <Col span={8}><b>本期周期：</b>{this.state.data.periodRent}</Col>
                                 <Col span={8}><b>交费期限：</b>{this.state.data.payDeadline}</Col>
-                                <Col span={8}><b>本期租金：</b>{this.state.data.actualPaidMoney} 元  （已优惠 {this.state.data.discountMoney} 元）</Col>
+                                <Col span={8}><b>本期租金：</b>
+                                    <MoneySpan>
+                                        {this.state.data.actualPaidMoney}
+                                    </MoneySpan>
+                                    元（已优惠 <MoneySpan>{this.state.data.discountMoney}</MoneySpan> 元）</Col>
                             </Row>
                             <p className="line" />
                             <h2>其他信息</h2>
@@ -166,7 +186,12 @@ class RentDetail extends React.Component {
                             <div className="main">
                                 <h2>确认收款</h2>
                                 <Row>
-                                    <Col span={8}><b>应收金额：</b>{this.state.data.actualPaidMoney} 元</Col>
+                                    <Col span={8}><b>应收金额：</b>
+                                        <MoneySpan>
+                                            {this.state.data.actualPaidMoney}
+                                        </MoneySpan>
+                                        元
+                                    </Col>
                                     <Col span={16}><b>开票状态：</b>{this.state.invoiceRentStatus}</Col>
                                 </Row>
                                 <table className="tb">
@@ -182,48 +207,48 @@ class RentDetail extends React.Component {
                                             if (collectRent.paidWay === 0) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>银行转账</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 1) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>支付宝</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 2) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>微信</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 3) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>支票</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 4) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>现金</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
                                             } else if (collectRent.paidWay === 5) {
                                                 return <tr key={collectRent.id}>
                                                     <td>{collectRent.receiptDate}</td>
-                                                    <td>{collectRent.paidMoney}</td>
-                                                    <td>{collectRent.unpaidMoney}</td>
+                                                    <td><MoneySpan> {collectRent.paidMoney} </MoneySpan></td>
+                                                    <td><MoneySpan> {collectRent.unpaidMoney} </MoneySpan></td>
                                                     <td>其他</td>
                                                     <td>{collectRent.createName}</td>
                                                 </tr>
@@ -319,6 +344,12 @@ class RentDetail extends React.Component {
         )
     }
 }
+
+// style
+const MoneySpan = styled.span `
+    padding: 0 ${elf.d.autoPadding / 2}px;
+    color: ${elf.c.money}
+`
 
 export default RentDetail
 

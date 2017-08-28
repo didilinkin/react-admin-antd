@@ -94,8 +94,11 @@
     "animate.css": "^3.5.2",
     "antd": "^2.12.8",
     "axios": "^0.16.1",
+<<<<<<< HEAD
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
+=======
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a
     "echarts-for-react": "^1.4.4",
     "history": "^4.6.3",
     "lodash": "^4.17.4",
@@ -113,10 +116,15 @@
     "react-router-config": "^1.0.0-beta.3",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "5.0.0-alpha.6",
+<<<<<<< HEAD
     "react-router-redux-dom-link": "^0.2.0",
     "recharts": "^1.0.0-alpha.1",
     "redux": "^3.7.1",
     "redux-freeze": "^0.1.5",
+=======
+    "recharts": "^1.0.0-alpha.1",
+    "redux": "^3.6.0",
+>>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a
     "redux-thunk": "^2.2.0",
     "screenfull": "^3.2.0",
     "store": "^2.0.12",

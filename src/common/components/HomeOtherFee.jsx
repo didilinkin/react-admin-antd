@@ -42,7 +42,7 @@ class HomeOtherFee extends React.Component {
                 <div className="otherFee-bottom" >
                     <div className="otherFee-bottom-left">
                         <div className="otherFee-bottom-left-box">
-                            <img className="otherFee-bottom-image" src={moneyLogo} />
+                            <img className="otherFee-bottom-image" src={moneyLogo} alt="" />
                         </div>
                     </div>
                     <div className="otherFee-bottom-right">
