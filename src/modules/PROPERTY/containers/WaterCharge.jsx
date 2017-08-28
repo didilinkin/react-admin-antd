@@ -39,6 +39,9 @@ class ChargeWaterBill extends React.Component {
             openInfo: false,
             openWaterAddUpComponent: false})
         console.log(this.activeKey)
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
                 this.activeKey.toString() === '4' ? 2 : 3

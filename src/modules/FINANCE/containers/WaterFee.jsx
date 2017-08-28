@@ -43,6 +43,9 @@ class WaterFee extends React.Component {
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openInfo: false})
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
                 this.activeKey.toString() === '4' ? 2 : 3
