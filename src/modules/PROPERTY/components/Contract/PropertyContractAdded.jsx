@@ -422,7 +422,7 @@ class PropertyContractAdded extends React.Component {
                                     )}
                                     <span style={{color: 'red',
                                         padding: '0 5px'}}
-                                    >减免</span>
+                                    >减免面积</span>
                                     {getFieldDecorator('reliefArea')(
                                         <InputNumber onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                                     )}

@@ -1,5 +1,5 @@
 import {Modal, Input, Form, notification, Icon, Select, Row, Col,
-    DatePicker, InputNumber, Button, Table, Popconfirm   } from 'antd'
+    DatePicker, InputNumber, Button, Table, Popconfirm } from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import EditableCell from './EditableCell'
@@ -457,12 +457,14 @@ class Happy extends React.Component {
                     <h2>房源信息</h2>
                     <Row>
                         <Col style={{marginBottom: '20px',
-                            paddingLeft: '25px'}} span={24}>
+                            paddingLeft: '25px'}} span={24}
+                        >
                             <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
                                 fontSize: '12px',
                                 color: 'red',
                                 marginRight: '4px',
-                                fontFamily: 'SimSun'}}>*</a>所在房间 :&nbsp;&nbsp;</em>
+                                fontFamily: 'SimSun'}}
+                            >*</a>所在房间 :&nbsp;&nbsp;</em>
                             {getFieldDecorator('buildIdOne', {
                                 rules: [ {
                                     required: true,
@@ -505,12 +507,14 @@ class Happy extends React.Component {
                     </Row>
                     <Row>
                         <Col style={{marginBottom: '20px',
-                            paddingLeft: '25px'}} span={24}>
+                            paddingLeft: '25px'}} span={24}
+                        >
                             <em style={{color: 'rgba(0, 0, 0, 0.65)'}}><a style={{lineHeight: '1',
                                 fontSize: '12px',
                                 color: 'red',
                                 marginRight: '4px',
-                                fontFamily: 'SimSun'}}>*</a>服务面积 :&nbsp;&nbsp;</em>
+                                fontFamily: 'SimSun'}}
+                            >*</a>服务面积 :&nbsp;&nbsp;</em>
                             {getFieldDecorator('leaseArea', {
                                 rules: [{
                                     required: true,
@@ -521,7 +525,8 @@ class Happy extends React.Component {
                                 <Input style={{ width: 200 }} disabled addonAfter="㎡" />
                             )}
                             <span style={{color: 'red',
-                                padding: '0 5px'}}>减免</span>
+                                padding: '0 5px'}}
+                            >减免面积</span>
                             {getFieldDecorator('reliefArea')(
                                 <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                             )}
@@ -698,7 +703,8 @@ class Happy extends React.Component {
                 </Form>
                 {!this.props.id > 0 &&
                     <Button type="primary" style={{margin: '10px auto',
-                        display: 'block'}} onClick={this.generate}>生成每期租金</Button>
+                        display: 'block'}} onClick={this.generate}
+                    >生成每期租金</Button>
                 }
                 <div style={{marginBottom: '10px'}}>
                     <Table
