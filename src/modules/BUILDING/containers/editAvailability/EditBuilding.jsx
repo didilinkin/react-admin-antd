@@ -78,27 +78,23 @@ class EditBuilding extends Component {
                 }
             }, {
                 title: '楼宇名称',
-                width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '楼层数量',
-                width: 250,
                 dataIndex: 'floorNum',
                 key: 'floorNum'
             }, {
                 title: '客梯数量',
-                width: 300,
                 dataIndex: 'passengerElevatorNum',
                 key: 'passengerElevatorNum'
             }, {
                 title: '货梯数量',
-                width: 250,
                 dataIndex: 'goodsElevatorNum',
                 key: 'goodsElevatorNum'
             }, {
                 title: '操作',
-                width: 200,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -203,7 +199,7 @@ class EditBuilding extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1100 }}
+                        scroll={{ x: 1300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

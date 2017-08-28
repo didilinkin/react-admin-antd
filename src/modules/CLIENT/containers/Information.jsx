@@ -208,15 +208,15 @@ class Information extends Component {
                     paddingTop: '10px',
                     display: 'block'}}
                 >
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;客户名称:&nbsp;&nbsp;</span>
+                    <span style={{margin: '0 10px'}}>客户名称:</span>
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;联系方式:&nbsp;&nbsp;</span>
+                    <span style={{margin: '0 10px'}}>联系方式:</span>
                     <Input style={{width: 150,
                         marginRight: '5px'}} onChange={this.entryPhoneOnChange}
                     />
-                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button type="primary" style={{margin: '0 10px'}} onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.add}>添加客户</Button>
                 </span>
 

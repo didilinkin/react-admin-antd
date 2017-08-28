@@ -153,7 +153,21 @@ class App extends React.Component {
                             <Col span={8}><b>首年服务费：</b><span className="color1">{this.state.contract.firstYearRent}</span> 元 </Col>
                         </Row>
                         <Row>
-                            <Col span={24}><b>管理押金：</b><span className="color1">{this.state.contract.depositMoney}</span> 元 （当前余额：<span className="color1">{this.state.contract.currentBalance} 元</span>） &nbsp; <span className="color1">{this.state.contract.startIncNum}</span> 年后租金每年递增 <span className="color1">{this.state.contract.rentIncrRate}</span> %</Col>
+                            <Col span={8}>
+                                <span className="color1">
+                                    {this.state.contract.startIncNum}</span>
+                                年后租金每年递增
+                                <span className="color1">{this.state.contract.rentIncrRate}</span> %
+                            </Col>
+                            <Col span={16}>
+                                <b>管理押金：</b>
+                                <span className="color1">{this.state.contract.depositMoney}</span>
+                                <span>
+                                    元 （当前余额：
+                                </span>
+                                <span className="color1">{this.state.contract.currentBalance} 元</span>
+                                <span>）</span>
+                            </Col>
                         </Row>
                         <p className="line" />
                         <Table
@@ -165,7 +179,7 @@ class App extends React.Component {
                 </div>
                 {this.state.contract.contractStatus === 0 &&
                     <div>
-                        <Button className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
+                        <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
                     </div>
                 }
                 <TerminationComponent

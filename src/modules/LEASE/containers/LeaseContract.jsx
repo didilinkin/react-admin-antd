@@ -66,7 +66,7 @@ class LeaseContract extends React.Component {
             total: result.data.total,
             columns: [{
                 title: '序号',
-                width: 100,
+                width: 50,
                 dataIndex: 'id',
                 render: function (text, record, index) {
                     index++
@@ -90,7 +90,6 @@ class LeaseContract extends React.Component {
                 }
             }, {
                 title: '客户名称',
-                width: 200,
                 dataIndex: 'clientName'
             }, {
                 title: '合同编号',
@@ -102,7 +101,7 @@ class LeaseContract extends React.Component {
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
+                width: 150,
                 dataIndex: 'leaseRooms'
             }, {
                 title: '合同面积',
@@ -134,10 +133,11 @@ class LeaseContract extends React.Component {
                 }
             }, {
                 title: '剩余天数',
+                width: 100,
                 dataIndex: 'daysRemaining'
             }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -223,7 +223,7 @@ class LeaseContract extends React.Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
-                        scroll={{ x: 1300 }}
+                        scroll={{ x: 1500}}
                         bordered
                         pagination={{total: this.state.total,
                             showSizeChanger: true,
