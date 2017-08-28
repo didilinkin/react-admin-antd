@@ -99,27 +99,21 @@ class PropertyFeeing extends Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 300,
                 dataIndex: 'clientName'
             }, {
                 title: '本期物业费周期',
-                width: 250,
                 dataIndex: 'periodPropertyFee'
             }, {
                 title: '应收金额',
-                width: 150,
                 dataIndex: 'actualPaidMoney'
             }, {
                 title: '交费期限',
-                width: 150,
                 dataIndex: 'payDeadline'
             }, {
                 title: '操作',

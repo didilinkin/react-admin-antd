@@ -179,16 +179,11 @@ class ReceiveStatistics extends Component {
     query = () => {
         this.refresh()
     }
-<<<<<<< HEAD:src/modules/WAREHOUSE/containers/ReceiveStatistics.jsx
     startDate = null
-=======
-    startDate = ''
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/ReceiveStatistics.jsx
     getDate = (e) => {
         if (e !== null) {
             this.startDate = e.format('YYYY-MM-DD 23:59:59')
         } else {
-<<<<<<< HEAD:src/modules/WAREHOUSE/containers/ReceiveStatistics.jsx
             this.startDate = null
         }
     }
@@ -196,16 +191,11 @@ class ReceiveStatistics extends Component {
         this.setState({
             RowKeys: selectedRowKeys
         })
-=======
-            this.startDate = ''
-        }
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/ReceiveStatistics.jsx
     }
     render () {
         return (
             <div>
                 <span style={{paddingBottom: '10px',
-<<<<<<< HEAD:src/modules/WAREHOUSE/containers/ReceiveStatistics.jsx
                     display: 'block'}}
                 >
                     <span>截止日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -216,15 +206,6 @@ class ReceiveStatistics extends Component {
                     <Select
                         showSearch
                         allowClear
-=======
-                    display: 'block'}}>
-                    <span>截止日期&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <DatePicker style={{width: 200,
-                        marginRight: '5px'}} onChange={this.getDate} />
-                    <span>仓库类型&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Select
-                        showSearch
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/ReceiveStatistics.jsx
                         style={{ width: 200,
                             marginRight: '5px'}}
                         placeholder="请选择仓库"
@@ -237,12 +218,8 @@ class ReceiveStatistics extends Component {
                     </Select>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;材料名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
-<<<<<<< HEAD:src/modules/WAREHOUSE/containers/ReceiveStatistics.jsx
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-=======
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/ReceiveStatistics.jsx
                     <Button type="primary" onClick={this.query}>查询</Button>
                 </span>
 

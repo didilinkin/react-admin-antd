@@ -45,7 +45,6 @@ class HomeRepairedInfoChart extends React.Component {
                 {
                     name: '评价等级',
                     type: 'pie',
-                    radius: '70%',
                     data: [],
                     itemStyle: {
                         emphasis: {
@@ -88,7 +87,7 @@ class HomeRepairedInfoChart extends React.Component {
                         </RadioGroup>
                     </div>
                     <div style={{float: 'right',
-                        width: '170px',
+                        width: '200px',
                         marginRight: '10px'}}
                     >
                         <RangePicker />

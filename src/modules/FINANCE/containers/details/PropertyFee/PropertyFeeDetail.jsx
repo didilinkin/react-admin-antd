@@ -333,7 +333,7 @@ class PropertyFeeDetail extends React.Component {
                         </table>
                     </div>
                     {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
-                    <div className="wrapbox">
+                    <div className="main">
                         <p className="line" />
                         <h2>确认违约金</h2>
                         <Row>
@@ -421,14 +421,12 @@ class PropertyFeeDetail extends React.Component {
                         </table>
                     </div>}
                 </div>}
-                <div className="wrapbox">
+                <div>
                     {this.state.data.unpaidMoney !== 0 &&
                     <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
-                    {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
-                    <Button type="primary" onClick={this.handleUpdate2} >收违约金</Button>}
                     {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 && this.state.data.whetherLatePaid !== 2 &&
-                    <Popconfirm title="确定违约金延期下月电费吗?" onConfirm={this.delayNext}>
-                        <a>&nbsp; 延期下月电费 </a>
+                    <Popconfirm title="确定违约金延期下月电费吗?" okText="实收违约金" cancelText="延期下月电费" onConfirm={this.handleUpdate2} onCancel={this.delayNext}>
+                        <Button type="primary">确认违约金</Button>
                     </Popconfirm>}
                     {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>

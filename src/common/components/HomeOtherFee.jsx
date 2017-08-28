@@ -1,6 +1,7 @@
 import React from 'react'
 import moneyLogo from '../../assets/images/money.png'
 import {DatePicker} from 'antd'
+import moment from 'moment'
 const { MonthPicker } = DatePicker
 class HomeOtherFee extends React.Component {
     state = {
@@ -15,6 +16,9 @@ class HomeOtherFee extends React.Component {
     componentWillReceiveProps (nextPorps) {
         this.setState({otherFees: nextPorps.otherFees})
     }
+    componentDidMount () {
+        this.setState({})
+    }
 
     formatMoney = (number) => {
         let negative = number < 0 ? '-' : ''
@@ -24,6 +28,7 @@ class HomeOtherFee extends React.Component {
     }
 
     render () {
+        const monthFormat = 'YYYY-MM'
         return (
             <div className="otherFee">
                 <div className="otherFee-top">
@@ -31,7 +36,7 @@ class HomeOtherFee extends React.Component {
                         其他费用
                     </div>
                     <div className="otherFee-top-picker">
-                        选择月份：<MonthPicker placeholder="请选择月份" />
+                        选择月份：<MonthPicker defaultValue={moment('2017-08', monthFormat)} format={monthFormat} placeholder="请选择月份" />
                     </div>
                 </div>
                 <div className="otherFee-bottom" >

@@ -68,47 +68,38 @@ class PropertyFeeSuccess extends Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum',
                 key: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 320,
                 dataIndex: 'clientName',
                 key: 'clientName'
             }, {
                 title: '本期物业费周期',
-                width: 280,
                 dataIndex: 'periodPropertyFee',
                 key: 'periodPropertyFee'
             }, {
                 title: '应收金额',
-                width: 150,
                 dataIndex: 'actualPaidMoney',
                 key: 'actualPaidMoney'
             }, {
                 title: '交费期限',
-                width: 150,
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
                 title: '实收物业费日期',
-                width: 150,
                 dataIndex: 'receiptDate',
                 key: 'receiptDate'
             }, {
                 title: '逾期天数',
-                width: 150,
                 dataIndex: 'overdueDay',
                 key: 'overdueDay'
             }, {
                 title: '延期下个月电费',
-                width: 150,
                 dataIndex: 'lateConductWay',
                 key: 'lateConductWay',
                 render: function (text, record, index) {
@@ -125,7 +116,6 @@ class PropertyFeeSuccess extends Component {
                 }
             }, {
                 title: '物业费开票状态',
-                width: 150,
                 dataIndex: 'invoicePropertyStatus',
                 key: 'invoicePropertyStatus',
                 render: function (text, record, index) {
@@ -142,7 +132,6 @@ class PropertyFeeSuccess extends Component {
                 }
             }, {
                 title: '打印状态',
-                width: 150,
                 dataIndex: 'whetherPrinted',
                 key: 'whetherPrinted',
                 render: function (text, record, index) {
