@@ -493,11 +493,13 @@ class propertyFeeAdd extends React.Component {
                 message: '操作成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.state.json1.tenant = null
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
         } else {
+            console.log(this.state.json1.printClientName)
             await apiPost(
                 'propertyFee/savePropertyFee',
                 this.state.json1
@@ -506,6 +508,7 @@ class propertyFeeAdd extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.state.json1.tenant = null
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,

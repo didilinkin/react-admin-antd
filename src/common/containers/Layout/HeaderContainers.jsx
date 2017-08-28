@@ -181,7 +181,7 @@ class headerContainers extends React.Component {
                                             message: '旧密码不能为空'
                                         }]
                                     })(
-                                        <Input />
+                                        <Input placeholder="请输入旧密码" />
                                     )}
                                 </FormItem>
                                 <FormItem label="新密码" labelCol={{ span: 6 }}
@@ -193,7 +193,7 @@ class headerContainers extends React.Component {
                                             message: '新密码不能为空'
                                         }]
                                     })(
-                                        <Input />
+                                        <Input placeholder="请输入新密码" />
                                     )}
                                 </FormItem>
                                 <FormItem label="确认密码" labelCol={{ span: 6 }}
@@ -205,7 +205,7 @@ class headerContainers extends React.Component {
                                             message: '确认密码不能为空'
                                         }]
                                     })(
-                                        <Input />
+                                        <Input placeholder="请再次输入新密码" />
                                     )}
                                 </FormItem>
                             </Col>
@@ -227,7 +227,7 @@ class headerContainers extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('phone')(
-                                        <Input />
+                                        <Input placeholder="请输入新的手机号或座机号码" />
                                     )}
                                 </FormItem>
                             </Col>

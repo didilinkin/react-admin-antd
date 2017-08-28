@@ -105,7 +105,18 @@ class PropertyFeeing extends Component {
                 dataIndex: 'roomNum'
             }, {
                 title: '客户名称',
-                dataIndex: 'clientName'
+                dataIndex: 'clientName',
+                render: function (text, record, index) {
+                    if (record.tenant !== null && record.tenant !== '') {
+                        return (
+                            <span>{record.tenant}</span>
+                        )
+                    } else {
+                        return (
+                            <span>{record.clientName}</span>
+                        )
+                    }
+                }
             }, {
                 title: '本期物业费周期',
                 dataIndex: 'periodPropertyFee'

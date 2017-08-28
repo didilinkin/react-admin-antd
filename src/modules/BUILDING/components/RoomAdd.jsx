@@ -14,6 +14,7 @@ class RoomAdd extends React.Component {
         propertyType1: '',
         roomStatus1: '',
         ListBuildingInfo: [],
+        propertyType: null,
         data: {}
     }
 
@@ -76,6 +77,7 @@ class RoomAdd extends React.Component {
                     visible: nextProps.visible,
                     isFirst: false,
                     view: true,
+                    propertyType: room.data.propertyType,
                     fileList: []
                 })
             }
@@ -158,6 +160,9 @@ class RoomAdd extends React.Component {
     propertyType = null
     selectPType = (e) => {
         this.propertyType = e
+        this.setState({
+            propertyType: e
+        })
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -303,6 +308,7 @@ class RoomAdd extends React.Component {
                                 })(<Input />)}
                             </FormItem>
                         </Col>
+                        {this.state.propertyType !== 2 &&
                         <Col span={12}>
                             <FormItem label="房屋状态" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
@@ -321,7 +327,7 @@ class RoomAdd extends React.Component {
                                         <Option key={2}>自用</Option>
                                     </Select>)}
                             </FormItem>
-                        </Col>
+                        </Col>}
                     </Row>
                     <Row>
                         <Col span={12}>

@@ -76,7 +76,6 @@ class PropertyContract extends React.Component {
                 }
             }, {
                 title: '合同类型',
-                width: 100,
                 dataIndex: 'contractSplit',
                 render: function (text, record, index) {
                     if (text === 1) {
@@ -90,35 +89,27 @@ class PropertyContract extends React.Component {
                 }
             }, {
                 title: '客户名称',
-                width: 200,
                 dataIndex: 'clientName'
             }, {
                 title: '合同编号',
-                width: 150,
                 dataIndex: 'contractCode'
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'leaseRooms'
             }, {
                 title: '合同面积',
-                width: 100,
                 dataIndex: 'serviceArea'
             }, {
                 title: '合同开始日期',
-                width: 150,
                 dataIndex: 'startDate'
             }, {
                 title: '合同结束日期',
-                width: 150,
                 dataIndex: 'endDate'
             }, {
                 title: '合同状态',
-                width: 100,
                 dataIndex: 'contractStatus',
                 render: function (text, record, index) {
                     if (text === 1) {
@@ -223,7 +214,7 @@ class PropertyContract extends React.Component {
                 <Spin spinning={this.state.loading}>
                     <Table
                         onChange={this.refresh}
-                        scroll={{ x: 1300 }}
+                        scroll={{ x: 1500 }}
                         bordered
                         pagination={{total: this.state.total,
                             showSizeChanger: true,

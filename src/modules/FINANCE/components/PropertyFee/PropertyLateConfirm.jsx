@@ -65,6 +65,7 @@ class propertyLateConfirm extends React.Component {
         this.setState({visible: false,
             isFirst: true })
         this.props.close()
+        this.props.form.resetFields()
         this.props.refreshTable()
     }
     handleCancel = (e) => {
