@@ -205,7 +205,7 @@ class headerContainers extends React.Component {
                                             message: '确认密码不能为空'
                                         }]
                                     })(
-                                        <Input placeholder="请输入确认密码" />
+                                        <Input placeholder="请再次输入新密码" />
                                     )}
                                 </FormItem>
                             </Col>
