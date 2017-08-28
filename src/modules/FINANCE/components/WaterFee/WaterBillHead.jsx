@@ -90,6 +90,7 @@ class WaterBillHead extends React.Component {
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
@@ -128,6 +129,7 @@ class WaterBillHead extends React.Component {
                                 {getFieldDecorator('cycleClass')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="查询依据"
                                         optionFilterProp="children"
@@ -156,6 +158,7 @@ class WaterBillHead extends React.Component {
                                 {getFieldDecorator('paymentState')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="请选择收费状态"
                                         optionFilterProp="children"
@@ -174,6 +177,7 @@ class WaterBillHead extends React.Component {
                                 {getFieldDecorator('billingState')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="请选择开票状态"
                                         optionFilterProp="children"
