@@ -209,21 +209,33 @@ class PropertyContractAdded extends React.Component {
         this.initialRemarks()
     }
     next = () => {
-        let json = this.props.form.getFieldsValue()
-        console.log(json)
-        const current = this.state.current + 1
-        if (current === 0) {
-            this.setState({
-                current: current,
-                none1: '',
-                none2: 'none'
-            })
-        } else if (current === 1) {
-            this.setState({
-                current: current,
-                none1: 'none',
-                none2: ''
-            })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            console.log(json)
+            const current = this.state.current + 1
+            if (current === 0) {
+                this.setState({
+                    current: current,
+                    none1: '',
+                    none2: 'none'
+                })
+            } else if (current === 1) {
+                this.setState({
+                    current: current,
+                    none1: 'none',
+                    none2: ''
+                })
+            }
         }
     }
     prev= () => {
