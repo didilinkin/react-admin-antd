@@ -178,7 +178,7 @@ class ContractDetail extends React.Component {
                         <Row>
                             {
                                 this.state.contract.yearPmPrice > 0 &&
-                                <Col span={8}><b>年物业费：</b><em className="color1">{this.state.contract.yearPmPrice}</em> </Col>
+                                <Col span={8}><b>年物业费：</b><em className="color1">{this.state.contract.yearPmPrice}</em>元 </Col>
                             }
                             {
                                 this.state.contract.pmUnitPrice > 0 &&
@@ -201,7 +201,7 @@ class ContractDetail extends React.Component {
                         </Row>
                         <Row>
                             {this.state.contract.yearAcPrice > 0 &&
-                                <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> </Col>
+                                <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> 元</Col>
                             }
                             {this.state.contract.acUnitPrice > 0 &&
                             <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/天 （{this.state.contract.acUnitDay}天） </Col>
