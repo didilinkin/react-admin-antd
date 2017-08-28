@@ -238,18 +238,10 @@ class ContractDetail extends React.Component {
                         </ul>
                     </div>
                 </div>
-<<<<<<< HEAD
                 {this.state.contract.contractStatus === 0 &&
                 <div>
                     <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
                 </div>
-=======
-                {
-                    this.state.contract.contractStatus === 0 &&
-                    <div onClick={this.TerminationComponent} className="submit">
-                        终止合同
-                    </div>
->>>>>>> 956f632427b0654e8b8e8fe86e75e70c2951df93
                 }
                 <SubletAddUpCom
                     id={this.state.id}

@@ -90,7 +90,6 @@ class ComputerRoom extends Component {
                 dataIndex: 'opt',
                 key: 'opt',
                 render: function (text, record, index) {
-<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ComputerRoomManagement.jsx
                     let url = '/home/equipment/Details/serverRoomDetails/' + record.id
                     return (
                         <div>
@@ -98,15 +97,6 @@ class ComputerRoom extends Component {
                             <a onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
                             <Popconfirm title="确定修改吗?" onConfirm={() => delect(record.id)}>
                                 <a>&nbsp; 删除 </a>
-=======
-                    let url = '/deviceMaintain/serverRoom/' + record.id
-                    return (
-                        <div>
-                            <a href={url}> 详情 &nbsp;</a>
-                            <a href="javascript:" onClick={() => handleUpdateEquipment(record.id)}>&nbsp; 修改 &nbsp;</a>
-                            <Popconfirm title="确定修改吗?" onConfirm={() => delect(record.id)}>
-                                <a href="javascript:">&nbsp; 删除 </a>
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/ComputerRoom.jsx
                             </Popconfirm>
                         </div>
                     )
@@ -204,12 +194,8 @@ class ComputerRoom extends Component {
                     visible={this.state.openUpdate}
                 />
                 <span style={{paddingBottom: '10px',
-<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ComputerRoomManagement.jsx
                     display: 'block'}}
                 >
-=======
-                    display: 'block'}}>
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/ComputerRoom.jsx
                     <span>所属系统&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Select
                         showSearch
@@ -224,12 +210,8 @@ class ComputerRoom extends Component {
                     </Select>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;机房名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
-<<<<<<< HEAD:src/modules/EQUIPMENT/containers/ComputerRoomManagement.jsx
                         marginRight: '5px'}} onChange={this.machineRoomNameFn}
                     />
-=======
-                        marginRight: '5px'}} onChange={this.machineRoomNameFn} />
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/DeviceMaintain/pages/ComputerRoom.jsx
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>添加机房</Button>
                 </span>

@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-// axios 接口: 判断环境, 输出对应的 接口头部
-if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./api.prod')
-} else {
-    module.exports = require('./api.dev')
-=======
 /* global url: true */
 import axios from 'axios'
 // import * as baseURL from '../services'   // 管理配置的 URL( 包括测试接口 )
@@ -92,5 +85,4 @@ export const apiPut = (configObj) => {
             reject(error)
         })
     })
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a
 }

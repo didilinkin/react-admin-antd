@@ -121,11 +121,11 @@ class App extends React.Component {
                     <div className="main">
                         <Row>
                             <Col span={8}><b>服务周期：</b>{this.state.contract.startDate}  ~ {this.state.contract.endDate}</Col>
-                            <Col span={16}><b>录入时间：</b>{this.state.contract.createName} ({this.state.contract.createDate})</Col>
+                            <Col span={16}><b>录入时间：</b>{this.state.contract.createName} {this.state.contract.createDate}</Col>
                         </Row>
                         <Row>
                             <Col span={8}><b>合同编号：</b>{this.state.contract.contractCode} </Col>
-                            <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
+                            <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} {this.state.contract.updateDate}</Col>
                         </Row>
                         {this.state.contract.contractStatus === 1 &&
                         <Row>

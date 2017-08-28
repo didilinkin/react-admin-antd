@@ -102,19 +102,12 @@ class MaintenanceFees extends Component {
                     visible={this.state.open}
                 />
                 <span style={{paddingBottom: '10px',
-<<<<<<< HEAD:src/modules/CLIENT/containers/repair/MaintenanceFees.jsx
                     display: 'block'}}
                 >
                     <span>物品名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-=======
-                    display: 'block'}}>
-                    <span>物品名称&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <Input style={{width: 200,
-                        marginRight: '5px'}} onChange={this.entryNameOnChange} />
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/UpkeepList.jsx
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
                     <Button type="primary" onClick={this.showModal}>增加收费项</Button>
                 </span>
@@ -193,17 +186,10 @@ function mapDispatchToProps (dispatch) {
                 return (
                     <div>
                         <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-<<<<<<< HEAD:src/modules/CLIENT/containers/repair/MaintenanceFees.jsx
                             <a> 删除 &nbsp;</a>
                         </Popconfirm>
                         <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
                             <a>&nbsp; 修改 </a>
-=======
-                            <a href="javascript:"> 删除 &nbsp;</a>
-                        </Popconfirm>
-                        <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdate(record.id)}>
-                            <a href="javascript:">&nbsp; 修改 </a>
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Repair/pages/UpkeepList.jsx
                         </Popconfirm>
                     </div>
                 )

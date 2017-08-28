@@ -1,8 +1,3 @@
-// 入库
-<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseAddUp.jsx
-=======
-import {Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseAddUp.jsx
 import React from 'react'
 
 import { Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'
@@ -71,11 +66,7 @@ class AddUp extends React.Component {
         let list = JSON.stringify(list1)
         let result = await apiPost(
             'warehouse/insertWarehouse',
-<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseAddUp.jsx
             { list: list }
-=======
-            {list: list}
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseAddUp.jsx
         )
         notification.open({
             message: result.data,
@@ -181,11 +172,7 @@ class AddUp extends React.Component {
         return (
             <Modal maskClosable={false}
                 title="入库登记"
-<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseAddUp.jsx
                 style={{ top: 20 }}
-=======
-                style={{top: 20}}
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseAddUp.jsx
                 width="800"
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
@@ -229,17 +216,12 @@ class AddUp extends React.Component {
                     >
                         <PicturesWall fileList={this.state.fileList} view={this.state.view} callback={this.Callback} />
                     </FormItem>
-<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseAddUp.jsx
                     <div
                         style={{
                             width: 750,
                             marginBottom: 20
                         }}
                     >
-=======
-                    <div style={{width: 750,
-                        marginBottom: 20}}>
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseAddUp.jsx
                         <table className="tb">
                             <tr className="hd">
                                 <td>仓库类型</td>
@@ -271,7 +253,6 @@ class AddUp extends React.Component {
                             <FormItem label="材料名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 15 }}
                             >
-<<<<<<< HEAD:src/modules/WAREHOUSE/components/InventoryManage/WarehouseAddUp.jsx
                                 {
                                     getFieldDecorator('name')(
                                         <Select
@@ -289,21 +270,6 @@ class AddUp extends React.Component {
                                         </Select>
                                     )
                                 }
-=======
-                                {getFieldDecorator('name')(<Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择材料"
-                                    optionFilterProp="children"
-                                    onChange={this.getMaterial}
-                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                >
-                                    {this.state.material.map(d => {
-                                        let key = d.id
-                                        return <Option key={key}>{d.name}</Option>
-                                    })}
-                                </Select>)}
->>>>>>> cd084c6aa42d6ffc4aa871e42ae8952a3a7d3c7a:src/views/Warehouse/pages/common/WarehouseAddUp.jsx
                             </FormItem>
                         </Col>
                         <Col span={12}>
