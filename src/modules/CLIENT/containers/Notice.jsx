@@ -25,11 +25,15 @@ class Notice extends Component {
             id: id
         })
     }
+    info = (url) => {
+        this.props.history.push(url)
+    }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             'rectification/list'
         )
+        const info = this.info
         let repairList = result.data
         const handleUpdateRectification = this.handleUpdateRectification
         this.setState({loading: false,
@@ -71,9 +75,9 @@ class Notice extends Component {
                 key: 'rectificationContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
-                    let url = '/upkeep/correctionDetail/' + record.id
+                    let url = '/home/client/NoticeDetail/CorrectionDetail/' + record.id
                     return (
-                        <a href={url}>{text}</a>
+                        <a onClick={() => info(url)}>{text}</a>
                     )
                 }
             }, {
