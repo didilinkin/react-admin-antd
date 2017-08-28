@@ -209,21 +209,33 @@ class PropertyContractAdded extends React.Component {
         this.initialRemarks()
     }
     next = () => {
-        let json = this.props.form.getFieldsValue()
-        console.log(json)
-        const current = this.state.current + 1
-        if (current === 0) {
-            this.setState({
-                current: current,
-                none1: '',
-                none2: 'none'
-            })
-        } else if (current === 1) {
-            this.setState({
-                current: current,
-                none1: 'none',
-                none2: ''
-            })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            console.log(json)
+            const current = this.state.current + 1
+            if (current === 0) {
+                this.setState({
+                    current: current,
+                    none1: '',
+                    none2: 'none'
+                })
+            } else if (current === 1) {
+                this.setState({
+                    current: current,
+                    none1: 'none',
+                    none2: ''
+                })
+            }
         }
     }
     prev= () => {
@@ -410,7 +422,7 @@ class PropertyContractAdded extends React.Component {
                                     )}
                                     <span style={{color: 'red',
                                         padding: '0 5px'}}
-                                    >减免</span>
+                                    >减免面积</span>
                                     {getFieldDecorator('reliefArea')(
                                         <InputNumber onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                                     )}
