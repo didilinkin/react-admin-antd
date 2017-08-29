@@ -148,7 +148,7 @@ class TabsContainers extends React.Component {
                             tab={ pane.title }
                             path={ pane.path }
                         >
-                            <route.component { ...tabsProps } routes={route.routes} />
+                            <route.component { ...tabsProps } routes={ route.routes } />
                         </TabPane>
                     ))
                 }
