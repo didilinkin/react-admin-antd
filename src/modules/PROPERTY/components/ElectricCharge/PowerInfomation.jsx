@@ -215,7 +215,7 @@ class PowerInfomation extends React.Component {
                             </Col>
                         </Row>
                         <Row style={{marginTop: 30,
-                            fontSize: '12px'}}
+                            fontSize: '14px'}}
                         >
                             <Col span={8}>
                                 <div>
@@ -251,7 +251,7 @@ class PowerInfomation extends React.Component {
                             />
                         </div>
                         <Row type="flex" justify="end" style={{marginTop: 20,
-                            fontSize: '12px',
+                            fontSize: '14px',
                             lineHeight: '18px',
                             color: '#666',
                             textAlign: 'right',
@@ -265,8 +265,10 @@ class PowerInfomation extends React.Component {
                             </Col>
                             <Col span={6}>
                                 <div>
-                                    <span>本期应收：</span>
-                                    <span style={{fontSize: '18px'}}>&nbsp;{fees.thisReceivable}</span>
+                                    <span>本期应收：</span>&nbsp;
+                                    <span style={{fontSize: '18px',
+                                        color: 'red'}}
+                                    >￥{fees.thisReceivable}</span>
                                 </div>
                             </Col>
                         </Row>
@@ -368,13 +370,13 @@ function Middle (props) {
                 lineHeight: '18px',
                 color: '#363636'}}
             >
-                <Col span={12}>
+                <Col span={14}>
                     <div>
                         <span style={lightGrayStyle}>审核人：</span>
                         <span>&nbsp;{props.fees.auditName}&nbsp;{props.fees.auditDate}</span>
                     </div>
                 </Col>
-                <Col span={12}>
+                <Col span={14}>
                     <div>
                         <span style={lightGrayStyle}>审核状态：</span>
                         <span>&nbsp;{props.fees.auditExplain}</span>
@@ -425,11 +427,6 @@ function ExaminingState (props) {
 function ExamineSuccessState (props) {
     const lightGrayStyle = {
         color: '#989898'
-    }
-
-    const blueBlodStyle = {
-        color: '#09F',
-        fontWeight: 'bold'
     }
     // 确认收款
     const confirmReceipt = [{
@@ -506,7 +503,7 @@ function ExamineSuccessState (props) {
                             <div>
                                 <span style={lightGrayStyle}>应收金额：&nbsp;</span>
                                 <span
-                                    style={blueBlodStyle}
+                                    style={{color: 'red'}}
                                 >{props.fees.thisReceivable}</span>
                                 <span>&nbsp;元</span>
                             </div>
@@ -546,7 +543,7 @@ function ExamineSuccessState (props) {
                             <div>
                                 <span style={lightGrayStyle}>违约金额：&nbsp;</span>
                                 <span
-                                    style={blueBlodStyle}
+                                    style={{color: 'red'}}
                                 >{props.fees.liquidatedDamages ? props.fees.liquidatedDamages : 0}</span>
                                 <span>&nbsp;元</span>
                             </div>

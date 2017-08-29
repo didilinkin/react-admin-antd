@@ -240,9 +240,12 @@ class PropertyFeeDetail extends React.Component {
                     </tbody>
                 </table>
                 <p style={{margin: '20px 0',
-                    textAlign: 'right'}}
-                >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
-
+                    textAlign: 'right',
+                    color: '#666666'}}
+                >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
+                    <span style={{color: 'red',
+                        fontSize: '18px'}}
+                    >¥{this.state.data.actualPaidMoney}</span></p>
                 <div className="wrapbox">
                     <div className="main">
                         <p className="line" />
@@ -265,7 +268,9 @@ class PropertyFeeDetail extends React.Component {
                     <div className="main">
                         <h2>确认收款</h2>
                         <Row>
-                            <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
+                            <Col span={8}><i>应收金额：</i>
+                                <span style={{color: 'red'}}>{this.state.data.actualPaidMoney}</span>&nbsp;元
+                            </Col>
                             <Col span={16}><i>开票状态：</i>{this.state.invoiceRentStatus}</Col>
                         </Row>
                         <table className="tb">
@@ -337,7 +342,9 @@ class PropertyFeeDetail extends React.Component {
                         <p className="line" />
                         <h2>确认违约金</h2>
                         <Row>
-                            <Col span={8}><i>违约金额：</i>{this.state.data.lateMoney}  元 </Col>
+                            <Col span={8}><i>违约金额：</i>
+                                <span style={{color: 'red'}}>{this.state.data.lateMoney}</span>&nbsp;元
+                            </Col>
                             <Col span={8}><i>开票状态：</i>{this.state.invoiceLateStatus}</Col>
                         </Row>
                         <table className="tb">
