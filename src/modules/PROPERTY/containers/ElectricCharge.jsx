@@ -5,8 +5,6 @@ import PowerBillHeadComponent from '../components/ElectricCharge/PowerBillHead'
 import PowerAddUpComponent from '../components/ElectricCharge/PowerAddUp'
 import { apiPost } from '../../../api'
 import PowerInfomation from '../components/ElectricCharge/PowerInfomation'
-
-
 const TabPane = Tabs.TabPane
 class ElectricCharge extends React.Component {
     constructor (props) {
@@ -31,17 +29,67 @@ class ElectricCharge extends React.Component {
             id: 0
         }
     }
-    // 删除记录
-    deleteRecord = async (id) => {
-        let data = await apiPost(
-            '/ElectricityFees/deleteElectricityFees',
-            {id: id}
+    activeKey = 1
+    refreshTwo = async (activeKey) => {
+        this.activeKey = activeKey ? activeKey : 1
+        this.refresh({}, {}, {})
+    }
+    refresh = async (pagination, filters) => {
+        this.setState({loading: true,
+            openWaterAddUpComponent: false,
+            openInfo: false})
+        console.log(this.activeKey)
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
+            this.activeKey.toString() === '2' ? 1 :
+                this.activeKey.toString() === '4' ? 2 : 3
+        if (pagination === null) {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
+        let result = await apiPost(
+            '/ElectricityFees/list',
+            filters
         )
-        notification.open({
-            message: data.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        let PowerBillList = result.data
+        let dataSource1 = []
+        let dataSource2 = []
+        let dataSource3 = []
+        let dataSource4 = []
+        PowerBillList.map(PowerBill => {
+            if (PowerBill.examineState.toString() === '0') {
+                dataSource1.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '1') {
+                dataSource2.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '2') {
+                dataSource4.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '3') {
+                dataSource3.push(PowerBill)
+            }
+            return ''
         })
-        this.refreshTwo(1)
+        this.setState({
+            loading: false,
+            current: pagination ? pagination.current : 1,
+            total: result.data.total,
+            dataSource1: dataSource1,
+            dataSource2: dataSource2,
+            dataSource3: dataSource3,
+            dataSource4: dataSource4,
+            order: this.activeKey
+        })
+    }
+    openWaterAddUpComponent = (id) => {
+        this.setState({
+            openWaterAddUpComponent: true,
+            openInfo: false,
+            id: id
+        })
     }
     // 发起审核
     examine = async (id) => {
@@ -56,81 +104,25 @@ class ElectricCharge extends React.Component {
         })
         this.refreshTwo(1)
     }
-    refreshTwo = async (activeKey) => {
-        this.setState({loading: true,
-            openWaterAddUpComponent: false,
-            openInfo: false})
-        let result = await apiPost(
-            '/ElectricityFees/list'
-        )
-        console.log(result)
-        console.log(result.data)
-        let WaterBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
-            }
-            return ''
-        })
+    info = (id) => {
+        console.log(id)
         this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4,
+            openInfo: true,
             openWaterAddUpComponent: false,
-            order: activeKey ? activeKey : 1
-        })
-    }
-    refresh = async (pagination, filters) => {
-        this.setState({loading: true,
-            openWaterAddUpComponent: false,
-            openInfo: false})
-        let result = await apiPost(
-            '/ElectricityFees/list',
-            filters
-        )
-        let WaterBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
-            }
-            return ''
-        })
-        this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4
-        })
-    }
-    openWaterAddUpComponent = (id) => {
-        this.setState({
-            openWaterAddUpComponent: true,
-            openInfo: false,
             id: id
         })
+    }
+    // 删除记录
+    deleteRecord = async (id) => {
+        let data = await apiPost(
+            '/ElectricityFees/deleteElectricityFees',
+            {id: id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -140,20 +132,20 @@ class ElectricCharge extends React.Component {
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
         )
-        let WaterBillList = result.data
+        let PowerBillList = result.data
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
         let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
+        PowerBillList.map(PowerBill => {
+            if (PowerBill.examineState.toString() === '0') {
+                dataSource1.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '1') {
+                dataSource2.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '2') {
+                dataSource4.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '3') {
+                dataSource3.push(PowerBill)
             }
             return ''
         })
@@ -347,14 +339,6 @@ class ElectricCharge extends React.Component {
                     )
                 }
             }])
-        })
-    }
-    info = (id) => {
-        console.log(id)
-        this.setState({
-            openInfo: true,
-            openWaterAddUpComponent: false,
-            id: id
         })
     }
     componentDidMount () {

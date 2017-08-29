@@ -1,6 +1,7 @@
 import React from 'react'
 import moneyLogo from '../../assets/images/money.png'
 import {DatePicker} from 'antd'
+import {apiPost} from '../../api/api.dev'
 import moment from 'moment'
 const { MonthPicker } = DatePicker
 class HomeOtherFee extends React.Component {
@@ -26,8 +27,27 @@ class HomeOtherFee extends React.Component {
         negative = negative + (numberString || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
         return negative + '.' + number.toFixed(2).slice(-2)
     }
+    loadData = async (date) => {
+        let otherFeeData = await apiPost(
+            '/otherFees',
+            {
+                startDate: date
+            }
+        )
+        console.log(otherFeeData)
+        this.setState({
+            otherFees: {
+                rentPenal: otherFeeData.data.otherFees.rentPenal > 0 ? otherFeeData.data.otherFees.rentPenal : 0,
+                powerPenal: otherFeeData.data.otherFees.powerPenal > 0 ? otherFeeData.data.otherFees.powerPenal : 0,
+                waterPenal: otherFeeData.data.otherFees.waterPenal > 0 ? otherFeeData.data.otherFees.waterPenal : 0,
+                propertyPenal: otherFeeData.data.otherFees.propertyPenal > 0 ? otherFeeData.data.otherFees.propertyPenal : 0,
+                workWatch: otherFeeData.data.otherFees.workWatch > 0 ? otherFeeData.data.otherFees.workWatch : 0
+            }
+        })
+    }
     datePickerChange = (date, dateString)=> {
         console.log(dateString)
+        this.loadData(dateString)
     }
 
     render () {
