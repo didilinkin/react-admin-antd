@@ -201,7 +201,6 @@ class Electricity extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <Popconfirm />
                             <a onClick={() => info(record.id)}>明细</a>
                         </span>
                     )

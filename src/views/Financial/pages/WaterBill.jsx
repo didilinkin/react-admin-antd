@@ -1,6 +1,4 @@
 // 财务管理 - 水费审核
-// 财务管理 - 电费审核
-// 物业管理 - 水费审核
 import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon } from 'antd'
 import WaterBillHeadComponent from '../../Charge/pages/components/WaterBillHead'

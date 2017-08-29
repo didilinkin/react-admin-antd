@@ -276,14 +276,14 @@ class ElectricCharge extends React.Component {
                 title: ' 操作',
                 width: 200,
                 dataIndex: 'opt',
-                render: function (record) {
+                render: function (text, record) {
                     console.log(record)
                     return (
                         <span>
                             <Popconfirm key="1" title="确定重新收费吗?">
                                 <a>重新收费</a>
                             </Popconfirm>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style={{marginLeft: '20px'}} onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -350,6 +350,7 @@ class ElectricCharge extends React.Component {
         })
     }
     info = (id) => {
+        console.log(id)
         this.setState({
             openInfo: true,
             openWaterAddUpComponent: false,

@@ -274,7 +274,7 @@ class PropertyDetail extends React.Component {
                                 </table>
                             </div>
                             {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
-                            <div className="wrapbox">
+                            <div className="main">
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
