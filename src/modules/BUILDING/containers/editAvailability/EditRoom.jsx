@@ -92,7 +92,7 @@ class EditRoom extends React.Component {
                 key: 'roomNum'
             }, {
                 title: '建筑面积（㎡）',
-                width: 300,
+                width: 250,
                 dataIndex: 'roomArea',
                 key: 'roomArea'
             }, {

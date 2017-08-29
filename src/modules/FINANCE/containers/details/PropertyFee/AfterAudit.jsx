@@ -115,10 +115,10 @@ class AfterAudit extends React.Component {
                             <td>物业管理费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.pmUnitPrice}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.pmFee}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
                         </tr>
                         <tr>
                             <td>电梯费</td>
@@ -133,19 +133,19 @@ class AfterAudit extends React.Component {
                             <td>空调费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.acUnitPrice}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.acUnitDay}/4</td>
-                            <td>{this.state.data.airFee}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
                         </tr>
                         <tr>
                             <td>水费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.waterUnitPrice}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.waterFee}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -156,7 +156,7 @@ class AfterAudit extends React.Component {
                 <Card title="其他信息">
                     <Row>
                         <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                        <Col span={8}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                        <Col span={8}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                         {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                         <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>}
                     </Row>

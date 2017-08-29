@@ -127,6 +127,14 @@ class PropertyFeeing extends Component {
                 title: '交费期限',
                 dataIndex: 'payDeadline'
             }, {
+                title: '创建时间',
+                dataIndex: 'createDate',
+                key: 'createDate'
+            }, {
+                title: '创建人',
+                dataIndex: 'createName',
+                key: 'createName'
+            }, {
                 title: '操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -212,7 +220,7 @@ class PropertyFeeing extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 2300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

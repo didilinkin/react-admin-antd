@@ -146,10 +146,10 @@ class PropertyDetail extends React.Component {
                                 <td>物业管理费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.pmUnitPrice}</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.months}</td>
-                                <td>{this.state.data.pmFee}</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
                             </tr>
                             <tr>
                                 <td>电梯费</td>
@@ -164,19 +164,19 @@ class PropertyDetail extends React.Component {
                                 <td>空调费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.acUnitPrice}</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.acUnitDay}/4</td>
-                                <td>{this.state.data.airFee}</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
                             </tr>
                             <tr>
                                 <td>水费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.waterUnitPrice}</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.months}</td>
-                                <td>{this.state.data.waterFee}</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -190,7 +190,7 @@ class PropertyDetail extends React.Component {
                             <h2>其他信息</h2>
                             <Row>
                                 <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                                <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                                <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                             </Row>
                             {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                             <Row>
@@ -274,7 +274,7 @@ class PropertyDetail extends React.Component {
                                 </table>
                             </div>
                             {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
-                            <div className="wrapbox">
+                            <div className="main">
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
