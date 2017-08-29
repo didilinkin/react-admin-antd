@@ -5,7 +5,6 @@ import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 const RadioGroup = Radio.Group
 
-
 class App extends React.Component {
     constructor (props) {
         super(props)
@@ -139,6 +138,12 @@ class App extends React.Component {
                             <Row>
                                 <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
                                 <Col span={14}><b>审核说明：</b>{this.state.data.remark}</Col>
+                            </Row>
+                            <Row>
+                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
+                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
+                                    <Radio value={3}>审核不通过</Radio>
+                                </RadioGroup>
                             </Row>
                         </div>
                     </div>

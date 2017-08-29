@@ -155,13 +155,13 @@ class AfterAudit extends React.Component {
 
                 <Card title="其他信息">
                     <Row>
-                        <Col span={8}><span>录入日期：</span>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                        <Col span={8}><span>最后修改：</span>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                        <Col span={10}><span className="card-span-gray">录入日期：</span><span className="card-span">{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</span></Col>
+                        <Col span={14}><span className="card-span-gray">最后修改：</span><span className="card-span">{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</span></Col>
                     </Row>
-                    <Row>
+                    <Row style={{marginTop: '10px'}}>
                         {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
-                        <Col span={8}><span>审核人：</span>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>}
-                        <Col span={16}><span>审核说明：</span>{this.state.data.remark}</Col>
+                        <Col span={10}><span className="card-span-gray">审核人：&nbsp;&nbsp;</span><span className="card-span">{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</span></Col>}
+                        <Col span={14}><span className="card-span-gray">审核说明：</span><span className="card-span">{this.state.data.remark}</span></Col>
                     </Row>
                 </Card>
             </Modal>
