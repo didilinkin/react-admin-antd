@@ -44,6 +44,9 @@ class UserAddUp extends React.Component {
                     remark: user.remark
                 })
             } else {
+                this.props.form.setFieldsValue({
+                    loginFlag: 1
+                })
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false

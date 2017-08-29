@@ -115,10 +115,10 @@ class AfterAudit extends React.Component {
                             <td>物业管理费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.pmUnitPrice}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.pmFee}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
                         </tr>
                         <tr>
                             <td>电梯费</td>
@@ -133,19 +133,19 @@ class AfterAudit extends React.Component {
                             <td>空调费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.acUnitPrice}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.acUnitDay}/4</td>
-                            <td>{this.state.data.airFee}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
                         </tr>
                         <tr>
                             <td>水费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.waterUnitPrice}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.waterFee}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
                         </tr>
                     </tbody>
                 </table>
