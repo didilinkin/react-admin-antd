@@ -77,9 +77,11 @@ class App extends React.Component {
                     <div className="contract">
                         <h2>租户信息</h2>
                         <Row>
-                            <Col span={8}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                            <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                        </Row>
+                        <Row>
                             <Col span={8}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
-                            <Col span={8}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
+                            <Col span={16}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
                         </Row>
                         <Row>
                             <Col span={8}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
@@ -92,17 +94,19 @@ class App extends React.Component {
                                 <Row>
                                     <Col span={8}><b>合同单价：</b>{this.state.data.unitPrice} 元/㎡/天</Col>
                                     <Col span={8}><b>交费方式：</b>{this.state.payPeriod}</Col>
-                                    <Col span={8}><b>首年租金：</b>{this.state.data.firstYearRent}  元</Col>
                                 </Row>
                                 <Row>
-                                    <Col span={24}> {this.state.data.startIncNum} 年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
+                                    <Col span={8}><b>首年租金：</b>{this.state.data.firstYearRent}  元</Col>
+                                    <Col span={16}> {this.state.data.startIncNum} 年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
                                 </Row>
                                 <p className="line" />
                                 <h2>本期租金</h2>
                                 <Row>
                                     <Col span={8}><b>本期周期：</b>{this.state.data.periodRent}</Col>
-                                    <Col span={8}><b>缴费期限：</b>{this.state.data.payDeadline}</Col>
-                                    <Col span={8}><b>本期租金：</b>{this.state.data.actualPaidMoney} 元  （已优惠 {this.state.data.discountMoney} 元）</Col>
+                                    <Col span={16}><b>缴费期限：</b>{this.state.data.payDeadline}</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={24}><b>本期租金：</b>{this.state.data.actualPaidMoney} 元  （已优惠 {this.state.data.discountMoney} 元）</Col>
                                 </Row>
                                 <p className="line" />
                                 <h2>其他信息</h2>

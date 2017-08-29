@@ -129,6 +129,7 @@ class Role extends React.Component {
                                 placeholder="请选择所属部门"
                                 style={{width: '200px'}}
                                 optionFilterProp="children"
+                                size="normal"
                             >
                                 {this.state.department.map(d => {
                                     return <Option key={d.id}>{d.departmentName}</Option>
@@ -138,18 +139,18 @@ class Role extends React.Component {
                     </FormItem>
                     <FormItem label="角色名称">
                         {getFieldDecorator('roleName')(
-                            <Input style={{width: '100px'}} />
+                            <Input size="normal" style={{width: '100px'}} />
                         )}
                     </FormItem>
                     <FormItem>
-                        <Button type="primary" onClick={this.query}>查询</Button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button type="primary" onClick={this.add}>添加角色</Button>
+                        <Button size="normal" style={{marginRight: '15px'}} type="primary" onClick={this.query}>查询</Button>
+                        <Button size="normal" type="primary" onClick={this.add}>添加角色</Button>
                     </FormItem>
                 </Form>
                 <Table
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
+                    style={{marginTop: '20px'}}
                 />
                 <RoleAddUpComponent
                     refresh={this.query}

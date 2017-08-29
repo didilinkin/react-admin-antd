@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
+import '../style/test.less'
 import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 

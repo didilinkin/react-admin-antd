@@ -2,7 +2,7 @@
 import React from 'react'
 import {Row, Col, Button, notification, Icon, Popconfirm} from 'antd'
 import '../../../../style/test.less'
-import { apiPost  } from '../../../../api'
+import { apiPost } from '../../../../api'
 import CollectRentAuditComponent from '../components/CollectRentConfirm'
 
 
