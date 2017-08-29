@@ -218,7 +218,8 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
+            }
+            ],
             columns2: [{
                 title: '序号',
                 width: 100,
@@ -268,7 +269,8 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
+            }
+            ],
             columns3: [{
                 title: '序号',
                 width: 100,
@@ -332,7 +334,8 @@ class ChargeWaterBill extends React.Component {
                         </span>
                     )
                 }
-            }],
+            }
+            ],
             columns4: [{
                 title: '序号',
                 width: 100,
@@ -380,12 +383,12 @@ class ChargeWaterBill extends React.Component {
                 width: 100,
                 dataIndex: 'days'
             }, {
-                title: '延期下月电费',
+                title: '延期下月水费',
                 width: 100,
                 dataIndex: 'penaltyType',
                 render: function (text, record, index) {
                     let penaltyType = '否'
-                    if (text.toString() === '1') {
+                    if (record.penaltyType === 1) {
                         penaltyType = '是'
                     }
                     return (
@@ -398,7 +401,7 @@ class ChargeWaterBill extends React.Component {
                 dataIndex: 'billingState',
                 render: function (text, record, index) {
                     let billingState = '未开票'
-                    if (text.toString() === '1') {
+                    if (record.billingState === 1) {
                         billingState = '已开票'
                     }
                     return (

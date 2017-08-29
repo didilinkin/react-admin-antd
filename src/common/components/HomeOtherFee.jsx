@@ -26,6 +26,9 @@ class HomeOtherFee extends React.Component {
         negative = negative + (numberString || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
         return negative + '.' + number.toFixed(2).slice(-2)
     }
+    datePickerChange = (date, dateString)=> {
+        console.log(dateString)
+    }
 
     render () {
         const monthFormat = 'YYYY-MM'
@@ -36,7 +39,7 @@ class HomeOtherFee extends React.Component {
                         其他费用
                     </div>
                     <div className="otherFee-top-picker">
-                        选择月份：<MonthPicker defaultValue={moment('2017-08', monthFormat)} format={monthFormat} placeholder="请选择月份" />
+                        选择月份：<MonthPicker onChange={this.datePickerChange} defaultValue={moment('2017-08', monthFormat)} format={monthFormat} placeholder="请选择月份" />
                     </div>
                 </div>
                 <div className="otherFee-bottom" >

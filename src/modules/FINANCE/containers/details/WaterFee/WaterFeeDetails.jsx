@@ -203,7 +203,7 @@ class CollectionDetails extends React.Component {
                                 lineHeight: '40px'}}
                             >
                                 <span>{this.state.map.waterBill.formName}</span>
-                                <span>&ensp;&ensp;水量统计表</span>
+                                <span>水量统计表</span>
                             </div>
                         </Col>
                     </Row>
