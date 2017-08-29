@@ -157,7 +157,6 @@ class AfterAudit extends React.Component {
                     <Row>
                         <Col span={8}><span>录入日期：</span>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
                         <Col span={8}><span>最后修改：</span>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-
                     </Row>
                     <Row>
                         {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
