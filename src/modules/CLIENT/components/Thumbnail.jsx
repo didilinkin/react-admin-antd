@@ -54,6 +54,7 @@ class Thumbnail extends React.Component {
                 >
                     <Button onClick={this.moveImg.bind(this, -1)}>上一张</Button>
                     <Button style={{float: 'right'}} onClick={this.moveImg.bind(this, 1)}>下一张</Button>
+                    <div style={{height: '20px'}} />
                     <img id="img" alt="图片预览" src={this.state.src} style={{width: '100%'}} />
                 </Modal>
                 {this.state.url.map((u, i) => {
