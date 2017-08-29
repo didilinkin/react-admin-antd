@@ -1,4 +1,4 @@
-// 楼宇添加
+// 房间添加
 import {Modal, Input, Form, Row, Col, Icon, notification, Select} from 'antd'
 import React from 'react'
 import { apiPost } from '../../../api/index'
@@ -19,6 +19,7 @@ class RoomAdd extends React.Component {
     }
 
     async initialRemarks (nextProps) {
+        console.log(this.state.propertyType)
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
@@ -160,9 +161,9 @@ class RoomAdd extends React.Component {
     propertyType = null
     selectPType = (e) => {
         this.propertyType = e
-        this.setState({
-            propertyType: e
-        })
+        // this.setState({
+        //     propertyType: e
+        // })
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -317,6 +318,7 @@ class RoomAdd extends React.Component {
                                     <Select
                                         showSearch
                                         style={{width: 180,
+                                            display: (this.props.form.getFieldValue('propertyType1') !== 2 ? 'block' : 'none'),
                                             marginRight: '5px'}}
                                         placeholder="请选择房屋状态"
                                         optionFilterProp="children"

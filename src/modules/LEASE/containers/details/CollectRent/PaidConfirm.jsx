@@ -104,7 +104,7 @@ class addUpkeep extends React.Component {
                         <Row>
                             <Col span={24}>
                                 <FormItem label="本期周期" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
+                                    wrapperCol={{ span: 12 }}
                                 >
                                     {getFieldDecorator('repairDate')(
                                         <RangePicker disabled />
@@ -114,25 +114,25 @@ class addUpkeep extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('currentPeriodMoney')(
-                                        <Input disabled />
+                                        <Input disabled addonAfter="元" />
                                     )}
                                 </FormItem>
                                 <FormItem label="优惠金额" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('discountMoney')(
-                                        <Input onKeyUp={this.sumMoney} />
+                                        <Input onKeyUp={this.sumMoney} addonAfter="元" />
                                     )}
                                 </FormItem>
                                 <FormItem label="实际应收" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('actualPaidMoney')(
-                                        <Input disabled />
+                                        <Input disabled addonAfter="元" />
                                     )}
                                 </FormItem>
                                 <FormItem label="付款帐号" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
+                                    wrapperCol={{ span: 12 }}
                                 >
                                     {getFieldDecorator('accountId', {
                                         rules: [ {
@@ -142,7 +142,7 @@ class addUpkeep extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 245 }}
+                                            style={{ width: 190 }}
                                             placeholder="请选择付款帐号"
                                             optionFilterProp="children"
                                         >

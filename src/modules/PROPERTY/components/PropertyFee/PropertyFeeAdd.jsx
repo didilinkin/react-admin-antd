@@ -801,7 +801,7 @@ class propertyFeeAdd extends React.Component {
                     >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
                             <Input onKeyUp={this.sumMoney} style={{ width: 120 }} />
                         )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
-                            <Input style={{ width: 120 }} disabled />
+                            <Input style={{ width: 120 }} disabled addonAfter="元" />
                         )}</p>
                 </Form>
             </Modal>
