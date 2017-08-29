@@ -2,8 +2,8 @@
 import React from 'react'
 import { Row, Col, Button } from 'antd'
 import '../../style/test.less'
-import { apiPost, baseURL } from '../../../../api'
-
+import { apiPost } from '../../../../api'
+import Thumbnail from '../../components/Thumbnail'
 class App extends React.Component {
     constructor (props) {
         super(props)
@@ -17,15 +17,15 @@ class App extends React.Component {
             {'id': this.props.match.params.id}
         )
         let Repair = resulData.data
-        let i = 0
-        Repair['imgUrls'] = Repair.imgUrls.split('#').map(img => {
-            if (img !== '') {
-                i++
-                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
-            } else {
-                return '无'
-            }
-        })
+        // let i = 0
+        // Repair.imgUrls.split('#').map(img => {
+        //     if (img !== '') {
+        //         i++
+        //         return <Thumbnail key={i} url={baseURL + 'storage/files/' + img} />
+        //     } else {
+        //         return '无'
+        //     }
+        // })
         let j = 0
         Repair['rectificationContent'] = Repair.rectificationContent.split('\n').map(span => {
             j++
@@ -89,7 +89,7 @@ class App extends React.Component {
                         <ul>
                             <li>
                                 <b>现场图片：</b>
-                                {this.state.data.imgUrls}
+                                <Thumbnail url={this.state.data.imgUrls} />
                             </li>
                         </ul>
                         <Row>
