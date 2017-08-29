@@ -2,6 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
+import '../style/test.less'
 import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 
@@ -116,7 +117,7 @@ class PropertyFeeFinanceFail extends Component {
                 key: 'updateDate'
             }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',

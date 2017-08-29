@@ -206,7 +206,7 @@ class ElectricChargeDetails extends React.Component {
                                 lineHeight: '40px'}}
                             >
                                 <span>{feesInfo.clientName}</span>
-                                <span>&nbsp;&nbsp;电量统计表</span>
+                                <span>电量统计表</span>
                             </div>
                         </Col>
                     </Row>

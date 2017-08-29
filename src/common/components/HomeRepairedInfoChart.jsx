@@ -57,6 +57,10 @@ class HomeRepairedInfoChart extends React.Component {
             ]
         }
     }
+    rangePickerChange = (date, dateStrings) => {
+        console.log(date)
+        console.log(dateStrings)
+    }
     componentWillReceiveProps (nextPorps) {
         let repair = this.state.repair
         let appraise = this.state.appraise
@@ -90,7 +94,7 @@ class HomeRepairedInfoChart extends React.Component {
                         width: '200px',
                         marginRight: '10px'}}
                     >
-                        <RangePicker />
+                        <RangePicker onChange={this.rangePickerChange} />
                     </div>
                 </div>
                 <div>

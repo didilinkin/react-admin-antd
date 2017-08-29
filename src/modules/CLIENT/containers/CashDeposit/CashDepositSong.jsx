@@ -72,22 +72,18 @@ class CashDepositRent extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum',
                 key: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 300,
                 dataIndex: 'sublietName',
                 key: 'sublietName'
             }, {
                 title: '当前结余',
-                width: 250,
                 dataIndex: 'currentBalance',
                 key: 'currentBalance'
             }, {
