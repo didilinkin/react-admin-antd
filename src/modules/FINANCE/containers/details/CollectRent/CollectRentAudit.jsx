@@ -137,12 +137,6 @@ class App extends React.Component {
                                     <Radio value={3}>审核不通过</Radio>
                                 </RadioGroup>
                             </Row>
-                            <Row>
-                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
-                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
-                                    <Radio value={3}>审核不通过</Radio>
-                                </RadioGroup>
-                            </Row>
                         </div>
                     </div>
                     <textarea style={{width: '50%'}} placeholder="请输入审批意见" onChange={this.onValueChange} />
