@@ -63,6 +63,7 @@ class InReview extends React.Component {
         })
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
@@ -79,6 +80,7 @@ class InReview extends React.Component {
             message: result.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
+        this.props.close()
         this.props.refreshTable()
         this.setState({visible: false,
             isFirst: false })

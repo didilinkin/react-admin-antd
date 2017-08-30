@@ -86,6 +86,8 @@ class App extends React.Component {
             isFirst: false })
     }
     render () {
+        const blueNumberStyle = {color: '#169BD5',
+            padding: '0 10px'}
         return (
             <Modal maskClosable={false}
                 title="租金明细"
@@ -111,31 +113,32 @@ class App extends React.Component {
                         <div className="main">
                             <h2>费用设置</h2>
                             <Row>
-                                <Col span={8}><b>合同单价：</b>{this.state.data.unitPrice} 元/㎡/天</Col>
-                                <Col span={8}><b>交费方式：</b>{this.state.payPeriod}</Col>
-                                <Col span={8}><b>首年租金：</b>{this.state.data.firstYearRent}  元</Col>
+                                <Col span={10}><b>合同单价：</b>
+                                    <span style={blueNumberStyle}>{this.state.data.unitPrice}</span> 元/㎡/天</Col>
+                                <Col span={14}><b>交费方式：</b>{this.state.payPeriod}</Col>
                             </Row>
                             <Row>
-                                <Col span={24}> {this.state.data.startIncNum} 年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
+
+                                <Col span={10}><b>首年租金：</b>
+                                    <span style={blueNumberStyle}>{this.state.data.firstYearRent}</span>  元</Col>
+                                <Col span={14}>
+                                    <span style={blueNumberStyle}>{this.state.data.startIncNum}</span> 年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
                             </Row>
                             <p className="line" />
                             <h2>本期租金</h2>
                             <Row>
-                                <Col span={8}><b>本期周期：</b>{this.state.data.periodRent}</Col>
-                                <Col span={8}><b>缴费期限：</b>{this.state.data.payDeadline}</Col>
-                                <Col span={8}><b>本期租金：</b>{this.state.data.actualPaidMoney} 元  （已优惠 {this.state.data.discountMoney} 元）</Col>
+                                <Col span={10}><b>本期周期：</b>{this.state.data.periodRent}</Col>
+                                <Col span={14}><b>交费期限：</b>{this.state.data.payDeadline}</Col></Row>
+                            <Row>
+                                <Col span={24}><b>本期租金：</b>
+                                    <span style={blueNumberStyle}>{this.state.data.actualPaidMoney}</span> 元  （已优惠
+                                    <span style={blueNumberStyle}>{this.state.data.discountMoney}</span> 元）</Col>
                             </Row>
                             <p className="line" />
                             <h2>其他信息</h2>
                             <Row>
                                 <Col span={8}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
                                 <Col span={16}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
-                            </Row>
-                            <Row>
-                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
-                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
-                                    <Radio value={3}>审核不通过</Radio>
-                                </RadioGroup>
                             </Row>
                             <Row>
                                 <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>

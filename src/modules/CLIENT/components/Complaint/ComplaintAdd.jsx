@@ -25,11 +25,11 @@ class TableAddUp extends React.Component {
                     'upkeep/getClient'
                 )
                 let resulData = await apiPost(
-                    'upkeep/getRepair',
+                    'complaint/getComplaintById',
                     {'id': nextProps.id}
                 )
-                this.imgUrl = resulData.data.picture + '#'
-                let imgArr = resulData.data.picture.split('#')
+                this.imgUrl = resulData.data.pic + '#'
+                let imgArr = resulData.data.pic.split('#')
                 let Arr = []
                 let i = 0
                 imgArr.map(img => {
@@ -55,18 +55,18 @@ class TableAddUp extends React.Component {
                     clientList: result.data
                 })
                 this.props.form.setFieldsValue({
-                    repairDate: moment(resulData.data.repairDate),
-                    repairMan: resulData.data.repairMan,
-                    clientName: resulData.data.clientName,
-                    clientNameOne: resulData.data.clientName + '(' + resulData.data.roomNum + ')',
+                    createDate: moment(resulData.data.createDate),
+                    complaintMan: resulData.data.complaintMan,
+                    customerName: resulData.data.customerName,
+                    customerNameOne: resulData.data.customerName + '(' + resulData.data.roomNum + ')',
                     clientType: resulData.data.clientType,
                     clientId: resulData.data.clientId,
                     phone: resulData.data.phone,
                     buildName: resulData.data.buildName,
                     buildId: resulData.data.buildId,
-                    repairNum: resulData.data.repairNum,
+                    number: resulData.data.number,
                     roomNum: resulData.data.roomNum,
-                    repairContent: resulData.data.repairContent
+                    complaintContent: resulData.data.complaintContent
                 })
             }
         } else {
@@ -122,9 +122,10 @@ class TableAddUp extends React.Component {
             if (this.props.id > 0) {
                 json['id'] = this.props.id
                 let result = await apiPost(
-                    'upkeep/updateRepair',
+                    'complaint/updateComplaintByEdit',
                     json
                 )
+                this.props.close()
                 notification.open({
                     message: result.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
@@ -134,6 +135,7 @@ class TableAddUp extends React.Component {
                     'complaint/insertComplaint',
                     json
                 )
+                this.props.close()
                 notification.open({
                     message: result.data,
                     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
@@ -151,6 +153,7 @@ class TableAddUp extends React.Component {
         }
     }
     handleCancel = (e) => {
+        this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
