@@ -65,7 +65,7 @@ class CollectRentHead extends React.Component {
         return (
             <Form layout="horizontal">
                 <Row>
-                    <Col span={5}>
+                    <Col span={8}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 10 }}
                         >
@@ -73,7 +73,7 @@ class CollectRentHead extends React.Component {
                                 <Select
                                     showSearch
                                     allowClear
-                                    style={{ width: 140 }}
+                                    style={{ width: 200 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
@@ -84,28 +84,24 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={8}>
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入客户名称" style={{ width: 140 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={8}>
                         <FormItem label="房间编号" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入房间编号" style={{ width: 140 }} />
+                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                    <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                    {type === 2 &&
-                    <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
                 </Row>
                 {type === 2 &&
                 <Row style={{display: this.state.none}}>
@@ -151,7 +147,7 @@ class CollectRentHead extends React.Component {
                             {getFieldDecorator('whetherPrinted')(
                                 <Select
                                     showSearch
-                                    style={{ width: 170 }}
+                                    style={{ width: 200 }}
                                     placeholder="请选择打印状态"
                                     optionFilterProp="children"
                                 >
@@ -190,6 +186,14 @@ class CollectRentHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>}
+                <div style={{height: '50px'}}>
+                    <div style={{float: 'right'}}>
+                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                        <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
+                        {type === 2 &&
+                        <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
             </Form>
         )
     }

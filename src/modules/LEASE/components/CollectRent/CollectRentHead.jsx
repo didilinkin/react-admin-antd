@@ -102,10 +102,7 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                    <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                    {type === 2 &&
-                    <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
+
                 </Row>
                 {type === 2 &&
                 <Row style={{display: this.state.none}}>
@@ -190,6 +187,14 @@ class CollectRentHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>}
+                <div style={{height: '50px'}}>
+                    <div style={{float: 'right'}}>
+                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                        <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
+                        {type === 2 &&
+                        <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
             </Form>
         )
     }
