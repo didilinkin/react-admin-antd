@@ -380,6 +380,7 @@ class WaterFee extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            bordered
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
                         />
@@ -405,6 +406,7 @@ class WaterFee extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />
@@ -431,6 +433,7 @@ class WaterFee extends React.Component {
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
                             scroll={{ x: 1450 }}
+                            bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
                         />

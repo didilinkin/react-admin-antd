@@ -219,7 +219,7 @@ class CollectionDetails extends React.Component {
                         </Col>
                     </Row>
                     <Row style={{marginTop: 30,
-                        fontSize: '12px'}}
+                        fontSize: '14px'}}
                     >
                         <Col span={8}>
                             <div>
@@ -255,7 +255,7 @@ class CollectionDetails extends React.Component {
                         />
                     </div>
                     <Row type="flex" justify="end" style={{marginTop: 20,
-                        fontSize: '12px',
+                        fontSize: '14px',
                         lineHeight: '18px',
                         color: '#666'}}
                     >
@@ -268,7 +268,9 @@ class CollectionDetails extends React.Component {
                         <Col span={6}>
                             <div>
                                 <span>本期应收：</span>
-                                <span style={{fontSize: '18px'}}>￥{this.state.map.waterBill.receivableMoney}</span>
+                                <span style={{fontSize: '18px',
+                                    color: 'red'}}
+                                >￥{this.state.map.waterBill.receivableMoney}</span>
                             </div>
                         </Col>
                     </Row>

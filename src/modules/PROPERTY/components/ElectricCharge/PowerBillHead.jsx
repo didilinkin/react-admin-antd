@@ -76,7 +76,7 @@ class PowerBillHead extends React.Component {
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="所属楼宇" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -95,7 +95,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="房间编号" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -104,7 +104,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -115,7 +115,7 @@ class PowerBillHead extends React.Component {
                         </Col>
                     </Row>
                     <Row style={{display: this.state.none}}>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="查询依据" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -134,7 +134,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="查询时间" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -144,7 +144,7 @@ class PowerBillHead extends React.Component {
                             </FormItem>
                         </Col>
 
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="收费状态" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -163,7 +163,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="开票状态" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -213,15 +213,10 @@ class PowerBillHead extends React.Component {
                             <div style={{paddingLeft: '25%',
                                 marginBottom: 10}}
                             >
-                                <Button type="primary" onClick={this.handleSubmit}>
-                                    搜索
-                                </Button>&nbsp;&nbsp;
+                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                                <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
                                 { type === 4 &&
-                                <span>
-                                    <Button
-                                        onClick={this.handleReset}
-                                    >清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button>
-                                </span>
+                                <Button onClick={this.open}>{this.state.open}</Button>
                                 }
                             </div></Col>
                     </Row>

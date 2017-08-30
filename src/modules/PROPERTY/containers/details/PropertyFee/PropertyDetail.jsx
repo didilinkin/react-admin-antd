@@ -96,7 +96,7 @@ class PropertyDetail extends React.Component {
         return (
             <Modal maskClosable={false}
                 title= "物业费明细"
-                style={{top: 10}}
+                style={{top: 20}}
                 width={900}
                 visible={this.state.visible}
                 footer={null}
@@ -126,7 +126,7 @@ class PropertyDetail extends React.Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row style={{margin: '10px 0'}}>
                         <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
                         <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
                         <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
@@ -181,10 +181,13 @@ class PropertyDetail extends React.Component {
                         </tbody>
                     </table>
                     <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
-
-                    <div className="wrapbox">
+                        textAlign: 'right',
+                        color: '#666666'}}
+                    >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
+                        <span style={{color: 'red',
+                            fontSize: '18px'}}
+                        >¥{this.state.data.actualPaidMoney}</span></p>
+                    <div className="other">
                         <div className="main">
                             <p className="line" />
                             <h2>其他信息</h2>
@@ -206,7 +209,9 @@ class PropertyDetail extends React.Component {
                             <div className="main">
                                 <h2>确认收款</h2>
                                 <Row>
-                                    <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
+                                    <Col span={8}><i>应收金额：</i>
+                                        <span style={{color: 'red'}}>{this.state.data.actualPaidMoney}</span>元
+                                    </Col>
                                     <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
                                 </Row>
                                 <table className="tb">
@@ -278,7 +283,9 @@ class PropertyDetail extends React.Component {
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
-                                    <Col span={8}><i>违约金额：</i>{this.state.data.lateMoney}  元 </Col>
+                                    <Col span={8}><i>违约金额：</i>
+                                        <span style={{color: 'red'}}>{this.state.data.lateMoney}  元 </span>
+                                    </Col>
                                     <Col span={8}><i>开票状态：</i>{this.state.invoiceLateStatus}</Col>
                                 </Row>
                                 <table className="tb">

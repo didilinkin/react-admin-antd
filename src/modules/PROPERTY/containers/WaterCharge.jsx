@@ -171,31 +171,24 @@ class ChargeWaterBill extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientSubletName'
             }, {
                 title: '本期水费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次总水量',
-                width: 100,
                 dataIndex: 'totalWater'
             }, {
                 title: ' 本次应收',
-                width: 100,
                 dataIndex: 'receivableMoney'
             }, {
                 title: ' 交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
             }, {
                 title: ' 操作',
@@ -232,31 +225,24 @@ class ChargeWaterBill extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientSubletName'
             }, {
                 title: '本期水费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次总水量',
-                width: 100,
                 dataIndex: 'totalWater'
             }, {
                 title: ' 本次应收',
-                width: 100,
                 dataIndex: 'receivableMoney'
             }, {
                 title: ' 交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
             }, {
                 title: ' 操作',
@@ -283,43 +269,33 @@ class ChargeWaterBill extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientSubletName'
             }, {
                 title: '本期水费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次总水量',
-                width: 100,
                 dataIndex: 'totalWater'
             }, {
                 title: '本次应收',
-                width: 100,
                 dataIndex: 'receivableMoney'
             }, {
                 title: '交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
             }, {
                 title: '审核说明',
-                width: 100,
                 dataIndex: 'auditExplain'
             }, {
                 title: '审核时间',
-                width: 100,
                 dataIndex: 'auditDate'
             }, {
                 title: '审核人',
-                width: 100,
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
@@ -348,39 +324,30 @@ class ChargeWaterBill extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientSubletName'
             }, {
                 title: '本期水费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次总水量',
-                width: 100,
                 dataIndex: 'totalWater'
             }, {
                 title: '本次应收',
-                width: 100,
                 dataIndex: 'receivableMoney'
             }, {
                 title: '交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
             }, {
                 title: '实交日期',
-                width: 100,
                 dataIndex: 'collectionDate'
             }, {
                 title: '逾期天数',
-                width: 100,
                 dataIndex: 'days'
             }, {
                 title: '延期下月水费',
@@ -457,6 +424,7 @@ class ChargeWaterBill extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            bordered
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
@@ -487,6 +455,7 @@ class ChargeWaterBill extends React.Component {
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
+                            bordered
                             // onChange={this.refresh}
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
@@ -513,6 +482,7 @@ class ChargeWaterBill extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />
@@ -539,6 +509,7 @@ class ChargeWaterBill extends React.Component {
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
                             scroll={{ x: 1450 }}
+                            bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
                         />

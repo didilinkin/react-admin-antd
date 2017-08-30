@@ -84,7 +84,6 @@ class RoomAdd extends React.Component {
             }
         } else {
             if (this.state.isFirst && nextProps.visible) {
-                this.props.form.resetFields()
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
@@ -131,6 +130,7 @@ class RoomAdd extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.form.resetFields()
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,

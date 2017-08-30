@@ -38,11 +38,23 @@ const CLIENT_DIR = {
                 }
             ]
         }, {
+            title: '投诉建议',
+            key: 'complain',
+            path: '/home/client/complain',
+            ancestor: ['client'],
+            component: require('./containers/Complain').default
+        }, {
             title: '整改通知',
             key: 'notice',
             path: '/home/client/notice',
             ancestor: ['client'],
             component: require('./containers/Notice').default
+        }, {
+            title: '物业公告',
+            key: 'propertyNotice',
+            path: '/home/client/propertyNotice',
+            ancestor: ['client'],
+            component: require('./containers/PropertyNotice').default
         }, {
             title: '二次装修',
             key: 'secondaryDecoration',
