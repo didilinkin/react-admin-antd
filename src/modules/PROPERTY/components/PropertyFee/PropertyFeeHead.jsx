@@ -137,14 +137,6 @@ class CollectRentHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                        <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                        {type === 2 &&
-                        <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
-                        {type === 0 &&
-                        <Button type="primary" onClick={this.showModal}>收物业费</Button>}&nbsp;&nbsp;
-                        {type === 0 &&
-                        <Button type="primary" onClick={this.BatchAuditPropertyFee}>批量提交</Button>}&nbsp;&nbsp;
                     </Row>
                     {type === 2 &&
                 <Row style={{display: this.state.none}}>
@@ -232,6 +224,18 @@ class CollectRentHead extends React.Component {
                         </FormItem>
                     </Col>
                 </Row>}
+                    <div style={{height: '50px'}}>
+                        <div style={{float: 'right'}}>
+                            <Button style={{marginLeft: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button style={{marginLeft: '10px'}} onClick={this.handleReset}>清除</Button>
+                            {type === 2 &&
+                        <Button style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</Button>}
+                            {type === 0 &&
+                        <Button style={{marginLeft: '10px'}} type="primary" onClick={this.showModal}>收物业费</Button>}
+                            {type === 0 &&
+                        <Button style={{marginLeft: '10px'}} type="primary" onClick={this.BatchAuditPropertyFee}>批量提交</Button>}
+                        </div>
+                    </div>
                 </Form>
             </div>
         )
