@@ -6,6 +6,7 @@ import { LEASE_DETAILS } from '../modules/LEASE/configDir' // 租赁管理
 import { EQUIPMENT_DETAILS } from '../modules/EQUIPMENT/configDir' // 设备管理
 import { FINANCE_DETAILS } from '../modules/FINANCE/configDir' // 财务详情
 import { SYSTEM_DETAILS } from '../modules/SYSTEM/configDir' // 系统设置
+import { HARDWARE_DETAILS } from '../modules/HARDWARE/configDir' // 硬件管理
 
 const globalDetailsRoute = [
     ...WAREHOUSE_DETAILS,
@@ -14,7 +15,8 @@ const globalDetailsRoute = [
     ...LEASE_DETAILS,
     ...EQUIPMENT_DETAILS,
     ...FINANCE_DETAILS,
-    ...SYSTEM_DETAILS
+    ...SYSTEM_DETAILS,
+    ...HARDWARE_DETAILS
 ]
 
 export default globalDetailsRoute
