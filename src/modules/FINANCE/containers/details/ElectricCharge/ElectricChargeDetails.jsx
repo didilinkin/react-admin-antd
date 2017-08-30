@@ -222,7 +222,7 @@ class ElectricChargeDetails extends React.Component {
                         </Col>
                     </Row>
                     <Row style={{marginTop: 30,
-                        fontSize: '12px'}}
+                        fontSize: '14px'}}
                     >
                         <Col span={8}>
                             <div>
@@ -258,7 +258,7 @@ class ElectricChargeDetails extends React.Component {
                         />
                     </div>
                     <Row type="flex" justify="end" style={{marginTop: 20,
-                        fontSize: '12px',
+                        fontSize: '14px',
                         lineHeight: '18px',
                         color: '#666',
                         textAlign: 'right',
@@ -272,8 +272,10 @@ class ElectricChargeDetails extends React.Component {
                         </Col>
                         <Col span={6}>
                             <div>
-                                <span>本期应收：</span>
-                                <span style={{fontSize: '18px'}}>&nbsp;{feesInfo.thisReceivable}</span>
+                                <span>本期应收：</span>&nbsp;
+                                <span style={{fontSize: '18px',
+                                    color: 'red'}}
+                                >￥{feesInfo.thisReceivable}</span>
                             </div>
                         </Col>
                     </Row>
@@ -415,11 +417,6 @@ function ExamineSuccessState (props) {
     const lightGrayStyle = {
         color: '#989898'
     }
-
-    const blueBlodStyle = {
-        color: '#09F',
-        fontWeight: 'bold'
-    }
     // 确认收款
     const confirmReceipt = [{
         title: '时间',
@@ -496,7 +493,7 @@ function ExamineSuccessState (props) {
                                 <div>
                                     <span style={lightGrayStyle}>应收金额：&nbsp;</span>
                                     <span
-                                        style={blueBlodStyle}
+                                        style={{color: 'red'}}
                                     >{props.fees.thisReceivable}</span>
                                     <span>&nbsp;元</span>
                                 </div>
@@ -540,7 +537,7 @@ function ExamineSuccessState (props) {
                                     <div>
                                         <span style={lightGrayStyle}>违约金额：&nbsp;</span>
                                         <span
-                                            style={blueBlodStyle}
+                                            style={{color: 'red'}}
                                         >{props.fees.liquidatedDamages ? props.fees.liquidatedDamages : 0}</span>
                                         <span>&nbsp;元</span>
                                     </div>

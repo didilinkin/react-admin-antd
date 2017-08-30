@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactEcharts from 'echarts-for-react'
 import {DatePicker, Radio} from 'antd'
+import {apiPost} from '../../api/api.dev'
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 const {RangePicker } = DatePicker
@@ -57,9 +58,22 @@ class HomeRepairedInfoChart extends React.Component {
             ]
         }
     }
+    loadData = async (startDate, endDate) => {
+        let repairStatistics = await apiPost(
+            '/repairStatistics',
+            {
+                startDate: startDate,
+                endDate: endDate
+            }
+        )
+        console.log(repairStatistics)
+        let repair = this.state.repair
+        let appraise = this.state.appraise
+        repair.series[0].data = repairStatistics.data.repairStatistics
+        appraise.series[0].data = repairStatistics.data.appraise
+    }
     rangePickerChange = (date, dateStrings) => {
-        console.log(date)
-        console.log(dateStrings)
+        this.loadData(dateStrings[0], dateStrings[1])
     }
     componentWillReceiveProps (nextPorps) {
         let repair = this.state.repair

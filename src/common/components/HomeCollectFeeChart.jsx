@@ -95,6 +95,7 @@ class HomeCollectFeeChart extends React.Component {
         option.series[1].data = nextPorps.collectFee.water
         option.series[2].data = nextPorps.collectFee.power
         option.series[3].data = nextPorps.collectFee.elevator
+        option.series[4].data = nextPorps.collectFee.power
     }
     render () {
         return (
