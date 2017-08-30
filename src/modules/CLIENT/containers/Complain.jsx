@@ -1,9 +1,11 @@
 // 客户列表
 import React, {Component} from 'react'
-import {Table, Button, Spin, Input, Icon, notification, Popconfirm, DatePicker, Modal, Form, Row, Col} from 'antd'
+import {Table, Button, Spin, Input, Icon, notification, DatePicker, Modal, Form, Row, Col} from 'antd'
 import { apiPost } from '../../../api'
 import AddComplaint from '../components/Complaint/ComplaintAdd'
 import ComplaintContent from './details/complaint/ComplaintDetail'
+import HandleVisit from './details/complaint/ReturnAdd'
+import VisitDetail from './details/complaint/ReturnDetail'
 const { RangePicker } = DatePicker
 const FormItem = Form.Item
 // 引入组件
@@ -16,6 +18,8 @@ class complaint extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
+            openVisit: false,
+            openVisitDetail: false,
             columns: [],
             dataSource: [],
             title: '',
@@ -33,20 +37,46 @@ class complaint extends Component {
             openAdd: true,
             openTableAddUp: false,
             openUpdate: false,
-            title: '修改客户',
+            openVisit: false,
+            openVisitDetail: false,
+            title: '修改报单',
             id: id
         })
     }
-    complaintContent = (id) => {
+    complaintDetail = (id) => {
         this.setState({
             openAdd: false,
             openTableAddUp: true,
             openUpdate: false,
+            openVisitDetail: false,
+            openVisit: false,
             title: '报单明细',
             id: id
         })
     }
-    handleContent = (id) => {
+    handleVisit = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            openVisitDetail: false,
+            openVisit: true,
+            title: '回访登记',
+            id: id
+        })
+    }
+    visitDetail = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false,
+            openVisitDetail: true,
+            openVisit: false,
+            title: '回访明细',
+            id: id
+        })
+    }
+    handleAcception = (id) => {
         this.setState({
             visible: true,
             id: id
@@ -80,9 +110,10 @@ class complaint extends Component {
             {page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
-        const handleContent = this.handleContent
-        const complaintContent = this.complaintContent
-        const handleDelete = this.handleDelete
+        const handleAcception = this.handleAcception
+        const handleVisit = this.handleVisit
+        const complaintDetail = this.complaintDetail
+        const visitDetail = this.visitDetail
         this.setState({loading: false,
             total: result.data.total,
             columns: [{
@@ -111,7 +142,7 @@ class complaint extends Component {
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
                     return (
-                        <a onClick={() => complaintContent(record.id)}>{text}</a>
+                        <a onClick={() => complaintDetail(record.id)}>{text}</a>
                     )
                 }
 
@@ -137,7 +168,7 @@ class complaint extends Component {
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
                     return (
-                        <a>{text}</a>
+                        <a onClick={() => visitDetail(record.id)}>{text}</a>
                     )
                 }
             }, {
@@ -150,22 +181,17 @@ class complaint extends Component {
                         return (
                             <div>
                                 <a onClick={() => handleUpdate(record.id)} > 修改 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleContent(record.id)} > 受理 &nbsp;&nbsp;</a>
-                                <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                                    <a> 删除 </a>
-                                </Popconfirm>
+                                <a onClick={() => handleAcception(record.id)} > 受理 &nbsp;&nbsp;</a>
                             </div>
                         )
-                    } else {
+                    } else if (record.status === 1 && record.visitStatus !== 1) {
                         return (
                             <div>
-                                <a onClick={() => handleUpdate(record.id)} > 修改 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleContent(record.id)} > 受理 &nbsp;&nbsp;</a>
-                                <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
-                                    <a> 删除 </a>
-                                </Popconfirm>
+                                <a onClick={() => handleVisit(record.id)} > 回访登记 &nbsp;&nbsp;</a>
                             </div>
                         )
+                    } else if (record.visitStatus === 1) {
+                        return ''
                     }
                 }
             }],
@@ -202,6 +228,8 @@ class complaint extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
+            openVisit: false,
+            openVisitDetail: false,
             dataSource: result.data.rows,
             total: result.data.total,
             id: 0
@@ -225,7 +253,9 @@ class complaint extends Component {
         this.setState({
             openAdd: false,
             openTableAddUp: false,
-            openUpdate: false
+            openUpdate: false,
+            openVisit: false,
+            openVisitDetail: false
         })
     }
     query = () => {
@@ -296,6 +326,20 @@ class complaint extends Component {
                     close={this.close}
                     title={this.state.title}
                 />
+                <HandleVisit
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openVisit}
+                    close={this.close}
+                    title={this.state.title}
+                />
+                <VisitDetail
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openVisitDetail}
+                    close={this.close}
+                    title={this.state.title}
+                />
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}
@@ -322,7 +366,7 @@ class complaint extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1800 }}
+                        scroll={{ x: 1500 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
