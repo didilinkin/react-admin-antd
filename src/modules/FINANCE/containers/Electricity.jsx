@@ -320,6 +320,7 @@ class Electricity extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            bordered
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
@@ -336,6 +337,7 @@ class Electricity extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            bordered
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
                         />
@@ -353,6 +355,7 @@ class Electricity extends React.Component {
                                 onChange: this.onSelectChange
                             }}
                             scroll={{ x: 1450 }}
+                            bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />

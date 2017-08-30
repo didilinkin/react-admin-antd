@@ -56,7 +56,7 @@ class ElectricCharge extends React.Component {
             '/ElectricityFees/list',
             filters
         )
-        let PowerBillList = result.data
+        let PowerBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -132,7 +132,7 @@ class ElectricCharge extends React.Component {
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
         )
-        let PowerBillList = result.data
+        let PowerBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -165,25 +165,21 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientName'
             }, {
                 title: '收费类型',
-                width: 200,
                 dataIndex: 'wattHourType',
                 render: function (text) {
                     let dataIndex = '固定单价'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         dataIndex = '差额单价'
-                    } else if (text.toString() === '2') {
+                    } else if (text === 2) {
                         dataIndex = '功峰平谷'
                     }
                     return (
@@ -192,19 +188,15 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '本期电费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次用电量',
-                width: 100,
                 dataIndex: 'sumElectricity'
             }, {
                 title: '本次应收',
-                width: 100,
                 dataIndex: 'thisReceivable'
             }, {
                 title: ' 交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
 
             }]
@@ -242,8 +234,9 @@ class ElectricCharge extends React.Component {
             }]),
             columns2: arr.slice().concat([{
                 title: ' 操作',
-                width: 200,
+                width: 60,
                 dataIndex: 'opt',
+                fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <span>
@@ -254,19 +247,17 @@ class ElectricCharge extends React.Component {
             }]),
             columns3: arr.slice().concat([{
                 title: '审核说明',
-                width: 100,
                 dataIndex: 'auditExplain'
             }, {
                 title: '审核时间',
-                width: 100,
                 dataIndex: 'auditDate'
             }, {
                 title: '审核人',
-                width: 100,
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                width: 200,
+                fixed: 'right',
+                width: 150,
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)
@@ -282,19 +273,16 @@ class ElectricCharge extends React.Component {
             }]),
             columns4: arr.slice().concat([{
                 title: '实交日期',
-                width: 100,
                 dataIndex: 'principalCollectionDate'
             }, {
                 title: '逾期天数',
-                width: 100,
                 dataIndex: 'overdueDays'
             }, {
                 title: '延期下月电费',
-                width: 100,
                 dataIndex: 'penaltyType',
                 render: function (text) {
                     let penaltyType = '否'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         penaltyType = '是'
                     }
                     return (
@@ -303,11 +291,10 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '打印状态',
-                width: 100,
                 dataIndex: 'printStatus',
                 render: function (text) {
                     let printStatus = '否'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         printStatus = '是'
                     }
                     return (
@@ -316,7 +303,6 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '开票状态',
-                width: 100,
                 dataIndex: 'principalPrincipalBilling',
                 render: function (text) {
                     text = text ? text : ''
@@ -330,7 +316,8 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                fixed: 'right',
+                width: 100,
                 render: function (text, record) {
                     return (
                         <span>
