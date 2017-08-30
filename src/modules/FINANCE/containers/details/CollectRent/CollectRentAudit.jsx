@@ -100,15 +100,13 @@ class App extends React.Component {
                 <div className="contract">
                     <h2>租户信息</h2>
                     <Row>
-                        <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                        <Col span={8}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                        <Col span={8}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
+                        <Col span={8}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
                     </Row>
                     <Row>
-                        <Col span={10}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
-                        <Col span={14}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
-                        <Col span={14}><b>房间编号：</b>{this.state.data.roomNum} </Col>
+                        <Col span={8}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
+                        <Col span={16}><b>房间编号：</b>{this.state.data.roomNum} </Col>
                     </Row>
                     <div className="wrapbox">
                         <div className="title">租金信息</div>
@@ -139,12 +137,14 @@ class App extends React.Component {
                             <p className="line" />
                             <h2>其他信息</h2>
                             <Row>
-                                <Col span={10}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
-                                <Col span={14}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
+                                <Col span={8}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
+                                <Col span={16}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
                             </Row>
                             <Row>
-                                <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
-                                <Col span={14}><b>审核说明：</b>{this.state.data.remark}</Col>
+                                <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
+                                    <b>审批意见：</b><Radio value={2}>审核通过</Radio>
+                                    <Radio value={3}>审核不通过</Radio>
+                                </RadioGroup>
                             </Row>
                             <Row>
                                 <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
