@@ -24,7 +24,8 @@ class PrincipalCollection extends React.Component {
             })
             this.props.form.setFieldsValue({
                 receivableMoney: WaterBill.receivableMoney,
-                paidMoney: WaterBill.paidMoney
+                paidMoney: WaterBill.paidMoney,
+                money: 0
             })
         }
     }

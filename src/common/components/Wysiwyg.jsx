@@ -78,10 +78,11 @@ class Wysiwyg extends React.Component {
         })
     }
 
+    // 图片上传 回调函数
     imageUploadCallBack = file => new Promise(
         (resolve, reject) => {
             const xhr = new XMLHttpRequest() // eslint-disable-line no-undef
-            xhr.open('POST', 'https://api.imgur.com/3/image')
+            xhr.open('POST', 'https://192.168.5.24:18082/storage/uploader')
             xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca')
             const data = new FormData() // eslint-disable-line no-undef
             data.append('image', file)

@@ -13,6 +13,7 @@ class ContractDetail extends React.Component {
             ListSublet: [],
             contract: {},
             id: 0,
+            roomNum: '',
             SubletOpen: false,
             TerminationComponentOpen: false,
             title: ''
@@ -26,6 +27,7 @@ class ContractDetail extends React.Component {
             }
         )
         this.setState({
+            roomNum: contract.data.roomNum,
             ListSublet: contract.data.subletInfoList,
             contract: contract.data.contract
         })
@@ -233,7 +235,7 @@ class ContractDetail extends React.Component {
                         <ul>
                             <li>
                                 <b>业主自交房间：</b>
-                                {this.state.contract.roomIdsEnergy}
+                                {this.state.roomNum}
                             </li>
                         </ul>
                     </div>

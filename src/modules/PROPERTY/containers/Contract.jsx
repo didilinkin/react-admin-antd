@@ -125,7 +125,10 @@ class PropertyContract extends React.Component {
                 }
             }, {
                 title: '剩余天数',
-                dataIndex: 'daysRemaining'
+                dataIndex: 'daysRemaining',
+                render: function (text, record, index) {
+                    return text > 0 ? text : '0'
+                }
             }, {
                 title: '操作',
                 width: 200,
