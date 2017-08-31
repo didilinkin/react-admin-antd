@@ -797,10 +797,11 @@ class propertyFeeAdd extends React.Component {
                         </tbody>
                     </table>
                     <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
+                        textAlign: 'right',
+                        lineHeight: '28px'}}
+                    >优惠金额: &nbsp;&nbsp;{getFieldDecorator('discountMoney')(
                             <Input onKeyUp={this.sumMoney} addonBefore="￥" addonAfter="元" style={{ width: 120 }} />
-                        )} &nbsp; 本期应收 {getFieldDecorator('actualPaidMoney')(
+                        )}&nbsp;&nbsp;本期应收:&nbsp;&nbsp;{getFieldDecorator('actualPaidMoney')(
                             <Input style={{ width: 120 }} disabled addonBefore="￥" addonAfter="元" />
                         )}</p>
                 </Form>

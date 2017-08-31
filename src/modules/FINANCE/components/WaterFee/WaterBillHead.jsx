@@ -82,238 +82,157 @@ class WaterBillHead extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
+        let fourOpen = (this.props.type === 4) && this.state.openState
+        let spanEight = fourOpen ? 8 : 6
         return (
             <div>
-                {type !== 4 ?
-                    <Form layout="horizontal">
-                        <Row>
-                            <Col span={6}>
-                                <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                <Form layout="horizontal">
+                    <Row>
+                        <Col span={spanEight}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('buildId')(
+                                    <Select
+                                        showSearch
+                                        allowClear
+                                        style={{ width: 200 }}
+                                        placeholder="请选择所属楼宇"
+                                        optionFilterProp="children"
+                                    >
+                                        {ListBuildingInfo.map(BuildingInfo => {
+                                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={spanEight}>
+                            <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('roomNumber')(
+                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={spanEight}>
+                            <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('clientSubletName')(
+                                    <Input placeholder="请输入" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        {!this.state.openState &&
+                        <Col span={spanEight}>
+                            <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button onClick={this.handleReset}>清除</Button>
+                            {type === 4 &&
+                            <a style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</a>
+                            }
+                        </Col>
+                        }
+                        {fourOpen &&
+                        <div>
+                            <Col span={spanEight}>
+                                <FormItem label="查询依据" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('buildId')(
+                                    {getFieldDecorator('cycleClass')(
                                         <Select
                                             showSearch
                                             allowClear
                                             style={{ width: 200 }}
-                                            placeholder="请选择所属楼宇"
+                                            placeholder="查询依据"
                                             optionFilterProp="children"
                                         >
-                                            {ListBuildingInfo.map(BuildingInfo => {
-                                                return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                            })}
+                                            <Option key="2">实交日期</Option>
+                                            <Option key="3">交费期限</Option>
+                                            <Option key="1">抄表日期</Option>
                                         </Select>
                                     )}
                                 </FormItem>
                             </Col>
-                            <Col span={6}>
-                                <FormItem label="房间编号" labelCol={{ span: 6 }}
+                            <Col span={spanEight}>
+                                <FormItem label="查询时间" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('roomNumber')(
-                                        <Input placeholder="请输入" style={{ width: 200 }} />
+                                    {getFieldDecorator('cxsj')(
+                                        <RangePicker />
                                     )}
                                 </FormItem>
                             </Col>
-                            <Col span={6}>
-                                <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('clientSubletName')(
-                                        <Input placeholder="请输入" style={{ width: 200 }} />
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col span={6}>
-                                <div>
-                                    <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
-                                    <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Form> :
-                    <Form layout="horizontal">
-                        {!this.state.openState ?
-                            <div>
-                                <Row>
-                                    <Col span={6}>
-                                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('buildId')(
-                                                <Select
-                                                    showSearch
-                                                    allowClear
-                                                    style={{ width: 200 }}
-                                                    placeholder="请选择所属楼宇"
-                                                    optionFilterProp="children"
-                                                >
-                                                    {ListBuildingInfo.map(BuildingInfo => {
-                                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                                    })}
-                                                </Select>
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={6}>
-                                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('roomNumber')(
-                                                <Input placeholder="请输入" style={{ width: 200 }} />
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={6}>
-                                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('clientSubletName')(
-                                                <Input placeholder="请输入" style={{ width: 200 }} />
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={6}>
-                                        <div>
-                                            <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
-                                            <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
-                                            <Button style={{marginRight: '10px'}} onClick={this.open}>{this.state.open}</Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row style={{marginBottom: 10}}>
-                                    <Col span={16} >
-                                        <span>
-                                            <Button style={{marginRight: '10px'}}>批量打印</Button>
-                                            <Button >导出</Button>
-                                        </span>
-                                    </Col>
-                                </Row>
-                            </div> :
-                            <div>
-                                <Row>
-                                    <Col span={8}>
-                                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('buildId')(
-                                                <Select
-                                                    showSearch
-                                                    allowClear
-                                                    style={{ width: 200 }}
-                                                    placeholder="请选择所属楼宇"
-                                                    optionFilterProp="children"
-                                                >
-                                                    {ListBuildingInfo.map(BuildingInfo => {
-                                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                                    })}
-                                                </Select>
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={8}>
-                                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('roomNumber')(
-                                                <Input placeholder="请输入" style={{ width: 200 }} />
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={8}>
-                                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('clientSubletName')(
-                                                <Input placeholder="请输入" style={{ width: 200 }} />
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={8}>
-                                        <FormItem label="查询依据" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('cycleClass')(
-                                                <Select
-                                                    showSearch
-                                                    allowClear
-                                                    style={{ width: 200 }}
-                                                    placeholder="查询依据"
-                                                    optionFilterProp="children"
-                                                >
-                                                    <Option key="2">实交日期</Option>
-                                                    <Option key="3">交费期限</Option>
-                                                    <Option key="1">抄表日期</Option>
-                                                </Select>
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={8}>
-                                        <FormItem label="查询时间" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
-                                        >
-                                            {getFieldDecorator('cxsj')(
-                                                <RangePicker style={{ width: 200 }} />
-                                            )}
-                                        </FormItem>
-                                    </Col>
 
-                                    <Col span={8}>
-                                        <FormItem label="收费状态" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
+                            <Col span={spanEight}>
+                                <FormItem label="收费状态" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('paymentState')(
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{ width: 200 }}
+                                            placeholder="请选择收费状态"
+                                            optionFilterProp="children"
                                         >
-                                            {getFieldDecorator('paymentState')(
-                                                <Select
-                                                    showSearch
-                                                    allowClear
-                                                    style={{ width: 200 }}
-                                                    placeholder="请选择收费状态"
-                                                    optionFilterProp="children"
-                                                >
-                                                    <Option key="1">已收</Option>
-                                                    <Option key="2">未收</Option>
-                                                    <Option key="3">未收全</Option>
-                                                </Select>
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                    <Col span={8}>
-                                        <FormItem label="开票状态" labelCol={{ span: 6 }}
-                                            wrapperCol={{ span: 16 }}
+                                            <Option key="1">已收</Option>
+                                            <Option key="2">未收</Option>
+                                            <Option key="3">未收全</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={spanEight}>
+                                <FormItem label="开票状态" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('billingState')(
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{ width: 200 }}
+                                            placeholder="请选择开票状态"
+                                            optionFilterProp="children"
                                         >
-                                            {getFieldDecorator('billingState')(
-                                                <Select
-                                                    showSearch
-                                                    allowClear
-                                                    style={{ width: 200 }}
-                                                    placeholder="请选择开票状态"
-                                                    optionFilterProp="children"
-                                                >
-                                                    <Option key="1">已开票</Option>
-                                                    <Option key="2">未开票</Option>
-                                                </Select>
-                                            )}
-                                        </FormItem>
-                                    </Col>
-                                </Row>
-                                <Row style={{marginBottom: 10}}>
-                                    <Col span={16} >
-                                        <span>
-                                            <Button style={{marginRight: '10px'}}>批量打印</Button>
-                                            <Button >导出</Button>
-                                        </span>
-                                    </Col>
-                                    <Col span={8}>
-                                        <div style={{paddingLeft: '20%'}}>
-                                            <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
-                                            <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
-                                            <Button style={{marginRight: '10px'}} onClick={this.open}>{this.state.open}</Button>
-                                        </div></Col>
-                                </Row>
-                            </div>
+                                            <Option key="1">已开票</Option>
+                                            <Option key="2">未开票</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </div>
                         }
-                    </Form>
-                }
+                    </Row>
+                    <Row style={{marginBottom: '10px'}}>
+                        <Col span={16} >
+                            {
+                                type === 4 &&
+                                <span>
+                                    <Button style={{marginRight: '10px'}}>批量打印</Button>
+                                    <Button >导出</Button>
+                                </span>
+                            }
+                            {
+                                type === 1 &&
+                                <span>
+                                    <Button style={{marginRight: '10px'}} onClick={this.openWaterAddUpComponent} type="primary">添加水费</Button>
+                                    <Button type="primary" onClick={this.BatchAuditWaterBill}>提交财务</Button>
+                                </span>
+                            }
+                        </Col>
+                        {fourOpen &&
+                        <Col span={8}>
+                            <div style={{paddingLeft: '25%'}}>
+                                <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
+                                <a onClick={this.open}>{this.state.open}</a>
+                            </div>
+                        </Col>
+                        }
+                    </Row>
+                </Form>
             </div>
         )
     }
