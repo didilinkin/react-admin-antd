@@ -1,6 +1,7 @@
-import {Form, Select, Input, Button, Row, Col, DatePicker} from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
 import PowerAddUpComponent from './PowerAddUp'
+import { apiPost } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -68,6 +69,17 @@ class PowerBillHead extends React.Component {
         this.setState({
             openPowerAddUpComponent: true
         })
+    }
+    BatchAuditWaterBill = async () => {
+        let data = await apiPost(
+            '/ElectricityFees/updateAuditList',
+            {ids: this.props.RowKeys.toString()}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.handleSubmit()
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -203,7 +215,7 @@ class PowerBillHead extends React.Component {
                                         添加电费
                                     </Button>
                                     &nbsp;&nbsp;
-                                    <Button type="primary">
+                                    <Button type="primary" onClick={this.BatchAuditWaterBill}>
                                         提交财务
                                     </Button>
                                 </span>

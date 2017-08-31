@@ -127,6 +127,7 @@ class ElectricCharge extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/ElectricityFees/list',
+            {examineState: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
