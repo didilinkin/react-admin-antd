@@ -143,7 +143,7 @@ class sumElectricityAddUp extends React.Component {
             dataIndex: 'sumElectricity',
             key: 'sumElectricity'
         }, {
-            title: '单价(1.0685)',
+            title: '单价',
             dataIndex: 'unitPrice',
             key: 'unitPrice'
         }, {

@@ -231,7 +231,13 @@ class UserAddUp extends React.Component {
                             <RadioGroup>
                                 {
                                     this.state.roles.map((role, i) => {
-                                        return <RadioButton key={i} value={role.id}>{role.roleName}</RadioButton>
+                                        return (
+                                            <RadioButton style={{width: '130px',
+                                                marginRight: '10px',
+                                                marginBottom: '10px'
+                                            }} key={i} value={role.id}
+                                            >{role.roleName}</RadioButton>
+                                        )
                                     })
                                 }
                             </RadioGroup>

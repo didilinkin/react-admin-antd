@@ -385,7 +385,7 @@ class ElectricChargeDetails extends React.Component {
                         </Popconfirm>
                         }
                         {feesInfo.principalPaymentStatus === 1 && feesInfo.defaultPaymentStatus !== 1 && feesInfo.liquidatedDamages > 0 &&
-                        <Popconfirm title="确认放入下月电费吗?" onConfirm={this.collectPenal} onCancel={this.putNextMouth} okText="实收违约金" cancelText="延期下月电费">
+                        <Popconfirm title="请选择违约金交费方式?" onConfirm={this.collectPenal} onCancel={this.putNextMouth} okText="实收违约金" cancelText="延期下月电费">
                             <Button type="primary" style={{marginLeft: 20}} onClick={this.penalty}>确认违约金</Button>
                         </Popconfirm>
                         }
