@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, Table, Button } from 'antd' // Button
+import { Row, Col, Table, Button } from 'antd'
 import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 import TerminationComponent from '../../../components/LeaseContract/Termination'
