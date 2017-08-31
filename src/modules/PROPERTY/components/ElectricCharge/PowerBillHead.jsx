@@ -218,7 +218,7 @@ class PowerBillHead extends React.Component {
                                         添加电费
                                     </Button>
                                     &nbsp;&nbsp;
-                                    <Button type="primary">
+                                    <Button type="primary" onClick={this.BatchAuditWaterBill}>
                                         提交财务
                                     </Button>
                                 </span>
