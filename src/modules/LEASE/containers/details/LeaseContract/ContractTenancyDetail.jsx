@@ -14,10 +14,10 @@ class App extends React.Component {
             dataSource: [],
             columns: [
                 {
-                    title: '租赁开始时间',
+                    title: '费用开始日期',
                     dataIndex: 'startDate'
                 }, {
-                    title: '租赁结束时间',
+                    title: '费用结束日期',
                     dataIndex: 'endDate'
                 }, {
                     title: '交费期限',
@@ -31,6 +31,9 @@ class App extends React.Component {
                 }, {
                     title: '实际应收',
                     dataIndex: 'actualPaidMoney'
+                }, {
+                    title: '已收租金',
+                    dataIndex: 'paidMoney'
                 }, {
                     title: '未收租金',
                     dataIndex: 'unpaidMoney'
