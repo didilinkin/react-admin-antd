@@ -25,7 +25,7 @@ const HomeIndexRoute = [{
     title: '测试',
     key: 'test',
     path: '/home/test',
-    component: require('../common/components/Wysiwyg.jsx').default
+    component: require('../common/components/Thermometers').default
 }]
 
 // 根据是否存在 component属性, 保存对象

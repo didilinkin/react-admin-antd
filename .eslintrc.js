@@ -157,7 +157,7 @@ module.exports = {
         "no-extra-semi": "error",                                                   // 禁用不必要的多余分号
         "no-unused-labels": "error",                                                // 禁用未使用过的标签
         "wrap-iife": ["error", "outside"],                                          // 需要把立即执行的函数包裹起来
-        "no-undefined": "error",                                                    // 禁止将 undefined 作为标识符
+        "no-undefined": "off",                                                    // 禁止将 undefined 作为标识符
         "require-yield": "error",                                                   // 禁用函数内没有yield的 generator 函数
         "no-restricted-globals": 0,                                                 // 禁用特定的全局变量
         "no-script-url": "error",                                                   // 禁用 Script URL

@@ -30,3 +30,11 @@ export const flexCenter = () => {
         'justify-content': 'center'
     }
 }
+
+// 图片宽度自适应
+export const imgCover = (width) => {
+    return {
+        'width': width, // 只接受百分比
+        'object-fit': 'cover'
+    }
+}
