@@ -231,7 +231,7 @@ class GeneratorLog extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => abnormal(record.id, 3)}>查看</Button>
+                        <a onClick={() => abnormal(record.id, 3)}>查看</a>
                     )
                 }
             }],

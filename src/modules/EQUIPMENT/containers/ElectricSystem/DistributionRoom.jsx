@@ -76,7 +76,7 @@ class DistributionRoom extends React.Component {
                 key: 'transformer',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => info(record.id)}>查看明细</Button>
+                        <a onClick={() => info(record.id)}>查看明细</a>
                     )
                 }
             }, {
@@ -111,13 +111,13 @@ class DistributionRoom extends React.Component {
                 key: 'patrolName'
             }, {
                 title: '异常情况',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => abnormal(record.id, 1)}>查看</Button>
+                        <a onClick={() => abnormal(record.id, 1)}>查看</a>
                     )
                 }
             }],

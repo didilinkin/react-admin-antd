@@ -86,7 +86,7 @@ class DailyInspection extends Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => abnormal(record.id, 5)}>查看</Button>
+                        <a onClick={() => abnormal(record.id, 5)}>查看</a>
                     )
                 }
             }],
@@ -148,7 +148,6 @@ class DailyInspection extends Component {
                 <span style={{paddingBottom: '10px',
                     display: 'block'}}
                 >
-                    display: 'block'}}>
                     <span>巡检日期:&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <RangePicker onChange={this.getDate} />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;巡检人:&nbsp;&nbsp;&nbsp;&nbsp;</span>

@@ -691,11 +691,6 @@ class Happy extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col span={12}>
-                            <span style={{color: 'red'}}>注意： 请在下方租金明细中修改</span>
-                        </Col>
-                    </Row>
                     {getFieldDecorator('roomIds')(
                         <Input type="hidden" />
                     )}

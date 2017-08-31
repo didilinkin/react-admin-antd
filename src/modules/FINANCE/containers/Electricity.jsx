@@ -5,13 +5,14 @@ import PowerBillHead from '../components/ElectricInfo/PowerBillHead'
 import { apiPost } from '../../../api'
 import PowerInfomation from '../../PROPERTY/components/ElectricCharge/PowerInfomation'
 
-
 const TabPane = Tabs.TabPane
 class Electricity extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             columns1: [],
             columns2: [],
             columns3: [],
@@ -25,43 +26,32 @@ class Electricity extends React.Component {
             id: 0
         }
     }
-
+    activeKey = 1
     refreshTwo = async (activeKey) => {
-        this.setState({loading: true,
-            openInfo: false})
-        let result = await apiPost(
-            '/ElectricityFees/list'
-        )
-        let PowerBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        PowerBillList.map(PowerBill => {
-            if (PowerBill.examineState.toString() === '1') {
-                dataSource1.push(PowerBill)
-            } else if (PowerBill.examineState.toString() === '2') {
-                dataSource3.push(PowerBill)
-            } else if (PowerBill.examineState.toString() === '3') {
-                dataSource2.push(PowerBill)
-            }
-            return ''
-        })
-        this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            order: activeKey ? activeKey : 1
-        })
+        this.activeKey = activeKey ? activeKey : 1
+        this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openInfo: false})
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
+        console.log(this.activeKey)
+        filters['examineState'] = this.activeKey.toString() === '1' ? 1 :
+            this.activeKey.toString() === '3' ? 2 : 3
+        if (pagination === null) {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
         let result = await apiPost(
             '/ElectricityFees/list',
             filters
         )
-        let PowerBillList = result.data
+        let PowerBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -77,20 +67,24 @@ class Electricity extends React.Component {
         })
         this.setState({
             loading: false,
+            current: pagination ? pagination.current : 1,
+            total: result.data.total,
             dataSource1: dataSource1,
             dataSource2: dataSource2,
-            dataSource3: dataSource3
+            dataSource3: dataSource3,
+            order: this.activeKey
         })
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             '/ElectricityFees/list',
+            {examineState: 1}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
         )
-        let PowerBillList = result.data
+        let PowerBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
@@ -118,25 +112,21 @@ class Electricity extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientName'
             }, {
                 title: '收费类型',
-                width: 200,
                 dataIndex: 'wattHourType',
                 render: function (text, record, index) {
                     let dataIndex = '固定单价'
-                    if (text.toString() === '1') {
+                    if (record.wattHourType === 1) {
                         dataIndex = '差额单价'
-                    } else if (text.toString() === '2') {
+                    } else if (record.wattHourType === 2) {
                         dataIndex = '功峰平谷'
                     }
                     return (
@@ -145,19 +135,15 @@ class Electricity extends React.Component {
                 }
             }, {
                 title: '本期电费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次用电量',
-                width: 100,
                 dataIndex: 'sumElectricity'
             }, {
                 title: '本次应收',
-                width: 100,
                 dataIndex: 'thisReceivable'
             }, {
                 title: ' 交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
 
             }]
@@ -172,7 +158,8 @@ class Electricity extends React.Component {
             dataSource3: dataSource3,
             columns1: arr.slice().concat([{
                 title: ' 操作',
-                width: 200,
+                fixed: 'right',
+                width: 100,
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -184,19 +171,17 @@ class Electricity extends React.Component {
             }]),
             columns2: arr.slice().concat([{
                 title: '审核说明',
-                width: 100,
                 dataIndex: 'auditExplain'
             }, {
                 title: '审核时间',
-                width: 100,
                 dataIndex: 'auditDate'
             }, {
                 title: '审核人',
-                width: 100,
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                width: 200,
+                width: 100,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -208,19 +193,16 @@ class Electricity extends React.Component {
             }]),
             columns3: arr.slice().concat([{
                 title: '实交日期',
-                width: 100,
                 dataIndex: 'principalCollectionDate'
             }, {
                 title: '逾期天数',
-                width: 100,
                 dataIndex: 'overdueDays'
             }, {
                 title: '延期下月电费',
-                width: 100,
                 dataIndex: 'penaltyType',
                 render: function (text, record, index) {
                     let penaltyType = '否'
-                    if (text.toString() === '1') {
+                    if (record.penaltyType === 1) {
                         penaltyType = '是'
                     }
                     return (
@@ -233,7 +215,7 @@ class Electricity extends React.Component {
                 dataIndex: 'printStatus',
                 render: function (text, record, index) {
                     let printStatus = '否'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         printStatus = '是'
                     }
                     return (
@@ -247,7 +229,7 @@ class Electricity extends React.Component {
                 render: function (text, record, index) {
                     text = text ? text : ''
                     let billingState = '未开票'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         billingState = '已开票'
                     }
                     return (
@@ -257,6 +239,7 @@ class Electricity extends React.Component {
             }, {
                 title: '操作',
                 width: 200,
+                fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/finance/electricChargeDetails/' + record.id
                     return (
@@ -320,6 +303,14 @@ class Electricity extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
@@ -337,6 +328,14 @@ class Electricity extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
@@ -354,7 +353,14 @@ class Electricity extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            scroll={{ x: 1450 }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 2000 }}
                             bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
