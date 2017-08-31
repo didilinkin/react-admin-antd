@@ -370,7 +370,7 @@ function Middle (props) {
                 lineHeight: '18px',
                 color: '#363636'}}
             >
-                <Col span={14}>
+                <Col span={10}>
                     <div>
                         <span style={lightGrayStyle}>审核人：</span>
                         <span>&nbsp;{props.fees.auditName}&nbsp;{props.fees.auditDate}</span>

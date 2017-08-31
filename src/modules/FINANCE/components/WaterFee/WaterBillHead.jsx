@@ -11,7 +11,8 @@ class WaterBillHead extends React.Component {
         super(props)
         this.state = {
             open: '展开',
-            none: 'none'
+            none: 'none',
+            openState: false
         }
     }
     // 清除
@@ -55,12 +56,14 @@ class WaterBillHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
@@ -120,6 +123,23 @@ class WaterBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
+                        {type !== 4 &&
+                        <Col span={6}>
+                            <div>
+                                <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
+                            </div>
+                        </Col>
+                        }
+                        {type === 4 && this.state.openState === false &&
+                        <Col>
+                            <div>
+                                <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.open}>{this.state.open}</Button>
+                            </div>
+                        </Col>
+                        }
                     </Row>
                     <Row style={{display: this.state.none}}>
                         <Col span={6}>
@@ -189,6 +209,7 @@ class WaterBillHead extends React.Component {
                             </FormItem>
                         </Col>
                     </Row>
+                    {type === 4 && this.state.openState &&
                     <Row>
                         <Col span={16} >
                             {
@@ -197,7 +218,7 @@ class WaterBillHead extends React.Component {
                                     <Button >
                                 批量打印
                                     </Button>
-                            &nbsp;&nbsp;
+                                    &nbsp;&nbsp;
                                     <Button >
                             导出
                                     </Button>
@@ -208,19 +229,12 @@ class WaterBillHead extends React.Component {
                             <div style={{paddingLeft: '25%',
                                 marginBottom: 10}}
                             >
-                                <Button type="primary" onClick={this.handleSubmit}>
-                        搜索
-                                </Button>&nbsp;&nbsp;
-                                <Button
-                                    onClick={this.handleReset}
-                                >清除</Button>&nbsp;&nbsp;
-                                { type === 4 &&
-                                <span>
-                                    <Button onClick={this.open}>{this.state.open}</Button>
-                                </span>
-                                }
+                                <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.open}>{this.state.open}</Button>
                             </div></Col>
                     </Row>
+                    }
                 </Form>
             </div>
         )

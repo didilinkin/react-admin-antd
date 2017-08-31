@@ -34,11 +34,10 @@ class ElectricCharge extends React.Component {
         this.activeKey = activeKey ? activeKey : 1
         this.refresh({}, {}, {})
     }
-    refresh = async (pagination, filters) => {
+    refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openWaterAddUpComponent: false,
             openInfo: false})
-        console.log(this.activeKey)
         if (filters === null || typeof (filters) === 'undefined') {
             filters = []
         }
@@ -353,6 +352,7 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
                             bordered
                             pagination={{total: this.state.total,
                                 showSizeChanger: true,
@@ -360,6 +360,7 @@ class ElectricCharge extends React.Component {
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
@@ -383,6 +384,7 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
                             pagination={{total: this.state.total,
                                 showSizeChanger: true,
                                 showQuickJumper: true,
@@ -390,6 +392,7 @@ class ElectricCharge extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
@@ -407,12 +410,14 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
                             pagination={{total: this.state.total,
                                 showSizeChanger: true,
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
@@ -430,13 +435,14 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
                             pagination={{total: this.state.total,
                                 showSizeChanger: true,
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
-                            scroll={{ x: 1450 }}
+                            scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
