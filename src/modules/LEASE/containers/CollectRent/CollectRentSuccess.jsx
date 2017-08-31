@@ -212,10 +212,6 @@ class CollectRentSuccess extends React.Component {
             RowKeys: selectedRowKeys
         })
     }
-    /* foot = (currentPageData) =>{
-        console.log(currentPageData)
-        return currentPageData
-    }*/
     render () {
         return (
             <div>

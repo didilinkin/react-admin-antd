@@ -22,7 +22,6 @@ class HomeRentChart extends React.Component {
                     name: '实收租金',
                     icon: 'circle'
                 }],
-                orient: 'vertical',
                 right: '20px',
                 top: '30px'
             },
