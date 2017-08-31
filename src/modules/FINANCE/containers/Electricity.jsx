@@ -28,7 +28,7 @@ class Electricity extends React.Component {
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
-        this.activeKey = activeKey ? activeKey : 1
+        this.activeKey = activeKey ? activeKey : this.activeKey
         this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
