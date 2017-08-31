@@ -154,11 +154,19 @@ class PropertyFeeFinanceConduct extends Component {
             RowKeys: selectedRowKeys
         })
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     render () {
         return (
             <div>
                 <PropertyFeeFinanceConductComponent
                     id={this.state.id}
+                    close={this.close}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />
