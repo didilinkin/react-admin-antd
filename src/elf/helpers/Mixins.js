@@ -9,7 +9,7 @@ export const size = (width, height) => {
 
 export const fS = (fontSize) => {
     return {
-        'font-size': fontSize
+        'font-size': `${fontSize}px`
     }
 }
 
