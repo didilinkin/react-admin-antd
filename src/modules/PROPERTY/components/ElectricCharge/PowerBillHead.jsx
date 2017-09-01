@@ -1,6 +1,7 @@
-import {Form, Select, Input, Button, Row, Col, DatePicker} from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
 import PowerAddUpComponent from './PowerAddUp'
+import { apiPost } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -13,7 +14,8 @@ class PowerBillHead extends React.Component {
             open: '展开',
             none: 'none',
             openPowerAddUpComponent: false,
-            openPowerInfomationComponent: false
+            openPowerInfomationComponent: false,
+            openState: false
         }
     }
     // 清除
@@ -55,12 +57,14 @@ class PowerBillHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
@@ -69,17 +73,28 @@ class PowerBillHead extends React.Component {
             openPowerAddUpComponent: true
         })
     }
+    BatchAuditWaterBill = async () => {
+        let data = await apiPost(
+            '/ElectricityFees/updateAuditList',
+            {ids: this.props.RowKeys.toString()}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.handleSubmit()
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
+        let fourOpen = (this.props.type === 4) && this.state.openState
+        let spanEight = fourOpen ? 8 : 6
         return (
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={8}>
-                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
+                        <Col span={spanEight}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
@@ -203,7 +218,7 @@ class PowerBillHead extends React.Component {
                                         添加电费
                                     </Button>
                                     &nbsp;&nbsp;
-                                    <Button type="primary">
+                                    <Button type="primary" onClick={this.BatchAuditWaterBill}>
                                         提交财务
                                     </Button>
                                 </span>

@@ -31,7 +31,7 @@ class ElectricCharge extends React.Component {
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
-        this.activeKey = activeKey ? activeKey : 1
+        this.activeKey = activeKey ? activeKey : this.activeKey
         this.refresh({}, {}, {})
     }
     refresh = async (pagination, filters, sorter) => {
@@ -127,6 +127,7 @@ class ElectricCharge extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/ElectricityFees/list',
+            {examineState: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
@@ -262,7 +263,7 @@ class ElectricCharge extends React.Component {
                     console.log(record)
                     return (
                         <span>
-                            <Popconfirm key="1" title="确定重新收费吗?">
+                            <Popconfirm key="1" title="确定重新收费吗?" onConfirm={() => openWaterAddUpComponent(record.id)}>
                                 <a>重新收费</a>
                             </Popconfirm>
                             <a style={{marginLeft: '20px'}} onClick={() => info(record.id)}>明细</a>

@@ -54,8 +54,6 @@ class App extends React.Component {
             dataSource: contract.data.list,
             contract: contract.data.contract
         })
-        console.log(contract.data.contract)
-        console.log(contract.data.subletInfoList)
     }
     componentWillMount () {
         this.initialRemarks()
@@ -162,11 +160,8 @@ class App extends React.Component {
                             <Col span={16}>
                                 <b>管理押金：</b>
                                 <span className="color1">{this.state.contract.depositMoney}</span>
-                                <span>
-                                    元 （当前余额：
-                                </span>
-                                <span className="color1">{this.state.contract.currentBalance} 元</span>
-                                <span>）</span>
+                                元 （当前余额：
+                                <span className="color1">{this.state.contract.currentBalance} 元</span>）
                             </Col>
                         </Row>
                         <p className="line" />

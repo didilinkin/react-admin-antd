@@ -15,11 +15,11 @@ class RoomAdd extends React.Component {
         roomStatus1: '',
         ListBuildingInfo: [],
         propertyType: null,
-        data: {}
+        data: {},
+        sale: false
     }
 
     async initialRemarks (nextProps) {
-        console.log(this.state.propertyType)
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
         )
@@ -158,12 +158,12 @@ class RoomAdd extends React.Component {
     selectRStatus = (e) => {
         this.roomStatus = e
     }
-    propertyType = null
     selectPType = (e) => {
-        this.propertyType = e
-        // this.setState({
-        //     propertyType: e
-        // })
+        if (e === '2') {
+            this.setState({sale: true})
+        } else {
+            this.setState({sale: false})
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -309,7 +309,7 @@ class RoomAdd extends React.Component {
                                 })(<Input />)}
                             </FormItem>
                         </Col>
-                        {this.state.propertyType !== 2 &&
+                        {!this.state.sale &&
                         <Col span={12}>
                             <FormItem label="房屋状态" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
@@ -329,7 +329,8 @@ class RoomAdd extends React.Component {
                                         <Option key={2}>自用</Option>
                                     </Select>)}
                             </FormItem>
-                        </Col>}
+                        </Col>
+                        }
                     </Row>
                     <Row>
                         <Col span={12}>

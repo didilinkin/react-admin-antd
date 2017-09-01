@@ -81,29 +81,35 @@ class ElectricChargeDetails extends React.Component {
             dataIndex: 'ratio'
         }, {
             title: '总电量',
-            dataIndex: 'sumElectricity'
+            dataIndex: 'sumElectricity',
+            render: function (text, record, index) {
+                return parseFloat(record.sumElectricity).toFixed(2)
+            }
         }, {
             title: '单价',
             dataIndex: 'unitPrice'
         }, {
             title: '金额',
-            dataIndex: 'singleMoney'
+            dataIndex: 'singleMoney',
+            render: function (text, record, index) {
+                return parseFloat(record.singleMoney).toFixed(1)
+            }
         }, {
             title: '备注',
             dataIndex: 'remarks'
         }]
         if (electricityFeeInfo.electricityFees.wattHourType.toString() === '0') {
-            mainColumn.splice(6, 0, {
+            mainColumn.splice(5, 0, {
                 title: '电损0%',
                 dataIndex: 'electricLoss'
             })
         } else if (electricityFeeInfo.electricityFees.wattHourType.toString() === '1') {
-            mainColumn.splice(6, 0, {
+            mainColumn.splice(5, 0, {
                 title: '电损' + electricityFeeInfo.electricityFees.powerLossRatio + '%',
                 dataIndex: 'electricLoss'
             })
         } else {
-            mainColumn.splice(6, 0, {
+            mainColumn.splice(5, 0, {
                 title: '电损' + electricityFeeInfo.electricityFees.powerLossRatio + '%',
                 dataIndex: 'electricLoss'
             })
@@ -242,10 +248,10 @@ class ElectricChargeDetails extends React.Component {
                         </Col>
                         <Col span={8}>
                             <div>
-                                <span style={lightGrayStyle} >缴费期限：</span>
+                                <span style={lightGrayStyle} >交费期限：</span>
                                 <span style={{color: '#666',
                                     marginLeft: '20px'}}
-                                >{feesInfo.wattDate}</span>
+                                >{feesInfo.overdueDate}</span>
                             </div>
                         </Col>
                     </Row>
@@ -339,7 +345,7 @@ class ElectricChargeDetails extends React.Component {
                                 <Col span={12}>
                                     <div>
                                         <span style={lightGrayStyle}>最后修改：</span>
-                                        <span>&nbsp;{feesInfo.updateBy ? feesInfo.updateBy : feesInfo.createName}&nbsp;{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
+                                        <span>&nbsp;{feesInfo.createName}&nbsp;{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
                                     </div>
                                 </Col>
                             </Row>

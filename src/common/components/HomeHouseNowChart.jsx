@@ -5,7 +5,9 @@ class HomeHouseNowChart extends React.Component {
         option: {
             tooltip: {
                 trigger: 'item',
-                formatter: '{b}统计 <br/>{c}间 ({d}%)'
+                formatter: function (params) {
+                    return params.data.name + '统计<br/>' + params.data.rooms + '间(' + params.data.value + 'm²)'
+                }
             },
             grid: {
                 bottom: '20%',
