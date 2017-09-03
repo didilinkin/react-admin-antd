@@ -376,7 +376,11 @@ class WaterAddUp extends React.Component {
                                 <FormItem label="房间编号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('roomNumber')(<Input />)}
+                                    {getFieldDecorator('roomNumber')(
+                                        <Input
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -390,7 +394,11 @@ class WaterAddUp extends React.Component {
                                             required: true,
                                             message: '请选择本次周期!'
                                         }]
-                                    })(<RangePicker />)}
+                                    })(
+                                        <RangePicker
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>
@@ -402,7 +410,11 @@ class WaterAddUp extends React.Component {
                                             required: true,
                                             message: '请填写交费期限!'
                                         }]
-                                    })(<DatePicker />)}
+                                    })(
+                                        <DatePicker
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>

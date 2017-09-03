@@ -185,10 +185,11 @@ class Happy extends React.Component {
                         },
                         {
                             title: '操作',
+                            width: 100,
                             dataIndex: 'opt',
-                            render: (text, record, index) => {
+                            render: (text, record) => {
                                 return (
-                                    <Popconfirm title="确认删除码?" onConfirm={() => this.onDelete(record)}>
+                                    <Popconfirm title="确认删除吗?" onConfirm={() => this.onDelete(record)}>
                                         <a>删除</a>
                                     </Popconfirm>
                                 )
@@ -528,7 +529,7 @@ class Happy extends React.Component {
                             )}
                             <span style={{color: 'red',
                                 padding: '0 5px'}}
-                            >减免</span>
+                            >减免面积</span>
                             {getFieldDecorator('reliefArea')(
                                 <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                             )}
@@ -640,15 +641,17 @@ class Happy extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                {getFieldDecorator('startIncNum')(
-                                    <Input style={{ width: 40 }} />
-                                )}
-                                <span> 年后开始递增，递增比&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                {getFieldDecorator('rentIncrRate', {
-                                    initialValue: this.state.MapDict.percentage
-                                })(
-                                    <Input style={{ width: 80 }} addonAfter="%" />
-                                )}
+                                <div style={{marginLeft: '20px'}}>
+                                    {getFieldDecorator('startIncNum')(
+                                        <Input style={{ width: 40 }} />
+                                    )}
+                                    <span style={{margin: '0 10px'}}>年后开始递增，递增比</span>
+                                    {getFieldDecorator('rentIncrRate', {
+                                        initialValue: this.state.MapDict.percentage
+                                    })(
+                                        <Input style={{ width: '95px' }} addonAfter="%" />
+                                    )}
+                                </div>
                             </Col>
                         </Row>
                     </Row>
@@ -686,11 +689,6 @@ class Happy extends React.Component {
                                     <Input style={{ width: 200 }} addonAfter="元" />
                                 )}
                             </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <span style={{color: 'red'}}>注意： 请在下方租金明细中修改</span>
                         </Col>
                     </Row>
                     {getFieldDecorator('roomIds')(

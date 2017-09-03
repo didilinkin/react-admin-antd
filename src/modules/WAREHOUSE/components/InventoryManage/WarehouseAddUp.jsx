@@ -1,4 +1,3 @@
-// 入库
 import React from 'react'
 
 import { Modal, Input, Form, DatePicker, Button, Row, notification, Col, Icon, Select, InputNumber } from 'antd'

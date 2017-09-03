@@ -10,7 +10,8 @@ class CollectRentHead extends React.Component {
         super(props)
         this.state = {
             open: '展开',
-            none: 'none'
+            none: 'none',
+            openState: false
         }
     }
     // 清除
@@ -40,12 +41,14 @@ class CollectRentHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
@@ -62,10 +65,11 @@ class CollectRentHead extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form
         let {type, ListBuildingInfo} = this.props
+        let sapnNumber = this.state.openState ? 8 : 6
         return (
             <Form layout="horizontal">
                 <Row>
-                    <Col span={5}>
+                    <Col span={sapnNumber}>
                         <FormItem label="所属楼宇" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 10 }}
                         >
@@ -73,7 +77,7 @@ class CollectRentHead extends React.Component {
                                 <Select
                                     showSearch
                                     allowClear
-                                    style={{ width: 140 }}
+                                    style={{ width: 200 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
@@ -84,112 +88,130 @@ class CollectRentHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={sapnNumber}>
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入客户名称" style={{ width: 140 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={6}>
+                    <Col span={sapnNumber}>
                         <FormItem label="房间编号" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入房间编号" style={{ width: 140 }} />
+                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
-                    <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                    <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                    {type === 2 &&
-                    <Button onClick={this.open}>{this.state.open}</Button>}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {this.state.openState ||
+                    <Col span={sapnNumber}>
+                        <div>
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button style={{marginLeft: '10px'}} onClick={this.handleReset}>清除</Button>
+                            {type === 2 &&
+                            <Button style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</Button>
+                            }
+                        </div>
+                    </Col>
+                    }
+                    {this.state.openState &&
+                    <div>
+                        <Col span={sapnNumber}>
+                            <FormItem label="开票状态" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('invoiceRentStatus')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择开票状态"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="0">未开票</Option>
+                                        <Option key="1">已开票</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="收费状态" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('whetherRentPaid')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择收费状态"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="0">未收款</Option>
+                                        <Option key="1">已收全</Option>
+                                        <Option key="2">未收全</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="打印状态" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('whetherPrinted')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择打印状态"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="0">未打印</Option>
+                                        <Option key="1">已打印</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="查询依据" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('dateSelect')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择查询依据"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="0">实交日期</Option>
+                                        <Option key="1">交费期限</Option>
+                                        <Option key="2">费用周期</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="查询日期" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 13 }}
+                            >
+                                <RangePicker style={{ width: 200 }} onChange={this.getDate} />
+                            </FormItem>
+                        </Col>
+                    </div>
+                    }
                 </Row>
-                {type === 2 &&
-                <Row style={{display: this.state.none}}>
-                    <Col span={8}>
-                        <FormItem label="开票状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('invoiceRentStatus')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择开票状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">未开票</Option>
-                                    <Option key="1">已开票</Option>
-                                </Select>
-                            )}
-                        </FormItem>
+                {type === 2 && this.state.openState &&
+                <Row style={{marginBottom: '10px'}}>
+                    <Col span={18} />
+                    <Col span={6}>
+                        <div>
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
+                            {type === 2 &&
+                            <Button onClick={this.open}>{this.state.open}</Button>}
+                        </div>
                     </Col>
-                    <Col span={8}>
-                        <FormItem label="收费状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('whetherRentPaid')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择收费状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">未收款</Option>
-                                    <Option key="1">已收全</Option>
-                                    <Option key="2">未收全</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="打印状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('whetherPrinted')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 170 }}
-                                    placeholder="请选择打印状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">未打印</Option>
-                                    <Option key="1">已打印</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                </Row>}
-                {type === 2 &&
-                <Row style={{display: this.state.none}}>
-                    <Col span={8}>
-                        <FormItem label="查询依据" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('dateSelect')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择查询依据"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">实交日期</Option>
-                                    <Option key="1">交费期限</Option>
-                                    <Option key="2">费用周期</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="查询日期" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 13 }}
-                        >
-                            <RangePicker onChange={this.getDate} />
-                        </FormItem>
-                    </Col>
-                </Row>}
+                </Row>
+                }
             </Form>
         )
     }

@@ -9,7 +9,7 @@ export const size = (width, height) => {
 
 export const fS = (fontSize) => {
     return {
-        'font-size': fontSize
+        'font-size': `${fontSize}px`
     }
 }
 
@@ -28,5 +28,13 @@ export const flexCenter = () => {
         'display': 'flex',
         'align-items': 'center',
         'justify-content': 'center'
+    }
+}
+
+// 图片宽度自适应
+export const imgCover = (width) => {
+    return {
+        'width': width, // 只接受百分比
+        'object-fit': 'cover'
     }
 }

@@ -558,7 +558,7 @@ class Lease extends React.Component {
                             )}
                             <span style={{color: 'red',
                                 padding: '0 5px'}}
-                            >减免</span>
+                            >减免面积</span>
                             {getFieldDecorator('reliefArea')(
                                 <InputNumber onBlur={this.Calculation} onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                             )}
@@ -670,15 +670,17 @@ class Lease extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={12}>
-                                {getFieldDecorator('startIncNum')(
-                                    <Input style={{ width: 40 }} />
-                                )}
-                                <span> 年后开始递增，递增比&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                {getFieldDecorator('rentIncrRate', {
-                                    initialValue: this.state.MapDict.percentage
-                                })(
-                                    <Input style={{ width: 80 }} addonAfter="%" />
-                                )}
+                                <div style={{marginLeft: '35px'}}>
+                                    {getFieldDecorator('startIncNum')(
+                                        <Input style={{ width: 40 }} />
+                                    )}
+                                    <span style={{margin: '0 10px'}}>年后开始递增，递增比</span>
+                                    {getFieldDecorator('rentIncrRate', {
+                                        initialValue: this.state.MapDict.percentage
+                                    })(
+                                        <Input style={{ width: 80 }} addonAfter="%" />
+                                    )}
+                                </div>
                             </Col>
                         </Row>
                     </Row>
@@ -765,7 +767,7 @@ class Lease extends React.Component {
                             </FormItem>
                         </Col>
                         <Col span={12}>
-                            <span style={{color: 'red'}}>注意： 请在下方租金明细中减去免租期内的金额</span>
+                            <div className="red-right">请在下方租金明细中减去免租期内的金额</div>
                         </Col>
                     </Row>
                     {getFieldDecorator('roomIds')(

@@ -90,7 +90,6 @@ class WaterInfomation extends React.Component {
         this.setState({
             text: e.target.value
         })
-        console.log(e.target.value)
     }
     render () {
         const columns = [{
@@ -180,7 +179,7 @@ class WaterInfomation extends React.Component {
                                     lineHeight: '40px'}}
                                 >
                                     <span>{this.state.map.waterBill.formName}</span>
-                                    <span>&ensp;&ensp;水量统计表</span>
+                                    <span>水量统计表</span>
                                 </div>
                             </Col>
                         </Row>
@@ -216,7 +215,7 @@ class WaterInfomation extends React.Component {
                             </Col>
                             <Col span={8}>
                                 <div>
-                                    <span style={lightGrayStyle} >缴费期限：</span>
+                                    <span style={lightGrayStyle} >交费期限：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
                                     >{this.state.map.waterBill.overdueDate}</span>

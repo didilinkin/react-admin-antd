@@ -5,10 +5,14 @@ class HomeRentChart extends React.Component {
         option: {
             title: {
                 text: '本年度 (2016-12 ~ 2017-11） 收租汇总',
-                top: '10px'
+                top: '10px',
+                left: '20px'
             },
             tooltip: {
                 trigger: 'axis'
+            },
+            grid: {
+                bottom: '40px'
             },
             legend: {
                 data: [{
@@ -18,7 +22,6 @@ class HomeRentChart extends React.Component {
                     name: '实收租金',
                     icon: 'circle'
                 }],
-                orient: 'vertical',
                 right: '20px',
                 top: '30px'
             },

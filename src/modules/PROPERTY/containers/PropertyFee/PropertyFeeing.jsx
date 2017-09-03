@@ -99,28 +99,41 @@ class PropertyFeeing extends Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 300,
-                dataIndex: 'clientName'
+                dataIndex: 'clientName',
+                render: function (text, record, index) {
+                    if (record.tenant !== null && record.tenant !== '') {
+                        return (
+                            <span>{record.tenant}</span>
+                        )
+                    } else {
+                        return (
+                            <span>{record.clientName}</span>
+                        )
+                    }
+                }
             }, {
                 title: '本期物业费周期',
-                width: 250,
                 dataIndex: 'periodPropertyFee'
             }, {
                 title: '应收金额',
-                width: 150,
                 dataIndex: 'actualPaidMoney'
             }, {
                 title: '交费期限',
-                width: 150,
                 dataIndex: 'payDeadline'
+            }, {
+                title: '创建时间',
+                dataIndex: 'createDate',
+                key: 'createDate'
+            }, {
+                title: '创建人',
+                dataIndex: 'createName',
+                key: 'createName'
             }, {
                 title: '操作',
                 width: 200,
@@ -207,7 +220,7 @@ class PropertyFeeing extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 2300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

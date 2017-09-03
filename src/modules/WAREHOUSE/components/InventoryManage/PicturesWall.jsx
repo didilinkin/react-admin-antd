@@ -1,8 +1,9 @@
 // 图片墙
 import React from 'react'
+import { baseURL } from '../../../../api/index'
 
 import { Upload, Icon, Modal } from 'antd'
-import { baseURL } from '../../../../api'
+// import { baseURL } from '../../../../api'
 
 class PicturesWall extends React.Component {
     state = {

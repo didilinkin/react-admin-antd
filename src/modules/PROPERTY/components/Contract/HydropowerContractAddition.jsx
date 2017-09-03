@@ -285,7 +285,7 @@ class HydropowerContractAddition extends React.Component {
                             })(
                                 <Select
                                     mode="multiple"
-                                    style={{ width: 200 }}
+                                    style={{ width: 380 }}
                                     placeholder="请输入所在房间"
                                     onChange={this.selectRoom}
                                     optionFilterProp="children"
@@ -319,7 +319,7 @@ class HydropowerContractAddition extends React.Component {
                             )}
                             <span style={{color: 'red',
                                 padding: '0 5px'}}
-                            >减免</span>
+                            >减免面积</span>
                             {getFieldDecorator('reliefArea')(
                                 <InputNumber onChange={this.reliefArea} style={{ width: 200 }} addonAfter="㎡" />
                             )}

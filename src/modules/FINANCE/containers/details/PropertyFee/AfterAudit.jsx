@@ -1,6 +1,6 @@
 // 财务管理 - 物业费明细( 审核失败 )
 import React from 'react'
-import { Row, Col, Modal, Card} from 'antd'
+import { Row, Col, Modal} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 
@@ -67,7 +67,7 @@ class AfterAudit extends React.Component {
             <Modal maskClosable={false}
                 title= "物业费明细"
                 style={{top: 20}}
-                width={700}
+                width={900}
                 visible={this.state.visible}
                 footer={null}
                 onCancel={this.handleCancel}
@@ -80,7 +80,7 @@ class AfterAudit extends React.Component {
                             lineHeight: '40px'}}
                         >
                             <span>{this.state.data.printClientName}</span>
-                            <span>物业服务费统计表A</span>
+                            <span>物业服务费统计表</span>
                         </div>
                     </Col>
                 </Row>
@@ -95,7 +95,7 @@ class AfterAudit extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{margin: '10px 0'}}>
                     <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
                     <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
                     <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
@@ -115,10 +115,10 @@ class AfterAudit extends React.Component {
                             <td>物业管理费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.pmUnitPrice}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.pmFee}</td>
+                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
                         </tr>
                         <tr>
                             <td>电梯费</td>
@@ -133,36 +133,43 @@ class AfterAudit extends React.Component {
                             <td>空调费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.acUnitPrice}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.acUnitDay}/4</td>
-                            <td>{this.state.data.airFee}</td>
+                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
                         </tr>
                         <tr>
                             <td>水费</td>
                             <td>{this.state.data.serviceArea}</td>
                             <td>*</td>
-                            <td>{this.state.data.waterUnitPrice}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
                             <td>*</td>
                             <td>{this.state.data.months}</td>
-                            <td>{this.state.data.waterFee}</td>
+                            <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
                         </tr>
                     </tbody>
                 </table>
                 <p style={{margin: '20px 0',
-                    textAlign: 'right'}}
-                >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
-
-                <Card title="其他信息">
-                    <Row>
-                        <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                        <Col span={8}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-                        <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
-                    </Row>
-                    <Row>
-                        <Col span={24}><b>审核说明：</b>{this.state.data.remark}</Col>
-                    </Row>
-                </Card>
+                    textAlign: 'right',
+                    color: '#666666'}}
+                >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
+                    <span style={{color: 'red',
+                        fontSize: '18px'}}
+                    >¥{this.state.data.actualPaidMoney}</span></p>
+                <div className="other">
+                    <div className="main">
+                        <p className="line" />
+                        <h2>其他信息</h2>
+                        <Row style={{marginBottom: '10px'}}>
+                            <Col span={10}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                            <Col span={14}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                        </Row>
+                        {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
+                        <Row>
+                            <Col span={10}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
+                            <Col span={14}><b>审核说明：</b>{this.state.data.remark}</Col>
+                        </Row>}</div>
+                </div>
             </Modal>
         )
     }

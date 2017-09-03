@@ -145,6 +145,7 @@ class Department extends React.Component {
             <div>
                 <Button type="primary" onClick={this.add}>添加部门</Button>
                 <Table
+                    style={{marginTop: '15px'}}
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
                 />

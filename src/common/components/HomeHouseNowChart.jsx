@@ -5,15 +5,22 @@ class HomeHouseNowChart extends React.Component {
         option: {
             tooltip: {
                 trigger: 'item',
-                formatter: '{b}统计 <br/>{c}间 ({d}%)'
+                formatter: function (params) {
+                    return params.data.name + '统计<br/>' + params.data.rooms + '间(' + params.data.value + 'm²)'
+                }
+            },
+            grid: {
+                bottom: '20%',
+                left: '10%',
+                right: '10%',
+                top: '0%'
             },
             color: ['#EF877F', '#53ABE8', '#FDD67D', '#9CD685'],
             series: [
                 {
                     name: '访问来源',
                     type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
+                    radius: '70%',
                     data: [],
                     itemStyle: {
                         emphasis: {

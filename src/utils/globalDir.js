@@ -8,6 +8,7 @@ import STATISTICS_DIR from '../modules/STATISTICS/configDir' // 统计报表
 import { WAREHOUSE_DIR } from '../modules/WAREHOUSE/configDir' // 仓库管理
 import { EQUIPMENT_DIR } from '../modules/EQUIPMENT/configDir' // 设备管理
 import { SYSTEM_DIR } from '../modules/SYSTEM/configDir' // 系统设置
+import { HARDWARE_DIR } from '../modules/HARDWARE/configDir'
 
 const globalDir = [
     BUILDING_DIR,
@@ -18,7 +19,8 @@ const globalDir = [
     STATISTICS_DIR,
     WAREHOUSE_DIR,
     EQUIPMENT_DIR,
-    SYSTEM_DIR
+    SYSTEM_DIR,
+    HARDWARE_DIR
 ]
 
 export default globalDir

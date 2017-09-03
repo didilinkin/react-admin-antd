@@ -5,14 +5,14 @@ import PowerBillHeadComponent from '../components/ElectricCharge/PowerBillHead'
 import PowerAddUpComponent from '../components/ElectricCharge/PowerAddUp'
 import { apiPost } from '../../../api'
 import PowerInfomation from '../components/ElectricCharge/PowerInfomation'
-
-
 const TabPane = Tabs.TabPane
 class ElectricCharge extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
             loading: false,
+            total: 0,
+            current: 1,
             columns1: [],
             columns2: [],
             columns3: [],
@@ -29,17 +29,66 @@ class ElectricCharge extends React.Component {
             id: 0
         }
     }
-    // 删除记录
-    deleteRecord = async (id) => {
-        let data = await apiPost(
-            '/ElectricityFees/deleteElectricityFees',
-            {id: id}
+    activeKey = 1
+    refreshTwo = async (activeKey) => {
+        this.activeKey = activeKey ? activeKey : this.activeKey
+        this.refresh({}, {}, {})
+    }
+    refresh = async (pagination, filters, sorter) => {
+        this.setState({loading: true,
+            openWaterAddUpComponent: false,
+            openInfo: false})
+        if (filters === null || typeof (filters) === 'undefined') {
+            filters = []
+        }
+        filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
+            this.activeKey.toString() === '2' ? 1 :
+                this.activeKey.toString() === '4' ? 2 : 3
+        if (pagination === null) {
+            filters['page'] = 1
+            filters['rows'] = 30
+        } else {
+            filters['page'] = pagination.current
+            filters['rows'] = pagination.pageSize
+        }
+        let result = await apiPost(
+            '/ElectricityFees/list',
+            filters
         )
-        notification.open({
-            message: data.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        let PowerBillList = result.data.rows
+        let dataSource1 = []
+        let dataSource2 = []
+        let dataSource3 = []
+        let dataSource4 = []
+        PowerBillList.map(PowerBill => {
+            if (PowerBill.examineState.toString() === '0') {
+                dataSource1.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '1') {
+                dataSource2.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '2') {
+                dataSource4.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '3') {
+                dataSource3.push(PowerBill)
+            }
+            return ''
         })
-        this.refreshTwo(1)
+        this.setState({
+            loading: false,
+            current: pagination ? pagination.current : 1,
+            total: result.data.total,
+            dataSource1: dataSource1,
+            dataSource2: dataSource2,
+            dataSource3: dataSource3,
+            dataSource4: dataSource4,
+            order: this.activeKey
+        })
+    }
+    openWaterAddUpComponent = (id) => {
+        this.setState({
+            openWaterAddUpComponent: true,
+            openInfo: false,
+            id: id
+        })
     }
     // 发起审核
     examine = async (id) => {
@@ -54,104 +103,49 @@ class ElectricCharge extends React.Component {
         })
         this.refreshTwo(1)
     }
-    refreshTwo = async (activeKey) => {
-        this.setState({loading: true,
-            openWaterAddUpComponent: false,
-            openInfo: false})
-        let result = await apiPost(
-            '/ElectricityFees/list'
-        )
-        console.log(result)
-        console.log(result.data)
-        let WaterBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
-            }
-            return ''
-        })
+    info = (id) => {
+        console.log(id)
         this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4,
+            openInfo: true,
             openWaterAddUpComponent: false,
-            order: activeKey ? activeKey : 1
-        })
-    }
-    refresh = async (pagination, filters) => {
-        this.setState({loading: true,
-            openWaterAddUpComponent: false,
-            openInfo: false})
-        let result = await apiPost(
-            '/ElectricityFees/list',
-            filters
-        )
-        let WaterBillList = result.data
-        let dataSource1 = []
-        let dataSource2 = []
-        let dataSource3 = []
-        let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
-            }
-            return ''
-        })
-        this.setState({
-            loading: false,
-            dataSource1: dataSource1,
-            dataSource2: dataSource2,
-            dataSource3: dataSource3,
-            dataSource4: dataSource4
-        })
-    }
-    openWaterAddUpComponent = (id) => {
-        this.setState({
-            openWaterAddUpComponent: true,
-            openInfo: false,
             id: id
         })
+    }
+    // 删除记录
+    deleteRecord = async (id) => {
+        let data = await apiPost(
+            '/ElectricityFees/deleteElectricityFees',
+            {id: id}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.refreshTwo(1)
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             '/ElectricityFees/list',
+            {examineState: 0}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',
         )
-        let WaterBillList = result.data
+        let PowerBillList = result.data.rows
         let dataSource1 = []
         let dataSource2 = []
         let dataSource3 = []
         let dataSource4 = []
-        WaterBillList.map(WaterBill => {
-            if (WaterBill.examineState.toString() === '0') {
-                dataSource1.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '1') {
-                dataSource2.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '2') {
-                dataSource4.push(WaterBill)
-            } else if (WaterBill.examineState.toString() === '3') {
-                dataSource3.push(WaterBill)
+        PowerBillList.map(PowerBill => {
+            if (PowerBill.examineState.toString() === '0') {
+                dataSource1.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '1') {
+                dataSource2.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '2') {
+                dataSource4.push(PowerBill)
+            } else if (PowerBill.examineState.toString() === '3') {
+                dataSource3.push(PowerBill)
             }
             return ''
         })
@@ -171,25 +165,21 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 100,
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                width: 100,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
-                width: 100,
                 dataIndex: 'clientName'
             }, {
                 title: '收费类型',
-                width: 200,
                 dataIndex: 'wattHourType',
                 render: function (text) {
                     let dataIndex = '固定单价'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         dataIndex = '差额单价'
-                    } else if (text.toString() === '2') {
+                    } else if (text === 2) {
                         dataIndex = '功峰平谷'
                     }
                     return (
@@ -198,19 +188,15 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '本期电费周期',
-                width: 200,
                 dataIndex: 'cycle'
             }, {
                 title: '本次用电量',
-                width: 100,
                 dataIndex: 'sumElectricity'
             }, {
                 title: '本次应收',
-                width: 100,
                 dataIndex: 'thisReceivable'
             }, {
                 title: ' 交费期限',
-                width: 100,
                 dataIndex: 'overdueDate'
 
             }]
@@ -248,8 +234,9 @@ class ElectricCharge extends React.Component {
             }]),
             columns2: arr.slice().concat([{
                 title: ' 操作',
-                width: 200,
+                width: 60,
                 dataIndex: 'opt',
+                fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <span>
@@ -260,47 +247,42 @@ class ElectricCharge extends React.Component {
             }]),
             columns3: arr.slice().concat([{
                 title: '审核说明',
-                width: 100,
                 dataIndex: 'auditExplain'
             }, {
                 title: '审核时间',
-                width: 100,
                 dataIndex: 'auditDate'
             }, {
                 title: '审核人',
-                width: 100,
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                width: 200,
+                fixed: 'right',
+                width: 150,
                 dataIndex: 'opt',
-                render: function (record) {
+                render: function (text, record) {
                     console.log(record)
                     return (
                         <span>
-                            <Popconfirm key="1" title="确定重新收费吗?">
+                            <Popconfirm key="1" title="确定重新收费吗?" onConfirm={() => openWaterAddUpComponent(record.id)}>
                                 <a>重新收费</a>
                             </Popconfirm>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style={{marginLeft: '20px'}} onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
             }]),
             columns4: arr.slice().concat([{
                 title: '实交日期',
-                width: 100,
                 dataIndex: 'principalCollectionDate'
             }, {
                 title: '逾期天数',
-                width: 100,
                 dataIndex: 'overdueDays'
             }, {
                 title: '延期下月电费',
-                width: 100,
                 dataIndex: 'penaltyType',
                 render: function (text) {
                     let penaltyType = '否'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         penaltyType = '是'
                     }
                     return (
@@ -309,11 +291,10 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '打印状态',
-                width: 100,
                 dataIndex: 'printStatus',
                 render: function (text) {
                     let printStatus = '否'
-                    if (text.toString() === '1') {
+                    if (text === 1) {
                         printStatus = '是'
                     }
                     return (
@@ -322,7 +303,6 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '开票状态',
-                width: 100,
                 dataIndex: 'principalPrincipalBilling',
                 render: function (text) {
                     text = text ? text : ''
@@ -336,7 +316,8 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                fixed: 'right',
+                width: 100,
                 render: function (text, record) {
                     return (
                         <span>
@@ -345,13 +326,6 @@ class ElectricCharge extends React.Component {
                     )
                 }
             }])
-        })
-    }
-    info = (id) => {
-        this.setState({
-            openInfo: true,
-            openWaterAddUpComponent: false,
-            id: id
         })
     }
     componentDidMount () {
@@ -379,6 +353,15 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            bordered
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
                         />
@@ -402,7 +385,16 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
                             // onChange={this.refresh}
+                            scroll={{ x: 1800 }}
+                            bordered
                             dataSource={this.state.dataSource2}
                             columns={this.state.columns2}
                         />
@@ -419,6 +411,15 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
+                            bordered
                             dataSource={this.state.dataSource3}
                             columns={this.state.columns3}
                         />
@@ -435,7 +436,15 @@ class ElectricCharge extends React.Component {
                             rowSelection={{
                                 onChange: this.onSelectChange
                             }}
-                            scroll={{ x: 1450 }}
+                            onChange={this.refresh}
+                            pagination={{total: this.state.total,
+                                showSizeChanger: true,
+                                showQuickJumper: true,
+                                current: this.state.current,
+                                pageSizeOptions: ['15', '30', '45'],
+                                defaultPageSize: 30}}
+                            scroll={{ x: 1800 }}
+                            bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
                         />

@@ -48,7 +48,10 @@ class PowerInfomation extends React.Component {
                 dataIndex: 'ratio'
             }, {
                 title: '总电量',
-                dataIndex: 'sumElectricity'
+                dataIndex: 'sumElectricity',
+                render: function (text, record) {
+                    return parseFloat(record.sumElectricity).toFixed(2)
+                }
             }, {
                 title: '单价',
                 dataIndex: 'unitPrice'
@@ -65,17 +68,17 @@ class PowerInfomation extends React.Component {
                 dataIndex: 'remarks'
             }]
             if (electricityFeeInfo.electricityFees.wattHourType.toString() === '0') {
-                mainColumn.splice(6, 0, {
+                mainColumn.splice(5, 0, {
                     title: '电损0%',
                     dataIndex: 'electricLoss'
                 })
             } else if (electricityFeeInfo.electricityFees.wattHourType.toString() === '1') {
-                mainColumn.splice(6, 0, {
+                mainColumn.splice(5, 0, {
                     title: '电损' + electricityFeeInfo.electricityFees.powerLossRatio + '%',
                     dataIndex: 'electricLoss'
                 })
             } else {
-                mainColumn.splice(6, 0, {
+                mainColumn.splice(5, 0, {
                     title: '电损' + electricityFeeInfo.electricityFees.powerLossRatio + '%',
                     dataIndex: 'electricLoss'
                 })
@@ -199,7 +202,7 @@ class PowerInfomation extends React.Component {
                                     lineHeight: '40px'}}
                                 >
                                     <span>{fees.clientName}</span>
-                                    <span>&nbsp;&nbsp;电量统计表</span>
+                                    <span>电量统计表</span>
                                 </div>
                             </Col>
                         </Row>
@@ -215,7 +218,7 @@ class PowerInfomation extends React.Component {
                             </Col>
                         </Row>
                         <Row style={{marginTop: 30,
-                            fontSize: '12px'}}
+                            fontSize: '14px'}}
                         >
                             <Col span={8}>
                                 <div>
@@ -235,10 +238,10 @@ class PowerInfomation extends React.Component {
                             </Col>
                             <Col span={8}>
                                 <div>
-                                    <span style={lightGrayStyle} >缴费期限：</span>
+                                    <span style={lightGrayStyle} >交费期限：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
-                                    >{fees.wattDate}</span>
+                                    >{fees.overdueDate}</span>
                                 </div>
                             </Col>
                         </Row>
@@ -251,7 +254,7 @@ class PowerInfomation extends React.Component {
                             />
                         </div>
                         <Row type="flex" justify="end" style={{marginTop: 20,
-                            fontSize: '12px',
+                            fontSize: '14px',
                             lineHeight: '18px',
                             color: '#666',
                             textAlign: 'right',
@@ -265,8 +268,10 @@ class PowerInfomation extends React.Component {
                             </Col>
                             <Col span={6}>
                                 <div>
-                                    <span>本期应收：</span>
-                                    <span style={{fontSize: '18px'}}>&nbsp;{fees.thisReceivable}</span>
+                                    <span>本期应收：</span>&nbsp;
+                                    <span style={{fontSize: '18px',
+                                        color: 'red'}}
+                                    >￥{fees.thisReceivable}</span>
                                 </div>
                             </Col>
                         </Row>
@@ -330,7 +335,7 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
-                                            <span>&nbsp;{fees.updateBy ? fees.updateBy : fees.createName}&nbsp;{fees.updateDate ? fees.updateDate : fees.createDate}</span>
+                                            <span>&nbsp;{fees.createName}&nbsp;{fees.updateDate ? fees.updateDate : fees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
@@ -426,11 +431,6 @@ function ExamineSuccessState (props) {
     const lightGrayStyle = {
         color: '#989898'
     }
-
-    const blueBlodStyle = {
-        color: '#09F',
-        fontWeight: 'bold'
-    }
     // 确认收款
     const confirmReceipt = [{
         title: '时间',
@@ -506,7 +506,7 @@ function ExamineSuccessState (props) {
                             <div>
                                 <span style={lightGrayStyle}>应收金额：&nbsp;</span>
                                 <span
-                                    style={blueBlodStyle}
+                                    style={{color: 'red'}}
                                 >{props.fees.thisReceivable}</span>
                                 <span>&nbsp;元</span>
                             </div>
@@ -546,7 +546,7 @@ function ExamineSuccessState (props) {
                             <div>
                                 <span style={lightGrayStyle}>违约金额：&nbsp;</span>
                                 <span
-                                    style={blueBlodStyle}
+                                    style={{color: 'red'}}
                                 >{props.fees.liquidatedDamages ? props.fees.liquidatedDamages : 0}</span>
                                 <span>&nbsp;元</span>
                             </div>

@@ -173,6 +173,7 @@ class Account extends React.Component {
                     <FormItem label="所属部门">
                         {getFieldDecorator('departmentName')(
                             <Select
+                                size="normal"
                                 showSearch
                                 placeholder="请选择所属部门"
                                 style={{width: '200px'}}
@@ -186,17 +187,18 @@ class Account extends React.Component {
                     </FormItem>
                     <FormItem label="工号">
                         {getFieldDecorator('jobNum')(
-                            <Input style={{width: '100px'}} />
+                            <Input size="normal" style={{width: '100px'}} />
                         )}
                     </FormItem>
                     <FormItem label="登录用户名">
                         {getFieldDecorator('loginName')(
-                            <Input style={{width: '100px'}} />
+                            <Input size="normal" style={{width: '100px'}} />
                         )}
                     </FormItem>
                     <FormItem label="账号状态">
                         {getFieldDecorator('delFlag')(
                             <Select
+                                size="normal"
                                 showSearch
                                 style={{width: '200px'}}
                                 placeholder="请选择账号状态"
@@ -208,12 +210,13 @@ class Account extends React.Component {
                         )}
                     </FormItem>
                     <FormItem>
-                        <Button type="primary" onClick={this.query}>查询</Button>
+                        <Button size="normal" type="primary" onClick={this.query}>查询</Button>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <Button type="primary" onClick={this.add}>添加账号</Button>
+                        <Button size="normal" type="primary" onClick={this.add}>添加账号</Button>
                     </FormItem>
                 </Form>
                 <Table
+                    style={{marginTop: '15px'}}
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
                 />

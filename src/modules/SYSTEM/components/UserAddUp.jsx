@@ -44,6 +44,9 @@ class UserAddUp extends React.Component {
                     remark: user.remark
                 })
             } else {
+                this.props.form.setFieldsValue({
+                    loginFlag: 1
+                })
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false
@@ -228,7 +231,13 @@ class UserAddUp extends React.Component {
                             <RadioGroup>
                                 {
                                     this.state.roles.map((role, i) => {
-                                        return <RadioButton key={i} value={role.id}>{role.roleName}</RadioButton>
+                                        return (
+                                            <RadioButton style={{width: '130px',
+                                                marginRight: '10px',
+                                                marginBottom: '10px'
+                                            }} key={i} value={role.id}
+                                            >{role.roleName}</RadioButton>
+                                        )
                                     })
                                 }
                             </RadioGroup>

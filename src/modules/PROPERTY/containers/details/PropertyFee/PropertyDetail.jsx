@@ -96,7 +96,7 @@ class PropertyDetail extends React.Component {
         return (
             <Modal maskClosable={false}
                 title= "物业费明细"
-                style={{top: 10}}
+                style={{top: 20}}
                 width={900}
                 visible={this.state.visible}
                 footer={null}
@@ -126,7 +126,7 @@ class PropertyDetail extends React.Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row style={{margin: '10px 0'}}>
                         <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
                         <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
                         <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
@@ -146,10 +146,10 @@ class PropertyDetail extends React.Component {
                                 <td>物业管理费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.pmUnitPrice}</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.months}</td>
-                                <td>{this.state.data.pmFee}</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
                             </tr>
                             <tr>
                                 <td>电梯费</td>
@@ -164,39 +164,42 @@ class PropertyDetail extends React.Component {
                                 <td>空调费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.acUnitPrice}</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.acUnitDay}/4</td>
-                                <td>{this.state.data.airFee}</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
                             </tr>
                             <tr>
                                 <td>水费</td>
                                 <td>{this.state.data.serviceArea}</td>
                                 <td>*</td>
-                                <td>{this.state.data.waterUnitPrice}</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
                                 <td>*</td>
                                 <td>{this.state.data.months}</td>
-                                <td>{this.state.data.waterFee}</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
                             </tr>
                         </tbody>
                     </table>
                     <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额  ¥{this.state.data.discountMoney} 本期应收 ¥{this.state.data.actualPaidMoney}</p>
-
-                    <div className="wrapbox">
+                        textAlign: 'right',
+                        color: '#666666'}}
+                    >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
+                        <span style={{color: 'red',
+                            fontSize: '18px'}}
+                        >¥{this.state.data.actualPaidMoney}</span></p>
+                    <div className="other">
                         <div className="main">
                             <p className="line" />
                             <h2>其他信息</h2>
                             <Row>
                                 <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                                <Col span={16}><i>最后修改：</i>{this.state.data.undateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                                <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                             </Row>
+                            {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                             <Row>
                                 <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
                                 <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
-                            </Row>
-                        </div>
+                            </Row>}</div>
                     </div>
                     {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
@@ -206,7 +209,9 @@ class PropertyDetail extends React.Component {
                             <div className="main">
                                 <h2>确认收款</h2>
                                 <Row>
-                                    <Col span={8}><i>应收金额：</i>{this.state.data.actualPaidMoney}元</Col>
+                                    <Col span={8}><i>应收金额：</i>
+                                        <span style={{color: 'red'}}>{this.state.data.actualPaidMoney}</span>元
+                                    </Col>
                                     <Col span={16}><i>开票状态：</i>{this.state.invoicePropertyStatus}</Col>
                                 </Row>
                                 <table className="tb">
@@ -274,11 +279,13 @@ class PropertyDetail extends React.Component {
                                 </table>
                             </div>
                             {this.state.data.lateMoney !== 0 && this.state.data.unpaidMoney === 0 && ((this.state.data.lateMoney - this.state.data.unpaidLateMoney) !== 0) &&
-                            <div className="wrapbox">
+                            <div className="main">
                                 <p className="line" />
                                 <h2>确认违约金</h2>
                                 <Row>
-                                    <Col span={8}><i>违约金额：</i>{this.state.data.lateMoney}  元 </Col>
+                                    <Col span={8}><i>违约金额：</i>
+                                        <span style={{color: 'red'}}>{this.state.data.lateMoney}  元 </span>
+                                    </Col>
                                     <Col span={8}><i>开票状态：</i>{this.state.invoiceLateStatus}</Col>
                                 </Row>
                                 <table className="tb">

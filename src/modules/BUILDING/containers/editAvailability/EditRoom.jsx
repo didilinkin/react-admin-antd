@@ -82,7 +82,7 @@ class EditRoom extends React.Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
+                width: 250,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
@@ -92,7 +92,7 @@ class EditRoom extends React.Component {
                 key: 'roomNum'
             }, {
                 title: '建筑面积（㎡）',
-                width: 300,
+                width: 250,
                 dataIndex: 'roomArea',
                 key: 'roomArea'
             }, {
@@ -266,7 +266,7 @@ class EditRoom extends React.Component {
                     paddingTop: '10px',
                     display: 'block'}}
                 >
-                    <span>所属楼宇:&nbsp;&nbsp;</span>
+                    <span style={{marginRight: '10px'}}>所属楼宇:</span>
                     <Select
                         showSearch
                         allowClear
@@ -280,11 +280,11 @@ class EditRoom extends React.Component {
                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
                         })}
                     </Select>
-                    <span>房间编号:&nbsp;&nbsp;</span>
+                    <span style={{margin: '0 10px'}}>房间编号:</span>
                     <Input style={{width: 100,
                         marginRight: '5px'}} onChange={this.entryNumberOnChange}
                     />
-                    <span>产权性质:&nbsp;&nbsp;</span>
+                    <span style={{margin: '0 10px'}}>产权性质:</span>
                     <Select
                         showSearch
                         allowClear
@@ -297,7 +297,7 @@ class EditRoom extends React.Component {
                         <Option key="1">使用权</Option>
                         <Option key="2">出售</Option>
                     </Select>
-                    <span>房间状态:&nbsp;&nbsp;</span>
+                    <span style={{margin: '0 10px'}}>房间状态:</span>
                     <Select
                         showSearch
                         allowClear
@@ -310,8 +310,8 @@ class EditRoom extends React.Component {
                         <Option key="1">已租</Option>
                         <Option key="2">自用</Option>
                     </Select>
-                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button type="primary" onClick={this.add}>添加房间</Button>
+                    <Button style={{marginLeft: '10px'}} type="primary" onClick={this.query}>查询</Button>
+                    <Button style={{marginLeft: '10px'}} type="primary" onClick={this.add}>添加房间</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>

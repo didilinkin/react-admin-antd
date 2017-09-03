@@ -53,6 +53,9 @@ class RoleAddUp extends React.Component {
                     roleNumber: Role.roleNumber
                 })
             } else {
+                this.props.form.setFieldsValue({
+                    roleNumber: Math.ceil(Math.random() * 1000000)
+                })
                 this.setState({
                     visible: nextProps.visible,
                     HaveMenuList: [],

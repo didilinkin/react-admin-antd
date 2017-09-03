@@ -62,14 +62,10 @@ class propertyLateConfirm extends React.Component {
             message: '违约金收费成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        // if (json.unpaidLateMoney !== '0.0') {
-        //     location.href = '/home/finance/propertyFeeDetails/PropertyFinishAndLate/' + json.id
-        // } else if (json.unpaidLateMoney === '0.0') {
-        //     location.href = '/home/finance/propertyFeeDetails/PropertyFeeDetail/' + json.id
-        // }
         this.setState({visible: false,
             isFirst: true })
         this.props.close()
+        this.props.form.resetFields()
         this.props.refreshTable()
     }
     handleCancel = (e) => {

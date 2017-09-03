@@ -109,7 +109,7 @@ class NewWindRoom extends Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => abnormal(record.id, 5)}>查看</Button>
+                        <a onClick={() => abnormal(record.id, 5)}>查看</a>
                     )
                 }
             }],

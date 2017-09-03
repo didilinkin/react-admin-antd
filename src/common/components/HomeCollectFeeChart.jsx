@@ -5,7 +5,11 @@ class HomeCollectFeeChart extends React.Component {
         option: {
             title: {
                 text: '本年度物业收费汇总',
-                top: '10px'
+                top: '10px',
+                left: '20px'
+            },
+            grid: {
+                bottom: '40px'
             },
             tooltip: {
                 trigger: 'axis'
@@ -91,6 +95,7 @@ class HomeCollectFeeChart extends React.Component {
         option.series[1].data = nextPorps.collectFee.water
         option.series[2].data = nextPorps.collectFee.power
         option.series[3].data = nextPorps.collectFee.elevator
+        option.series[4].data = nextPorps.collectFee.power
     }
     render () {
         return (

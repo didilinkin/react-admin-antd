@@ -104,7 +104,10 @@ class WaterInfomation extends React.Component {
             dataIndex: 'meterRead'
         }, {
             title: '本次用水量',
-            dataIndex: 'waterCount'
+            dataIndex: 'waterCount',
+            render: function (text, record, index) {
+                return parseFloat(record.waterCount).toFixed(2)
+            }
         }, {
             title: '损耗10%',
             dataIndex: 'meterLoss'
@@ -116,7 +119,10 @@ class WaterInfomation extends React.Component {
             dataIndex: 'waterUnitPrice'
         }, {
             title: '金额',
-            dataIndex: 'money'
+            dataIndex: 'money',
+            render: function (text, record, index) {
+                return parseFloat(record.money).toFixed(1)
+            }
         }, {
             title: '备注',
             dataIndex: 'remarks'
@@ -180,7 +186,7 @@ class WaterInfomation extends React.Component {
                                     lineHeight: '40px'}}
                                 >
                                     <span>{this.state.map.waterBill.formName}</span>
-                                    <span>&ensp;&ensp;水量统计表</span>
+                                    <span>水量统计表</span>
                                 </div>
                             </Col>
                         </Row>
@@ -196,7 +202,7 @@ class WaterInfomation extends React.Component {
                             </Col>
                         </Row>
                         <Row style={{marginTop: 30,
-                            fontSize: '12px'}}
+                            fontSize: '14px'}}
                         >
                             <Col span={8}>
                                 <div>
@@ -216,7 +222,7 @@ class WaterInfomation extends React.Component {
                             </Col>
                             <Col span={8}>
                                 <div>
-                                    <span style={lightGrayStyle} >缴费期限：</span>
+                                    <span style={lightGrayStyle} >交费期限：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
                                     >{this.state.map.waterBill.overdueDate}</span>
@@ -232,7 +238,7 @@ class WaterInfomation extends React.Component {
                             />
                         </div>
                         <Row type="flex" justify="end" style={{marginTop: 20,
-                            fontSize: '12px',
+                            fontSize: '14px',
                             lineHeight: '18px',
                             color: '#666'}}
                         >
@@ -245,7 +251,9 @@ class WaterInfomation extends React.Component {
                             <Col span={6}>
                                 <div>
                                     <span>本期应收：</span>
-                                    <span style={{fontSize: '18px'}}>￥{this.state.map.waterBill.receivableMoney}</span>
+                                    <span style={{fontSize: '18px',
+                                        color: 'red'}}
+                                    >￥{this.state.map.waterBill.receivableMoney}</span>
                                 </div>
                             </Col>
                         </Row>

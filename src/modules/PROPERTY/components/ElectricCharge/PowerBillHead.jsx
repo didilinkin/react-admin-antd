@@ -1,6 +1,7 @@
-import {Form, Select, Input, Button, Row, Col, DatePicker} from 'antd'
+import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
 import PowerAddUpComponent from './PowerAddUp'
+import { apiPost } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -13,7 +14,8 @@ class PowerBillHead extends React.Component {
             open: '展开',
             none: 'none',
             openPowerAddUpComponent: false,
-            openPowerInfomationComponent: false
+            openPowerInfomationComponent: false,
+            openState: false
         }
     }
     // 清除
@@ -55,12 +57,14 @@ class PowerBillHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
@@ -69,20 +73,32 @@ class PowerBillHead extends React.Component {
             openPowerAddUpComponent: true
         })
     }
+    BatchAuditWaterBill = async () => {
+        let data = await apiPost(
+            '/ElectricityFees/updateAuditList',
+            {ids: this.props.RowKeys.toString()}
+        )
+        notification.open({
+            message: data.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.handleSubmit()
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
+        let fourOpen = (this.props.type === 4) && this.state.openState
+        let spanEight = fourOpen ? 8 : 6
         return (
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={6}>
-                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
+                        <Col span={spanEight}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
@@ -94,7 +110,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="房间编号" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -103,7 +119,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -114,13 +130,14 @@ class PowerBillHead extends React.Component {
                         </Col>
                     </Row>
                     <Row style={{display: this.state.none}}>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="查询依据" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
                                 {getFieldDecorator('cycleClass')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="查询依据"
                                         optionFilterProp="children"
@@ -132,7 +149,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="查询时间" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -142,12 +159,13 @@ class PowerBillHead extends React.Component {
                             </FormItem>
                         </Col>
 
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="收费状态" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
                                 {getFieldDecorator('paymentState')(
                                     <Select
+                                        allowClear
                                         showSearch
                                         style={{ width: 200 }}
                                         placeholder="请选择收费状态"
@@ -160,13 +178,14 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={8}>
                             <FormItem label="开票状态" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
                                 {getFieldDecorator('billingState')(
                                     <Select
                                         showSearch
+                                        allowClear
                                         style={{ width: 200 }}
                                         placeholder="请选择开票状态"
                                         optionFilterProp="children"
@@ -199,7 +218,7 @@ class PowerBillHead extends React.Component {
                                         添加电费
                                     </Button>
                                     &nbsp;&nbsp;
-                                    <Button type="primary">
+                                    <Button type="primary" onClick={this.BatchAuditWaterBill}>
                                         提交财务
                                     </Button>
                                 </span>
@@ -209,15 +228,10 @@ class PowerBillHead extends React.Component {
                             <div style={{paddingLeft: '25%',
                                 marginBottom: 10}}
                             >
-                                <Button type="primary" onClick={this.handleSubmit}>
-                                    搜索
-                                </Button>&nbsp;&nbsp;
+                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
+                                <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
                                 { type === 4 &&
-                                <span>
-                                    <Button
-                                        onClick={this.handleReset}
-                                    >清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button>
-                                </span>
+                                <Button onClick={this.open}>{this.state.open}</Button>
                                 }
                             </div></Col>
                     </Row>

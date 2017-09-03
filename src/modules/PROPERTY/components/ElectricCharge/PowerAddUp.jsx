@@ -143,7 +143,7 @@ class sumElectricityAddUp extends React.Component {
             dataIndex: 'sumElectricity',
             key: 'sumElectricity'
         }, {
-            title: '单价(1.0685)',
+            title: '单价',
             dataIndex: 'unitPrice',
             key: 'unitPrice'
         }, {
@@ -173,13 +173,19 @@ class sumElectricityAddUp extends React.Component {
                 tableColumns.splice(6, 0, {
                     title: '电损0%',
                     dataIndex: 'electricLoss',
-                    key: 'electricLoss'
+                    key: 'electricLoss',
+                    render: function (text, record) {
+                        return parseFloat(record.electricLoss).toFixed(2)
+                    }
                 })
             } else {
                 tableColumns.splice(6, 0, {
                     title: '电损' + contract.powerLossRatio + '%',
                     dataIndex: 'electricLoss',
-                    key: 'electricLoss'
+                    key: 'electricLoss',
+                    render: function (text, record) {
+                        return parseFloat(record.electricLoss).toFixed(2)
+                    }
                 })
                 if (contract[powerType].toString() !== '1') {
                     tableColumns.splice(8, 0, {
@@ -711,7 +717,10 @@ class sumElectricityAddUp extends React.Component {
                                 <FormItem label="房间编号" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 15 }}
                                 >
-                                    {getFieldDecorator('roomNumber')(<Input />)}
+                                    {getFieldDecorator('roomNumber')(
+                                        <Input style={{ width: 200,
+                                            marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                         </Row>
@@ -725,7 +734,10 @@ class sumElectricityAddUp extends React.Component {
                                             required: true,
                                             message: '请选择本次周期!'
                                         }]
-                                    })(<RangePicker />)}
+                                    })(
+                                        <RangePicker style={{ width: 200,
+                                            marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>
@@ -737,7 +749,11 @@ class sumElectricityAddUp extends React.Component {
                                             required: true,
                                             message: '请填写交费期限!'
                                         }]
-                                    })(<DatePicker />)}
+                                    })(
+                                        <DatePicker
+                                            style={{ width: 200,
+                                                marginRight: '10px' }}
+                                        />)}
                                 </FormItem>
                             </Col>
                             <Col span={8}>

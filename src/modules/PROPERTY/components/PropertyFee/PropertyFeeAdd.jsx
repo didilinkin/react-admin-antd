@@ -493,11 +493,13 @@ class propertyFeeAdd extends React.Component {
                 message: '操作成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.state.json1.tenant = null
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
                 isFirst: true })
         } else {
+            console.log(this.state.json1.printClientName)
             await apiPost(
                 'propertyFee/savePropertyFee',
                 this.state.json1
@@ -506,6 +508,7 @@ class propertyFeeAdd extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.state.json1.tenant = null
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
@@ -738,7 +741,7 @@ class propertyFeeAdd extends React.Component {
                                     <input style={{width: '300px',
                                         height: '25px'}} value={this.state.json1.printClientName} onChange={this.entryNameOnChange}
                                     /></span>
-                                <span>物业服务费统计表</span>
+                                <span style={{marginLeft: '20px'}}>物业服务费统计表</span>
                             </div>
                         </Col>
                     </Row>
@@ -794,11 +797,12 @@ class propertyFeeAdd extends React.Component {
                         </tbody>
                     </table>
                     <p style={{margin: '20px 0',
-                        textAlign: 'right'}}
-                    >优惠金额 &nbsp; {getFieldDecorator('discountMoney')(
-                            <Input onKeyUp={this.sumMoney} style={{ width: 120 }} />
-                        )} &nbsp; 本期应收 ¥{getFieldDecorator('actualPaidMoney')(
-                            <Input style={{ width: 120 }} disabled />
+                        textAlign: 'right',
+                        lineHeight: '28px'}}
+                    >优惠金额: &nbsp;&nbsp;{getFieldDecorator('discountMoney')(
+                            <Input onKeyUp={this.sumMoney} addonBefore="￥" addonAfter="元" style={{ width: 120 }} />
+                        )}&nbsp;&nbsp;本期应收:&nbsp;&nbsp;{getFieldDecorator('actualPaidMoney')(
+                            <Input style={{ width: 120 }} disabled addonBefore="￥" addonAfter="元" />
                         )}</p>
                 </Form>
             </Modal>

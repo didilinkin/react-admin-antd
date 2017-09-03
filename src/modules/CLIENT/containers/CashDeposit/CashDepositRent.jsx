@@ -95,7 +95,6 @@ class CashDepositRent extends React.Component {
                 width: 200,
                 dataIndex: 'opt',
                 key: 'opt',
-                fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/client/cashDepositDetail/cashDepositDetail/' + record.id
                     if (record.currentBalance !== 0) {

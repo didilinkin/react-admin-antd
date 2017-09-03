@@ -9,7 +9,8 @@ class ContractHead extends React.Component {
         super(props)
         this.state = {
             open: '展开',
-            none: 'none'
+            none: 'none',
+            openState: false
         }
     }
     // 清除
@@ -42,12 +43,14 @@ class ContractHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
@@ -61,10 +64,11 @@ class ContractHead extends React.Component {
         } else {
             contractSplit = [<Option key="1">范本合同</Option>, <Option key="2">欢乐颂合同</Option>]
         }
+        let spanNumber = this.state.openState ? 8 : 6
         return (
             <Form layout="horizontal">
                 <Row>
-                    <Col span={8}>
+                    <Col span={spanNumber}>
                         <FormItem label="合同类型" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
@@ -80,7 +84,7 @@ class ContractHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
+                    <Col span={spanNumber}>
                         <FormItem label="客户名称" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
@@ -89,7 +93,7 @@ class ContractHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
-                    <Col span={8}>
+                    <Col span={spanNumber}>
                         <FormItem label="房间编号" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 16 }}
                         >
@@ -98,73 +102,89 @@ class ContractHead extends React.Component {
                             )}
                         </FormItem>
                     </Col>
+                    {this.state.openState ||
+                <Col span={spanNumber}>
+                    <div>
+                        <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
+                        <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
+                        <Button onClick={this.open}>{this.state.open}</Button>
+                    </div>
+                </Col>
+                    }
+                    {this.state.openState &&
+                    <div>
+                        <Col span={spanNumber}>
+                            <FormItem label="合同状态" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('contractStatus')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择合同状态"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="0">执行中</Option>
+                                        <Option key="1">已终止</Option>
+                                        <Option key="2">未开始</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={spanNumber}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('buildId')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择所属楼宇"
+                                        optionFilterProp="children"
+                                    >
+                                        {ListBuildingInfo.map(BuildingInfo => {
+                                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={spanNumber}>
+                            <FormItem label="临期查询" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 16 }}
+                            >
+                                {getFieldDecorator('Advent')(
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="请选择临期查询"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key="1">一个月</Option>
+                                        <Option key="3">一个季度</Option>
+                                        <Option key="6">半年</Option>
+                                        <Option key="12">一年</Option>
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                    </div>
+                    }
                 </Row>
-                <Row style={{display: this.state.none}}>
-                    <Col span={8}>
-                        <FormItem label="合同状态" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('contractStatus')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择合同状态"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="0">执行中</Option>
-                                    <Option key="1">已终止</Option>
-                                    <Option key="2">未开始</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('buildId')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择所属楼宇"
-                                    optionFilterProp="children"
-                                >
-                                    {ListBuildingInfo.map(BuildingInfo => {
-                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                    })}
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={8}>
-                        <FormItem label="临期查询" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            {getFieldDecorator('Advent')(
-                                <Select
-                                    showSearch
-                                    style={{ width: 200 }}
-                                    placeholder="请选择临期查询"
-                                    optionFilterProp="children"
-                                >
-                                    <Option key="1">一个月</Option>
-                                    <Option key="3">一个季度</Option>
-                                    <Option key="6">半年</Option>
-                                    <Option key="12">一年</Option>
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                </Row>
+                {this.state.openState &&
                 <Row>
                     <Col span={16} />
                     <Col span={8}>
                         <div style={{paddingLeft: '25%',
                             marginBottom: 10}}
-                        ><Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;<Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;<Button onClick={this.open}>{this.state.open}</Button></div></Col>
+                        >
+                            <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
+                            <Button onClick={this.open}>{this.state.open}</Button>
+                        </div>
+                    </Col>
                 </Row>
-
-
+                }
             </Form>
         )
     }

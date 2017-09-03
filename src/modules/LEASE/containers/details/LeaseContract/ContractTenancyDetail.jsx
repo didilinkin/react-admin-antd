@@ -1,9 +1,7 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, Table } from 'antd' // Button
+import { Row, Col, Table, Button } from 'antd'
 import '../../../style/test.less'
-import styled from 'styled-components'
-import elf from '../../../../../elf'
 import { apiPost } from '../../../../../api'
 import TerminationComponent from '../../../components/LeaseContract/Termination'
 
@@ -16,10 +14,10 @@ class App extends React.Component {
             dataSource: [],
             columns: [
                 {
-                    title: '租赁开始时间',
+                    title: '费用开始日期',
                     dataIndex: 'startDate'
                 }, {
-                    title: '租赁结束时间',
+                    title: '费用结束日期',
                     dataIndex: 'endDate'
                 }, {
                     title: '交费期限',
@@ -33,6 +31,9 @@ class App extends React.Component {
                 }, {
                     title: '实际应收',
                     dataIndex: 'actualPaidMoney'
+                }, {
+                    title: '已收租金',
+                    dataIndex: 'paidMoney'
                 }, {
                     title: '未收租金',
                     dataIndex: 'unpaidMoney'
@@ -130,11 +131,11 @@ class App extends React.Component {
                     <div className="main">
                         <Row>
                             <Col span={8}><b>租赁周期：</b>{this.state.contract.startDate}  ~ {this.state.contract.endDate} </Col>
-                            <Col span={16}><b>录入时间：</b>{this.state.contract.createName} ({this.state.contract.createDate})</Col>
+                            <Col span={16}><b>录入时间：</b>{this.state.contract.createName} {this.state.contract.createDate}</Col>
                         </Row>
                         <Row>
                             <Col span={8}><b>合同编号：</b>{this.state.contract.contractCode} </Col>
-                            <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} ({this.state.contract.updateDate})</Col>
+                            <Col span={16}><b>最后修改：</b>{this.state.contract.updateName} {this.state.contract.updateDate}</Col>
                         </Row>
                         {this.state.contract.contractStatus === 1 &&
                         <Row>
@@ -184,22 +185,13 @@ class App extends React.Component {
                             dataSource={this.state.dataSource}
                             columns={this.state.columns}
                         />
-                        <ButtonBox>
-                            {
-                                this.state.contract.contractStatus === 0 &&
-                                <TerminationBtn
-                                    className="termination"
-                                    onClick={this.TerminationComponent}
-                                >
-                                    {
-                                        console.dir(this)
-                                    }
-                                    终止合同
-                                </TerminationBtn>
-                            }
-                        </ButtonBox>
                     </div>
                 </div>
+                {this.state.contract.contractStatus === 0 &&
+                <div>
+                    <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
+                </div>
+                }
                 <TerminationComponent
                     id={this.props.match.params.id}
                     type="2"
@@ -210,38 +202,6 @@ class App extends React.Component {
         )
     }
 }
-
-// style
-const ButtonBox = styled.div `
-    ${elf.m.flexCenter}
-`
-
-const TerminationBtn = styled.button `
-    color: #FFF;
-    cursor: pointer;
-    border-radius: 4px;
-    user-select: none;
-    min-width: 28px;
-    height: 28px;
-    padding: 0 12px;
-    line-height: 28px;
-    text-align: center;
-    list-style: none;
-    display: inline-block;
-    vertical-align: middle;
-    border: 1px solid #d9d9d9;
-    background-color: ${elf.c.danger};
-    margin-right: 8px;
-    font-family: Arial;
-    outline: 0;
-
-    &:hover {
-        background-color: #FFF;
-        color: red;
-    }
-`
-
-// background-color: ${props => props.active ? 'red' : 'yellow'}; // hover状态
 
 export default App
 

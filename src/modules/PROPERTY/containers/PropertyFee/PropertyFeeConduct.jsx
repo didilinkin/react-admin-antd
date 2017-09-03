@@ -68,37 +68,31 @@ class PropertyFeeConduct extends Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum',
                 key: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 300,
                 dataIndex: 'clientName',
                 key: 'clientName'
             }, {
                 title: '本期物业费周期',
-                width: 250,
                 dataIndex: 'periodPropertyFee',
                 key: 'periodPropertyFee'
             }, {
                 title: '应收金额',
-                width: 150,
                 dataIndex: 'actualPaidMoney',
                 key: 'actualPaidMoney'
             }, {
                 title: '交费期限',
                 dataIndex: 'payDeadline',
-                key: 'payDeadline',
-                width: 200
+                key: 'payDeadline'
             }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',

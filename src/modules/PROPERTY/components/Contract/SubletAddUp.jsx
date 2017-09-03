@@ -217,7 +217,7 @@ class SubletAddUp extends React.Component {
                                 <Checkbox.Group style={{ width: '100%' }}>
                                     <Row>
                                         {this.state.leaseRooms.map((room, i) => {
-                                            return <Col key={i} offset="1" span={4}><Checkbox value={this.state.roomIds[i]}>{room}</Checkbox></Col>
+                                            return <Col key={i} span={6}><Checkbox value={this.state.roomIds[i]}>{room}</Checkbox></Col>
                                         })}
                                     </Row>
                                 </Checkbox.Group>

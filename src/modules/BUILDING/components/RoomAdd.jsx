@@ -1,4 +1,4 @@
-// 楼宇添加
+// 房间添加
 import {Modal, Input, Form, Row, Col, Icon, notification, Select} from 'antd'
 import React from 'react'
 import { apiPost } from '../../../api/index'
@@ -14,7 +14,9 @@ class RoomAdd extends React.Component {
         propertyType1: '',
         roomStatus1: '',
         ListBuildingInfo: [],
-        data: {}
+        propertyType: null,
+        data: {},
+        sale: false
     }
 
     async initialRemarks (nextProps) {
@@ -76,12 +78,12 @@ class RoomAdd extends React.Component {
                     visible: nextProps.visible,
                     isFirst: false,
                     view: true,
+                    propertyType: room.data.propertyType,
                     fileList: []
                 })
             }
         } else {
             if (this.state.isFirst && nextProps.visible) {
-                this.props.form.resetFields()
                 this.setState({
                     visible: nextProps.visible,
                     isFirst: false,
@@ -128,6 +130,7 @@ class RoomAdd extends React.Component {
                 message: '添加成功',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
+            this.props.form.resetFields()
             this.props.close()
             this.props.refreshTable()
             this.setState({visible: false,
@@ -155,9 +158,12 @@ class RoomAdd extends React.Component {
     selectRStatus = (e) => {
         this.roomStatus = e
     }
-    propertyType = null
     selectPType = (e) => {
-        this.propertyType = e
+        if (e === '2') {
+            this.setState({sale: true})
+        } else {
+            this.setState({sale: false})
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -303,6 +309,7 @@ class RoomAdd extends React.Component {
                                 })(<Input />)}
                             </FormItem>
                         </Col>
+                        {!this.state.sale &&
                         <Col span={12}>
                             <FormItem label="房屋状态" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
@@ -311,6 +318,7 @@ class RoomAdd extends React.Component {
                                     <Select
                                         showSearch
                                         style={{width: 180,
+                                            display: (this.props.form.getFieldValue('propertyType1') !== 2 ? 'block' : 'none'),
                                             marginRight: '5px'}}
                                         placeholder="请选择房屋状态"
                                         optionFilterProp="children"
@@ -322,6 +330,7 @@ class RoomAdd extends React.Component {
                                     </Select>)}
                             </FormItem>
                         </Col>
+                        }
                     </Row>
                     <Row>
                         <Col span={12}>

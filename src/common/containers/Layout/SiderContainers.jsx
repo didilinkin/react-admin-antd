@@ -94,11 +94,11 @@ class SiderContainers extends React.Component {
 
         if (obj.hasOwnProperty('childRoute')) {
             childHtml = childArray.map((item) => {
-                if (this.jurisdiction(item)) {
-                    return this.renderChildRoute(item)
-                } else {
-                    return null
-                }
+                // if (this.jurisdiction(item)) {
+                return this.renderChildRoute(item)
+                // } else {
+                //   return null
+                // }
             })
 
             // 判断是否需要 图标
@@ -154,11 +154,11 @@ class SiderContainers extends React.Component {
     render () {
         const renderMenu = globalDir.map((childItem) => {
             if (this.hasChildRoute(childItem)) {
-                if (this.jurisdiction(childItem)) {
-                    return this.renderChildRoute(childItem)
-                } else {
-                    return null
-                }
+                // if (this.jurisdiction(childItem)) {
+                return this.renderChildRoute(childItem)
+                // } else {
+                //   return null
+                // }
             } else {
                 return (
                     <Menu.Item key={childItem.key}>

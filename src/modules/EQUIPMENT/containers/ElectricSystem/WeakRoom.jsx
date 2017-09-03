@@ -102,13 +102,13 @@ class WeakRoom extends React.Component {
                 key: 'other'
             }, {
                 title: '异常情况',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
-                        <Button onClick={() => abnormal(record.id, 2)}>查看</Button>
+                        <a onClick={() => abnormal(record.id, 2)}>查看</a>
                     )
                 }
             }],

@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 合同管理 [详情]
 import React from 'react'
-import { Row, Col, notification, Icon, Popconfirm } from 'antd'
+import { Row, Col, notification, Icon, Popconfirm, Button } from 'antd'
 import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 import SubletAddUpCom from '../../../components/Contract/SubletAddUp'
@@ -13,6 +13,7 @@ class ContractDetail extends React.Component {
             ListSublet: [],
             contract: {},
             id: 0,
+            roomNum: '',
             SubletOpen: false,
             TerminationComponentOpen: false,
             title: ''
@@ -26,6 +27,7 @@ class ContractDetail extends React.Component {
             }
         )
         this.setState({
+            roomNum: contract.data.roomNum,
             ListSublet: contract.data.subletInfoList,
             contract: contract.data.contract
         })
@@ -178,7 +180,7 @@ class ContractDetail extends React.Component {
                         <Row>
                             {
                                 this.state.contract.yearPmPrice > 0 &&
-                                <Col span={8}><b>年物业费：</b><em className="color1">{this.state.contract.yearPmPrice}</em> </Col>
+                                <Col span={8}><b>年物业费：</b><em className="color1">{this.state.contract.yearPmPrice}</em>元 </Col>
                             }
                             {
                                 this.state.contract.pmUnitPrice > 0 &&
@@ -201,7 +203,7 @@ class ContractDetail extends React.Component {
                         </Row>
                         <Row>
                             {this.state.contract.yearAcPrice > 0 &&
-                                <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> </Col>
+                                <Col span={8}><b>年空调费：</b><em className="color1">{this.state.contract.yearAcPrice}</em> 元</Col>
                             }
                             {this.state.contract.acUnitPrice > 0 &&
                             <Col span={8}><b>空调费单价：</b><em className="color1">{this.state.contract.acUnitPrice}</em> 元／㎡/天 （{this.state.contract.acUnitDay}天） </Col>
@@ -223,7 +225,7 @@ class ContractDetail extends React.Component {
                             <Col span={8}><b>电梯费单价：</b><em className="color1">{this.state.contract.elevUnitPrice}</em> 元／㎡/月 </Col>
                             <Col span={16}><b>能源管理押金：</b><em className="color1">{this.state.contract.energy}</em> 元 （
                                 {this.state.contract.isSublet === 0 &&
-                                <em >业主自交</em>
+                                <em className="color1">业主自交</em>
                                 }
                                 {this.state.contract.isSublet === 1 &&
                                 <em>转租自交</em>
@@ -233,16 +235,15 @@ class ContractDetail extends React.Component {
                         <ul>
                             <li>
                                 <b>业主自交房间：</b>
-                                {this.state.contract.roomIdsEnergy}
+                                {this.state.roomNum}
                             </li>
                         </ul>
                     </div>
                 </div>
-                {
-                    this.state.contract.contractStatus === 0 &&
-                    <div onClick={this.TerminationComponent} className="submit">
-                        终止合同
-                    </div>
+                {this.state.contract.contractStatus === 0 &&
+                <div>
+                    <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
+                </div>
                 }
                 <SubletAddUpCom
                     id={this.state.id}
