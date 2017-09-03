@@ -38,3 +38,10 @@ export const imgCover = (width) => {
         'object-fit': 'cover'
     }
 }
+
+export const bCimg = (obj) => {
+    return {
+        'background-image': `url(${obj})`, // 传入 背景图 对象
+        'background-size': 'cover'
+    }
+}
