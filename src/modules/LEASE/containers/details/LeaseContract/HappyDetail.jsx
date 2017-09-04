@@ -36,8 +36,10 @@ class App extends React.Component {
                 {
                     title: '实际应收',
                     dataIndex: 'actualPaidMoney'
-                },
-                {
+                }, {
+                    title: '已收租金',
+                    dataIndex: 'paidMoney'
+                }, {
                     title: '未收租金',
                     dataIndex: 'unpaidMoney'
                 }
