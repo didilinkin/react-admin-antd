@@ -18,10 +18,13 @@ class HomeBottomCard extends React.Component {
     }
 
     formatMoney = (number) => {
-        let negative = number < 0 ? '-' : ''
-        let numberString = parseInt(number, 0)
-        negative = negative + (numberString || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
-        return negative + '.' + number.toFixed(2).slice(-2)
+        if (number) {
+            let negative = number < 0 ? '-' : ''
+            let numberString = parseInt(number, 0)
+            negative = negative + (numberString || 0).toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+            return negative + '.' + number.toFixed(2).slice(-2)
+        }
+        return 0
     }
     render () {
         return (
