@@ -15,9 +15,10 @@ const NoMatch = () => (
 )
 
 // style
-const NoMatchImg = require('../../assets/images/404.png')
+const NoMatchImg = require('../../assets/images/404@2x.png')
 
 const NoMatchBox = styled.div `
+    height: 100%;
     ${elf.m.bCimg(NoMatchImg)};
 `
 

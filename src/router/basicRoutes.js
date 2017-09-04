@@ -5,8 +5,7 @@
  * @modify date 2017-09-03 12:54:47
  * @desc 基础常用 路由配置表(404 / Login 等页面)
 */
-
-import { Login, Navigator, NoMatch } from '../common/containers'
+import { Login, Navigator, NoMatch } from '../common/containers' //
 
 const basicRoutes = [
     {
