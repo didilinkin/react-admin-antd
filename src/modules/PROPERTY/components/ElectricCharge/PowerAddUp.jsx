@@ -173,13 +173,19 @@ class sumElectricityAddUp extends React.Component {
                 tableColumns.splice(6, 0, {
                     title: '电损0%',
                     dataIndex: 'electricLoss',
-                    key: 'electricLoss'
+                    key: 'electricLoss',
+                    render: function (text, record) {
+                        return parseFloat(record.electricLoss).toFixed(2)
+                    }
                 })
             } else {
                 tableColumns.splice(6, 0, {
                     title: '电损' + contract.powerLossRatio + '%',
                     dataIndex: 'electricLoss',
-                    key: 'electricLoss'
+                    key: 'electricLoss',
+                    render: function (text, record) {
+                        return parseFloat(record.electricLoss).toFixed(2)
+                    }
                 })
                 if (contract[powerType].toString() !== '1') {
                     tableColumns.splice(8, 0, {

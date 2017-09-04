@@ -36,7 +36,7 @@ class App extends React.Component {
                         <h2>本期租金</h2>
                         <Row>
                             <Col span={8}><b>本期周期：</b>2015-10-02  ~ 2015-10-10</Col>
-                            <Col span={8}><b>缴费期限：</b>2015-10-02</Col>
+                            <Col span={8}><b>交费期限：</b>2015-10-02</Col>
                             <Col span={8}><b>本期租金：</b>1,234 元  （已优惠  0.12 元）</Col>
                         </Row>
                         <p className="line" />

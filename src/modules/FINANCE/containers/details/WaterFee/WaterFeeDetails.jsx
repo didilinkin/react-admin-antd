@@ -245,7 +245,7 @@ class CollectionDetails extends React.Component {
                         </Col>
                         <Col span={8}>
                             <div>
-                                <span style={lightGrayStyle} >缴费期限：</span>
+                                <span style={lightGrayStyle} >交费期限：</span>
                                 <span style={{color: '#666',
                                     marginLeft: '20px'}}
                                 >{this.state.map.waterBill.overdueDate}</span>

@@ -102,7 +102,7 @@ class WeakRoom extends React.Component {
                 key: 'other'
             }, {
                 title: '异常情况',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',

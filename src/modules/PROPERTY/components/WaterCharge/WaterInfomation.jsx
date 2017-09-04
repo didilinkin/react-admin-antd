@@ -104,7 +104,10 @@ class WaterInfomation extends React.Component {
             dataIndex: 'meterRead'
         }, {
             title: '本次用水量',
-            dataIndex: 'waterCount'
+            dataIndex: 'waterCount',
+            render: function (text, record, index) {
+                return parseFloat(record.waterCount).toFixed(2)
+            }
         }, {
             title: '损耗10%',
             dataIndex: 'meterLoss'
@@ -116,7 +119,10 @@ class WaterInfomation extends React.Component {
             dataIndex: 'waterUnitPrice'
         }, {
             title: '金额',
-            dataIndex: 'money'
+            dataIndex: 'money',
+            render: function (text, record, index) {
+                return parseFloat(record.money).toFixed(1)
+            }
         }, {
             title: '备注',
             dataIndex: 'remarks'
@@ -216,7 +222,7 @@ class WaterInfomation extends React.Component {
                             </Col>
                             <Col span={8}>
                                 <div>
-                                    <span style={lightGrayStyle} >缴费期限：</span>
+                                    <span style={lightGrayStyle} >交费期限：</span>
                                     <span style={{color: '#666',
                                         marginLeft: '20px'}}
                                     >{this.state.map.waterBill.overdueDate}</span>

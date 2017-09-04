@@ -66,12 +66,40 @@ class HomeRepairedInfoChart extends React.Component {
                 endDate: endDate
             }
         )
-        console.log(repairStatistics)
         let repair = this.state.repair
         let appraise = this.state.appraise
         repair.series[0].data = repairStatistics.data.repairStatistics
         appraise.series[0].data = repairStatistics.data.appraise
     }
+    // zero = (values, number) => {
+    //     if (values.length !== number) {
+    //         let defaultValue = [
+    //             {name: '作废工单',
+    //                 value: 0
+    //             }, {name: '取消工单',
+    //                 value: 0
+    //             }, {name: '未派单',
+    //                 value: 0
+    //             }, {name: '已完工',
+    //                 value: 0
+    //             }, {
+    //                 name: '进行中',
+    //                 value: 0
+    //             }]
+    //         defaultValue.map(model => {
+    //             values.map(model2 => {
+    //                 if (model.name === model2.name) {
+    //                     model.value = model2.value
+    //                 }
+    //                 return ''
+    //             })
+    //             return ''
+    //         })
+    //         console.log(defaultValue)
+    //         return defaultValue
+    //     }
+    //     return values
+    // }
     rangePickerChange = (date, dateStrings) => {
         this.loadData(dateStrings[0], dateStrings[1])
     }
