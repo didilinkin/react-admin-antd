@@ -1,4 +1,4 @@
-import {Modal, Form, notification, Icon, Input} from 'antd'
+import {Modal, Form, notification, Icon, Input, Button} from 'antd'
 import React from 'react'
 import { apiGet, apiPost, baseURL } from '../../../../api/index'
 import moment from 'moment'
@@ -12,11 +12,19 @@ class NoticeAdd extends React.Component {
         view: 'select',
         repairDate: '',
         fileList: [],
-        clientList: []
+        clientList: [],
+        flag: 1,
+        data: ''
     }
 
     isFirst = true
     async initialRemarks (nextProps) {
+        let resulData = await apiPost(
+            '/complaint/getContent'
+        )
+        this.setState({
+            data: resulData
+        })
         if (nextProps.id > 0) {
             if (this.isFirst && nextProps.visible) {
                 let result = await apiGet(
@@ -96,65 +104,54 @@ class NoticeAdd extends React.Component {
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
     }
-    // 单击确定按钮提交表单
-    handleSubmit = async () => {
-        let adopt = false
-        this.props.form.validateFields(
-            (err) => {
-                if (err) {
-                    adopt = false
-                } else {
-                    adopt = true
-                }
-            },
-        )
-        if (adopt) {
-            this.setState({
-                view: false
+    handleSave = async (editContent) => {
+        let json = []
+        this.setState({
+            view: false,
+            flag: 2
+        })
+        json['content'] = editContent
+        json['title'] = this.title
+        if (this.props.id > 0) {
+            let result = await apiPost(
+                'complaint/updateNotice',
+                json
+            )
+            this.props.close()
+            notification.open({
+                message: result.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
-            let json = this.props.form.getFieldsValue()
-            this.imgUrl = this.imgUrl.substring(0, this.imgUrl.length - 1)
-            json['pic'] = this.imgUrl
-            let createDate = json.createDate.format('YYYY-MM-DD')
-            json['createDate'] = createDate
-            if (this.props.id > 0) {
-                json['id'] = this.props.id
-                let result = await apiPost(
-                    'complaint/updateComplaintByEdit',
-                    json
-                )
-                this.props.close()
-                notification.open({
-                    message: result.data,
-                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-                })
-            } else {
-                let result = await apiPost(
-                    'complaint/insertComplaint',
-                    json
-                )
-                this.props.close()
-                notification.open({
-                    message: result.data,
-                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-                })
-            }
-
-            this.isFirst = true
-            this.setState({
-                visible: false,
-                isFirst: true,
-                view: false,
-                clientList: []
+        } else {
+            await apiPost(
+                'complaint/insertNotice',
+                json
+            )
+            this.props.close()
+            notification.open({
+                message: '添加成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
-            this.props.refreshTable()
         }
+
+        this.isFirst = true
+        this.setState({
+            visible: false,
+            isFirst: true,
+            view: false,
+            clientList: []
+        })
+        this.props.refreshTable()
     }
     handleCancel = (e) => {
         this.props.close()
         this.isFirst = true
         this.setState({ visible: false,
             isFirst: true})
+    }
+    title = ''
+    titleChange = (e) => {
+        this.title = e.target.value
     }
     render () {
         return (
@@ -167,10 +164,16 @@ class NoticeAdd extends React.Component {
                 footer={null}
             >
                 <div>
-                    <div>
-                        <p><span>标题：<Input type={{width: 200}} /></span></p>
-                    </div>
-                    <PropertyFeeHeadComponent />
+                    <p><span>标题：<Input onChange={this.titleChange} /></span></p>
+                    <PropertyFeeHeadComponent
+                        getContent ={this.getContent}
+                        flag= {this.state.flag}
+                        handleSave= {this.handleSave}
+                        handleRelease= {this.handleRelease}
+                    />
+                    <Button type="primary" onClick={this.handleSave} >保存&nbsp;&nbsp;</Button>&nbsp;&nbsp;
+                    <Button type="primary" onClick={this.handleRelease} >保存并发布&nbsp;&nbsp;</Button>&nbsp;&nbsp;
+                    <Button type="primary" onClick={this.handleCancel} >取消</Button>
                 </div>
             </Modal>
         )

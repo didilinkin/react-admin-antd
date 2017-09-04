@@ -134,7 +134,10 @@ class LeaseContract extends React.Component {
             }, {
                 title: '剩余天数',
                 width: 100,
-                dataIndex: 'daysRemaining'
+                dataIndex: 'daysRemaining',
+                render: function (text, record, index) {
+                    return record.contractStatus !== 1 ? text : '0'
+                }
             }, {
                 title: '操作',
                 width: 100,
