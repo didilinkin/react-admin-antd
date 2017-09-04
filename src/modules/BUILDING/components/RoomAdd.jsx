@@ -34,6 +34,9 @@ class RoomAdd extends React.Component {
                     '/build/getRoomById',
                     {id: nextProps.id}
                 )
+                if (room.data.propertyType === 2) {
+                    this.setState({sale: true})
+                }
                 if (room.data.propertyType === 0) {
                     this.setState({
                         propertyType1: '自有'

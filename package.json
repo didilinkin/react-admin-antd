@@ -98,6 +98,7 @@
     "babel-polyfill": "^6.23.0",
     "echarts-for-react": "^1.4.4",
     "history": "^4.6.3",
+    "html-to-draftjs": "^0.1.0-beta15",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "nprogress": "^0.2.0",
