@@ -1,4 +1,11 @@
-// '登录' 页面
+/**
+ * @author 闫晓迪
+ * @email 929213769@qq.com
+ * @create date 2017-09-03 12:02:51
+ * @modify date 2017-09-03 12:02:51
+ * @desc '登录' 页面
+*/
+
 import React from 'react'
 import { Form, Icon, Input, Button, Modal, Checkbox, notification } from 'antd'
 import { apiPost } from '../../api'
@@ -7,27 +14,6 @@ import styled from 'styled-components'
 import elf from '../../elf'
 
 const FormItem = Form.Item
-
-// 样式 -start
-const LoginBox = styled.div`
-    height: 100%;
-    ${elf.m.flexCenter()};
-`
-
-const LoginForm = styled.div`
-    width: 320px;
-    height: 340px;
-    padding: 36px;
-    box-shadow: 0 0 100px rgba(0,0,0,.08);
-    background: #fff;
-`
-
-const LoginTitle = styled.h2`
-    font-size: ${elf.f.title}px;
-    text-align: center;
-    padding-bottom: ${elf.d.autoPadding};
-`
-// 样式 - end
 
 function info () {
     Modal.info({
@@ -127,5 +113,28 @@ class Login extends React.Component {
         )
     }
 }
+
+// style
+const loginImg = require('../../assets/images/Login@2x.png')
+
+const LoginBox = styled.div`
+    height: 100%;
+    ${elf.m.flexCenter()};
+    ${elf.m.bCimg(loginImg)};
+`
+
+const LoginForm = styled.div`
+    width: 320px;
+    height: 340px;
+    padding: 36px;
+    box-shadow: 0 0 100px rgba(0,0,0,.08);
+    background: #fff;
+`
+
+const LoginTitle = styled.h2`
+    font-size: ${elf.f.title}px;
+    text-align: center;
+    padding-bottom: ${elf.d.autoPadding};
+`
 
 export default Form.create()(Login)

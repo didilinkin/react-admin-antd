@@ -8,7 +8,15 @@ import React from 'react'
 import { Row, Col, Card } from 'antd'
 import { Editor } from 'react-draft-wysiwyg'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-
+// import { apiPost } from '../../api'
+import draftToHtml from 'draftjs-to-html'
+// import {convertToRaw } from 'draft-js'
+// import htmlToDraft from 'html-to-draftjs'
+import { EditorState } from 'draft-js'
+// const blocksFromHtml = htmlToDraft()
+// const { contentBlocks, entityMap } = blocksFromHtml.contentBlocks
+// const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap)
+// const editorState = EditorState.createWithContent(contentState)
 const rawContentState = {
     'entityMap': {
         '0': {
@@ -58,8 +66,10 @@ const rawContentState = {
 
 class Wysiwyg extends React.Component {
     state = {
+        editContent: '',
         contentState: rawContentState,
-        editorState: ''
+        editorState: EditorState.createEmpty(),
+        data: ''
     }
 
     clearContent = () => {
@@ -68,28 +78,62 @@ class Wysiwyg extends React.Component {
         })
     }
 
+    onEditorChange = (editorContent) => {
+        this.setState({
+            editorContent
+        })
+        console.log(editorContent)
+    }
+
     onContentStateChange = (contentState) => {
         console.log('contentState', contentState)
     }
-
+    onEditorChange = (editContent) =>{
+        console.log(draftToHtml(editContent))
+        this.setState({
+            editContent: editContent
+        })
+        if (this.props.flag === 2) {
+            this.props.handleSave(draftToHtml(editContent))
+        }
+        if (this.props.flag === 3) {
+            this.props.handleRelease(draftToHtml(editContent))
+        }
+    }
     onEditorStateChange = (editorState) => {
         this.setState({
             editorState
         })
+        console.log(this.state.editorContent)
+        console.log(typeof this.state.editorContent)
     }
+    componentDidMount () {
+        this.initialRemarks()
+    }
+    async initialRemarks () {
+        // let resulData = await apiPost(
+        //     '/complaint/getContent'
+        // )
 
+        // console.log(htmlToDraft(resulData) + '1111')
+        // this.setState({
+        //     data: resulData.data
+        // })
+        // console.log(this.props.data)
+    }
     // 图片上传 回调函数
     imageUploadCallBack = file => new Promise(
         (resolve, reject) => {
             const xhr = new XMLHttpRequest() // eslint-disable-line no-undef
-            xhr.open('POST', 'https://192.168.5.24:18082/storage/uploader')
-            xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca')
+            xhr.open('POST', 'http://192.168.5.24:18082/storage/uploader')
             const data = new FormData() // eslint-disable-line no-undef
-            data.append('image', file)
+            data.append('file', file)
             xhr.send(data)
             xhr.addEventListener('load', () => {
                 const response = JSON.parse(xhr.responseText)
-                resolve(response)
+                let imgUrl = `http://192.168.5.24:18082/storage/files/${response.data}`
+                console.log(imgUrl)
+                resolve(imgUrl)
             })
 
             xhr.addEventListener('error', () => {
@@ -111,7 +155,7 @@ class Wysiwyg extends React.Component {
                 <Row gutter={16}>
                     <Col className="gutter-row" md={24}>
                         <div className="gutter-box">
-                            <Card title="富文本编辑器" bordered={false} >
+                            <Card title="" bordered={false} >
                                 <Editor
                                     editorState={editorState}
                                     toolbarClassName="home-toolbar"

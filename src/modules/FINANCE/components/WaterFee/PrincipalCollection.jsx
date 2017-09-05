@@ -27,6 +27,7 @@ class PrincipalCollection extends React.Component {
                 paidMoney: WaterBill.paidMoney,
                 money: 0
             })
+            this.onBlur()
         }
     }
     componentWillReceiveProps (nextProps) {

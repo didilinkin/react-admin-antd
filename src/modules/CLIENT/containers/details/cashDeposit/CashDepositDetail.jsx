@@ -56,9 +56,24 @@ class CashDepositDetail extends React.Component {
                 }
             }, {
                 title: '收支类型',
-                width: 150,
+                width: 250,
                 dataIndex: 'revenueType',
-                key: 'revenueType'
+                key: 'revenueType',
+                render: function (text, record, index) {
+                    let revenueType = ''
+                    if (record.revenueType === 0) {
+                        revenueType = '收款'
+                    }
+                    if (record.revenueType === 1) {
+                        revenueType = '扣款'
+                    }
+                    if (record.revenueType === 2) {
+                        revenueType = '退款'
+                    }
+                    return (
+                        <span>{revenueType}</span>
+                    )
+                }
             }, {
                 title: '金额',
                 width: 250,
@@ -78,7 +93,22 @@ class CashDepositDetail extends React.Component {
                 title: '审核状态',
                 width: 250,
                 dataIndex: 'auditStatus',
-                key: 'auditStatus'
+                key: 'auditStatus',
+                render: function (text, record, index) {
+                    let auditStatus = ''
+                    if (record.auditStatus === 0) {
+                        auditStatus = '待审核'
+                    }
+                    if (record.auditStatus === 1) {
+                        auditStatus = '审核成功'
+                    }
+                    if (record.auditStatus === 2) {
+                        auditStatus = '审核失败'
+                    }
+                    return (
+                        <span>{auditStatus}</span>
+                    )
+                }
             }, {
                 title: '审核说明',
                 width: 250,

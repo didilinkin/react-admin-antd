@@ -250,7 +250,12 @@ class Electricity extends React.Component {
                                 <a>撤回</a>
                             </Popconfirm>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a>打印单据</a>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.12:18082/ElectricityFees/print?ids=' + record.id)
+                            }}
+                            >
+                                <a>打印单据</a>
+                            </Popconfirm>
                         </span>
                     )
                 }

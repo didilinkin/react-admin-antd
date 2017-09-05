@@ -6,6 +6,7 @@ import SiderContainers from './Layout/SiderContainers'
 import LayoutContainers from './Layout/LayoutContainers'
 import HomeContainers from './HomeContainers'
 import Navigator from './Navigator'
+import NoMatch from './NoMatch'
 
 export {
     Count,
@@ -14,5 +15,6 @@ export {
     SiderContainers,
     LayoutContainers,
     HomeContainers,
-    Navigator
+    Navigator,
+    NoMatch
 }
