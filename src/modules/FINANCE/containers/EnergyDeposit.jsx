@@ -155,7 +155,7 @@ class EnergyDeposit extends React.Component {
                 width: 150,
                 dataIndex: 'voucherNo',
                 key: 'voucherNo'
-            }, {
+            }, /* {
                 title: '收款方式',
                 width: 100,
                 dataIndex: 'receiptType',
@@ -187,6 +187,31 @@ class EnergyDeposit extends React.Component {
                         <span>{whType}</span>
                     )
                 }
+            }, */{
+                title: '审核状态',
+                width: 90,
+                dataIndex: 'auditStatus',
+                key: 'auditStatus',
+                render: function (text, record, index) {
+                    let auditStatus = ''
+                    if (record.auditStatus === 0) {
+                        auditStatus = '待审核'
+                    }
+                    if (record.auditStatus === 1) {
+                        auditStatus = '审核不通过'
+                    }
+                    if (record.auditStatus === 2) {
+                        auditStatus = '审核通过'
+                    }
+                    return (
+                        <span>{auditStatus}</span>
+                    )
+                }
+            }, {
+                title: '审核说明',
+                width: 90,
+                dataIndex: 'remark',
+                key: 'remark'
             }, {
                 title: '审核人',
                 width: 90,

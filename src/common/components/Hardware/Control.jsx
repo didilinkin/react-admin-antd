@@ -28,11 +28,9 @@ const Control = ({ controlState }) => (
         </div>
     </Card>
 )
-
 Control.propTypes = {
     controlState: PropTypes.bool.isRequired
 }
-
 // style
 const TitleBox = styled.h1`
     ${elf.m.fS(elf.f.title)}; // font-size: title

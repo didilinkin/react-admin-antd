@@ -1,7 +1,8 @@
-/**
+/*
+/!**
  * Created by 闫晓迪 929213769@qq.com on 2017/8/13.
  * For: 富文本编辑器 组件 —— 通用
- */
+ *!/
 
 import React from 'react'
 
@@ -148,9 +149,9 @@ class Wysiwyg extends React.Component {
         return (
             <div className="gutter-example button-demo">
 
-                {/*
+                {/!*
                     <BreadcrumbCustom first="UI" second="富文本" />
-                */}
+                *!/}
 
                 <Row gutter={16}>
                     <Col className="gutter-row" md={24}>
@@ -239,3 +240,4 @@ class Wysiwyg extends React.Component {
 }
 
 export default Wysiwyg
+*/
