@@ -1,6 +1,6 @@
 // 自定义新增页签触发器
 import React from 'react'
-import { cloneDeep } from 'lodash' // isArray
+import cloneDeep from 'lodash/cloneDeep' // isArray
 import { hasString } from '../../../utils'
 
 import { Tabs } from 'antd' // Button

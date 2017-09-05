@@ -132,6 +132,7 @@ const LoginForm = styled.div`
 const LoginTitle = styled.h2`
     font-size: ${elf.f.title}px;
     text-align: center;
+    font-weight: bold;
     padding-bottom: ${elf.d.autoPadding}px;
 `
 
