@@ -1,6 +1,6 @@
 // 财务管理 - 目录配置
 const HARDWARE_DIR = {
-    title: '智能硬件管理后台',
+    title: '智能硬件',
     key: 'hardware',
     path: '/home/hardware',
     icon: 'tool',

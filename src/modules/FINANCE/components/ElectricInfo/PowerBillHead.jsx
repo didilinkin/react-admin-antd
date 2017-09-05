@@ -11,7 +11,8 @@ class PowerBillHead extends React.Component {
         this.state = {
             open: '展开',
             none: 'none',
-            openPowerInfomationComponent: false
+            openPowerInfomationComponent: false,
+            openState: false
         }
     }
     // 清除
@@ -50,26 +51,28 @@ class PowerBillHead extends React.Component {
         if (this.state.open === '展开') {
             this.setState({
                 open: '收起搜索',
-                none: ''
+                none: '',
+                openState: true
             })
         } else {
             this.setState({
                 open: '展开',
-                none: 'none'
+                none: 'none',
+                openState: false
             })
         }
     }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
+        let fourOpen = (this.props.type === 3) && this.state.openState
+        let spanEight = fourOpen ? 8 : 6
         return (
             <div>
                 <Form layout="horizontal">
                     <Row>
-                        <Col span={8}>
-                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
+                        <Col span={spanEight}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
@@ -85,7 +88,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
+                        <Col span={spanEight}>
                             <FormItem label="房间编号" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -94,7 +97,7 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={8}>
+                        <Col span={spanEight}>
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
@@ -103,102 +106,103 @@ class PowerBillHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                    </Row>
-                    <Row style={{display: this.state.none}}>
-                        <Col span={8}>
-                            <FormItem label="查询依据" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('cycleClass')(
-                                    <Select
-                                        allowClear
-                                        showSearch
-                                        style={{ width: 200 }}
-                                        placeholder="查询依据"
-                                        optionFilterProp="children"
-                                    >
-                                        <Option key="2">实交日期</Option>
-                                        <Option key="3">交费期限</Option>
-                                        <Option key="1">抄表日期</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
+                        {!this.state.openState &&
+                        <Col span={spanEight}>
+                            <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                            <Button onClick={this.handleReset}>清除</Button>
+                            {type === 3 &&
+                            <a style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</a>
+                            }
                         </Col>
-                        <Col span={8}>
-                            <FormItem label="查询时间" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('cxsj')(
-                                    <RangePicker />
-                                )}
-                            </FormItem>
-                        </Col>
+                        }
+                        {fourOpen &&
+                        <div>
+                            <Col span={spanEight}>
+                                <FormItem label="查询依据" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                    {getFieldDecorator('cycleClass')(
+                                        <Select
+                                            allowClear
+                                            showSearch
+                                            style={{ width: 200 }}
+                                            placeholder="查询依据"
+                                            optionFilterProp="children"
+                                        >
+                                            <Option key="2">实交日期</Option>
+                                            <Option key="3">交费期限</Option>
+                                            <Option key="1">抄表日期</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={spanEight}>
+                                <FormItem label="查询时间" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                    {getFieldDecorator('cxsj')(
+                                        <RangePicker style={{ width: 200 }} />
+                                    )}
+                                </FormItem>
+                            </Col>
 
-                        <Col span={8}>
-                            <FormItem label="收费状态" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('paymentState')(
-                                    <Select
-                                        showSearch
-                                        allowClear
-                                        style={{ width: 200 }}
-                                        placeholder="请选择收费状态"
-                                        optionFilterProp="children"
-                                    >
-                                        <Option key="1">已收</Option>
-                                        <Option key="2">未收</Option>
-                                        <Option key="3">未收全</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
-                        <Col span={8}>
-                            <FormItem label="开票状态" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('billingState')(
-                                    <Select
-                                        showSearch
-                                        allowClear
-                                        style={{ width: 200 }}
-                                        placeholder="请选择开票状态"
-                                        optionFilterProp="children"
-                                    >
-                                        <Option key="1">已开票</Option>
-                                        <Option key="2">未开票</Option>
-                                    </Select>
-                                )}
-                            </FormItem>
-                        </Col>
+                            <Col span={spanEight}>
+                                <FormItem label="收费状态" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                    {getFieldDecorator('paymentState')(
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{ width: 200 }}
+                                            placeholder="请选择收费状态"
+                                            optionFilterProp="children"
+                                        >
+                                            <Option key="1">已收</Option>
+                                            <Option key="2">未收</Option>
+                                            <Option key="3">未收全</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                            <Col span={spanEight}>
+                                <FormItem label="开票状态" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                    {getFieldDecorator('billingState')(
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{ width: 200 }}
+                                            placeholder="请选择开票状态"
+                                            optionFilterProp="children"
+                                        >
+                                            <Option key="1">已开票</Option>
+                                            <Option key="2">未开票</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
+                        </div>
+                        }
                     </Row>
-                    <Row>
+                    <Row style={{marginBottom: '10px'}}>
                         <Col span={16} >
                             {
                                 type === 3 &&
                                 <span>
-                                    <Button >
-                                批量打印
-                                    </Button>
-                                    &nbsp;&nbsp;
-                                    <Button >
-                            导出
-                                    </Button>
+                                    <Button style={{marginRight: '10px'}}>批量打印</Button>
+                                    <Button >导出</Button>
                                 </span>
                             }
+                            {type === 1 &&
+                            <span>
+                                <Button style={{marginRight: '10px'}} onClick={this.openWaterAddUpComponent} type="primary">添加水费</Button>
+                                <Button type="primary" onClick={this.BatchAuditWaterBill}>提交财务</Button>
+                            </span>
+                            }
                         </Col>
+                        {fourOpen &&
                         <Col span={8}>
-                            <div style={{paddingLeft: '25%',
-                                marginBottom: 10}}
-                            >
-                                <Button type="primary" onClick={this.handleSubmit}>搜索</Button>&nbsp;&nbsp;
-                                <Button onClick={this.handleReset}>清除</Button>&nbsp;&nbsp;
-                                { type === 3 &&
-                                <span>
-                                    <Button onClick={this.open}>{this.state.open}</Button>
-                                </span>
-                                }
-                            </div></Col>
+                            <div style={{paddingLeft: '25%'}}>
+                                <Button style={{marginRight: '10px'}} type="primary" onClick={this.handleSubmit}>搜索</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.handleReset}>清除</Button>
+                                <a onClick={this.open}>{this.state.open}</a>
+                            </div>
+                        </Col>
+                        }
                     </Row>
                 </Form>
             </div>

@@ -107,7 +107,7 @@ class ContractHead extends React.Component {
                     <div>
                         <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
                         <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
-                        <Button onClick={this.open}>{this.state.open}</Button>
+                        <a onClick={this.open}>{this.state.open}</a>
                     </div>
                 </Col>
                     }
@@ -180,7 +180,7 @@ class ContractHead extends React.Component {
                         >
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
                             <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
-                            <Button onClick={this.open}>{this.state.open}</Button>
+                            <a onClick={this.open}>{this.state.open}</a>
                         </div>
                     </Col>
                 </Row>
