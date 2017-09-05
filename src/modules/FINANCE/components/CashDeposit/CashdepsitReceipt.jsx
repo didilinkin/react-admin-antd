@@ -1,8 +1,7 @@
-import {Modal, Form, notification, Icon, Col, Row, Input, Select} from 'antd'
+import {Modal, Form, notification, Icon, Col, Row, Input} from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 const FormItem = Form.Item
-const Option = Select.Option
 
 
 class propertyPaidConfirm extends React.Component {
@@ -123,7 +122,7 @@ class propertyPaidConfirm extends React.Component {
                                         <Input />
                                     )}
                                 </FormItem>
-                                <FormItem label="收款方式" labelCol={{ span: 6 }}
+                                {/* <FormItem label="收款方式" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('receiptType')(
@@ -141,7 +140,7 @@ class propertyPaidConfirm extends React.Component {
                                             <Option key="5">其他</Option>
                                         </Select>
                                     )}
-                                </FormItem>
+                                </FormItem>*/}
                             </Col>
                         </Row>
                     </Form>

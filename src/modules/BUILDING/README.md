@@ -12,7 +12,7 @@
 |   │   └── EditBuilding.jsx        |   |    # 编辑楼宇
 │   |                               |
 │   ├── BuildingShow.jsx            |   # 楼宇图示
-│   └── RegistrationMessage.jsx     |   # 注册信息
+│
 │                                   |
 ├—— components /                    # 视图组件(表现组件 - 展现逻辑内容, 不操作数据)
 │                                   |

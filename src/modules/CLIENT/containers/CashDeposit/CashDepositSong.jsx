@@ -94,18 +94,18 @@ class CashDepositRent extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/client/cashDepositDetail/cashDepositDetail/' + record.id
-                    if (record.currentBalance !== 0) {
+                    if (record.revenueType === 0 || record.currentBalance === 0) {
                         return (
                             <div>
-                                <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleUpdate(record.id)} > 扣款 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleUpdate2(record.id)} > 退款 </a>
+                                <a onClick={() => info(url)}> 明细 &nbsp;</a>
                             </div>
                         )
                     } else {
                         return (
                             <div>
-                                <a onClick={() => info(url)}> 明细 &nbsp;</a>
+                                <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleUpdate(record.id)} > 扣款 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleUpdate2(record.id)} > 退款 </a>
                             </div>
                         )
                     }

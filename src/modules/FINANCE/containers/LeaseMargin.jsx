@@ -154,7 +154,7 @@ class LeaseMargin extends Component {
                 width: 150,
                 dataIndex: 'voucherNo',
                 key: 'voucherNo'
-            }, {
+            }, /* {
                 title: '收款方式',
                 width: 100,
                 dataIndex: 'receiptType',
@@ -186,6 +186,31 @@ class LeaseMargin extends Component {
                         <span>{whType}</span>
                     )
                 }
+            },*/ {
+                title: '审核状态',
+                width: 90,
+                dataIndex: 'auditStatus',
+                key: 'auditStatus',
+                render: function (text, record, index) {
+                    let auditStatus = ''
+                    if (record.auditStatus === 0) {
+                        auditStatus = '待审核'
+                    }
+                    if (record.auditStatus === 1) {
+                        auditStatus = '审核不通过'
+                    }
+                    if (record.auditStatus === 2) {
+                        auditStatus = '审核通过'
+                    }
+                    return (
+                        <span>{auditStatus}</span>
+                    )
+                }
+            }, {
+                title: '审核说明',
+                width: 90,
+                dataIndex: 'remark',
+                key: 'remark'
             }, {
                 title: '审核人',
                 width: 90,
@@ -330,7 +355,7 @@ class LeaseMargin extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1900 }}
+                        scroll={{ x: 2300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
