@@ -133,8 +133,8 @@ class PropertyFeeDetail extends React.Component {
                 unpaidLateMoney: 0,
                 feeType: 4,
                 feeId: this.props.match.params.id,
-                unpaidMoney: 0,
-                paidMoney: this.state.data.lateMoney,
+                unpaidMoney: this.state.data.lateMoney,
+                paidMoney: 0,
                 latePaidWay: 6,
                 paidWay: 6,
                 whetherLatePaid: 1}

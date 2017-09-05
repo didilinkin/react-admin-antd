@@ -112,7 +112,7 @@ class CollectRentHead extends React.Component {
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
                             <Button style={{marginLeft: '10px'}} onClick={this.handleReset}>清除</Button>
                             {type === 2 &&
-                            <Button style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</Button>
+                            <a style={{marginLeft: '10px'}} onClick={this.open}>{this.state.open}</a>
                             }
                         </div>
                     </Col>
@@ -207,7 +207,7 @@ class CollectRentHead extends React.Component {
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
                             <Button style={{margin: '0 10px'}} onClick={this.handleReset}>清除</Button>
                             {type === 2 &&
-                            <Button onClick={this.open}>{this.state.open}</Button>}
+                            <a onClick={this.open}>{this.state.open}</a>}
                         </div>
                     </Col>
                 </Row>

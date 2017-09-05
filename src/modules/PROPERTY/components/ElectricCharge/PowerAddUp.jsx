@@ -175,7 +175,10 @@ class sumElectricityAddUp extends React.Component {
                     dataIndex: 'electricLoss',
                     key: 'electricLoss',
                     render: function (text, record) {
-                        return parseFloat(record.electricLoss).toFixed(2)
+                        if (text) {
+                            return parseFloat(text).toFixed(2)
+                        }
+                        return ''
                     }
                 })
             } else {
@@ -184,7 +187,10 @@ class sumElectricityAddUp extends React.Component {
                     dataIndex: 'electricLoss',
                     key: 'electricLoss',
                     render: function (text, record) {
-                        return parseFloat(record.electricLoss).toFixed(2)
+                        if (text) {
+                            return parseFloat(text).toFixed(2)
+                        }
+                        return ''
                     }
                 })
                 if (contract[powerType].toString() !== '1') {
