@@ -11,6 +11,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
         elecInfo: {}
     }
     async initialRemarks (nextProps) {
+        this.props.form.resetFields()
         if (this.state.isFirst && nextProps.visible) {
             let elecInfo = await apiPost(
                 '/ElectricityFees/ElectricityFeeInfo',

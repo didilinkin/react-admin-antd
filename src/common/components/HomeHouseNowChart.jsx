@@ -35,6 +35,7 @@ class HomeHouseNowChart extends React.Component {
     }
     componentWillReceiveProps (nextPorps) {
         let option = this.state.option
+        console.log(nextPorps.buildingNow)
         option.series[0].data = nextPorps.buildingNow
     }
     render () {
