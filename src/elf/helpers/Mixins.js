@@ -9,7 +9,8 @@ export const size = (width, height) => {
 
 export const fS = (fontSize) => {
     return {
-        'font-size': `${fontSize}px`
+        'font-size': `${fontSize}px`,
+        'line-height': '1.5'
     }
 }
 
@@ -39,9 +40,9 @@ export const imgCover = (width) => {
     }
 }
 
-export const bCimg = (obj) => {
+export const bCimg = (obj, fit) => {
     return {
         'background-image': `url(${obj})`, // 传入 背景图 对象
-        'background-size': 'cover'
+        'background-size': fit
     }
 }
