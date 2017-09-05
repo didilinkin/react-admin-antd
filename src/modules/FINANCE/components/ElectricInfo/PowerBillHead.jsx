@@ -177,7 +177,10 @@ class PowerBillHead extends React.Component {
                             {
                                 type === 3 &&
                                 <span>
-                                    <Button >
+                                    <Button onClick={() => {
+                                        window.open('http://192.168.5.12:18082/ElectricityFees/print?ids=' + this.props.RowKeys)
+                                    }}
+                                    >
                                 批量打印
                                     </Button>
                                     &nbsp;&nbsp;
