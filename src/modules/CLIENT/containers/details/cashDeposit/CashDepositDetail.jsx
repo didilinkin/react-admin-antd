@@ -56,7 +56,7 @@ class CashDepositDetail extends React.Component {
                 }
             }, {
                 title: '收支类型',
-                width: 150,
+                width: 250,
                 dataIndex: 'revenueType',
                 key: 'revenueType',
                 render: function (text, record, index) {
