@@ -12,6 +12,7 @@ export const background = 'rgb(236, 236, 236)'
 export const money = '#169BD5' // 金钱提示色
 export const success = '#33CC00' // 成功色 - 绿色
 export const font = 'rgba(0, 0, 0, 0.65)' // 普通文字 颜色 - 浅黑色
+export const button = '#F7F7F7' // 按钮背景色 - 浅灰色
 
 // 提示色
 export const error = '#333'
