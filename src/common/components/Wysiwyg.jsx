@@ -78,6 +78,13 @@ class Wysiwyg extends React.Component {
         })
     }
 
+    onEditorChange = (editorContent) => {
+        this.setState({
+            editorContent
+        })
+        console.log(editorContent)
+    }
+
     onContentStateChange = (contentState) => {
         console.log('contentState', contentState)
     }
@@ -97,6 +104,8 @@ class Wysiwyg extends React.Component {
         this.setState({
             editorState
         })
+        console.log(this.state.editorContent)
+        console.log(typeof this.state.editorContent)
     }
     componentDidMount () {
         this.initialRemarks()
@@ -122,7 +131,9 @@ class Wysiwyg extends React.Component {
             xhr.send(data)
             xhr.addEventListener('load', () => {
                 const response = JSON.parse(xhr.responseText)
-                resolve(response)
+                let imgUrl = `http://192.168.5.24:18082/storage/files/${response.data}`
+                console.log(imgUrl)
+                resolve(imgUrl)
             })
 
             xhr.addEventListener('error', () => {

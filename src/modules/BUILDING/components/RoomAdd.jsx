@@ -248,12 +248,7 @@ class RoomAdd extends React.Component {
                             <FormItem label="产权单位" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('propertyOwner', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '产权单位不能为空'
-                                    }]
-                                })(<Input />)}
+                                {getFieldDecorator('propertyOwner')(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>

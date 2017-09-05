@@ -4,7 +4,7 @@
  * @create date 2017-09-01 12:31:47
  * @modify date 2017-09-01 12:49:39
  * @desc 测试向下传递数据
- */
+*/
 import React from 'react'
 
 import { Row, Col } from 'antd'
@@ -15,29 +15,23 @@ import {
     Mode,
     WindSpeed,
     SetTemperature
-} from '../../../../common/components/Hardware'
+} from './Hardware'
 
 import styled from 'styled-components'
-import elf from '../../../../elf'
+import elf from '../../elf'
 
 class The extends React.Component {
     render () {
         return (
             <TheBox>
                 <Row type="flex" justify="space-around">
-                    <Col span={4}> <TitleBox> 空调信息 </TitleBox> </Col>
-                </Row>
-                <Row type="flex" justify="space-around">
-                    <Col span={4}>空调编号：</Col>
-                    <Col span={4}>控制区域:</Col>
-                    <Col span={4}>所属楼宇：</Col>
-                    <Col span={4}>当前客户：</Col>
-                    <Col span={4}>采集时间：</Col>
+                    <Col span={4}> <TitleBox> 机房明细 </TitleBox> </Col>
+                    <Col span={4} />
+                    <Col span={4} />
+                    <Col span={4} />
+                    <Col span={4} />
                 </Row>
 
-                <Row type="flex" justify="space-around">
-                    <Col span={4}> <TitleBox> 空调控制 </TitleBox> </Col>
-                </Row>
                 <Row type="flex" justify="space-around">
                     <Col span={4}> <Thermometers value={23} /> </Col> {/* 向下传递 温度(数值类型) */}
                     <Col span={4}> <Control controlState={false} /> </Col> {/* 向下传递 开关状态(布尔类型) */}
