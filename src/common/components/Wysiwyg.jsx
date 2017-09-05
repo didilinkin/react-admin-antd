@@ -126,10 +126,6 @@ class Wysiwyg extends React.Component {
         (resolve, reject) => {
             const xhr = new XMLHttpRequest() // eslint-disable-line no-undef
             xhr.open('POST', 'http://192.168.5.24:18082/storage/uploader')
-<<<<<<< HEAD
-            xhr.setRequestHeader('Authorization', 'Client-ID 8d26ccd12712fca')
-=======
->>>>>>> 49f3b916b8b00b703b2b4bde75d529ed9daab877
             const data = new FormData() // eslint-disable-line no-undef
             data.append('file', file)
             xhr.send(data)
