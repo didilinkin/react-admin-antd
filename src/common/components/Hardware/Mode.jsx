@@ -11,61 +11,20 @@ import PropTypes from 'prop-types'
 import { Card, Button } from 'antd' // Button
 import styled from 'styled-components'
 import elf from '../../../elf'
-import { apiPost } from '../../../api'
 
 class Mode extends React.Component {
     constructor (props) {
         super(props)
-
-        let onState = (stateType) => {
-            let stateObj = {
-                refrigeration: false, // 制冷
-                heating: false, // 制热
-                auto: false // 自动
-            }
-
-            stateObj[stateType] = true
-            this.state = stateObj
-        }
-
-        switch (props.modeState) {
-            case 'refrigeration':
-                onState('refrigeration')
-                break
-            case 'heating':
-                onState('heating')
-                break
-            case 'auto':
-                onState('auto')
-                break
-            default:
-                onState('auto')
-                break
+        this.state = {
+            refrigeration: false,
+            heating: false
         }
     }
-    handleModel1 = async () => {
-        await apiPost(
-            '/hardware/setAirStatusList',
-            {model: '制冷',
-                numCode: this.props.numCode}
-        )
-        this.props.refresh()
-    }
-    handleModel2 = async () => {
-        await apiPost(
-            '/hardware/setAirStatusList',
-            {model: '制热',
-                numCode: this.props.numCode}
-        )
-        this.props.refresh()
-    }
-    handleModel3 = async () => {
-        await apiPost(
-            '/hardware/setAirStatusList',
-            {model: '自动',
-                numCode: this.props.numCode}
-        )
-        this.props.refresh()
+    componentWillReceiveProps (next) {
+        this.setState({
+            refrigeration: next.modeState === 'refrigeration',
+            heating: next.modeState === 'heating'
+        })
     }
     render () {
         return (
@@ -79,16 +38,12 @@ class Mode extends React.Component {
                 <TitleBox> 运行模式 </TitleBox>
 
                 <RefrigerationBtn refrigeration={ this.state.refrigeration }>
-                    <Button onClick={this.handleModel1}> 制冷 </Button>
+                    <Button onClick={() => this.props.refresh('model', 'refrigeration')}> 制冷 </Button>
                 </RefrigerationBtn>
 
                 <HeatingBtn heating={ this.state.heating }>
-                    <Button onClick={this.handleModel2}> 制热 </Button>
+                    <Button onClick={() => this.props.refresh('model', 'heating')}> 制热 </Button>
                 </HeatingBtn>
-
-                <AutoBtn auto={ this.state.auto }>
-                    <Button onClick={this.handleModel3}> 自动 </Button>
-                </AutoBtn>
             </Card>
         )
     }
@@ -121,11 +76,5 @@ const HeatingBtn = ModeBtn.extend `
     }
 `
 
-const AutoBtn = ModeBtn.extend `
-    >button {
-        background: ${props => props.auto ? `${elf.c.success}` : `${elf.c.base}`};
-        color: ${props => props.auto ? `${elf.c.base}` : `${elf.c.font}`};
-    }
-`
 
 export default Mode

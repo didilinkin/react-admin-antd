@@ -11,32 +11,42 @@ import PropTypes from 'prop-types'
 import { Card, Icon } from 'antd'
 import styled from 'styled-components'
 import elf from '../../../elf'
-import { apiPost } from '../../../api/index'
 
-const Control = ({ controlState }) => (
-    <Card
-        style={{
-            width: 200,
-            textAlign: 'center'
-        }}
-    >
-        <div style={{ height: 150 }} >
-            <TitleBox> 开关控制 </TitleBox>
+class Control extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            controlState: false
+        }
+    }
+    componentWillReceiveProps (next) {
+        this.setState({
+            controlState: next.controlState === true
+        })
+    }
+    render () {
+        return (
+            <Card
+                style={{
+                    width: 200,
+                    textAlign: 'center'
+                }}
+            >
+                <div style={{ height: 150 }} >
+                    <TitleBox> 开关控制 </TitleBox>
 
-            <IconBox controlState={controlState}>
-                <Icon type="poweroff" onClick={() => handleControl(controlState)} />
-            </IconBox>
-        </div>
-    </Card>
-)
+                    <IconBox controlState={this.state.controlState}>
+                        <Icon type="poweroff" onClick={() => this.props.refresh('onOff', this.state.controlState)} />
+                    </IconBox>
+                </div>
+            </Card>
+        )
+    }
+}
 Control.propTypes = {
-    controlState: PropTypes.bool.isRequired
+    controlState: PropTypes.bool
 }
-function handleControl (controlState) {
-    console.log({controlState} + '111111')
-    apiPost(
-    )
-}
+
 // style
 const TitleBox = styled.h1`
     ${elf.m.fS(elf.f.title)}; // font-size: title
