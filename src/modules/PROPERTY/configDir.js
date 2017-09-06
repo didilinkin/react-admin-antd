@@ -29,6 +29,12 @@ const PROPERTY_DIR = {
             path: '/home/property/waterCharge',
             ancestor: ['property'],
             component: require('./containers/WaterCharge').default
+        }, {
+            title: '物业公告',
+            key: 'propertyNotice',
+            path: '/home/client/propertyNotice',
+            ancestor: ['client'],
+            component: require('./containers/PropertyNotice').default
         }
     ]
 }
