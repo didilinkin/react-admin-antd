@@ -219,7 +219,7 @@ class PowerBillHead extends React.Component {
                             }
                             {type === 1 &&
                             <span>
-                                <Button style={{marginRight: '10px'}} onClick={this.openWaterAddUpComponent} type="primary">添加水费</Button>
+                                <Button style={{marginRight: '10px'}} onClick={this.openPowerAddUpComponent} type="primary">添加电费</Button>
                                 <Button type="primary" onClick={this.BatchAuditWaterBill}>提交财务</Button>
                             </span>
                             }

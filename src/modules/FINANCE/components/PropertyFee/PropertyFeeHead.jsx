@@ -77,7 +77,7 @@ class CollectRentHead extends React.Component {
                                 <Select
                                     showSearch
                                     allowClear
-                                    style={{ width: 140 }}
+                                    style={{ width: 200 }}
                                     placeholder="请选择所属楼宇"
                                     optionFilterProp="children"
                                 >
@@ -93,7 +93,7 @@ class CollectRentHead extends React.Component {
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('clientName')(
-                                <Input placeholder="请输入客户名称" style={{ width: 140 }} />
+                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
@@ -102,7 +102,7 @@ class CollectRentHead extends React.Component {
                             wrapperCol={{ span: 12 }}
                         >
                             {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入房间编号" style={{ width: 140 }} />
+                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
                             )}
                         </FormItem>
                     </Col>
@@ -162,7 +162,7 @@ class CollectRentHead extends React.Component {
                                     <Select
                                         showSearch
                                         allowClear
-                                        style={{ width: 170 }}
+                                        style={{ width: 200 }}
                                         placeholder="请选择打印状态"
                                         optionFilterProp="children"
                                     >
@@ -194,7 +194,7 @@ class CollectRentHead extends React.Component {
                             <FormItem label="查询日期" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 13 }}
                             >
-                                <RangePicker onChange={this.getDate} />
+                                <RangePicker style={{ width: 200 }} onChange={this.getDate} />
                             </FormItem>
                         </Col>
                     </div>
