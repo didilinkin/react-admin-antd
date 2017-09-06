@@ -25,7 +25,6 @@ class WindSpeed extends React.Component {
             }
 
             stateObj[stateType] = true
-            console.dir(stateObj)
             this.state = stateObj
         }
 

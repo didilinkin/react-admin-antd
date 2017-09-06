@@ -8,6 +8,7 @@
 import React from 'react'
 
 import { Row, Col } from 'antd'
+import { apiPost } from '../../../../api'
 
 import {
     Thermometers,
@@ -21,6 +22,54 @@ import styled from 'styled-components'
 import elf from '../../../../elf'
 
 class The extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            controlState: null,
+            modeState: null,
+            windSpeedState: null,
+            json: [],
+            data: {}
+        }
+    }
+    async initialRemarks () {
+        let resulData = await apiPost(
+            '/hardware/getAirStatusList',
+            {numCode: this.props.match.params.id.toString()}
+        )
+        // console.log(resulData.data)
+        let json = this.state.json
+        if (resulData.data.onOff === '关机') {
+            json['controlState'] = true
+        } else {
+            json['controlState'] = false
+        }
+        if (resulData.data.model === '制冷') {
+            json['modeState'] = 'refrigeration'
+        } else if (resulData.data.model === '制热') {
+            json['modeState'] = 'heating'
+        } else if (resulData.data.model === '自动') {
+            json['modeState'] = 'auto'
+        }
+        if (resulData.data.windSpeed === '高速') {
+            json['windSpeedState'] = 'high'
+        } else if (resulData.data.windSpeed === '低速') {
+            json['windSpeedState'] = 'low'
+        } else if (resulData.data.windSpeed === '自动') {
+            json['windSpeedState'] = 'auto'
+        }
+        this.setState({
+            data: resulData.data,
+            json: json
+        })
+        debugger
+    }
+    componentDidMount () {
+        this.initialRemarks()
+    }
+    refresh = async () => {
+        this.initialRemarks()
+    }
     render () {
         return (
             <TheBox>
@@ -28,22 +77,49 @@ class The extends React.Component {
                     <Col span={4}> <TitleBox> 空调信息 </TitleBox> </Col>
                 </Row>
                 <Row type="flex" justify="space-around">
-                    <Col span={4}>空调编号：</Col>
-                    <Col span={4}>控制区域:</Col>
-                    <Col span={4}>所属楼宇：</Col>
-                    <Col span={4}>当前客户：</Col>
-                    <Col span={4}>采集时间：</Col>
+                    <Col span={4}>空调编号：{this.state.data.numCode}</Col>
+                    <Col span={4}>控制区域:{this.state.data.controlArea}</Col>
+                    <Col span={4}>所属楼宇：{this.state.data.buildCode}</Col>
+                    <Col span={4}>当前客户：{this.state.data.numCode}</Col>
+                    <Col span={4}>采集时间：{this.state.data.createdAt}</Col>
                 </Row>
 
                 <Row type="flex" justify="space-around">
                     <Col span={4}> <TitleBox> 空调控制 </TitleBox> </Col>
                 </Row>
                 <Row type="flex" justify="space-around">
-                    <Col span={4}> <Thermometers value={23} /> </Col> {/* 向下传递 温度(数值类型) */}
-                    <Col span={4}> <Control controlState={false} /> </Col> {/* 向下传递 开关状态(布尔类型) */}
-                    <Col span={4}> <Mode modeState={'refrigeration'} /> </Col> {/* 向下传递 模式类型(字符串类型) */}
-                    <Col span={4}> <SetTemperature temperature={28} /> </Col> {/* 向下传递 设置温度(数值类型) */}
-                    <Col span={4}> <WindSpeed windSpeedState={'auto'} /> </Col> {/* 向下传递 风速(字符串类型) */}
+                    <Col span={4}> <Thermometers value={this.state.data.roomTemp} /> </Col> {/* 向下传递 温度(数值类型) */}
+                    <Col span={4}>
+                        <Control
+                            numCode={this.props.match.params.id.toString()}
+                            controlState={this.state.json.controlState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 开关状态(布尔类型) */}
+                    {
+                        console.log(this.state.json.modeState)
+                    }
+                    <Col span={4}>
+                        <Mode
+                            numCode={this.props.match.params.id.toString()}
+                            modeState={this.state.json.modeState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 模式类型(字符串类型) */}
+                    <Col span={4}>
+                        <SetTemperature
+                            numCode={this.props.match.params.id.toString()}
+                            temperature={this.state.data.setTemp}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 设置温度(数值类型) */}
+                    <Col span={4}>
+                        <WindSpeed
+                            numCode={this.props.match.params.id.toString()}
+                            windSpeedState={this.state.json.windSpeedState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 风速(字符串类型) */}
                 </Row>
             </TheBox>
         )

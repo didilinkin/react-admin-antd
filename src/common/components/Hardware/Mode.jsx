@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import { Card, Button } from 'antd' // Button
 import styled from 'styled-components'
 import elf from '../../../elf'
+import { apiPost } from '../../../api'
 
 class Mode extends React.Component {
     constructor (props) {
@@ -42,7 +43,30 @@ class Mode extends React.Component {
                 break
         }
     }
-
+    handleModel1 = async () => {
+        await apiPost(
+            '/hardware/setAirStatusList',
+            {model: '制冷',
+                numCode: this.props.numCode}
+        )
+        this.props.refresh()
+    }
+    handleModel2 = async () => {
+        await apiPost(
+            '/hardware/setAirStatusList',
+            {model: '制热',
+                numCode: this.props.numCode}
+        )
+        this.props.refresh()
+    }
+    handleModel3 = async () => {
+        await apiPost(
+            '/hardware/setAirStatusList',
+            {model: '自动',
+                numCode: this.props.numCode}
+        )
+        this.props.refresh()
+    }
     render () {
         return (
             <Card
@@ -55,15 +79,15 @@ class Mode extends React.Component {
                 <TitleBox> 运行模式 </TitleBox>
 
                 <RefrigerationBtn refrigeration={ this.state.refrigeration }>
-                    <Button> 制冷 </Button>
+                    <Button onClick={this.handleModel1}> 制冷 </Button>
                 </RefrigerationBtn>
 
                 <HeatingBtn heating={ this.state.heating }>
-                    <Button> 制热 </Button>
+                    <Button onClick={this.handleModel2}> 制热 </Button>
                 </HeatingBtn>
 
                 <AutoBtn auto={ this.state.auto }>
-                    <Button> 自动 </Button>
+                    <Button onClick={this.handleModel3}> 自动 </Button>
                 </AutoBtn>
             </Card>
         )

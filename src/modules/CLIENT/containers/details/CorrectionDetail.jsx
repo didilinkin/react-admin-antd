@@ -57,7 +57,7 @@ class App extends React.Component {
         link.rel = 'stylesheet'
         win.document.head.appendChild(link)
         win.document.head.appendChild(script)
-        win.document.onload = win.dy()
+        // win.onload = () => win.dy()
         // win.document.head.innerHTML = '<script type="text/javascript">window.onload = Window.print()</script>'
         // win.onload = win.print()
         // win.close()

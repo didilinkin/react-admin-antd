@@ -17,6 +17,12 @@ const LEASE_DIR = {
             path: '/home/lease/rentManagement',
             ancestor: ['lease'],
             component: require('./containers/RentManagement').default
+        }, {
+            title: '注册信息',
+            key: 'registrationMessage',
+            path: '/home/building/registrationMessage',
+            ancestor: ['building'],
+            component: require('./containers/RegistrationMessage').default
         }
     ]
 }

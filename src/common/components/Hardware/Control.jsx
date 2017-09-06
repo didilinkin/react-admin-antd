@@ -11,6 +11,7 @@ import PropTypes from 'prop-types'
 import { Card, Icon } from 'antd'
 import styled from 'styled-components'
 import elf from '../../../elf'
+import { apiPost } from '../../../api/index'
 
 const Control = ({ controlState }) => (
     <Card
@@ -19,20 +20,23 @@ const Control = ({ controlState }) => (
             textAlign: 'center'
         }}
     >
-        <div style={{ height: 150 }}>
+        <div style={{ height: 150 }} >
             <TitleBox> 开关控制 </TitleBox>
 
             <IconBox controlState={controlState}>
-                <Icon type="poweroff" />
+                <Icon type="poweroff" onClick={() => handleControl(controlState)} />
             </IconBox>
         </div>
     </Card>
 )
-
 Control.propTypes = {
     controlState: PropTypes.bool.isRequired
 }
-
+function handleControl (controlState) {
+    console.log({controlState} + '111111')
+    apiPost(
+    )
+}
 // style
 const TitleBox = styled.h1`
     ${elf.m.fS(elf.f.title)}; // font-size: title

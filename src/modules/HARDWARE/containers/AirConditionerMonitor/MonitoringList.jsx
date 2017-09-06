@@ -108,7 +108,7 @@ class MonitoringList extends React.Component {
         })
     }
     controlAreaText = ''
-    controlArea = (e) => {
+    handelArea = (e) => {
         this.controlAreaText = e.target.value
     }
     numberText = ''
@@ -126,7 +126,7 @@ class MonitoringList extends React.Component {
                 >
                     <span>控制区域：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,
-                        arginRight: '5px'}} onChange={this.controlArea}
+                        arginRight: '5px'}} onChange={this.handelArea}
                     />
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;空调编号&nbsp;：&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <Input style={{width: 200,

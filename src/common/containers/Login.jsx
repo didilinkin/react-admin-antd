@@ -64,9 +64,7 @@ class Login extends React.Component {
         return (
             <LoginBox>
                 <LoginForm>
-                    <LoginTitle>
-                        <span>长江中心 - 物业管理系统</span>
-                    </LoginTitle>
+                    <LoginTitle> 长江中心 - 物业管理系统 </LoginTitle>
                     <Form style={{ maxWidth: '300px' }}>
                         <FormItem>
                             {
@@ -120,7 +118,7 @@ const loginImg = require('../../assets/images/Login@2x.png')
 const LoginBox = styled.div`
     height: 100%;
     ${elf.m.flexCenter()};
-    ${elf.m.bCimg(loginImg)};
+    ${elf.m.bCimg(loginImg, 'cover')};
 `
 
 const LoginForm = styled.div`
@@ -134,7 +132,8 @@ const LoginForm = styled.div`
 const LoginTitle = styled.h2`
     font-size: ${elf.f.title}px;
     text-align: center;
-    padding-bottom: ${elf.d.autoPadding};
+    font-weight: bold;
+    padding-bottom: ${elf.d.autoPadding}px;
 `
 
 export default Form.create()(Login)
