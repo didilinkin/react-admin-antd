@@ -437,7 +437,7 @@ class CollectionDetails extends React.Component {
                                 </Row>
                             </div>
                             <div style={{marginTop: 10}}>
-                                {this.state.map.waterBill.penaltyPaidMoney > 0 &&
+                                {(this.state.map.waterBill.penaltyPaidMoney > 0 || this.state.map.waterBill.penaltyType === 1) &&
                                 <Table
                                     columns={columns6}
                                     dataSource={this.state.ChargeRecord6}
