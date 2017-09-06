@@ -35,7 +35,7 @@ const SetTemperature = ({ temperature }) => (
 )
 
 SetTemperature.propTypes = {
-    temperature: PropTypes.number.isRequired
+    temperature: PropTypes.number
 }
 
 // style

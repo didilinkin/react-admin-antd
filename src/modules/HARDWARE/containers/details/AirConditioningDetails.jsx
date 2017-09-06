@@ -62,7 +62,7 @@ class The extends React.Component {
             data: resulData.data,
             json: json
         })
-        debugger
+        // debugger
     }
     componentDidMount () {
         this.initialRemarks()
@@ -97,7 +97,7 @@ class The extends React.Component {
                         />
                     </Col> {/* 向下传递 开关状态(布尔类型) */}
                     {
-                        console.log(this.state.json.modeState)
+                        // console.log(this.state.json.modeState)
                     }
                     <Col span={4}>
                         <Mode
@@ -105,6 +105,9 @@ class The extends React.Component {
                             modeState={this.state.json.modeState}
                             refresh={this.refresh}
                         />
+                        {
+                            // console.log(this.state.json.modeState)
+                        }
                     </Col> {/* 向下传递 模式类型(字符串类型) */}
                     <Col span={4}>
                         <SetTemperature

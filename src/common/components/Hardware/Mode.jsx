@@ -17,6 +17,8 @@ class Mode extends React.Component {
     constructor (props) {
         super(props)
 
+        console.log(props)
+
         let onState = (stateType) => {
             let stateObj = {
                 refrigeration: false, // 制冷

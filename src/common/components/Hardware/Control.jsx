@@ -30,7 +30,7 @@ const Control = ({ controlState }) => (
     </Card>
 )
 Control.propTypes = {
-    controlState: PropTypes.bool.isRequired
+    controlState: PropTypes.bool
 }
 function handleControl (controlState) {
     console.log({controlState} + '111111')
