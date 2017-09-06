@@ -198,10 +198,10 @@ class EnergyDeposit extends React.Component {
                         auditStatus = '待审核'
                     }
                     if (record.auditStatus === 1) {
-                        auditStatus = '审核不通过'
+                        auditStatus = '审核通过'
                     }
                     if (record.auditStatus === 2) {
-                        auditStatus = '审核通过'
+                        auditStatus = '审核不通过'
                     }
                     return (
                         <span>{auditStatus}</span>

@@ -36,7 +36,7 @@ class The extends React.Component {
             '/hardware/getAirStatusList',
             {numCode: this.props.match.params.id.toString()}
         )
-        console.log(resulData.data)
+        // console.log(resulData.data)
         if (resulData.data.onOff === '关机') {
             this.setState({
                 controlState: true
@@ -50,11 +50,11 @@ class The extends React.Component {
             this.setState({
                 modeState: 'refrigeration'
             })
-        } else if (resulData.data.modal === '制热') {
+        } else if (resulData.data.model === '制热') {
             this.setState({
                 modeState: 'heating'
             })
-        } else if (resulData.data.modal === '自动') {
+        } else if (resulData.data.model === '自动') {
             this.setState({
                 modeState: 'auto'
             })
@@ -79,6 +79,9 @@ class The extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    refresh = async () => {
+        this.initialRemarks()
+    }
     render () {
         return (
             <TheBox>
@@ -98,8 +101,20 @@ class The extends React.Component {
                 </Row>
                 <Row type="flex" justify="space-around">
                     <Col span={4}> <Thermometers value={this.state.data.roomTemp} /> </Col> {/* 向下传递 温度(数值类型) */}
-                    <Col span={4}> <Control controlState={this.state.controlState} /> </Col> {/* 向下传递 开关状态(布尔类型) */}
-                    <Col span={4}> <Mode modeState={this.state.modeState} /> </Col> {/* 向下传递 模式类型(字符串类型) */}
+                    <Col span={4}>
+                        <Control
+                            numCode={this.props.match.params.id.toString()}
+                            controlState={this.state.controlState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 开关状态(布尔类型) */}
+                    <Col span={4}>
+                        <Mode
+                            numCode={this.props.match.params.id.toString()}
+                            modeState={this.state.modeState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 模式类型(字符串类型) */}
                     <Col span={4}> <SetTemperature temperature={this.state.data.setTemp} /> </Col> {/* 向下传递 设置温度(数值类型) */}
                     <Col span={4}> <WindSpeed windSpeedState={this.state.windSpeedState} /> </Col> {/* 向下传递 风速(字符串类型) */}
                 </Row>
