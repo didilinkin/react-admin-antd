@@ -31,7 +31,7 @@ const Thermometers = ({ value }) => (
 )
 
 Thermometers.propTypes = {
-    value: PropTypes.number.isRequired
+    value: PropTypes.number
 }
 
 // style
