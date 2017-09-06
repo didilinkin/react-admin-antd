@@ -87,7 +87,14 @@ const CLIENT_DIR = {
                     component: require('./containers/accessCard/Deposit').default
                 }
             ]
-        }
+        },
+        {
+            title: '房间梆定',
+            key: 'roombinding',
+            path: '/home/client/roombinding',
+            ancestor: ['client'],
+            component: require('./containers/RoomBinding').default
+        },
     ]
 }
 
