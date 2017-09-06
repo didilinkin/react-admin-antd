@@ -189,7 +189,7 @@ class MenuCom extends React.Component {
                         defaultExpandAll
                         onSelect={this.onSelect}
                     >
-                        <TreeNode title={<Button><Icon type="folder" />菜单结构<Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, 3)} type="caret-down" /></Dropdown></Button>} key="0-0">
+                        <TreeNode title={<Button><Icon type="folder" />菜单结构<Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft"><Icon type="caret-down" /></Dropdown></Button>} key="0-0">
                             {this.recursion(this.state.MenuList, 3)}
                         </TreeNode>
                     </Tree>
