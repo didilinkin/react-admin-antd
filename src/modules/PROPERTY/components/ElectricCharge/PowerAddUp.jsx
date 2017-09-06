@@ -88,8 +88,6 @@ class sumElectricityAddUp extends React.Component {
             })
             let elecListJson = JSON.stringify(elecList)
             json['list'] = elecListJson
-            console.log(json)
-            debugger
             if (this.props.id > 0) {
                 json['idOld'] = this.props.id
                 await apiPost(
@@ -609,6 +607,7 @@ class sumElectricityAddUp extends React.Component {
     }
     // 选择房间编号
     chooseRoomNumber = async (value) => {
+        console.log(value)
         // 查询上次抄表数
         let lastTimeData = await apiPost(
             '/ElectricityFees/LastTimeNumber',
@@ -622,6 +621,10 @@ class sumElectricityAddUp extends React.Component {
             this.props.form.setFieldsValue({
                 lastSurfaceNumber: this.props.id ? lastTimeData.lastSurfaceNumber : lastTimeData.surfaceNumber,
                 electricCostName: this.state.powerType !== 2 ? value : ''
+            })
+        } else {
+            this.props.form.setFieldsValue({
+                electricCostName: value
             })
         }
     }

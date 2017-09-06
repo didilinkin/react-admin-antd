@@ -50,12 +50,6 @@ const CLIENT_DIR = {
             ancestor: ['client'],
             component: require('./containers/Notice').default
         }, {
-            title: '物业公告',
-            key: 'propertyNotice',
-            path: '/home/client/propertyNotice',
-            ancestor: ['client'],
-            component: require('./containers/PropertyNotice').default
-        }, {
             title: '二次装修',
             key: 'secondaryDecoration',
             path: '/home/client/secondaryDecoration',
