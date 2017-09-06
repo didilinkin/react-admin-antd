@@ -28,6 +28,7 @@ class The extends React.Component {
             controlState: null,
             modeState: null,
             windSpeedState: null,
+            json: [],
             data: {}
         }
     }
@@ -37,44 +38,31 @@ class The extends React.Component {
             {numCode: this.props.match.params.id.toString()}
         )
         // console.log(resulData.data)
+        let json = this.state.json
         if (resulData.data.onOff === '关机') {
-            this.setState({
-                controlState: true
-            })
+            json['controlState'] = true
         } else {
-            this.setState({
-                controlState: false
-            })
+            json['controlState'] = false
         }
         if (resulData.data.model === '制冷') {
-            this.setState({
-                modeState: 'refrigeration'
-            })
+            json['modeState'] = 'refrigeration'
         } else if (resulData.data.model === '制热') {
-            this.setState({
-                modeState: 'heating'
-            })
+            json['modeState'] = 'heating'
         } else if (resulData.data.model === '自动') {
-            this.setState({
-                modeState: 'auto'
-            })
+            json['modeState'] = 'auto'
         }
         if (resulData.data.windSpeed === '高速') {
-            this.setState({
-                windSpeedState: 'high'
-            })
+            json['windSpeedState'] = 'high'
         } else if (resulData.data.windSpeed === '低速') {
-            this.setState({
-                windSpeedState: 'windSpeed'
-            })
+            json['windSpeedState'] = 'low'
         } else if (resulData.data.windSpeed === '自动') {
-            this.setState({
-                windSpeedState: 'auto'
-            })
+            json['windSpeedState'] = 'auto'
         }
         this.setState({
-            data: resulData.data
+            data: resulData.data,
+            json: json
         })
+        debugger
     }
     componentDidMount () {
         this.initialRemarks()
@@ -104,19 +92,34 @@ class The extends React.Component {
                     <Col span={4}>
                         <Control
                             numCode={this.props.match.params.id.toString()}
-                            controlState={this.state.controlState}
+                            controlState={this.state.json.controlState}
                             refresh={this.refresh}
                         />
                     </Col> {/* 向下传递 开关状态(布尔类型) */}
+                    {
+                        console.log(this.state.json.modeState)
+                    }
                     <Col span={4}>
                         <Mode
                             numCode={this.props.match.params.id.toString()}
-                            modeState={this.state.modeState}
+                            modeState={this.state.json.modeState}
                             refresh={this.refresh}
                         />
                     </Col> {/* 向下传递 模式类型(字符串类型) */}
-                    <Col span={4}> <SetTemperature temperature={this.state.data.setTemp} /> </Col> {/* 向下传递 设置温度(数值类型) */}
-                    <Col span={4}> <WindSpeed windSpeedState={this.state.windSpeedState} /> </Col> {/* 向下传递 风速(字符串类型) */}
+                    <Col span={4}>
+                        <SetTemperature
+                            numCode={this.props.match.params.id.toString()}
+                            temperature={this.state.data.setTemp}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 设置温度(数值类型) */}
+                    <Col span={4}>
+                        <WindSpeed
+                            numCode={this.props.match.params.id.toString()}
+                            windSpeedState={this.state.json.windSpeedState}
+                            refresh={this.refresh}
+                        />
+                    </Col> {/* 向下传递 风速(字符串类型) */}
                 </Row>
             </TheBox>
         )
