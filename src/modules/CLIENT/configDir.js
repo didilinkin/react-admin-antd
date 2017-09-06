@@ -94,7 +94,7 @@ const CLIENT_DIR = {
             path: '/home/client/roombinding',
             ancestor: ['client'],
             component: require('./containers/RoomBinding').default
-        },
+        }
     ]
 }
 
