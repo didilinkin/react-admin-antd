@@ -204,7 +204,11 @@ class CollectRentHead extends React.Component {
                         {
                             type === 2 &&
                             <span>
-                                <Button style={{marginRight: '10px'}}>批量打印</Button>
+                                <Button style={{marginRight: '10px'}}
+                                    onClick={() => {
+                                        window.open('http://192.168.5.24:18082/collectRent/print?ids=' + this.props.RowKeys + '&source=' + 1)
+                                    }}
+                                >批量打印</Button>
                                 <Button >导出</Button>
                             </span>
                         }

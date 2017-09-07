@@ -152,16 +152,16 @@ class CollectRentSuccess extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 100,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;&nbsp;&nbsp;</a>
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
-                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id)
+                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id + '&source=' + 1)
                             }}
                             >
                                 <a>打印通知单</a>

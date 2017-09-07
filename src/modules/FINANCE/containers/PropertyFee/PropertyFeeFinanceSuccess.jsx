@@ -158,7 +158,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                 key: 'updateDate'
             }, {
                 title: '操作',
-                width: 100,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -168,7 +168,13 @@ class PropertyFeeFinanceSuccess extends React.Component {
                         <div>
                             <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a> 撤回 </a>
+                                <a> 撤回&nbsp;&nbsp; </a>
+                            </Popconfirm>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + record.id + '&source=' + 2)
+                            }}
+                            >
+                                <a>打印通知单</a>
                             </Popconfirm>
                         </div>
                     )
