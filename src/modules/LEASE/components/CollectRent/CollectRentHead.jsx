@@ -199,17 +199,17 @@ class CollectRentHead extends React.Component {
                     </div>
                     }
                 </Row>
-                {type === 2 && this.state.openState &&
                 <Row style={{marginBottom: '10px'}}>
                     <Col span={16} >
                         {
-                            type === 4 &&
+                            type === 2 &&
                             <span>
                                 <Button style={{marginRight: '10px'}}>批量打印</Button>
                                 <Button >导出</Button>
                             </span>
                         }
                     </Col>
+                    {type === 2 && this.state.openState &&
                     <Col span={6}>
                         <div>
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
@@ -218,8 +218,8 @@ class CollectRentHead extends React.Component {
                             <a onClick={this.open}>{this.state.open}</a>}
                         </div>
                     </Col>
+                    }
                 </Row>
-                }
             </Form>
         )
     }
