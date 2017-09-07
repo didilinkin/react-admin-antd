@@ -16,14 +16,22 @@ class TabsContainers extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            activeKey: props.panesState.activeKey, // 默认值: panes[0].key
+            activeKey: props.panesState.activeKey, // 默认值: panes[0].key; Redux中 setPanes 状态
             panes: props.panesState.panes // 默认值: [{ route, tabsProps, key }]
         }
     }
 
     // render 渲染之前
     componentWillMount = () => {
-        this.handleChange()
+        let asyncHandle = async function () {
+            await this.handleChange()
+
+            await this.setState(cloneDeep(this.props.panesState)) // 深拷贝
+
+            // await console.log('改变 state')
+        }
+
+        asyncHandle.bind(this)()
     }
 
     // 切换面板的回调 => 切换 state.activeKey
@@ -58,6 +66,7 @@ class TabsContainers extends React.Component {
             if (hasUrl < 1) { // 无 当前url
                 let currentPanes = this.setCloneObj() // 拷贝 出当前的 状态的obj对象(深拷贝)
                 this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store; panes数组length +1, 深拷贝当前的对象; => 发起actions
+                // console.log('此时 redux应该改变, 但未改变')
             } else { // 有 当前url
                 let currentKey // 当前的 key
                 arrayPanes.forEach((pane, i) => { // 遍历 state中的 panes数组
@@ -74,6 +83,7 @@ class TabsContainers extends React.Component {
     setActions = (strKey, arrPanes) => { // 参数类型: str, obj
         // console.log('检查 tabs 运行几次设置action')
         const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj => 返回最新的 panes数组
+
         this.props.onAddPane({ // 使用 props传入的 actions方法 => 将url状态保存
             activeKey: strKey,
             panes: previousState
@@ -88,6 +98,7 @@ class TabsContainers extends React.Component {
             title: this.props.route.title,
             path: this.props.tabsProps.match.url
         })
+
         return cloneObj
     }
 
@@ -128,13 +139,6 @@ class TabsContainers extends React.Component {
                 panes: cloneDeep(currentPanes)
             })
         }
-    }
-
-    // 当 props改变时 触发 => 调用 更改 setState的方法
-    componentWillReceiveProps = (nextProps) => {
-        // console.log('容器 传入新props')
-        let currentState = cloneDeep(nextProps.panesState)
-        this.setState(currentState)
     }
 
     render () {
