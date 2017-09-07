@@ -118,17 +118,6 @@ class ElectricChargeDetails extends React.Component {
                 dataIndex: 'valleysProportion'
             })
         }
-        if (electricityFeeInfo.electricityFees.penaltyType === 1) {
-            console.log(liquidatedDamagesList)
-            liquidatedDamagesList.push({
-                receiptDate: electricityFeeInfo.electricityFees.liquidatedDamagesDate,
-                discountMoney: '0',
-                paidMoney: electricityFeeInfo.electricityFees.liquidatedDamages,
-                unpaidMoney: '0',
-                paidWayString: '放入下月电费',
-                createName: electricityFeeInfo.electricityFees.defaultPayee ? electricityFeeInfo.electricityFees.defaultPayee : ''
-            })
-        }
         this.setState({
             list: electricityFeeInfo.list,
             electricityFees: electricityFeeInfo.electricityFees,

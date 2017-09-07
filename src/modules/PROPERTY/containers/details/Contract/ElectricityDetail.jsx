@@ -81,7 +81,7 @@ class ElectricityDetail extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} -- {this.state.contract.endDate}</Col>
+                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} ~ {this.state.contract.endDate}</Col>
                             <Col span={16}><b>录入时间：</b>{this.state.contract.createName} {this.state.contract.createDate}</Col>
                         </Row>
                         <Row>
