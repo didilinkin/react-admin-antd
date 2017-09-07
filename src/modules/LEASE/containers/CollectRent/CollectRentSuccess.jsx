@@ -20,6 +20,8 @@ class CollectRentSuccess extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -39,7 +41,9 @@ class CollectRentSuccess extends React.Component {
         let result = await apiPost(
             '/collectRent/collectRentList',
             {auditStatus: 2,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
@@ -152,16 +156,16 @@ class CollectRentSuccess extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 100,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;&nbsp;&nbsp;</a>
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
-                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id)
+                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id + '&source=' + 1)
                             }}
                             >
                                 <a>打印通知单</a>
@@ -181,6 +185,8 @@ class CollectRentSuccess extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

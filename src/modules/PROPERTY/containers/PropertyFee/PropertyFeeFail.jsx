@@ -21,6 +21,8 @@ class PropertyFeeFail extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -54,7 +56,9 @@ class PropertyFeeFail extends Component {
         await apiPost(
             '/propertyFee/updatePropertyFee',
             {id: id,
-                delFlag: 1}
+                delFlag: 1,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         notification.open({
             message: '删除成功',
@@ -155,6 +159,8 @@ class PropertyFeeFail extends Component {
             filters = []
         }
         filters['auditStatus'] = 3
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

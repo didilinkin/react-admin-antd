@@ -19,6 +19,8 @@ class PropertyFeeFinanceConduct extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -37,7 +39,9 @@ class PropertyFeeFinanceConduct extends Component {
             '/propertyFee/propertyFeeList',
             {auditStatus: 1,
                 contractStatus: 0,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -122,6 +126,8 @@ class PropertyFeeFinanceConduct extends Component {
             filters = []
         }
         filters['auditStatus'] = 1
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

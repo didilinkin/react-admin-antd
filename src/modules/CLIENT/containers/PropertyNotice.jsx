@@ -29,6 +29,8 @@ class PropertyNotice extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -85,7 +87,9 @@ class PropertyNotice extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/complaint/noticeList',
-            {page: this.state.page}
+            {page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
@@ -168,6 +172,8 @@ class PropertyNotice extends Component {
             filters = []
         }
         filters['title'] = this.title
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
