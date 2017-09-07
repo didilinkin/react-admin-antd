@@ -550,7 +550,7 @@ class HydropowerContractAddition extends React.Component {
                         <Input type="hidden" />
                     )}
                 </Form>
-                <Button onClick={this.handleSubmit}>保存</Button>
+                <Button type="primary" onClick={this.handleSubmit}>保存</Button>
             </Modal>
         )
     }

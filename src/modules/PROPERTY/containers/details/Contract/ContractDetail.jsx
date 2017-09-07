@@ -135,7 +135,7 @@ class ContractDetail extends React.Component {
                                     <Col span={8}><b>E-mail：</b>{sublet.email}</Col>
                                 </Row>
                                 <Row>
-                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} -- {sublet.subletEndDate} </Col>
+                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} ~ {sublet.subletEndDate} </Col>
                                     <Col span={16}><b>转租房间：</b>{sublet.roomNum} </Col>
                                 </Row>
                                 <Row>
@@ -202,11 +202,11 @@ class ContractDetail extends React.Component {
                                         单价
                                 <em className="color1">{this.state.contract.powerUnitPrice}
                                 </em> 元/度
-                                <div style={{marginLeft: '20px'}}>
+                                <span style={{marginLeft: '20px'}}>
                                     变比
                                     <em className="color1">{this.state.contract.powerRatio}</em> 电损比
                                     <em className="color1">{this.state.contract.powerLossRatio}</em>%
-                                </div>
+                                </span>
                             </Col>
                         </Row>
                         <Row>

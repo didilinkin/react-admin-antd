@@ -149,7 +149,7 @@ class sumElectricityAddUp extends React.Component {
             dataIndex: 'singleMoney',
             key: 'singleMoney',
             render: function (text) {
-                return parseFloat(text).toFixed(2)
+                return parseFloat(text).toFixed(1)
             }
         }, {
             title: '备注',
@@ -361,6 +361,7 @@ class sumElectricityAddUp extends React.Component {
         })
     }
     complement (arr1, arr2) {
+        console.log(arr1, arr2)
         const arr = arr1.toString().split(',')
         let j = 0
         arr1.forEach((a, i) => {
@@ -394,10 +395,9 @@ class sumElectricityAddUp extends React.Component {
                 this.getSubletList(contractId)
                 this.setTableColunms(contract, 'powerType')
                 let roomNumber = contract.leaseRooms.split(',')
-                let roomIds = contract.roomIds.split(',')
+                let newRoomNumber = []
                 this.state.subletList.map(sublet => {
-                    roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
-                    roomIds = this.complement(roomIds, sublet.roomNum.split(','))
+                    newRoomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
                     return ''
                 })
                 this.setState({
@@ -408,7 +408,7 @@ class sumElectricityAddUp extends React.Component {
                 this.props.form.setFieldsValue({
                     unitPrice: contract.powerUnitPrice,
                     currentMouthUnitPrice: contract.powerUnitPrice,
-                    roomNumber: roomNumber.toString(),
+                    roomNumber: newRoomNumber.toString(),
                     formName: formName,
                     ratio: contract.powerRatio
                 })
@@ -445,7 +445,7 @@ class sumElectricityAddUp extends React.Component {
         this.deleteTotalColunm()
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
-        jsonTwo['singleMoney'] = json.liquidatedDamagessingleMoney ? json.liquidatedDamagessingleMoney : 0
+        jsonTwo['singleMoney'] = json.liquidatedDamagessingleMoney ? parseFloat(json.liquidatedDamagessingleMoney).toFixed(1) : 0
         jsonTwo['electricCostName'] = json.liquidatedDamagesName
         jsonTwo['uuid'] = new Date().getTime()
         jsonTwo['surfaceType'] = 3
@@ -557,23 +557,24 @@ class sumElectricityAddUp extends React.Component {
         sumElectricityRecordlList.map((record) => {
             if (record.sumElectricity) {
                 sumElec += record.sumElectricity
-                sumSingeMoney += (record.sumElectricity * record.unitPrice)
+                sumSingeMoney += parseFloat((record.sumElectricity * record.unitPrice).toFixed(1))
             } else {
-                sumSingeMoney += Number(record.singleMoney)
+                sumSingeMoney += parseFloat((parseFloat(record.singleMoney)).toFixed(1))
             }
+            console.log(sumSingeMoney)
             return ''
         })
         let json = {}
         json['electricCostName'] = '合计'
         json['sumElectricity'] = sumElec
-        json['singleMoney'] = sumSingeMoney.toFixed(2)
+        json['singleMoney'] = parseFloat(sumSingeMoney).toFixed(1)
         sumElectricityRecordlList.push(json)
         this.props.form.setFieldsValue({
-            actualReceivable: (parseFloat(sumSingeMoney) - parseFloat(this.state.amountReceivable ? this.state.amountReceivable : 0)).toFixed(2)
+            actualReceivable: (parseFloat(sumSingeMoney) - parseFloat(this.state.amountReceivable ? this.state.amountReceivable : 0)).toFixed(1)
         })
         this.setState({
             sumElectricity: sumElec,
-            thisReceivable: sumSingeMoney.toFixed(2)
+            thisReceivable: parseFloat(sumSingeMoney).toFixed(1)
         })
     }
 
@@ -582,7 +583,7 @@ class sumElectricityAddUp extends React.Component {
         let num = e.target.value
         this.setState({amountReceivable: e.target.value})
         this.props.form.setFieldsValue({
-            actualReceivable: (parseFloat(this.state.thisReceivable) - parseFloat(num ? num : 0)).toFixed(2)
+            actualReceivable: (parseFloat(this.state.thisReceivable) - parseFloat(num ? num : 0)).toFixed(1)
         })
     }
     // 本次抄表数
@@ -602,7 +603,7 @@ class sumElectricityAddUp extends React.Component {
         json['lastMouthTotalDosage'] = json.lastMouthTotalDosage ? json.lastMouthTotalDosage : 0
         this.props.form.setFieldsValue({
             unitPriceBalance: (json.currentMouthUnitPrice - json.lastMouthUnitPrice).toFixed(5),
-            balance: ((json.currentMouthUnitPrice - json.lastMouthUnitPrice) * json.lastMouthTotalDosage).toFixed(2)
+            balance: ((json.currentMouthUnitPrice - json.lastMouthUnitPrice) * json.lastMouthTotalDosage).toFixed(1)
         })
     }
     // 选择房间编号
