@@ -129,15 +129,12 @@ class complaint extends Component {
                 }
             }, {
                 title: '报单日期',
-                width: 250,
                 dataIndex: 'createDate'
             }, {
                 title: '公司名称',
-                width: 250,
                 dataIndex: 'customerName'
             }, {
                 title: '投诉内容',
-                width: 250,
                 dataIndex: 'complaintContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
@@ -148,7 +145,6 @@ class complaint extends Component {
 
             }, {
                 title: '状态',
-                width: 150,
                 dataIndex: 'status',
                 render: function (text, record, index) {
                     let status = ''
@@ -163,7 +159,6 @@ class complaint extends Component {
                 }
             }, {
                 title: '回访情况',
-                width: 250,
                 dataIndex: 'visitContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
@@ -173,7 +168,7 @@ class complaint extends Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                width: 150,
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {

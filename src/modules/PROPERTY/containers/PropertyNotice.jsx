@@ -106,11 +106,9 @@ class PropertyNotice extends Component {
                 }
             }, {
                 title: '标题',
-                width: 250,
                 dataIndex: 'title'
             }, {
                 title: '状态',
-                width: 150,
                 dataIndex: 'status',
                 render: function (text, record, index) {
                     let status = ''
@@ -125,15 +123,13 @@ class PropertyNotice extends Component {
                 }
             }, {
                 title: '发布时间',
-                width: 250,
                 dataIndex: 'createDate'
             }, {
                 title: '发布人',
-                width: 250,
                 dataIndex: 'createName'
             }, {
                 title: '操作',
-                width: 200,
+                width: 150,
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {

@@ -392,23 +392,27 @@ class sumElectricityAddUp extends React.Component {
             if (contractId.toString() === contract.id.toString()) {
                 formName = contract.clientName
                 this.lastTimeRecord(contractId, contract.clientId, 1, true)
-                this.getSubletList(contractId)
+                let subletList = await apiPost(
+                    '/propertyFee/getSubletByPmId',
+                    {id: contractId}
+                )
                 this.setTableColunms(contract, 'powerType')
                 let roomNumber = contract.leaseRooms.split(',')
                 let newRoomNumber = []
-                this.state.subletList.map(sublet => {
+                subletList.data.map(sublet => {
                     newRoomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
                     return ''
                 })
                 this.setState({
                     Contract: contract,
                     roomNumberOne: roomNumber,
-                    powerType: contract.powerType
+                    powerType: contract.powerType,
+                    subletList: subletList.data ? subletList.data : []
                 })
                 this.props.form.setFieldsValue({
                     unitPrice: contract.powerUnitPrice,
                     currentMouthUnitPrice: contract.powerUnitPrice,
-                    roomNumber: newRoomNumber.toString(),
+                    roomNumber: newRoomNumber.length > 0 ? newRoomNumber.toString() : contract.leaseRooms,
                     formName: formName,
                     ratio: contract.powerRatio
                 })
@@ -500,15 +504,17 @@ class sumElectricityAddUp extends React.Component {
             this.state.bili.map(type => {
                 if (type.name === json.moneyType) {
                     jsonTwo['electricCostName'] = json.moneyType
-                    jsonTwo['valleysProportion'] = type.value
+                    jsonTwo['valleysProportion'] = this.state.peakValleyRatio
+                    jsonTwo['unitPrice'] = json.unitPrice ? (parseFloat(json.unitPrice) * type.value).toFixed(5) : 0
                 }
                 return ''
             })
         } else {
             jsonTwo['electricCostName'] = json.electricCostName
+            jsonTwo['unitPrice'] = json.unitPrice ? json.unitPrice : 0
         }
         jsonTwo['surfaceType'] = this.state.Contract.powerType
-        jsonTwo['unitPrice'] = json.unitPrice ? json.unitPrice : 0
+
         jsonTwo['needElectricity'] = (json.surfaceNumber - json.lastSurfaceNumber) ? json.surfaceNumber - json.lastSurfaceNumber : 0
         jsonTwo['remarks'] = json.remarks
         // 电损比例

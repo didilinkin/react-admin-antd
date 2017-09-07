@@ -78,27 +78,22 @@ class LeaseMargin extends Component {
                 }
             }, {
                 title: '所属楼宇',
-                width: 150,
                 dataIndex: 'buildName',
                 key: 'buildName'
             }, {
                 title: '房间编号',
-                width: 250,
                 dataIndex: 'roomNum',
                 key: 'roomNum'
             }, {
                 title: '客户名称',
-                width: 300,
                 dataIndex: 'sublietName',
                 key: 'sublietName'
             }, {
                 title: '当前结余',
-                width: 100,
                 dataIndex: 'currentBalance',
                 key: 'currentBalance'
             }, {
                 title: '收支类型',
-                width: 100,
                 dataIndex: 'revenueType',
                 key: 'revenueType',
                 render: function (text, record, index) {
@@ -124,7 +119,6 @@ class LeaseMargin extends Component {
                 }
             }, {
                 title: '金额',
-                width: 100,
                 dataIndex: 'operateMoney',
                 key: 'operateMoney',
                 render: function (text, record, index) {
@@ -146,12 +140,10 @@ class LeaseMargin extends Component {
                 }
             }, {
                 title: '事由',
-                width: 100,
                 dataIndex: 'reason',
                 key: 'reason'
             }, {
                 title: '收据号',
-                width: 150,
                 dataIndex: 'voucherNo',
                 key: 'voucherNo'
             }, /* {
@@ -188,7 +180,6 @@ class LeaseMargin extends Component {
                 }
             },*/ {
                 title: '审核状态',
-                width: 90,
                 dataIndex: 'auditStatus',
                 key: 'auditStatus',
                 render: function (text, record, index) {
@@ -208,32 +199,27 @@ class LeaseMargin extends Component {
                 }
             }, {
                 title: '审核说明',
-                width: 90,
                 dataIndex: 'remark',
                 key: 'remark'
             }, {
                 title: '审核人',
-                width: 90,
                 dataIndex: 'auditName',
                 key: 'auditName'
             }, {
                 title: '审核日期',
-                width: 100,
                 dataIndex: 'auditDate',
                 key: 'auditDate'
             }, {
                 title: '申请人',
-                width: 90,
                 dataIndex: 'createName',
                 key: 'createName'
             }, {
                 title: '申请时间',
-                width: 100,
                 dataIndex: 'createDate',
                 key: 'createDate'
             }, {
                 title: '操作',
-                width: 200,
+                width: 100,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -355,7 +341,7 @@ class LeaseMargin extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 2300 }}
+                        scroll={{ x: 2100 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

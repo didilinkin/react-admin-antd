@@ -1,6 +1,6 @@
 // 客户管理 - 房间梆定
 import React from 'react'
-import {Table, Row, Col, DatePicker, Form, Button, Input, Popconfirm} from 'antd'
+import {Table, Row, Col, DatePicker, Form, Button, Input, Popconfirm, notification, Icon} from 'antd'
 import {apiPost} from '../../../api/api.dev'
 const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
@@ -53,7 +53,6 @@ class RoomBinding extends React.Component {
                     title: '操作',
                     key: 'operation',
                     render: function (text, record, index) {
-                        index++
                         return (
                             <span>
                                 <Popconfirm title="确定解除绑定吗?" onConfirm={() => unbind(record.id)}>
@@ -85,11 +84,25 @@ class RoomBinding extends React.Component {
             '/userWx/deleteUserWx',
             {'id': id}
         )
+        notification.open({
+            message: response.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
         console.log(response)
     }
     // 备注
-    remarks = function (id) {
+    remarks = async function (id) {
         console.log(id)
+        let response = await apiPost(
+            '/userWx/updateUserWx',
+            {'id': id,
+                'remarks': 'dddd'}
+        )
+        notification.open({
+            message: response.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        console.log(response)
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -107,9 +120,7 @@ class RoomBinding extends React.Component {
                                 </FormItem>
                             </Col>
                             <Col span={8} >
-                                <FormItem label="公司编号" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
+                                <FormItem label="公司编号" labelCol={{ span: 6 }} wrapperCol={{ span: 15 }}>
                                     {getFieldDecorator('companyNumber')(
                                         <Input />)}
                                 </FormItem>
@@ -120,9 +131,18 @@ class RoomBinding extends React.Component {
                         </Row>
                     </div>
                 </Form>
-                <Table dataSource={this.state.dataSource}
-                    columns={this.state.columns}
+                <Table
+                    onChange={this.refresh}
+                    pagination={{total: this.state.total,
+                        showSizeChanger: true,
+                        showQuickJumper: true,
+                        current: this.state.current,
+                        pageSizeOptions: ['15', '30', '45'],
+                        defaultPageSize: 30}}
+                    scroll={{ x: 1800 }}
                     bordered
+                    dataSource={this.state.dataSource}
+                    columns={this.state.columns}
                 />
             </div>
         )

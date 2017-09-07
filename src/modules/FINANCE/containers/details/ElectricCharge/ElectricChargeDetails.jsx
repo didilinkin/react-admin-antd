@@ -118,6 +118,12 @@ class ElectricChargeDetails extends React.Component {
                 dataIndex: 'valleysProportion'
             })
         }
+        if (electricityFeeInfo.electricityFees.differentialPrice || electricityFeeInfo.electricityFees.difference) {
+            electricityFeeInfo.list.push({
+                unitPrice: electricityFeeInfo.electricityFees.differentialPrice,
+                singleMoney: electricityFeeInfo.electricityFees.difference,
+                electricCostName: '上月差额'})
+        }
         this.setState({
             list: electricityFeeInfo.list,
             electricityFees: electricityFeeInfo.electricityFees,
@@ -328,13 +334,15 @@ class ElectricChargeDetails extends React.Component {
                                 <Col span={12}>
                                     <div>
                                         <span style={lightGrayStyle}>录入日期：</span>
-                                        <span>&nbsp;{feesInfo.createName}&nbsp;{feesInfo.createDate}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.createDate}</span>
                                     </div>
                                 </Col>
                                 <Col span={12}>
                                     <div>
                                         <span style={lightGrayStyle}>最后修改：</span>
-                                        <span>&nbsp;{feesInfo.createName}&nbsp;{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
                                     </div>
                                 </Col>
                             </Row>
@@ -345,13 +353,20 @@ class ElectricChargeDetails extends React.Component {
                                 <Col span={12}>
                                     <div>
                                         <span style={lightGrayStyle}>审核人：</span>
-                                        <span>&nbsp;{feesInfo.auditName}&nbsp;{feesInfo.auditDate}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditName}</span>
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditDate}</span>
                                     </div>
                                 </Col>
                                 <Col span={12}>
                                     <div>
                                         <span style={lightGrayStyle}>审核状态：</span>
-                                        <span>&nbsp;{feesInfo.auditExplain}</span>
+                                        {feesInfo.examineState === 2 &&
+                                        <span style={{marginLeft: '10px'}}>审核通过</span>
+                                        }
+                                        {feesInfo.examineState === 3 &&
+                                        <span style={{marginLeft: '10px'}}>审核不通过</span>
+                                        }
+                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditExplain}</span>
                                     </div>
                                 </Col>
                             </Row>
