@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React from 'react'
-import {Table, Spin } from 'antd'
+import {Table, Spin, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 import AllPaidComponent from '../details/CollectRent/RentReviewDetail'
@@ -160,6 +160,12 @@ class CollectRentSuccess extends React.Component {
                     return (
                         <div>
                             <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id)
+                            }}
+                            >
+                                <a>打印通知单</a>
+                            </Popconfirm>
                         </div>
                     )
                 }
