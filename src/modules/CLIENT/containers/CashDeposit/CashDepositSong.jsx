@@ -94,7 +94,7 @@ class CashDepositRent extends React.Component {
                 fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/client/cashDepositDetail/cashDepositDetail/' + record.id
-                    if (record.revenueType === 0 || record.auditDate === null) {
+                    if (record.auditDate === null) {
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 明细 &nbsp;</a>
