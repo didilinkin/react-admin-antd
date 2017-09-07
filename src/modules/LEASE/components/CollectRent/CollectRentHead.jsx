@@ -201,7 +201,15 @@ class CollectRentHead extends React.Component {
                 </Row>
                 {type === 2 && this.state.openState &&
                 <Row style={{marginBottom: '10px'}}>
-                    <Col span={18} />
+                    <Col span={16} >
+                        {
+                            type === 4 &&
+                            <span>
+                                <Button style={{marginRight: '10px'}}>批量打印</Button>
+                                <Button >导出</Button>
+                            </span>
+                        }
+                    </Col>
                     <Col span={6}>
                         <div>
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>

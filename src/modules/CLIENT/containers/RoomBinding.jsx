@@ -1,61 +1,95 @@
 // 客户管理 - 房间梆定
 import React from 'react'
-import {Table, Row, Col, DatePicker, Form, Button, Input} from 'antd'
+import {Table, Row, Col, DatePicker, Form, Button, Input, Popconfirm} from 'antd'
+import {apiPost} from '../../../api/api.dev'
 const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
 class RoomBinding extends React.Component {
     state = {
         dataSource: [],
-        columns: [{
-            title: '公司编号',
-            dataIndex: 'companyNumber',
-            key: 'companyNumber'
-        }, {
-            title: '所属楼宇',
-            dataIndex: 'buildingName',
-            key: 'buildingName'
-        }, {
-            title: '房间编号',
-            dataIndex: 'roomNumber',
-            key: 'roomNumber'
-        }, {
-            title: '微信客户编号',
-            dataIndex: 'wechatNumber',
-            key: 'wechatNumber'
-        }, {
-            title: '用户昵称',
-            dataIndex: 'wechatName',
-            key: 'wechatName'
-        }, {
-            title: '备注',
-            dataIndex: 'remarks',
-            key: 'remarks'
-        }, {
-            title: '手机编号',
-            dataIndex: 'phoneNumber',
-            key: 'phoneNumber'
-        }, {
-            title: '绑定时间',
-            dataIndex: 'bindingDate',
-            key: 'bindingDate'
-        }, {
-            title: '操作',
-            key: 'operation',
-            render: function (text, record, index) {
-                index++
-                return (
-                    <span>
-                        <a>解除绑定</a>
-                        <a>备注</a>
-                    </span>
-
-                )
-            }
-        }]
+        columns: [],
+        page: 1,
+        pageSize: 30
     }
     componentDidMount () {
-        // To disabled submit button at the beginning.
         this.props.form.validateFields()
+        let unbind = this.unbind
+        let remarks = this.remarks
+        this.setState({
+            columns: [
+                {
+                    title: '公司编号',
+                    dataIndex: 'companyNum',
+                    key: 'companyNum'
+                }, {
+                    title: '所属楼宇',
+                    dataIndex: 'buildName',
+                    key: 'buildName'
+                }, {
+                    title: '房间编号',
+                    dataIndex: 'roomName',
+                    key: 'roomName'
+                }, {
+                    title: '微信客户编号',
+                    dataIndex: 'clientNum',
+                    key: 'clientNum'
+                }, {
+                    title: '用户昵称',
+                    dataIndex: 'clientName',
+                    key: 'clientName'
+                }, {
+                    title: '备注',
+                    dataIndex: 'remarks',
+                    key: 'remarks'
+                }, {
+                    title: '手机编号',
+                    dataIndex: 'phone',
+                    key: 'phone'
+                }, {
+                    title: '绑定时间',
+                    dataIndex: 'createDate',
+                    key: 'createDate'
+                }, {
+                    title: '操作',
+                    key: 'operation',
+                    render: function (text, record, index) {
+                        index++
+                        return (
+                            <span>
+                                <Popconfirm title="确定解除绑定吗?" onConfirm={() => unbind(record.id)}>
+                                    <a>解除绑定</a>
+                                </Popconfirm>
+                                <a onClick={() => remarks(record.id)} style={{marginLeft: '20px'}}>备注</a>
+                            </span>
+
+                        )
+                    }
+                }
+            ]
+        })
+        this.init()
+    }
+    // 初始化方法
+    init = async () => {
+        console.log('网络请求')
+        let response = await apiPost(
+            '/userWx/userWxList'
+        )
+        console.log(response)
+        this.setState({dataSource: response.data.rows})
+    }
+    // 解除绑定
+    unbind = async function (id) {
+        console.log(id)
+        let response = await apiPost(
+            '/userWx/deleteUserWx',
+            {'id': id}
+        )
+        console.log(response)
+    }
+    // 备注
+    remarks = function (id) {
+        console.log(id)
     }
     render () {
         const { getFieldDecorator } = this.props.form
