@@ -21,6 +21,8 @@ class Information extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -59,7 +61,9 @@ class Information extends Component {
         let result = await apiPost(
             '/customer/customerList',
             {delFlag: 0,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
@@ -144,6 +148,8 @@ class Information extends Component {
             filters = []
         }
         filters['delFlag'] = 0
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         filters['clientName'] = this.clientName
         filters['phoneAdmin'] = this.phoneAdmin
         if (pagination !== null && typeof (pagination) !== 'undefined') {

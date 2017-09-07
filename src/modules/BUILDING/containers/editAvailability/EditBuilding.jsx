@@ -21,6 +21,8 @@ class EditBuilding extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -59,7 +61,9 @@ class EditBuilding extends Component {
         let result = await apiPost(
             '/build/buildList',
             {delFlag: 0,
-                page: this.state.page}
+                page: this.state.page,
+                sort: this.state.sort,
+                order: this.state.order}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
@@ -120,6 +124,8 @@ class EditBuilding extends Component {
             filters = []
         }
         filters['delFlag'] = 0
+        filters['order'] = this.state.order
+        filters['sort'] = this.state.sort
         filters['buildName'] = this.buildName
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize

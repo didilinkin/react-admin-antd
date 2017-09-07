@@ -18,6 +18,8 @@ class PropertyFeeFinanceSuccess extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -44,7 +46,9 @@ class PropertyFeeFinanceSuccess extends React.Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: 2,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const info = this.info
@@ -191,6 +195,8 @@ class PropertyFeeFinanceSuccess extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

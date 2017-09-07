@@ -22,6 +22,8 @@ class PropertyFeeSuccess extends Component {
             page: 1,
             rows: 30,
             auditStatus: 2,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -49,7 +51,9 @@ class PropertyFeeSuccess extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: this.state.auditStatus,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
@@ -177,6 +181,8 @@ class PropertyFeeSuccess extends Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
