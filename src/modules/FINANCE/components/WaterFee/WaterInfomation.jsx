@@ -35,7 +35,7 @@ class WaterInfomation extends React.Component {
                 message: data.data,
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
-            this.props.refresh()
+            this.props.refresh({}, {}, {})
         }
     }
     handleCancel = (e) => {

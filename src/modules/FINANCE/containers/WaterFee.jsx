@@ -23,7 +23,7 @@ class WaterFee extends React.Component {
             dataSource3: [],
             dataSource4: [],
             ListBuildingInfo: [],
-            order: 1,
+            order: 2,
             RowKeys: [],
             openInfo: false,
             id: 0
@@ -37,14 +37,22 @@ class WaterFee extends React.Component {
     }
     activeKey = 2
     refreshTwo = async (activeKey) => {
+        this.json = {}
         this.activeKey = activeKey ? activeKey : 2
         this.refresh({}, {}, {})
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openInfo: false})
         if (filters === null || typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null && sorter === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
@@ -423,7 +431,7 @@ class WaterFee extends React.Component {
                     id={this.state.id}
                     visible={this.state.openInfo}
                     Finance={1}
-                    refresh={this.refreshTwo}
+                    refresh={this.refresh}
                 />
             </Spin>
         )
