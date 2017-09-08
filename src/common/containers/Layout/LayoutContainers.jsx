@@ -1,4 +1,11 @@
-// 布局
+/**
+ * @author 闫晓迪
+ * @email 929213769@qq.com
+ * @create date 2017-09-06 03:06:07
+ * @modify date 2017-09-06 03:06:07
+ * @desc 内容部分 - 布局
+*/
+
 import React from 'react'
 import { Route } from 'react-router-dom'
 
@@ -11,8 +18,8 @@ import TabsBox from './TabsBox'
 
 // Antd 布局组件
 import { Layout } from 'antd' // Icon
-// import { Layout, Modal, Input } from 'antd' // Icon
 const { Header, Sider } = Layout // Sider
+
 // let num = 1
 // let timer = (num2) => setTimeout(
 //     () => {
@@ -38,6 +45,7 @@ const { Header, Sider } = Layout // Sider
 //     let num2 = num
 //     timer(num2)
 // }
+
 // 负责 渲染传递进来的 compObj
 const RouteWithSubRoutes = (route) => (
     <Route path={ route.path } render={ props => (

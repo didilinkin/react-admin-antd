@@ -15,7 +15,7 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 const FormItem = Form.Item
 
-const UserDiv = styled.span`
+const UserDiv = styled.span `
     position: relative;
     display: inline-block;
     width: 40px;
@@ -175,17 +175,18 @@ class headerContainers extends React.Component {
                     background: elf.c.content
                 }}
             >
-                <Modal maskClosable={false}
+                <Modal
+                    maskClosable={ false }
                     title="修改密码"
-                    style={{top: 100}}
-                    width={400}
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
+                    style={{ top: 100 }}
+                    width={ 400 }
+                    visible={ this.state.visible }
+                    onOk={ this.handleSubmit }
+                    onCancel={ this.handleCancel }
                 >
                     <Form layout="horizontal">
                         <Row>
-                            <Col span={20}>
+                            <Col span={ 20 }>
                                 <FormItem label="旧密码" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
@@ -255,7 +256,8 @@ class headerContainers extends React.Component {
                     style={{
                         fontSize: elf.f.text + 'px',
                         lineHeight: '64px',
-                        padding: '0',
+                        // padding: '0',
+                        paddingLeft: `${elf.d.autoPadding}px`,
                         cursor: 'pointer',
                         transition: 'color .3s'
                     }}
@@ -270,8 +272,11 @@ class headerContainers extends React.Component {
                     }}
                 >
                     {/* 全屏按钮 */}
-                    <Menu.Item key="full" onClick={this.screenFull} >
-                        <Icon type="arrows-alt" onClick={this.screenFull} />
+                    <Menu.Item key="full" onClick={this.screenFull}>
+                        <Icon
+                            type="arrows-alt"
+                            onClick={this.screenFull}
+                        />
                     </Menu.Item>
 
                     {/* 用户消息 */}
