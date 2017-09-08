@@ -78,6 +78,7 @@ class ContractHead extends React.Component {
                                     style={{ width: 200 }}
                                     placeholder="请选择合同类型"
                                     optionFilterProp="children"
+                                    allowClear
                                 >
                                     {contractSplit}
                                 </Select>
@@ -123,6 +124,7 @@ class ContractHead extends React.Component {
                                         style={{ width: 200 }}
                                         placeholder="请选择合同状态"
                                         optionFilterProp="children"
+                                        allowClear
                                     >
                                         <Option key="0">执行中</Option>
                                         <Option key="1">已终止</Option>
@@ -141,6 +143,7 @@ class ContractHead extends React.Component {
                                         style={{ width: 200 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
+                                        allowClear
                                     >
                                         {ListBuildingInfo.map(BuildingInfo => {
                                             return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
@@ -159,6 +162,7 @@ class ContractHead extends React.Component {
                                         style={{ width: 200 }}
                                         placeholder="请选择临期查询"
                                         optionFilterProp="children"
+                                        allowClear
                                     >
                                         <Option key="1">一个月</Option>
                                         <Option key="3">一个季度</Option>
