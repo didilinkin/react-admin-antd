@@ -237,6 +237,12 @@ class sumElectricityAddUp extends React.Component {
                     peakValleyRatio: lastTimeData.data.electricityFees.peakValleyRatio ? lastTimeData.data.electricityFees.peakValleyRatio : 0
                 })
             }
+        } else {
+            this.setState({
+                isPropertyMoney: false,
+                isWaterMoney: false,
+                isElectricMoney: false
+            })
         }
         if (lastTimeData.data.totalDefault) {
             let totoalDefault = lastTimeData.data.totalDefault
@@ -244,6 +250,12 @@ class sumElectricityAddUp extends React.Component {
                 propertyMoney: totoalDefault.propertyMoney ? totoalDefault.propertyMoney : 0,
                 waterMoney: totoalDefault.waterMoney ? totoalDefault.waterMoney : 0,
                 electricMoney: totoalDefault.electricMoney ? totoalDefault.electricMoney : 0
+            })
+        } else {
+            this.setState({
+                propertyMoney: 0,
+                waterMoney: 0,
+                electricMoney: 0
             })
         }
     }
@@ -398,9 +410,8 @@ class sumElectricityAddUp extends React.Component {
                 )
                 this.setTableColunms(contract, 'powerType')
                 let roomNumber = contract.leaseRooms.split(',')
-                let newRoomNumber = []
                 subletList.data.map(sublet => {
-                    newRoomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
+                    roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
                     return ''
                 })
                 this.setState({
@@ -412,7 +423,7 @@ class sumElectricityAddUp extends React.Component {
                 this.props.form.setFieldsValue({
                     unitPrice: contract.powerUnitPrice,
                     currentMouthUnitPrice: contract.powerUnitPrice,
-                    roomNumber: newRoomNumber.length > 0 ? newRoomNumber.toString() : contract.leaseRooms,
+                    roomNumber: roomNumber.length > 0 ? roomNumber.toString() : contract.leaseRooms,
                     formName: formName,
                     ratio: contract.powerRatio
                 })
