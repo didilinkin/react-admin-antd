@@ -225,8 +225,7 @@ class sumElectricityAddUp extends React.Component {
         )
         if (lastTimeData.data.electricityFees) {
             this.props.form.setFieldsValue({
-                lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0,
-                lastMouthTotalDosage: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
+                lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0
             })
             if (isNew) {
                 let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
@@ -341,7 +340,8 @@ class sumElectricityAddUp extends React.Component {
                     readId: electricChargeInfo.readId,
                     unitPrice: currentContract.powerUnitPrice,
                     ratio: currentContract.powerRatio,
-                    currentMouthUnitPrice: currentContract.powerUnitPrice
+                    currentMouthUnitPrice: currentContract.powerUnitPrice,
+                    lmelectricity: electricChargeInfo.lmelectricity ? electricChargeInfo.lmelectricity : 0
                 })
             } else {
                 this.setState({
@@ -618,10 +618,10 @@ class sumElectricityAddUp extends React.Component {
         let json = this.props.form.getFieldsValue()
         json['lastMouthUnitPrice'] = json.lastMouthUnitPrice ? json.lastMouthUnitPrice : 0
         json['currentMouthUnitPrice'] = json.currentMouthUnitPrice ? json.currentMouthUnitPrice : 0
-        json['lastMouthTotalDosage'] = json.lastMouthTotalDosage ? json.lastMouthTotalDosage : 0
+        json['lmelectricity'] = json.lmelectricity ? json.lmelectricity : 0
         this.props.form.setFieldsValue({
             unitPriceBalance: (json.currentMouthUnitPrice - json.lastMouthUnitPrice).toFixed(5),
-            balance: ((json.currentMouthUnitPrice - json.lastMouthUnitPrice) * json.lastMouthTotalDosage).toFixed(1)
+            balance: ((json.currentMouthUnitPrice - json.lastMouthUnitPrice) * json.lmelectricity).toFixed(1)
         })
     }
     // 选择房间编号
@@ -961,7 +961,7 @@ class sumElectricityAddUp extends React.Component {
                                     <FormItem
                                         {...formItemLayout}
                                         label="上月总用量："
-                                    >{getFieldDecorator('lastMouthTotalDosage')(<Input id="lastMouthTotalDosage" disabled onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
+                                    >{getFieldDecorator('lmelectricity')(<Input id="lmelectricity" disabled onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
                                         }
                                     </FormItem>
                                     <FormItem
