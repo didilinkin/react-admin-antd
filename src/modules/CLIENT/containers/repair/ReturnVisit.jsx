@@ -21,7 +21,10 @@ class ReturnVisit extends React.Component {
     async initialRemarks () {
         let result = await apiPost(
             'upkeep/repairList',
-            {repairStatus: 1}
+            {repairStatus: 1,
+                sort: 'id',
+                order: 'desc'
+            }
         )
         let info = this.info
         this.setState({
@@ -132,6 +135,7 @@ class ReturnVisit extends React.Component {
         filters['endDate'] = this.endDate
         filters['clientName'] = this.clientName
         filters['type'] = 2
+        filters['repairStatus'] = 1
         if (pagination === null || typeof (pagination) === 'undefined') {
             filters['page'] = 1
             filters['rows'] = 30
@@ -139,6 +143,8 @@ class ReturnVisit extends React.Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
+        filters['sort'] = 'id'
+        filters['order'] = 'desc'
         let result = await apiPost(
             'upkeep/repairList',
             filters
