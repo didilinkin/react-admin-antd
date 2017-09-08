@@ -961,7 +961,7 @@ class sumElectricityAddUp extends React.Component {
                                     <FormItem
                                         {...formItemLayout}
                                         label="上月总用量："
-                                    >{getFieldDecorator('lastMouthTotalDosage')(<Input id="lastMouthTotalDosage" onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
+                                    >{getFieldDecorator('lastMouthTotalDosage')(<Input id="lastMouthTotalDosage" disabled onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
                                         }
                                     </FormItem>
                                     <FormItem
