@@ -53,7 +53,7 @@ class ChargeWaterBill extends React.Component {
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
                 this.activeKey.toString() === '4' ? 2 : 3
-        if (pagination === null) {
+        if (pagination === null || typeof (pagination) === 'undefined') {
             filters['page'] = 1
             filters['rows'] = 30
         } else {
