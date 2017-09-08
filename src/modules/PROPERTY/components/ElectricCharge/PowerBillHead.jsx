@@ -123,7 +123,7 @@ class PowerBillHead extends React.Component {
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
                                 wrapperCol={{ span: 16 }}
                             >
-                                {getFieldDecorator('clientSubletName')(
+                                {getFieldDecorator('clientName')(
                                     <Input placeholder="请输入" style={{ width: 200 }} />
                                 )}
                             </FormItem>
@@ -172,7 +172,7 @@ class PowerBillHead extends React.Component {
                                 <FormItem label="收费状态" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('paymentState')(
+                                    {getFieldDecorator('principalPaymentStatus')(
                                         <Select
                                             allowClear
                                             showSearch
@@ -191,7 +191,7 @@ class PowerBillHead extends React.Component {
                                 <FormItem label="开票状态" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {getFieldDecorator('billingState')(
+                                    {getFieldDecorator('principalPrincipalBilling')(
                                         <Select
                                             showSearch
                                             allowClear
