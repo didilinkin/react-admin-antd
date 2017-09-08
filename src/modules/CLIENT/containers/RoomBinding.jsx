@@ -2,7 +2,6 @@
 import React from 'react'
 import {Table, Row, Col, DatePicker, Form, Button, Input, Modal, Popconfirm, notification, Icon} from 'antd'
 import {apiPost} from '../../../api/api.dev'
-import RoomBindingRemarks from '../components/RoomBinding/RoomBindingRemarks'
 const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
 class RoomBinding extends React.Component {
@@ -12,7 +11,6 @@ class RoomBinding extends React.Component {
         total: 0,
         current: 1,
         visible: false,
-        remarks: '',
         id: 0
     }
     componentDidMount () {
@@ -90,12 +88,14 @@ class RoomBinding extends React.Component {
     }
     // 备注
     remarks = async (id, remarks) => {
-        console.log(id)
+        console.log(id, remarks)
         this.setState(
             {visible: true,
-                remarks: remarks,
                 id: id
             })
+        this.props.form.setFieldsValue({
+            remarks: remarks
+        })
     }
     refresh = async (pagination, filters, sorter) => {
         if (filters === null || typeof (filters) === 'undefined') {
@@ -124,17 +124,11 @@ class RoomBinding extends React.Component {
             current: pagination ? pagination.current : 1
         })
     }
-    setRemarks = (e) => {
-        const { value } = e.target
-        this.setState({
-            remarks: value
-        })
-    }
     handleSubmit = async () => {
         let response = await apiPost(
             '/userWx/updateUserWx',
             {id: this.state.id,
-                remarks: this.state.remarks
+                remarks: this.props.form.getFieldValue('remarks')
             }
         )
         notification.open({
@@ -143,16 +137,20 @@ class RoomBinding extends React.Component {
         })
         this.setState({
             id: 0,
-            remarks: '',
             visible: false
+        })
+        this.props.form.setFieldsValue({
+            remarks: ''
         })
         this.refresh(null, null, null)
     }
     handleCancel = () => {
         this.setState({
             id: 0,
-            remarks: '',
             visible: false
+        })
+        this.props.form.setFieldsValue({
+            remarks: ''
         })
     }
     render () {
@@ -181,38 +179,39 @@ class RoomBinding extends React.Component {
                             </Col>
                         </Row>
                     </div>
+                    <Table
+                        onChange={this.refresh}
+                        pagination={{total: this.state.total,
+                            showSizeChanger: true,
+                            showQuickJumper: true,
+                            current: this.state.current,
+                            pageSizeOptions: ['15', '30', '45'],
+                            defaultPageSize: 30}}
+                        scroll={{ x: 1400 }}
+                        bordered
+                        dataSource={this.state.dataSource}
+                        columns={this.state.columns}
+                    />
+                    <Modal maskClosable={false}
+                        title="编辑备注"
+                        style={{top: 50}}
+                        width="500px"
+                        visible={this.state.visible}
+                        onOk={this.handleSubmit}
+                        onCancel={this.handleCancel}
+                    >
+                        <div>
+                            <Row>
+                                <Col span={24} >
+                                    <FormItem label="编辑备注" labelCol={{ span: 4 }} wrapperCol={{ span: 19 }}>
+                                        {getFieldDecorator('remarks')(
+                                            <Input type="textarea" rows={4} />)}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </div>
+                    </Modal>
                 </Form>
-                <Table
-                    onChange={this.refresh}
-                    pagination={{total: this.state.total,
-                        showSizeChanger: true,
-                        showQuickJumper: true,
-                        current: this.state.current,
-                        pageSizeOptions: ['15', '30', '45'],
-                        defaultPageSize: 30}}
-                    scroll={{ x: 1400 }}
-                    bordered
-                    dataSource={this.state.dataSource}
-                    columns={this.state.columns}
-                />
-                <RoomBindingRemarks
-                    visible={this.state.remarkShow}
-                    id={this.state.id}
-                    refresh={this.refresh}
-                />
-                <Modal maskClosable={false}
-                    title="编辑备注"
-                    style={{top: 20}}
-                    width="400px"
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                >
-                    <div>
-                        <span>编辑备注：</span><Input onChange={this.setRemarks} type="textarea" rows={4} value={this.state.remarks} />
-                    </div>
-
-                </Modal>
             </div>
         )
     }
