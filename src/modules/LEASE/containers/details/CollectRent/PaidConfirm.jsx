@@ -37,7 +37,7 @@ class addUpkeep extends React.Component {
                 currentPeriodMoney: resulData.data.currentPeriodMoney,
                 actualPaidMoney: resulData.data.actualPaidMoney,
                 discountMoney: resulData.data.discountMoney,
-                printName: resulData.data.printName,
+                printName: resulData.data.rentClientName,
                 id: resulData.data.id
             })
             this.setState({
