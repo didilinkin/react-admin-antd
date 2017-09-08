@@ -101,43 +101,59 @@ class RoomAdd extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            json['roomStatus'] = this.roomStatus
-            json['buildId'] = this.buildId
-            json['buildName'] = this.buildName
-            json['propertyType'] = this.propertyType
-            await apiPost(
-                'build/updateRoom',
-                json
-            )
-            notification.open({
-                message: '修改成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
-        } else {
-            json['roomStatus'] = this.roomStatus
-            json['propertyType'] = this.propertyType
-            json['buildId'] = this.buildId
-            json['buildName'] = this.buildName
-            await apiPost(
-                'build/saveRoom',
-                json
-            )
-            notification.open({
-                message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.form.resetFields()
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                json['roomStatus'] = this.roomStatus
+                json['buildId'] = this.buildId
+                json['buildName'] = this.buildName
+                json['propertyType'] = this.propertyType
+                await apiPost(
+                    'build/updateRoom',
+                    json
+                )
+                notification.open({
+                    message: '修改成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            } else {
+                json['roomStatus'] = this.roomStatus
+                json['propertyType'] = this.propertyType
+                json['buildId'] = this.buildId
+                json['buildName'] = this.buildName
+                await apiPost(
+                    'build/saveRoom',
+                    json
+                )
+                notification.open({
+                    message: '添加成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.form.resetFields()
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            }
         }
     }
     handleCancel = (e) => {

@@ -120,7 +120,7 @@ class Account extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refresh()
+        this.query()
     }
     refresh = async (json) => {
         this.setState({loading: true,

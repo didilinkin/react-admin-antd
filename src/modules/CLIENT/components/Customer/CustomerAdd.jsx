@@ -59,34 +59,50 @@ class CustomerAddUp extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (this.props.id > 0) {
-            json['id'] = this.props.id
-            await apiPost(
-                'customer/updateCustomer',
-                json
-            )
-            notification.open({
-                message: '修改成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
-        } else {
-            await apiPost(
-                'customer/saveCustomer',
-                json
-            )
-            notification.open({
-                message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (this.props.id > 0) {
+                json['id'] = this.props.id
+                await apiPost(
+                    'customer/updateCustomer',
+                    json
+                )
+                notification.open({
+                    message: '修改成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            } else {
+                await apiPost(
+                    'customer/saveCustomer',
+                    json
+                )
+                notification.open({
+                    message: '添加成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            }
         }
     }
     handleCancel = (e) => {
