@@ -433,8 +433,8 @@ class WaterInfomation extends React.Component {
                             >
                                 <span>审批意见：</span>
                                 <RadioGroup onChange={this.onChange} value={this.state.value}>
-                                    <Radio value={2}>审批通过</Radio>
-                                    <Radio value={3}>审批不通过</Radio>
+                                    <Radio value={2}>审核通过</Radio>
+                                    <Radio value={3}>审核不通过</Radio>
                                 </RadioGroup>
                             </div>
                             <div style={{

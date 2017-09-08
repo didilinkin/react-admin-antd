@@ -19,6 +19,8 @@ class CashDepositDetail extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -35,7 +37,9 @@ class CashDepositDetail extends React.Component {
         let result = await apiPost(
             '/cashDeposit/cashDepositDetailList',
             {'cashDepositId': this.props.match.params.id,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -168,6 +172,8 @@ class CashDepositDetail extends React.Component {
             filters = []
         }
         filters['chargeItem'] = 0
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         filters['cashDepositId'] = this.props.match.params.id
         filters['revenueType'] = this.revenueType
         if (pagination !== null && typeof (pagination) !== 'undefined') {

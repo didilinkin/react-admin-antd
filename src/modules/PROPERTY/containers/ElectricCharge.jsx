@@ -51,6 +51,8 @@ class ElectricCharge extends React.Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
+        filters['sort'] = 'a.id'
+        filters['order'] = 'desc'
         let result = await apiPost(
             '/ElectricityFees/list',
             filters
@@ -72,6 +74,7 @@ class ElectricCharge extends React.Component {
             }
             return ''
         })
+        console.log(PowerBillList)
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,
@@ -127,7 +130,10 @@ class ElectricCharge extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/ElectricityFees/list',
-            {examineState: 0}
+            {examineState: 0,
+                sort: 'a.id',
+                order: 'desc'
+            }
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',

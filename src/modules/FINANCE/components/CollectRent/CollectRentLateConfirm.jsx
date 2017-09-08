@@ -52,31 +52,38 @@ class addUpkeep extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null || json.receiptDate !== 'undefined') {
-            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
-        }
-        json['feeType'] = 1
-        await apiPost(
-            '/collectRent/updateCollectRentVoByLate',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '违约金收费成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        // if (json.unpaidLateMoney !== '0.0') {
-        //     // this.props.pro.history.push('/home/finance/collectRentDetails/RentFinishAndLate/' + json.id)
-        //     location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
-        // } else if (json.unpaidLateMoney === '0.0') {
-        //     this.props.pro.history.push('/home/finance/collectRentDetails/RentReviewDetail/' + json.id)
-        //     // location.href = '/financial/RentReviewDetail/' + json.id
-        // }
-        this.setState({visible: false,
-            isFirst: true })
-        this.props.close()
-        this.props.form.resetFields()
-        this.props.refreshTable()
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (json.receiptDate !== null || json.receiptDate !== 'undefined') {
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+            }
+            json['feeType'] = 1
+            await apiPost(
+                '/collectRent/updateCollectRentVoByLate',
+                json
+            )
+            notification.open({
+                message: '违约金收费成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+            this.props.close()
+            this.props.form.resetFields()
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.props.close()

@@ -48,25 +48,39 @@ class propertyLateConfirm extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null) {
-            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
-        }
-        json['feeType'] = 4
-        json['latePaidWay'] = this.props.form.getFieldValue('paidWay')
-        await apiPost(
-            '/propertyFee/updatePropertyFeeByLate',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '违约金收费成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.setState({visible: false,
-            isFirst: true })
-        this.props.close()
-        this.props.form.resetFields()
-        this.props.refreshTable()
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (json.receiptDate !== null) {
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+            }
+            json['feeType'] = 4
+            json['latePaidWay'] = this.props.form.getFieldValue('paidWay')
+            await apiPost(
+                '/propertyFee/updatePropertyFeeByLate',
+                json
+            )
+            notification.open({
+                message: '违约金收费成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+            this.props.close()
+            this.props.form.resetFields()
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.props.close()

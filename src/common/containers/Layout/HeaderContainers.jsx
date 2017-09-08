@@ -71,48 +71,62 @@ class headerContainers extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if ((json.oldPassWord + '') === 'undefined' || (json.oldPassWord + '') === '') {
-            notification.open({
-                message: '旧密码不能为空！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        if ((json.passWord + '') === 'undefined' || (json.passWord + '') === '') {
-            notification.open({
-                message: '新密码不能为空！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        let pattern = /^(?![^a-zA-Z]+$)(?!\D+$).{6,12}/
-        if (!pattern.test(json.passWord)) {
-            notification.open({
-                message: '密码长度6-12位，且必须同时含有数字和字母',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        if (json.confirmPassWord !== json.passWord) {
-            notification.open({
-                message: '两次密码输入不一致！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        let result = await apiPost(
-            '/system/updatePassWord',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: result.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        if (result.data === '修改成功') {
-            this.setState({visible: false,
-                isFirst: true })
-            window.location.href = '/login'
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            /* if ((json.oldPassWord + '') === 'undefined' || (json.oldPassWord + '') === '') {
+                notification.open({
+                    message: '旧密码不能为空！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            if ((json.passWord + '') === 'undefined' || (json.passWord + '') === '') {
+                notification.open({
+                    message: '新密码不能为空！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }*/
+            let pattern = /^(?![^a-zA-Z]+$)(?!\D+$).{6,12}/
+            if (!pattern.test(json.passWord)) {
+                notification.open({
+                    message: '密码长度6-12位，且必须同时含有数字和字母',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            if (json.confirmPassWord !== json.passWord) {
+                notification.open({
+                    message: '两次密码输入不一致！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            let result = await apiPost(
+                '/system/updatePassWord',
+                json
+            )
+            notification.open({
+                message: result.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            if (result.data === '修改成功') {
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                window.location.href = '/login'
+            }
         }
     }
     handleSubmit2 = async () => {

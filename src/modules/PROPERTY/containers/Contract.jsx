@@ -53,7 +53,10 @@ class PropertyContract extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/contract/contractlist',
-            {type: this.state.type}
+            {type: this.state.type,
+                sort: 'a.id',
+                order: 'desc'
+            }
         )
         let ListBuildingInfo = await apiPost(
             '/contract/ListBuildingInfo'
@@ -98,7 +101,8 @@ class PropertyContract extends React.Component {
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                dataIndex: 'leaseRooms'
+                dataIndex: 'leaseRooms',
+                width: 200
             }, {
                 title: '合同面积',
                 dataIndex: 'serviceArea'
@@ -172,6 +176,8 @@ class PropertyContract extends React.Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
+        filters['sort'] = 'a.id'
+        filters['order'] = 'desc'
         let result = await apiPost(
             '/contract/contractlist',
             filters

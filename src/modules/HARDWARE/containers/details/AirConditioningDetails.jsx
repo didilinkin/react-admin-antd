@@ -37,8 +37,9 @@ class The extends React.Component {
             '/hardware/getAirStatusList',
             {numCode: this.props.match.params.id.toString()}
         )
-        // console.log(resulData.data)
+        console.log(resulData.data)
         let json = this.state.json
+        json['setTemp'] = resulData.data.setTemp
         if (resulData.data.onOff === '关机') {
             json['controlState'] = true
         } else {
@@ -62,13 +63,58 @@ class The extends React.Component {
             data: resulData.data,
             json: json
         })
-        // debugger
     }
     componentDidMount () {
         this.initialRemarks()
     }
-    refresh = async () => {
-        this.initialRemarks()
+    refresh = async (key, value) => {
+        let json = this.state.json
+        let json1 = []
+        json1['numCode'] = this.props.match.params.id.toString()
+        if (value === 'refrigeration') {
+            json1[key] = '制冷'
+            json['modeState'] = value
+            json1['onOff'] = '开机'
+        } else if (value === 'heating') {
+            json1[key] = '制热'
+            json['modeState'] = value
+            json1['onOff'] = '开机'
+        }
+        if (value === 'high') {
+            json1[key] = '高速'
+            json['windSpeedState'] = value
+            json1['onOff'] = '开机'
+        } else if (value === 'low') {
+            json1[key] = '低速'
+            json['windSpeedState'] = value
+            json1['onOff'] = '开机'
+        } else if (value === 'auto') {
+            json1[key] = '自动'
+            json['windSpeedState'] = value
+            json1['onOff'] = '开机'
+        }
+        if (value === true) {
+            json1[key] = '开机'
+            json['controlState'] = false
+        } else if (value === false) {
+            json1[key] = '关机'
+            json['controlState'] = true
+        }
+        if (key === 'setTemp') {
+            json1['onOff'] = '开机'
+            json1['setTemp'] = value
+            json['setTemp'] = value
+        }
+        let result = await apiPost(
+            '/hardware/setAirStatusList',
+            json1
+        )
+        if (result.code === 1) {
+            this.setState({
+                json: json
+            })
+            // console.log(this.state.json)
+        }
     }
     render () {
         return (
@@ -96,9 +142,6 @@ class The extends React.Component {
                             refresh={this.refresh}
                         />
                     </Col> {/* 向下传递 开关状态(布尔类型) */}
-                    {
-                        // console.log(this.state.json.modeState)
-                    }
                     <Col span={4}>
                         <Mode
                             numCode={this.props.match.params.id.toString()}
@@ -112,7 +155,7 @@ class The extends React.Component {
                     <Col span={4}>
                         <SetTemperature
                             numCode={this.props.match.params.id.toString()}
-                            temperature={this.state.data.setTemp}
+                            temperature={this.state.json.setTemp}
                             refresh={this.refresh}
                         />
                     </Col> {/* 向下传递 设置温度(数值类型) */}

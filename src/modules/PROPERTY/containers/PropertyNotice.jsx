@@ -2,10 +2,10 @@
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../api'
-import AddNotice from '../components/Complaint/NoticeAdd'
+/* import AddNotice from '../components/Complaint/NoticeAdd'
 import ComplaintContent from './details/complaint/ComplaintDetail'
 import HandleVisit from './details/complaint/ReturnAdd'
-import VisitDetail from './details/complaint/ReturnDetail'
+import VisitDetail from './details/complaint/ReturnDetail'*/
 
 // const FormItem = Form.Item
 // 引入组件
@@ -29,8 +29,6 @@ class PropertyNotice extends Component {
             total: 0,
             page: 1,
             rows: 30,
-            sort: 'a.id',
-            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -87,9 +85,7 @@ class PropertyNotice extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/complaint/noticeList',
-            {page: this.state.page,
-                order: this.state.order,
-                sort: this.state.sort}
+            {page: this.state.page}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
@@ -110,11 +106,9 @@ class PropertyNotice extends Component {
                 }
             }, {
                 title: '标题',
-                width: 250,
                 dataIndex: 'title'
             }, {
                 title: '状态',
-                width: 150,
                 dataIndex: 'status',
                 render: function (text, record, index) {
                     let status = ''
@@ -129,15 +123,13 @@ class PropertyNotice extends Component {
                 }
             }, {
                 title: '发布时间',
-                width: 250,
                 dataIndex: 'createDate'
             }, {
                 title: '发布人',
-                width: 250,
                 dataIndex: 'createName'
             }, {
                 title: '操作',
-                width: 200,
+                width: 150,
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
@@ -172,8 +164,6 @@ class PropertyNotice extends Component {
             filters = []
         }
         filters['title'] = this.title
-        filters['sort'] = this.state.sort
-        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
@@ -268,7 +258,7 @@ class PropertyNotice extends Component {
                         </Row>
                     </Form>
                 </Modal>*/}
-                <AddNotice
+                {/* <AddNotice
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
@@ -295,7 +285,7 @@ class PropertyNotice extends Component {
                     visible={this.state.openVisitDetail}
                     close={this.close}
                     title={this.state.title}
-                />
+                />*/}
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}

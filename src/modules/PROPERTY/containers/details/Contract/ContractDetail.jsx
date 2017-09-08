@@ -135,7 +135,7 @@ class ContractDetail extends React.Component {
                                     <Col span={8}><b>E-mail：</b>{sublet.email}</Col>
                                 </Row>
                                 <Row>
-                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} -- {sublet.subletEndDate} </Col>
+                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} ~ {sublet.subletEndDate} </Col>
                                     <Col span={16}><b>转租房间：</b>{sublet.roomNum} </Col>
                                 </Row>
                                 <Row>
@@ -153,7 +153,7 @@ class ContractDetail extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} -- {this.state.contract.endDate}</Col>
+                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} ~ {this.state.contract.endDate}</Col>
                             <Col span={16}><b>录入时间：</b>{this.state.contract.createName} {this.state.contract.createDate}</Col>
                         </Row>
                         <Row>
@@ -199,7 +199,15 @@ class ContractDetail extends React.Component {
                                 <em className="color1">
                                     功峰平谷
                                 </em>}
-                                        单价 <em className="color1">{this.state.contract.powerUnitPrice}</em> 元/度  变比 <em className="color1">{this.state.contract.powerRatio}</em> 电损比 <em className="color1">{this.state.contract.powerLossRatio}</em>%</Col>
+                                        单价
+                                <em className="color1">{this.state.contract.powerUnitPrice}
+                                </em> 元/度
+                                <span style={{marginLeft: '20px'}}>
+                                    变比
+                                    <em className="color1">{this.state.contract.powerRatio}</em> 电损比
+                                    <em className="color1">{this.state.contract.powerLossRatio}</em>%
+                                </span>
+                            </Col>
                         </Row>
                         <Row>
                             {this.state.contract.yearAcPrice > 0 &&

@@ -12,27 +12,58 @@ import { Card, Icon } from 'antd'
 import styled from 'styled-components'
 import elf from '../../../elf'
 
-const SetTemperature = ({ temperature }) => (
-    <Card
-        style={{
-            width: 200,
-            textAlign: 'center'
-        }}
-    >
-        <div style={{ height: 150 }}>
-            <TitleBox> 设定温度 </TitleBox>
+class SetTemperature extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            temperature: 0
+        }
+    }
+    componentWillReceiveProps (next) {
+        this.setState({
+            temperature: next.setTemp
+        })
+    }
+    temperatureUp = async () => {
+        let temperature = this.props.temperature
+        temperature = temperature + 1
+        this.setState({
+            temperature: temperature
+        })
+        this.props.refresh('setTemp', temperature)
+    }
+    temperatureDown = async () => {
+        let temperature = this.props.temperature
+        temperature = temperature - 1
+        this.setState({
+            temperature: temperature
+        })
+        this.props.refresh('setTemp', temperature)
+    }
+    render () {
+        return (
+            <Card
+                style={{
+                    width: 200,
+                    textAlign: 'center'
+                }}
+            >
+                <div style={{ height: 150 }}>
+                    <TitleBox> 设定温度 </TitleBox>
 
-            <TemperatureBox>
-                <IconBox> <Icon type="up" /> </IconBox>
+                    <TemperatureBox>
+                        <IconBox> <Icon type="up" onClick={this.temperatureUp} /> </IconBox>
 
-                <TemperatureTitle> { temperature }℃ </TemperatureTitle>
+                        <TemperatureTitle> { this.props.temperature }℃ </TemperatureTitle>
 
-                <IconBox> <Icon type="down" /> </IconBox>
-            </TemperatureBox>
+                        <IconBox> <Icon type="down" onClick={this.temperatureDown} /> </IconBox>
+                    </TemperatureBox>
 
-        </div>
-    </Card>
-)
+                </div>
+            </Card>
+        )
+    }
+}
 
 SetTemperature.propTypes = {
     temperature: PropTypes.number

@@ -156,11 +156,11 @@ class WaterAddUp extends React.Component {
                 WaterRecordlList.splice(i, 1)
                 this.setState({
                     totalWater: (parseFloat(this.state.totalWater) - parseFloat(WaterRecordl.sumWater)).toFixed(2),
-                    totalMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money)).toFixed(2),
+                    totalMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money)).toFixed(1),
                     WaterRecordlList: WaterRecordlList
                 })
                 this.props.form.setFieldsValue({
-                    receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(2)
+                    receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(WaterRecordl.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(1)
                 })
             }
             return ''
@@ -290,7 +290,7 @@ class WaterAddUp extends React.Component {
         jsontwo['meterLoss'] = parseFloat((this.state.waterLossRatio * json.waterCount / 100).toFixed(2))
         jsontwo['sumWater'] = (parseFloat(jsontwo.meterLoss) + parseFloat(json.waterCount)).toFixed(2)
         jsontwo['waterUnitPrice'] = json.waterUnitPrice
-        jsontwo['money'] = (jsontwo.waterUnitPrice * jsontwo.sumWater).toFixed(2)
+        jsontwo['money'] = (jsontwo.waterUnitPrice * jsontwo.sumWater).toFixed(1)
         jsontwo['remark'] = jsontwo.remark
         jsontwo['uuid'] = new Date().getTime()
         jsontwo['roomNumberOne'] = json.roomNumberOne
@@ -299,16 +299,16 @@ class WaterAddUp extends React.Component {
         WaterRecordlList.push(jsontwo)
         this.setState({
             totalWater: (parseFloat(this.state.totalWater) + parseFloat(jsontwo.sumWater)).toFixed(2),
-            totalMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money)).toFixed(2),
+            totalMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money)).toFixed(1),
             WaterRecordlList: WaterRecordlList
         })
         this.props.form.setFieldsValue({
-            receivableMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(2)
+            receivableMoney: (parseFloat(this.state.totalMoney) + parseFloat(jsontwo.money) - parseFloat(this.props.form.getFieldValue('amountReceivable') ? this.props.form.getFieldValue('amountReceivable') : 0)).toFixed(1)
         })
     }
     amountReceivable = (e) => {
         this.props.form.setFieldsValue({
-            receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(e.target.value ? e.target.value : 0)).toFixed(2)
+            receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(e.target.value ? e.target.value : 0)).toFixed(1)
         })
     }
     render () {

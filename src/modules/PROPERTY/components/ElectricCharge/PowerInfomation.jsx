@@ -50,7 +50,10 @@ class PowerInfomation extends React.Component {
                 title: '总电量',
                 dataIndex: 'sumElectricity',
                 render: function (text, record) {
-                    return parseFloat(record.sumElectricity).toFixed(2)
+                    if (record.sumElectricity) {
+                        return parseFloat(record.sumElectricity).toFixed(2)
+                    }
+                    return ''
                 }
             }, {
                 title: '单价',
@@ -87,16 +90,11 @@ class PowerInfomation extends React.Component {
                     dataIndex: 'valleysProportion'
                 })
             }
-            if (electricityFeeInfo.electricityFees.penaltyType === 1) {
-                console.log(liquidatedDamagesList)
-                liquidatedDamagesList.push({
-                    receiptDate: electricityFeeInfo.electricityFees.liquidatedDamagesDate,
-                    discountMoney: '0',
-                    paidMoney: electricityFeeInfo.electricityFees.liquidatedDamages,
-                    unpaidMoney: '0',
-                    paidWayString: '放入下月电费',
-                    createName: electricityFeeInfo.electricityFees.defaultPayee ? electricityFeeInfo.electricityFees.defaultPayee : ''
-                })
+            if (electricityFeeInfo.electricityFees.differentialPrice || electricityFeeInfo.electricityFees.difference) {
+                electricityFeeInfo.list.push({
+                    unitPrice: electricityFeeInfo.electricityFees.differentialPrice,
+                    singleMoney: electricityFeeInfo.electricityFees.difference,
+                    electricCostName: '上月差额'})
             }
             this.setState({
                 list: electricityFeeInfo.list,
@@ -125,9 +123,9 @@ class PowerInfomation extends React.Component {
             return ''
         })
         let json = {}
-        json['roomNumberOne'] = '合计'
+        json['electricCostName'] = '合计'
         json['sumElectricity'] = sumElec
-        json['singleMoney'] = sumSingeMoney.toFixed(1)
+        json['singleMoney'] = sumSingeMoney
         electricRecordlList.push(json)
         this.setState({
             list: electricRecordlList
@@ -329,13 +327,15 @@ class PowerInfomation extends React.Component {
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>录入日期：</span>
-                                            <span>&nbsp;{fees.createName}&nbsp;{fees.createDate}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.createName}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.createDate}</span>
                                         </div>
                                     </Col>
                                     <Col span={12}>
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
-                                            <span>&nbsp;{fees.createName}&nbsp;{fees.updateDate ? fees.updateDate : fees.createDate}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.createName}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.updateDate ? fees.updateDate : fees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
@@ -376,13 +376,20 @@ function Middle (props) {
                 <Col span={12}>
                     <div>
                         <span style={lightGrayStyle}>审核人：</span>
-                        <span>&nbsp;{props.fees.auditName}&nbsp;{props.fees.auditDate}</span>
+                        <span style={{marginLeft: '10px'}}>{props.fees.auditName}</span>
+                        <span style={{marginLeft: '10px'}}>{props.fees.auditDate}</span>
                     </div>
                 </Col>
                 <Col span={12}>
                     <div>
                         <span style={lightGrayStyle}>审核状态：</span>
-                        <span>&nbsp;{props.fees.auditExplain}</span>
+                        {props.fees.examineState === 2 &&
+                        <span style={{marginLeft: '10px'}}>审核通过</span>
+                        }
+                        {props.fees.examineState === 3 &&
+                        <span style={{marginLeft: '10px'}}>审核不通过</span>
+                        }
+                        <span style={{marginLeft: '10px'}}>{props.fees.auditExplain}</span>
                     </div>
                 </Col>
             </Row>)
@@ -405,8 +412,8 @@ function ExaminingState (props) {
         >
             <span>审批意见：</span>
             <RadioGroup onChange={props.stateChange} value={props.stateValue}>
-                <Radio value={2}>审批通过</Radio>
-                <Radio value={3}>审批不通过</Radio>
+                <Radio value={2}>审核通过</Radio>
+                <Radio value={3}>审核不通过</Radio>
             </RadioGroup>
         </div>
         <div style={{

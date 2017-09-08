@@ -18,6 +18,8 @@ class PropertyFeeFinanceSuccess extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             dataSource: [],
             ListBuildingInfo: []
         }
@@ -44,7 +46,9 @@ class PropertyFeeFinanceSuccess extends React.Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: 2,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const info = this.info
@@ -158,7 +162,7 @@ class PropertyFeeFinanceSuccess extends React.Component {
                 key: 'updateDate'
             }, {
                 title: '操作',
-                width: 100,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -168,7 +172,13 @@ class PropertyFeeFinanceSuccess extends React.Component {
                         <div>
                             <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a> 撤回 </a>
+                                <a> 撤回&nbsp;&nbsp; </a>
+                            </Popconfirm>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + record.id + '&source=' + 2)
+                            }}
+                            >
+                                <a>打印通知单</a>
                             </Popconfirm>
                         </div>
                     )
@@ -185,6 +195,8 @@ class PropertyFeeFinanceSuccess extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

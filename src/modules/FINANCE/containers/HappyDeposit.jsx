@@ -22,6 +22,8 @@ class HappyDeposit extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -54,7 +56,9 @@ class HappyDeposit extends React.Component {
         let result = await apiPost(
             '/cashDeposit/cashDepositDetailList',
             {chargeItem: 3,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -274,6 +278,8 @@ class HappyDeposit extends React.Component {
             filters = []
         }
         filters['chargeItem'] = 3
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

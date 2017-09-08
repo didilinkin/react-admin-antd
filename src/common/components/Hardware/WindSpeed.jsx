@@ -16,34 +16,19 @@ import elf from '../../../elf'
 class WindSpeed extends React.Component {
     constructor (props) {
         super(props)
-
-        let onState = (stateType) => {
-            let stateObj = {
-                high: false, // 高速
-                low: false, // 低速
-                auto: false // 自动
-            }
-
-            stateObj[stateType] = true
-            this.state = stateObj
-        }
-
-        switch (props.windSpeedState) {
-            case 'high':
-                onState('high')
-                break
-            case 'low':
-                onState('low')
-                break
-            case 'auto':
-                onState('auto')
-                break
-            default:
-                onState('auto')
-                break
+        this.state = {
+            high: false,
+            low: false,
+            auto: false
         }
     }
-
+    componentWillReceiveProps (next) {
+        this.setState({
+            high: next.windSpeedState === 'high',
+            low: next.windSpeedState === 'low',
+            auto: next.windSpeedState === 'auto'
+        })
+    }
     render () {
         return (
             <Card
@@ -56,15 +41,15 @@ class WindSpeed extends React.Component {
                     <TitleBox> 设定风速 </TitleBox>
 
                     <HighBtn high={this.state.high}>
-                        <Button> 高速 </Button>
+                        <Button onClick={() => this.props.refresh('windSpeed', 'high')}> 高速 </Button>
                     </HighBtn>
 
                     <LowBtn low={this.state.low}>
-                        <Button> 低速 </Button>
+                        <Button onClick={() => this.props.refresh('windSpeed', 'low')}> 低速 </Button>
                     </LowBtn>
 
                     <AutoBtn auto={this.state.auto}>
-                        <Button> 自动 </Button>
+                        <Button onClick={() => this.props.refresh('windSpeed', 'auto')}> 自动 </Button>
                     </AutoBtn>
                 </div>
             </Card>

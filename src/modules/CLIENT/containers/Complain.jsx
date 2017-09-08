@@ -29,6 +29,8 @@ class complaint extends Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -107,7 +109,9 @@ class complaint extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/complaint/complaintList',
-            {page: this.state.page}
+            {page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const handleAcception = this.handleAcception
@@ -129,15 +133,12 @@ class complaint extends Component {
                 }
             }, {
                 title: '报单日期',
-                width: 250,
                 dataIndex: 'createDate'
             }, {
                 title: '公司名称',
-                width: 250,
                 dataIndex: 'customerName'
             }, {
                 title: '投诉内容',
-                width: 250,
                 dataIndex: 'complaintContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
@@ -148,7 +149,6 @@ class complaint extends Component {
 
             }, {
                 title: '状态',
-                width: 150,
                 dataIndex: 'status',
                 render: function (text, record, index) {
                     let status = ''
@@ -163,7 +163,6 @@ class complaint extends Component {
                 }
             }, {
                 title: '回访情况',
-                width: 250,
                 dataIndex: 'visitContent',
                 render: function (text, record, index) {
                     text = text.substring(0, 30)
@@ -173,7 +172,7 @@ class complaint extends Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                width: 150,
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
@@ -208,6 +207,8 @@ class complaint extends Component {
         filters['customerName'] = this.clientName
         filters['startDate'] = this.startDate
         filters['endDate'] = this.endDate
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

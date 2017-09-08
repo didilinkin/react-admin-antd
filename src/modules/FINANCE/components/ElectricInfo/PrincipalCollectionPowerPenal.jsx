@@ -11,8 +11,8 @@ class PrincipalCollectionPowerPenal extends React.Component {
         elecInfo: {}
     }
     async initialRemarks (nextProps) {
-        this.props.form.resetFields()
         if (this.state.isFirst && nextProps.visible) {
+            this.props.form.resetFields()
             let elecInfo = await apiPost(
                 '/ElectricityFees/ElectricityFeeInfo',
                 {id: nextProps.id}
@@ -119,7 +119,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
                                     message: '请输入优惠金额!'
                                 }]
                             })(
-                                <Input onBlur={this.onBlur} type="text" style={{width: '200px'}} />
+                                <Input onKeyUp={this.onBlur} type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="实际应收" labelCol={{ span: 7 }}

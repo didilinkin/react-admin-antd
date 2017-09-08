@@ -1,6 +1,6 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
-import {Table, Spin} from 'antd'
+import {Table, Spin, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 import AllPaidComponent from '../details/PropertyFee/PropertyDetail'
@@ -22,6 +22,8 @@ class PropertyFeeSuccess extends Component {
             page: 1,
             rows: 30,
             auditStatus: 2,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -49,7 +51,9 @@ class PropertyFeeSuccess extends Component {
         let result = await apiPost(
             '/propertyFee/propertyFeeList',
             {auditStatus: this.state.auditStatus,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         this.setState({loading: false,
@@ -148,14 +152,20 @@ class PropertyFeeSuccess extends Component {
                 }
             }, {
                 title: '操作',
-                width: 100,
+                width: 150,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a onClick={() => handleUpdate(record.id)} > 明细 </a>
+                            <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;&nbsp;&nbsp;</a>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + record.id + '&source=' + 1)
+                            }}
+                            >
+                                <a>打印通知单</a>
+                            </Popconfirm>
                         </div>
                     )
                 }
@@ -171,6 +181,8 @@ class PropertyFeeSuccess extends Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

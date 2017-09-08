@@ -1,6 +1,6 @@
 // 楼宇管理 - 目录配置
 const BUILDING_DIR = {
-    title: '楼宇管理',
+    title: '房源管理',
     key: 'building',
     path: '/home/building',
     icon: 'home',

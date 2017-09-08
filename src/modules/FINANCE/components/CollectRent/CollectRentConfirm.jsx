@@ -62,30 +62,37 @@ class collectRentConfirm extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null) {
-            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
-        }
-        await apiPost(
-            '/collectRent/updateCollectRentVoByPaid',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '收租成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        // if (json.unpaidMoney !== '0.0') {
-        //     location.href = '/home/finance/collectRentDetails/RentReviewDetailNoLate/' + json.id
-        // } else if (json.unpaidMoney === '0.0' && json.receiptDate <= this.state.data.payDeadline) {
-        //     location.href = '/home/finance/collectRentDetails/NoLateAndRentFinish/' + json.id
-        // } else if (json.unpaidMoney === '0.0' && json.receiptDate > this.state.data.payDeadline) {
-        //     location.href = '/home/finance/collectRentDetails/RentFinishAndLate/' + json.id
-        // }
-        this.setState({visible: false,
-            isFirst: true })
-        this.props.close()
-        this.props.form.resetFields()
-        this.props.refreshTable()
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (json.receiptDate !== null) {
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+            }
+            await apiPost(
+                '/collectRent/updateCollectRentVoByPaid',
+                json
+            )
+            notification.open({
+                message: '收租成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+            this.props.close()
+            this.props.form.resetFields()
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.props.close()

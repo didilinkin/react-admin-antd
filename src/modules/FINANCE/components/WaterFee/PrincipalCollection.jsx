@@ -75,18 +75,30 @@ class PrincipalCollection extends React.Component {
         let purchasePrice = this.props.form.getFieldValue('receivableMoney')
         let serviceCharge = this.props.form.getFieldValue('paidMoney')
         let money = this.props.form.getFieldValue('money')
-        if (typeof (purchasePrice) === 'undefined') {
+        if (typeof (purchasePrice) === 'undefined' || purchasePrice.length === 0) {
             purchasePrice = 0
         }
-        if (typeof (serviceCharge) === 'undefined') {
+        if (typeof (serviceCharge) === 'undefined' || serviceCharge.length === 0) {
             serviceCharge = 0
         }
-        if (typeof (money) === 'undefined') {
+        if (typeof (money) === 'undefined' || money.length === 0) {
             money = 0
         }
-        this.props.form.setFieldsValue({
-            unpaidMoney: (parseFloat(purchasePrice) - parseFloat(serviceCharge) - parseFloat(money)).toFixed(2)
-        })
+        let unpaid = parseFloat(purchasePrice) - parseFloat(serviceCharge) - parseFloat(money)
+        if (unpaid < 0) {
+            this.props.form.setFieldsValue({
+                unpaidMoney: (parseFloat(purchasePrice) - parseFloat(serviceCharge)).toFixed(1),
+                money: ''
+            })
+            notification.open({
+                message: '输入金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+        } else {
+            this.props.form.setFieldsValue({
+                unpaidMoney: (unpaid).toFixed(1)
+            })
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form

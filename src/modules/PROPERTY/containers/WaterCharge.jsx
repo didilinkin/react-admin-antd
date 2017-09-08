@@ -52,6 +52,8 @@ class ChargeWaterBill extends React.Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
+        filters['sort'] = 'a.id'
+        filters['order'] = 'desc'
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters
@@ -125,7 +127,10 @@ class ChargeWaterBill extends React.Component {
         this.setState({loading: true})
         let result = await apiPost(
             '/WaterBill/WaterBillList',
-            {examineState: 0}
+            {examineState: 0,
+                sort: 'a.id',
+                order: 'desc'
+            }
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo',

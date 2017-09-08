@@ -20,6 +20,8 @@ class CollectRentConduct extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -36,7 +38,9 @@ class CollectRentConduct extends React.Component {
         let result = await apiPost(
             '/collectRent/collectRentList',
             {auditStatus: 1,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -131,6 +135,8 @@ class CollectRentConduct extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 1
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

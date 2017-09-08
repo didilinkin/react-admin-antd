@@ -19,6 +19,8 @@ class CollectRentFinanceSuccess extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -44,7 +46,9 @@ class CollectRentFinanceSuccess extends React.Component {
         let result = await apiPost(
             '/collectRent/collectRentList',
             {auditStatus: 2,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
         const info = this.info
@@ -146,7 +150,7 @@ class CollectRentFinanceSuccess extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
+                width: 250,
                 dataIndex: 'opt',
                 key: 'opt',
                 fixed: 'right',
@@ -154,9 +158,15 @@ class CollectRentFinanceSuccess extends React.Component {
                     let url = '/home/finance/collectRentDetails/RentReviewDetail/' + record.id
                     return (
                         <div>
-                            <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;&nbsp;</a>
+                            <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a>&nbsp; 撤回 </a>
+                                <a> 撤回 &nbsp;&nbsp;</a>
+                            </Popconfirm>
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id + '&source=' + 2)
+                            }}
+                            >
+                                <a>打印通知单</a>
                             </Popconfirm>
                         </div>
                     )
@@ -174,6 +184,8 @@ class CollectRentFinanceSuccess extends React.Component {
             filters = []
         }
         filters['auditStatus'] = 2
+        filters['sort'] = this.state.sort
+        filters['order'] = this.state.order
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current

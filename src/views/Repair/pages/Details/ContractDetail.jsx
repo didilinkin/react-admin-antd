@@ -135,7 +135,7 @@ class App extends React.Component {
                                     <Col span={8}><b>E-mail：</b>{sublet.email}</Col>
                                 </Row>
                                 <Row>
-                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} -- {sublet.subletEndDate} </Col>
+                                    <Col span={8}><b>转租周期：</b>{sublet.subletStartDate} ~ {sublet.subletEndDate} </Col>
                                     <Col span={16}><b>转租房间：</b>{sublet.roomNum} </Col>
                                 </Row>
                                 <Row>
@@ -153,7 +153,7 @@ class App extends React.Component {
                     </div>
                     <div className="main">
                         <Row>
-                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} -- {this.state.contract.endDate}</Col>
+                            <Col span={8}><b>服务周期：</b>{this.state.contract.startDate} ~ {this.state.contract.endDate}</Col>
                             <Col span={16}><b>录入时间：</b>{this.state.contract.createName} {this.state.contract.createDate}</Col>
                         </Row>
                         <Row>

@@ -21,6 +21,8 @@ class EditRoom extends React.Component {
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'a.id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -59,7 +61,9 @@ class EditRoom extends React.Component {
         let result = await apiPost(
             '/build/roomList',
             {delFlag: 0,
-                page: this.state.page}
+                page: this.state.page,
+                order: this.state.order,
+                sort: this.state.sort}
         )
         let ListBuildingInfo = await apiPost(
             '/collectRent/ListBuildingInfo'
@@ -195,6 +199,8 @@ class EditRoom extends React.Component {
         filters['buildId'] = this.buildId
         filters['propertyType'] = this.propertyType
         filters['roomStatus'] = this.roomStatus
+        filters['order'] = this.state.order
+        filters['sort'] = this.state.sort
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
