@@ -83,7 +83,7 @@ const CLIENT_DIR = {
             ]
         },
         {
-            title: '房间梆定',
+            title: '房间绑定',
             key: 'roombinding',
             path: '/home/client/roombinding',
             ancestor: ['client'],

@@ -1,4 +1,4 @@
-// 客户管理 - 房间梆定
+// 客户管理 - 房间绑定
 import React from 'react'
 import {Table, Row, Col, DatePicker, Form, Button, Input, Popconfirm, notification, Icon} from 'antd'
 import {apiPost} from '../../../api/api.dev'
@@ -49,6 +49,8 @@ class RoomBinding extends React.Component {
                 }, {
                     title: '操作',
                     key: 'operation',
+                    width: 150,
+                    fixed: 'right',
                     render: function (text, record, index) {
                         return (
                             <span>
@@ -101,7 +103,7 @@ class RoomBinding extends React.Component {
         // })
         // console.log(response)
         this.setState(
-            {message: 'b'})
+            {remarkShow: true})
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -138,13 +140,13 @@ class RoomBinding extends React.Component {
                         current: this.state.current,
                         pageSizeOptions: ['15', '30', '45'],
                         defaultPageSize: 30}}
-                    scroll={{ x: 1600 }}
+                    scroll={{ x: 1400 }}
                     bordered
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
                 />
                 <RoomBindingRemarks
-                    visible={this.state.collectPenal}
+                    visible={this.state.remarkShow}
                     id={this.state.id}
                     refresh={this.refresh}
                 />
