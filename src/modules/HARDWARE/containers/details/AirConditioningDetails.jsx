@@ -149,7 +149,7 @@ class The extends React.Component {
                             refresh={this.refresh}
                         />
                         {
-                            // console.log(this.state.json.modeState)
+                        // console.log(this.state.json.modeState)
                         }
                     </Col> {/* 向下传递 模式类型(字符串类型) */}
                     <Col span={4}>
