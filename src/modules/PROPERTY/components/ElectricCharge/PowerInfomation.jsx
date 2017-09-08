@@ -123,7 +123,7 @@ class PowerInfomation extends React.Component {
             return ''
         })
         let json = {}
-        json['roomNumberOne'] = '合计'
+        json['electricCostName'] = '合计'
         json['sumElectricity'] = sumElec
         json['singleMoney'] = sumSingeMoney
         electricRecordlList.push(json)

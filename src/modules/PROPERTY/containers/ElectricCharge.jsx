@@ -74,6 +74,7 @@ class ElectricCharge extends React.Component {
             }
             return ''
         })
+        console.log(PowerBillList)
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,

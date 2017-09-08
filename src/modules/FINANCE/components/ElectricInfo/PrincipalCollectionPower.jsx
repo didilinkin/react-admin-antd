@@ -24,8 +24,9 @@ class PrincipalCollectionPower extends React.Component {
                 isFirst: false
             })
             this.props.form.setFieldsValue({
-                receivableMoney: elecInfo.thisReceivable,
-                principalReceived: elecInfo.principalReceived
+                receivableMoney: parseFloat(elecInfo.thisReceivable).toFixed(1),
+                principalReceived: parseFloat(elecInfo.principalReceived).toFixed(1),
+                unprincipalReceived: parseFloat((elecInfo.thisReceivable ? elecInfo.thisReceivable : 0) - (elecInfo.principalReceived ? elecInfo.principalReceived : 0)).toFixed(1)
             })
         }
     }
@@ -71,21 +72,34 @@ class PrincipalCollectionPower extends React.Component {
             isFirst: true})
     }
     onBlur = () => {
-        let purchasePrice = this.props.form.getFieldValue('receivableMoney')
-        let serviceCharge = this.props.form.getFieldValue('principalReceived')
+        let receivableMoney = this.props.form.getFieldValue('receivableMoney')
+        let principalReceived = this.props.form.getFieldValue('principalReceived')
         let money = this.props.form.getFieldValue('money')
-        if (typeof (purchasePrice) === 'undefined') {
-            purchasePrice = 0
+        if (typeof (receivableMoney) === 'undefined' || receivableMoney.length === 0) {
+            receivableMoney = 0
         }
-        if (typeof (serviceCharge) === 'undefined') {
-            serviceCharge = 0
+        if (typeof (principalReceived) === 'undefined' || principalReceived.length === 0) {
+            principalReceived = 0
         }
-        if (typeof (money) === 'undefined') {
+        if (typeof (money) === 'undefined' || money.length === 0) {
             money = 0
         }
-        this.props.form.setFieldsValue({
-            unprincipalReceived: (parseFloat(purchasePrice) - parseFloat(serviceCharge) - parseFloat(money)).toFixed(1)
-        })
+        // 未收金额
+        let unprincipalReceivedMoney = parseFloat(receivableMoney) - parseFloat(principalReceived) - parseFloat(money)
+        if (unprincipalReceivedMoney < 0) {
+            this.props.form.setFieldsValue({
+                unprincipalReceived: (parseFloat(receivableMoney) - parseFloat(principalReceived)).toFixed(1),
+                money: ''
+            })
+            notification.open({
+                message: '输入金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+        } else {
+            this.props.form.setFieldsValue({
+                unprincipalReceived: unprincipalReceivedMoney.toFixed(1)
+            })
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -115,25 +129,15 @@ class PrincipalCollectionPower extends React.Component {
                         <FormItem label="本期应收" labelCol={{ span: 7 }}
                             wrapperCol={{ span: 13 }}
                         >
-                            {getFieldDecorator('receivableMoney', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请输入本期应收!'
-                                }]
-                            })(
+                            {getFieldDecorator('receivableMoney')(
                                 <Input disabled type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="已收金额" labelCol={{ span: 7 }}
                             wrapperCol={{ span: 13 }}
                         >
-                            {getFieldDecorator('principalReceived', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请输入已收金额!'
-                                }]
-                            })(
-                                <Input disabled onBlur={this.onBlur} type="text" style={{width: '200px'}} />
+                            {getFieldDecorator('principalReceived')(
+                                <Input disabled type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="本次实收" labelCol={{ span: 7 }}
@@ -145,18 +149,13 @@ class PrincipalCollectionPower extends React.Component {
                                     message: '请输入本次实收!'
                                 }]
                             })(
-                                <Input onBlur={this.onBlur} type="text" style={{width: '200px'}} />
+                                <Input onKeyUp={this.onBlur} type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
                         <FormItem label="未收金额" labelCol={{ span: 7 }}
                             wrapperCol={{ span: 13 }}
                         >
-                            {getFieldDecorator('unprincipalReceived', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请输入未收金额!'
-                                }]
-                            })(
+                            {getFieldDecorator('unprincipalReceived')(
                                 <Input disabled type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
