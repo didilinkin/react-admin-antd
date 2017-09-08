@@ -164,9 +164,16 @@ class PropertyFeeing extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json={}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['auditStatus'] = 0
         filters['contractStatus'] = 0
