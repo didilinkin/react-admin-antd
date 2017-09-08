@@ -28,7 +28,7 @@ class ElectricChargeDetails extends React.Component {
             return ''
         })
         let json = {}
-        json['roomNumberOne'] = '合计'
+        json['electricCostName'] = '合计'
         json['sumElectricity'] = sumElec
         json['singleMoney'] = sumSingeMoney.toFixed(1)
         electricRecordlList.push(json)
@@ -83,7 +83,11 @@ class ElectricChargeDetails extends React.Component {
             title: '总电量',
             dataIndex: 'sumElectricity',
             render: function (text, record, index) {
-                return parseFloat(record.sumElectricity).toFixed(2)
+                if (record.sumElectricity) {
+                    return parseFloat(record.sumElectricity).toFixed(2)
+                } else {
+                    return ''
+                }
             }
         }, {
             title: '单价',

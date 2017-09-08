@@ -60,23 +60,37 @@ class propertyPaidConfirm extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (json.receiptDate !== null) {
-            json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
-        }
-        await apiPost(
-            '/propertyFee/updatePropertyFeeByPaid',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '收款成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.setState({visible: false,
-            isFirst: true })
-        this.props.close()
-        this.props.form.resetFields()
-        this.props.refreshTable()
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (json.receiptDate !== null) {
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+            }
+            await apiPost(
+                '/propertyFee/updatePropertyFeeByPaid',
+                json
+            )
+            notification.open({
+                message: '收款成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+            this.props.close()
+            this.props.form.resetFields()
+            this.props.refreshTable()
+        }
     }
     handleCancel = (e) => {
         this.props.close()

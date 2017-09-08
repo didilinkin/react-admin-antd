@@ -1,4 +1,10 @@
-// 自定义新增页签触发器
+/**
+ * @author 闫晓迪
+ * @email 929213769@qq.com
+ * @create date 2017-09-06 02:17:06
+ * @modify date 2017-09-06 02:17:06
+ * @desc 自定义新增页签触发器
+*/
 import React from 'react'
 import cloneDeep from 'lodash/cloneDeep' // isArray
 import { hasString } from '../../../utils'
@@ -10,14 +16,22 @@ class TabsContainers extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            activeKey: props.panesState.activeKey, // 默认值: panes[0].key
+            activeKey: props.panesState.activeKey, // 默认值: panes[0].key; Redux中 setPanes 状态
             panes: props.panesState.panes // 默认值: [{ route, tabsProps, key }]
         }
     }
 
     // render 渲染之前
     componentWillMount = () => {
-        this.handleChange()
+        let asyncHandle = async function () {
+            await this.handleChange()
+
+            await this.setState(cloneDeep(this.props.panesState)) // 深拷贝
+
+            // await console.log('改变 state')
+        }
+
+        asyncHandle.bind(this)()
     }
 
     // 切换面板的回调 => 切换 state.activeKey
@@ -45,29 +59,32 @@ class TabsContainers extends React.Component {
     handleChange = () => {
         const arrayPanes = this.state.panes // 获取 store当中的 panes数组
         const strUrl = this.props.tabsProps.match.url // 根据当前路由状态 获取 url字符串
-        const isHomeIndex = strUrl === '/home/index'
-        const hasUrl = hasString(arrayPanes, 'path', strUrl)
+        const isHomeIndex = strUrl === '/home/index' // 判断 strUrl 是否是 首页; 返回值为 bool布尔值 => isHomeIndex
+        const hasUrl = hasString(arrayPanes, 'path', strUrl) // 在 arrayPanes数组中查找, 是否有当前url的path
 
-        if (!isHomeIndex) {
-            if (hasUrl < 1) { // console.log('无 当前url')
-                let currentPanes = this.setCloneObj() // 单个
-                this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store
-            } else { // console.log('有 当前url')
-                let currentKey
-                arrayPanes.forEach((pane, i) => {
+        if (!isHomeIndex) { // 判断是否是 '首页'; 如果不是, 取反 => 返回true
+            if (hasUrl < 1) { // 无 当前url
+                let currentPanes = this.setCloneObj() // 拷贝 出当前的 状态的obj对象(深拷贝)
+                this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store; panes数组length +1, 深拷贝当前的对象; => 发起actions
+                // console.log('此时 redux应该改变, 但未改变')
+            } else { // 有 当前url
+                let currentKey // 当前的 key
+                arrayPanes.forEach((pane, i) => { // 遍历 state中的 panes数组
                     if (pane.path === strUrl) {
-                        currentKey = pane.key
+                        currentKey = pane.key // 如果 遍历中的pane(单个)的path 等于 目前的url => 将这个 pane的key 赋值给 currentKey
                     }
                 })
-                this.setActiveKey(currentKey)
+                this.setActiveKey(currentKey) // 设置 activeKey
             }
         }
     }
 
     // 配置 actions / 发起 actions
-    setActions = (strKey, arrPanes) => {
-        const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj
-        this.props.onAddPane({
+    setActions = (strKey, arrPanes) => { // 参数类型: str, obj
+        // console.log('检查 tabs 运行几次设置action')
+        const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj => 返回最新的 panes数组
+
+        this.props.onAddPane({ // 使用 props传入的 actions方法 => 将url状态保存
             activeKey: strKey,
             panes: previousState
         })
@@ -81,6 +98,7 @@ class TabsContainers extends React.Component {
             title: this.props.route.title,
             path: this.props.tabsProps.match.url
         })
+
         return cloneObj
     }
 
@@ -123,12 +141,6 @@ class TabsContainers extends React.Component {
         }
     }
 
-    // 当 props改变时 触发 => 调用 更改 setState的方法
-    componentWillReceiveProps = (nextProps) => {
-        let currentState = cloneDeep(nextProps.panesState)
-        this.setState(currentState)
-    }
-
     render () {
         const { route, tabsProps } = this.props
         return (
@@ -149,6 +161,7 @@ class TabsContainers extends React.Component {
                             path={ pane.path }
                         >
                             <route.component { ...tabsProps } routes={ route.routes } />
+
                         </TabPane>
                     ))
                 }

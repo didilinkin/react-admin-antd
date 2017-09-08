@@ -45,22 +45,36 @@ class propertyPaidConfirm extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        json['id'] = this.state.data.id
-        json['cashDepositId'] = this.state.data.cashDepositId
-        json['auditStatus'] = 1
-        await apiPost(
-            '/cashDeposit/updateCashDepositByConfirm',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '收款成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.props.close()
-        this.props.refreshTable()
-        this.setState({visible: false,
-            isFirst: true })
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            json['id'] = this.state.data.id
+            json['cashDepositId'] = this.state.data.cashDepositId
+            json['auditStatus'] = 1
+            await apiPost(
+                '/cashDeposit/updateCashDepositByConfirm',
+                json
+            )
+            notification.open({
+                message: '收款成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.close()
+            this.props.refreshTable()
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+        }
     }
     handleCancel = (e) => {
         this.props.close()

@@ -1,4 +1,11 @@
-// Tabs - 获取顶级 State
+/**
+ * @author 闫晓迪
+ * @email 929213769@qq.com
+ * @create date 2017-09-06 03:22:07
+ * @modify date 2017-09-06 03:22:07
+ * @desc Tabs - 获取顶级 State
+*/
+
 import React from 'react'
 // import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'

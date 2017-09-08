@@ -15,7 +15,7 @@ const SubMenu = Menu.SubMenu
 const MenuItemGroup = Menu.ItemGroup
 const FormItem = Form.Item
 
-const UserDiv = styled.span`
+const UserDiv = styled.span `
     position: relative;
     display: inline-block;
     width: 40px;
@@ -71,48 +71,62 @@ class headerContainers extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        if ((json.oldPassWord + '') === 'undefined' || (json.oldPassWord + '') === '') {
-            notification.open({
-                message: '旧密码不能为空！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        if ((json.passWord + '') === 'undefined' || (json.passWord + '') === '') {
-            notification.open({
-                message: '新密码不能为空！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        let pattern = /^(?![^a-zA-Z]+$)(?!\D+$).{6,12}/
-        if (!pattern.test(json.passWord)) {
-            notification.open({
-                message: '密码长度6-12位，且必须同时含有数字和字母',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        if (json.confirmPassWord !== json.passWord) {
-            notification.open({
-                message: '两次密码输入不一致！',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            return false
-        }
-        let result = await apiPost(
-            '/system/updatePassWord',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: result.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        if (result.data === '修改成功') {
-            this.setState({visible: false,
-                isFirst: true })
-            window.location.href = '/login'
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            /* if ((json.oldPassWord + '') === 'undefined' || (json.oldPassWord + '') === '') {
+                notification.open({
+                    message: '旧密码不能为空！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            if ((json.passWord + '') === 'undefined' || (json.passWord + '') === '') {
+                notification.open({
+                    message: '新密码不能为空！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }*/
+            let pattern = /^(?![^a-zA-Z]+$)(?!\D+$).{6,12}/
+            if (!pattern.test(json.passWord)) {
+                notification.open({
+                    message: '密码长度6-12位，且必须同时含有数字和字母',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            if (json.confirmPassWord !== json.passWord) {
+                notification.open({
+                    message: '两次密码输入不一致！',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                return false
+            }
+            let result = await apiPost(
+                '/system/updatePassWord',
+                json
+            )
+            notification.open({
+                message: result.data,
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            if (result.data === '修改成功') {
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+                window.location.href = '/login'
+            }
         }
     }
     handleSubmit2 = async () => {
@@ -161,17 +175,18 @@ class headerContainers extends React.Component {
                     background: elf.c.content
                 }}
             >
-                <Modal maskClosable={false}
+                <Modal
+                    maskClosable={ false }
                     title="修改密码"
-                    style={{top: 100}}
-                    width={400}
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
+                    style={{ top: 100 }}
+                    width={ 400 }
+                    visible={ this.state.visible }
+                    onOk={ this.handleSubmit }
+                    onCancel={ this.handleCancel }
                 >
                     <Form layout="horizontal">
                         <Row>
-                            <Col span={20}>
+                            <Col span={ 20 }>
                                 <FormItem label="旧密码" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
@@ -241,7 +256,8 @@ class headerContainers extends React.Component {
                     style={{
                         fontSize: elf.f.text + 'px',
                         lineHeight: '64px',
-                        padding: '0',
+                        // padding: '0',
+                        paddingLeft: `${elf.d.autoPadding}px`,
                         cursor: 'pointer',
                         transition: 'color .3s'
                     }}
@@ -256,8 +272,11 @@ class headerContainers extends React.Component {
                     }}
                 >
                     {/* 全屏按钮 */}
-                    <Menu.Item key="full" onClick={this.screenFull} >
-                        <Icon type="arrows-alt" onClick={this.screenFull} />
+                    <Menu.Item key="full" onClick={this.screenFull}>
+                        <Icon
+                            type="arrows-alt"
+                            onClick={this.screenFull}
+                        />
                     </Menu.Item>
 
                     {/* 用户消息 */}
