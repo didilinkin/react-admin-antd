@@ -111,7 +111,7 @@ class ChargeWaterBill extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     info = (id) => {
         this.setState({
@@ -129,7 +129,7 @@ class ChargeWaterBill extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     async initialRemarks () {
         this.setState({loading: true})
