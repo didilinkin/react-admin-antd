@@ -112,7 +112,7 @@ class ElectricCharge extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     info = (id) => {
         console.log(id)
@@ -132,7 +132,7 @@ class ElectricCharge extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     async initialRemarks () {
         this.setState({loading: true})
