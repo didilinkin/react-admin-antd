@@ -3,7 +3,7 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHeadComponent from '../components/ElectricCharge/PowerBillHead'
 import PowerAddUpComponent from '../components/ElectricCharge/PowerAddUp'
-import { apiPost } from '../../../api'
+import { apiPost, baseURL } from '../../../api'
 import PowerInfomation from '../components/ElectricCharge/PowerInfomation'
 const TabPane = Tabs.TabPane
 class ElectricCharge extends React.Component {
@@ -338,7 +338,7 @@ class ElectricCharge extends React.Component {
                             <a onClick={() => info(record.id)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
-                                window.open('http://192.168.5.12:18082/ElectricityFees/print?ids=' + record.id)
+                                window.open(baseURL + '/ElectricityFees/print?ids=' + record.id)
                             }}
                             >
                                 <a>打印单据</a>
