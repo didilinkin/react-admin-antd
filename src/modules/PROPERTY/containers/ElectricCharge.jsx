@@ -336,6 +336,13 @@ class ElectricCharge extends React.Component {
                     return (
                         <span>
                             <a onClick={() => info(record.id)}>明细</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open('http://192.168.5.12:18082/ElectricityFees/print?ids=' + record.id)
+                            }}
+                            >
+                                <a>打印单据</a>
+                            </Popconfirm>
                         </span>
                     )
                 }
@@ -458,6 +465,7 @@ class ElectricCharge extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             scroll={{ x: 1800 }}
+                            RowKeys={this.state.RowKeys}
                             bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}
