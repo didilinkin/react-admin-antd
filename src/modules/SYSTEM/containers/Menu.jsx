@@ -207,9 +207,6 @@ class MenuCom extends React.Component {
                             {this.recursion(this.state.MenuList, 3)}
                         </TreeNode>
                     </Tree>
-                    <Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft">
-                        <Icon onClick={this.handleButtonClick.bind(this, 3)} type="caret-down" />
-                    </Dropdown>
                 </MenuBox>
                 <MenuBox1>
                     <h2 style={{ marginLeft: '7%',
