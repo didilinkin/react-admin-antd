@@ -241,7 +241,7 @@ class CollectRentSuccess extends React.Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 2000 }}
+                        scroll={{ x: 1800 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
