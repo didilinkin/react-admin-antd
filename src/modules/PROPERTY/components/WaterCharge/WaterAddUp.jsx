@@ -140,13 +140,13 @@ class WaterAddUp extends React.Component {
             }
             this.setState({visible: false,
                 isFirst: true })
-            this.props.refreshTable()
+            this.props.refreshTable({}, {}, {})
         }
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
-        this.props.refreshTable()
+        this.props.refreshTable({}, {}, {})
     }
 
     delect = async (uuid) => {
