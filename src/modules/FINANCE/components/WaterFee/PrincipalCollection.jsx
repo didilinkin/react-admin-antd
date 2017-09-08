@@ -94,7 +94,7 @@ class PrincipalCollection extends React.Component {
                 message: '输入金额不能大于未收金额！',
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
-        }else {
+        } else {
             this.props.form.setFieldsValue({
                 unpaidMoney: (unpaid).toFixed(1)
             })
