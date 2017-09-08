@@ -119,9 +119,16 @@ class EditBuilding extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['delFlag'] = 0
         filters['order'] = this.state.order
