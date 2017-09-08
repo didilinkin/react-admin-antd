@@ -161,9 +161,11 @@ class TableAddUp extends React.Component {
     }
     getClient = (value) => {
         this.state.clientList.map(client => {
-            let key = client.clientId + ':' + client.roomNum.toString() + ':' + client.clientType.toString()
+            let key = client.clientId + ':' + (client.roomNum ? client.roomNum.toString() : 'null') + ':' + client.clientType.toString()
+            console.log(key)
             if (key === value) {
                 this.props.form.setFieldsValue({
+                    clientNameOne: client.clientName,
                     buildName: client.buildName,
                     buildId: client.buildId,
                     roomNum: client.roomNum,

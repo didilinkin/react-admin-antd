@@ -73,7 +73,10 @@ class ClientRepair extends Component {
         this.setState({loading: true})
         let result = await apiPost(
             'upkeep/repairList',
-            {repairStatus: 0}
+            {repairStatus: 0,
+                sort: 'id',
+                order: 'desc'
+            }
         )
         let repairList = result.data.rows
         const distributeLeaflets = this.distributeLeaflets
@@ -229,6 +232,9 @@ class ClientRepair extends Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
+        filters['sort'] = 'id'
+        filters['order'] = 'desc'
+
         let result = await apiPost(
             'upkeep/repairList',
             filters
