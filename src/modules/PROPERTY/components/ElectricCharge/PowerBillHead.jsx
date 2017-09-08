@@ -163,7 +163,7 @@ class PowerBillHead extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('cxsj')(
-                                        <RangePicker />
+                                        <RangePicker style={{ width: 200 }} />
                                     )}
                                 </FormItem>
                             </Col>
