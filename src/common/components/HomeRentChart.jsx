@@ -68,11 +68,12 @@ class HomeRentChart extends React.Component {
         }
     }
     componentWillReceiveProps (nextPorps) {
-        // let option = this.state.option
-        // let yearNumber = nextPorps.rent.year.substring(0, 4)
-        // option.title.text = '本年度 (' + yearNumber + '-12 ~ ' + (parseInt(yearNumber, 0) + 1) + '-11） 收租汇总'
-        // option.series[0].data = nextPorps.rent.receivable
-        // option.series[1].data = nextPorps.rent.actualReceipt
+        console.log(nextPorps.rent.year)
+        let option = this.state.option
+        let yearNumber = nextPorps.rent.year ? nextPorps.rent.year.substring(0, 4) : 0
+        option.title.text = '本年度 (' + yearNumber + '-12 ~ ' + (parseInt(yearNumber, 0) + 1) + '-11） 收租汇总'
+        option.series[0].data = nextPorps.rent.receivable
+        option.series[1].data = nextPorps.rent.actualReceipt
     }
     render () {
         return (
