@@ -484,35 +484,51 @@ class propertyFeeAdd extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        if (this.props.id > 0) {
-            await apiPost(
-                'propertyFee/updatePropertyFee',
-                this.state.json1
-            )
-            notification.open({
-                message: '操作成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.state.json1.tenant = null
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
-        } else {
-            console.log(this.state.json1.printClientName)
-            await apiPost(
-                'propertyFee/savePropertyFee',
-                this.state.json1
-            )
-            notification.open({
-                message: '添加成功',
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-            this.state.json1.tenant = null
-            this.props.close()
-            this.props.refreshTable()
-            this.setState({visible: false,
-                isFirst: true })
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
+        )
+        if (adopt) {
+            if (this.props.id > 0) {
+                await apiPost(
+                    'propertyFee/updatePropertyFee',
+                    this.state.json1
+                )
+                notification.open({
+                    message: '操作成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.state.json1.tenant = null
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            } else {
+                console.log(this.state.json1.printClientName)
+                await apiPost(
+                    'propertyFee/savePropertyFee',
+                    this.state.json1
+                )
+                notification.open({
+                    message: '添加成功',
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+                this.state.json1.tenant = null
+                this.props.close()
+                this.props.refreshTable()
+                this.setState({
+                    visible: false,
+                    isFirst: true
+                })
+            }
         }
     }
     handleChange3 = (e) =>{
