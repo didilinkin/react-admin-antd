@@ -31,15 +31,23 @@ class ElectricCharge extends React.Component {
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
+        this.json = {}
         this.activeKey = activeKey ? activeKey : this.activeKey
         this.refresh({}, {}, {})
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openWaterAddUpComponent: false,
             openInfo: false})
         if (filters === null || typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null && sorter === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
@@ -374,7 +382,7 @@ class ElectricCharge extends React.Component {
                         <PowerAddUpComponent
                             title="修改电费"
                             id={this.state.id}
-                            refreshTable={this.refreshTwo}
+                            refreshTable={this.refresh}
                             visible={this.state.openWaterAddUpComponent}
                         />
                     </TabPane>

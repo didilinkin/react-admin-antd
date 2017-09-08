@@ -38,6 +38,7 @@ class sumElectricityAddUp extends React.Component {
         this.getClientListAndUser()
         this.setTableColunms()
     }
+    // 提交
     handleSubmit = async () => {
         let adopt = false
         this.props.form.validateFields(
@@ -102,13 +103,13 @@ class sumElectricityAddUp extends React.Component {
             }
             this.setState({visible: false,
                 isFirst: true })
-            this.props.refreshTable()
+            this.props.refreshTable({}, {}, {})
         }
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
             isFirst: true})
-        this.props.refreshTable()
+        this.props.refreshTable({}, {}, {})
     }
     setTableColunms = (contract, powerType) => {
         let deleteRecord = this.deleteRecord
