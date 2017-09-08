@@ -137,7 +137,12 @@ class BuildAdd extends React.Component {
                             <FormItem label="客梯数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('passengerElevatorNum')(<Input />)}
+                                {getFieldDecorator('passengerElevatorNum', {
+                                    rules: [ {
+                                        pattern: '^\\d+$',
+                                        message: '必须为数字'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>
@@ -146,7 +151,12 @@ class BuildAdd extends React.Component {
                             <FormItem label="货梯数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('goodsElevatorNum')(<Input />)}
+                                {getFieldDecorator('goodsElevatorNum', {
+                                    rules: [ {
+                                        pattern: '^\\d+$',
+                                        message: '必须为数字'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>
@@ -155,7 +165,12 @@ class BuildAdd extends React.Component {
                             <FormItem label="楼层数量" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('floorNum')(<Input />)}
+                                {getFieldDecorator('floorNum', {
+                                    rules: [ {
+                                        pattern: '^\\d+$',
+                                        message: '必须为数字'
+                                    }]
+                                })(<Input />)}
                             </FormItem>
                         </Col>
                     </Row>

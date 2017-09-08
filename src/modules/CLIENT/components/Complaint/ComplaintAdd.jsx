@@ -7,7 +7,7 @@ const FormItem = Form.Item
 const Option = Select.Option
 
 
-class TableAddUp extends React.Component {
+class ComplaintAdd extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -217,7 +217,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('number', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入单号'
                                         }]
                                     })(
                                         <Input disabled />
@@ -233,7 +233,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('customerNameOne', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入公司名称'
                                         }]
                                     })(
                                         <Select
@@ -261,7 +261,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('buildName', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入所属楼宇'
                                         }]
                                     })(
                                         <Input disabled />
@@ -275,7 +275,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('roomNum', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入所在房间'
                                         }]
                                     })(
                                         <Input />
@@ -291,7 +291,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('complaintMan', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入投诉人'
                                         }]
                                     })(
                                         <Input />
@@ -305,7 +305,7 @@ class TableAddUp extends React.Component {
                                     {getFieldDecorator('phone', {
                                         rules: [ {
                                             required: true,
-                                            message: '请输入'
+                                            message: '请输入联系方式'
                                         }]
                                     })(
                                         <Input />
@@ -320,7 +320,7 @@ class TableAddUp extends React.Component {
                             {getFieldDecorator('complaintContent', {
                                 rules: [ {
                                     required: true,
-                                    message: '请输入'
+                                    message: '请输入投诉内容'
                                 }]
                             })(
                                 <Input type="textarea" rows={4} />
@@ -350,6 +350,6 @@ class TableAddUp extends React.Component {
     }
 }
 
-let TableAddUpComponent = Form.create()(TableAddUp)
+let ComplaintAddComponent = Form.create()(ComplaintAdd)
 
-export default TableAddUpComponent
+export default ComplaintAddComponent
