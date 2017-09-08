@@ -169,10 +169,17 @@ class LeaseContract extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         // 刷新表格
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null && sorter === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['type'] = this.state.type
         if (pagination === null || typeof (pagination) === 'undefined') {
