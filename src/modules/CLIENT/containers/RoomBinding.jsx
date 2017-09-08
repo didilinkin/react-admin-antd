@@ -2,6 +2,7 @@
 import React from 'react'
 import {Table, Row, Col, DatePicker, Form, Button, Input, Popconfirm, notification, Icon} from 'antd'
 import {apiPost} from '../../../api/api.dev'
+import RoomBindingRemarks from '../components/RoomBinding/RoomBindingRemarks'
 const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
 class RoomBinding extends React.Component {
@@ -42,10 +43,6 @@ class RoomBinding extends React.Component {
                     dataIndex: 'remarks',
                     key: 'remarks'
                 }, {
-                    title: '手机编号',
-                    dataIndex: 'phone',
-                    key: 'phone'
-                }, {
                     title: '绑定时间',
                     dataIndex: 'createDate',
                     key: 'createDate'
@@ -78,7 +75,7 @@ class RoomBinding extends React.Component {
         this.setState({dataSource: response.data.rows})
     }
     // 解除绑定
-    unbind = async function (id) {
+    unbind = async (id) => {
         console.log(id)
         let response = await apiPost(
             '/userWx/deleteUserWx',
@@ -91,18 +88,20 @@ class RoomBinding extends React.Component {
         console.log(response)
     }
     // 备注
-    remarks = async function (id) {
+    remarks = async (id) => {
         console.log(id)
-        let response = await apiPost(
-            '/userWx/updateUserWx',
-            {'id': id,
-                'remarks': 'dddd'}
-        )
-        notification.open({
-            message: response.data,
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        console.log(response)
+        // let response = await apiPost(
+        //     '/userWx/updateUserWx',
+        //     {'id': id,
+        //         'remarks': 'dddd'}
+        // )
+        // notification.open({
+        //     message: response.data,
+        //     icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        // })
+        // console.log(response)
+        this.setState(
+            {message: 'b'})
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -139,10 +138,15 @@ class RoomBinding extends React.Component {
                         current: this.state.current,
                         pageSizeOptions: ['15', '30', '45'],
                         defaultPageSize: 30}}
-                    scroll={{ x: 1800 }}
+                    scroll={{ x: 1600 }}
                     bordered
                     dataSource={this.state.dataSource}
                     columns={this.state.columns}
+                />
+                <RoomBindingRemarks
+                    visible={this.state.collectPenal}
+                    id={this.state.id}
+                    refresh={this.refresh}
                 />
             </div>
         )
