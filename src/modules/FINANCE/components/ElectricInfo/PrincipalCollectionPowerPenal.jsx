@@ -25,7 +25,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
             })
             this.props.form.setFieldsValue({
                 liquidatedDamages: elecInfo.liquidatedDamages,
-                principalReceived: elecInfo.principalReceived
+                shouldPay: (elecInfo.liquidatedDamages - elecInfo.liquidatedDamagesReceived - elecInfo.defaultAmount).toFixed(1)
             })
         }
     }
@@ -50,9 +50,9 @@ class PrincipalCollectionPowerPenal extends React.Component {
             let data = await apiPost(
                 '/ElectricityFees/DefaultCollection',
                 {liquidatedDamagesDate: json.liquidatedDamagesDate.format('YYYY-MM-DD'),
-                    defaultAmount: json.defaultAmount,
+                    defaultAmount: json.defaultAmount ? json.defaultAmount : 0,
                     principalMethod: json.method,
-                    money: json.liquidatedDamagesReceived,
+                    money: json.liquidatedDamagesReceived ? json.liquidatedDamagesReceived : 0,
                     id: json.id}
             )
             notification.open({
@@ -71,18 +71,37 @@ class PrincipalCollectionPowerPenal extends React.Component {
             isFirst: true})
     }
     onBlur = () => {
-        let liquidatedDamages = this.props.form.getFieldValue('liquidatedDamages')
+        let shouldPay = this.props.form.getFieldValue('shouldPay')
+        let liquidatedDamagesReceived = this.props.form.getFieldValue('liquidatedDamagesReceived')
         let defaultAmount = this.props.form.getFieldValue('defaultAmount')
+        let unpaid = parseFloat(shouldPay ? shouldPay : 0) - parseFloat(liquidatedDamagesReceived ? liquidatedDamagesReceived : 0) - parseFloat(defaultAmount ? defaultAmount : 0)
         this.props.form.setFieldsValue({
-            liquidatedDamagesReceived: (parseFloat(liquidatedDamages) - parseFloat(defaultAmount)).toFixed(1)
+            unpaid: (unpaid).toFixed(1)
         })
+
+        // 未收金额
+        if (unpaid < 0) {
+            this.props.form.setFieldsValue({
+                unpaid: parseFloat(shouldPay ? shouldPay : 0) - parseFloat(defaultAmount ? defaultAmount : 0),
+                liquidatedDamagesReceived: '',
+                defaultAmount: ''
+            })
+            notification.open({
+                message: '输入金额不能大于未收金额！',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+        } else {
+            this.props.form.setFieldsValue({
+                unpaid: unpaid.toFixed(1)
+            })
+        }
     }
     render () {
         const { getFieldDecorator } = this.props.form
         return (
             <div>
                 <Modal maskClosable={false}
-                    title="确认违约金"
+                    title="确认收违约金"
                     style={{top: 20}}
                     width={380}
                     visible={this.state.visible}
@@ -90,9 +109,7 @@ class PrincipalCollectionPowerPenal extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
-                        <FormItem label="客户交费日期" labelCol={{ span: 7 }}
-                            wrapperCol={{ span: 13 }}
-                        >
+                        <FormItem label="交费日期" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
                             {getFieldDecorator('liquidatedDamagesDate', {
                                 rules: [ {
                                     required: true,
@@ -102,37 +119,40 @@ class PrincipalCollectionPowerPenal extends React.Component {
                                 <DatePicker style={{width: '200px'}} />
                             )}
                         </FormItem>
-                        <FormItem label="本期违约金" labelCol={{ span: 7 }}
-                            wrapperCol={{ span: 13 }}
-                        >
+                        <FormItem label="本期应收" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
                             {getFieldDecorator('liquidatedDamages', {
                             })(
-                                <Input disabled type="text" style={{width: '200px'}} />
+                                <Input disabled style={{width: '200px'}} />
                             )}
                         </FormItem>
-                        <FormItem label="优惠金额" labelCol={{ span: 7 }}
-                            wrapperCol={{ span: 13 }}
-                        >
-                            {getFieldDecorator('defaultAmount', {
+                        <FormItem label="本次应收" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
+                            {getFieldDecorator('shouldPay', {
+                            })(
+                                <Input disabled style={{width: '200px'}} />
+                            )}
+                        </FormItem>
+                        <FormItem label="优惠金额" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
+                            {getFieldDecorator('defaultAmount')(
+                                <Input onKeyUp={this.onBlur} style={{width: '200px'}} />
+                            )}
+                        </FormItem>
+                        <FormItem label="本次实收" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
+                            {getFieldDecorator('liquidatedDamagesReceived', {
                                 rules: [ {
                                     required: true,
-                                    message: '请输入优惠金额!'
+                                    message: '请输入本次实收金额!'
                                 }]
                             })(
-                                <Input onKeyUp={this.onBlur} type="text" style={{width: '200px'}} />
+                                <Input onKeyUp={this.onBlur} style={{width: '200px'}} />
                             )}
                         </FormItem>
-                        <FormItem label="实际应收" labelCol={{ span: 7 }}
-                            wrapperCol={{ span: 13 }}
-                        >
-                            {getFieldDecorator('liquidatedDamagesReceived', {
+                        <FormItem label="未收金额" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
+                            {getFieldDecorator('unpaid', {
                             })(
-                                <Input disabled type="text" style={{width: '200px'}} />
+                                <Input disabled style={{width: '200px'}} />
                             )}
                         </FormItem>
-                        <FormItem label="客户交费方式" labelCol={{ span: 7 }}
-                            wrapperCol={{ span: 13 }}
-                        >
+                        <FormItem label="交费方式" labelCol={{ span: 7 }} wrapperCol={{ span: 13 }}>
                             {getFieldDecorator('damagesMethod', {
                                 rules: [ {
                                     required: true,
