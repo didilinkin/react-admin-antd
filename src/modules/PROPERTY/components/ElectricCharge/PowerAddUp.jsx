@@ -385,6 +385,7 @@ class sumElectricityAddUp extends React.Component {
                 }
             })
         })
+        console.log(arr)
         return arr
     }
     // 选择客户名称 参数：客户id
@@ -401,9 +402,7 @@ class sumElectricityAddUp extends React.Component {
             amountReceivable: 0
         })
         this.state.ClientList.map(async (contract) => {
-            let formName = ''
             if (contractId.toString() === contract.id.toString()) {
-                formName = contract.clientName
                 this.lastTimeRecord(contractId, contract.clientId, 1, true)
                 let subletList = await apiPost(
                     '/propertyFee/getSubletByPmId',
@@ -415,6 +414,7 @@ class sumElectricityAddUp extends React.Component {
                     roomNumber = this.complement(roomNumber, sublet.leaseRooms.split(','))
                     return ''
                 })
+                console.log(roomNumber)
                 this.setState({
                     Contract: contract,
                     roomNumberOne: roomNumber,
@@ -424,8 +424,8 @@ class sumElectricityAddUp extends React.Component {
                 this.props.form.setFieldsValue({
                     unitPrice: contract.powerUnitPrice,
                     currentMouthUnitPrice: contract.powerUnitPrice,
-                    roomNumber: roomNumber.length > 0 ? roomNumber.toString() : contract.leaseRooms,
-                    formName: formName,
+                    roomNumber: roomNumber.length > 0 ? roomNumber.toString() : '',
+                    formName: contract.clientName,
                     ratio: contract.powerRatio
                 })
             }
