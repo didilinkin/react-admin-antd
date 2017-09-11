@@ -13,33 +13,26 @@ import { Tabs } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
-    state = {
-        activePane: { // 展示的 pane标签
-            closable: false,
-            key: '/home/index',
-            path: '/home/index',
-            title: '首页'
-        },
-        panes: [{ // 展示的所有标签; [array]
-            closable: false,
-            key: '首页',
-            path: '/home/index',
-            title: '首页'
-        }]
+    constructor (props) {
+        super(props)
+        this.state = {
+            activePane: props.panesState.activePane,
+            panes: props.panesState.panes
+        }
     }
 
     // render 渲染前
     componentWillMount = () => {
         console.log('渲染前')
-        console.log('检查上一次的 data')
-        console.log(this.state)
+        console.log('检查 Redux中数据')
+        console.dir(this.props.panesState)
 
         this.handleChange()
     }
 
     // 处理变化; 根据url 判断显示内容;
     handleChange = () => {
-        const arrPanes = this.state.panes // 保存 state中数组
+        const arrPanes = this.props.panesState.panes // 保存 Redux.paneState 中数组
         const strUrl = this.props.route.path // 保存 当前url
         const hasUrlIndex = hasString(arrPanes, 'path', strUrl) // 在 arrPanes数组中查找, 返回当前url的位置(如果无 => 0)
         const isHomeUrl = strUrl === '/home/index' // 判断 当前url是否是 '首页'
@@ -77,14 +70,18 @@ class TabsContainers extends React.Component {
         return cloneObj
     }
 
-    // 设置 panes数组 => 更新state
+    // 设置 panes数组 => 更新 redux - panes数组
     setPanes = (objPane) => {
         const allPanes = cloneDeep([ // 配置完整的 panes
-            ...this.state.panes,
+            ...this.props.panesState.panes,
             objPane
         ])
 
-        this.setState({
+        console.log('检查 设置好的 panes数组 => 正确')
+        console.dir(allPanes)
+
+        // 使用actions 修改 redux
+        this.props.onAddPane({ // 使用 props传入的 actions方法 => 将url状态保存
             activePane: objPane,
             panes: allPanes
         })
@@ -92,14 +89,29 @@ class TabsContainers extends React.Component {
 
     // 设置 activePane(显示标签的对象)
     setActivePane = (objActive) => {
+        // this.setState({
+        //     activePane: objActive
+        // })
+
+        // 发起 actions, 修改 redux
+        this.props.onActivePane({ objActive })
+    }
+
+    // 当 props(redux)改变时, 触发 nextPorps
+    componentWillReceiveProps = (nextProps) => {
+        console.log('props 发生改变')
+        console.dir(nextProps)
+
+        // 改变 this.state
         this.setState({
-            activePane: objActive
+            activePane: nextProps.panesState.activePane,
+            panes: nextProps.panesState.panes
         })
     }
 
-    // 永远禁止 二次刷新
+    // 允许组件 二次刷新
     shouldComponentUpdate = () => {
-        return false
+        return true
     }
 
     render () {
@@ -112,19 +124,21 @@ class TabsContainers extends React.Component {
             <div>
                 { console.log('1. 测试return 渲染次数(不包含TabPane遍历) => 打印 1次') }
                 <Tabs
+                    activeKey={ this.state.activePane.key } // 当前激活 tab 面板的 key
                     hideAdd
+                    onChange={ this.onChange } // 切换面板的回调
                     type="editable-card" // 页签的基本样式
                 >
                     {/* 内容部分 与 state.panes数组无关系 */}
                     {
                         this.state.panes.map((pane) => (
                             <TabPane
-                                closable={pane.closable}
-                                key={pane.key} // this.state.activeKey // 与 store中的 panesState 绑定
-                                tab={pane.title}
-                                path={pane.path}
+                                closable={ pane.closable }
+                                key={ pane.key } // this.state.activeKey // 与 store中的 panesState 绑定
+                                tab={ pane.title }
+                                path={ pane.path }
                             >
-                                <route.component { ...tabsProps } routes={route.routes} />
+                                <route.component { ...tabsProps } routes={ route.routes } />
                                 { console.log('2. 测试return 渲染次数(包含TabPane遍历) => 打印 2次') }
                             </TabPane>
                         ))
