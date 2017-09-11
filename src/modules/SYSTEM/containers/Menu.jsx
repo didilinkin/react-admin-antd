@@ -157,34 +157,46 @@ class MenuCom extends React.Component {
         this.initialization()
     }
     Preservation = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (this.state.state === 3) {
-            json['parentId'] = this.state.id
-            this.state.MenuList.forEach(menu => {
-                if (menu.id === this.state.id) {
-                    json['menuNumber'] = menu.menuNumber + 1
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
                 }
-            })
-            let data = await apiPost(
-                'system/insertMenu',
-                json
-            )
-            notification.open({
-                message: data.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else if (this.state.state === 2) {
-            json['id'] = this.state.id
-            let data = await apiPost(
-                'system/updateMenu',
-                json
-            )
-            notification.open({
-                message: data.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (this.state.state === 3) {
+                json['parentId'] = this.state.id
+                this.state.MenuList.forEach(menu => {
+                    if (menu.id === this.state.id) {
+                        json['menuNumber'] = menu.menuNumber + 1
+                    }
+                })
+                let data = await apiPost(
+                    'system/insertMenu',
+                    json
+                )
+                notification.open({
+                    message: data.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else if (this.state.state === 2) {
+                json['id'] = this.state.id
+                let data = await apiPost(
+                    'system/updateMenu',
+                    json
+                )
+                notification.open({
+                    message: data.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
+            this.initialization()
         }
-        this.initialization()
     }
     render () {
         const { getFieldDecorator } = this.props.form
