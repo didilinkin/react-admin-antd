@@ -456,30 +456,26 @@ class CollectionDetails extends React.Component {
                         }}
                         />
                         <div style={{
-                            margin: '20px 0',
-                            textAlign: 'center'
+                            margin: '20px 0'
                         }}
                         >
                             {this.state.map.waterBill.paymentState !== 1 &&
                             <Button type="primary" size="normal" onClick={this.openPrincipalCollection}>确认收款</Button>
                             }
-                            &nbsp;&nbsp;&nbsp;&nbsp;
                             {this.state.map.waterBill.billingState === 2 &&
                             <Popconfirm title="确认开票吗?" onConfirm={this.PrincipalBilling}>
                                 <Button type="danger" style={dangerButtonStyle} size="normal">确认开票</Button>
                             </Popconfirm>
                             }
-                            &nbsp;&nbsp;&nbsp;&nbsp;
                             {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.defaultPaymentStatus !== 1 && this.state.map.waterBill.penaltyTotalMoney > 0 &&
                             <span>
                                 {!this.state.ChargeRecord6.length > 0 &&
                                 <Popconfirm title="请选择违约金交费方式?" onConfirm={this.penalty} onCancel={this.nextMonth} okText="实收违约金" cancelText="延期下月电费">
-                                    <Button type="primary" size="normal">确认违约金</Button>
+                                    <Button style={{marginLeft: '20px'}} type="primary" size="normal">确认违约金</Button>
                                 </Popconfirm>
                                 }
                             </span>
                             }
-                            &nbsp;&nbsp;&nbsp;&nbsp;
                             {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.penaltyTotalMoney > 0 && this.state.map.waterBill.principalDamagesBilling === 2 &&
                             <Popconfirm title="确认违约金开票?" onConfirm={this.DefaultBilling}>
                                 <Button type="danger" style={dangerButtonStyle} size="normal">确认违约金开票</Button>

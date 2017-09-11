@@ -311,6 +311,15 @@ class WaterAddUp extends React.Component {
             receivableMoney: (parseFloat(this.state.totalMoney) - parseFloat(e.target.value ? e.target.value : 0)).toFixed(1)
         })
     }
+    handleConfirmPassword = (rule, value, callback) => {
+        debugger
+        if (value.length < 2) {
+            callback('日期不合法')
+        } else {
+            callback()
+        }
+        // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         return (
@@ -393,6 +402,8 @@ class WaterAddUp extends React.Component {
                                         rules: [ {
                                             required: true,
                                             message: '请选择本次周期!'
+                                        }, {
+                                            validator: this.handleConfirmPassword
                                         }]
                                     })(
                                         <RangePicker
