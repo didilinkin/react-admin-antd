@@ -331,7 +331,7 @@ class ElectricCharge extends React.Component {
             }, {
                 title: '操作',
                 fixed: 'right',
-                width: 100,
+                width: 150,
                 render: function (text, record) {
                     return (
                         <span>
