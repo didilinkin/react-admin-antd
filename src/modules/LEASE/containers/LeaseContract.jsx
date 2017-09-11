@@ -150,7 +150,7 @@ class LeaseContract extends React.Component {
                 render: function (text, record, index) {
                     let arr = []
                     let url = '/home/lease/LeaseContractDetails/contractTenancyDetail/' + record.id
-                    if (record.contractSplit.toString() === '2') {
+                    if (record.contractSplit === 2) {
                         url = '/home/lease/LeaseContractDetails/happyDetail/' + record.id
                     }
                     arr.push(
