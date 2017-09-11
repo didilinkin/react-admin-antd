@@ -37,6 +37,7 @@ class addUpkeep extends React.Component {
                 currentPeriodMoney: resulData.data.currentPeriodMoney,
                 actualPaidMoney: resulData.data.actualPaidMoney,
                 discountMoney: resulData.data.discountMoney,
+                printName: resulData.data.rentClientName,
                 id: resulData.data.id
             })
             this.setState({
@@ -51,19 +52,33 @@ class addUpkeep extends React.Component {
     }
     // 单击确定按钮提交表单
     handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        await apiPost(
-            '/collectRent/updateCollectRentVoByCommit',
-            json
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
+                }
+            },
         )
-        notification.open({
-            message: '收租成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.props.close()
-        this.props.refreshTable()
-        this.setState({visible: false,
-            isFirst: true })
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            await apiPost(
+                '/collectRent/updateCollectRentVoByCommit',
+                json
+            )
+            notification.open({
+                message: '收租成功',
+                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+            })
+            this.props.close()
+            this.props.refreshTable()
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
+        }
     }
     handleCancel = (e) => {
         this.props.close()
@@ -150,6 +165,18 @@ class addUpkeep extends React.Component {
                                                 return <Option key={Account.accountId}>{Account.accountName}</Option>
                                             })}
                                         </Select>
+                                    )}
+                                </FormItem>
+                                <FormItem label="通知单名" labelCol={{ span: 6 }}
+                                    wrapperCol={{ span: 16 }}
+                                >
+                                    {getFieldDecorator('printName', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请输入通知单名'
+                                        }]
+                                    })(
+                                        <Input />
                                     )}
                                 </FormItem>
                                 {getFieldDecorator('id')(
