@@ -1,6 +1,7 @@
 import {Modal, Col, Row} from 'antd'
 import React from 'react'
-import { apiPost, baseURL } from '../../../../../api/index'
+import { apiPost } from '../../../../../api/index'
+import Thumbnail from '../../../components/Thumbnail'
 
 
 class ComplaintDetail extends React.Component {
@@ -29,7 +30,7 @@ class ComplaintDetail extends React.Component {
             } else {
                 Complaint['fromType'] = '客服录入'
             }
-            let i = 0
+            /* let i = 0
             Complaint['picture'] = Complaint.pic.split('#').map(img => {
                 if (img !== '') {
                     i++
@@ -37,7 +38,7 @@ class ComplaintDetail extends React.Component {
                 } else {
                     return '无'
                 }
-            })
+            })*/
             this.setState({
                 data: Complaint
             })
@@ -84,8 +85,8 @@ class ComplaintDetail extends React.Component {
                     </Row>
                     <p className="line" />
                     <ul>
-                        <li className="clearfix"><b>报修内容：</b> <div>{this.state.data.complaintContent}</div></li>
-                        <li className="clearfix"><b>报修图片：</b>{this.state.data.picture}</li>
+                        <li className="clearfix"><b>报单内容：</b> <div>{this.state.data.complaintContent}</div></li>
+                        <li className="clearfix"><b>报单图片：</b><Thumbnail url={this.state.data.pic} /></li>
                     </ul>
                 </div>
             </Modal>

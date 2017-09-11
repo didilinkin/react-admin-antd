@@ -140,7 +140,7 @@ class CashDepositDetail extends React.Component {
                 key: 'auditDate'
             }, {
                 title: '附件',
-                width: 500,
+                width: 1000,
                 render: function (text, record, index) {
                     let i = 0
                     let arr = []
@@ -167,20 +167,11 @@ class CashDepositDetail extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    json={}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
         }
-        if (pagination === null) {
-            this.json = filters
-        }
-        for (let p in this.json) {
-            filters[p] = this.json[p]
-        }
         filters['chargeItem'] = 0
-        filters['sort'] = this.state.sort
-        filters['order'] = this.state.order
         filters['cashDepositId'] = this.props.match.params.id
         filters['revenueType'] = this.revenueType
         if (pagination !== null && typeof (pagination) !== 'undefined') {
@@ -256,7 +247,7 @@ class CashDepositDetail extends React.Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1200 }}
+                        scroll={{ x: 2000 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

@@ -12,7 +12,6 @@ class Thumbnail extends React.Component {
         }
     }
     componentWillReceiveProps (nextProps) {
-        alert(nextProps)
         if (typeof (nextProps.url) !== 'undefined') {
             let url = nextProps.url.split('#')
             this.setState({
