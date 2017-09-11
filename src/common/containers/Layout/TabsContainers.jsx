@@ -30,6 +30,10 @@ class TabsContainers extends React.Component {
 
     // render 渲染前
     componentWillMount = () => {
+        console.log('渲染前')
+        console.log('检查上一次的 data')
+        console.log(this.state)
+
         this.handleChange()
     }
 
@@ -43,6 +47,10 @@ class TabsContainers extends React.Component {
         if (!isHomeUrl) { // 判断 是否是首页; 如果是, 取反 => 返回 true
             if (hasUrlIndex < 1) { // 无 当前url
                 let currentPane = this.setCloneObj()
+
+                console.log('新的 pane对象')
+                console.log(currentPane)
+
                 this.setPanes(currentPane)
             } else { // 当前url 已打开过
                 let currentPane // 当前 pane标签对象
@@ -98,6 +106,7 @@ class TabsContainers extends React.Component {
         const { route, tabsProps } = this.props
 
         console.log('render次数 => 打印 1次')
+        console.log(this.state)
 
         return (
             <div>
