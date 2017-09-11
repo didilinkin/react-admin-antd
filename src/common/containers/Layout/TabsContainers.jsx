@@ -14,7 +14,12 @@ const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
     state = {
-        activeKey: '/home/index', // 展示的标签 key; [string]
+        activePane: { // 展示的 pane标签
+            closable: false,
+            key: '/home/index',
+            path: '/home/index',
+            title: '首页'
+        },
         panes: [{ // 展示的所有标签; [array]
             closable: false,
             key: '首页',
@@ -38,17 +43,17 @@ class TabsContainers extends React.Component {
         if (!isHomeUrl) { // 判断 是否是首页; 如果是, 取反 => 返回 true
             if (hasUrlIndex < 1) { // 无 当前url
                 let currentPane = this.setCloneObj()
-                this.setPanes(currentPane.key, currentPane)
+                this.setPanes(currentPane)
             } else { // 当前url 已打开过
-                let currentKey // 当前 key
+                let currentPane // 当前 pane标签对象
 
                 arrPanes.forEach((pane) => { // 遍历 state中的 panes数组
                     if (pane.path === strUrl) {
-                        currentKey = pane.key // 如果匹配 path, 将 此 pane.key 存入 currentKey
+                        currentPane = pane // 如果匹配 path, 将 此 pane 存入 currentPane 对象中
                     }
                 })
 
-                this.setActiveKey(currentKey)
+                this.setActivePane(currentPane)
             }
         }
     }
@@ -65,25 +70,26 @@ class TabsContainers extends React.Component {
     }
 
     // 设置 panes数组 => 更新state
-    setPanes = (strKey, objPane) => {
+    setPanes = (objPane) => {
         const allPanes = cloneDeep([ // 配置完整的 panes
             ...this.state.panes,
             objPane
         ])
 
         this.setState({
-            activeKey: strKey,
+            activePane: objPane,
             panes: allPanes
         })
     }
 
-    // 设置 activeKey(显示标签的key)
-    setActiveKey = (strKey) => {
+    // 设置 activePane(显示标签的对象)
+    setActivePane = (objActive) => {
         this.setState({
-            activeKey: strKey
+            activePane: objActive
         })
     }
 
+    // 永远禁止 二次刷新
     shouldComponentUpdate = () => {
         return false
     }
@@ -91,34 +97,31 @@ class TabsContainers extends React.Component {
     render () {
         const { route, tabsProps } = this.props
 
-        // console.log(this.state)
-
-        // debugger
-
-        console.log('render次数')
+        console.log('render次数 => 打印 1次')
 
         return (
-            <Tabs
-                hideAdd
-                type="editable-card" // 页签的基本样式
-            >
-                {/* 内容部分 与 state.panes数组无关系 */}
-                {
-                    this.state.panes.map((pane) => (
-                        <TabPane
-                            closable={pane.closable}
-                            key={pane.key} // this.state.activeKey // 与 store中的 panesState 绑定
-                            tab={pane.title}
-                            path={pane.path}
-                        >
-                            <route.component { ...tabsProps } routes={ route.routes } />
-                            {
-                                console.log(this.state)
-                            }
-                        </TabPane>
-                    ))
-                }
-            </Tabs>
+            <div>
+                { console.log('1. 测试return 渲染次数(不包含TabPane遍历) => 打印 1次') }
+                <Tabs
+                    hideAdd
+                    type="editable-card" // 页签的基本样式
+                >
+                    {/* 内容部分 与 state.panes数组无关系 */}
+                    {
+                        this.state.panes.map((pane) => (
+                            <TabPane
+                                closable={pane.closable}
+                                key={pane.key} // this.state.activeKey // 与 store中的 panesState 绑定
+                                tab={pane.title}
+                                path={pane.path}
+                            >
+                                <route.component { ...tabsProps } routes={route.routes} />
+                                { console.log('2. 测试return 渲染次数(包含TabPane遍历) => 打印 2次') }
+                            </TabPane>
+                        ))
+                    }
+                </Tabs>
+            </div>
         )
     }
 }
