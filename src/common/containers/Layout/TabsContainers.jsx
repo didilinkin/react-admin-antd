@@ -89,12 +89,7 @@ class TabsContainers extends React.Component {
 
     // 设置 activePane(显示标签的对象)
     setActivePane = (objActive) => {
-        // this.setState({
-        //     activePane: objActive
-        // })
-
-        // 发起 actions, 修改 redux
-        this.props.onActivePane({ objActive })
+        this.props.onActivePane({ objActive }) // 发起 actions, 修改 redux
     }
 
     // 当 props(redux)改变时, 触发 nextPorps
@@ -109,14 +104,7 @@ class TabsContainers extends React.Component {
         })
     }
 
-    // 允许组件 二次刷新
-    shouldComponentUpdate = () => {
-        return true
-    }
-
     render () {
-        const { route, tabsProps } = this.props
-
         console.log('render次数 => 打印 1次')
         console.log(this.state)
 
@@ -129,18 +117,14 @@ class TabsContainers extends React.Component {
                     onChange={ this.onChange } // 切换面板的回调
                     type="editable-card" // 页签的基本样式
                 >
-                    {/* 内容部分 与 state.panes数组无关系 */}
                     {
                         this.state.panes.map((pane) => (
                             <TabPane
                                 closable={ pane.closable }
-                                key={ pane.key } // this.state.activeKey // 与 store中的 panesState 绑定
+                                key={ pane.key }
                                 tab={ pane.title }
                                 path={ pane.path }
-                            >
-                                <route.component { ...tabsProps } routes={ route.routes } />
-                                { console.log('2. 测试return 渲染次数(包含TabPane遍历) => 打印 2次') }
-                            </TabPane>
+                            />
                         ))
                     }
                 </Tabs>

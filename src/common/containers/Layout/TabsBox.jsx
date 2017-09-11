@@ -24,17 +24,21 @@ const TabsBox = ({
     panesState,
     actions
 }) => (
-    <TabsContainers
-        route={ route }
-        tabsProps={ tabsProps }
-        rootState={ rootState }
-        // panes State
-        panesState={ panesState }
-        // actions
-        onAddPane={ actions.addPane }
-        onActivePane={ actions.activePane }
-        onRemovePane={ () => actions.removePane(panesState) }
-    />
+    <div>
+        <TabsContainers
+            route={ route }
+            tabsProps={ tabsProps }
+            rootState={ rootState }
+            // panes State
+            panesState={ panesState }
+            // actions
+            onAddPane={ actions.addPane }
+            onActivePane={ actions.activePane }
+            onRemovePane={ () => actions.removePane(panesState) }
+        />
+        {/* 分离内容 与 标签 */}
+        <route.component { ...tabsProps } routes={ route.routes } />
+    </div>
 )
 
 const mapStateToProps = (state) => ({
