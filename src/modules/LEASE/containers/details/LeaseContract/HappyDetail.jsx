@@ -2,7 +2,7 @@
 import React from 'react'
 import { Row, Button, Col, Table} from 'antd'
 import '../../../style/test.less'
-import { apiPost } from '../../../../../api'
+import { apiPost, verification } from '../../../../../api'
 import TerminationComponent from '../../../components/LeaseContract/Termination'
 
 class App extends React.Component {
