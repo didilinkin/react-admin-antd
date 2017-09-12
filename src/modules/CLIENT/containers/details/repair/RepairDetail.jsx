@@ -2,7 +2,8 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../style/test.less'
-import { apiPost, baseURL } from '../../../../../api'
+import { apiPost } from '../../../../../api'
+import Thumbnail from '../../../components/Thumbnail'
 
 
 class RepairDetail extends React.Component {
@@ -34,15 +35,6 @@ class RepairDetail extends React.Component {
         } else {
             Repair['pieStatus'] = '未派单'
         }
-        let i = 0
-        Repair['picture'] = Repair.picture.split('#').map(img => {
-            if (img !== '') {
-                i++
-                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
-            } else {
-                return '无'
-            }
-        })
         this.setState({
             data: Repair
         })
@@ -73,7 +65,7 @@ class RepairDetail extends React.Component {
                 <h2>报修信息</h2>
                 <ul>
                     <li className="clearfix"><b>报修内容：</b> <div>{this.state.data.repairContent}</div></li>
-                    <li className="clearfix"><b>报修图片：</b>{this.state.data.picture}</li>
+                    <li className="clearfix"><b>报修图片：</b><Thumbnail url={this.state.data.picture} /></li>
                 </ul>
                 <p className="line" />
                 <h2>派单信息</h2>
