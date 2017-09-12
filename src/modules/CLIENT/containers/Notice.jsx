@@ -1,7 +1,7 @@
 // 客户管理 - 整改通知
 import React, {Component} from 'react'
 import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 // 引入组件
 import RectificationAddUpComponent from '../components/Notice/RectificationAddUp'
 const { RangePicker } = DatePicker
@@ -93,9 +93,11 @@ class Notice extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
+                            {verification('editReform') &&
                             <Popconfirm title="确定修改吗?" onConfirm={() => handleUpdateRectification(record.id)}>
                                 <a> 修改 &nbsp;</a>
                             </Popconfirm>
+                            }
                         </div>
                     )
                 }
@@ -170,7 +172,9 @@ class Notice extends Component {
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
                     <Button style={{marginRight: '5px'}} type="primary" onClick={this.query}>查询</Button>
+                    {verification('addReform') &&
                     <Button type="primary" onClick={this.showModal}>添加整改通知</Button>
+                    }
                 </span>
 
                 <Spin spinning={this.state.loading}>

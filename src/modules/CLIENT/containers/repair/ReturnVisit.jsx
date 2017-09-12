@@ -1,7 +1,7 @@
 // 客户管理 - 客户回访
 import React from 'react'
 import {Table, Button, Spin, DatePicker, Input } from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 const { RangePicker } = DatePicker
 class ReturnVisit extends React.Component {
     constructor (props) {
@@ -116,7 +116,8 @@ class ReturnVisit extends React.Component {
                 render: function (text, record, index) {
                     let url = '/home/client/repair/ReturnDetail/' + record.id
                     return (
-                        <a onClick={() => info(url)}> 回访登记 </a>
+                        verification('visitingCustomers') &&
+                            <a onClick={() => info(url)}> 回访登记 </a>
                     )
                 }
             }],

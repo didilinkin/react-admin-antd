@@ -1,7 +1,7 @@
 // 客户管理 - 房间绑定
 import React from 'react'
 import {Table, Row, Col, DatePicker, Form, Button, Input, Modal, Popconfirm, notification, Icon} from 'antd'
-import {apiPost} from '../../../api/api.dev'
+import {apiPost, verification} from '../../../api/api.dev'
 const RangePicker = DatePicker.RangePicker
 const FormItem = Form.Item
 class RoomBinding extends React.Component {
@@ -55,9 +55,11 @@ class RoomBinding extends React.Component {
                     render: function (text, record, index) {
                         return (
                             <span>
+                                {verification('Unbound') &&
                                 <Popconfirm title="确定解除绑定吗?" onConfirm={() => unbind(record.id)}>
                                     <a>解除绑定</a>
                                 </Popconfirm>
+                                }
                                 <a onClick={() => remarks(record.id, record.remarks)} style={{marginLeft: '20px'}}>备注</a>
                             </span>
 

@@ -1,7 +1,7 @@
 // 客户管理 - 客户报修
 import React, {Component} from 'react'
 import {Table, Button, Spin, Popconfirm, Input, DatePicker } from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 // 引入组件
 import CancelRepairComponent from '../../components/repair/ClientRepair/CancelRepair'
 import DistributeLeafletsComponent from '../../components/repair/ClientRepair/DistributeLeaflets'
@@ -185,22 +185,26 @@ class ClientRepair extends Component {
                 render: function (text, record, index) {
                     let arr = []
                     if (record.pieStatus === 0 || record.isCancel === 1) {
-                        arr.push(
-                            <Popconfirm key="1" title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
-                                <a> 派单 &nbsp;</a>
-                            </Popconfirm>
-                        )
+                        if (verification('dispatchOrder')) {
+                            arr.push(
+                                <Popconfirm key="1" title="确定派单吗?" onConfirm={() => distributeLeaflets(record.id)}>
+                                    <a> 派单 &nbsp;</a>
+                                </Popconfirm>
+                            )
+                        }
                         arr.push(
                             <Popconfirm key="2" title="确定修改吗?" onConfirm={() => handleUpdateRepair(record.id)}>
                                 <a>&nbsp; 修改&nbsp; </a>
                             </Popconfirm>)
                     }
                     if (record.pieStatus === 0) {
-                        arr.push(
-                            <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
-                                <a> &nbsp;作废 </a>
-                            </Popconfirm>
-                        )
+                        if (verification('cancelledOrder')) {
+                            arr.push(
+                                <Popconfirm key="3" title="确定作废吗?" onConfirm={() => handleUpdate(record.id)}>
+                                    <a> &nbsp;作废 </a>
+                                </Popconfirm>
+                            )
+                        }
                     }
                     return arr
                 }
