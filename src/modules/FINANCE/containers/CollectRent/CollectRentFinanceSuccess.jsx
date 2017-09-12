@@ -1,7 +1,7 @@
 // 收费管理 - 应收租金
 import React from 'react'
 import {Table, Spin, Popconfirm, notification, Icon} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 // 引入组件
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // React component
@@ -159,9 +159,11 @@ class CollectRentFinanceSuccess extends React.Component {
                     return (
                         <div>
                             <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
+                            {verification('revokeRent') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a> 撤回 &nbsp;&nbsp;</a>
                             </Popconfirm>
+                            }
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
                                 window.open('http://192.168.5.24:18082/collectRent/print?ids=' + record.id + '&source=' + 2)
                             }}
