@@ -174,7 +174,7 @@ class App extends React.Component {
                         />
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
+                {this.state.contract.contractStatus === 0 && verification('stopLease') &&
                     <div>
                         <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
                     </div>
