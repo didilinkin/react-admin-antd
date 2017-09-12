@@ -1,6 +1,6 @@
 // 仓库管理 - 目录配置
 const WAREHOUSE_DIR = {
-    title: '仓库管理',
+    title: '仓储管理',
     key: 'wareHouse',
     path: '/home/wareHouse',
     icon: 'database',

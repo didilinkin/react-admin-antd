@@ -1,7 +1,7 @@
 // 收费管理 - 审核中
 import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import PropertyFeeFinanceConductComponent from '../details/PropertyFee/PropertyFeeAudit'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
@@ -110,7 +110,9 @@ class PropertyFeeFinanceConduct extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a onClick={() => handleUpdate(record.id)} > 审核 </a>
+                            {verification('censorProperty') &&
+                            <a onClick={() => handleUpdate(record.id)}> 审核 </a>
+                            }
                         </div>
                     )
                 }

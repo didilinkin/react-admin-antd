@@ -2,7 +2,7 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../style/test.less'
-import { apiPost } from '../../../../../api'
+import { apiPost, verification } from '../../../../../api'
 import TerminationComponent from '../../../components/Contract/Termination'
 
 class ElectricityDetail extends React.Component {
@@ -137,7 +137,7 @@ class ElectricityDetail extends React.Component {
                         </Row>
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
+                {this.state.contract.contractStatus === 0 && verification('endProperty') &&
                 <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>

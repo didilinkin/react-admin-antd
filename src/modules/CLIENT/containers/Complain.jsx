@@ -1,7 +1,7 @@
 // 投诉
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Icon, notification, DatePicker, Modal, Form, Row, Col} from 'antd'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 import AddComplaint from '../components/Complaint/ComplaintAdd'
 import ComplaintContent from './details/complaint/ComplaintDetail'
 import HandleVisit from './details/complaint/ReturnAdd'
@@ -180,7 +180,9 @@ class complaint extends Component {
                         return (
                             <div>
                                 <a onClick={() => handleUpdate(record.id)} > 修改 &nbsp;&nbsp;</a>
+                                {verification('acceptance') &&
                                 <a onClick={() => handleAcception(record.id)} > 受理 &nbsp;&nbsp;</a>
+                                }
                             </div>
                         )
                     } else if (record.status === 1 && record.visitStatus !== 1) {

@@ -1,7 +1,7 @@
 // 收费管理 - 应收租金
 import React from 'react'
 import {Table, Spin} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import CollectRentAuditComponent from '../details/CollectRent/CollectRentAudit'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // 引入组件
@@ -119,7 +119,9 @@ class CollectRentConduct extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <a onClick={() => handleUpdate(record.id)} > 审核 </a>
+                            {verification('censorRent') &&
+                            <a onClick={() => handleUpdate(record.id)}> 审核 </a>
+                            }
                         </div>
                     )
                 }

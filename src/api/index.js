@@ -1,5 +1,6 @@
 /* global url: true */
 import axios from 'axios'
+import localStore from '../utils/LocalStore' // LS操作统一使用此方法
 // import * as baseURL from '../services'   // 管理配置的 URL( 包括测试接口 )
 const qs = require('qs')
 
@@ -85,4 +86,19 @@ export const apiPut = (configObj) => {
             reject(error)
         })
     })
+}
+
+export const verification = (Jurisdiction) => {
+    let PermissionsList = localStore.get('PermissionsList')
+    let existence = false
+    if (typeof (PermissionsList) === 'undefined' || PermissionsList === null) {
+        window.location.href = '/login'
+        return existence
+    }
+    PermissionsList.forEach(Permissions => {
+        if (Permissions.permissionCode.toString() === Jurisdiction) {
+            existence = true
+        }
+    })
+    return existence
 }
