@@ -374,6 +374,7 @@ class propertyFeeAdd extends React.Component {
                 json['clientId'] = pmContract.clientId
                 json['clientName'] = pmContract.clientName
                 json['contractId'] = pmContract.id
+                json['tenant'] = null
             }
             return ''
         })
@@ -512,7 +513,7 @@ class propertyFeeAdd extends React.Component {
                     isFirst: true
                 })
             } else {
-                console.log(this.state.json1.printClientName)
+                // console.log(this.state.json1.printClientName)
                 await apiPost(
                     'propertyFee/savePropertyFee',
                     this.state.json1

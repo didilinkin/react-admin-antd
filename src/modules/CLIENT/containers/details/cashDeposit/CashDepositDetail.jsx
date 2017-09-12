@@ -150,8 +150,8 @@ class CashDepositDetail extends React.Component {
                                 i++
                                 arr.push(
                                     <img key={i} style={{
-                                        width: '100px',
-                                        height: '100px'
+                                        width: '80px',
+                                        height: '80px'
                                     }} src={baseURL + 'storage/files/' + img} alt=""
                                     />)
                             }

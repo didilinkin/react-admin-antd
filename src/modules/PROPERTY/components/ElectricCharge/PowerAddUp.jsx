@@ -650,17 +650,14 @@ class sumElectricityAddUp extends React.Component {
             })
         }
     }
-    // 点击选择功峰平谷的点击事件
-    chooseMoneyType = (value) => {
-        this.state.bili.map((type) => {
-            if (value === type.name) {
-                let json = this.props.form.getFieldsValue()
-                this.props.form.setFieldsValue({
-                    unitPrice: (parseFloat(type.value) * parseFloat(json.unitPrice)).toFixed(5)
-                })
-            }
-            return ''
-        })
+    handleConfirmPassword = (rule, value, callback) => {
+        debugger
+        if (value.length < 2) {
+            callback('日期不合法')
+        } else {
+            callback()
+        }
+        // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -764,6 +761,8 @@ class sumElectricityAddUp extends React.Component {
                                         rules: [ {
                                             required: true,
                                             message: '请选择本次周期!'
+                                        }, {
+                                            validator: this.handleConfirmPassword
                                         }]
                                     })(
                                         <RangePicker style={{ width: 200,
@@ -880,7 +879,6 @@ class sumElectricityAddUp extends React.Component {
                                                     showSearch
                                                     placeholder="请选择费用名称"
                                                     optionFilterProp="children"
-                                                    onChange={this.chooseMoneyType}
                                                 >
                                                     {this.state.bili.map((type) => {
                                                         return <Option key={type.name}>{type.name}</Option>
