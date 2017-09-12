@@ -227,7 +227,23 @@ class sumElectricityAddUp extends React.Component {
             this.props.form.setFieldsValue({
                 lastMouthUnitPrice: lastTimeData.data.electricityFees.powerUnitPrice ? lastTimeData.data.electricityFees.powerUnitPrice : 0
             })
-            if (isNew) {
+        }
+        if (isNew) {
+            if (lastTimeData.data.totalDefault) {
+                let totoalDefault = lastTimeData.data.totalDefault
+                this.setState({
+                    propertyMoney: totoalDefault.propertyMoney ? totoalDefault.propertyMoney : 0,
+                    waterMoney: totoalDefault.waterMoney ? totoalDefault.waterMoney : 0,
+                    electricMoney: totoalDefault.electricMoney ? totoalDefault.electricMoney : 0
+                })
+            } else {
+                this.setState({
+                    propertyMoney: 0,
+                    waterMoney: 0,
+                    electricMoney: 0
+                })
+            }
+            if (lastTimeData.data.electricityFees) {
                 let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
                 this.props.form.setFieldsValue({
                     sfzq: sfzq,
@@ -239,27 +255,13 @@ class sumElectricityAddUp extends React.Component {
                     isElectricMoney: lastTimeData.data.electricityFees.isElectricMoney === 1,
                     peakValleyRatio: lastTimeData.data.electricityFees.peakValleyRatio ? lastTimeData.data.electricityFees.peakValleyRatio : 0
                 })
+            } else {
+                this.setState({
+                    isPropertyMoney: false,
+                    isWaterMoney: false,
+                    isElectricMoney: false
+                })
             }
-        } else {
-            this.setState({
-                isPropertyMoney: false,
-                isWaterMoney: false,
-                isElectricMoney: false
-            })
-        }
-        if (lastTimeData.data.totalDefault) {
-            let totoalDefault = lastTimeData.data.totalDefault
-            this.setState({
-                propertyMoney: totoalDefault.propertyMoney ? totoalDefault.propertyMoney : 0,
-                waterMoney: totoalDefault.waterMoney ? totoalDefault.waterMoney : 0,
-                electricMoney: totoalDefault.electricMoney ? totoalDefault.electricMoney : 0
-            })
-        } else {
-            this.setState({
-                propertyMoney: 0,
-                waterMoney: 0,
-                electricMoney: 0
-            })
         }
     }
     // 获取转租客户
@@ -281,31 +283,31 @@ class sumElectricityAddUp extends React.Component {
                     {id: nextProps.id}
                 )
                 // 电费详情
-                let electricChargeInfo = map.data.electricityFees
-                electricChargeInfo.clientName = electricChargeInfo.clientNameTwo ? electricChargeInfo.clientNameTwo : ''
+                let electricInfo = map.data.electricityFees
+                electricInfo.clientName = electricInfo.clientNameTwo ? electricInfo.clientNameTwo : ''
                 let currentContract = null
                 this.state.ClientList.map(contract => {
-                    if (contract.id === electricChargeInfo.conteractId) {
+                    if (contract.id === electricInfo.conteractId) {
                         currentContract = contract
                         this.setState({Contract: contract})
                     }
                     return ''
                 })
                 // 设置表格标题
-                this.setTableColunms(electricChargeInfo, 'wattHourType')
+                this.setTableColunms(electricInfo, 'wattHourType')
                 this.lastTimeRecord(currentContract.id, currentContract.clientId, 1, false)
-                this.getSubletList(electricChargeInfo.contractId)
+                this.getSubletList(electricInfo.contractId)
                 let uuid = new Date().getTime()
                 let list = map.data.list
                 list.map(record => {
                     record.uuid = uuid += 1
                     return ''
                 })
-                if (electricChargeInfo.differentialPrice || electricChargeInfo.difference) {
+                if (electricInfo.differentialPrice || electricInfo.difference) {
                     let balanceUUID = new Date().getTime()
                     list.push({
-                        unitPrice: electricChargeInfo.differentialPrice,
-                        singleMoney: electricChargeInfo.difference,
+                        unitPrice: electricInfo.differentialPrice,
+                        singleMoney: electricInfo.difference,
                         electricCostName: '上月差额',
                         uuid: balanceUUID})
                     this.setState({balanceUUID: balanceUUID})
@@ -314,37 +316,37 @@ class sumElectricityAddUp extends React.Component {
                     visible: nextProps.visible,
                     isFirst: false,
                     sumElectricityRecordlList: list,
-                    ratio: electricChargeInfo.ratio,
-                    sumElectricity: electricChargeInfo.sumElectricity,
-                    thisReceivable: electricChargeInfo.thisReceivable,
-                    roomNumberOne: electricChargeInfo.roomNumber.split(','),
-                    isPropertyMoney: electricChargeInfo.isPropertyMoney === 1,
-                    isWaterMoney: electricChargeInfo.isWaterMoney === 1,
-                    isElectricMoney: electricChargeInfo.isElectricMoney === 1,
-                    propertyMoney: electricChargeInfo.propertyMoney ? electricChargeInfo.propertyMoney : 0,
-                    waterMoney: electricChargeInfo.waterMoney ? electricChargeInfo.waterMoney : 0,
-                    electricMoney: electricChargeInfo.electricMoney ? electricChargeInfo.electricMoney : 0,
-                    peakValleyRatio: electricChargeInfo.peakValleyRatio
+                    ratio: electricInfo.ratio,
+                    sumElectricity: electricInfo.sumElectricity,
+                    thisReceivable: electricInfo.thisReceivable,
+                    roomNumberOne: electricInfo.roomNumber.split(','),
+                    isPropertyMoney: electricInfo.isPropertyMoney === 1,
+                    isWaterMoney: electricInfo.isWaterMoney === 1,
+                    isElectricMoney: electricInfo.isElectricMoney === 1,
+                    propertyMoney: electricInfo.propertyMoney ? electricInfo.propertyMoney : 0,
+                    waterMoney: electricInfo.waterMoney ? electricInfo.waterMoney : 0,
+                    electricMoney: electricInfo.electricMoney ? electricInfo.electricMoney : 0,
+                    peakValleyRatio: electricInfo.peakValleyRatio
                 })
                 this.addTotalColunm()
                 this.props.form.setFieldsValue({
-                    clientName: electricChargeInfo.clientName,
-                    subletIdOne: electricChargeInfo.subletName,
-                    subletId: electricChargeInfo.subletId,
-                    sfzq: [moment(electricChargeInfo.preWattDate), moment(electricChargeInfo.wattDate)],
-                    overdueDate: moment(electricChargeInfo.overdueDate),
-                    formName: electricChargeInfo.formName,
-                    actualReceivable: electricChargeInfo.actualReceivable,
-                    principalDiscount: electricChargeInfo.principalDiscount,
-                    subletName: electricChargeInfo.subletName,
-                    roomId: electricChargeInfo.roomId,
-                    roomNumber: electricChargeInfo.roomNumber,
-                    readIdOne: electricChargeInfo.readName,
-                    readId: electricChargeInfo.readId,
+                    clientName: electricInfo.clientName,
+                    subletIdOne: electricInfo.subletName,
+                    subletId: electricInfo.subletId,
+                    sfzq: [moment(electricInfo.preWattDate), moment(electricInfo.wattDate)],
+                    overdueDate: moment(electricInfo.overdueDate),
+                    formName: electricInfo.formName,
+                    actualReceivable: electricInfo.actualReceivable,
+                    principalDiscount: electricInfo.principalDiscount,
+                    subletName: electricInfo.subletName,
+                    roomId: electricInfo.roomId,
+                    roomNumber: electricInfo.roomNumber,
+                    readIdOne: electricInfo.readName,
+                    readId: electricInfo.readId,
                     unitPrice: currentContract.powerUnitPrice,
                     ratio: currentContract.powerRatio,
                     currentMouthUnitPrice: currentContract.powerUnitPrice,
-                    lmelectricity: electricChargeInfo.lmelectricity ? electricChargeInfo.lmelectricity : 0
+                    lmelectricity: electricInfo.lmelectricity ? electricInfo.lmelectricity : 0
                 })
             } else {
                 this.setState({
