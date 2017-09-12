@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Spin, Icon, notification, Popconfirm} from 'antd'
 import { apiPost } from '../../../../api'
-import CollectRentFailComponent from '../details/PropertyFee/PropertyDetail'
+import PropertyFeeFailComponent from '../details/PropertyFee/PropertyDetail'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
@@ -208,7 +208,7 @@ class PropertyFeeFail extends Component {
                     type={3}
                     ListBuildingInfo={this.state.ListBuildingInfo}
                 />
-                <CollectRentFailComponent
+                <PropertyFeeFailComponent
                     close={this.close}
                     id={this.state.id}
                     refreshTable={this.refresh}
