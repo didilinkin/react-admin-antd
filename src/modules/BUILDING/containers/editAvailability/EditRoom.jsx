@@ -1,7 +1,7 @@
 // 房间管理
 import React from 'react'
 import {Table, Button, Spin, Input, Select, Popconfirm, Icon, notification} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import AddRoom from '../../components/RoomAdd'
 // 引入组件
 const Option = Select.Option
@@ -177,9 +177,11 @@ class EditRoom extends React.Component {
                     return (
                         <div>
                             <a href="#" onClick={() => handleUpdate(record.id)} > 编辑 &nbsp;&nbsp;</a>
+                            {verification('deleteRoom') &&
                             <Popconfirm title="删除该房间将会删除该房间对应的合同，确定继续删除吗？" onConfirm={() => handleDelete(record.id)}>
-                                <a href="#" > 删除 </a>
+                                <a href="#"> 删除 </a>
                             </Popconfirm>
+                            }
                         </div>
                     )
                 }

@@ -1,7 +1,7 @@
 // 楼宇列表
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Icon, notification, Popconfirm} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import AddBuilding from '../../components/BuidAdd'
 // 引入组件
 // React component
@@ -106,9 +106,11 @@ class EditBuilding extends Component {
                     return (
                         <div>
                             <a href="#" onClick={() => handleUpdate(record.id)} > 编辑&nbsp;&nbsp; </a>
+                            { verification('deleteBuilding') &&
                             <Popconfirm title="删除该楼宇将会删除楼宇下的所有房间，确定继续删除吗?" onConfirm={() => handleDelete(record.id)}>
-                                <a href="#" > 删除 </a>
+                                <a href="#"> 删除 </a>
                             </Popconfirm>
+                            }
                         </div>
                     )
                 }
