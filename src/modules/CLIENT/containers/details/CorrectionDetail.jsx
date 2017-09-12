@@ -42,12 +42,9 @@ class App extends React.Component {
         // let html = window.document.body.innerHTML
         // window.document.body.innerHTML = document.getElementById('box2').innerHTML
         const win = window.open()
-        win.loaded = () => function () {
-            alert(1)
-        }
         let script = document.createElement('script')
         script.type = 'text/javascript'
-        let text = document.createTextNode('window.onload = function(){alert(11)};function dy(){document.getElementById("dy").style.display="none";window.print();window.close();}')
+        let text = document.createTextNode('function dy(){document.getElementById("dy").style.display="none";window.print();window.close();}')
         script.appendChild(text)
         // win.document.head.innerHTML = '<script type="text/javascript">function dy(){print()};onload = dy</script>'
         win.document.body.innerHTML = document.getElementById('box2').innerHTML + '<button id="dy" onClick="dy()">打印</button>'
