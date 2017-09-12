@@ -2,7 +2,7 @@
 import React from 'react'
 import { Row, Col, notification, Icon, Popconfirm, Button } from 'antd'
 import '../../../style/test.less'
-import { apiPost } from '../../../../../api'
+import { apiPost, verification } from '../../../../../api'
 import SubletAddUpCom from '../../../components/Contract/SubletAddUp'
 import TerminationComponent from '../../../components/Contract/Termination'
 
@@ -100,7 +100,9 @@ class ContractDetail extends React.Component {
                         客户信息
                     </div>
                     <div className="main">
-                        <h3>客户信息 <span onClick={this.SubletOpen.bind(this, 0)} className="blue">添加转租信息</span></h3>
+                        {verification('addSublet') &&
+                        < h3 > 客户信息 < span onClick={this.SubletOpen.bind(this, 0)} className="blue">添加转租信息</span></h3>
+                        }
                         <Row>
                             <Col span={8}><b>物业客户名称：</b>{this.state.contract.clientName} </Col>
                             <Col span={8}><b>联系人：</b>{this.state.contract.contactPerson}</Col>
@@ -119,10 +121,17 @@ class ContractDetail extends React.Component {
                         {this.state.ListSublet.map((sublet, i) => {
                             return <div key={i}>
                                 <p className="line" />
-                                <h3>转租信息 <span onClick={this.SubletOpen.bind(this, sublet.id)} className="green">编辑</span>
-                                    <Popconfirm key="1" title="确定删除吗?" onConfirm={this.deleteSublet.bind(this, sublet.id)}>
+                                <h3>转租信息
+                                    {verification('editSublet') &&
+                                        <span onClick={this.SubletOpen.bind(this, sublet.id)} className="green">编辑</span>
+                                    }
+                                    {verification('deleteSublet') &&
+                                    <Popconfirm key="1" title="确定删除吗?"
+                                        onConfirm={this.deleteSublet.bind(this, sublet.id)}
+                                    >
                                         <span className="red">删除</span>
                                     </Popconfirm>
+                                    }
                                 </h3>
                                 <Row>
                                     <Col span={8}><b>租户名称：</b>{sublet.tenant} </Col>
@@ -248,7 +257,7 @@ class ContractDetail extends React.Component {
                         </ul>
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
+                {this.state.contract.contractStatus === 0 && verification('endProperty') &&
                 <div>
                     <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
                 </div>

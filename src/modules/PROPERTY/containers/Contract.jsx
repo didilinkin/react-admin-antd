@@ -1,6 +1,6 @@
 // 物业管理 - 物业合同
 import React from 'react'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 import {Table, Button, Spin } from 'antd'
 import ContractHeadComponent from '../components/Contract/ContractHead'
 import PropertyContractAddedCom from '../components/Contract/PropertyContractAdded'
@@ -150,9 +150,11 @@ class PropertyContract extends React.Component {
                     arr.push(
                         <a key="1" onClick={() => info(url)}> 查看 &nbsp;</a>
                     )
-                    arr.push(
-                        <a key="2" onClick={() => updatePm(record.contractSplit, record.id)}>&nbsp; 编辑 </a>
-                    )
+                    if (verification('changeProperty')) {
+                        arr.push(
+                            <a key="2" onClick={() => updatePm(record.contractSplit, record.id)}>&nbsp; 编辑 </a>
+                        )
+                    }
 
                     return arr
                 }
