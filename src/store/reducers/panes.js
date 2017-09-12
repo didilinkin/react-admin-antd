@@ -30,7 +30,7 @@ const setPanes = (state = initialState, action) => {
 
         case ACTIVE_PANE:
             let activeState = Object.assign({}, state, {
-                activePane: action.activeObj
+                activePane: action.activeObj.objActive
             })
             return activeState
 

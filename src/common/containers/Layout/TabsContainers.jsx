@@ -2,7 +2,7 @@
  * @author 闫晓迪
  * @email 929213769@qq.com
  * @create date 2017-09-06 02:17:06
- * @modify date 2017-09-09 02:31:13
+ * @modify date 2017-09-12 04:59:31
  * @desc 自定义新增页签触发器
 */
 import React from 'react'
@@ -23,10 +23,6 @@ class TabsContainers extends React.Component {
 
     // render 渲染前
     componentWillMount = () => {
-        console.log('渲染前')
-        console.log('检查 Redux中数据')
-        console.dir(this.props.panesState)
-
         this.handleChange()
     }
 
@@ -41,9 +37,6 @@ class TabsContainers extends React.Component {
             if (hasUrlIndex < 1) { // 无 当前url
                 let currentPane = this.setCloneObj()
 
-                console.log('新的 pane对象')
-                console.log(currentPane)
-
                 this.setPanes(currentPane)
             } else { // 当前url 已打开过
                 let currentPane // 当前 pane标签对象
@@ -56,6 +49,46 @@ class TabsContainers extends React.Component {
 
                 this.setActivePane(currentPane)
             }
+        } else {
+            if (this.state.panes.length > 1) { // 标签不止一个
+                this.setActivePane(this.setCloneObj())
+            }
+        }
+    }
+
+    // 切换面板的回调 => 切换 state.activeKey
+    onChange = (activeKey) => {
+        let activeObj
+        this.state.panes.forEach((pane) => {
+            if (pane.key === activeKey) {
+                activeObj = pane
+            }
+        })
+
+        this.props.tabsProps.history.push(activeObj.path) // 切换标签时, 不处理redux, 由 willMount来触发
+    }
+
+    // 新增和删除页签的回调
+    onEdit = (targetKey, action) => {
+        this[action](targetKey) // targetKey[string]: 删除的key; action[string]: 操作类型(只考虑remove 类型)
+    }
+
+    // 关闭 单个 Tab标签 => 修改 Redux 中数据
+    remove = (targetKey) => {
+        const currentActiveKey = this.state.activePane.key // 当前的 activeKey
+        const currentPanes = this.state.panes.fillter(pane => pane.key !== targetKey) // panes中 key值非 targetKey的 集合数组
+
+        let currentIndex // 当前位置
+
+        if (targetKey === currentActiveKey) { // 要 '关闭'的标签是 activeKey
+            this.state.panes.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                    currentIndex = i
+                    console.log(i)
+                }
+            })
+        } else { // 要 '关闭'的标签 不是 activeKey
+
         }
     }
 
@@ -77,9 +110,6 @@ class TabsContainers extends React.Component {
             objPane
         ])
 
-        console.log('检查 设置好的 panes数组 => 正确')
-        console.dir(allPanes)
-
         // 使用actions 修改 redux
         this.props.onAddPane({ // 使用 props传入的 actions方法 => 将url状态保存
             activePane: objPane,
@@ -94,9 +124,6 @@ class TabsContainers extends React.Component {
 
     // 当 props(redux)改变时, 触发 nextPorps
     componentWillReceiveProps = (nextProps) => {
-        console.log('props 发生改变')
-        console.dir(nextProps)
-
         // 改变 this.state
         this.setState({
             activePane: nextProps.panesState.activePane,
@@ -105,16 +132,13 @@ class TabsContainers extends React.Component {
     }
 
     render () {
-        console.log('render次数 => 打印 1次')
-        console.log(this.state)
-
         return (
             <div>
-                { console.log('1. 测试return 渲染次数(不包含TabPane遍历) => 打印 1次') }
                 <Tabs
-                    activeKey={ this.state.activePane.key } // 当前激活 tab 面板的 key
                     hideAdd
+                    activeKey={ this.state.activePane.key } // 当前激活 tab 面板的 key
                     onChange={ this.onChange } // 切换面板的回调
+                    onEdit={ this.onEdit } // 新增和删除页签的回调
                     type="editable-card" // 页签的基本样式
                 >
                     {
