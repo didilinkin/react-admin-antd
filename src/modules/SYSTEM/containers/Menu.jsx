@@ -23,7 +23,7 @@ const MenuBox1 = styled.div `
     border: 1px solid #333;
 `
 const style = {
-    width: '100px',
+    width: '110%',
     height: '25px',
     textAlign: 'center',
     border: '1px solid #c5b4b4',
