@@ -97,6 +97,12 @@ class CollectRentHead extends React.Component {
         let spanEight = fourOpen ? 8 : 6
         return (
             <div>
+                <PropertyAddComponent
+                    id={null}
+                    close={this.close}
+                    refreshTable={this.props.refresh}
+                    visible={this.state.openPropertyAdd}
+                />
                 <Form layout="horizontal">
                     <Row>
                         <Col span={spanEight}>
@@ -262,12 +268,6 @@ class CollectRentHead extends React.Component {
                         }
                     </Row>
                 </Form>
-                <PropertyAddComponent
-                    id={null}
-                    close={this.close}
-                    refreshTable={this.props.refresh}
-                    visible={this.state.openPropertyAdd}
-                />
             </div>
         )
     }
