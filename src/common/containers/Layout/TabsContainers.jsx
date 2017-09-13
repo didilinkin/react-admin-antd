@@ -29,7 +29,7 @@ class TabsContainers extends React.Component {
     // 处理变化; 根据url 判断显示内容;
     handleChange = () => {
         const arrPanes = this.props.panesState.panes // 保存 Redux.paneState 中数组
-        const strUrl = this.props.route.path // 保存 当前url
+        const strUrl = this.props.rootState.router.location.pathname // 保存 当前url
         const hasUrlIndex = hasString(arrPanes, 'path', strUrl) // 在 arrPanes数组中查找, 返回当前url的位置(如果无 => 0)
         const isHomeUrl = strUrl === '/home/index' // 判断 当前url是否是 '首页'
 
@@ -92,7 +92,6 @@ class TabsContainers extends React.Component {
             this.state.panes.forEach((pane, i) => { // 使用 pane, 获取i; 0 是数组第一个, 1 是数组第二个
                 if (pane.key === targetKey) {
                     currentIndex = i
-
                     currentPane = currentPanes[currentIndex - 1] // 前一个对象
 
                     this.props.onAddPane({ // 发起 actions, 改变 redux 为最新的 activePane 与 panes
@@ -109,14 +108,14 @@ class TabsContainers extends React.Component {
                 panes: cloneDeep(currentPanes)
             })
         }
-
-        console.dir(currentPanes)
     }
 
     // 深拷贝 对象; 配置一个当前状态的对象
     setCloneObj = () => {
+        console.dir(this.props)
+
         let cloneObj = cloneDeep({
-            key: this.props.route.path,
+            key: this.props.rootState.router.location.pathname, // this.props.route.path 在 详情 url时, 获取不到 :id; 改为location.pathname
             title: this.props.route.title,
             path: this.props.tabsProps.match.url
         })
