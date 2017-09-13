@@ -75,21 +75,42 @@ class TabsContainers extends React.Component {
 
     // 关闭 单个 Tab标签 => 修改 Redux 中数据
     remove = (targetKey) => {
+        // 逻辑描述:
+        // 1. @parms: 要删除的 标签 key
+        // 2. 通过筛选 => 获取到 key值不等于 targetKey 的数组
+        // 3. 判断 要删除的 标签是否是当前展示的 activePane
+        //      如果 是当前展示的 标签 => 获取到 当前的 index位置, 将它在数组中的前一个对象获取到, 然后 发起 action( @parms: 前一个对象, @parms: 筛选后的数组 ); 最后跳转 url
+        //      如果 不是当前展示的 标签 => 直接发起 actions( @parms: 当前 state中的 activePane 对象, @parms: 筛选后的数组 ); 不需要跳转 url
+
         const currentActiveKey = this.state.activePane.key // 当前的 activeKey
-        const currentPanes = this.state.panes.fillter(pane => pane.key !== targetKey) // panes中 key值非 targetKey的 集合数组
+        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey) // panes中 key值非 targetKey的 集合数组
 
         let currentIndex // 当前位置
+        let currentPane // 当前的位置对象
 
         if (targetKey === currentActiveKey) { // 要 '关闭'的标签是 activeKey
-            this.state.panes.forEach((pane, i) => {
+            this.state.panes.forEach((pane, i) => { // 使用 pane, 获取i; 0 是数组第一个, 1 是数组第二个
                 if (pane.key === targetKey) {
                     currentIndex = i
-                    console.log(i)
+
+                    currentPane = currentPanes[currentIndex - 1] // 前一个对象
+
+                    this.props.onAddPane({ // 发起 actions, 改变 redux 为最新的 activePane 与 panes
+                        activePane: cloneDeep(currentPane),
+                        panes: cloneDeep(currentPanes)
+                    })
+
+                    this.props.tabsProps.history.push(currentPane.path) // 跳转向 上一个对象的 path
                 }
             })
-        } else { // 要 '关闭'的标签 不是 activeKey
-
+        } else { // 要 '关闭'的标签 不是 activeKey; 只需修改 panes; activePane 对象不变; 不需 跳转 url
+            this.props.onAddPane({
+                activePane: cloneDeep(this.state.activePane),
+                panes: cloneDeep(currentPanes)
+            })
         }
+
+        console.dir(currentPanes)
     }
 
     // 深拷贝 对象; 配置一个当前状态的对象
@@ -136,10 +157,10 @@ class TabsContainers extends React.Component {
             <div>
                 <Tabs
                     hideAdd
-                    activeKey={ this.state.activePane.key } // 当前激活 tab 面板的 key
-                    onChange={ this.onChange } // 切换面板的回调
-                    onEdit={ this.onEdit } // 新增和删除页签的回调
                     type="editable-card" // 页签的基本样式
+                    onEdit={ this.onEdit } // 新增和删除页签的回调
+                    onChange={ this.onChange } // 切换面板的回调
+                    activeKey={ this.state.activePane.key } // 当前激活 tab 面板的 key
                 >
                     {
                         this.state.panes.map((pane) => (
