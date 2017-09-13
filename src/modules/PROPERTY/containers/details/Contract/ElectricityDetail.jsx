@@ -50,7 +50,9 @@ class ElectricityDetail extends React.Component {
                 <Row>
                     <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
                     <Col span={8}><b>服务面积：</b>{this.state.contract.serviceArea} &nbsp;㎡</Col>
-                    <Col span={8}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
+                </Row>
+                <Row>
+                    <Col span={24}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
                 </Row>
                 <div className="wrapbox">
                     <div className="title">
