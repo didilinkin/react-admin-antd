@@ -25,6 +25,10 @@ class propertyFeeAdd extends React.Component {
         }
     }
     async initialRemarks (nextProps) {
+        this.setState({
+            view: false
+        })
+        // console.log(nextProps)
         let accountList = await apiPost(
             '/propertyFee/getAccountList'
         )
