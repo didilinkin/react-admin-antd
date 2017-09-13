@@ -1,7 +1,7 @@
 // 物业公告
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Icon, notification, Popconfirm} from 'antd'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 /* import AddNotice from '../components/Complaint/NoticeAdd'
 import ComplaintContent from './details/complaint/ComplaintDetail'
 import HandleVisit from './details/complaint/ReturnAdd'
@@ -159,9 +159,16 @@ class PropertyNotice extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json={}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['title'] = this.title
         if (pagination !== null && typeof (pagination) !== 'undefined') {
@@ -295,7 +302,9 @@ class PropertyNotice extends Component {
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
                     <Button type="primary" style={{margin: '0 10px'}} onClick={this.query}>查询</Button>
-                    <Button type="primary" onClick={this.add}>添加公告</Button>
+                    { verification('addNotice') &&
+                        < Button type="primary" onClick={this.add}>添加公告</Button>
+                    }
                 </span>
 
                 <Spin spinning={this.state.loading}>

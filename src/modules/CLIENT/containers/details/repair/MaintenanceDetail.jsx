@@ -2,7 +2,8 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../style/test.less'
-import { apiPost, baseURL } from '../../../../../api'
+import { apiPost } from '../../../../../api'
+import Thumbnail from '../../../components/Thumbnail'
 
 class MaintenanceDetail extends React.Component {
     constructor (props) {
@@ -25,15 +26,6 @@ class MaintenanceDetail extends React.Component {
         if (Repair.isCancel === 1) {
             Repair['repairStatus'] = '已取消'
         }
-        let i = 0
-        Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
-            if (img !== '') {
-                i++
-                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
-            } else {
-                return '无'
-            }
-        })
         let j = 0
         Repair['repairedContent'] = Repair.repairedContent.split('\n').map(span => {
             j++
@@ -66,7 +58,7 @@ class MaintenanceDetail extends React.Component {
                 <ul>
                     <li>
                         <b>现场图片：</b>
-                        {this.state.data.repairedPic}
+                        <Thumbnail url={this.state.data.repairedPic} />
                     </li>
                 </ul>
             </div>

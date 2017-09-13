@@ -2,7 +2,7 @@
 import React from 'react'
 import { Row, Button, Col, Table} from 'antd'
 import '../../../style/test.less'
-import { apiPost } from '../../../../../api'
+import { apiPost, verification } from '../../../../../api'
 import TerminationComponent from '../../../components/LeaseContract/Termination'
 
 class App extends React.Component {
@@ -174,7 +174,7 @@ class App extends React.Component {
                         />
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
+                {this.state.contract.contractStatus === 0 && verification('stopLease') &&
                     <div>
                         <Button size="large" className="btn-danger" type="danger" onClick={this.TerminationComponent}>终止合同</Button>
                     </div>

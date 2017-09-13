@@ -1,7 +1,7 @@
 import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
 import PowerAddUpComponent from './PowerAddUp'
-import { apiPost } from '../../../../api'
+import { apiPost, baseURL } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -163,7 +163,7 @@ class PowerBillHead extends React.Component {
                                     wrapperCol={{ span: 16 }}
                                 >
                                     {getFieldDecorator('cxsj')(
-                                        <RangePicker />
+                                        <RangePicker style={{ width: 200 }} />
                                     )}
                                 </FormItem>
                             </Col>
@@ -213,7 +213,10 @@ class PowerBillHead extends React.Component {
                             {
                                 type === 4 &&
                                 <span>
-                                    <Button style={{marginRight: '10px'}}>批量打印</Button>
+                                    <Button onClick={() => {
+                                        window.open(baseURL + '/ElectricityFees/print?ids=' + this.props.RowKeys)
+                                    }} style={{marginRight: '10px'}}
+                                    >批量打印</Button>
                                     <Button >导出</Button>
                                 </span>
                             }

@@ -2,7 +2,7 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import '../../../style/test.less'
-import { apiPost } from '../../../../../api'
+import { apiPost, verification } from '../../../../../api'
 import TerminationComponent from '../../../components/Contract/Termination'
 
 class ElectricityDetail extends React.Component {
@@ -50,7 +50,9 @@ class ElectricityDetail extends React.Component {
                 <Row>
                     <Col span={8}><b>所属楼宇：</b>{this.state.contract.buildName} </Col>
                     <Col span={8}><b>服务面积：</b>{this.state.contract.serviceArea} &nbsp;㎡</Col>
-                    <Col span={8}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
+                </Row>
+                <Row>
+                    <Col span={24}><b>房间编号：</b>{this.state.contract.leaseRooms} </Col>
                 </Row>
                 <div className="wrapbox">
                     <div className="title">
@@ -137,7 +139,7 @@ class ElectricityDetail extends React.Component {
                         </Row>
                     </div>
                 </div>
-                {this.state.contract.contractStatus === 0 &&
+                {this.state.contract.contractStatus === 0 && verification('endProperty') &&
                 <div onClick={this.TerminationComponent} className="submit">
                     终止合同
                 </div>

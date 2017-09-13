@@ -265,7 +265,7 @@ class CollectRentHead extends React.Component {
                 <PropertyAddComponent
                     id={null}
                     close={this.close}
-                    refreshTable={this.handleSubmit}
+                    refreshTable={this.props.refresh}
                     visible={this.state.openPropertyAdd}
                 />
             </div>

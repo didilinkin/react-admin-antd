@@ -114,7 +114,7 @@ class PrincipalCollectionPower extends React.Component {
                     onCancel={this.handleCancel}
                 >
                     <Form layout="horizontal">
-                        <FormItem label="客户交费日期" labelCol={{ span: 7 }}
+                        <FormItem label="交费日期" labelCol={{ span: 7 }}
                             wrapperCol={{ span: 13 }}
                         >
                             {getFieldDecorator('collectionDate', {
@@ -159,7 +159,7 @@ class PrincipalCollectionPower extends React.Component {
                                 <Input disabled type="text" style={{width: '200px'}} />
                             )}
                         </FormItem>
-                        <FormItem label="客户交费方式" labelCol={{ span: 7 }}
+                        <FormItem label="交费方式" labelCol={{ span: 7 }}
                             wrapperCol={{ span: 13 }}
                         >
                             {getFieldDecorator('method', {

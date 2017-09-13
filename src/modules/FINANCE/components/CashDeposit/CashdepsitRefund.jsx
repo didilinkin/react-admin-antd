@@ -1,6 +1,7 @@
 import {Modal, Radio, Form, notification, Icon, Col, Row, Input, Select, textarea} from 'antd'
 import React from 'react'
-import { apiPost, baseURL } from '../../../../api/index'
+import { apiPost } from '../../../../api/index'
+import Thumbnail from '../../components/Thumbnail'
 const FormItem = Form.Item
 const RadioGroup = Radio.Group
 const Option = Select.Option
@@ -28,14 +29,14 @@ class propertyPaidConfirm extends React.Component {
                 { 'id': nextProps.id }
             )
             let CashDepositDetail = resulData.data
-            let i = 0
+            /* let i = 0
             CashDepositDetail['fileUrl'] = CashDepositDetail.fileUrl.split('#').map(img => {
                 if (img !== '') {
                     i++
                     return <img key={i} width={100} height={100} src={baseURL + 'storage/files/' + img} alt="" />
                 }
                 return ''
-            })
+            })*/
             this.props.form.setFieldsValue({
                 buildName: resulData.data.buildName,
                 roomNum: resulData.data.roomNum,
@@ -154,7 +155,7 @@ class propertyPaidConfirm extends React.Component {
                                 <FormItem label="附件" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}
                                 >
-                                    {this.state.data.fileUrl}
+                                    <Thumbnail url={this.state.data.fileUrl} />
                                 </FormItem>
                                 <FormItem label="审批意见" labelCol={{ span: 6 }}
                                     wrapperCol={{ span: 16 }}

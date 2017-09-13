@@ -2,7 +2,8 @@
 import React from 'react'
 import { Timeline, Rate } from 'antd'
 import '../../../style/test.less'
-import { apiPost, baseURL } from '../../../../../api'
+import { apiPost } from '../../../../../api'
+import Thumbnail from '../../../components/Thumbnail'
 
 class App extends React.Component {
     constructor (props) {
@@ -33,15 +34,6 @@ class App extends React.Component {
                 </tr>
             } else {
                 return null
-            }
-        })
-        let i = 0
-        Repair['repairedPic'] = Repair.repairedPic.split('#').map(img => {
-            if (img !== '') {
-                i++
-                return <img key={i} src={baseURL + 'storage/files/' + img} alt="" />
-            } else {
-                return '无'
             }
         })
         this.setState({
@@ -87,7 +79,7 @@ class App extends React.Component {
                             <p>协作人： {this.state.data.withMan}</p>
                             <ul>
                                 <li>
-                                    {this.state.data.repairedPic}
+                                    <Thumbnail url={this.state.data.repairedPic} />
                                 </li>
                             </ul>
                         </Timeline.Item>

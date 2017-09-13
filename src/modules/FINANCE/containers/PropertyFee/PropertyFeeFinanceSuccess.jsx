@@ -1,7 +1,7 @@
 // 收费管理 - 审核成功
 import React from 'react'
 import {Table, Spin, Popconfirm, Icon, notification} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
 // React component
@@ -171,9 +171,11 @@ class PropertyFeeFinanceSuccess extends React.Component {
                     return (
                         <div>
                             <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
+                            {verification('revokeProperty') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a> 撤回&nbsp;&nbsp; </a>
                             </Popconfirm>
+                            }
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
                                 window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + record.id + '&source=' + 2)
                             }}
@@ -190,9 +192,16 @@ class PropertyFeeFinanceSuccess extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json={}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['auditStatus'] = 2
         filters['sort'] = this.state.sort

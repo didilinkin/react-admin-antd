@@ -94,7 +94,9 @@ class PowerInfomation extends React.Component {
                 electricityFeeInfo.list.push({
                     unitPrice: electricityFeeInfo.electricityFees.differentialPrice,
                     singleMoney: electricityFeeInfo.electricityFees.difference,
-                    electricCostName: '上月差额'})
+                    electricCostName: '上月差额',
+                    sumElectricity: electricityFeeInfo.electricityFees.lmelectricity
+                })
             }
             this.setState({
                 list: electricityFeeInfo.list,
@@ -115,7 +117,9 @@ class PowerInfomation extends React.Component {
         let sumSingeMoney = 0
         electricRecordlList.map((record) => {
             if (record.sumElectricity) {
-                sumElec += record.sumElectricity
+                if (record.electricCostName !== '上月差额') {
+                    sumElec += record.sumElectricity
+                }
                 sumSingeMoney += (record.sumElectricity * record.unitPrice)
             } else {
                 sumSingeMoney += Number(record.singleMoney)

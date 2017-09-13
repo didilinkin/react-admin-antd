@@ -1,6 +1,6 @@
 // 物业费明细
 import React from 'react'
-import {Row, Col, Modal} from 'antd'
+import {Row, Col, Modal, Popconfirm, Icon, notification} from 'antd'
 import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
@@ -89,6 +89,22 @@ class PropertyDetail extends React.Component {
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
+    }
+    handleCommit = async () => {
+        await apiPost(
+            '/propertyFee/updatePropertyFee',
+            {id: this.state.data.id,
+                auditStatus: 1}
+        )
+        notification.open({
+            message: '提交成功',
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.props.close()
+        this.isFirst = true
+        this.setState({ visible: false,
+            isFirst: true})
+        this.props.refreshTable()
     }
     render () {
         let chargeList = this.state.data2
@@ -195,6 +211,12 @@ class PropertyDetail extends React.Component {
                                 <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
                                 <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                             </Row>
+                            {this.state.data.auditStatus === 0 &&
+                            <Row>
+                                <Popconfirm title="确定提交吗?" onConfirm={this.handleCommit}>
+                                    <a> 提交 &nbsp;&nbsp;</a>
+                                </Popconfirm>
+                            </Row>}
                             {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                             <Row>
                                 <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>

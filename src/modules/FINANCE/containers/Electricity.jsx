@@ -2,7 +2,7 @@
 import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHead from '../components/ElectricInfo/PowerBillHead'
-import { apiPost } from '../../../api'
+import { apiPost, baseURL, verification } from '../../../api'
 import PowerInfomation from '../../PROPERTY/components/ElectricCharge/PowerInfomation'
 
 const TabPane = Tabs.TabPane
@@ -169,7 +169,9 @@ class Electricity extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
+                            {verification('censorElectric') &&
                             <a onClick={() => info(record.id)}>审核</a>
+                            }
                         </span>
                     )
                 }
@@ -251,12 +253,14 @@ class Electricity extends React.Component {
                         <span>
                             <a onClick={() => infoTwo(url)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
+                            {verification('revokeElectric') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
                             </Popconfirm>
+                            }
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
-                                window.open('http://192.168.5.12:18082/ElectricityFees/print?ids=' + record.id)
+                                window.open(baseURL + '/ElectricityFees/print?ids=' + record.id)
                             }}
                             >
                                 <a>打印单据</a>

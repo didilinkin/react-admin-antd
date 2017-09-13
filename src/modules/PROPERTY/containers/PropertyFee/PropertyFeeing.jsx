@@ -4,6 +4,7 @@ import {Table, Spin, Popconfirm, Icon, notification} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
+import PropertyFeeingComponent from '../details/PropertyFee/PropertyDetail'
 // 引入组件
 // React component
 class PropertyFeeing extends Component {
@@ -32,6 +33,14 @@ class PropertyFeeing extends Component {
             openAdd: true,
             openTableAddUp: false,
             openUpdate: false,
+            id: id
+        })
+    }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: true,
             id: id
         })
     }
@@ -64,7 +73,6 @@ class PropertyFeeing extends Component {
     close = async () => {
         this.setState({
             openAdd: false,
-            opendispatch: false,
             openTableAddUp: false,
             openUpdate: false,
             id: null
@@ -87,8 +95,8 @@ class PropertyFeeing extends Component {
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
         const handleDelete = this.handleDelete
-        const handleCommit = this.handleCommit
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             columns: [{
@@ -146,9 +154,10 @@ class PropertyFeeing extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>
-                                <a> 提交 &nbsp;&nbsp;</a>
-                            </Popconfirm>
+                            {/* <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>*/}
+                            {/* <a> 提交 &nbsp;&nbsp;</a>*/}
+                            {/* </Popconfirm>*/}
+                            <a type="primary" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;&nbsp;</a>
                             <a type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
                                 <a> 删除 </a>
@@ -164,9 +173,16 @@ class PropertyFeeing extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json={}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['auditStatus'] = 0
         filters['contractStatus'] = 0
@@ -206,6 +222,12 @@ class PropertyFeeing extends Component {
                     refresh={this.refresh}
                     type={0}
                     ListBuildingInfo={this.state.ListBuildingInfo}
+                />
+                <PropertyFeeingComponent
+                    close={this.close}
+                    id={this.state.id}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
                 />
                 <PropertyAddComponent
                     close={this.close}

@@ -60,3 +60,19 @@ export const apiPost = (url, configObj) => {
         })
     })
 }
+
+
+export const verification = (Jurisdiction) => {
+    let PermissionsList = localStore.get('PermissionsList')
+    let existence = false
+    if (typeof (PermissionsList) === 'undefined' || PermissionsList === null) {
+        window.location.href = '/login'
+        return existence
+    }
+    PermissionsList.forEach(Permissions => {
+        if (Permissions.permissionCode.toString() === Jurisdiction) {
+            existence = true
+        }
+    })
+    return existence
+}

@@ -27,7 +27,6 @@ class CustomerAddUp extends React.Component {
                 this.props.form.setFieldsValue({
                     clientName: customer.data.clientName,
                     rentClientName: customer.data.rentClientName,
-                    printClientName: customer.data.printClientName,
                     contactPerson: customer.data.contactPerson,
                     phoneAdmin: customer.data.phoneAdmin,
                     phoneManager: customer.data.phoneManager,
@@ -146,20 +145,6 @@ class CustomerAddUp extends React.Component {
                                     rules: [ {
                                         required: true,
                                         message: '请输入租赁客户名'
-                                    }]
-                                })(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={18}>
-                            <FormItem label="提示单客户名" labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('printClientName', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请输入提示单客户名'
                                     }]
                                 })(<Input />)}
                             </FormItem>

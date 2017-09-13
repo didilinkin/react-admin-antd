@@ -1,6 +1,6 @@
 // 客户管理 - 合同管理 - 租赁合同
 import React from 'react'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 import {Table, Spin, Button } from 'antd'
 import ContractHeadComponent from '../components/LeaseContract/ContractHead'
 import LeaseCom from '../components/LeaseContract/LeaseCom'
@@ -150,16 +150,17 @@ class LeaseContract extends React.Component {
                 render: function (text, record, index) {
                     let arr = []
                     let url = '/home/lease/LeaseContractDetails/contractTenancyDetail/' + record.id
-                    if (record.contractSplit.toString() === '2') {
+                    if (record.contractSplit === 2) {
                         url = '/home/lease/LeaseContractDetails/happyDetail/' + record.id
                     }
                     arr.push(
                         <a onClick={() => info(url)} key="1"> 查看 &nbsp;</a>
                     )
-                    arr.push(
-                        <a key="2" onClick={() => updateRent(record.contractSplit, record.id)}>&nbsp; 编辑 </a>
-                    )
-
+                    if (verification('changeLease')) {
+                        arr.push(
+                            <a key="2" onClick={() => updateRent(record.contractSplit, record.id)}>&nbsp; 编辑 </a>
+                        )
+                    }
                     return arr
                 }
             }],

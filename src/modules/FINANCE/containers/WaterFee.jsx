@@ -3,7 +3,7 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon } from 'antd'
 import WaterBillHeadComponent from '../components/WaterFee/WaterBillHead'
 import WaterInfomation from '../components/WaterFee/WaterInfomation'
-import { apiPost } from '../../../api'
+import { apiPost, verification } from '../../../api'
 
 
 const TabPane = Tabs.TabPane
@@ -191,7 +191,9 @@ class WaterFee extends React.Component {
                 render: function (text, record, index) {
                     return (
                         <span>
+                            {verification('censorWater') &&
                             <a onClick={() => info(record.id)}>审核</a>
+                            }
                         </span>
                     )
                 }
@@ -321,9 +323,11 @@ class WaterFee extends React.Component {
                         <span>
                             <a onClick={() => infoTwo(url)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
+                            {verification('revokeWater') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
                             </Popconfirm>
+                            }
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <a>打印单据</a>
                         </span>

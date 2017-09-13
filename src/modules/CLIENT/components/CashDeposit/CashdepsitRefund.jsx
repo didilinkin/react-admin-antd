@@ -63,7 +63,7 @@ class propertyPaidConfirm extends React.Component {
             json['id'] = this.state.data.id
             json['revenueType'] = 2
             json['chargeItem'] = this.state.data.chargeItem
-            json['fileUrl'] = this.fileUrl
+            json['fileUrl'] = this.fileUrl.substring(0, this.fileUrl.length - 1)
             json['operateMoney'] = this.state.data.currentBalance
             json['buildId'] = this.state.data.buildId
             await apiPost(

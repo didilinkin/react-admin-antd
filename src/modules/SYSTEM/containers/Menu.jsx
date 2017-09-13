@@ -22,6 +22,13 @@ const MenuBox1 = styled.div `
     flex: 1;
     border: 1px solid #333;
 `
+const style = {
+    width: '110%',
+    height: '25px',
+    textAlign: 'center',
+    border: '1px solid #c5b4b4',
+    lineHeight: '25px'
+}
 class MenuCom extends React.Component {
     constructor (props) {
         super(props)
@@ -138,7 +145,7 @@ class MenuCom extends React.Component {
         let j = 0
         MenuList.forEach((menu) => {
             if (menu.parentId === i) {
-                arr[j] = <TreeNode title={<Button onClick={() => this.info(menu)}><Icon type={menu.menuType === 2 ? 'file' : menu.menuType === 3 ? 'tag-o' : 'folder'} />{menu.menuName}<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></Button>} key={menu.id} >
+                arr[j] = <TreeNode title={<div style={style} onClick={() => this.info(menu)}><Icon type={menu.menuType === 2 ? 'file' : menu.menuType === 3 ? 'tag-o' : 'folder'} />&nbsp;&nbsp;{menu.menuName}&nbsp;&nbsp;<Dropdown trigger={['click']} overlay={this.Caidan} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, menu.id)} type="caret-down" /></Dropdown></div>} key={menu.id} >
                     {this.recursion(MenuList, menu.id)}
                 </TreeNode>
                 j = j + 1
@@ -150,34 +157,46 @@ class MenuCom extends React.Component {
         this.initialization()
     }
     Preservation = async () => {
-        let json = this.props.form.getFieldsValue()
-        if (this.state.state === 3) {
-            json['parentId'] = this.state.id
-            this.state.MenuList.forEach(menu => {
-                if (menu.id === this.state.id) {
-                    json['menuNumber'] = menu.menuNumber + 1
+        let adopt = false
+        this.props.form.validateFields(
+            (err) => {
+                if (err) {
+                    adopt = false
+                } else {
+                    adopt = true
                 }
-            })
-            let data = await apiPost(
-                'system/insertMenu',
-                json
-            )
-            notification.open({
-                message: data.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
-        } else if (this.state.state === 2) {
-            json['id'] = this.state.id
-            let data = await apiPost(
-                'system/updateMenu',
-                json
-            )
-            notification.open({
-                message: data.data,
-                icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-            })
+            },
+        )
+        if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            if (this.state.state === 3) {
+                json['parentId'] = this.state.id
+                this.state.MenuList.forEach(menu => {
+                    if (menu.id === this.state.id) {
+                        json['menuNumber'] = menu.menuNumber + 1
+                    }
+                })
+                let data = await apiPost(
+                    'system/insertMenu',
+                    json
+                )
+                notification.open({
+                    message: data.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            } else if (this.state.state === 2) {
+                json['id'] = this.state.id
+                let data = await apiPost(
+                    'system/updateMenu',
+                    json
+                )
+                notification.open({
+                    message: data.data,
+                    icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+                })
+            }
+            this.initialization()
         }
-        this.initialization()
     }
     render () {
         const { getFieldDecorator } = this.props.form
@@ -189,7 +208,14 @@ class MenuCom extends React.Component {
                         defaultExpandAll
                         onSelect={this.onSelect}
                     >
-                        <TreeNode title={<Button><Icon type="folder" />菜单结构<Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft"><Icon onClick={this.handleButtonClick.bind(this, 3)} type="caret-down" /></Dropdown></Button>} key="0-0">
+                        <TreeNode title={
+                            <div style={style}><Icon type="folder" />&nbsp;&nbsp;菜单结构&nbsp;&nbsp;
+                                <Dropdown trigger={['click']} overlay={this.CaidanTwo} placement="bottomLeft">
+                                    <Icon onClick={this.handleButtonClick.bind(this, 3)} type="caret-down" />
+                                </Dropdown>
+                            </div>
+                        } key="0-0"
+                        >
                             {this.recursion(this.state.MenuList, 3)}
                         </TreeNode>
                     </Tree>

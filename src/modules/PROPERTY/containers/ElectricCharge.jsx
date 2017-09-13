@@ -3,7 +3,7 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHeadComponent from '../components/ElectricCharge/PowerBillHead'
 import PowerAddUpComponent from '../components/ElectricCharge/PowerAddUp'
-import { apiPost } from '../../../api'
+import { apiPost, baseURL } from '../../../api'
 import PowerInfomation from '../components/ElectricCharge/PowerInfomation'
 const TabPane = Tabs.TabPane
 class ElectricCharge extends React.Component {
@@ -31,15 +31,23 @@ class ElectricCharge extends React.Component {
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
+        this.json = {}
         this.activeKey = activeKey ? activeKey : this.activeKey
         this.refresh({}, {}, {})
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
             openWaterAddUpComponent: false,
             openInfo: false})
         if (filters === null || typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null && sorter === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['examineState'] = this.activeKey.toString() === '1' ? 0 :
             this.activeKey.toString() === '2' ? 1 :
@@ -104,7 +112,7 @@ class ElectricCharge extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     info = (id) => {
         console.log(id)
@@ -124,7 +132,7 @@ class ElectricCharge extends React.Component {
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.refreshTwo(1)
+        this.refresh({}, {}, {})
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -323,11 +331,18 @@ class ElectricCharge extends React.Component {
             }, {
                 title: '操作',
                 fixed: 'right',
-                width: 100,
+                width: 150,
                 render: function (text, record) {
                     return (
                         <span>
                             <a onClick={() => info(record.id)}>明细</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <Popconfirm title="确定打印吗?" onConfirm={() => {
+                                window.open(baseURL + '/ElectricityFees/print?ids=' + record.id)
+                            }}
+                            >
+                                <a>打印单据</a>
+                            </Popconfirm>
                         </span>
                     )
                 }
@@ -374,7 +389,7 @@ class ElectricCharge extends React.Component {
                         <PowerAddUpComponent
                             title="修改电费"
                             id={this.state.id}
-                            refreshTable={this.refreshTwo}
+                            refreshTable={this.refresh}
                             visible={this.state.openWaterAddUpComponent}
                         />
                     </TabPane>
@@ -450,6 +465,7 @@ class ElectricCharge extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 30}}
                             scroll={{ x: 1800 }}
+                            RowKeys={this.state.RowKeys}
                             bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}

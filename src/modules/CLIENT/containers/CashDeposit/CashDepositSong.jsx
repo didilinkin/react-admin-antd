@@ -1,7 +1,7 @@
 // 欢乐颂管理押金
 import React from 'react'
 import {Table, Spin} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, verification } from '../../../../api'
 import CashDepositChargeComponent from '../../components/CashDeposit/CashdepsitCharge'
 import CashDepositRefundComponent from '../../components/CashDeposit/CashdepsitRefund'
 import CashDepositHeadComponent from '../../components/CashDeposit/CashDepositHead'
@@ -108,8 +108,12 @@ class CashDepositRent extends React.Component {
                         return (
                             <div>
                                 <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleUpdate(record.id)} > 扣款 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleUpdate2(record.id)} > 退款 </a>
+                                {verification('debit') &&
+                                <a onClick={() => handleUpdate(record.id)}> 扣款 &nbsp;&nbsp;</a>
+                                }
+                                {verification('refund') &&
+                                <a onClick={() => handleUpdate2(record.id)}> 退款 </a>
+                                }
                             </div>
                         )
                     }
@@ -121,9 +125,16 @@ class CashDepositRent extends React.Component {
     componentDidMount () {
         this.initialRemarks()
     }
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
+        }
+        if (pagination === null) {
+            this.json = filters
+        }
+        for (let p in this.json) {
+            filters[p] = this.json[p]
         }
         filters['chargeItem'] = 3
         filters['sort'] = this.state.sort
