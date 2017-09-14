@@ -214,7 +214,7 @@ class PropertyDetail extends React.Component {
                             {this.state.data.auditStatus === 0 &&
                             <Row>
                                 <Popconfirm title="确定提交吗?" onConfirm={this.handleCommit}>
-                                    <a> 提交 &nbsp;&nbsp;</a>
+                                    <a className="btnred ant-btn">提交 </a>
                                 </Popconfirm>
                             </Row>}
                             {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
