@@ -140,7 +140,13 @@ class sumElectricityAddUp extends React.Component {
         }, {
             title: '总电量',
             dataIndex: 'sumElectricity',
-            key: 'sumElectricity'
+            key: 'sumElectricity',
+            render: function (text) {
+                if (text) {
+                    return parseFloat(text).toFixed(2)
+                }
+                return ''
+            }
         }, {
             title: '单价',
             dataIndex: 'unitPrice',
@@ -589,7 +595,7 @@ class sumElectricityAddUp extends React.Component {
         })
         let json = {}
         json['electricCostName'] = '合计'
-        json['sumElectricity'] = sumElec
+        json['sumElectricity'] = sumElec.toFixed(2)
         json['singleMoney'] = parseFloat(sumSingeMoney).toFixed(1)
         sumElectricityRecordlList.push(json)
         this.props.form.setFieldsValue({

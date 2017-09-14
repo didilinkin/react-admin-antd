@@ -1,7 +1,7 @@
 // 收费管理 - 审核成功
 import React, {Component} from 'react'
 import {Table, Spin, Popconfirm} from 'antd'
-import { apiPost } from '../../../../api'
+import { apiPost, baseURL } from '../../../../api'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 import AllPaidComponent from '../details/PropertyFee/PropertyDetail'
 // 引入组件
@@ -161,7 +161,7 @@ class PropertyFeeSuccess extends Component {
                         <div>
                             <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;&nbsp;&nbsp;</a>
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
-                                window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + record.id + '&source=' + 1)
+                                window.open(baseURL + '/propertyFee/print?ids=' + record.id + '&source=' + 1)
                             }}
                             >
                                 <a>打印通知单</a>

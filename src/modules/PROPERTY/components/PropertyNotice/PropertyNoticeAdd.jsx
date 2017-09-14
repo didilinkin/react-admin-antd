@@ -1,10 +1,10 @@
 // 楼宇添加
-import {Modal, Input, Form, Row, Col, Icon, notification} from 'antd'
+import {Modal, Input, Form, Row, Col, Icon, notification, Button} from 'antd'
 import React from 'react'
-import { apiPost } from '../../../api/index'
-import '../style/test.less'
+import { apiPost } from '../../../../api/index'
+import '../../style/test.less'
 const FormItem = Form.Item
-class BuildAdd extends React.Component {
+class PropertyNoticeAdd extends React.Component {
     state = {
         visible: false,
         isFirst: true,
@@ -20,15 +20,14 @@ class BuildAdd extends React.Component {
         })
         if (nextProps.id !== null) {
             if (this.state.isFirst && nextProps.visible) {
-                let build = await apiPost(
-                    '/build/getBuildById',
+                let propertyNotice = await apiPost(
+                    '/complaint/getNoticeById',
                     {id: nextProps.id}
                 )
+                console.log(propertyNotice)
                 this.props.form.setFieldsValue({
-                    buildName: build.data.buildName,
-                    passengerElevatorNum: build.data.passengerElevatorNum,
-                    goodsElevatorNum: build.data.goodsElevatorNum,
-                    floorNum: build.data.floorNum
+                    title: propertyNotice.data.title,
+                    content: propertyNotice.data.content
                 })
                 this.setState({
                     visible: nextProps.visible,
@@ -53,7 +52,7 @@ class BuildAdd extends React.Component {
         this.initialRemarks(nextProps)
     }
     // 单击确定按钮提交表单
-    handleSubmit = async () => {
+    handleSubmit = async (status) => {
         let adopt = false
         this.props.form.validateFields(
             (err) => {
@@ -66,10 +65,11 @@ class BuildAdd extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
+            json['status'] = status
             if (this.props.id > 0) {
                 json['id'] = this.props.id
                 await apiPost(
-                    'build/updateBuild',
+                    'complaint/updateNotice',
                     json
                 )
                 notification.open({
@@ -84,7 +84,7 @@ class BuildAdd extends React.Component {
                 })
             } else {
                 await apiPost(
-                    'build/saveBuild',
+                    'complaint/insertNotice',
                     json
                 )
                 notification.open({
@@ -112,21 +112,22 @@ class BuildAdd extends React.Component {
             <Modal maskClosable={false}
                 title={this.state.title}
                 style={{top: 20}}
-                width={300}
+                width={500}
                 visible={this.state.visible}
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}
+                footer={null}
             >
                 <Form layout="horizontal">
                     <Row>
                         <Col span={20}>
-                            <FormItem label="楼宇名称" labelCol={{ span: 8 }}
+                            <FormItem label="标题" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('buildName', {
+                                {getFieldDecorator('title', {
                                     rules: [ {
                                         required: true,
-                                        message: '楼宇名称不能为空'
+                                        message: '标题不能为空'
                                     }]
                                 })(<Input />)}
                             </FormItem>
@@ -134,37 +135,22 @@ class BuildAdd extends React.Component {
                     </Row>
                     <Row>
                         <Col span={20}>
-                            <FormItem label="客梯数量" labelCol={{ span: 8 }}
+                            <FormItem label="内容" labelCol={{ span: 8 }}
                                 wrapperCol={{ span: 15 }}
                             >
-                                {getFieldDecorator('passengerElevatorNum')(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={20}>
-                            <FormItem label="货梯数量" labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('goodsElevatorNum')(<Input />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={20}>
-                            <FormItem label="楼层数量" labelCol={{ span: 8 }}
-                                wrapperCol={{ span: 15 }}
-                            >
-                                {getFieldDecorator('floorNum')(<Input />)}
+                                {getFieldDecorator('content')(<Input type={'textarea'} size={'large'} />)}
                             </FormItem>
                         </Col>
                     </Row>
                 </Form>
+                <Button type="primary" onClick={() => this.handleSubmit(0)} >保存&nbsp;&nbsp;</Button>&nbsp;&nbsp;&nbsp;
+                <Button type="primary" onClick={() => this.handleSubmit(1)} >保存并发布&nbsp;&nbsp;</Button>&nbsp;&nbsp;&nbsp;
+                <Button type="primary" onClick={this.handleCancel} >取消</Button>
             </Modal>
         )
     }
 }
 
-let BuildAddComponent = Form.create()(BuildAdd)
+let PropertyNoticeAddComponent = Form.create()(PropertyNoticeAdd)
 
-export default BuildAddComponent
+export default PropertyNoticeAddComponent

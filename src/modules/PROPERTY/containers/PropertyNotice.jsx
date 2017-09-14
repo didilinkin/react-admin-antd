@@ -1,13 +1,9 @@
-// 物业公告
+// 楼宇列表
 import React, {Component} from 'react'
 import {Table, Button, Spin, Input, Icon, notification, Popconfirm} from 'antd'
-import { apiPost, verification } from '../../../api'
-/* import AddNotice from '../components/Complaint/NoticeAdd'
-import ComplaintContent from './details/complaint/ComplaintDetail'
-import HandleVisit from './details/complaint/ReturnAdd'
-import VisitDetail from './details/complaint/ReturnDetail'*/
-
-// const FormItem = Form.Item
+import { apiPost } from '../../../api'
+import AddNotice from '../components/PropertyNotice/PropertyNoticeAdd'
+import PropertyNoticeDetail from '../components/PropertyNotice/PropertyNoticeDetail'
 // 引入组件
 // React component
 class PropertyNotice extends Component {
@@ -18,17 +14,16 @@ class PropertyNotice extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            openVisit: false,
-            openVisitDetail: false,
             columns: [],
             dataSource: [],
             title: '',
-            visible: false,
             id: null,
             RowKeys: [],
             total: 0,
             page: 1,
             rows: 30,
+            sort: 'id',
+            order: 'desc',
             ListBuildingInfo: []
         }
     }
@@ -37,32 +32,13 @@ class PropertyNotice extends Component {
             openAdd: true,
             openTableAddUp: false,
             openUpdate: false,
-            openVisit: false,
-            openVisitDetail: false,
-            title: '修改报单',
-            id: id
-        })
-    }
-    handleVisit = (id) => {
-        this.setState({
-            openAdd: false,
-            openTableAddUp: false,
-            openUpdate: false,
-            openVisitDetail: false,
-            openVisit: true,
-            title: '回访登记',
-            id: id
-        })
-    }
-    handleAcception = (id) => {
-        this.setState({
-            visible: true,
+            title: '编辑物业公告',
             id: id
         })
     }
     handleDelete = async (id) => {
         await apiPost(
-            '/complaint/deleteNotice',
+            '/complaint/updateNotice',
             {id: id,
                 delFlag: 1}
         )
@@ -77,20 +53,30 @@ class PropertyNotice extends Component {
             openAdd: true,
             openTableAddUp: false,
             openUpdate: false,
-            title: '添加公告',
+            title: '新建物业公告',
             id: null
+        })
+    }
+    handleDetail = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: true,
+            openUpdate: false,
+            title: '物业公告详情',
+            id: id
         })
     }
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
             '/complaint/noticeList',
-            {page: this.state.page}
+            {page: this.state.page,
+                sort: this.state.sort,
+                order: this.state.order}
         )
         const handleUpdate = this.handleUpdate
         const handleDelete = this.handleDelete
-        const handleAcception = this.handleAcception
-        const handleVisit = this.handleVisit
+        const handleDetail = this.handleDetail
         this.setState({loading: false,
             total: result.data.total,
             columns: [{
@@ -136,15 +122,15 @@ class PropertyNotice extends Component {
                     if (record.status === 1) {
                         return (
                             <div>
-                                <a onClick={() => handleUpdate(record.id)} > 详情 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleAcception(record.id)} > 删除 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleDetail(record.id)} > 详情 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleDelete(record.id)} > 删除 &nbsp;&nbsp;</a>
                             </div>
                         )
                     } else if (record.status === 0) {
                         return (
                             <div>
-                                <a onClick={() => handleUpdate(record.id)} > 详情 &nbsp;&nbsp;</a>
-                                <a onClick={() => handleVisit(record.id)} > 编辑 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleDetail(record.id)} > 详情 &nbsp;&nbsp;</a>
+                                <a onClick={() => handleUpdate(record.id)} > 编辑 &nbsp;&nbsp;</a>
                                 <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
                                     <a> 删除 </a>
                                 </Popconfirm>
@@ -159,7 +145,7 @@ class PropertyNotice extends Component {
     componentDidMount () {
         this.initialRemarks()
     }
-    json={}
+    json = {}
     refresh = async (pagination, filters, sorter) => {
         if (typeof (filters) === 'undefined') {
             filters = []
@@ -171,6 +157,8 @@ class PropertyNotice extends Component {
             filters[p] = this.json[p]
         }
         filters['title'] = this.title
+        filters['order'] = this.state.order
+        filters['sort'] = this.state.sort
         if (pagination !== null && typeof (pagination) !== 'undefined') {
             filters['rows'] = pagination.pageSize
             filters['page'] = pagination.current
@@ -191,8 +179,6 @@ class PropertyNotice extends Component {
             openAdd: false,
             openTableAddUp: false,
             openUpdate: false,
-            openVisit: false,
-            openVisitDetail: false,
             dataSource: result.data.rows,
             total: result.data.total,
             id: 0
@@ -200,15 +186,13 @@ class PropertyNotice extends Component {
     }
     title = ''
     entryNameOnChange = (e) => {
-        this.title = e.target.value
+        this.buildName = e.target.value
     }
     close = async () => {
         this.setState({
             openAdd: false,
             openTableAddUp: false,
-            openUpdate: false,
-            openVisit: false,
-            openVisitDetail: false
+            openUpdate: false
         })
     }
     query = () => {
@@ -219,80 +203,23 @@ class PropertyNotice extends Component {
             RowKeys: selectedRowKeys
         })
     }
-    handleCancel = (e) => {
-        this.setState({ visible: false})
-    }
-    // 单击确定按钮提交表单
-    handleSubmit = async () => {
-        let json = this.props.form.getFieldsValue()
-        json['id'] = this.state.id
-        json['status'] = 1
-        await apiPost(
-            '/complaint/updateComplaint',
-            json
-        )
-        notification.open({
-            message: '操作成功',
-            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
-        })
-        this.setState({visible: false,
-            isFirst: true })
-        this.refresh()
-    }
     render () {
-        // const { getFieldDecorator } = this.props.form
         return (
             <div>
-                {/* <Modal maskClosable={false}
-                    title="受理投诉"
-                    style={{top: 100}}
-                    width={400}
-                    visible={this.state.visible}
-                    onOk={this.handleSubmit}
-                    onCancel={this.handleCancel}
-                >
-                    <Form layout="horizontal">
-                        <Row>
-                            <Col span={20}>
-                                <FormItem label="受理结果" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 16 }}
-                                >
-                                    {getFieldDecorator('handleContent')(
-                                        <Input type="textarea" placeholder="请输入受理结果" />
-                                    )}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                    </Form>
-                </Modal>*/}
-                {/* <AddNotice
+                <AddNotice
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openAdd}
                     close={this.close}
                     title={this.state.title}
                 />
-                <ComplaintContent
+                <PropertyNoticeDetail
                     id={this.state.id}
                     refreshTable={this.refresh}
                     visible={this.state.openTableAddUp}
                     close={this.close}
                     title={this.state.title}
                 />
-                <HandleVisit
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openVisit}
-                    close={this.close}
-                    title={this.state.title}
-                />
-                <VisitDetail
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    visible={this.state.openVisitDetail}
-                    close={this.close}
-                    title={this.state.title}
-                />*/}
                 <span style={{paddingBottom: '10px',
                     paddingTop: '10px',
                     display: 'block'}}
@@ -301,10 +228,8 @@ class PropertyNotice extends Component {
                     <Input style={{width: 200,
                         marginRight: '5px'}} onChange={this.entryNameOnChange}
                     />
-                    <Button type="primary" style={{margin: '0 10px'}} onClick={this.query}>查询</Button>
-                    { verification('addNotice') &&
-                        < Button type="primary" onClick={this.add}>添加公告</Button>
-                    }
+                    <Button type="primary" onClick={this.query}>查询</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button type="primary" onClick={this.add}>添加物业公告</Button>
                 </span>
 
                 <Spin spinning={this.state.loading}>
@@ -319,7 +244,7 @@ class PropertyNotice extends Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1200 }}
+                        scroll={{ x: 1300 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

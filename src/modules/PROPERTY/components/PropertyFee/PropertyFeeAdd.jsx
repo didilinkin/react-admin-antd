@@ -28,7 +28,6 @@ class propertyFeeAdd extends React.Component {
         this.setState({
             view: false
         })
-        // console.log(nextProps)
         let accountList = await apiPost(
             '/propertyFee/getAccountList'
         )
@@ -45,6 +44,7 @@ class propertyFeeAdd extends React.Component {
                     '/propertyFee/getPropertyFeeById',
                     {id: nextProps.id}
                 )
+                console.log(propertyFee.data)
                 json['pmUnitPrice'] = propertyFee.data.pmUnitPrice
                 json['auditStatus'] = 0
                 json['printClientName'] = propertyFee.data.printClientName
@@ -84,10 +84,7 @@ class propertyFeeAdd extends React.Component {
                     discountMoney: propertyFee.data.discountMoney
                 })
                 this.setState({
-                    visible: nextProps.visible,
-                    isFirst: false,
-                    view: true,
-                    fileList: []
+                    isFirst: false
                 })
             }
         } else {
@@ -106,13 +103,15 @@ class propertyFeeAdd extends React.Component {
                 json['waterFee'] = ''
                 this.props.form.resetFields()
                 this.setState({
-                    visible: nextProps.visible,
-                    isFirst: false,
-                    view: true,
-                    fileList: []
+                    isFirst: false
                 })
             }
         }
+        this.setState({
+            visible: nextProps.visible,
+            view: true,
+            fileList: []
+        })
     }
     componentWillReceiveProps (nextProps) {
         this.initialRemarks(nextProps)
@@ -513,10 +512,6 @@ class propertyFeeAdd extends React.Component {
                 // this.state.json1.tenant = null
                 this.props.close()
                 this.props.refreshTable()
-                this.setState({
-                    visible: false,
-                    isFirst: true
-                })
             } else {
                 await apiPost(
                     'propertyFee/savePropertyFee',
@@ -529,11 +524,11 @@ class propertyFeeAdd extends React.Component {
                 // this.state.json1.tenant = null
                 this.props.close()
                 this.props.refreshTable()
-                this.setState({
-                    visible: false,
-                    isFirst: true
-                })
             }
+            this.setState({
+                visible: false,
+                isFirst: true
+            })
         }
     }
     handleChange3 = (e) =>{
