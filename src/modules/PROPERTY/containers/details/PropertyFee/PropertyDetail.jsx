@@ -220,7 +220,7 @@ class PropertyDetail extends React.Component {
                             {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                             <Row>
                                 <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
-                                <Col span={16}><b>审核说明：</b>{this.state.data.remark}</Col>
+                                <Col span={16}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
                             </Row>}</div>
                     </div>
                     {this.state.data.whetherRentPaid !== 0 &&
