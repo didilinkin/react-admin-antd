@@ -62,7 +62,7 @@ class Account extends React.Component {
                                 <div>
                                     <a onClick={() => edit(record.id)}>编辑</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Popconfirm title="此操作将重置密码为abc123456，是否继续?" onConfirm={() => reset(record.id)}>
+                                    <Popconfirm title="此操作将重置密码为cj123456，是否继续?" onConfirm={() => reset(record.id)}>
                                         <a>重置密码</a>
                                     </Popconfirm>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
