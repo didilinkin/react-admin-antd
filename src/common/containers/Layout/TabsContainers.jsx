@@ -2,8 +2,8 @@
  * @author 闫晓迪
  * @email 929213769@qq.com
  * @create date 2017-09-06 02:17:06
- * @modify date 2017-09-06 02:17:06
- * @desc 自定义新增页签触发器
+ * @modify date 2017-09-13 04:36:32
+ * @desc 自定义新增页签触发器(完整注释查看 commit: 4b24e5fd6a4ec91727d3043c4403919fdff94fd3)
 */
 import React from 'react'
 import cloneDeep from 'lodash/cloneDeep' // isArray
@@ -16,85 +16,91 @@ class TabsContainers extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
-            activeKey: props.panesState.activeKey, // 默认值: panes[0].key; Redux中 setPanes 状态
-            panes: props.panesState.panes // 默认值: [{ route, tabsProps, key }]
+            activePane: props.panesState.activePane,
+            panes: props.panesState.panes
         }
     }
 
-    // render 渲染之前
     componentWillMount = () => {
-        let asyncHandle = async function () {
-            await this.handleChange()
-
-            await this.setState(cloneDeep(this.props.panesState)) // 深拷贝
-
-            // await console.log('改变 state')
-        }
-
-        asyncHandle.bind(this)()
+        this.handleChange()
     }
 
-    // 切换面板的回调 => 切换 state.activeKey
+    handleChange = () => {
+        const arrPanes = this.props.panesState.panes
+        const strUrl = this.props.rootState.router.location.pathname
+        const hasUrlIndex = hasString(arrPanes, 'path', strUrl)
+        const isHomeUrl = strUrl === '/home/index'
+
+        if (!isHomeUrl) {
+            if (hasUrlIndex < 1) {
+                let currentPane = this.setCloneObj()
+
+                this.setPanes(currentPane)
+            } else {
+                let currentPane
+
+                arrPanes.forEach((pane) => {
+                    if (pane.path === strUrl) {
+                        currentPane = pane
+                    }
+                })
+
+                this.setActivePane(currentPane)
+            }
+        } else {
+            if (this.state.panes.length > 1) {
+                this.setActivePane(this.setCloneObj())
+            }
+        }
+    }
+
     onChange = (activeKey) => {
-        let currentKey
-        let currentIndex = 0
-        let currentUrl
-        this.state.panes.forEach((pane, i) => {
+        let activeObj
+        this.state.panes.forEach((pane) => {
             if (pane.key === activeKey) {
-                currentIndex = i
+                activeObj = pane
             }
         })
-        currentKey = this.state.panes[currentIndex].key
-        currentUrl = this.state.panes[currentIndex].path
-        this.setActiveKey(currentKey) // 改变 activeKey
-        this.props.tabsProps.history.push(currentUrl)
+
+        this.props.tabsProps.history.push(activeObj.path)
     }
 
-    // 新增和删除页签的回调
     onEdit = (targetKey, action) => {
         this[action](targetKey)
     }
 
-    // 判断 标签显示条件
-    handleChange = () => {
-        const arrayPanes = this.state.panes // 获取 store当中的 panes数组
-        const strUrl = this.props.tabsProps.match.url // 根据当前路由状态 获取 url字符串
-        const isHomeIndex = strUrl === '/home/index' // 判断 strUrl 是否是 首页; 返回值为 bool布尔值 => isHomeIndex
-        const hasUrl = hasString(arrayPanes, 'path', strUrl) // 在 arrayPanes数组中查找, 是否有当前url的path
+    remove = (targetKey) => {
+        const currentActiveKey = this.state.activePane.key
+        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey)
 
-        if (!isHomeIndex) { // 判断是否是 '首页'; 如果不是, 取反 => 返回true
-            if (hasUrl < 1) { // 无 当前url
-                let currentPanes = this.setCloneObj() // 拷贝 出当前的 状态的obj对象(深拷贝)
-                this.setActions(`${arrayPanes.length + 1}`, currentPanes) // 加入 store; panes数组length +1, 深拷贝当前的对象; => 发起actions
-                // console.log('此时 redux应该改变, 但未改变')
-            } else { // 有 当前url
-                let currentKey // 当前的 key
-                arrayPanes.forEach((pane, i) => { // 遍历 state中的 panes数组
-                    if (pane.path === strUrl) {
-                        currentKey = pane.key // 如果 遍历中的pane(单个)的path 等于 目前的url => 将这个 pane的key 赋值给 currentKey
-                    }
-                })
-                this.setActiveKey(currentKey) // 设置 activeKey
-            }
+        let currentIndex
+        let currentPane
+
+        if (targetKey === currentActiveKey) {
+            this.state.panes.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                    currentIndex = i
+                    currentPane = currentPanes[currentIndex - 1]
+
+                    this.props.onAddPane({
+                        activePane: cloneDeep(currentPane),
+                        panes: cloneDeep(currentPanes)
+                    })
+
+                    this.props.tabsProps.history.push(currentPane.path)
+                }
+            })
+        } else {
+            this.props.onAddPane({
+                activePane: cloneDeep(this.state.activePane),
+                panes: cloneDeep(currentPanes)
+            })
         }
     }
 
-    // 配置 actions / 发起 actions
-    setActions = (strKey, arrPanes) => { // 参数类型: str, obj
-        // console.log('检查 tabs 运行几次设置action')
-        const previousState = cloneDeep([...this.props.panesState.panes, arrPanes]) // 深拷贝 => 将数组带入 addObj => 返回最新的 panes数组
-
-        this.props.onAddPane({ // 使用 props传入的 actions方法 => 将url状态保存
-            activeKey: strKey,
-            panes: previousState
-        })
-    }
-
-    // 配置 深拷贝的 cloneObj
     setCloneObj = () => {
-        // 深拷贝 route 与 tabsPropss 组成的对象
         let cloneObj = cloneDeep({
-            key: `${this.props.panesState.panes.length + 1}`,
+            key: this.props.rootState.router.location.pathname,
             title: this.props.route.title,
             path: this.props.tabsProps.match.url
         })
@@ -102,70 +108,51 @@ class TabsContainers extends React.Component {
         return cloneObj
     }
 
-    // 配置 activeKey(设置显示 当前active 标签)
-    setActiveKey = (strKey) => {
-        this.props.onActivePane({
-            activeKey: strKey
+    setPanes = (objPane) => {
+        const allPanes = cloneDeep([
+            ...this.props.panesState.panes,
+            objPane
+        ])
+
+        this.props.onAddPane({
+            activePane: objPane,
+            panes: allPanes
         })
     }
 
-    // 删减 / 关闭 单个 Tabs标签 => 修改 Redux 中的数据
-    remove = (targetKey) => { // targetKey === key
-        let activeKey = this.state.activeKey
+    setActivePane = (objActive) => {
+        this.props.onActivePane({ objActive })
+    }
 
-        let currentIndex // 当前展示的下标位置
-        let currentKey // 如果要删除的标签是当前展示的, 删除后更新key 为当前位置(currentIndex)的 key
-        let currentUrl // 如果要删除的标签是当前展示的, 删除后 更改url
-
-        const currentPanes = this.state.panes.filter(pane => pane.key !== targetKey)
-
-        if (targetKey === activeKey) {
-            this.state.panes.forEach((pane, i) => {
-                if (pane.key === targetKey) {
-                    currentIndex = i
-                }
-            })
-            currentKey = currentPanes[currentIndex - 1].key
-            currentUrl = currentPanes[currentIndex - 1].path
-            this.props.onAddPane({
-                activeKey: cloneDeep(currentKey),
-                panes: cloneDeep(currentPanes)
-            })
-            this.props.tabsProps.history.push(currentUrl)
-        } else {
-            currentKey = activeKey
-            this.props.onAddPane({
-                activeKey: cloneDeep(currentKey),
-                panes: cloneDeep(currentPanes)
-            })
-        }
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            activePane: nextProps.panesState.activePane,
+            panes: nextProps.panesState.panes
+        })
     }
 
     render () {
-        const { route, tabsProps } = this.props
         return (
-            <Tabs
-                hideAdd
-                onChange={ this.onChange } // 切换面板的回调
-                activeKey={ this.state.activeKey } // 当前激活 tab 面板的 key
-                type="editable-card" // 页签的基本样式
-                onEdit={ this.onEdit } // 新增和删除页签的回调
-            >
-                {/* 内容部分 与 state.panes数组无关系 */}
-                {
-                    this.state.panes.map((pane) => (
-                        <TabPane
-                            closable={ pane.closable }
-                            key={ pane.key } // this.state.activeKey // 与 store中的 panesState 绑定
-                            tab={ pane.title }
-                            path={ pane.path }
-                        >
-                            <route.component { ...tabsProps } routes={ route.routes } />
-
-                        </TabPane>
-                    ))
-                }
-            </Tabs>
+            <div>
+                <Tabs
+                    hideAdd
+                    type="editable-card"
+                    onEdit={ this.onEdit }
+                    onChange={ this.onChange }
+                    activeKey={ this.state.activePane.key }
+                >
+                    {
+                        this.state.panes.map((pane) => (
+                            <TabPane
+                                closable={ pane.closable }
+                                key={ pane.key }
+                                tab={ pane.title }
+                                path={ pane.path }
+                            />
+                        ))
+                    }
+                </Tabs>
+            </div>
         )
     }
 }
