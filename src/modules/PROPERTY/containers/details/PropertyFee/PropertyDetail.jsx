@@ -212,9 +212,9 @@ class PropertyDetail extends React.Component {
                                 <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                             </Row>
                             {this.state.data.auditStatus === 0 &&
-                            <Row>
+                            <Row style={{textAlign: 'center'}}>
                                 <Popconfirm title="确定提交吗?" onConfirm={this.handleCommit}>
-                                    <a className="btnred ant-btn">提交 </a>
+                                    <a className="btnred ant-btn" >提交 </a>
                                 </Popconfirm>
                             </Row>}
                             {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
