@@ -59,9 +59,10 @@ class propertyPaidConfirm extends React.Component {
             let json = this.props.form.getFieldsValue()
             json['id'] = this.state.data.id
             json['cashDepositId'] = this.state.data.cashDepositId
+            json['currentBalance'] = json.operateMoney
             json['auditStatus'] = 1
             await apiPost(
-                '/cashDeposit/updateCashDepositByConfirm',
+                '/cashDeposit/updateCashDepositByReceipt',
                 json
             )
             notification.open({
