@@ -140,7 +140,13 @@ class sumElectricityAddUp extends React.Component {
         }, {
             title: '总电量',
             dataIndex: 'sumElectricity',
-            key: 'sumElectricity'
+            key: 'sumElectricity',
+            render: function (text) {
+                if (text) {
+                    return parseFloat(text).toFixed(2)
+                }
+                return ''
+            }
         }, {
             title: '单价',
             dataIndex: 'unitPrice',
@@ -250,16 +256,7 @@ class sumElectricityAddUp extends React.Component {
                     lmelectricity: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
                 })
                 this.setState({
-                    isPropertyMoney: lastTimeData.data.electricityFees.isPropertyMoney === 1,
-                    isWaterMoney: lastTimeData.data.electricityFees.isWaterMoney === 1,
-                    isElectricMoney: lastTimeData.data.electricityFees.isElectricMoney === 1,
                     peakValleyRatio: lastTimeData.data.electricityFees.peakValleyRatio ? lastTimeData.data.electricityFees.peakValleyRatio : 0
-                })
-            } else {
-                this.setState({
-                    isPropertyMoney: false,
-                    isWaterMoney: false,
-                    isElectricMoney: false
                 })
             }
         }
@@ -589,7 +586,7 @@ class sumElectricityAddUp extends React.Component {
         })
         let json = {}
         json['electricCostName'] = '合计'
-        json['sumElectricity'] = sumElec
+        json['sumElectricity'] = sumElec.toFixed(2)
         json['singleMoney'] = parseFloat(sumSingeMoney).toFixed(1)
         sumElectricityRecordlList.push(json)
         this.props.form.setFieldsValue({
@@ -712,14 +709,23 @@ class sumElectricityAddUp extends React.Component {
                                     })(
                                         <Select
                                             showSearch
-                                            style={{ width: 200,
-                                                marginRight: '10px' }}
+                                            style={{
+                                                width: 200,
+                                                marginRight: '10px'}}
                                             placeholder="请选择客户名称"
                                             optionFilterProp="children"
                                             onChange={this.chooseClient}
                                         >
                                             {this.state.ClientList.map(Contract => {
-                                                return <Option key={Contract.id}>{Contract.clientName + '(' + Contract.leaseRooms + ')'}</Option>
+                                                return (
+                                                    <Option
+                                                        // 配置 li
+                                                        key={Contract.id}
+                                                        style={{ whiteSpace: 'normal' }}
+                                                    >
+                                                        { Contract.clientName + '(' + Contract.leaseRooms + ')' }
+                                                    </Option>
+                                                )
                                             })}
                                         </Select>)}
                                 </FormItem>
@@ -1023,6 +1029,20 @@ class sumElectricityAddUp extends React.Component {
                     {getFieldDecorator('readId')(<Input type="hidden" />)}
                     {getFieldDecorator('subletName')(<Input type="hidden" />)}
                 </Form>
+
+                <style>
+                    {`
+                        .ant-select-dropdown > div {
+                            overflow: scroll;
+                            width: 200px;
+                        }
+
+                        .ant-select-dropdown-menu {
+                            overflow: initial;
+                            width: 300px;
+                        }
+                    `}
+                </style>
             </Modal>
         )
     }

@@ -121,7 +121,7 @@ class App extends React.Component {
                             </Row>
                             <Row>
                                 <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
-                                <Col span={14}><b>审核说明：</b>{this.state.data.remark}</Col>
+                                <Col span={14}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
                             </Row>
                         </div>
                     </div>

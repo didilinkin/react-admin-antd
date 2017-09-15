@@ -182,7 +182,8 @@ class ElectricCharge extends React.Component {
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                dataIndex: 'roomNumber'
+                dataIndex: 'roomNumber',
+                width: 200
             }, {
                 title: '客户名称',
                 dataIndex: 'clientName'

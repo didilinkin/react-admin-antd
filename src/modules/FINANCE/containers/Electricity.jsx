@@ -120,6 +120,7 @@ class Electricity extends React.Component {
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
+                width: 200,
                 dataIndex: 'roomNumber'
             }, {
                 title: '客户名称',
