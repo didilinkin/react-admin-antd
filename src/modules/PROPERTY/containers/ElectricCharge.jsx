@@ -182,7 +182,8 @@ class ElectricCharge extends React.Component {
                 dataIndex: 'buildName'
             }, {
                 title: '房间编号',
-                dataIndex: 'roomNumber'
+                dataIndex: 'roomNumber',
+                width: 200
             }, {
                 title: '客户名称',
                 dataIndex: 'clientName'
@@ -207,8 +208,8 @@ class ElectricCharge extends React.Component {
                 title: '本次用电量',
                 dataIndex: 'sumElectricity'
             }, {
-                title: '本次应收',
-                dataIndex: 'thisReceivable'
+                title: '本期应收',
+                dataIndex: 'actualReceivable'
             }, {
                 title: ' 交费期限',
                 dataIndex: 'overdueDate'
@@ -227,6 +228,7 @@ class ElectricCharge extends React.Component {
             columns1: arr.slice().concat([{
                 title: ' 操作',
                 width: 200,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     return (
