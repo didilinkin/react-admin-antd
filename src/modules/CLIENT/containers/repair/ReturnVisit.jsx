@@ -57,7 +57,9 @@ class ReturnVisit extends React.Component {
                 key: 'repairContent',
                 render: function (text, record, index) {
                     let url = '/home/client/repair/repairDetail/' + record.id
-                    text = text.substring(0, 30)
+                    if (text !== null && typeof (text) !== 'undefined') {
+                        text = text.substring(0, 30)
+                    }
                     return (
                         <a onClick={() => info(url)}>{text}</a>
                     )
@@ -101,7 +103,9 @@ class ReturnVisit extends React.Component {
                 dataIndex: 'visitContent',
                 key: 'visitContent',
                 render: function (text, record, index) {
-                    text = text.substring(0, 30)
+                    if (text !== null && typeof (text) !== 'undefined') {
+                        text = text.substring(0, 30)
+                    }
                     let url = '/home/client/repair/ReturnVisitDetail/' + record.id
                     return (
                         <a onClick={() => info(url)}>{text}</a>

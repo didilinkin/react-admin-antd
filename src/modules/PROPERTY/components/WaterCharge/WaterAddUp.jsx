@@ -357,7 +357,13 @@ class WaterAddUp extends React.Component {
                                             onChange={this.PmContract}
                                         >
                                             {this.state.PmContract.map(Contract => {
-                                                return <Option key={Contract.id}>{Contract.clientName + '(' + Contract.leaseRooms + ')'}</Option>
+                                                return (
+                                                    <Option
+                                                        key={Contract.id}
+                                                        style={{ whiteSpace: 'normal' }}
+                                                    >
+                                                        {Contract.clientName + '(' + Contract.leaseRooms + ')'}
+                                                    </Option>)
                                             })}
                                         </Select>)}
                                 </FormItem>
@@ -640,6 +646,19 @@ class WaterAddUp extends React.Component {
                     {getFieldDecorator('readId')(<Input type="hidden" />)}
                     {getFieldDecorator('subletName')(<Input type="hidden" />)}
                 </Form>
+                <style>
+                    {`
+                        .ant-select-dropdown > div {
+                            overflow: scroll;
+                            width: 200px;
+                        }
+
+                        .ant-select-dropdown-menu {
+                            overflow: initial;
+                            width: 300px;
+                        }
+                    `}
+                </style>
             </Modal>
         )
     }

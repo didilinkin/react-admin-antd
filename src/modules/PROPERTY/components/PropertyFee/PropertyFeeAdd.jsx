@@ -649,7 +649,12 @@ class propertyFeeAdd extends React.Component {
                                         optionFilterProp="children"
                                     >
                                         {pmContractList.map(pmContract => {
-                                            return <Option key={pmContract.id}>{pmContract.clientName}：{pmContract.leaseRooms}</Option>
+                                            return (
+                                                <Option
+                                                    style={{ whiteSpace: 'normal' }}
+                                                    key={pmContract.id}
+                                                >{pmContract.clientName}：{pmContract.leaseRooms}
+                                                </Option>)
                                         })}
                                     </Select>
                                 )}
@@ -821,6 +826,19 @@ class propertyFeeAdd extends React.Component {
                             <Input style={{ width: 120 }} disabled addonBefore="￥" addonAfter="元" />
                         )}</p>
                 </Form>
+                <style>
+                    {`
+                        .ant-select-dropdown > div {
+                            overflow: scroll;
+                            width: 200px;
+                        }
+
+                        .ant-select-dropdown-menu {
+                            overflow: initial;
+                            width: 300px;
+                        }
+                    `}
+                </style>
             </Modal>
         )
     }
