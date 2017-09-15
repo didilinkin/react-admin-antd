@@ -284,7 +284,7 @@ class ElectricChargeDetails extends React.Component {
                                 <span>本期应收：</span>&nbsp;
                                 <span style={{fontSize: '18px',
                                     color: 'red'}}
-                                >￥{feesInfo.thisReceivable}</span>
+                                >￥{feesInfo.actualReceivable}</span>
                             </div>
                         </Col>
                     </Row>

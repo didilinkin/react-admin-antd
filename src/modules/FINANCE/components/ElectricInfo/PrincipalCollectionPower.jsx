@@ -24,9 +24,9 @@ class PrincipalCollectionPower extends React.Component {
                 isFirst: false
             })
             this.props.form.setFieldsValue({
-                receivableMoney: parseFloat(elecInfo.thisReceivable).toFixed(1),
+                receivableMoney: parseFloat(elecInfo.actualReceivable).toFixed(1),
                 principalReceived: parseFloat(elecInfo.principalReceived).toFixed(1),
-                unprincipalReceived: parseFloat((elecInfo.thisReceivable ? elecInfo.thisReceivable : 0) - (elecInfo.principalReceived ? elecInfo.principalReceived : 0)).toFixed(1)
+                unprincipalReceived: parseFloat((elecInfo.actualReceivable ? elecInfo.actualReceivable : 0) - (elecInfo.principalReceived ? elecInfo.principalReceived : 0)).toFixed(1)
             })
         }
     }

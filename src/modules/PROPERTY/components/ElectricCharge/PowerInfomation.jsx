@@ -273,7 +273,7 @@ class PowerInfomation extends React.Component {
                                     <span>本期应收：</span>&nbsp;
                                     <span style={{fontSize: '18px',
                                         color: 'red'}}
-                                    >￥{fees.thisReceivable}</span>
+                                    >￥{fees.actualReceivable}</span>
                                 </div>
                             </Col>
                         </Row>
