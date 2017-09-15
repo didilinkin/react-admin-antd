@@ -1,5 +1,6 @@
 import {Form, Select, Input, Button, Row, Col, DatePicker } from 'antd'
 import React from 'react'
+import { baseURL } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -205,7 +206,7 @@ class CollectRentHead extends React.Component {
                         <span>
                             <Button style={{marginRight: '10px'}}
                                 onClick={() => {
-                                    window.open('http://192.168.5.24:18082/collectRent/print?ids=' + this.props.RowKeys + '&source=' + 1)
+                                    window.open(baseURL + '/collectRent/print?ids=' + this.props.RowKeys + '&source=' + 1)
                                 }}
                             >批量打印</Button>
                             <Button >导出</Button>
