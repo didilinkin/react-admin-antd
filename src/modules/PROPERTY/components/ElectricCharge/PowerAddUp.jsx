@@ -250,7 +250,8 @@ class sumElectricityAddUp extends React.Component {
                 })
             }
             if (lastTimeData.data.electricityFees) {
-                let sfzq = lastTimeData.data ? [moment(lastTimeData.data.wattDate)] : null
+                // console.log(lastTimeData.data.electricityFees)
+                let sfzq = lastTimeData.data ? [moment(lastTimeData.data.electricityFees.wattDate)] : null
                 this.props.form.setFieldsValue({
                     sfzq: sfzq,
                     lmelectricity: lastTimeData.data.electricityFees.sumElectricity ? lastTimeData.data.electricityFees.sumElectricity : 0
