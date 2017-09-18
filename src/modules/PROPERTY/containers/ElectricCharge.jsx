@@ -382,7 +382,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
@@ -413,7 +413,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             scroll={{ x: 1800 }}
                             bordered
@@ -439,7 +439,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource3}
@@ -464,7 +464,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             RowKeys={this.state.RowKeys}
                             bordered

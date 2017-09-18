@@ -368,7 +368,7 @@ class WaterFee extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             bordered
                             scroll={{ x: 1450 }}
@@ -395,7 +395,7 @@ class WaterFee extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             bordered
                             scroll={{ x: 1600 }}
@@ -422,7 +422,7 @@ class WaterFee extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             scroll={{ x: 1800 }}
                             bordered

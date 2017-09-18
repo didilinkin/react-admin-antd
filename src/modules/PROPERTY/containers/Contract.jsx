@@ -240,7 +240,7 @@ class PropertyContract extends React.Component {
                             showQuickJumper: true,
                             current: this.state.current,
                             pageSizeOptions: ['15', '30', '45'],
-                            defaultPageSize: 30}}
+                            defaultPageSize: 15}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

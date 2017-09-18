@@ -333,7 +333,7 @@ class ClientRepair extends Component {
                             showQuickJumper: true,
                             current: this.state.current,
                             pageSizeOptions: ['15', '30', '45'],
-                            defaultPageSize: 30}}
+                            defaultPageSize: 15}}
                         scroll={{ x: 1850 }}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

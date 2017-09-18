@@ -246,7 +246,7 @@ class LeaseContract extends React.Component {
                             showQuickJumper: true,
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.current,
-                            defaultPageSize: 30}}
+                            defaultPageSize: 15}}
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}
                     />

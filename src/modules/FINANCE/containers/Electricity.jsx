@@ -324,7 +324,7 @@ class Electricity extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource1}
@@ -349,7 +349,7 @@ class Electricity extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource2}
@@ -374,7 +374,7 @@ class Electricity extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 2000 }}
                             bordered
                             dataSource={this.state.dataSource3}
