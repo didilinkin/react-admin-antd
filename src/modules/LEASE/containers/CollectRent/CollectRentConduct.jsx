@@ -4,6 +4,7 @@ import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api/index'
 import CollectRentConductComponent from '../details/CollectRent/RentReviewDetail'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
+import CollectRentRepaidComponent from '../details/CollectRent/PaidConfirm'
 // 引入组件
 // React component
 class CollectRentConduct extends Component {
@@ -18,7 +19,7 @@ class CollectRentConduct extends Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             sort: 'a.id',
             order: 'desc',
             dataSource: [],
@@ -30,6 +31,14 @@ class CollectRentConduct extends Component {
             openAdd: true,
             openTableAddUp: false,
             openUpdate: false,
+            id: id
+        })
+    }
+    handleUpdate2 = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: true,
             id: id
         })
     }
@@ -46,6 +55,7 @@ class CollectRentConduct extends Component {
             '/collectRent/ListBuildingInfo'
         )
         const handleUpdate = this.handleUpdate
+        const handleUpdate2 = this.handleUpdate2
         this.setState({loading: false,
             total: result.data.total,
             ListBuildingInfo: ListBuildingInfo.data,
@@ -111,6 +121,11 @@ class CollectRentConduct extends Component {
                 dataIndex: 'payDeadline',
                 key: 'payDeadline'
             }, {
+                title: '提交时间',
+                width: 150,
+                dataIndex: 'updateDate',
+                key: 'updateDate'
+            }, {
                 title: '操作',
                 width: 200,
                 dataIndex: 'opt',
@@ -120,6 +135,7 @@ class CollectRentConduct extends Component {
                     return (
                         <div>
                             <a onClick={() => handleUpdate(record.id)} > 明细 &nbsp;</a>
+                            <a type="primary" onClick={() => handleUpdate2(record.id)} >&nbsp; 修改 </a>
                         </div>
                     )
                 }
@@ -192,6 +208,13 @@ class CollectRentConduct extends Component {
                     refreshTable={this.refresh}
                     close={this.close}
                     visible={this.state.openAdd}
+                />
+
+                <CollectRentRepaidComponent
+                    id={this.state.id}
+                    close={this.close}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
                 />
                 <CollectRentHeadComponent
                     refresh={this.refresh}

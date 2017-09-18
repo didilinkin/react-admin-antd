@@ -19,7 +19,7 @@ class CollectRenting extends Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             sort: 'a.id',
             order: 'desc',
             dataSource: [],

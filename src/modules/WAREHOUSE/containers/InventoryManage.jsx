@@ -24,7 +24,7 @@ class InventoryManage extends React.Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             warehouseId: 0,
             amount: 0,
             number: 0,
