@@ -86,10 +86,6 @@ class ElectricCharge extends React.Component {
             }
             return ''
         })
-        this.state.columns1[this.state.columns1.length - 1].fixed = dataSource1.length > 0 ? 'right' : null
-        this.state.columns2[this.state.columns2.length - 1].fixed = dataSource2.length > 0 ? 'right' : null
-        this.state.columns3[this.state.columns3.length - 1].fixed = dataSource3.length > 0 ? 'right' : null
-        this.state.columns4[this.state.columns4.length - 1].fixed = dataSource4.length > 0 ? 'right' : null
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,
@@ -239,7 +235,7 @@ class ElectricCharge extends React.Component {
             dataSource4: dataSource4,
             columns1: arr.slice().concat([{
                 title: ' 操作',
-                fixed: dataSource1.length > 0 ? 'right' : null,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     if (record) {
@@ -261,7 +257,7 @@ class ElectricCharge extends React.Component {
             columns2: arr.slice().concat([{
                 title: ' 操作',
                 dataIndex: 'opt',
-                fixed: dataSource2.length > 0 ? 'right' : null,
+                fixed: 'right',
                 render: function (text, record, index) {
                     return (
                         <span>
@@ -281,7 +277,7 @@ class ElectricCharge extends React.Component {
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                fixed: dataSource3.length > 0 ? 'right' : null,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)
@@ -340,7 +336,7 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '操作',
-                fixed: dataSource4.length > 0 ? 'right' : null,
+                fixed: 'right',
                 render: function (text, record) {
                     return (
                         <span>

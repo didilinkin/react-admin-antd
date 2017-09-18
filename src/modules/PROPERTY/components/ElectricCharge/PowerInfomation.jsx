@@ -159,7 +159,6 @@ class PowerInfomation extends React.Component {
             })
             this.props.refresh()
         }
-        this.props.refreshTable({}, {}, {})
     }
     handleCancel = () => {
         this.setState({

@@ -67,9 +67,6 @@ class Electricity extends React.Component {
             }
             return ''
         })
-        this.state.columns1[this.state.columns1.length - 1].fixed = dataSource1.length > 0 ? 'right' : null
-        this.state.columns2[this.state.columns2.length - 1].fixed = dataSource2.length > 0 ? 'right' : null
-        this.state.columns3[this.state.columns3.length - 1].fixed = dataSource3.length > 0 ? 'right' : null
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,
@@ -167,7 +164,7 @@ class Electricity extends React.Component {
             dataSource3: dataSource3,
             columns1: arr.slice().concat([{
                 title: ' 操作',
-                fixed: dataSource1.length > 0 ? 'right' : null,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -190,7 +187,7 @@ class Electricity extends React.Component {
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                fixed: dataSource2.length > 0 ? 'right' : null,
+                fixed: 'right',
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -247,7 +244,7 @@ class Electricity extends React.Component {
                 }
             }, {
                 title: '操作',
-                fixed: dataSource3.length > 0 ? 'right' : null,
+                fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/finance/electricChargeDetails/' + record.id
                     return (
