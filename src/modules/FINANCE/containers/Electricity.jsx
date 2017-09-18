@@ -67,6 +67,9 @@ class Electricity extends React.Component {
             }
             return ''
         })
+        this.state.columns1[this.state.columns1.length - 1].fixed = dataSource1.length > 0 ? 'right' : null
+        this.state.columns2[this.state.columns2.length - 1].fixed = dataSource2.length > 0 ? 'right' : null
+        this.state.columns3[this.state.columns3.length - 1].fixed = dataSource3.length > 0 ? 'right' : null
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,
@@ -164,14 +167,13 @@ class Electricity extends React.Component {
             dataSource3: dataSource3,
             columns1: arr.slice().concat([{
                 title: ' 操作',
-                fixed: 'right',
-                width: 100,
+                fixed: dataSource1.length > 0 ? 'right' : null,
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
                         <span>
                             {verification('censorElectric') &&
-                            <a onClick={() => info(record.id)}>审核</a>
+                            <a style={{margin: '0 20px'}} onClick={() => info(record.id)}>审核</a>
                             }
                         </span>
                     )
@@ -188,13 +190,12 @@ class Electricity extends React.Component {
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                width: 100,
-                fixed: 'right',
+                fixed: dataSource2.length > 0 ? 'right' : null,
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a onClick={() => info(record.id)}>明细</a>
+                            <a style={{margin: '0 20px'}} onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -246,25 +247,22 @@ class Electricity extends React.Component {
                 }
             }, {
                 title: '操作',
-                width: 200,
-                fixed: 'right',
+                fixed: dataSource3.length > 0 ? 'right' : null,
                 render: function (text, record, index) {
                     let url = '/home/finance/electricChargeDetails/' + record.id
                     return (
                         <span>
-                            <a onClick={() => infoTwo(url)}>明细</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style={{margin: '0 10px'}} onClick={() => infoTwo(url)}>明细</a>
                             {verification('revokeElectric') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
                             </Popconfirm>
                             }
-                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
                                 window.open(baseURL + '/ElectricityFees/print?ids=' + record.id)
                             }}
                             >
-                                <a>打印单据</a>
+                                <a style={{margin: '0 10px'}}>打印单据</a>
                             </Popconfirm>
                         </span>
                     )

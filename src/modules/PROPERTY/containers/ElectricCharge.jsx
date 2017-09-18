@@ -29,6 +29,9 @@ class ElectricCharge extends React.Component {
             id: 0
         }
     }
+    startLoading = () => {
+        this.setState({loading: true})
+    }
     activeKey = 1
     refreshTwo = async (activeKey) => {
         this.json = {}
@@ -70,6 +73,7 @@ class ElectricCharge extends React.Component {
         let dataSource2 = []
         let dataSource3 = []
         let dataSource4 = []
+
         PowerBillList.map(PowerBill => {
             if (PowerBill.examineState.toString() === '0') {
                 dataSource1.push(PowerBill)
@@ -82,7 +86,10 @@ class ElectricCharge extends React.Component {
             }
             return ''
         })
-        console.log(PowerBillList)
+        this.state.columns1[this.state.columns1.length - 1].fixed = dataSource1.length > 0 ? 'right' : null
+        this.state.columns2[this.state.columns2.length - 1].fixed = dataSource2.length > 0 ? 'right' : null
+        this.state.columns3[this.state.columns3.length - 1].fixed = dataSource3.length > 0 ? 'right' : null
+        this.state.columns4[this.state.columns4.length - 1].fixed = dataSource4.length > 0 ? 'right' : null
         this.setState({
             loading: false,
             current: pagination ? pagination.current : 1,
@@ -95,6 +102,7 @@ class ElectricCharge extends React.Component {
         })
     }
     openWaterAddUpComponent = (id) => {
+        this.startLoading()
         this.setState({
             openWaterAddUpComponent: true,
             openInfo: false,
@@ -103,6 +111,7 @@ class ElectricCharge extends React.Component {
     }
     // 发起审核
     examine = async (id) => {
+        this.startLoading()
         let data = await apiPost(
             '/ElectricityFees/updateAudit',
             {id: id,
@@ -115,7 +124,7 @@ class ElectricCharge extends React.Component {
         this.refresh({}, {}, {})
     }
     info = (id) => {
-        console.log(id)
+        this.startLoading()
         this.setState({
             openInfo: true,
             openWaterAddUpComponent: false,
@@ -124,6 +133,7 @@ class ElectricCharge extends React.Component {
     }
     // 删除记录
     deleteRecord = async (id) => {
+        this.startLoading()
         let data = await apiPost(
             '/ElectricityFees/deleteElectricityFees',
             {id: id}
@@ -134,6 +144,7 @@ class ElectricCharge extends React.Component {
         })
         this.refresh({}, {}, {})
     }
+    // 初始化
     async initialRemarks () {
         this.setState({loading: true})
         let result = await apiPost(
@@ -172,10 +183,9 @@ class ElectricCharge extends React.Component {
                 width: 100,
                 dataIndex: 'id',
                 render: function (text, record, index) {
-                    index++
-                    return (
-                        <span>{index}</span>
-                    )
+                    if (text) {
+                        return (index + 1)
+                    }
                 }
             }, {
                 title: '所属楼宇',
@@ -191,15 +201,17 @@ class ElectricCharge extends React.Component {
                 title: '收费类型',
                 dataIndex: 'wattHourType',
                 render: function (text) {
-                    let dataIndex = '固定单价'
-                    if (text === 1) {
-                        dataIndex = '差额单价'
-                    } else if (text === 2) {
-                        dataIndex = '功峰平谷'
+                    if (text) {
+                        let dataIndex = '固定单价'
+                        if (text === 1) {
+                            dataIndex = '差额单价'
+                        } else if (text === 2) {
+                            dataIndex = '功峰平谷'
+                        }
+                        return (
+                            <p>{dataIndex}</p>
+                        )
                     }
-                    return (
-                        <p>{dataIndex}</p>
-                    )
                 }
             }, {
                 title: '本期电费周期',
@@ -227,36 +239,33 @@ class ElectricCharge extends React.Component {
             dataSource4: dataSource4,
             columns1: arr.slice().concat([{
                 title: ' 操作',
-                width: 200,
-                fixed: 'right',
+                fixed: dataSource1.length > 0 ? 'right' : null,
                 dataIndex: 'opt',
                 render: function (text, record) {
-                    return (
-                        <span>
-                            <a onClick={() => info(record.id)}>明细</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm title="确定提交吗?" onConfirm={() => examine(record.id)}>
-                                <a>提交</a>
-                            </Popconfirm>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <Popconfirm title="确定删除吗?" onConfirm={() => deleteRecord(record.id)}>
-                                <a>删除</a>
-                            </Popconfirm>
-                        </span>
-                    )
+                    if (record) {
+                        return (
+                            <span>
+                                <a style={{margin: '0 10px'}} onClick={() => info(record.id)}>明细</a>
+                                <a onClick={() => openWaterAddUpComponent(record.id)}>修改</a>
+                                <Popconfirm title="确定提交吗?" onConfirm={() => examine(record.id)}>
+                                    <a style={{marginLeft: '10px'}}>提交</a>
+                                </Popconfirm>
+                                <Popconfirm title="确定删除吗?" onConfirm={() => deleteRecord(record.id)}>
+                                    <a style={{margin: '0 10px'}}>删除</a>
+                                </Popconfirm>
+                            </span>
+                        )
+                    }
                 }
             }]),
             columns2: arr.slice().concat([{
                 title: ' 操作',
-                width: 60,
                 dataIndex: 'opt',
-                fixed: 'right',
+                fixed: dataSource2.length > 0 ? 'right' : null,
                 render: function (text, record, index) {
                     return (
                         <span>
-                            <a onClick={() => info(record.id)}>明细</a>
+                            <a style={{margin: '0 10px'}} onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -272,17 +281,16 @@ class ElectricCharge extends React.Component {
                 dataIndex: 'auditName'
             }, {
                 title: ' 操作',
-                fixed: 'right',
-                width: 150,
+                fixed: dataSource3.length > 0 ? 'right' : null,
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)
                     return (
                         <span>
                             <Popconfirm key="1" title="确定重新收费吗?" onConfirm={() => openWaterAddUpComponent(record.id)}>
-                                <a>重新收费</a>
+                                <a style={{margin: '0 10px'}}>重新收费</a>
                             </Popconfirm>
-                            <a style={{marginLeft: '20px'}} onClick={() => info(record.id)}>明细</a>
+                            <a style={{marginRight: '10px'}} onClick={() => info(record.id)}>明细</a>
                         </span>
                     )
                 }
@@ -332,18 +340,16 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '操作',
-                fixed: 'right',
-                width: 150,
+                fixed: dataSource4.length > 0 ? 'right' : null,
                 render: function (text, record) {
                     return (
                         <span>
-                            <a onClick={() => info(record.id)}>明细</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a style={{margin: '0 10px'}} onClick={() => info(record.id)}>明细</a>
                             <Popconfirm title="确定打印吗?" onConfirm={() => {
                                 window.open(baseURL + '/ElectricityFees/print?ids=' + record.id)
                             }}
                             >
-                                <a>打印单据</a>
+                                <a style={{marginRight: '10px'}}>打印单据</a>
                             </Popconfirm>
                         </span>
                     )
@@ -383,7 +389,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             dataSource={this.state.dataSource1}
                             columns={this.state.columns1}
@@ -414,7 +420,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             scroll={{ x: 1800 }}
                             bordered
@@ -440,7 +446,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             bordered
                             dataSource={this.state.dataSource3}
@@ -465,7 +471,7 @@ class ElectricCharge extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             scroll={{ x: 1800 }}
                             RowKeys={this.state.RowKeys}
                             bordered
@@ -476,6 +482,7 @@ class ElectricCharge extends React.Component {
                 </Tabs>
                 <PowerInfomation
                     id={this.state.id}
+                    refreshTable={this.refresh}
                     visible={this.state.openInfo}
                 />
             </Spin>

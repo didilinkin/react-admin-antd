@@ -159,6 +159,7 @@ class PowerInfomation extends React.Component {
             })
             this.props.refresh()
         }
+        this.props.refreshTable({}, {}, {})
     }
     handleCancel = () => {
         this.setState({
@@ -167,6 +168,7 @@ class PowerInfomation extends React.Component {
             visible: false,
             isFirst: true
         })
+        this.props.refreshTable({}, {}, {})
     }
     stateChange = (e) => {
         this.setState({
