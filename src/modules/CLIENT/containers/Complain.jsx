@@ -28,7 +28,7 @@ class complaint extends Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             sort: 'id',
             order: 'desc',
             ListBuildingInfo: []

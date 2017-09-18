@@ -20,7 +20,7 @@ class PropertyFeeing extends Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             sort: 'a.id',
             order: 'desc',
             dataSource: [],
@@ -154,9 +154,6 @@ class PropertyFeeing extends Component {
                 render: function (text, record, index) {
                     return (
                         <div>
-                            {/* <Popconfirm title="确定提交吗?" onConfirm={() => handleCommit(record.id)}>*/}
-                            {/* <a> 提交 &nbsp;&nbsp;</a>*/}
-                            {/* </Popconfirm>*/}
                             <a type="primary" onClick={() => handleUpdate2(record.id)} > 明细 &nbsp;&nbsp;</a>
                             <a type="primary" onClick={() => handleUpdate(record.id)} > 重新收费 &nbsp;&nbsp;</a>
                             <Popconfirm title="确定删除吗?" onConfirm={() => handleDelete(record.id)}>
