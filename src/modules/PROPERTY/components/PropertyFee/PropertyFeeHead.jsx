@@ -1,7 +1,7 @@
 import {Form, Select, Input, Button, Row, Col, DatePicker, notification, Icon} from 'antd'
 import React from 'react'
 import PropertyAddComponent from '../../components/PropertyFee/PropertyFeeAdd'
-import { apiPost } from '../../../../api'
+import { apiPost, baseURL } from '../../../../api'
 const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
@@ -243,7 +243,7 @@ class CollectRentHead extends React.Component {
                                 <span>
                                     <Button style={{marginRight: '10px'}}
                                         onClick={() => {
-                                            window.open('http://192.168.5.24:18082/propertyFee/print?ids=' + this.props.RowKeys + '&source=' + 1)
+                                            window.open(baseURL + '/propertyFee/print?ids=' + this.props.RowKeys + '&source=' + 1)
                                         }}
                                     >批量打印</Button>
                                     <Button >导出</Button>

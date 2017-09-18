@@ -146,8 +146,8 @@ class Electricity extends React.Component {
                 title: '本次用电量',
                 dataIndex: 'sumElectricity'
             }, {
-                title: '本次应收',
-                dataIndex: 'thisReceivable'
+                title: '本期应收',
+                dataIndex: 'actualReceivable'
             }, {
                 title: ' 交费期限',
                 dataIndex: 'overdueDate'
