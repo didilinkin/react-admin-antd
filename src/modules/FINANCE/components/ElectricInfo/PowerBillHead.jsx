@@ -176,6 +176,22 @@ class PowerBillHead extends React.Component {
                                     )}
                                 </FormItem>
                             </Col>
+                            <Col span={spanEight}>
+                                <FormItem label="打印状态" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                    {getFieldDecorator('printStatus')(
+                                        <Select
+                                            showSearch
+                                            allowClear
+                                            style={{ width: 200 }}
+                                            placeholder="请选择开票状态"
+                                            optionFilterProp="children"
+                                        >
+                                            <Option key="1">已打印</Option>
+                                            <Option key="2">未打印</Option>
+                                        </Select>
+                                    )}
+                                </FormItem>
+                            </Col>
                         </div>
                         }
                     </Row>
