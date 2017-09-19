@@ -478,7 +478,7 @@ class ElectricCharge extends React.Component {
                 </Tabs>
                 <PowerInfomation
                     id={this.state.id}
-                    refreshTable={this.refresh}
+                    refresh={this.refresh}
                     visible={this.state.openInfo}
                 />
             </Spin>
