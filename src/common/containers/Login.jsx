@@ -113,7 +113,7 @@ class Login extends React.Component {
 }
 
 // style
-const loginImg = require('../../assets/images/Login@2x.png')
+const loginImg = require('../../assets/images/Login@2x.jpg')
 
 const LoginBox = styled.div`
     height: 100%;
