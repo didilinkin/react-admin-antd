@@ -167,6 +167,7 @@ class PowerInfomation extends React.Component {
             visible: false,
             isFirst: true
         })
+        this.props.refreshTable({}, {}, {})
     }
     stateChange = (e) => {
         this.setState({

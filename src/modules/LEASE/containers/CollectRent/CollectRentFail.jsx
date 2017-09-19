@@ -19,7 +19,7 @@ class CollectRentFail extends React.Component {
             RowKeys: [],
             total: 0,
             page: 1,
-            rows: 30,
+            rows: 15,
             sort: 'a.id',
             order: 'desc',
             dataSource: [],
@@ -244,7 +244,7 @@ class CollectRentFail extends React.Component {
                             pageSizeOptions: ['15', '30', '45'],
                             current: this.state.page,
                             defaultPageSize: this.state.rows}}
-                        scroll={{ x: 1500 }}
+                        scroll={{ x: 1700 }}
                         bordered
                         dataSource={this.state.dataSource}
                         columns={this.state.columns}

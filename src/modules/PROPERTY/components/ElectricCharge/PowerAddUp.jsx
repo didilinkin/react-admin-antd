@@ -1,5 +1,5 @@
 import React from 'react'
-import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table, Tag} from 'antd'
+import {Modal, Form, Row, Col, Input, Button, DatePicker, Select, Table, Tag, Spin} from 'antd'
 import { apiPost } from '../../../../api/index'
 import '../../style/PowerAddUp.less'
 import moment from 'moment'
@@ -28,7 +28,8 @@ class sumElectricityAddUp extends React.Component {
         propertyMoney: 0,
         waterMoney: 0,
         electricMoney: 0,
-        amountReceivable: 0
+        amountReceivable: 0,
+        loading: false
 
     }
     componentWillReceiveProps (nextProps) {
@@ -223,6 +224,7 @@ class sumElectricityAddUp extends React.Component {
     }
     // 获取上次抄表记录
     lastTimeRecord = async (contractId, clientId, clientType, isNew) => {
+        this.setState({loading: true})
         let lastTimeData = await apiPost(
             '/ElectricityFees/LastTimeDate',
             {contractId: contractId,
@@ -261,6 +263,7 @@ class sumElectricityAddUp extends React.Component {
                 })
             }
         }
+        this.setState({loading: false})
     }
     // 获取转租客户
     getSubletList = async (contractId) => {
@@ -275,6 +278,7 @@ class sumElectricityAddUp extends React.Component {
         if (this.state.isFirst && nextProps.visible) {
             this.props.form.resetFields()
             if (nextProps.id > 0) {
+                this.setState({loading: true})
                 // 获取电费详情 和 列表
                 let map = await apiPost(
                     '/ElectricityFees/ElectricityFeeInfo',
@@ -346,6 +350,7 @@ class sumElectricityAddUp extends React.Component {
                     currentMouthUnitPrice: currentContract.powerUnitPrice,
                     lmelectricity: electricInfo.lmelectricity ? electricInfo.lmelectricity : 0
                 })
+                this.setState({loading: false})
             } else {
                 this.setState({
                     visible: nextProps.visible,
@@ -362,6 +367,7 @@ class sumElectricityAddUp extends React.Component {
         }
     }
     async getClientListAndUser () {
+        this.setState({loading: true})
         let ClientList = await apiPost(
             '/propertyFee/getPmContractList',
             {contractStatus: 0}
@@ -375,6 +381,7 @@ class sumElectricityAddUp extends React.Component {
             ClientList: ClientList.data,
             meterReader: meterReader.data
         })
+        this.setState({loading: false})
     }
     complement (arr1, arr2) {
         console.log(arr1, arr2)
@@ -407,6 +414,7 @@ class sumElectricityAddUp extends React.Component {
         this.state.ClientList.map(async (contract) => {
             if (contractId.toString() === contract.id.toString()) {
                 this.lastTimeRecord(contractId, contract.clientId, 1, true)
+                this.setState({loading: true})
                 let subletList = await apiPost(
                     '/propertyFee/getSubletByPmId',
                     {id: contractId}
@@ -431,6 +439,7 @@ class sumElectricityAddUp extends React.Component {
                     formName: contract.clientName,
                     ratio: contract.powerRatio
                 })
+                this.setState({loading: false})
             }
         })
     }
@@ -631,6 +640,7 @@ class sumElectricityAddUp extends React.Component {
     chooseRoomNumber = async (value) => {
         console.log(value)
         // 查询上次抄表数
+        this.setState({loading: true})
         let lastTimeData = await apiPost(
             '/ElectricityFees/LastTimeNumber',
             {
@@ -649,6 +659,7 @@ class sumElectricityAddUp extends React.Component {
                 electricCostName: value
             })
         }
+        this.setState({loading: false})
     }
     handleConfirmPassword = (rule, value, callback) => {
         debugger
@@ -683,9 +694,6 @@ class sumElectricityAddUp extends React.Component {
                 }
             }
         }
-        const tagStyle = {
-            marginLeft: '50px',
-            marginBottom: '20px'}
         return (
             <Modal maskClosable={false}
                 title={this.props.title}
@@ -695,342 +703,353 @@ class sumElectricityAddUp extends React.Component {
                 onOk={this.handleSubmit}
                 onCancel={this.handleCancel}
             >
-                <Form layout="horizontal">
-                    <div className="main-div">
-                        <Row>
-                            <Col span={8}>
-                                <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('clientName', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择客户名称!'
-                                        }]
-                                    })(
-                                        <Select
-                                            showSearch
-                                            style={{
-                                                width: 200,
-                                                marginRight: '10px'}}
-                                            placeholder="请选择客户名称"
-                                            optionFilterProp="children"
-                                            onChange={this.chooseClient}
-                                        >
-                                            {this.state.ClientList.map(Contract => {
-                                                return (
-                                                    <Option
-                                                        // 配置 li
-                                                        key={Contract.id}
-                                                        style={{ whiteSpace: 'normal' }}
-                                                    >
-                                                        { Contract.clientName + '(' + Contract.leaseRooms + ')' }
-                                                    </Option>
-                                                )
-                                            })}
-                                        </Select>)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="转租客户" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('subletIdOne')(
-                                        <Select
-                                            showSearch
-                                            style={{ width: 200,
-                                                marginRight: '10px' }}
-                                            placeholder="请选择转租客户"
-                                            optionFilterProp="children"
-                                            onChange={this.chooseSublet}
-                                        >
-                                            {this.state.subletList.map(sub => {
-                                                return <Option key={sub.clientId}>{sub.clientName}</Option>
-                                            })}
-                                        </Select>)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('roomNumber')(
-                                        <Input style={{ width: 200,
-                                            marginRight: '10px' }}
-                                        />)}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col span={8}>
-                                <FormItem label="本次周期" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('sfzq', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择本次周期!'
-                                        }, {
-                                            validator: this.handleConfirmPassword
-                                        }]
-                                    })(
-                                        <RangePicker style={{ width: 200,
-                                            marginRight: '10px' }}
-                                        />)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="交费期限" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('overdueDate', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请填写交费期限!'
-                                        }]
-                                    })(
-                                        <DatePicker
-                                            style={{ width: 200,
-                                                marginRight: '10px' }}
-                                        />)}
-                                </FormItem>
-                            </Col>
-                            <Col span={8}>
-                                <FormItem label="抄表人员" labelCol={{ span: 6 }}
-                                    wrapperCol={{ span: 15 }}
-                                >
-                                    {getFieldDecorator('readIdOne', {
-                                        rules: [ {
-                                            required: true,
-                                            message: '请选择抄表人员!'
-                                        }]
-                                    })(
-                                        <Select
-                                            showSearch
-                                            style={{ width: 200,
-                                                marginRight: '10px' }}
-                                            placeholder="请选择抄表人员"
-                                            optionFilterProp="children"
-                                            onChange={this.readIdOne}
-                                        >
-                                            {this.state.meterReader.map(user => {
-                                                return <Option key={user.id}>{user.loginName}</Option>
-                                            })}
-                                        </Select>)}
-                                </FormItem>
-                            </Col>
-                        </Row>
-                    </div>
-                    <span style={{textAlign: 'center',
-                        display: 'block'}}
-                    >
-                        {getFieldDecorator('formName')(<Input style={{width: '300px'}} />)}
-                        <span style={{marginLeft: '20px'}}>电量统计表</span>
-                    </span>
-                    <br />
-                    <div style={{marginBottom: 20}}>
-                        <Table
-                            columns={this.state.tableColumns}
-                            dataSource={this.state.sumElectricityRecordlList}
-                            bordered
-                            pagination={false}
-                        />
-                    </div>
-                    <Row>
-                        <Col span={12} />
-                        <Col span={6}>
-                            <FormItem label="本期应收" labelCol={{ span: 9 }}
-                                wrapperCol={{ span: 12 }}
-                            >
-                                {getFieldDecorator('actualReceivable', {
-                                    rules: [ {
-                                        required: true,
-                                        message: '请填写本期应收!'
-                                    }]
-                                })(<Input style={{width: '100px'}} addonBefore="￥" />)}
-                            </FormItem>
-                        </Col>
-                        <Col span={6}>
-                            <FormItem label="优惠金额" labelCol={{ span: 9 }}
-                                wrapperCol={{ span: 12 }}
-                            >
-                                {getFieldDecorator('principalDiscount')(<Input onChange={this.amountReceivable} style={{width: '100px'}} />)}
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    <Row gutter={32}>
-                        <Col span={8}>
-                            <div className="bottom-card">
-                                <div className="bottom-cards-title">抄表录入</div>
-                                <div style={{marginTop: 20}}>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="房间编号"
-                                    >{getFieldDecorator('roomNumberOne')(
+                <Spin spinning={this.state.loading}>
+                    <Form layout="horizontal">
+                        <div className="main-div">
+                            <Row>
+                                <Col span={8}>
+                                    <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('clientName', {
+                                            rules: [ {
+                                                required: true,
+                                                message: '请选择客户名称!'
+                                            }]
+                                        })(
                                             <Select
                                                 showSearch
-                                                placeholder="请选择房间编号"
+                                                style={{
+                                                    width: 200,
+                                                    marginRight: '10px'}}
+                                                placeholder="请选择客户名称"
                                                 optionFilterProp="children"
-                                                onChange={this.chooseRoomNumber}
+                                                onChange={this.chooseClient}
                                             >
-                                                {this.state.roomNumberOne.map((roomNumber, i) => {
-                                                    return <Option key={roomNumber}>{roomNumber}</Option>
+                                                {this.state.ClientList.map(Contract => {
+                                                    return (
+                                                        <Option
+                                                        // 配置 li
+                                                            key={Contract.id}
+                                                            style={{ whiteSpace: 'normal' }}
+                                                        >
+                                                            { Contract.clientName + '(' + Contract.leaseRooms + ')' }
+                                                        </Option>
+                                                    )
                                                 })}
-                                            </Select>)
-                                        }
+                                            </Select>)}
                                     </FormItem>
-                                    {this.state.powerType === 2 ?
+                                </Col>
+                                <Col span={8}>
+                                    <FormItem label="转租客户" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('subletIdOne')(
+                                            <Select
+                                                showSearch
+                                                style={{ width: 200,
+                                                    marginRight: '10px' }}
+                                                placeholder="请选择转租客户"
+                                                optionFilterProp="children"
+                                                onChange={this.chooseSublet}
+                                            >
+                                                {this.state.subletList.map(sub => {
+                                                    return <Option key={sub.clientId}>{sub.clientName}</Option>
+                                                })}
+                                            </Select>)}
+                                    </FormItem>
+                                </Col>
+                                <Col span={8}>
+                                    <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('roomNumber')(
+                                            <Input style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            />)}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={8}>
+                                    <FormItem label="本次周期" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('sfzq', {
+                                            rules: [ {
+                                                required: true,
+                                                message: '请选择本次周期!'
+                                            }, {
+                                                validator: this.handleConfirmPassword
+                                            }]
+                                        })(
+                                            <RangePicker style={{ width: 200,
+                                                marginRight: '10px' }}
+                                            />)}
+                                    </FormItem>
+                                </Col>
+                                <Col span={8}>
+                                    <FormItem label="交费期限" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('overdueDate', {
+                                            rules: [ {
+                                                required: true,
+                                                message: '请填写交费期限!'
+                                            }]
+                                        })(
+                                            <DatePicker
+                                                style={{ width: 200,
+                                                    marginRight: '10px' }}
+                                            />)}
+                                    </FormItem>
+                                </Col>
+                                <Col span={8}>
+                                    <FormItem label="抄表人员" labelCol={{ span: 6 }}
+                                        wrapperCol={{ span: 15 }}
+                                    >
+                                        {getFieldDecorator('readIdOne', {
+                                            rules: [ {
+                                                required: true,
+                                                message: '请选择抄表人员!'
+                                            }]
+                                        })(
+                                            <Select
+                                                showSearch
+                                                style={{ width: 200,
+                                                    marginRight: '10px' }}
+                                                placeholder="请选择抄表人员"
+                                                optionFilterProp="children"
+                                                onChange={this.readIdOne}
+                                            >
+                                                {this.state.meterReader.map(user => {
+                                                    return <Option key={user.id}>{user.loginName}</Option>
+                                                })}
+                                            </Select>)}
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </div>
+                        <span style={{textAlign: 'center',
+                            display: 'block'}}
+                        >
+                            {getFieldDecorator('formName')(<Input style={{width: '300px'}} />)}
+                            <span style={{marginLeft: '20px'}}>电量统计表</span>
+                        </span>
+                        <br />
+                        <div style={{marginBottom: 20}}>
+                            <Table
+                                columns={this.state.tableColumns}
+                                dataSource={this.state.sumElectricityRecordlList}
+                                bordered
+                                pagination={false}
+                            />
+                        </div>
+                        <Row>
+                            <Col span={12} />
+                            <Col span={6}>
+                                <FormItem label="本期应收" labelCol={{ span: 9 }}
+                                    wrapperCol={{ span: 12 }}
+                                >
+                                    {getFieldDecorator('actualReceivable', {
+                                        rules: [ {
+                                            required: true,
+                                            message: '请填写本期应收!'
+                                        }]
+                                    })(<Input style={{width: '100px'}} addonBefore="￥" />)}
+                                </FormItem>
+                            </Col>
+                            <Col span={6}>
+                                <FormItem label="优惠金额" labelCol={{ span: 9 }}
+                                    wrapperCol={{ span: 12 }}
+                                >
+                                    {getFieldDecorator('principalDiscount')(<Input onChange={this.amountReceivable} style={{width: '100px'}} />)}
+                                </FormItem>
+                            </Col>
+                        </Row>
+                        <Row gutter={32}>
+                            <Col span={8}>
+                                <div className="bottom-card">
+                                    <div className="bottom-cards-title">抄表录入</div>
+                                    <div style={{marginTop: 20}}>
                                         <FormItem
                                             {...formItemLayout}
-                                            label="费用名称"
-                                        >{getFieldDecorator('moneyType')(
+                                            label="房间编号"
+                                        >{getFieldDecorator('roomNumberOne')(
                                                 <Select
                                                     showSearch
-                                                    placeholder="请选择费用名称"
+                                                    placeholder="请选择房间编号"
                                                     optionFilterProp="children"
+                                                    onChange={this.chooseRoomNumber}
                                                 >
-                                                    {this.state.bili.map((type) => {
-                                                        return <Option key={type.name}>{type.name}</Option>
+                                                    {this.state.roomNumberOne.map((roomNumber, i) => {
+                                                        return <Option key={roomNumber}>{roomNumber}</Option>
                                                     })}
-                                                </Select>
-                                            )}
-                                        </FormItem> :
-                                        <FormItem
-                                            {...formItemLayout}
-                                            label="费用名称"
-                                        >{getFieldDecorator('electricCostName')(<Input placeholder="请输入内容" />)
+                                                </Select>)
                                             }
                                         </FormItem>
-                                    }
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="上次抄表数"
-                                    >{getFieldDecorator('lastSurfaceNumber')(<Input id="lastSurfaceNumber" onBlur={this.currentMeterReading} placeholder="请输入内容" />)
+                                        {this.state.powerType === 2 ?
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="费用名称"
+                                            >{getFieldDecorator('moneyType')(
+                                                    <Select
+                                                        showSearch
+                                                        placeholder="请选择费用名称"
+                                                        optionFilterProp="children"
+                                                    >
+                                                        {this.state.bili.map((type) => {
+                                                            return <Option key={type.name}>{type.name}</Option>
+                                                        })}
+                                                    </Select>
+                                                )}
+                                            </FormItem> :
+                                            <FormItem
+                                                {...formItemLayout}
+                                                label="费用名称"
+                                            >{getFieldDecorator('electricCostName')(<Input placeholder="请输入内容" />)
+                                                }
+                                            </FormItem>
                                         }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="本次抄表数"
-                                    >{getFieldDecorator('surfaceNumber')(<Input id="surfaceNumber" onBlur={this.currentMeterReading} placeholder="请输入内容" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="变比"
-                                    >{getFieldDecorator('ratio')(<Input placeholder="请输入内容" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="单价"
-                                    >{getFieldDecorator('unitPrice')(<Input placeholder="请输入内容" addonAfter="元/度" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="本次用电量"
-                                    >{getFieldDecorator('needElectricity')(<Input addonAfter="Kwh" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="备注"
-                                    >{getFieldDecorator('remarks')(<Input type="textarea" rows={6} />)
-                                        }
-                                    </FormItem>
-                                    <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.add} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
-                                            borderColor: '#1FCA3E'}}
-                                        >增加本条记录</Button>
-                                    </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="上次抄表数"
+                                        >{getFieldDecorator('lastSurfaceNumber')(<Input id="lastSurfaceNumber" onBlur={this.currentMeterReading} placeholder="请输入内容" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="本次抄表数"
+                                        >{getFieldDecorator('surfaceNumber')(<Input id="surfaceNumber" onBlur={this.currentMeterReading} placeholder="请输入内容" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="变比"
+                                        >{getFieldDecorator('ratio')(<Input placeholder="请输入内容" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="单价"
+                                        >{getFieldDecorator('unitPrice')(<Input placeholder="请输入内容" addonAfter="元/度" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="本次用电量"
+                                        >{getFieldDecorator('needElectricity')(<Input addonAfter="Kwh" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="备注"
+                                        >{getFieldDecorator('remarks')(<Input type="textarea" rows={6} />)
+                                            }
+                                        </FormItem>
+                                        <FormItem {...tailFormItemLayout}>
+                                            <Button onClick={this.add} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                                borderColor: '#1FCA3E'}}
+                                            >增加本条记录</Button>
+                                        </FormItem>
+                                    </div>
                                 </div>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className="bottom-card">
-                                <div className="bottom-cards-title">调差</div>
-                                <div style={{marginTop: 20}}>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="本月单价："
-                                    >{getFieldDecorator('currentMouthUnitPrice')(<Input id="currentMouthUnitPrice" onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="元/度" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="上月单价："
-                                    >{getFieldDecorator('lastMouthUnitPrice')(<Input id="lastMouthUnitPrice" onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="元/度" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="单价差额："
-                                    >{getFieldDecorator('unitPriceBalance')(<Input addonAfter="元/度" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="上月总用量："
-                                    >{getFieldDecorator('lmelectricity')(<Input id="lmelectricity" disabled onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="差额："
-                                    >{getFieldDecorator('balance')(<Input addonAfter="元" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addBalance} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
-                                            borderColor: '#1FCA3E'}}
-                                        >增加本条记录</Button>
-                                    </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <div className="bottom-card">
+                                    <div className="bottom-cards-title">调差</div>
+                                    <div style={{marginTop: 20}}>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="本月单价："
+                                        >{getFieldDecorator('currentMouthUnitPrice')(<Input id="currentMouthUnitPrice" onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="元/度" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="上月单价："
+                                        >{getFieldDecorator('lastMouthUnitPrice')(<Input id="lastMouthUnitPrice" onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="元/度" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="单价差额："
+                                        >{getFieldDecorator('unitPriceBalance')(<Input addonAfter="元/度" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="上月总用量："
+                                        >{getFieldDecorator('lmelectricity')(<Input id="lmelectricity" disabled onBlur={this.balancesingleMoney} placeholder="请输入内容" addonAfter="Kwh" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="差额："
+                                        >{getFieldDecorator('balance')(<Input addonAfter="元" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem {...tailFormItemLayout}>
+                                            <Button onClick={this.addBalance} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                                borderColor: '#1FCA3E'}}
+                                            >增加本条记录</Button>
+                                        </FormItem>
+                                    </div>
                                 </div>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div className="bottom-card">
-                                <div className="bottom-cards-title">录入违约金</div>
-                                <div onSubmit={this.handleSubmit} style={{marginTop: 20}}>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="违约金名称："
-                                    >{getFieldDecorator('liquidatedDamagesName')(<Input placeholder="请输入内容" />)
-                                        }
-                                    </FormItem>
-                                    <FormItem
-                                        {...formItemLayout}
-                                        label="违约金金额："
-                                    >{getFieldDecorator('liquidatedDamagessingleMoney')(<Input placeholder="请输入内容" addonAfter="元" />)
-                                        }
-                                    </FormItem>
-                                    <CheckableTag onChange={(state) => {
-                                        this.setState({isPropertyMoney: state})
-                                    }} checked={this.state.isPropertyMoney} style={tagStyle}
-                                    >确认已收{this.state.propertyMoney}元物业违约金欠费</CheckableTag>
-                                    <CheckableTag onChange={(state) => {
-                                        this.setState({isElectricMoney: state})
-                                    }} checked={this.state.isElectricMoney} style={tagStyle}
-                                    >确认已收{this.state.electricMoney}元电费违约金欠费</CheckableTag>
-                                    <CheckableTag onChange={(state) => {
-                                        this.setState({isWaterMoney: state})
-                                    }} checked={this.state.isWaterMoney} style={tagStyle}
-                                    >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
-                                    <FormItem {...tailFormItemLayout}>
-                                        <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
-                                            borderColor: '#1FCA3E'}}
-                                        >增加本条记录</Button>
-                                    </FormItem>
+                            </Col>
+                            <Col span={8}>
+                                <div className="bottom-card">
+                                    <div className="bottom-cards-title">录入违约金</div>
+                                    <div onSubmit={this.handleSubmit} style={{marginTop: 20}}>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="违约金名称："
+                                        >{getFieldDecorator('liquidatedDamagesName')(<Input placeholder="请输入内容" />)
+                                            }
+                                        </FormItem>
+                                        <FormItem
+                                            {...formItemLayout}
+                                            label="违约金金额："
+                                        >{getFieldDecorator('liquidatedDamagessingleMoney')(<Input placeholder="请输入内容" addonAfter="元" />)
+                                            }
+                                        </FormItem>
+                                        <CheckableTag onChange={(state) => {
+                                            this.setState({isPropertyMoney: state})
+                                        }} checked={this.state.isPropertyMoney} style={{ marginLeft: '50px',
+                                            marginBottom: '20px',
+                                            color: '#FFFFFF',
+                                            backgroundColor: this.state.isPropertyMoney ? '#108EE9' : '#f04134'}}
+                                        >确认已收{this.state.propertyMoney}元物业违约金欠费</CheckableTag>
+                                        <CheckableTag onChange={(state) => {
+                                            this.setState({isElectricMoney: state})
+                                        }} checked={this.state.isElectricMoney} style={{ marginLeft: '50px',
+                                            marginBottom: '20px',
+                                            color: '#FFFFFF',
+                                            backgroundColor: this.state.isElectricMoney ? '#108EE9' : '#f04134'}}
+                                        >确认已收{this.state.electricMoney}元电费违约金欠费</CheckableTag>
+                                        <CheckableTag onChange={(state) => {
+                                            this.setState({isWaterMoney: state})
+                                        }} checked={this.state.isWaterMoney} style={{ marginLeft: '50px',
+                                            marginBottom: '20px',
+                                            color: '#FFFFFF',
+                                            backgroundColor: this.state.isWaterMoney ? '#108EE9' : '#f04134'}}
+                                        >确认已收{this.state.waterMoney}元水费违约金欠费</CheckableTag>
+                                        <FormItem {...tailFormItemLayout}>
+                                            <Button onClick={this.addLiquidatedDamages} type="primary" htmlType="submit" style={{backgroundColor: '#1FCA3E',
+                                                borderColor: '#1FCA3E'}}
+                                            >增加本条记录</Button>
+                                        </FormItem>
+                                    </div>
                                 </div>
-                            </div>
-                        </Col>
-                    </Row>
-                    {getFieldDecorator('roomId')(<Input type="hidden" />)}
-                    {getFieldDecorator('subletId')(<Input type="hidden" />)}
-                    {getFieldDecorator('readId')(<Input type="hidden" />)}
-                    {getFieldDecorator('subletName')(<Input type="hidden" />)}
-                </Form>
+                            </Col>
+                        </Row>
+                        {getFieldDecorator('roomId')(<Input type="hidden" />)}
+                        {getFieldDecorator('subletId')(<Input type="hidden" />)}
+                        {getFieldDecorator('readId')(<Input type="hidden" />)}
+                        {getFieldDecorator('subletName')(<Input type="hidden" />)}
+                    </Form>
 
+                </Spin>
                 <style>
                     {`
                         .ant-select-dropdown > div {

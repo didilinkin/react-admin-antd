@@ -435,7 +435,7 @@ class ChargeWaterBill extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             bordered
                             dataSource={this.state.dataSource1}
@@ -467,7 +467,7 @@ class ChargeWaterBill extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             bordered
                             // onChange={this.refresh}
                             dataSource={this.state.dataSource2}
@@ -493,7 +493,7 @@ class ChargeWaterBill extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             bordered
                             dataSource={this.state.dataSource3}
@@ -519,7 +519,7 @@ class ChargeWaterBill extends React.Component {
                                 showQuickJumper: true,
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
-                                defaultPageSize: 30}}
+                                defaultPageSize: 15}}
                             // onChange={this.refresh}
                             scroll={{ x: 1450 }}
                             bordered
