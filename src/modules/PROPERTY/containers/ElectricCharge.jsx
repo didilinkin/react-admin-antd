@@ -313,9 +313,9 @@ class ElectricCharge extends React.Component {
                 title: '打印状态',
                 dataIndex: 'printStatus',
                 render: function (text) {
-                    let printStatus = '否'
+                    let printStatus = '已打印'
                     if (text === 1) {
-                        printStatus = '是'
+                        printStatus = '未打印'
                     }
                     return (
                         <p>{printStatus}</p>
