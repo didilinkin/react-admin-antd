@@ -4,6 +4,7 @@ import {Table, Spin, Popconfirm, notification, Icon} from 'antd'
 import { apiPost, verification, baseURL } from '../../../../api'
 // 引入组件
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
+import CollectRentSuccessComponent from '../details/CollectRent/RentReviewDetail'
 // React component
 class CollectRentFinanceSuccess extends React.Component {
     constructor (props) {
@@ -35,6 +36,14 @@ class CollectRentFinanceSuccess extends React.Component {
         })
         this.refresh()
     }
+    handleDetail = (id) => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: true,
+            id: id
+        })
+    }
     info = (url) => {
         this.props.pro.history.push(url)
     }
@@ -51,7 +60,8 @@ class CollectRentFinanceSuccess extends React.Component {
                 sort: this.state.sort}
         )
         const handleUpdate = this.handleUpdate
-        const info = this.info
+        const handleDetail = this.handleDetail
+        // const info = this.info
         this.setState({loading: false,
             ListBuildingInfo: ListBuildingInfo.data,
             total: result.data.total,
@@ -155,10 +165,10 @@ class CollectRentFinanceSuccess extends React.Component {
                 key: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/home/finance/collectRentDetails/RentReviewDetail/' + record.id
+                    // let url = '/home/finance/collectRentDetails/RentReviewDetail/' + record.id
                     return (
                         <div>
-                            <a onClick={() => info(url)}> 明细 &nbsp;&nbsp;</a>
+                            <a onClick={() => handleDetail(record.id)} > 明细 &nbsp;</a>
                             {verification('revokeRent') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => handleUpdate(record.id)}>
                                 <a> 撤回 &nbsp;&nbsp;</a>
@@ -180,6 +190,13 @@ class CollectRentFinanceSuccess extends React.Component {
     }
     componentWillMount () {
         this.initialRemarks()
+    }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
     }
     json={}
     refresh = async (pagination, filters, sorter) => {
@@ -236,6 +253,12 @@ class CollectRentFinanceSuccess extends React.Component {
                     RowKeys={this.state.RowKeys}
                     type={2}
                     ListBuildingInfo={this.state.ListBuildingInfo}
+                />
+                <CollectRentSuccessComponent
+                    id={this.state.id}
+                    close={this.close}
+                    refreshTable={this.refresh}
+                    visible={this.state.openUpdate}
                 />
                 <Spin spinning={this.state.loading}>
                     <Table

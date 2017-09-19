@@ -1,6 +1,6 @@
 // 物业费明细
 import React from 'react'
-import {Row, Col, Popconfirm, Icon, notification, Button} from 'antd'
+import {Row, Col, Popconfirm, Icon, notification, Button, Modal} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 import PropertyFeePaidComponent from '../../../components/PropertyFee/PropertyPaidConfirm'
@@ -44,25 +44,26 @@ class PropertyFeeDetail extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
     }
-    async initialRemarks () {
+    async initialRemarks (nextProps) {
         this.setState({
-            id: this.props.match.params.id
+            id: nextProps.id,
+            view: false
         })
         let resulData = await apiPost(
             '/propertyFee/getPropertyFeeById',
-            {id: this.props.match.params.id}
+            {id: nextProps.id}
         )
         let result2 = await apiPost(
             '/collectRent/getChargeRecordById',
             {
-                feeId: this.props.match.params.id,
+                feeId: nextProps.id,
                 feeType: 3
             }
         )
         let result3 = await apiPost(
             '/collectRent/getChargeRecordById',
             {
-                feeId: this.props.match.params.id,
+                feeId: nextProps.id,
                 feeType: 4
             }
         )
@@ -87,38 +88,84 @@ class PropertyFeeDetail extends React.Component {
         this.setState({
             data: resulData.data,
             data2: result2.data,
-            data3: result3.data
+            data3: result3.data,
+            isFirst: false,
+            visible: nextProps.visible,
+            view: true
         })
     }
-    componentDidMount () {
-        this.initialRemarks()
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
     }
     invoiceProperty = async () => {
         await apiPost(
             '/propertyFee/updatePropertyFee',
-            {id: this.props.match.params.id,
+            {id: this.state.id,
                 invoicePropertyStatus: 1}
         )
         notification.open({
             message: '物业费开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.initialRemarks()
+        this.refresh()
     }
     invoiceLate = async () => {
         await apiPost(
             '/propertyFee/updatePropertyFee',
-            {id: this.props.match.params.id,
+            {id: this.state.id,
                 invoiceLateStatus: 1}
         )
         notification.open({
             message: '违约金开票成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.initialRemarks()
+        this.refresh()
     }
     refresh = async () => {
-        this.initialRemarks()
+        let resulData = await apiPost(
+            '/propertyFee/getPropertyFeeById',
+            {id: this.state.id}
+        )
+        let result2 = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {
+                feeId: this.state.id,
+                feeType: 3
+            }
+        )
+        let result3 = await apiPost(
+            '/collectRent/getChargeRecordById',
+            {
+                feeId: this.state.id,
+                feeType: 4
+            }
+        )
+        if (resulData.data.invoicePropertyStatus === 0) {
+            this.setState({
+                invoiceRentStatus: '未开票'
+            })
+        } else if (resulData.data.invoicePropertyStatus === 1) {
+            this.setState({
+                invoiceRentStatus: '已开票'
+            })
+        }
+        if (resulData.data.invoiceLateStatus === 0) {
+            this.setState({
+                invoiceLateStatus: '未开票'
+            })
+        } else if (resulData.data.invoiceLateStatus === 1) {
+            this.setState({
+                invoiceLateStatus: '已开票'
+            })
+        }
+        this.setState({
+            data: resulData.data,
+            data2: result2.data,
+            data3: result3.data,
+            isFirst: false,
+            visible: true,
+            view: true
+        })
     }
     close = async () => {
         this.setState({
@@ -129,7 +176,7 @@ class PropertyFeeDetail extends React.Component {
     delayNext = async () => {
         await apiPost(
             '/propertyFee/updatePropertyFeeByNext',
-            {id: this.props.match.params.id,
+            {id: this.state.id,
                 unpaidLateMoney: 0,
                 feeType: 4,
                 feeId: this.props.match.params.id,
@@ -143,124 +190,132 @@ class PropertyFeeDetail extends React.Component {
             message: '操作成功',
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
-        this.initialRemarks()
+        this.refresh()
     }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
         return (
-            <div style={this.props.style} className="contract">
-                <PropertyFeePaidComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    close={this.close}
-                    visible={this.state.openUpdate}
-                />
-                <PropertyFeeLateComponent
-                    id={this.state.id}
-                    refreshTable={this.refresh}
-                    close={this.close}
-                    visible={this.state.openUpdate2}
-                />
-                <Row style={{marginTop: 0}}>
-                    <Col>
-                        <div style={{textAlign: 'center',
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            lineHeight: '40px'}}
-                        >
-                            <span>{this.state.data.printClientName}</span>
-                            <span>物业服务费统计表</span>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <div style={{color: '#666',
-                            textAlign: 'center',
-                            fontSize: '14px',
-                            lineHeight: '18px'}}
-                        >
+            <Modal maskClosable={false}
+                title= "物业费明细"
+                style={{top: 20}}
+                width={900}
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                footer={null}
+            >
+                <div style={this.props.style} className="contract">
+                    <PropertyFeePaidComponent
+                        id={this.state.id}
+                        refreshTable={this.refresh}
+                        close={this.close}
+                        visible={this.state.openUpdate}
+                    />
+                    <PropertyFeeLateComponent
+                        id={this.state.id}
+                        refreshTable={this.refresh}
+                        close={this.close}
+                        visible={this.state.openUpdate2}
+                    />
+                    <Row style={{marginTop: 0}}>
+                        <Col>
+                            <div style={{textAlign: 'center',
+                                fontSize: '20px',
+                                fontWeight: 'bold',
+                                lineHeight: '40px'}}
+                            >
+                                <span>{this.state.data.printClientName}</span>
+                                <span>物业服务费统计表</span>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <div style={{color: '#666',
+                                textAlign: 'center',
+                                fontSize: '14px',
+                                lineHeight: '18px'}}
+                            >
                             （ {this.state.data.startDate} ~ {this.state.data.endDate} ）
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
+                        <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
+                        <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
+                    </Row>
+                    <table className="tb">
+                        <tbody>
+                            <tr className="hd">
+                                <td>费用项目</td>
+                                <td>面积</td>
+                                <td />
+                                <td>单价</td>
+                                <td />
+                                <td>月份</td>
+                                <td>金额</td>
+                            </tr>
+                            <tr>
+                                <td>物业管理费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
+                                <td>*</td>
+                                <td>{this.state.data.months}</td>
+                                <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
+                            </tr>
+                            <tr>
+                                <td>电梯费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.elevUnitPrice}</td>
+                                <td>*</td>
+                                <td>{this.state.data.months}</td>
+                                <td>{this.state.data.elevatorFee}</td>
+                            </tr>
+                            <tr>
+                                <td>空调费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
+                                <td>*</td>
+                                <td>{this.state.data.acUnitDay}/4</td>
+                                <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
+                            </tr>
+                            <tr>
+                                <td>水费</td>
+                                <td>{this.state.data.serviceArea}</td>
+                                <td>*</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
+                                <td>*</td>
+                                <td>{this.state.data.months}</td>
+                                <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style={{margin: '20px 0',
+                        textAlign: 'right',
+                        color: '#666666'}}
+                    >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
+                        <span style={{color: 'red',
+                            fontSize: '18px'}}
+                        >¥{this.state.data.actualPaidMoney}</span></p>
+                    <div className="wrapbox">
+                        <div className="main">
+                            <p className="line" />
+                            <h2>其他信息</h2>
+                            <Row>
+                                <Col span={8}><b>录入日期：</b>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                <Col span={16}><b>最后修改：</b>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                            </Row>
+                            <Row>
+                                <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
+                                <Col span={16}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
+                            </Row>
                         </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={8}><i>房间编号：</i>{this.state.data.roomNum} </Col>
-                    <Col span={8}><i>所在楼宇：</i>{this.state.data.buildName} </Col>
-                    <Col span={8}><i>交费期限：</i>{this.state.data.payDeadline} </Col>
-                </Row>
-                <table className="tb">
-                    <tbody>
-                        <tr className="hd">
-                            <td>费用项目</td>
-                            <td>面积</td>
-                            <td />
-                            <td>单价</td>
-                            <td />
-                            <td>月份</td>
-                            <td>金额</td>
-                        </tr>
-                        <tr>
-                            <td>物业管理费</td>
-                            <td>{this.state.data.serviceArea}</td>
-                            <td>*</td>
-                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmUnitPrice : '--'}</td>
-                            <td>*</td>
-                            <td>{this.state.data.months}</td>
-                            <td>{this.state.data.yearPmPrice === 0 ? this.state.data.pmFee : this.state.data.yearPmPrice}</td>
-                        </tr>
-                        <tr>
-                            <td>电梯费</td>
-                            <td>{this.state.data.serviceArea}</td>
-                            <td>*</td>
-                            <td>{this.state.data.elevUnitPrice}</td>
-                            <td>*</td>
-                            <td>{this.state.data.months}</td>
-                            <td>{this.state.data.elevatorFee}</td>
-                        </tr>
-                        <tr>
-                            <td>空调费</td>
-                            <td>{this.state.data.serviceArea}</td>
-                            <td>*</td>
-                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.acUnitPrice : '--'}</td>
-                            <td>*</td>
-                            <td>{this.state.data.acUnitDay}/4</td>
-                            <td>{this.state.data.yearAcPrice === 0 ? this.state.data.airFee : this.state.data.yearAcPrice}</td>
-                        </tr>
-                        <tr>
-                            <td>水费</td>
-                            <td>{this.state.data.serviceArea}</td>
-                            <td>*</td>
-                            <td>{this.state.data.waterType === 0 ? this.state.data.waterUnitPrice : '--'}</td>
-                            <td>*</td>
-                            <td>{this.state.data.months}</td>
-                            <td>{this.state.data.waterType === 0 ? this.state.data.waterFee : '--'}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p style={{margin: '20px 0',
-                    textAlign: 'right',
-                    color: '#666666'}}
-                >优惠金额：¥{this.state.data.discountMoney}&nbsp;&nbsp;&nbsp;&nbsp;本期应收：
-                    <span style={{color: 'red',
-                        fontSize: '18px'}}
-                    >¥{this.state.data.actualPaidMoney}</span></p>
-                <div className="wrapbox">
-                    <div className="main">
-                        <p className="line" />
-                        <h2>其他信息</h2>
-                        <Row>
-                            <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                            <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
-                        </Row>
-                        <Row>
-                            <Col span={8}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}</Col>
-                            <Col span={16}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
-                        </Row>
                     </div>
-                </div>
-                {this.state.data.whetherRentPaid !== 0 &&
+                    {this.state.data.whetherRentPaid !== 0 &&
                 <div className="wrapbox">
                     <div className="title">
                         收款信息
@@ -428,23 +483,24 @@ class PropertyFeeDetail extends React.Component {
                         </table>
                     </div>}
                 </div>}
-                <div>
-                    {this.state.data.unpaidMoney !== 0 &&
+                    <div>
+                        {this.state.data.unpaidMoney !== 0 &&
                     <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
-                    {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 && this.state.data.whetherLatePaid !== 2 &&
+                        {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 && this.state.data.whetherLatePaid !== 2 &&
                     <Popconfirm title="确定违约金延期下月电费吗?" okText="实收违约金" cancelText="延期下月电费" onConfirm={this.handleUpdate2} onCancel={this.delayNext}>
                         <Button type="primary">确认违约金</Button>
                     </Popconfirm>}
-                    {this.state.data.invoicePropertyStatus !== 1 &&
+                        {this.state.data.invoicePropertyStatus !== 1 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceProperty}>
                         <a className="btnred ant-btn">&nbsp; 物业费开票 </a>
                     </Popconfirm>}
-                    {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
+                        {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
                     <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                         <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
                     </Popconfirm>}
+                    </div>
                 </div>
-            </div>
+            </Modal>
         )
     }
 }
