@@ -215,8 +215,8 @@ class PowerBillHead extends React.Component {
                                             placeholder="请选择开票状态"
                                             optionFilterProp="children"
                                         >
-                                            <Option key="1">已打印</Option>
-                                            <Option key="2">未打印</Option>
+                                            <Option key="1">未打印</Option>
+                                            <Option key="2">已打印</Option>
                                         </Select>
                                     )}
                                 </FormItem>
