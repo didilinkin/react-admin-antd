@@ -48,13 +48,13 @@ class CollectRentHead extends React.Component {
                     <Row>
                         <Col span={5}>
                             <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 10 }}
+                                wrapperCol={{ span: 6 }}
                             >
                                 {getFieldDecorator('buildId')(
                                     <Select
                                         showSearch
                                         allowClear
-                                        style={{ width: 140 }}
+                                        style={{ width: 120 }}
                                         placeholder="请选择所属楼宇"
                                         optionFilterProp="children"
                                     >
@@ -65,21 +65,40 @@ class CollectRentHead extends React.Component {
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={5}>
                             <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 12 }}
+                                wrapperCol={{ span: 6 }}
                             >
                                 {getFieldDecorator('sublietName')(
-                                    <Input placeholder="请输入客户名称" style={{ width: 140 }} />
+                                    <Input placeholder="请输入客户名称" style={{ width: 120 }} />
                                 )}
                             </FormItem>
                         </Col>
-                        <Col span={6}>
+                        <Col span={5}>
                             <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 12 }}
+                                wrapperCol={{ span: 6 }}
                             >
                                 {getFieldDecorator('roomNum')(
-                                    <Input placeholder="请输入房间编号" style={{ width: 140 }} />
+                                    <Input placeholder="请输入房间编号" style={{ width: 120 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={5}>
+                            <FormItem label="审核状态" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 6 }}
+                            >
+                                {getFieldDecorator('auditStatus')(
+                                    <Select
+                                        showSearch
+                                        allowClear
+                                        style={{ width: 120 }}
+                                        placeholder="请选择审核状态"
+                                        optionFilterProp="children"
+                                    >
+                                        <Option key={0}>待审核</Option>
+                                        <Option key={1}>审核通过</Option>
+                                        <Option key={2}>审核失败</Option>
+                                    </Select>
                                 )}
                             </FormItem>
                         </Col>
