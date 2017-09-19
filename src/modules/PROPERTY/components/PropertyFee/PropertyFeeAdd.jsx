@@ -500,6 +500,9 @@ class propertyFeeAdd extends React.Component {
             },
         )
         if (adopt) {
+            let json = this.props.form.getFieldsValue()
+            this.state.json1['discountMoney'] = json.discountMoney
+            this.state.json1['actualPaidMoney'] = json.actualPaidMoney
             if (this.props.id > 0) {
                 await apiPost(
                     'propertyFee/updatePropertyFee',
@@ -536,8 +539,11 @@ class propertyFeeAdd extends React.Component {
         json['accountId'] = e
     }
     sumMoney = (e) => {
-        let discountMoney = e.target.value
-        let money = this.state.json1.actualPaidMoney
+        this.props.form.setFieldsValue({
+            actualPaidMoney: (parseFloat(this.state.json1.actualPaidMoney) - parseFloat(e.target.value ? e.target.value : 0)).toFixed(1)
+        })
+        /* let discountMoney = e.target.value
+        let money = parseFloat(this.state.json1.actualPaidMoney)
         let json = this.state.json1
         json['discountMoney'] = parseFloat(discountMoney).toFixed(1)
         if (typeof (discountMoney) === 'undefined') {
@@ -558,7 +564,7 @@ class propertyFeeAdd extends React.Component {
             this.props.form.setFieldsValue({
                 actualPaidMoney: parseFloat(money - discountMoney).toFixed(1)
             })
-        }
+        }*/
     }
     printClientName = ''
     entryNameOnChange = (e) => {
@@ -820,8 +826,13 @@ class propertyFeeAdd extends React.Component {
                     <p style={{margin: '20px 0',
                         textAlign: 'right',
                         lineHeight: '28px'}}
-                    >优惠金额: &nbsp;&nbsp;{getFieldDecorator('discountMoney')(
-                            <Input onKeyUp={this.sumMoney} addonBefore="￥" addonAfter="元" style={{ width: 120 }} />
+                    >优惠金额: &nbsp;&nbsp;{getFieldDecorator('discountMoney', {
+                            rules: [ {
+                                max: this.state.json1.actualPaidMoney,
+                                message: '优惠金额不能大于应收金额'
+                            }]
+                        })(
+                            <Input onChange={this.sumMoney} addonBefore="￥" addonAfter="元" style={{ width: 120 }} />
                         )}&nbsp;&nbsp;本期应收:&nbsp;&nbsp;{getFieldDecorator('actualPaidMoney')(
                             <Input style={{ width: 120 }} disabled addonBefore="￥" addonAfter="元" />
                         )}</p>

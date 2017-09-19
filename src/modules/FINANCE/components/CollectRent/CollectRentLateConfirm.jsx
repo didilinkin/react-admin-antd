@@ -65,7 +65,7 @@ class addUpkeep extends React.Component {
         if (adopt) {
             let json = this.props.form.getFieldsValue()
             if (json.receiptDate !== null || json.receiptDate !== 'undefined') {
-                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD 00:00:00')
             }
             json['feeType'] = 1
             await apiPost(
