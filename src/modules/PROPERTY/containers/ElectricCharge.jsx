@@ -236,6 +236,7 @@ class ElectricCharge extends React.Component {
             columns1: arr.slice().concat([{
                 title: ' 操作',
                 fixed: 'right',
+                width: '180',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     if (record) {
@@ -257,6 +258,7 @@ class ElectricCharge extends React.Component {
             columns2: arr.slice().concat([{
                 title: ' 操作',
                 dataIndex: 'opt',
+                width: '80',
                 fixed: 'right',
                 render: function (text, record, index) {
                     return (
@@ -278,6 +280,7 @@ class ElectricCharge extends React.Component {
             }, {
                 title: ' 操作',
                 fixed: 'right',
+                width: '80',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)
@@ -336,6 +339,7 @@ class ElectricCharge extends React.Component {
                 }
             }, {
                 title: '操作',
+                width: '120',
                 fixed: 'right',
                 render: function (text, record) {
                     return (
@@ -468,7 +472,7 @@ class ElectricCharge extends React.Component {
                                 current: this.state.current,
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 15}}
-                            scroll={{ x: 1800 }}
+                            scroll={{ x: 2000 }}
                             RowKeys={this.state.RowKeys}
                             bordered
                             dataSource={this.state.dataSource4}

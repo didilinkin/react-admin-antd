@@ -165,6 +165,7 @@ class Electricity extends React.Component {
             columns1: arr.slice().concat([{
                 title: ' 操作',
                 fixed: 'right',
+                width: '100',
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -188,6 +189,7 @@ class Electricity extends React.Component {
             }, {
                 title: ' 操作',
                 fixed: 'right',
+                width: '100',
                 dataIndex: 'opt',
                 render: function (text, record, index) {
                     return (
@@ -244,6 +246,7 @@ class Electricity extends React.Component {
                 }
             }, {
                 title: '操作',
+                width: '180',
                 fixed: 'right',
                 render: function (text, record, index) {
                     let url = '/home/finance/electricChargeDetails/' + record.id
