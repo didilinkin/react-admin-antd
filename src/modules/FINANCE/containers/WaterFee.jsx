@@ -3,6 +3,7 @@ import React from 'react'
 import {Table, Spin, Popconfirm, Tabs, notification, Icon } from 'antd'
 import WaterBillHeadComponent from '../components/WaterFee/WaterBillHead'
 import WaterInfomation from '../components/WaterFee/WaterInfomation'
+import CollectionDetails from './details/WaterFee/WaterFeeDetails'
 import { apiPost, verification } from '../../../api'
 
 
@@ -26,7 +27,8 @@ class WaterFee extends React.Component {
             order: 2,
             RowKeys: [],
             openInfo: false,
-            id: 0
+            id: 0,
+            openCollectionDetails: false
         }
     }
     info = (id) => {
@@ -95,7 +97,8 @@ class WaterFee extends React.Component {
             dataSource2: dataSource2,
             dataSource3: dataSource3,
             dataSource4: dataSource4,
-            order: this.activeKey
+            order: this.activeKey,
+            openCollectionDetails: false
         })
     }
     withdraw = async (id) => {
@@ -109,8 +112,11 @@ class WaterFee extends React.Component {
         })
         this.refresh()
     }
-    infoTwo = (url) => {
-        this.props.history.push(url)
+    infoTwo = (id) => {
+        this.setState({
+            id: id,
+            openCollectionDetails: true
+        })
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -318,10 +324,10 @@ class WaterFee extends React.Component {
                 dataIndex: 'opt',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/home/finance/waterFeeDetails/waterFeeDetails/' + record.id
+                    // let url = '/home/finance/waterFeeDetails/waterFeeDetails/' + record.id
                     return (
                         <span>
-                            <a onClick={() => infoTwo(url)}>明细</a>
+                            <a onClick={() => infoTwo(record.id)}>明细</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             {verification('revokeWater') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
@@ -435,6 +441,11 @@ class WaterFee extends React.Component {
                     id={this.state.id}
                     visible={this.state.openInfo}
                     Finance={1}
+                    refresh={this.refresh}
+                />
+                <CollectionDetails
+                    id={this.state.id}
+                    visible={this.state.openCollectionDetails}
                     refresh={this.refresh}
                 />
             </Spin>
