@@ -147,7 +147,9 @@ class CollectionDetails extends React.Component {
         console.log(e)
         this.setState({
             visible: false,
-            isFirst: true
+            isFirst: true,
+            openPrincipalCollection: false,
+            openDefaultCollection: false
         })
         this.props.refresh({}, {}, {})
     }
