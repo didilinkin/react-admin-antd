@@ -75,7 +75,7 @@ class collectRentConfirm extends React.Component {
         if (adopt) {
             let json = this.props.form.getFieldsValue()
             if (json.receiptDate !== null) {
-                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD')
+                json['receiptDate'] = json.receiptDate.format('YYYY-MM-DD 00:00:00')
             }
             await apiPost(
                 '/collectRent/updateCollectRentVoByPaid',

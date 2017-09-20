@@ -47,7 +47,6 @@ class App extends React.Component {
                 view: true,
                 fileList: []
             })
-            console.log(this.state.data.rentClientName)
         }
     }
     componentWillReceiveProps (nextProps) {

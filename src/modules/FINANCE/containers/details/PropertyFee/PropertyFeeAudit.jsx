@@ -182,8 +182,8 @@ class InReview extends React.Component {
                             <p className="line" />
                             <h2>其他信息</h2>
                             <Row>
-                                <Col span={8}><i>录入日期：</i>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
-                                <Col span={16}><i>最后修改：</i>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                                <Col span={8}><b>录入日期：</b>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                <Col span={16}><b>最后修改：</b>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                             </Row>
                             <Row>
                                 <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
