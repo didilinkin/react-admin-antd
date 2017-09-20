@@ -2,7 +2,7 @@
 import React from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
-import CollectRentFailComponent from '../details/CollectRent/AfterAudit'
+import CollectRentFailComponent from '../details/CollectRent/RentReviewDetail'
 import CollectRentHeadComponent from '../../components/CollectRent/CollectRentHead'
 // 引入组件
 // React component
