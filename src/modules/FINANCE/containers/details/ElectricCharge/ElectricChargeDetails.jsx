@@ -1,5 +1,5 @@
 import React from 'react'
-import {Row, Col, Table, Button, Popconfirm, notification, Icon} from 'antd'
+import {Row, Col, Table, Button, Popconfirm, notification, Icon, Modal} from 'antd'
 import { apiPost } from '../../../../../api/index'
 import PrincipalCollectionPower from '../../../components/ElectricInfo/PrincipalCollectionPower'
 import PrincipalCollectionPenal from '../../../components/ElectricInfo/PrincipalCollectionPowerPenal'
@@ -11,7 +11,9 @@ class ElectricChargeDetails extends React.Component {
         electricityFees: {},
         mainColumns: [],
         collectMoney: false,
-        collectPenal: false
+        collectPenal: false,
+        visible: false,
+        isFirst: true
     }
     // 添加合计行
     addTotalColunm = () => {
@@ -38,30 +40,34 @@ class ElectricChargeDetails extends React.Component {
             list: electricRecordlList
         })
     }
-    componentDidMount () {
-        this.initialRemarks()
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
     }
     refresh = () => {
-        this.initialRemarks()
+        this.getInfo(this.props.id, this.state.visible)
         this.setState({
             collectMoney: false,
             collectPenal: false
         })
     }
-    initialRemarks = async () => {
+    getInfo= async (id, visible) => {
         let electricityFeeInfo = await apiPost(
             '/ElectricityFees/ElectricityFeeInfo',
-            {id: this.props.match.params.id}
+            {id: id}
         )
         let receipt = await apiPost(
             '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
-                feeType: 7}
+            {
+                feeId: id,
+                feeType: 7
+            }
         )
         let liquidatedDamagesList = await apiPost(
             '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
-                feeType: 8}
+            {
+                feeId: id,
+                feeType: 8
+            }
         )
         electricityFeeInfo = electricityFeeInfo.data
         receipt = receipt.data
@@ -137,29 +143,42 @@ class ElectricChargeDetails extends React.Component {
             electricityFees: electricityFeeInfo.electricityFees,
             receipt: receipt ? receipt : [],
             liquidatedDamagesList: liquidatedDamagesList ? liquidatedDamagesList : [],
-            mainColumns: mainColumn
+            mainColumns: mainColumn,
+            isFirst: false,
+            visible: visible
         })
         this.addTotalColunm()
+    }
+    handleCancel = (e) => {
+        this.setState({ visible: false,
+            isFirst: true})
+        this.props.refresh({}, {}, {})
+    }
+    initialRemarks = async (nextProps) => {
+        console.log(nextProps.id)
+        if (this.state.isFirst && nextProps.visible) {
+            this.getInfo(nextProps.id, nextProps.visible)
+        }
     }
     collectMoney = () => {
         this.setState({
             collectMoney: true,
             collectPenal: false,
-            id: this.props.match.params.id
+            id: this.props.id
         })
     }
     collectPenal = () => {
         this.setState({
             collectMoney: false,
             collectPenal: true,
-            id: this.props.match.params.id
+            id: this.props.id
         })
     }
     // 放入下月电费
     putNextMouth = async () => {
         let data = await apiPost(
             '/ElectricityFees/nextMonth',
-            {id: this.props.match.params.id}
+            {id: this.props.id}
         )
         notification.open({
             message: data.data,
@@ -171,7 +190,7 @@ class ElectricChargeDetails extends React.Component {
     showBill = async () => {
         let Principal = await apiPost(
             '/ElectricityFees/updatePrincipalPrincipalBilling',
-            {id: this.props.match.params.id,
+            {id: this.props.id,
                 principalPrincipalBilling: 1}
         )
         notification.open({
@@ -184,7 +203,7 @@ class ElectricChargeDetails extends React.Component {
     showPenalBill = async () => {
         let Principal = await apiPost(
             '/ElectricityFees/updatePrincipalDamagesBilling',
-            {id: this.props.match.params.id,
+            {id: this.props.id,
                 principalDamagesBilling: 1}
         )
         notification.open({
@@ -206,224 +225,233 @@ class ElectricChargeDetails extends React.Component {
         let feesInfo = this.state.electricityFees
         return (
             <div>
-                <div>
-                    <Row style={{marginTop: 50}}>
-                        <Col>
-                            <div style={{textAlign: 'center',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                                lineHeight: '40px'}}
-                            >
-                                <span>{feesInfo.clientName}</span>
-                                <span>电量统计表</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <div style={{color: '#666',
-                                textAlign: 'center',
-                                fontSize: '14px',
-                                lineHeight: '18px'}}
-                            >
-                                （ {feesInfo.cycle} ）
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop: 30,
-                        fontSize: '14px'}}
-                    >
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >房间编号：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{feesInfo.roomNumber}</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >所在楼宇：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{feesInfo.buildName}</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >交费期限：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{feesInfo.overdueDate}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <div style={{marginTop: 10}}>
-                        <Table
-                            columns={this.state.mainColumns}
-                            dataSource={this.state.list}
-                            bordered
-                            pagination={false}
-                        />
-                    </div>
-                    <Row type="flex" justify="end" style={{marginTop: 20,
-                        fontSize: '14px',
-                        lineHeight: '18px',
-                        color: '#666',
-                        textAlign: 'right',
-                        marginRight: '20px'}}
-                    >
-                        <Col span={6}>
-                            <div>
-                                <span>优惠金额：</span>
-                                <span>&nbsp;￥{feesInfo.principalDiscount}</span>
-                            </div>
-                        </Col>
-                        <Col span={6}>
-                            <div>
-                                <span>本期应收：</span>&nbsp;
-                                <span style={{fontSize: '18px',
-                                    color: 'red'}}
-                                >￥{feesInfo.actualReceivable}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row type="flex" style={{marginTop: 20,
-                        fontSize: '13px',
-                        lineHeight: '18px',
-                        color: '#108EE9',
-                        textAlign: 'center'}}
-                    >
-                        <Col span={8}>
-                            <div>
-                                <span>当前未交物业费违约金：</span>
-                                <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.propertyMoney}</span>
-                                <span>({feesInfo.isPropertyMoney === 1 ? '已含' : '未包含'})</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span>当前未交电费违约金：</span>
-                                <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.electricMoney}</span>
-                                <span>({feesInfo.isElectricMoney === 1 ? '已含' : '未包含'})</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span>当前未交水费违约金：</span>
-                                <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.waterMoney}</span>
-                                <span>({feesInfo.isWaterMoney === 1 ? '已含' : '未包含'})</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <hr style={{marginTop: 20,
-                        color: '#EBEBEB' }}
-                    />
-                    <div style={{marginTop: 10,
-                        fontSize: '14px',
-                        padding: '0 20px'}}
-                    >
-                        <Row>
+                <Modal maskClosable={false}
+                    footer={null}
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    width="1000px"
+                    style={{top: 20}}
+                >
+                    <div>
+                        <Row style={{marginTop: 50}}>
                             <Col>
-                                <div style={{fontWeight: 'bold',
-                                    lineHeight: '21px',
-                                    color: '#666'}}
+                                <div style={{textAlign: 'center',
+                                    fontSize: '20px',
+                                    fontWeight: 'bold',
+                                    lineHeight: '40px'}}
                                 >
-                                    <span>其他信息</span>
+                                    <span>{feesInfo.clientName}</span>
+                                    <span>电量统计表</span>
                                 </div>
                             </Col>
                         </Row>
-                        <div style={{marginTop: 20,
+                        <Row>
+                            <Col>
+                                <div style={{color: '#666',
+                                    textAlign: 'center',
+                                    fontSize: '14px',
+                                    lineHeight: '18px'}}
+                                >
+                                （ {feesInfo.cycle} ）
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row style={{marginTop: 30,
+                            fontSize: '14px'}}
+                        >
+                            <Col span={8}>
+                                <div>
+                                    <span style={lightGrayStyle} >房间编号：</span>
+                                    <span style={{color: '#666',
+                                        marginLeft: '20px'}}
+                                    >{feesInfo.roomNumber}</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span style={lightGrayStyle} >所在楼宇：</span>
+                                    <span style={{color: '#666',
+                                        marginLeft: '20px'}}
+                                    >{feesInfo.buildName}</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span style={lightGrayStyle} >交费期限：</span>
+                                    <span style={{color: '#666',
+                                        marginLeft: '20px'}}
+                                    >{feesInfo.overdueDate}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <div style={{marginTop: 10}}>
+                            <Table
+                                columns={this.state.mainColumns}
+                                dataSource={this.state.list}
+                                bordered
+                                pagination={false}
+                            />
+                        </div>
+                        <Row type="flex" justify="end" style={{marginTop: 20,
+                            fontSize: '14px',
                             lineHeight: '18px',
-                            color: '#363636',
-                            fontFamily: '\'Microsoft YaHei Regular\', \'Microsoft YaHei\''}}
+                            color: '#666',
+                            textAlign: 'right',
+                            marginRight: '20px'}}
+                        >
+                            <Col span={6}>
+                                <div>
+                                    <span>优惠金额：</span>
+                                    <span>&nbsp;￥{feesInfo.principalDiscount}</span>
+                                </div>
+                            </Col>
+                            <Col span={6}>
+                                <div>
+                                    <span>本期应收：</span>&nbsp;
+                                    <span style={{fontSize: '18px',
+                                        color: 'red'}}
+                                    >￥{feesInfo.actualReceivable}</span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row type="flex" style={{marginTop: 20,
+                            fontSize: '13px',
+                            lineHeight: '18px',
+                            color: '#108EE9',
+                            textAlign: 'center'}}
+                        >
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交物业费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.propertyMoney}</span>
+                                    <span>({feesInfo.isPropertyMoney === 1 ? '已含' : '未包含'})</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交电费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.electricMoney}</span>
+                                    <span>({feesInfo.isElectricMoney === 1 ? '已含' : '未包含'})</span>
+                                </div>
+                            </Col>
+                            <Col span={8}>
+                                <div>
+                                    <span>当前未交水费违约金：</span>
+                                    <span style={{fontWeight: 'bold'}}>&nbsp;{feesInfo.waterMoney}</span>
+                                    <span>({feesInfo.isWaterMoney === 1 ? '已含' : '未包含'})</span>
+                                </div>
+                            </Col>
+                        </Row>
+                        <hr style={{marginTop: 20,
+                            color: '#EBEBEB' }}
+                        />
+                        <div style={{marginTop: 10,
+                            fontSize: '14px',
+                            padding: '0 20px'}}
                         >
                             <Row>
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>录入日期：</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.createDate}</span>
-                                    </div>
-                                </Col>
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>最后修改：</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
+                                <Col>
+                                    <div style={{fontWeight: 'bold',
+                                        lineHeight: '21px',
+                                        color: '#666'}}
+                                    >
+                                        <span>其他信息</span>
                                     </div>
                                 </Col>
                             </Row>
-                            <Row style={{marginTop: 20,
+                            <div style={{marginTop: 20,
                                 lineHeight: '18px',
-                                color: '#363636'}}
+                                color: '#363636',
+                                fontFamily: '\'Microsoft YaHei Regular\', \'Microsoft YaHei\''}}
                             >
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>审核人：</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditName}</span>
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditDate}</span>
-                                    </div>
-                                </Col>
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>审核状态：</span>
-                                        {feesInfo.examineState === 2 &&
+                                <Row>
+                                    <Col span={12}>
+                                        <div>
+                                            <span style={lightGrayStyle}>录入日期：</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.createDate}</span>
+                                        </div>
+                                    </Col>
+                                    <Col span={12}>
+                                        <div>
+                                            <span style={lightGrayStyle}>最后修改：</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row style={{marginTop: 20,
+                                    lineHeight: '18px',
+                                    color: '#363636'}}
+                                >
+                                    <Col span={12}>
+                                        <div>
+                                            <span style={lightGrayStyle}>审核人：</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.auditName}</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.auditDate}</span>
+                                        </div>
+                                    </Col>
+                                    <Col span={12}>
+                                        <div>
+                                            <span style={lightGrayStyle}>审核状态：</span>
+                                            {feesInfo.examineState === 2 &&
                                         <span style={{marginLeft: '10px'}}>审核通过</span>
-                                        }
-                                        {feesInfo.examineState === 3 &&
+                                            }
+                                            {feesInfo.examineState === 3 &&
                                         <span style={{marginLeft: '10px'}}>审核不通过</span>
-                                        }
-                                        <span style={{marginLeft: '10px'}}>{feesInfo.auditExplain}</span>
-                                    </div>
-                                </Col>
-                            </Row>
+                                            }
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.auditExplain}</span>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </div>
                         </div>
-                    </div>
-                    <ExamineSuccessState
-                        stateChange={this.stateChange}
-                        fees={feesInfo}
-                        receipt={this.state.receipt}
-                        liquidatedDamagesList={this.state.liquidatedDamagesList}
-                    />
-                    {feesInfo.principalPrincipalBilling === 2 &&
-                        <hr style={{marginTop: 20}} />}
-                    {feesInfo.principalPrincipalBilling !== 2 && feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
-                        <hr style={{marginTop: 20}} />}
-                    <div style={{marginTop: 20,
-                        marginBottom: 50
-                    }}
-                    >
-                        {feesInfo.principalPaymentStatus !== 1 &&
-                        <Button type="primary" style={{marginLeft: 20}} onClick={this.collectMoney}>确认收款</Button>
-                        }
+                        <ExamineSuccessState
+                            stateChange={this.stateChange}
+                            fees={feesInfo}
+                            receipt={this.state.receipt}
+                            liquidatedDamagesList={this.state.liquidatedDamagesList}
+                        />
                         {feesInfo.principalPrincipalBilling === 2 &&
+                        <hr style={{marginTop: 20}} />}
+                        {feesInfo.principalPrincipalBilling !== 2 && feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
+                        <hr style={{marginTop: 20}} />}
+                        <div style={{marginTop: 20,
+                            marginBottom: 50
+                        }}
+                        >
+                            {feesInfo.principalPaymentStatus !== 1 &&
+                        <Button type="primary" style={{marginLeft: 20}} onClick={this.collectMoney}>确认收款</Button>
+                            }
+                            {feesInfo.principalPrincipalBilling === 2 &&
                         <Popconfirm title="确认开票吗?" onConfirm={this.showBill}>
                             <Button type="danger" style={dangerButtonStyle}>确认开票</Button>
                         </Popconfirm>
-                        }
-                        {feesInfo.principalPaymentStatus === 1 && feesInfo.defaultPaymentStatus !== 1 && feesInfo.liquidatedDamages > 0 &&
+                            }
+                            {feesInfo.principalPaymentStatus === 1 && feesInfo.defaultPaymentStatus !== 1 && feesInfo.liquidatedDamages > 0 &&
                         <Popconfirm title="确认放入下月电费吗?" onConfirm={this.collectPenal} onCancel={this.putNextMouth} okText="实收违约金" cancelText="延期下月电费">
                             <Button type="primary" style={{marginLeft: 20}} onClick={this.penalty}>确认违约金</Button>
                         </Popconfirm>
-                        }
-                        {feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
+                            }
+                            {feesInfo.principalPaymentStatus === 1 && feesInfo.liquidatedDamages > 0 && feesInfo.principalDamagesBilling === 2 &&
                         <Popconfirm title="确认违约金开票?" onConfirm={this.showPenalBill}>
                             <Button type="danger" style={dangerButtonStyle}>确认违约金开票</Button>
                         </Popconfirm>
-                        }
+                            }
+                        </div>
                     </div>
-                </div>
-                <PrincipalCollectionPower
-                    visible={this.state.collectMoney}
-                    id={this.state.id}
-                    refresh={this.refresh}
-                />
-                <PrincipalCollectionPenal
-                    visible={this.state.collectPenal}
-                    id={this.state.id}
-                    refresh={this.refresh}
-                />
+                    <PrincipalCollectionPower
+                        visible={this.state.collectMoney}
+                        id={this.state.id}
+                        refresh={this.refresh}
+                    />
+                    <PrincipalCollectionPenal
+                        visible={this.state.collectPenal}
+                        id={this.state.id}
+                        refresh={this.refresh}
+                    />
+
+                </Modal>
             </div>
         )
     }

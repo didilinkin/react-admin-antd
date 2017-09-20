@@ -157,7 +157,7 @@ class PowerInfomation extends React.Component {
                 message: data.data,
                 icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
             })
-            this.props.refresh()
+            this.props.refresh({}, {}, {})
         }
     }
     handleCancel = () => {
@@ -167,18 +167,17 @@ class PowerInfomation extends React.Component {
             visible: false,
             isFirst: true
         })
+        this.props.refresh({}, {}, {})
     }
     stateChange = (e) => {
         this.setState({
             value: e.target.value
         })
-        console.log(e.target.value)
     }
     text = (e) => {
         this.setState({
             text: e.target.value
         })
-        console.log(e.target.value)
     }
     render () {
         const lightGrayStyle = {

@@ -4,6 +4,7 @@ import {Table, Spin, Popconfirm, Tabs, notification, Icon} from 'antd'
 import PowerBillHead from '../components/ElectricInfo/PowerBillHead'
 import { apiPost, baseURL, verification } from '../../../api'
 import PowerInfomation from '../../PROPERTY/components/ElectricCharge/PowerInfomation'
+import ElectricChargeDetails from './details/ElectricCharge/ElectricChargeDetails'
 
 const TabPane = Tabs.TabPane
 class Electricity extends React.Component {
@@ -23,8 +24,15 @@ class Electricity extends React.Component {
             order: 1,
             RowKeys: [],
             openInfo: false,
+            openInfoTwo: false,
             id: 0
         }
+    }
+    startLoading = () => {
+        this.setState({loading: true})
+    }
+    endLoading = () => {
+        this.setState({loading: false})
     }
     activeKey = 1
     refreshTwo = async (activeKey) => {
@@ -33,7 +41,8 @@ class Electricity extends React.Component {
     }
     refresh = async (pagination, filters, sorter) => {
         this.setState({loading: true,
-            openInfo: false})
+            openInfo: false,
+            openInfoTwo: false})
         if (filters === null || typeof (filters) === 'undefined') {
             filters = []
         }
@@ -76,6 +85,7 @@ class Electricity extends React.Component {
             dataSource3: dataSource3,
             order: this.activeKey
         })
+        this.endLoading()
     }
     async initialRemarks () {
         this.setState({loading: true})
@@ -249,10 +259,9 @@ class Electricity extends React.Component {
                 width: '180',
                 fixed: 'right',
                 render: function (text, record, index) {
-                    let url = '/home/finance/electricChargeDetails/' + record.id
                     return (
                         <span>
-                            <a style={{margin: '0 10px'}} onClick={() => infoTwo(url)}>明细</a>
+                            <a style={{margin: '0 10px'}} onClick={() => infoTwo(record.id)}>明细</a>
                             {verification('revokeElectric') &&
                             <Popconfirm title="确定撤回吗?" onConfirm={() => withdraw(record.id)}>
                                 <a>撤回</a>
@@ -282,6 +291,7 @@ class Electricity extends React.Component {
         this.refreshTwo()
     }
     info = (id) => {
+        this.startLoading()
         this.setState({
             openInfo: true,
             id: id
@@ -296,8 +306,12 @@ class Electricity extends React.Component {
             RowKeys: selectedRowKeys
         })
     }
-    infoTwo = (url) => {
-        this.props.history.push(url)
+    infoTwo = (id) => {
+        this.startLoading()
+        this.setState({
+            openInfoTwo: true,
+            id: id
+        })
     }
     render () {
         return (
@@ -384,7 +398,12 @@ class Electricity extends React.Component {
                     id={this.state.id}
                     Finance={1}
                     visible={this.state.openInfo}
-                    refresh={this.refreshTwo}
+                    refresh={this.refresh}
+                />
+                <ElectricChargeDetails
+                    id={this.state.id}
+                    visible={this.state.openInfoTwo}
+                    refresh={this.refresh}
                 />
             </Spin>
 
