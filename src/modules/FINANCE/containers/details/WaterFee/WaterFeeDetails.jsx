@@ -1,7 +1,7 @@
 // 收款
 import React from 'react'
 import { apiPost } from '../../../../../api/index'
-import { Row, Col, Table, Button, Popconfirm, notification, Icon } from 'antd'
+import { Modal, Row, Col, Spin, Table, Button, Popconfirm, notification, Icon } from 'antd'
 import PrincipalCollectionCom from '../../../components/WaterFee/PrincipalCollection'
 import PenaltyCom from '../../../components/WaterFee/Penalty'
 class CollectionDetails extends React.Component {
@@ -15,84 +15,101 @@ class CollectionDetails extends React.Component {
         ChargeRecord6: [],
         openPrincipalCollection: false,
         openDefaultCollection: false,
-        id: 0
+        id: 0,
+        visible: false,
+        isFirst: true,
+        loading: false
     }
     async initialRemarks (nextProps) {
-        let map = await apiPost(
-            '/propertyFee/getWaterBill',
-            {id: this.props.match.params.id}
-        )
-        map = map.data
-        let ChargeRecord5 = await apiPost(
-            '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
-                feeType: 5}
-        )
-        let ChargeRecord6 = await apiPost(
-            '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
-                feeType: 6}
-        )
-        this.setState({
-            ChargeRecord5: ChargeRecord5.data,
-            ChargeRecord6: ChargeRecord6.data,
-            map: {
-                WaterRecordList: map.list,
-                waterBill: map.waterBill,
-                pmContract: map.pmContract
-            }
-        })
+        if (this.state.isFirst && nextProps.visible) {
+            this.setState({loading: true})
+            let map = await apiPost(
+                '/propertyFee/getWaterBill',
+                {id: nextProps.id}
+            )
+            map = map.data
+            let ChargeRecord5 = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {
+                    feeId: nextProps.id,
+                    feeType: 5
+                }
+            )
+            let ChargeRecord6 = await apiPost(
+                '/collectRent/getChargeRecordById',
+                {
+                    feeId: nextProps.id,
+                    feeType: 6
+                }
+            )
+            this.setState({
+                ChargeRecord5: ChargeRecord5.data,
+                ChargeRecord6: ChargeRecord6.data,
+                map: {
+                    WaterRecordList: map.list,
+                    waterBill: map.waterBill,
+                    pmContract: map.pmContract
+                },
+                visible: nextProps.visible,
+                isFirst: false,
+                loading: false
+            })
+        }
     }
 
-    componentDidMount () {
-        this.initialRemarks()
+    componentWillReceiveProps (nextProps) {
+        this.initialRemarks(nextProps)
     }
     openPrincipalCollection = () => {
         this.setState({
             openPrincipalCollection: true,
             openDefaultCollection: false,
-            id: this.props.match.params.id
+            id: this.props.id
         })
     }
     penalty = () => {
         this.setState({
             openPrincipalCollection: false,
             openDefaultCollection: true,
-            id: this.props.match.params.id
+            id: this.props.id
         })
     }
     refresh = async () => {
+        this.setState({
+            loading: true,
+            openPrincipalCollection: false,
+            openDefaultCollection: false})
         let map = await apiPost(
             '/propertyFee/getWaterBill',
-            {id: this.props.match.params.id}
+            {id: this.props.id}
         )
         map = map.data
         let ChargeRecord5 = await apiPost(
             '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
+            {feeId: this.props.id,
                 feeType: 5}
         )
         let ChargeRecord6 = await apiPost(
             '/collectRent/getChargeRecordById',
-            {feeId: this.props.match.params.id,
+            {feeId: this.props.id,
                 feeType: 6}
         )
         this.setState({
             ChargeRecord5: ChargeRecord5.data,
             ChargeRecord6: ChargeRecord6.data,
-            openPrincipalCollection: false,
-            openDefaultCollection: false,
             map: {
                 WaterRecordList: map.list,
                 waterBill: map.waterBill,
                 pmContract: map.pmContract
-            }
+            },
+            loading: false
         })
     }
     PrincipalBilling = async () => {
+        this.setState({loading: true})
         let Principal = await apiPost(
             '/WaterBill/PrincipalBilling',
-            {id: this.props.match.params.id,
+            {id: this.props.id,
                 billingState: 1}
         )
         notification.open({
@@ -102,9 +119,10 @@ class CollectionDetails extends React.Component {
         this.refresh()
     }
     DefaultBilling = async () => {
+        this.setState({loading: true})
         let Principal = await apiPost(
             '/WaterBill/PrincipalBilling',
-            {id: this.props.match.params.id,
+            {id: this.props.id,
                 principalDamagesBilling: 1}
         )
         notification.open({
@@ -114,15 +132,26 @@ class CollectionDetails extends React.Component {
         this.refresh()
     }
     nextMonth = async () => {
+        this.setState({loading: true})
         let data = await apiPost(
             '/WaterBill/nextMonth',
-            {id: this.props.match.params.id}
+            {id: this.props.id}
         )
         notification.open({
             message: data.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
         })
         this.refresh()
+    }
+    handleCancel = (e) => {
+        console.log(e)
+        this.setState({
+            visible: false,
+            isFirst: true,
+            openPrincipalCollection: false,
+            openDefaultCollection: false
+        })
+        this.props.refresh({}, {}, {})
     }
     render () {
         const columns = [{
@@ -199,124 +228,132 @@ class CollectionDetails extends React.Component {
             marginLeft: 20
         }
         return (
-            <div>
-                <div>
-                    <Row style={{marginTop: 50}}>
-                        <Col>
-                            <div style={{textAlign: 'center',
-                                fontSize: '20px',
-                                fontWeight: 'bold',
-                                lineHeight: '40px'}}
-                            >
-                                <span>{this.state.map.waterBill.formName}</span>
-                                <span>水量统计表</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <div style={{color: '#666',
-                                textAlign: 'center',
-                                fontSize: '14px',
-                                lineHeight: '18px'}}
-                            >
-                                （ {this.state.map.waterBill.preMeterDate} ~ {this.state.map.waterBill.meterDate} ）
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row style={{marginTop: 30,
-                        fontSize: '14px'}}
-                    >
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >房间编号：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{this.state.map.waterBill.roomNumber}</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >所在楼宇：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{this.state.map.waterBill.buildName}</span>
-                            </div>
-                        </Col>
-                        <Col span={8}>
-                            <div>
-                                <span style={lightGrayStyle} >交费期限：</span>
-                                <span style={{color: '#666',
-                                    marginLeft: '20px'}}
-                                >{this.state.map.waterBill.overdueDate}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <div style={{marginTop: 10}}>
-                        <Table
-                            columns={columns}
-                            dataSource={this.state.map.WaterRecordList}
-                            bordered
-                            pagination={false}
-                        />
-                    </div>
-                    <Row type="flex" justify="end" style={{marginTop: 20,
-                        fontSize: '14px',
-                        lineHeight: '18px',
-                        color: '#666'}}
-                    >
-                        <Col span={6}>
-                            <div>
-                                <span>优惠金额：</span>
-                                <span>{this.state.map.waterBill.amountReceivable}</span>
-                            </div>
-                        </Col>
-                        <Col span={6}>
-                            <div>
-                                <span>本期应收：</span>
-                                <span style={{fontSize: '18px',
-                                    color: 'red'}}
-                                >￥{this.state.map.waterBill.receivableMoney}</span>
-                            </div>
-                        </Col>
-                    </Row>
-                    <hr style={{marginTop: 20,
-                        color: '#EBEBEB' }}
-                    />
-                    <div style={{marginTop: 10,
-                        fontSize: '14px',
-                        padding: '0 20px'}}
-                    >
-                        <Row>
-                            <Col>
-                                <div style={{fontWeight: 'bold',
-                                    lineHeight: '21px',
-                                    color: '#666'}}
-                                >
-                                    <span>其他信息</span>
-                                </div>
-                            </Col>
-                        </Row>
-                        <div style={{marginTop: 20,
-                            lineHeight: '18px',
-                            color: '#363636',
-                            fontFamily: '\'Microsoft YaHei Regular\', \'Microsoft YaHei\''}}
-                        >
-                            <Row>
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>录入日期：</span>
-                                        <span>{this.state.map.waterBill.createName} {this.state.map.waterBill.createDate}</span>
-                                    </div>
-                                </Col>
-                                <Col span={12}>
-                                    <div>
-                                        <span style={lightGrayStyle}>最后修改：</span>
-                                        <span>{this.state.map.waterBill.createName} {this.state.map.waterBill.createDate}</span>
+            <Modal
+                footer={null}
+                visible={this.state.visible}
+                onCancel={this.handleCancel}
+                width="1000px"
+                style={{top: 20}}
+            >
+                <Spin spinning={this.state.loading}>
+                    <div>
+                        <div>
+                            <Row style={{marginTop: 50}}>
+                                <Col>
+                                    <div style={{textAlign: 'center',
+                                        fontSize: '20px',
+                                        fontWeight: 'bold',
+                                        lineHeight: '40px'}}
+                                    >
+                                        <span>{this.state.map.waterBill.formName}</span>
+                                        <span>水量统计表</span>
                                     </div>
                                 </Col>
                             </Row>
-                            {this.state.map.waterBill.examineState !== 0 && this.state.map.waterBill.examineState !== 1 &&
+                            <Row>
+                                <Col>
+                                    <div style={{color: '#666',
+                                        textAlign: 'center',
+                                        fontSize: '14px',
+                                        lineHeight: '18px'}}
+                                    >
+                                （ {this.state.map.waterBill.preMeterDate} ~ {this.state.map.waterBill.meterDate} ）
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row style={{marginTop: 30,
+                                fontSize: '14px'}}
+                            >
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle} >房间编号：</span>
+                                        <span style={{color: '#666',
+                                            marginLeft: '20px'}}
+                                        >{this.state.map.waterBill.roomNumber}</span>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle} >所在楼宇：</span>
+                                        <span style={{color: '#666',
+                                            marginLeft: '20px'}}
+                                        >{this.state.map.waterBill.buildName}</span>
+                                    </div>
+                                </Col>
+                                <Col span={8}>
+                                    <div>
+                                        <span style={lightGrayStyle} >交费期限：</span>
+                                        <span style={{color: '#666',
+                                            marginLeft: '20px'}}
+                                        >{this.state.map.waterBill.overdueDate}</span>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div style={{marginTop: 10}}>
+                                <Table
+                                    columns={columns}
+                                    dataSource={this.state.map.WaterRecordList}
+                                    bordered
+                                    pagination={false}
+                                />
+                            </div>
+                            <Row type="flex" justify="end" style={{marginTop: 20,
+                                fontSize: '14px',
+                                lineHeight: '18px',
+                                color: '#666'}}
+                            >
+                                <Col span={6}>
+                                    <div>
+                                        <span>优惠金额：</span>
+                                        <span>{this.state.map.waterBill.amountReceivable}</span>
+                                    </div>
+                                </Col>
+                                <Col span={6}>
+                                    <div>
+                                        <span>本期应收：</span>
+                                        <span style={{fontSize: '18px',
+                                            color: 'red'}}
+                                        >￥{this.state.map.waterBill.receivableMoney}</span>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <hr style={{marginTop: 20,
+                                color: '#EBEBEB' }}
+                            />
+                            <div style={{marginTop: 10,
+                                fontSize: '14px',
+                                padding: '0 20px'}}
+                            >
+                                <Row>
+                                    <Col>
+                                        <div style={{fontWeight: 'bold',
+                                            lineHeight: '21px',
+                                            color: '#666'}}
+                                        >
+                                            <span>其他信息</span>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <div style={{marginTop: 20,
+                                    lineHeight: '18px',
+                                    color: '#363636',
+                                    fontFamily: '\'Microsoft YaHei Regular\', \'Microsoft YaHei\''}}
+                                >
+                                    <Row>
+                                        <Col span={12}>
+                                            <div>
+                                                <span style={lightGrayStyle}>录入日期：</span>
+                                                <span>{this.state.map.waterBill.createName} {this.state.map.waterBill.createDate}</span>
+                                            </div>
+                                        </Col>
+                                        <Col span={12}>
+                                            <div>
+                                                <span style={lightGrayStyle}>最后修改：</span>
+                                                <span>{this.state.map.waterBill.createName} {this.state.map.waterBill.createDate}</span>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    {this.state.map.waterBill.examineState !== 0 && this.state.map.waterBill.examineState !== 1 &&
                             <Row style={{
                                 marginTop: 20,
                                 lineHeight: '18px',
@@ -336,10 +373,10 @@ class CollectionDetails extends React.Component {
                                     </div>
                                 </Col>
                             </Row>
-                            }
-                        </div>
-                    </div>
-                    {this.state.map.waterBill.examineState === 2 &&
+                                    }
+                                </div>
+                            </div>
+                            {this.state.map.waterBill.examineState === 2 &&
                     <div style={{
                         marginTop: 20,
                         border: '1px solid #EBEBEB'
@@ -448,54 +485,56 @@ class CollectionDetails extends React.Component {
                             </div>
                         </div>
                     </div>
-                    }
-                    <div>
-                        <hr style={{
-                            marginTop: 20,
-                            color: '#EBEBEB'
-                        }}
-                        />
-                        <div style={{
-                            margin: '20px 0'
-                        }}
-                        >
-                            {this.state.map.waterBill.paymentState !== 1 &&
-                            <Button type="primary" size="normal" onClick={this.openPrincipalCollection}>确认收款</Button>
                             }
-                            {this.state.map.waterBill.billingState === 2 &&
+                            <div>
+                                <hr style={{
+                                    marginTop: 20,
+                                    color: '#EBEBEB'
+                                }}
+                                />
+                                <div style={{
+                                    margin: '20px 0'
+                                }}
+                                >
+                                    {this.state.map.waterBill.paymentState !== 1 &&
+                            <Button type="primary" size="small" onClick={this.openPrincipalCollection}>确认收款</Button>
+                                    }
+                                    {this.state.map.waterBill.billingState === 2 &&
                             <Popconfirm title="确认开票吗?" onConfirm={this.PrincipalBilling}>
-                                <Button type="danger" style={dangerButtonStyle} size="normal">确认开票</Button>
+                                <Button type="danger" style={dangerButtonStyle} size="small">确认开票</Button>
                             </Popconfirm>
-                            }
-                            {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.defaultPaymentStatus !== 1 && this.state.map.waterBill.penaltyTotalMoney > 0 &&
+                                    }
+                                    {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.defaultPaymentStatus !== 1 && this.state.map.waterBill.penaltyTotalMoney > 0 &&
                             <span>
                                 {!this.state.ChargeRecord6.length > 0 &&
                                 <Popconfirm title="请选择违约金交费方式?" onConfirm={this.penalty} onCancel={this.nextMonth} okText="实收违约金" cancelText="延期下月电费">
-                                    <Button style={{marginLeft: '20px'}} type="primary" size="normal">确认违约金</Button>
+                                    <Button style={{marginLeft: '20px'}} type="primary" size="small">确认违约金</Button>
                                 </Popconfirm>
                                 }
                             </span>
-                            }
-                            {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.penaltyTotalMoney > 0 && this.state.map.waterBill.principalDamagesBilling === 2 &&
+                                    }
+                                    {this.state.map.waterBill.paymentState === 1 && this.state.map.waterBill.penaltyTotalMoney > 0 && this.state.map.waterBill.principalDamagesBilling === 2 &&
                             <Popconfirm title="确认违约金开票?" onConfirm={this.DefaultBilling}>
-                                <Button type="danger" style={dangerButtonStyle} size="normal">确认违约金开票</Button>
+                                <Button type="danger" style={dangerButtonStyle} size="small">确认违约金开票</Button>
                             </Popconfirm>
-                            }
-                        </div>
-                    </div>
+                                    }
+                                </div>
+                            </div>
 
-                </div>
-                <PrincipalCollectionCom
-                    visible={this.state.openPrincipalCollection}
-                    id={this.state.id}
-                    refresh={this.refresh}
-                />
-                <PenaltyCom
-                    visible={this.state.openDefaultCollection}
-                    id={this.state.id}
-                    refresh={this.refresh}
-                />
-            </div>
+                        </div>
+                        <PrincipalCollectionCom
+                            visible={this.state.openPrincipalCollection}
+                            id={this.state.id}
+                            refresh={this.refresh}
+                        />
+                        <PenaltyCom
+                            visible={this.state.openDefaultCollection}
+                            id={this.state.id}
+                            refresh={this.refresh}
+                        />
+                    </div>
+                </Spin>
+            </Modal>
         )
     }
 }
