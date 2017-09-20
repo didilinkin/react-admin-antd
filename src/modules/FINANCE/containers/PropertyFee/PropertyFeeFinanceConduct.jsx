@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {Table, Spin } from 'antd'
 import { apiPost, verification } from '../../../../api'
-import PropertyFeeFinanceConductComponent from '../details/PropertyFee/PropertyFeeAudit'
+import PropertyFeeFinanceConductComponent from '../details/PropertyFee/PropertyFeeDetail'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
 // React component

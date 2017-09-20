@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import '../style/test.less'
-import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
+import PropertyFeeFinanceFailComponent from '../details/PropertyFee/PropertyFeeDetail'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 
 // 引入组件
