@@ -516,6 +516,8 @@ class sumElectricityAddUp extends React.Component {
     }
     // 添加条目
     add = () => {
+        console.log('powerType : ' + this.state.powerType)
+
         this.deleteTotalColunm()
         let json = this.props.form.getFieldsValue()
         let jsonTwo = {}
@@ -545,12 +547,16 @@ class sumElectricityAddUp extends React.Component {
         let powerLossRatio = this.state.Contract.powerLossRatio ? this.state.Contract.powerLossRatio / 100 : 0
 
         if (this.state.powerType === 0) {
-            jsonTwo['electricLoss'] = 0
+            jsonTwo['electricLoss'] = 0 // 电损
             jsonTwo['sumElectricity'] = (jsonTwo.needElectricity * json.ratio) ? (json.needElectricity * json.ratio) : 0
         } else {
             jsonTwo['electricLoss'] = this.state.Contract.powerLossRatio ? jsonTwo.needElectricity * jsonTwo.ratio * powerLossRatio : 0
             jsonTwo['sumElectricity'] = jsonTwo.needElectricity * jsonTwo.ratio + jsonTwo['electricLoss']
         }
+
+        console.log('电量 : ' + jsonTwo.needElectricity)
+        console.log('变比 : ' + jsonTwo.ratio)
+        console.log('该用户电损百分比 : ' + powerLossRatio)
         jsonTwo['singleMoney'] = (jsonTwo.sumElectricity * jsonTwo.unitPrice) ? (jsonTwo.sumElectricity * jsonTwo.unitPrice) : 0
         let sumElectricityRecordlList = this.state.sumElectricityRecordlList
         sumElectricityRecordlList.push(jsonTwo)
@@ -638,28 +644,29 @@ class sumElectricityAddUp extends React.Component {
     }
     // 选择房间编号
     chooseRoomNumber = async (value) => {
-        console.log(value)
-        // 查询上次抄表数
-        this.setState({loading: true})
-        let lastTimeData = await apiPost(
-            '/ElectricityFees/LastTimeNumber',
-            {
-                roomNumberOne: value,
-                buildingIdOne: this.state.Contract.buildId
+        if (value) {
+            // 查询上次抄表数
+            this.setState({loading: true})
+            let lastTimeData = await apiPost(
+                '/ElectricityFees/LastTimeNumber',
+                {
+                    roomNumberOne: value,
+                    buildingIdOne: this.state.Contract.buildId
+                }
+            )
+            lastTimeData = lastTimeData.data
+            if (lastTimeData !== null && lastTimeData !== '' && typeof (lastTimeData) !== 'undefined') {
+                this.props.form.setFieldsValue({
+                    lastSurfaceNumber: this.props.id ? lastTimeData.lastSurfaceNumber : lastTimeData.surfaceNumber,
+                    electricCostName: this.state.powerType !== 2 ? value : ''
+                })
+            } else {
+                this.props.form.setFieldsValue({
+                    electricCostName: value
+                })
             }
-        )
-        lastTimeData = lastTimeData.data
-        if (lastTimeData !== null && lastTimeData !== '' && typeof (lastTimeData) !== 'undefined') {
-            this.props.form.setFieldsValue({
-                lastSurfaceNumber: this.props.id ? lastTimeData.lastSurfaceNumber : lastTimeData.surfaceNumber,
-                electricCostName: this.state.powerType !== 2 ? value : ''
-            })
-        } else {
-            this.props.form.setFieldsValue({
-                electricCostName: value
-            })
+            this.setState({loading: false})
         }
-        this.setState({loading: false})
     }
     handleConfirmPassword = (rule, value, callback) => {
         debugger
@@ -878,6 +885,7 @@ class sumElectricityAddUp extends React.Component {
                                         >{getFieldDecorator('roomNumberOne')(
                                                 <Select
                                                     showSearch
+                                                    allowClear
                                                     placeholder="请选择房间编号"
                                                     optionFilterProp="children"
                                                     onChange={this.chooseRoomNumber}
