@@ -280,7 +280,7 @@ class ElectricCharge extends React.Component {
             }, {
                 title: ' 操作',
                 fixed: 'right',
-                width: '80',
+                width: '150',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)
