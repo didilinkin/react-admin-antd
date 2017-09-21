@@ -6,15 +6,17 @@
  * @desc 富文本编辑器 - 组件(基于 draft 封装)
 */
 import React from 'react'
+import localStore from 'store'
+// import cloneDeep from 'lodash/cloneDeep'
 import { Editor } from 'react-draft-wysiwyg'
 import { Row, Col, Card } from 'antd'
 
-import { EditorState, ContentState } from 'draft-js'
+// import { EditorState, ContentState } from 'draft-js'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 import draftToHtml from 'draftjs-to-html' // 编辑器 传输 JSON格式; 显示 '已编辑完'信息时, 使用此方法
-import htmlToDraft from 'html-to-draftjs' // 将 传输格式(html) 转换为 draftjs格式
+// import htmlToDraft from 'html-to-draftjs' // 将 传输格式(html) 转换为 draftjs格式
 
 const rawContentState = {
     'entityMap': {
@@ -63,7 +65,7 @@ const rawContentState = {
     ]
 }
 
-class EditorConvertToHTML extends React.Component {
+class Wysiwyg extends React.Component {
     state = {
         editorContent: undefined,
         contentState: rawContentState,
@@ -109,34 +111,31 @@ class EditorConvertToHTML extends React.Component {
     postVal = () => {
         console.log('提交 state中数据')
 
-        console.dir(this.state) // { contentState: {}, editorContent: {}, editorState: {} }
+        // console.dir(this.state) // { contentState: {}, editorContent: {}, editorState: {} }
 
-        let objToHtml = draftToHtml(this.state.editorContent)
-        console.dir(objToHtml)
+        // let objToHtml = draftToHtml(this.state.editorContent) // 暂不需 转换为 HTML
+        // console.dir(objToHtml)
+
+        localStore.remove('Wysiwyg') // 清空 Wysiwyg(富文本数据)
+
+        localStore.set('Wysiwyg', {
+            jsonObj: this.state.editorContent
+        })
     }
 
     // 将 html格式数据设置到 state中
     setVal = () => {
-        console.log('将 html格式数据设置到 state中')
+        console.log('将 LS数据取出, 然后深拷贝')
 
-        let strHtml = '<p> 测试数据 - html数据设置到 state </p>'
+        const lsValue = localStore.get('Wysiwyg').jsonObj
 
-        let objToDraft = htmlToDraft(strHtml) // Object: { contentBlock: [], entityMap: {} }
+        console.log('检查 数据')
+        console.dir(lsValue)
 
-        // const { ContentBlock, entityMap } = objToDraft.contentBlocks // 将 转换完成的 对象中 两个属性值取出
-
-        const contentBlocks = objToDraft.contentBlocks // 取出 contentBlocks
-        const entityMap = objToDraft.entityMap // 取出 entityMap
-
-
-        const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap) // 使用 取出的两个属性值, 使用 Draft方法转换 => contentState
-        const editorState = EditorState.createWithContent(contentState)
-
-        console.log('contentState')
-        console.dir(contentState)
-
-        console.log('editorState')
-        console.dir(editorState)
+        this.setState({ editorContent: lsValue }, () => {
+            console.log('setState 完成')
+            console.log(this.state)
+        }) // 效果完成; 但是没有触发再次的 render; 考虑使用 Redux 通过 nextProps来触发再次渲染
     }
 
     // 检查 this
@@ -147,6 +146,8 @@ class EditorConvertToHTML extends React.Component {
 
     render () {
         const { editorContent, editorState } = this.state
+        console.log('渲染次数')
+
         return (
             <div className="gutter-example button-demo">
                 <Row gutter={16}>
@@ -243,19 +244,19 @@ class EditorConvertToHTML extends React.Component {
                         <Card title="同步转换JSON" bordered={false}>
                             <pre style={{ whiteSpace: 'normal' }}>
                                 { JSON.stringify(editorContent) }
-                                7</pre>
+                            </pre>
                         </Card>
                     </Col>
 
                     <Col className="gutter-row" md={ 6 } style={{ marginBottom: '1rem' }}>
                         <div onClick={ () => this.postVal() }>
-                            <h1 style={{ cursor: 'pointer' }}> 将 state 中数据提交 </h1>
+                            <h1 style={{ cursor: 'pointer' }}> 将 state 中数据保存到LS </h1>
                         </div>
                     </Col>
 
                     <Col className="gutter-row" md={ 6 } style={{ marginBottom: '1rem' }}>
                         <div onClick={() => this.setVal()}>
-                            <h1 style={{ cursor: 'pointer' }}> 将 html格式数据设置到 state中 </h1>
+                            <h1 style={{ cursor: 'pointer' }}> 将 LS取出数据, 设置到 state中 </h1>
                         </div>
                     </Col>
 
@@ -270,4 +271,4 @@ class EditorConvertToHTML extends React.Component {
     }
 }
 
-export default EditorConvertToHTML
+export default Wysiwyg
