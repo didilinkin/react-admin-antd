@@ -249,10 +249,15 @@ class PropertyNotice extends Component {
             isFirst: true })
         this.refresh()
     }
+    enterKey = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.refresh()
+        }
+    }
     render () {
         // const { getFieldDecorator } = this.props.form
         return (
-            <div>
+            <div onKeyDown={this.enterKey}>
                 {/* <Modal maskClosable={false}
                     title="受理投诉"
                     style={{top: 100}}

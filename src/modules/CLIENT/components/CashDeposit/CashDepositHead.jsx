@@ -39,11 +39,16 @@ class CollectRentHead extends React.Component {
             openPropertyAdd: false
         })
     }
+    enterKey = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.handleSubmit()
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { ListBuildingInfo} = this.props
         return (
-            <div>
+            <div onKeyDown={this.enterKey}>
                 <Form layout="horizontal">
                     <Row>
                         <Col span={5}>
