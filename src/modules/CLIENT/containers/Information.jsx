@@ -209,9 +209,14 @@ class Information extends Component {
             RowKeys: selectedRowKeys
         })
     }
+    enterKey = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.refresh()
+        }
+    }
     render () {
         return (
-            <div>
+            <div onKeyDown={this.enterKey}>
                 <AddCustomer
                     id={this.state.id}
                     refreshTable={this.refresh}

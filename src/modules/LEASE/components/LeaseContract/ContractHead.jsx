@@ -54,6 +54,11 @@ class ContractHead extends React.Component {
             })
         }
     }
+    enter = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.handleSubmit()
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
@@ -66,7 +71,7 @@ class ContractHead extends React.Component {
         }
         let spanNumber = this.state.openState ? 8 : 6
         return (
-            <Form layout="horizontal">
+            <Form layout="horizontal" onKeyDown={this.enter}>
                 <Row>
                     <Col span={spanNumber}>
                         <FormItem label="合同类型" labelCol={{ span: 6 }}

@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import '../style/test.less'
-import PropertyFeeFinanceFailComponent from '../details/PropertyFee/AfterAudit'
+import PropertyFeeFinanceFailComponent from '../details/PropertyFee/PropertyFeeDetail'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 
 // 引入组件
@@ -185,6 +185,13 @@ class PropertyFeeFinanceFail extends Component {
             RowKeys: selectedRowKeys
         })
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     render () {
         return (
             <div>
@@ -196,6 +203,7 @@ class PropertyFeeFinanceFail extends Component {
                 />
                 <PropertyFeeFinanceFailComponent
                     id={this.state.id}
+                    close={this.close}
                     refreshTable={this.refresh}
                     visible={this.state.openUpdate}
                 />

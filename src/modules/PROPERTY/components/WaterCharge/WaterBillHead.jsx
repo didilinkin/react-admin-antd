@@ -6,7 +6,6 @@ const Option = Select.Option
 const FormItem = Form.Item
 const { RangePicker } = DatePicker
 
-
 class WaterBillHead extends React.Component {
     constructor (props) {
         super(props)
@@ -89,13 +88,18 @@ class WaterBillHead extends React.Component {
         })
         this.handleSubmit()
     }
+    enter = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.handleSubmit()
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo } = this.props
         let fourOpen = (this.props.type === 4) && this.state.openState
         let spanEight = fourOpen ? 8 : 6
         return (
-            <div>
+            <div onKeyDown={this.enter}>
                 <Form layout="horizontal">
                     <Row>
                         <Col span={spanEight}>

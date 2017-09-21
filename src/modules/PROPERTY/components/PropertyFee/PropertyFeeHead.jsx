@@ -90,13 +90,18 @@ class CollectRentHead extends React.Component {
             this.handleSubmit()
         }
     }
+    enter = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.handleSubmit()
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let { type, ListBuildingInfo} = this.props
         let fourOpen = (this.props.type === 2) && this.state.openState
         let spanEight = fourOpen ? 8 : 6
         return (
-            <div>
+            <div onKeyDown={this.enter}>
                 <PropertyAddComponent
                     id={null}
                     close={this.close}

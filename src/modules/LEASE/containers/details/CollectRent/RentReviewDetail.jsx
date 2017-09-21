@@ -1,6 +1,6 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, Modal} from 'antd'
+import {Row, Col, Modal, Spin} from 'antd'
 import '../../../style/test.less'
 import { apiPost } from '../../../../../api'
 
@@ -11,6 +11,7 @@ class RentDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            loading: false,
             auditStatus: 2,
             payPeriod: '',
             invoiceRentStatus: '',
@@ -40,6 +41,7 @@ class RentDetail extends React.Component {
     }
     async initialRemarks (nextProps) {
         this.setState({
+            loading: true,
             view: false
         })
         if (this.state.isFirst && nextProps.visible) {
@@ -98,6 +100,7 @@ class RentDetail extends React.Component {
                 data3: result3.data,
                 visible: nextProps.visible,
                 isFirst: false,
+                loading: false,
                 view: true
             })
         }
@@ -117,72 +120,73 @@ class RentDetail extends React.Component {
                 footer={null}
                 onCancel={this.handleCancel}
             >
-                <div className="contract">
-                    <h2>租户信息</h2>
-                    <Row>
-                        <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
-                        <Col span={14}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
-                        <Col span={14}><b>房间编号：</b>{this.state.data.roomNum} </Col>
-                    </Row>
-                    <div className="wrapbox">
-                        <div className="title">租金信息</div>
-                        <div className="main">
-                            <h2>费用设置</h2>
-                            <Row>
-                                <Col span={10}><b>合同单价：</b>
-                                    <MoneySpan>
-                                        {this.state.data.unitPrice}
-                                    </MoneySpan>
+                <Spin spinning={this.state.loading}>
+                    <div className="contract">
+                        <h2>租户信息</h2>
+                        <Row>
+                            <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                        </Row>
+                        <Row>
+                            <Col span={10}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
+                            <Col span={14}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
+                        </Row>
+                        <Row>
+                            <Col span={10}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
+                            <Col span={14}><b>房间编号：</b>{this.state.data.roomNum} </Col>
+                        </Row>
+                        <div className="wrapbox">
+                            <div className="title">租金信息</div>
+                            <div className="main">
+                                <h2>费用设置</h2>
+                                <Row>
+                                    <Col span={10}><b>合同单价：</b>
+                                        <MoneySpan>
+                                            {this.state.data.unitPrice}
+                                        </MoneySpan>
                                     元/㎡/天
-                                </Col>
-                                <Col span={14}><b>交费方式：</b>{this.state.payPeriod}</Col>
-                            </Row>
-                            <Row>
-                                <Col span={10}><b>首年租金：</b>
-                                    <MoneySpan>
-                                        {this.state.data.firstYearRent}
-                                    </MoneySpan>
+                                    </Col>
+                                    <Col span={14}><b>交费方式：</b>{this.state.payPeriod}</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={10}><b>首年租金：</b>
+                                        <MoneySpan>
+                                            {this.state.data.firstYearRent}
+                                        </MoneySpan>
                                     元</Col>
-                                <Col span={14}>
-                                    <MoneySpan>
-                                        {this.state.data.startIncNum}
-                                    </MoneySpan>
+                                    <Col span={14}>
+                                        <MoneySpan>
+                                            {this.state.data.startIncNum}
+                                        </MoneySpan>
                                     年后租金每年递增 {this.state.data.rentIncrRate} %
-                                </Col>
-                            </Row>
-                            <p className="line" />
-                            <h2>本期租金</h2>
-                            <Row>
-                                <Col span={10}><b>本期周期：</b>{this.state.data.periodRent}</Col>
-                                <Col span={14}><b>交费期限：</b>{this.state.data.payDeadline}</Col>
-                            </Row>
-                            <Row>
-                                <Col span={24}><b>本期租金：</b>
-                                    <MoneySpan>
-                                        {this.state.data.actualPaidMoney}
-                                    </MoneySpan>
+                                    </Col>
+                                </Row>
+                                <p className="line" />
+                                <h2>本期租金</h2>
+                                <Row>
+                                    <Col span={10}><b>本期周期：</b>{this.state.data.periodRent}</Col>
+                                    <Col span={14}><b>交费期限：</b>{this.state.data.payDeadline}</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={24}><b>本期租金：</b>
+                                        <MoneySpan>
+                                            {this.state.data.actualPaidMoney}
+                                        </MoneySpan>
                                     元（已优惠 <MoneySpan>{this.state.data.discountMoney}</MoneySpan> 元）</Col>
-                            </Row>
-                            <p className="line" />
-                            <h2>其他信息</h2>
-                            <Row>
-                                <Col span={10}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
-                                <Col span={14}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
-                            </Row>
-                            {this.state.data.auditStatus !== 1 && this.state.data.auditStatus !== 0 &&
+                                </Row>
+                                <p className="line" />
+                                <h2>其他信息</h2>
+                                <Row>
+                                    <Col span={10}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
+                                    <Col span={14}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
+                                </Row>
+                                {this.state.data.auditStatus !== 1 && this.state.data.auditStatus !== 0 &&
                                 <Row>
                                     <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
                                     <Col span={14}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
                                 </Row>}
+                            </div>
                         </div>
-                    </div>
-                    {this.state.data.whetherRentPaid !== 0 &&
+                        {this.state.data.whetherRentPaid !== 0 &&
                         <div className="wrapbox">
                             <div className="title">
                                 收款信息
@@ -342,8 +346,9 @@ class RentDetail extends React.Component {
                             </div>
                             }
                         </div>
-                    }
-                </div>
+                        }
+                    </div>
+                </Spin>
             </Modal>
         )
     }

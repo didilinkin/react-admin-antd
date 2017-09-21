@@ -12,17 +12,20 @@ class RentManagement extends Component {
     constructor (props) {
         super(props)
         this.state = {
+            key: 0
         }
     }
     callback = (key) => {
-        console.log(key)
+        this.setState({
+            key: key
+        })
     }
     render () {
-        return (<Tabs defaultActiveKey="1" onChange={() => this.callback}>
-            <TabPane tab="待收租" key="1"><CollectRenting /></TabPane>
-            <TabPane tab="审核中" key="2"><CollectRentConduct /></TabPane>
-            <TabPane tab="审核失败" key="3"><CollectRentFail /></TabPane>
-            <TabPane tab="审核成功" key="4"><CollectRentSuccess /></TabPane>
+        return (<Tabs defaultActiveKey="1" onChange={this.callback}>
+            <TabPane tab="待收租" key="1"><CollectRenting key={this.state.key} /></TabPane>
+            <TabPane tab="审核中" key="2"><CollectRentConduct key={this.state.key} /></TabPane>
+            <TabPane tab="审核失败" key="3"><CollectRentFail key={this.state.key} /></TabPane>
+            <TabPane tab="审核成功" key="4"><CollectRentSuccess key={this.state.key} /></TabPane>
         </Tabs>
         )
     }

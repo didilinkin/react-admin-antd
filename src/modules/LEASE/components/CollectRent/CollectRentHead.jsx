@@ -63,51 +63,57 @@ class CollectRentHead extends React.Component {
             this.endDate = dateString[1]
         }
     }
+    enter = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.handleSubmit()
+        }
+    }
     render () {
         const { getFieldDecorator } = this.props.form
         let {type, ListBuildingInfo} = this.props
         let sapnNumber = this.state.openState ? 8 : 6
         return (
-            <Form layout="horizontal">
-                <Row>
-                    <Col span={sapnNumber}>
-                        <FormItem label="所属楼宇" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 10 }}
-                        >
-                            {getFieldDecorator('buildId')(
-                                <Select
-                                    showSearch
-                                    allowClear
-                                    style={{ width: 200 }}
-                                    placeholder="请选择所属楼宇"
-                                    optionFilterProp="children"
-                                >
-                                    {ListBuildingInfo.map(BuildingInfo => {
-                                        return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
-                                    })}
-                                </Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={sapnNumber}>
-                        <FormItem label="客户名称" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
-                        >
-                            {getFieldDecorator('rentClientName')(
-                                <Input placeholder="请输入客户名称" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={sapnNumber}>
-                        <FormItem label="房间编号" labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 12 }}
-                        >
-                            {getFieldDecorator('roomNum')(
-                                <Input placeholder="请输入房间编号" style={{ width: 200 }} />
-                            )}
-                        </FormItem>
-                    </Col>
-                    {this.state.openState ||
+            <div onKeyDown={this.enter}>
+                <Form layout="horizontal">
+                    <Row>
+                        <Col span={sapnNumber}>
+                            <FormItem label="所属楼宇" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 10 }}
+                            >
+                                {getFieldDecorator('buildId')(
+                                    <Select
+                                        showSearch
+                                        allowClear
+                                        style={{ width: 200 }}
+                                        placeholder="请选择所属楼宇"
+                                        optionFilterProp="children"
+                                    >
+                                        {ListBuildingInfo.map(BuildingInfo => {
+                                            return <Option key={BuildingInfo.id}>{BuildingInfo.buildName}</Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="客户名称" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 12 }}
+                            >
+                                {getFieldDecorator('rentClientName')(
+                                    <Input placeholder="请输入客户名称" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={sapnNumber}>
+                            <FormItem label="房间编号" labelCol={{ span: 6 }}
+                                wrapperCol={{ span: 12 }}
+                            >
+                                {getFieldDecorator('roomNum')(
+                                    <Input placeholder="请输入房间编号" style={{ width: 200 }} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        {this.state.openState ||
                     <Col span={sapnNumber}>
                         <div>
                             <Button type="primary" onClick={this.handleSubmit}>搜索</Button>
@@ -117,8 +123,8 @@ class CollectRentHead extends React.Component {
                             }
                         </div>
                     </Col>
-                    }
-                    {this.state.openState &&
+                        }
+                        {this.state.openState &&
                     <div>
                         <Col span={sapnNumber}>
                             <FormItem label="开票状态" labelCol={{ span: 6 }}
@@ -198,9 +204,9 @@ class CollectRentHead extends React.Component {
                             </FormItem>
                         </Col>
                     </div>
-                    }
-                </Row>
-                {type === 2 &&
+                        }
+                    </Row>
+                    {type === 2 &&
                 <Row style={{marginBottom: '10px'}}>
                     <Col span={16}>
                         <span>
@@ -222,8 +228,9 @@ class CollectRentHead extends React.Component {
                     </Col>
                     }
                 </Row>
-                }
-            </Form>
+                    }
+                </Form>
+            </div>
         )
     }
 }
