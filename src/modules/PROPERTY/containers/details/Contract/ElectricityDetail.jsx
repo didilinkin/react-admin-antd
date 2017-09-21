@@ -121,7 +121,11 @@ class ElectricityDetail extends React.Component {
                                 <em className="color1">
                                     功峰平谷
                                 </em>}
-                                单价 <em className="color1">{this.state.contract.powerUnitPrice}</em> 元/度  变比 <em className="color1">{this.state.contract.powerRatio}</em> 电损比 <em className="color1">{this.state.contract.powerLossRatio}</em>%</Col>
+                                单价 <em className="color1">{this.state.contract.powerUnitPrice}</em> 元/度  变比 <em className="color1">{this.state.contract.powerRatio}</em>
+                                {this.state.contract.powerType !== 0 &&
+                                    <span>电损比 <em className="color1">{this.state.contract.powerLossRatio}</em>%</span>
+                                }
+                            </Col>
                         </Row>
                         <Row>
                             <Col span={16}><b>水费收费方式：</b>
