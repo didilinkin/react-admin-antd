@@ -52,6 +52,7 @@ class PropertyFeeDetail extends React.Component {
         this.setState({
             loading: true,
             id: nextProps.id,
+            visible: nextProps.visible,
             view: false
         })
         let resulData = await apiPost(
@@ -95,7 +96,6 @@ class PropertyFeeDetail extends React.Component {
             data2: result2.data,
             data3: result3.data,
             isFirst: false,
-            visible: nextProps.visible,
             loading: false,
             view: true
         })
