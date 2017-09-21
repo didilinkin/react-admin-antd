@@ -378,7 +378,7 @@ class ElectricChargeDetails extends React.Component {
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
                                             <span style={{marginLeft: '10px'}}>{feesInfo.createName}</span>
-                                            <span style={{marginLeft: '10px'}}>{feesInfo.updateDate ? feesInfo.updateDate : feesInfo.createDate}</span>
+                                            <span style={{marginLeft: '10px'}}>{feesInfo.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
