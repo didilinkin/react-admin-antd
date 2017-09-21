@@ -224,9 +224,14 @@ class InventoryManage extends React.Component {
             RowKeys: selectedRowKeys
         })
     }
+    enterKey = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.refresh()
+        }
+    }
     render () {
         return (
-            <div>
+            <div onKeyDown={this.enterKey}>
                 <WarehouseAddUp
                     refreshTable={ this.refresh }
                     visible={ this.state.openAdd }

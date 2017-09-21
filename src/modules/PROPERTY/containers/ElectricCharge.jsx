@@ -197,17 +197,15 @@ class ElectricCharge extends React.Component {
                 title: '收费类型',
                 dataIndex: 'wattHourType',
                 render: function (text) {
-                    if (text) {
-                        let dataIndex = '固定单价'
-                        if (text === 1) {
-                            dataIndex = '差额单价'
-                        } else if (text === 2) {
-                            dataIndex = '功峰平谷'
-                        }
-                        return (
-                            <p>{dataIndex}</p>
-                        )
+                    let dataIndex = '固定单价'
+                    if (text === 1) {
+                        dataIndex = '差额单价'
+                    } else if (text === 2) {
+                        dataIndex = '功峰平谷'
                     }
+                    return (
+                        <p>{dataIndex}</p>
+                    )
                 }
             }, {
                 title: '本期电费周期',
@@ -280,7 +278,7 @@ class ElectricCharge extends React.Component {
             }, {
                 title: ' 操作',
                 fixed: 'right',
-                width: '80',
+                width: '150',
                 dataIndex: 'opt',
                 render: function (text, record) {
                     console.log(record)

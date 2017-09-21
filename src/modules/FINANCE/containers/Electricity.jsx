@@ -138,11 +138,11 @@ class Electricity extends React.Component {
             }, {
                 title: '收费类型',
                 dataIndex: 'wattHourType',
-                render: function (text, record, index) {
+                render: function (text) {
                     let dataIndex = '固定单价'
-                    if (record.wattHourType === 1) {
+                    if (text === 1) {
                         dataIndex = '差额单价'
-                    } else if (record.wattHourType === 2) {
+                    } else if (text === 2) {
                         dataIndex = '功峰平谷'
                     }
                     return (

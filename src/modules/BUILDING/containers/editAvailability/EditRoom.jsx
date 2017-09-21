@@ -266,10 +266,15 @@ class EditRoom extends React.Component {
             RowKeys: selectedRowKeys
         })
     }
+    enterKey = (event) => {
+        if (event.keyCode === 13) { // enter 键
+            this.refresh()
+        }
+    }
     render () {
         let ListBuildingInfo = this.state.ListBuildingInfo
         return (
-            <div>
+            <div onKeyDown={this.enterKey}>
                 <AddRoom
                     id={this.state.id}
                     refreshTable={this.refresh}

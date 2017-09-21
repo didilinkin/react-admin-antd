@@ -10,7 +10,8 @@ class PowerInfomation extends React.Component {
         list: [],
         isFirst: true,
         visible: false,
-        mainColumns: []
+        mainColumns: [],
+        value: 2
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {

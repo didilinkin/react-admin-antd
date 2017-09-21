@@ -11,16 +11,19 @@ class Margin extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            key: 0
         }
     }
     callback = (key) => {
-        console.log(key)
+        this.setState({
+            key: key
+        })
     }
     render () {
-        return (<Tabs onChange={() => this.callback}>
-            <TabPane tab="租赁保证金" key="1"><CashDepositRent pro={this.props} /></TabPane>
-            <TabPane tab="能源管理押金" key="2"><CashDepositProperty pro={this.props} /></TabPane>
-            <TabPane tab="欢乐颂管理押金" key="3"><CashDepositSong pro={this.props} /></TabPane>
+        return (<Tabs onChange={this.callback}>
+            <TabPane tab="租赁保证金" key="1"><CashDepositRent key={this.state.key} pro={this.props} /></TabPane>
+            <TabPane tab="能源管理押金" key="2"><CashDepositProperty key={this.state.key} pro={this.props} /></TabPane>
+            <TabPane tab="欢乐颂管理押金" key="3"><CashDepositSong key={this.state.key} pro={this.props} /></TabPane>
         </Tabs>
         )
     }
