@@ -26,6 +26,8 @@ class TabsContainers extends React.Component {
     }
 
     handleChange = () => {
+        // console.log('检查当前url')
+        // console.dir(this)
         const arrPanes = this.props.panesState.panes
         const strUrl = this.props.rootState.router.location.pathname
         const hasUrlIndex = hasString(arrPanes, 'path', strUrl)
@@ -62,7 +64,13 @@ class TabsContainers extends React.Component {
             }
         })
 
-        this.props.tabsProps.history.push(activeObj.path)
+        // console.log('activeObj')
+        // console.dir(activeObj)
+
+        this.props.tabsProps.history.push(activeObj.path) // 如果是详情, 只跳转; 内容无更新
+
+        this.setActivePane(activeObj)
+        // location.href = activeObj.path // 会导致丢失 redux数据
     }
 
     onEdit = (targetKey, action) => {
