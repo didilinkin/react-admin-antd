@@ -151,7 +151,9 @@ class ElectricChargeDetails extends React.Component {
     }
     handleCancel = (e) => {
         this.setState({ visible: false,
-            isFirst: true})
+            isFirst: true,
+            collectMoney: false,
+            collectPenal: false})
         this.props.refresh({}, {}, {})
     }
     initialRemarks = async (nextProps) => {
@@ -562,7 +564,7 @@ function ExamineSuccessState (props) {
                             pagination={false}
                         />
                     </div>
-                    {props.fees.defaultPaymentStatus !== 2 &&
+                    {props.fees.liquidatedDamages > 0 &&
                     <div>
                         <hr />
                         <div style={{

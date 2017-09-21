@@ -118,19 +118,15 @@ class WaterBillHead extends React.Component {
                             </FormItem>
                         </Col>
                         <Col span={spanEight}>
-                            <FormItem label="房间编号" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('roomNumber')(
+                            <FormItem label="客户名称" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                {getFieldDecorator('clientSubletName')(
                                     <Input placeholder="请输入" style={{ width: 200 }} />
                                 )}
                             </FormItem>
                         </Col>
                         <Col span={spanEight}>
-                            <FormItem label="客户名称" labelCol={{ span: 6 }}
-                                wrapperCol={{ span: 16 }}
-                            >
-                                {getFieldDecorator('clientSubletName')(
+                            <FormItem label="房间编号" labelCol={{ span: 6 }} wrapperCol={{ span: 16 }}>
+                                {getFieldDecorator('roomNumber')(
                                     <Input placeholder="请输入" style={{ width: 200 }} />
                                 )}
                             </FormItem>
