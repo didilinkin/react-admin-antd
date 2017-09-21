@@ -1,12 +1,12 @@
 // 收费管理 - 审核中
-import React, {Component} from 'react'
+import React from 'react'
 import {Table, Spin} from 'antd'
 import { apiPost } from '../../../../api'
 import PropertyFeeConductComponent from '../details/PropertyFee/PropertyDetail'
 import PropertyFeeHeadComponent from '../../components/PropertyFee/PropertyFeeHead'
 // 引入组件
 // React component
-class PropertyFeeConduct extends Component {
+class PropertyFeeConduct extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
