@@ -69,6 +69,7 @@ class RentReviewDetail extends React.Component {
         this.setState({
             loading: true,
             id: nextProps.id,
+            visible: nextProps.visible,
             view: false
         })
         if (this.state.isFirst && nextProps.visible) {
@@ -126,7 +127,6 @@ class RentReviewDetail extends React.Component {
                 data2: result2.data,
                 data3: result3.data,
                 isFirst: false,
-                visible: nextProps.visible,
                 loading: false,
                 view: true
             })
@@ -290,8 +290,8 @@ class RentReviewDetail extends React.Component {
                                 <p className="line" />
                                 <h2>其他信息</h2>
                                 <Row>
-                                    <Col span={10}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
-                                    <Col span={14}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
+                                    <Col span={10}><b>录入日期：</b>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                    <Col span={14}><b>最后修改：</b>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
                                 </Row>
                                 {this.state.data.auditStatus === 1 &&
                                 <Row>
@@ -303,7 +303,7 @@ class RentReviewDetail extends React.Component {
                                 }
                                 {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
                                 <Row>
-                                    <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}
+                                    <Col span={10}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}
                                     </Col>
                                     <Col
                                         span={14}

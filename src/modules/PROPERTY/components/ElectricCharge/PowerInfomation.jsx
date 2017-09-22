@@ -339,7 +339,7 @@ class PowerInfomation extends React.Component {
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
                                             <span style={{marginLeft: '10px'}}>{fees.createName}</span>
-                                            <span style={{marginLeft: '10px'}}>{fees.updateDate ? fees.updateDate : fees.createDate}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
