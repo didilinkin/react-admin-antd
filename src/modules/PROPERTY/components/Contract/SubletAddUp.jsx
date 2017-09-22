@@ -77,8 +77,9 @@ class SubletAddUp extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
-            json['subletStartDate'] = json.subletStartDate.format('YYYY-MM-DD')
-            json['subletEndDate'] = json.subletEndDate.format('YYYY-MM-DD')
+
+            json['subletStartDate'] = json.subletStartDate ? json.subletStartDate.format('YYYY-MM-DD') : null
+            json['subletEndDate'] = json.subletEndDate ? json.subletEndDate.format('YYYY-MM-DD') : null
             json['roomNum'] = json.roomNum.toString()
             json['buildId'] = this.props.data.contract.buildId
             json['clientId'] = this.props.data.contract.clientId
