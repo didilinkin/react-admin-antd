@@ -189,24 +189,14 @@ class SubletAddUp extends React.Component {
                         <FormItem label="起租日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('subletStartDate', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请选择!'
-                                }]
-                            })(
+                            {getFieldDecorator('subletStartDate')(
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>
                         <FormItem label="结束日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('subletEndDate', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请选择!'
-                                }]
-                            })(
+                            {getFieldDecorator('subletEndDate')(
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>
