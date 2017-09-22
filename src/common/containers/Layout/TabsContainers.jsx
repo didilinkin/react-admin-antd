@@ -2,14 +2,14 @@
  * @author 闫晓迪
  * @email 929213769@qq.com
  * @create date 2017-09-06 02:17:06
- * @modify date 2017-09-13 04:36:32
+ * @modify date 2017-09-22 06:26:26
  * @desc 自定义新增页签触发器(完整注释查看 commit: 4b24e5fd6a4ec91727d3043c4403919fdff94fd3)
 */
 import React from 'react'
 import cloneDeep from 'lodash/cloneDeep' // isArray
 import { hasString } from '../../../utils'
 
-import { Tabs } from 'antd' // Button
+import { Tabs, Row, Col, Menu, Dropdown, Icon, message } from 'antd' // Button
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
@@ -26,8 +26,6 @@ class TabsContainers extends React.Component {
     }
 
     handleChange = () => {
-        // console.log('检查当前url')
-        // console.dir(this)
         const arrPanes = this.props.panesState.panes
         const strUrl = this.props.rootState.router.location.pathname
         const hasUrlIndex = hasString(arrPanes, 'path', strUrl)
@@ -135,28 +133,65 @@ class TabsContainers extends React.Component {
         })
     }
 
+    // 右侧下拉 功能按钮 - 按钮点击事件
+    handleButtonClick = (e) => {
+        message.info('关闭全部选项卡')
+        console.log('click left button', e)
+    }
+
+    // 右侧下拉 功能按钮 - 菜单点击事件
+    handleMenuClick = (e) => {
+        message.info('关闭其他选项卡')
+        console.log('click', e)
+    }
+
+    menu = (
+        <Menu onClick={ this.handleMenuClick }>
+            <Menu.Item key="1"> 关闭全部选项卡 </Menu.Item>
+            <Menu.Item key="2"> 关闭其他选项卡 </Menu.Item>
+        </Menu>
+    )
+
     render () {
         return (
-            <div>
-                <Tabs
-                    hideAdd
-                    type="editable-card"
-                    onEdit={ this.onEdit }
-                    onChange={ this.onChange }
-                    activeKey={ this.state.activePane.key }
+            <Row>
+                <Col span={ 22 }>
+                    <Tabs
+                        hideAdd
+                        type="editable-card"
+                        onEdit={this.onEdit}
+                        onChange={this.onChange}
+                        activeKey={this.state.activePane.key}
+                    >
+                        {
+                            this.state.panes.map((pane) => (
+                                <TabPane
+                                    closable={pane.closable}
+                                    key={pane.key}
+                                    tab={pane.title}
+                                    path={pane.path}
+                                />
+                            ))
+                        }
+                    </Tabs>
+                </Col>
+                <Col
+                    span={ 2 }
+                    style={{
+                        textAlign: 'center',
+                        lineHeight: 2
+                    }}
                 >
-                    {
-                        this.state.panes.map((pane) => (
-                            <TabPane
-                                closable={ pane.closable }
-                                key={ pane.key }
-                                tab={ pane.title }
-                                path={ pane.path }
-                            />
-                        ))
-                    }
-                </Tabs>
-            </div>
+                    <Dropdown
+                        overlay={ this.menu }
+                        trigger={['click']}
+                    >
+                        <a className="ant-dropdown-link" href="#">
+                            关闭操作 <Icon type="down" />
+                        </a>
+                    </Dropdown>
+                </Col>
+            </Row>
         )
     }
 }
