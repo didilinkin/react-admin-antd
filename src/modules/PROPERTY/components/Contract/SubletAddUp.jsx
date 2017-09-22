@@ -51,8 +51,8 @@ class SubletAddUp extends React.Component {
                     phoneFinance: SubletInfo.phoneFinance,
                     phoneManager: SubletInfo.phoneManager,
                     email: SubletInfo.email,
-                    subletStartDate: moment(SubletInfo.subletStartDate),
-                    subletEndDate: moment(SubletInfo.subletEndDate),
+                    subletStartDate: SubletInfo.subletStartDate ? moment(SubletInfo.subletStartDate) : null,
+                    subletEndDate: SubletInfo.subletEndDate ? moment(SubletInfo.subletEndDate) : null,
                     roomNum: SubletInfo.roomNum.split(','),
                     energy: SubletInfo.energy
                 })
