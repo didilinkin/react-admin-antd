@@ -31,12 +31,17 @@ class ContractDetail extends React.Component {
             ListSublet: contract.data.subletInfoList,
             contract: contract.data.contract
         })
-        console.log(contract.data.contract)
-        console.log(contract.data.subletInfoList)
     }
     componentWillMount () {
         this.initialRemarks()
     }
+
+
+    // 新加入 监听 props
+    componentWillReceiveProps = (nextProps) => {
+        this.initialRemarks()
+    }
+
     SubletOpen = (id) => {
         if (id > 0) {
             this.setState({
@@ -67,9 +72,10 @@ class ContractDetail extends React.Component {
     }
     refresh = async () => {
         let contract = await apiPost(
-            '/contract/getcontract',
-            {'id': this.props.match.params.id,
-                type: 1}
+            '/contract/getcontract', {
+                'id': this.props.match.params.id,
+                type: 1
+            }
         )
         this.setState({
             ListSublet: contract.data.subletInfoList,
@@ -87,6 +93,8 @@ class ContractDetail extends React.Component {
         })
     }
     render () {
+        console.log('详情页渲染次数')
+
         return (
             <div className="contract">
                 <h2>房源信息</h2>
