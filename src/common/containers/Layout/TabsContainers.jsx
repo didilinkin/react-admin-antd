@@ -64,13 +64,9 @@ class TabsContainers extends React.Component {
             }
         })
 
-        // console.log('activeObj')
-        // console.dir(activeObj)
-
         this.setActivePane(activeObj) // 修改 redux activePane; 检查是否二次渲染
 
         this.props.tabsProps.history.push(activeObj.path) // 如果是详情, 只跳转; 内容无更新
-        // location.href = activeObj.path // 会导致丢失 redux数据
     }
 
     onEdit = (targetKey, action) => {
@@ -140,8 +136,6 @@ class TabsContainers extends React.Component {
     }
 
     render () {
-        console.log('标签渲染')
-
         return (
             <div>
                 <Tabs
