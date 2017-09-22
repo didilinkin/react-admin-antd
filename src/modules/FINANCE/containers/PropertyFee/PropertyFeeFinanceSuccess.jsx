@@ -249,6 +249,13 @@ class PropertyFeeFinanceSuccess extends React.Component {
             RowKeys: selectedRowKeys
         })
     }
+    close = async () => {
+        this.setState({
+            openAdd: false,
+            openTableAddUp: false,
+            openUpdate: false
+        })
+    }
     render () {
         return (
             <div>

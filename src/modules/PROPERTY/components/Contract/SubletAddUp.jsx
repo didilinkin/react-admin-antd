@@ -51,8 +51,8 @@ class SubletAddUp extends React.Component {
                     phoneFinance: SubletInfo.phoneFinance,
                     phoneManager: SubletInfo.phoneManager,
                     email: SubletInfo.email,
-                    subletStartDate: moment(SubletInfo.subletStartDate),
-                    subletEndDate: moment(SubletInfo.subletEndDate),
+                    subletStartDate: SubletInfo.subletStartDate ? moment(SubletInfo.subletStartDate) : null,
+                    subletEndDate: SubletInfo.subletEndDate ? moment(SubletInfo.subletEndDate) : null,
                     roomNum: SubletInfo.roomNum.split(','),
                     energy: SubletInfo.energy
                 })
@@ -77,8 +77,9 @@ class SubletAddUp extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
-            json['subletStartDate'] = json.subletStartDate.format('YYYY-MM-DD')
-            json['subletEndDate'] = json.subletEndDate.format('YYYY-MM-DD')
+
+            json['subletStartDate'] = json.subletStartDate ? json.subletStartDate.format('YYYY-MM-DD') : null
+            json['subletEndDate'] = json.subletEndDate ? json.subletEndDate.format('YYYY-MM-DD') : null
             json['roomNum'] = json.roomNum.toString()
             json['buildId'] = this.props.data.contract.buildId
             json['clientId'] = this.props.data.contract.clientId
@@ -189,24 +190,14 @@ class SubletAddUp extends React.Component {
                         <FormItem label="起租日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('subletStartDate', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请选择!'
-                                }]
-                            })(
+                            {getFieldDecorator('subletStartDate')(
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>
                         <FormItem label="结束日期" labelCol={{ span: 6 }}
                             wrapperCol={{ span: 15 }}
                         >
-                            {getFieldDecorator('subletEndDate', {
-                                rules: [ {
-                                    required: true,
-                                    message: '请选择!'
-                                }]
-                            })(
+                            {getFieldDecorator('subletEndDate')(
                                 <DatePicker style={{ width: 200 }} />
                             )}
                         </FormItem>

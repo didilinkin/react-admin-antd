@@ -224,8 +224,12 @@ class ContractDetail extends React.Component {
                                 </em> 元/度
                                 <span style={{marginLeft: '20px'}}>
                                     变比
-                                    <em className="color1">{this.state.contract.powerRatio}</em> 电损比
-                                    <em className="color1">{this.state.contract.powerLossRatio}</em>%
+                                    <em className="color1">{this.state.contract.powerRatio}</em>
+                                    {this.state.contract.powerType !== 0 &&
+                                        <span>
+                                            电损比<em className="color1">{this.state.contract.powerLossRatio}</em>%
+                                        </span>
+                                    }
                                 </span>
                             </Col>
                         </Row>

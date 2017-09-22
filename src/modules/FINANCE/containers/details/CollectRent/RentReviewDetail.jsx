@@ -1,16 +1,18 @@
 // 租金明细
 import React from 'react'
-import {Row, Col, notification, Icon, Popconfirm, Button, Modal} from 'antd'
+import {Row, Col, notification, Icon, Popconfirm, Button, Modal, Spin, Radio} from 'antd'
 import '../../style/test.less'
 import { apiPost } from '../../../../../api'
 import CollectRentLateConfirmComponent from '../../../components/CollectRent/CollectRentLateConfirm'
 import CollectRentConfirmComponent from '../../../components/CollectRent/CollectRentConfirm'
+const RadioGroup = Radio.Group
 
 
 class RentReviewDetail extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            loading: false,
             visible: false,
             view: true,
             isFirst: true,
@@ -65,7 +67,9 @@ class RentReviewDetail extends React.Component {
     }
     async initialRemarks (nextProps) {
         this.setState({
+            loading: true,
             id: nextProps.id,
+            visible: nextProps.visible,
             view: false
         })
         if (this.state.isFirst && nextProps.visible) {
@@ -123,7 +127,7 @@ class RentReviewDetail extends React.Component {
                 data2: result2.data,
                 data3: result3.data,
                 isFirst: false,
-                visible: nextProps.visible,
+                loading: false,
                 view: true
             })
         }
@@ -202,83 +206,117 @@ class RentReviewDetail extends React.Component {
         this.setState({ visible: false,
             isFirst: true})
         this.props.close()
+        this.props.refreshTable()
+    }
+    handleCommit = async () => {
+        let result = await apiPost(
+            'collectRent/updateCollectRentVoByAudit',
+            {auditStatus: this.state.auditStatus,
+                remark: this.state.remark,
+                id: this.state.data.id}
+        )
+        notification.open({
+            message: result.data,
+            icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />
+        })
+        this.props.refreshTable()
+        this.setState({visible: false,
+            isFirst: false })
     }
     render () {
         let chargeList = this.state.data2
         let chargeList2 = this.state.data3
         return (
             <Modal maskClosable={false}
-                title= "物业费明细"
+                title= "租金明细"
                 style={{top: 20}}
                 width={900}
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
                 footer={null}
             >
-                <div style={this.props.style} className="contract">
-                    <CollectRentConfirmComponent
-                        id={this.state.id}
-                        refreshTable={this.refresh}
-                        close={this.close}
-                        visible={this.state.openUpdate}
-                    />
-                    <CollectRentLateConfirmComponent
-                        id={this.state.id}
-                        refreshTable={this.refresh}
-                        close={this.close}
-                        visible={this.state.openUpdate2}
-                    />
-                    <h2>租户信息</h2>
-                    <Row>
-                        <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
-                        <Col span={14}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
-                    </Row>
-                    <Row>
-                        <Col span={10}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
-                        <Col span={14}><b>房间编号：</b>{this.state.data.roomNum} </Col>
-                    </Row>
-                    <div className="wrapbox">
-                        <div className="title">租金信息</div>
-                        <div className="main">
-                            <h2>费用设置</h2>
-                            <Row>
-                                <Col span={10}><b>合同单价：</b>
-                                    <span className="color1">{this.state.data.unitPrice}</span>元/㎡/天</Col>
-                                <Col span={14}><b>交费方式：</b>{this.state.payPeriod}</Col>
-                            </Row>
-                            <Row>
+                <Spin spinning={this.state.loading}>
+                    <div style={this.props.style} className="contract">
+                        <CollectRentConfirmComponent
+                            id={this.state.id}
+                            refreshTable={this.refresh}
+                            close={this.close}
+                            visible={this.state.openUpdate}
+                        />
+                        <CollectRentLateConfirmComponent
+                            id={this.state.id}
+                            refreshTable={this.refresh}
+                            close={this.close}
+                            visible={this.state.openUpdate2}
+                        />
+                        <h2>租户信息</h2>
+                        <Row>
+                            <Col span={24}><b>客户名称：</b>{this.state.data.rentClientName} </Col>
+                        </Row>
+                        <Row>
+                            <Col span={10}><b>租赁周期：</b>{this.state.data.periodContract}</Col>
+                            <Col span={14}><b>租赁面积：</b>{this.state.data.leaseArea} </Col>
+                        </Row>
+                        <Row>
+                            <Col span={10}><b>所属楼宇：</b>{this.state.data.buildName} </Col>
+                            <Col span={14}><b>房间编号：</b>{this.state.data.roomNum} </Col>
+                        </Row>
+                        <div className="wrapbox">
+                            <div className="title">租金信息</div>
+                            <div className="main">
+                                <h2>费用设置</h2>
+                                <Row>
+                                    <Col span={10}><b>合同单价：</b>
+                                        <span className="color1">{this.state.data.unitPrice}</span>元/㎡/天</Col>
+                                    <Col span={14}><b>交费方式：</b>{this.state.payPeriod}</Col>
+                                </Row>
+                                <Row>
 
-                                <Col span={10}><b>首年租金：</b>
-                                    <span className="color1">{this.state.data.firstYearRent}</span>元</Col>
-                                <Col span={14}>
-                                    <span className="color1">{this.state.data.startIncNum}</span>年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
-                            </Row>
-                            <p className="line" />
-                            <h2>本期租金</h2>
-                            <Row>
-                                <Col span={10}><b>本期周期：</b>{this.state.data.periodRent}</Col>
-                                <Col span={14}><b>交费期限：</b>{this.state.data.payDeadline}</Col></Row>
-                            <Row>
-                                <Col span={24}><b>本期租金：</b>
-                                    <span className="color1">{this.state.data.actualPaidMoney}</span>元  （已优惠
-                                    <span className="color1">{this.state.data.discountMoney}</span>元）</Col>
-                            </Row>
-                            <p className="line" />
-                            <h2>其他信息</h2>
-                            <Row>
-                                <Col span={10}><b>录入日期：</b>{this.state.data.createName}{this.state.data.createDate}</Col>
-                                <Col span={14}><b>最后修改：</b>{this.state.data.updateName}{this.state.data.updateDate}</Col>
-                            </Row>
-                            <Row>
-                                <Col span={10}><b>审核人：</b>{this.state.data.auditName}{this.state.data.auditDate}</Col>
-                                <Col span={14}><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}</Col>
-                            </Row>
+                                    <Col span={10}><b>首年租金：</b>
+                                        <span className="color1">{this.state.data.firstYearRent}</span>元</Col>
+                                    <Col span={14}>
+                                        <span className="color1">{this.state.data.startIncNum}</span>年后租金每年递增 {this.state.data.rentIncrRate} % </Col>
+                                </Row>
+                                <p className="line" />
+                                <h2>本期租金</h2>
+                                <Row>
+                                    <Col span={10}><b>本期周期：</b>{this.state.data.periodRent}</Col>
+                                    <Col span={14}><b>交费期限：</b>{this.state.data.payDeadline}</Col></Row>
+                                <Row>
+                                    <Col span={24}><b>本期租金：</b>
+                                        <span className="color1">{this.state.data.actualPaidMoney}</span>元  （已优惠
+                                        <span className="color1">{this.state.data.discountMoney}</span>元）</Col>
+                                </Row>
+                                <p className="line" />
+                                <h2>其他信息</h2>
+                                <Row>
+                                    <Col span={10}><b>录入日期：</b>{this.state.data.createName}&nbsp;&nbsp;{this.state.data.createDate}</Col>
+                                    <Col span={14}><b>最后修改：</b>{this.state.data.updateName}&nbsp;&nbsp;{this.state.data.updateDate}</Col>
+                                </Row>
+                                {this.state.data.auditStatus === 1 &&
+                                <Row>
+                                    <RadioGroup onChange={this.onChange} value={this.state.auditStatus}>
+                                        <b>审批意见：</b><Radio value={2}>审核通过</Radio>
+                                        <Radio value={3}>审核不通过</Radio>
+                                    </RadioGroup>
+                                </Row>
+                                }
+                                {this.state.data.auditStatus !== 0 && this.state.data.auditStatus !== 1 &&
+                                <Row>
+                                    <Col span={10}><b>审核人：</b>{this.state.data.auditName}&nbsp;&nbsp;{this.state.data.auditDate}
+                                    </Col>
+                                    <Col
+                                        span={14}
+                                    ><b>审核说明：</b>{this.state.data.auditStatus === 2 && '审核成功'}{this.state.data.auditStatus === 3 && '审核失败'}&nbsp;&nbsp;{this.state.data.remark}
+                                    </Col>
+                                </Row>
+                                }
+                                {this.state.data.auditStatus === 1 &&
+                                <textarea style={{width: '50%'}} placeholder="请输入审批意见" onChange={this.onValueChange} />
+                                }
+                            </div>
                         </div>
-                    </div>
-                    {this.state.data.whetherRentPaid !== 0 &&
+                        {this.state.data.whetherRentPaid !== 0 &&
                 <div className="wrapbox">
                     <div className="title">
                         收款信息
@@ -437,19 +475,29 @@ class RentReviewDetail extends React.Component {
                     </div>
                     }
                 </div>
-                    }
-                    {this.state.data.unpaidMoney !== 0 &&
+                        }
+                        {this.state.data.auditStatus === 1 &&
+                        <div>
+                            <Row style={{textAlign: 'center'}}>
+                                <Button type="primary" onClick={this.handleCommit} >确定</Button>
+                            </Row>
+                        </div>}
+                        {this.state.data.auditStatus === 2 &&
+                        <div>
+                            {this.state.data.unpaidMoney !== 0 &&
                 <Button type="primary" onClick={this.handleUpdate} >确认收款</Button>}
-                    {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
+                            {this.state.data.whetherRentPaid === 1 && this.state.data.lateMoney !== 0 && this.state.data.whetherLatePaid !== 1 &&
                 <Button type="primary" onClick={this.handleUpdate2} >收违约金</Button>}
-                    {this.state.data.invoiceRentStatus !== 1 &&
+                            {this.state.data.invoiceRentStatus !== 1 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceRent}>
                     <a className="btnred ant-btn">&nbsp; 租金开票 </a>
                 </Popconfirm>}
-                    {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
+                            {this.state.data.invoiceLateStatus !== 1 && this.state.data.lateMoney !== 0 &&
                 <Popconfirm title="确定开票吗?" onConfirm={this.invoiceLate}>
                     <a className="btnred ant-btn">&nbsp; 违约金开票 </a>
-                </Popconfirm>}</div>
+                </Popconfirm>}</div>}
+                    </div>
+                </Spin>
             </Modal>
         )
     }

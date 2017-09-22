@@ -60,8 +60,14 @@ class ChargeWaterBill extends React.Component {
             filters['page'] = pagination.current
             filters['rows'] = pagination.pageSize
         }
-        filters['sort'] = 'a.id'
-        filters['order'] = 'desc'
+        if (sorter !== null && typeof (sorter) !== 'undefined' && typeof (sorter.order) !== 'undefined') {
+            console.log(sorter)
+            filters['sort'] = sorter.columnKey
+            filters['order'] = sorter.order.substring(0, sorter.order.length - 3)
+        } else {
+            filters['sort'] = 'a.id'
+            filters['order'] = 'desc'
+        }
         let result = await apiPost(
             '/WaterBill/WaterBillList',
             filters
@@ -336,6 +342,15 @@ class ChargeWaterBill extends React.Component {
                     )
                 }
             }, {
+                title: '审核时间',
+                sorter: true,
+                dataIndex: 'audit_date',
+                render: function (text, record, index) {
+                    return (
+                        record.auditDate
+                    )
+                }
+            }, {
                 title: '所属楼宇',
                 dataIndex: 'buildName'
             }, {
@@ -521,7 +536,7 @@ class ChargeWaterBill extends React.Component {
                                 pageSizeOptions: ['15', '30', '45'],
                                 defaultPageSize: 15}}
                             // onChange={this.refresh}
-                            scroll={{ x: 1450 }}
+                            scroll={{ x: 1650 }}
                             bordered
                             dataSource={this.state.dataSource4}
                             columns={this.state.columns4}

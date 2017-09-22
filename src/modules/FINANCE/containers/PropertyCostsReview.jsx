@@ -11,16 +11,19 @@ class PropertyCostsReview extends React.Component {
     constructor (props) {
         super(props)
         this.state = {
+            key: 0
         }
     }
     callback = (key) => {
-        console.log(key)
+        this.setState({
+            key: key
+        })
     }
     render () {
-        return (<Tabs defaultActiveKey="1" onChange={() => this.callback}>
-            <TabPane tab="待审核" key="1"><PropertyFeeFinanceConduct pro={this.props} /></TabPane>
-            <TabPane tab="审核失败" key="2"><PropertyFeeFinanceFail pro={this.props} /></TabPane>
-            <TabPane tab="审核成功" key="3"><PropertyFeeFinanceSuccess pro={this.props} /></TabPane>
+        return (<Tabs defaultActiveKey="1" onChange={this.callback}>
+            <TabPane tab="待审核" key="1"><PropertyFeeFinanceConduct key={this.state.key} pro={this.props} /></TabPane>
+            <TabPane tab="审核失败" key="2"><PropertyFeeFinanceFail key={this.state.key} pro={this.props} /></TabPane>
+            <TabPane tab="审核成功" key="3"><PropertyFeeFinanceSuccess key={this.state.key} pro={this.props} /></TabPane>
         </Tabs>
         )
     }

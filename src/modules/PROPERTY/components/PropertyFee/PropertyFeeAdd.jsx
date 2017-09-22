@@ -659,7 +659,7 @@ class propertyFeeAdd extends React.Component {
                                                 <Option
                                                     style={{ whiteSpace: 'normal' }}
                                                     key={pmContract.id}
-                                                >{pmContract.clientName}：{pmContract.leaseRooms}
+                                                >{pmContract.clientName}：{pmContract.leaseRooms}{new Date(pmContract.startDate) < new Date().getTime() ? '' : '(未开始)'}
                                                 </Option>)
                                         })}
                                     </Select>

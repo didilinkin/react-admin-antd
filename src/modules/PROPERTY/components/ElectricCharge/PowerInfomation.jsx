@@ -10,7 +10,8 @@ class PowerInfomation extends React.Component {
         list: [],
         isFirst: true,
         visible: false,
-        mainColumns: []
+        mainColumns: [],
+        value: 2
     }
     async initialRemarks (nextProps) {
         if (this.state.isFirst && nextProps.visible) {
@@ -338,7 +339,7 @@ class PowerInfomation extends React.Component {
                                         <div>
                                             <span style={lightGrayStyle}>最后修改：</span>
                                             <span style={{marginLeft: '10px'}}>{fees.createName}</span>
-                                            <span style={{marginLeft: '10px'}}>{fees.updateDate ? fees.updateDate : fees.createDate}</span>
+                                            <span style={{marginLeft: '10px'}}>{fees.createDate}</span>
                                         </div>
                                     </Col>
                                 </Row>
