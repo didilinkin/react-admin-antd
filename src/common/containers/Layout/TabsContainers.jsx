@@ -2,14 +2,14 @@
  * @author 闫晓迪
  * @email 929213769@qq.com
  * @create date 2017-09-06 02:17:06
- * @modify date 2017-09-22 06:26:26
+ * @modify date 2017-09-24 05:39:37
  * @desc 自定义新增页签触发器(完整注释查看 commit: 4b24e5fd6a4ec91727d3043c4403919fdff94fd3)
 */
 import React from 'react'
 import cloneDeep from 'lodash/cloneDeep' // isArray
 import { hasString } from '../../../utils'
 
-import { Tabs, Row, Col, Menu, Dropdown, Icon, message } from 'antd' // Button
+import { Tabs, Row, Col, Menu, Dropdown, Icon } from 'antd' // Button, message
 const TabPane = Tabs.TabPane
 
 class TabsContainers extends React.Component {
@@ -133,16 +133,33 @@ class TabsContainers extends React.Component {
         })
     }
 
-    // 右侧下拉 功能按钮 - 按钮点击事件
-    handleButtonClick = (e) => {
-        message.info('关闭全部选项卡')
-        console.log('click left button', e)
+    closePane = (activeObj, panesArr) => {
+        this.props.onRemovePane({
+            activePane: activeObj,
+            panes: panesArr
+        })
     }
 
     // 右侧下拉 功能按钮 - 菜单点击事件
     handleMenuClick = (e) => {
-        message.info('关闭其他选项卡')
-        console.log('click', e)
+        // 关闭全部标签(首页不关)
+        if (e.key === '1') {
+            let initActiveObj = cloneDeep(this.props.panesState.panes[0])
+            let initPanesArr = [initActiveObj]
+
+            this.closePane(initActiveObj, initPanesArr)
+
+            this.props.tabsProps.history.push(initActiveObj.path) // 只有初始化状态 需要跳转 url
+        // 关闭其他标签
+        } else {
+            let currentActiveObj = cloneDeep(this.props.panesState.activePane)
+            let setPanesArr = [
+                cloneDeep(this.props.panesState.panes[0]), // 首页
+                currentActiveObj // 当前的 activePane标签
+            ]
+
+            this.closePane(currentActiveObj, setPanesArr)
+        }
     }
 
     menu = (
@@ -159,17 +176,17 @@ class TabsContainers extends React.Component {
                     <Tabs
                         hideAdd
                         type="editable-card"
-                        onEdit={this.onEdit}
-                        onChange={this.onChange}
-                        activeKey={this.state.activePane.key}
+                        onEdit={ this.onEdit }
+                        onChange={ this.onChange }
+                        activeKey={ this.state.activePane.key }
                     >
                         {
                             this.state.panes.map((pane) => (
                                 <TabPane
-                                    closable={pane.closable}
-                                    key={pane.key}
-                                    tab={pane.title}
-                                    path={pane.path}
+                                    closable={ pane.closable }
+                                    key={ pane.key }
+                                    tab={ pane.title }
+                                    path={ pane.path }
                                 />
                             ))
                         }

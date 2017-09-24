@@ -13,9 +13,8 @@ export const activePane = activeObj => ({
     activeObj // stringKey
 })
 
-// 删减 (参数: 当前激活 tabs面板的 Key, 目标 tabs面板的 Key)
-export const removePane = (activeKey, targetKey) => ({
+// 删减 (参数: 留下的 activePane; 其余标签删除)
+export const removePane = activePane => ({
     type: types.REMOVE_PANE,
-    activeKey,
-    targetKey
+    activePane
 })

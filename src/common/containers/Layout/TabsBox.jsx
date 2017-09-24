@@ -34,7 +34,7 @@ const TabsBox = ({
             // actions
             onAddPane={ actions.addPane }
             onActivePane={ actions.activePane }
-            onRemovePane={ () => actions.removePane(panesState) }
+            onRemovePane={ actions.removePane }
         />
         {/* 分离内容 与 标签 */}
         <route.component { ...tabsProps } routes={ route.routes } />

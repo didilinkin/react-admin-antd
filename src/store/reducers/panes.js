@@ -35,27 +35,10 @@ const setPanes = (state = initialState, action) => {
             return activeState
 
         case REMOVE_PANE:
-            let activeKey = action.activeKey
-            let lastIndex
-
-            state.panes.forEach((pane, i) => {
-                // key为 pane中 route属性值中的path属性;
-                if (pane.route.path === action.targetKey) {
-                    lastIndex = i - 1
-                }
+            let removeState = Object.assign({}, state, {
+                activePane: action.activePane.activePane,
+                panes: action.activePane.panes
             })
-
-            const panes = state.filter(pane => pane.route.path !== action.targetKey)
-
-            if (lastIndex >= 0 && activeKey === action.targetKey) {
-                activeKey = panes[lastIndex].route.path
-            }
-
-            // 返回新的 removeState; 不需要拷贝, 直接返回新对象
-            let removeState = {
-                panes,
-                activeKey
-            }
 
             return removeState
         default:

@@ -135,9 +135,11 @@ class LayoutContainers extends React.Component {
                     </ContentBox>
 
                     {/* 底部 */}
-                    <FooterBox>
-                        <p> 长江中心 PMS 物业管理系统 ©2016 Created by 上朝科技 </p>
-                    </FooterBox>
+                    {/*
+                        <FooterBox>
+                            <p> 长江中心 PMS 物业管理系统 ©2016 Created by 上朝科技 </p>
+                        </FooterBox>
+                    */}
                 </Layout>
             </Layout>
         )
@@ -154,14 +156,14 @@ const ContentBox = styled.div `
     border-top: 2px solid rgb(233, 233, 233);
 `
 
-const FooterBox = styled.footer`
-    position: fixed;
-    bottom: 0;
-    width: calc(100% - 220px);
-    height: ${elf.d.autoPadding * 2}px;
-    text-align: center;
-    line-height: ${elf.d.autoPadding * 2}px;
-    background: ${elf.c.background};
-`
+// const FooterBox = styled.footer`
+//     position: fixed;
+//     bottom: 0;
+//     width: calc(100% - 220px);
+//     height: ${elf.d.autoPadding * 2}px;
+//     text-align: center;
+//     line-height: ${elf.d.autoPadding * 2}px;
+//     background: ${elf.c.background};
+// `
 
 export default LayoutContainers
