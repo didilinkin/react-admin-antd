@@ -20,7 +20,7 @@
 | [react](https://facebook.github.io/react/)            | 视图库              | 15.6.1  |
 | [redux](http://cn.redux.js.org/)                      | 状态管理             | 3.7.1  |
 | [react-redux](http://cn.redux.js.org/docs/react-redux/index.html)                      | Redux的 React 绑定库             | 5.0.5  |
-| [react-router](https://reacttraining.cn/)             | 路由管理            |  4.1.1 |
+| [react-router](http://react-guide.github.io/react-router-cn/index.html)             | 路由管理            |  4.1.1 |
 | [react-router-redux](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux)       | 路由状态            |  5.0.0-alpha.6 |
 | [react-router-config](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config)     | 静态路由配置            |  1.0.0-beta.3 |
 
