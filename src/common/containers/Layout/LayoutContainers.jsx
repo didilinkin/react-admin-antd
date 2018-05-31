@@ -127,7 +127,7 @@ class LayoutContainers extends React.Component {
                                 onClick={this.toggle}
                             />
                         */}
-                        <HeaderContainers route={ this.props } />
+                        <HeaderContainers { ...this.props } collapsed={ this.state.collapsed } toggle={ this.toggle } />
                     </Header>
 
                     <ContentBox>
