@@ -54,7 +54,7 @@ const UserDiv = styled.span `
 class headerContainers extends React.Component {
     // 展开状态
     state = {
-        collapsed: false,
+        // collapsed: false,
         visible: false,
         visible1: false
     }
@@ -251,7 +251,7 @@ class headerContainers extends React.Component {
                 </Modal>
                 <Icon
                     className="trigger custom-trigger"
-                    type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                    type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
                     onClick={this.props.toggle}
                     style={{
                         fontSize: elf.f.text + 'px',
