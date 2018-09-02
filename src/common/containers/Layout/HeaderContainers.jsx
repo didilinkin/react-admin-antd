@@ -159,6 +159,11 @@ class headerContainers extends React.Component {
         })
     }
 
+    handleMenuClick = (item, key) => {
+        if (item.key === 'full') {
+            this.screenFull()
+        }
+    }
     // 打开 '个人设置'页面
     // toOptions = () => {
     //     // console.log(this)
@@ -270,12 +275,12 @@ class headerContainers extends React.Component {
                         lineHeight: '64px',
                         float: 'right'
                     }}
+                    onClick={this.handleMenuClick}
                 >
                     {/* 全屏按钮 */}
-                    <Menu.Item key="full" onClick={this.screenFull}>
+                    <Menu.Item key="full">
                         <Icon
                             type="arrows-alt"
-                            onClick={this.screenFull}
                         />
                     </Menu.Item>
 
