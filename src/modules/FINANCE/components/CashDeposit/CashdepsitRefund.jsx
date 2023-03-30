@@ -1,4 +1,4 @@
-import {Modal, Radio, Form, notification, Icon, Col, Row, Input, Select, textarea} from 'antd'
+import {Modal, Radio, Form, notification, Icon, Col, Row, Input, Select} from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import Thumbnail from '../../components/Thumbnail'

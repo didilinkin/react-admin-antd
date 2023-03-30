@@ -1,4 +1,4 @@
-import {Modal, Input, Form, notification, Icon, Col, Row, textarea} from 'antd'
+import {Modal, Input, Form, notification, Icon, Col, Row} from 'antd'
 import React from 'react'
 import { apiPost } from '../../../../api/index'
 import PicturesWall from '../../components/PicturesWall'

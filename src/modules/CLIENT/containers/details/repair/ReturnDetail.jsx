@@ -45,12 +45,11 @@ class ReturnVisit extends React.Component {
         this.value = e.target.value
     }
     handleSubmit = async () => {
-        let resulData = await
-            apiPost(
-                'upkeep/visit',
-                {'id': this.props.match.params.id,
-                    visitContent: this.value}
-            )
+        let resulData = await apiPost(
+            'upkeep/visit',
+            {'id': this.props.match.params.id,
+                visitContent: this.value}
+        )
         notification.open({
             message: resulData.data,
             icon: <Icon type="smile-circle" style={{color: '#108ee9'}} />

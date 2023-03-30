@@ -501,8 +501,14 @@ class propertyFeeAdd extends React.Component {
         )
         if (adopt) {
             let json = this.props.form.getFieldsValue()
-            this.state.json1['discountMoney'] = json.discountMoney
-            this.state.json1['actualPaidMoney'] = json.actualPaidMoney
+            // this.state.json1['discountMoney'] = json.discountMoney
+            // this.state.json1['actualPaidMoney'] = json.actualPaidMoney
+            this.setState({
+                json1: {
+                    discountMoney: json.discountMoney,
+                    actualPaidMoney: json.actualPaidMoney
+                }
+            })
             if (this.props.id > 0) {
                 await apiPost(
                     'propertyFee/updatePropertyFee',
